@@ -1,0 +1,20 @@
+/* Eliminamos los márgenes predeterminados del navegador. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configuramos el estilo base de toda la aplicación. */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fffdf8;
+  color: #243447;
+}
+
+/* Permitimos que la aplicación utilice toda la altura de la pantalla. */
+html,
+body,
+#root {
+  min-height: 100%;
+}

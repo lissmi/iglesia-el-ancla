@@ -1,0 +1,494 @@
+/* Pie de página principal. */
+.footer {
+  /* Aplicamos el fondo azul marino oscuro. */
+  background-color: #182838;
+
+  /* Aplicamos texto blanco como base. */
+  color: #ffffff;
+}
+
+/* Parte principal del Footer. */
+.footer__main {
+  /* Añadimos espacio vertical y horizontal. */
+  padding: 78px 24px 65px;
+
+  /* Aplicamos un degradado muy suave. */
+  background:
+    linear-gradient(
+      135deg,
+      #182838 0%,
+      #203449 55%,
+      #263d53 100%
+    );
+}
+
+/* Contenedor principal de columnas. */
+.footer__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* La primera columna será un poco más ancha. */
+  grid-template-columns:
+    minmax(280px, 1.3fr)
+    minmax(150px, 0.7fr)
+    minmax(240px, 1fr)
+    minmax(190px, 0.8fr);
+
+  /* Añadimos separación entre columnas. */
+  gap: 54px;
+}
+
+/* Columna de identidad de la iglesia. */
+.footer__brand-column {
+  /* Limitamos su ancho para mantener buena lectura. */
+  max-width: 360px;
+}
+
+/* Enlace que contiene el logo. */
+.footer__brand {
+  /* Mostramos el logo como bloque. */
+  display: inline-block;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+}
+
+/* Logo principal del Footer. */
+.footer__logo {
+  /* Definimos el ancho visible. */
+  width: 220px;
+
+  /* Permitimos altura proporcional. */
+  height: auto;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+
+  /* Aplicamos un fondo claro para conservar la visibilidad del logo. */
+  background-color: rgba(255, 255, 255, 0.94);
+
+  /* Añadimos espacio interior. */
+  padding: 8px 12px;
+
+  /* Redondeamos suavemente los bordes. */
+  border-radius: 12px;
+}
+
+/* Descripción breve de la iglesia. */
+.footer__description {
+  /* Añadimos separación respecto al logo. */
+  margin: 23px 0 0;
+
+  /* Aplicamos un tono claro secundario. */
+  color: rgba(255, 255, 255, 0.72);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.7;
+}
+
+/* Versículo del Footer. */
+.footer__verse {
+  /* Añadimos separación superior. */
+  margin: 20px 0 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Aplicamos un dorado claro. */
+  color: #d8c4aa;
+
+  /* Definimos un tamaño discreto. */
+  font-size: 14px;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.6;
+}
+
+/* Referencia del versículo. */
+.footer__verse span {
+  /* Mostramos la referencia en una nueva línea. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 5px;
+
+  /* Quitamos la cursiva. */
+  font-style: normal;
+
+  /* Aplicamos la tipografía general. */
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título de cada columna. */
+.footer__column-title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 22px;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 20px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Usamos texto blanco. */
+  color: #ffffff;
+}
+
+/* Navegación del Footer. */
+.footer__navigation {
+  /* Organizamos los enlaces verticalmente. */
+  display: flex;
+
+  /* Colocamos los enlaces en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación entre enlaces. */
+  gap: 13px;
+}
+
+/* Enlaces del Footer. */
+.footer__link {
+  /* Ajustamos el ancho al contenido. */
+  width: fit-content;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos un color claro secundario. */
+  color: rgba(255, 255, 255, 0.7);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 14px;
+
+  /* Preparamos la animación. */
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Efecto al pasar el cursor sobre los enlaces. */
+.footer__link:hover {
+  /* Aplicamos el dorado claro. */
+  color: #d8c4aa;
+
+  /* Movemos ligeramente el enlace hacia la derecha. */
+  transform: translateX(4px);
+}
+
+/* Lista de información de contacto. */
+.footer__contact-list {
+  /* Organizamos los elementos verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación entre ellos. */
+  gap: 20px;
+}
+
+/* Información individual de contacto. */
+.footer__contact-item {
+  /* Organizamos icono y texto en una fila. */
+  display: flex;
+
+  /* Alineamos los elementos al inicio. */
+  align-items: flex-start;
+
+  /* Añadimos separación entre icono y texto. */
+  gap: 13px;
+
+  /* Eliminamos el subrayado en caso de ser enlace. */
+  text-decoration: none;
+}
+
+/* Variante clicable del contacto. */
+.footer__contact-item--link {
+  /* Cambiamos el cursor para indicar interacción. */
+  cursor: pointer;
+}
+
+/* Iconos de contacto. */
+.footer__contact-icon {
+  /* Evitamos que el icono se comprima. */
+  flex-shrink: 0;
+
+  /* Definimos el ancho. */
+  width: 38px;
+
+  /* Definimos la altura. */
+  height: 38px;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+}
+
+/* Bloque textual de contacto. */
+.footer__contact-text {
+  /* Organizamos la etiqueta y el valor verticalmente. */
+  display: flex;
+
+  /* Colocamos ambos textos en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación. */
+  gap: 5px;
+}
+
+/* Etiqueta de contacto. */
+.footer__contact-label {
+  /* Aplicamos el dorado claro. */
+  color: #d8c4aa;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.2px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Valor de contacto. */
+.footer__contact-value {
+  /* Aplicamos un tono claro. */
+  color: rgba(255, 255, 255, 0.75);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 14px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.55;
+
+  /* Preparamos una transición. */
+  transition: color 0.2s ease;
+}
+
+/* Efecto del enlace de contacto. */
+.footer__contact-item--link:hover .footer__contact-value {
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+}
+
+/* Descripción de redes sociales. */
+.footer__social-description {
+  /* Eliminamos el margen superior. */
+  margin: 0;
+
+  /* Aplicamos un tono claro secundario. */
+  color: rgba(255, 255, 255, 0.7);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 14px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.65;
+}
+
+/* Contenedor de enlaces sociales. */
+.footer__social-links {
+  /* Mostramos los enlaces en una fila. */
+  display: flex;
+
+  /* Añadimos separación entre ellos. */
+  gap: 14px;
+
+  /* Añadimos separación superior. */
+  margin-top: 22px;
+}
+
+/* Botón individual de red social. */
+.footer__social-link {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos el ancho. */
+  width: 52px;
+
+  /* Definimos la altura. */
+  height: 52px;
+
+  /* Redondeamos el botón. */
+  border-radius: 12px;
+
+  /* Aplicamos un fondo claro y transparente. */
+  background-color: rgba(255, 255, 255, 0.08);
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* Preparamos las animaciones. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Efecto al pasar el cursor. */
+.footer__social-link:hover {
+  /* Elevamos ligeramente el botón. */
+  transform: translateY(-3px);
+
+  /* Aplicamos un fondo dorado transparente. */
+  background-color: rgba(216, 196, 170, 0.15);
+
+  /* Destacamos el borde. */
+  border-color: rgba(216, 196, 170, 0.35);
+}
+
+/* Icono de la red social. */
+.footer__social-icon {
+  /* Definimos el ancho. */
+  width: 34px;
+
+  /* Definimos la altura. */
+  height: 34px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Franja inferior del Footer. */
+.footer__bottom {
+  /* Añadimos una línea superior. */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Aplicamos un fondo más oscuro. */
+  background-color: #142331;
+}
+
+/* Contenedor de la franja inferior. */
+.footer__bottom-container {
+  /* Limitamos el ancho. */
+  max-width: 1240px;
+
+  /* Centramos el contenido. */
+  margin: 0 auto;
+
+  /* Organizamos ambos textos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Separamos ambos textos. */
+  justify-content: space-between;
+
+  /* Añadimos espacio interior. */
+  padding: 20px 24px;
+
+  /* Añadimos separación por seguridad. */
+  gap: 20px;
+}
+
+/* Derechos del sitio. */
+.footer__copyright {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos un tono claro discreto. */
+  color: rgba(255, 255, 255, 0.56);
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+}
+
+/* Frase final. */
+.footer__blessing {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos el dorado claro. */
+  color: #d8c4aa;
+
+  /* Usamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 1050px) {
+  /* Cambiamos a dos columnas. */
+  .footer__container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Permitimos que la primera columna use todo su espacio. */
+  .footer__brand-column {
+    max-width: 100%;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos el espacio principal. */
+  .footer__main {
+    padding: 65px 18px 50px;
+  }
+
+  /* Cambiamos a una sola columna. */
+  .footer__container {
+    grid-template-columns: 1fr;
+
+    /* Reducimos la separación. */
+    gap: 44px;
+  }
+
+  /* Reducimos ligeramente el logo. */
+  .footer__logo {
+    width: 205px;
+  }
+
+  /* Organizamos la franja inferior verticalmente. */
+  .footer__bottom-container {
+    flex-direction: column;
+
+    /* Centramos los textos. */
+    text-align: center;
+
+    /* Reducimos la separación. */
+    gap: 10px;
+
+    /* Ajustamos el espacio interior. */
+    padding: 20px 18px;
+  }
+}

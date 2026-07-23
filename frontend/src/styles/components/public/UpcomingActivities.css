@@ -1,0 +1,476 @@
+/* Sección general de próximas actividades. */
+.upcoming-activities {
+  /* Aplicamos un fondo blanco cálido. */
+  background-color: #ffffff;
+
+  /* Añadimos espacio vertical y horizontal. */
+  padding: 95px 24px;
+}
+
+/* Contenedor principal de la sección. */
+.upcoming-activities__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos el contenido. */
+  margin: 0 auto;
+}
+
+/* Encabezado de la sección. */
+.upcoming-activities__header {
+  /* Organizamos el contenido en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Separamos el título y el enlace. */
+  justify-content: space-between;
+
+  /* Añadimos espacio entre ambos bloques. */
+  gap: 24px;
+
+  /* Añadimos separación inferior. */
+  margin-bottom: 42px;
+}
+
+/* Bloque que contiene icono y títulos. */
+.upcoming-activities__heading {
+  /* Mostramos el contenido en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Añadimos espacio entre icono y texto. */
+  gap: 18px;
+}
+
+/* Icono principal de la sección. */
+.upcoming-activities__heading-icon {
+  /* Definimos un tamaño visible. */
+  width: 70px;
+
+  /* Definimos una altura uniforme. */
+  height: 70px;
+
+  /* Evitamos que el icono se deforme. */
+  object-fit: contain;
+}
+
+/* Texto pequeño sobre el título. */
+.upcoming-activities__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 7px;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #a58b6e;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.2px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal de la sección. */
+.upcoming-activities__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Creamos un tamaño adaptable. */
+  font-size: clamp(34px, 4vw, 48px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Enlace para ver todas las actividades. */
+.upcoming-activities__view-all {
+  /* Mostramos texto y flecha en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente el contenido. */
+  align-items: center;
+
+  /* Añadimos espacio entre texto y flecha. */
+  gap: 9px;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 600;
+
+  /* Añadimos espacio inferior decorativo. */
+  padding-bottom: 5px;
+
+  /* Creamos una línea inferior dorada. */
+  border-bottom: 1px solid #b7a087;
+
+  /* Añadimos transición. */
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+/* Efecto del enlace al pasar el cursor. */
+.upcoming-activities__view-all:hover {
+  /* Aplicamos el dorado. */
+  color: #967c62;
+
+  /* Separamos ligeramente la flecha. */
+  gap: 13px;
+}
+
+/* Cuadrícula de tarjetas. */
+.upcoming-activities__grid {
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos cuatro columnas iguales. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  /* Añadimos separación entre tarjetas. */
+  gap: 22px;
+}
+
+/* Tarjeta individual de actividad. */
+.activity-card {
+  /* Organizamos la tarjeta verticalmente. */
+  display: flex;
+
+  /* Colocamos sus elementos en columna. */
+  flex-direction: column;
+
+  /* Ocultamos cualquier elemento que sobresalga. */
+  overflow: hidden;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #fbfaf7;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 18px;
+
+  /* Aplicamos una sombra suave. */
+  box-shadow: 0 12px 30px rgba(24, 40, 56, 0.07);
+
+  /* Preparamos el efecto al pasar el cursor. */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Efecto al pasar el cursor sobre la tarjeta. */
+.activity-card:hover {
+  /* Elevamos ligeramente la tarjeta. */
+  transform: translateY(-6px);
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 18px 40px rgba(24, 40, 56, 0.13);
+
+  /* Destacamos suavemente el borde. */
+  border-color: rgba(165, 139, 110, 0.32);
+}
+
+/* Parte superior decorativa. */
+.activity-card__top {
+  /* Organizamos los elementos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Separamos la categoría y modalidad. */
+  justify-content: space-between;
+
+  /* Añadimos espacio entre ellos. */
+  gap: 12px;
+
+  /* Añadimos espacio interior. */
+  padding: 18px 20px;
+
+  /* Aplicamos un fondo azul marino muy suave. */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(36, 54, 75, 0.08),
+      rgba(183, 160, 135, 0.13)
+    );
+
+  /* Añadimos una línea inferior discreta. */
+  border-bottom: 1px solid rgba(36, 54, 75, 0.08);
+}
+
+/* Categoría de la actividad. */
+.activity-card__category {
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Modalidad de la actividad. */
+.activity-card__modality {
+  /* Añadimos espacio interior. */
+  padding: 5px 9px;
+
+  /* Creamos una etiqueta redondeada. */
+  border-radius: 999px;
+
+  /* Aplicamos un fondo dorado suave. */
+  background-color: rgba(183, 160, 135, 0.2);
+
+  /* Aplicamos texto dorado oscuro. */
+  color: #80684f;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+}
+
+/* Variante para actividades online. */
+.activity-card__modality--online {
+  /* Aplicamos un fondo azul claro. */
+  background-color: rgba(36, 54, 75, 0.12);
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+}
+
+/* Contenido principal de la tarjeta. */
+.activity-card__content {
+  /* Organizamos el contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos en columna. */
+  flex-direction: column;
+
+  /* Permitimos que ocupe toda la altura disponible. */
+  flex: 1;
+
+  /* Añadimos espacio interior. */
+  padding: 24px 20px 22px;
+}
+
+/* Título de la actividad. */
+.activity-card__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos la tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 23px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción breve. */
+.activity-card__description {
+  /* Añadimos separación respecto al título. */
+  margin: 12px 0 0;
+
+  /* Permitimos que empuje el contenido inferior. */
+  flex: 1;
+
+  /* Aplicamos un color secundario. */
+  color: #647080;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 14px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.65;
+}
+
+/* Bloque con día y horario. */
+.activity-card__schedule {
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos dos columnas iguales. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  /* Añadimos separación. */
+  gap: 10px;
+
+  /* Añadimos espacio superior. */
+  margin-top: 22px;
+
+  /* Añadimos espacio interior vertical. */
+  padding: 17px 0;
+
+  /* Creamos bordes superior e inferior. */
+  border-top: 1px solid rgba(36, 54, 75, 0.09);
+  border-bottom: 1px solid rgba(36, 54, 75, 0.09);
+}
+
+/* Información individual de horario. */
+.activity-card__schedule-item {
+  /* Organizamos etiqueta y valor verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos en columna. */
+  flex-direction: column;
+
+  /* Añadimos espacio entre ambos. */
+  gap: 4px;
+}
+
+/* Etiqueta del horario. */
+.activity-card__schedule-label {
+  /* Aplicamos un color discreto. */
+  color: #8a94a0;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Valor del horario. */
+.activity-card__schedule-value {
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 14px;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 600;
+}
+
+/* Enlace inferior de la tarjeta. */
+.activity-card__link {
+  /* Mostramos texto y flecha en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos espacio entre texto y flecha. */
+  gap: 8px;
+
+  /* Ajustamos su ancho al contenido. */
+  align-self: flex-start;
+
+  /* Añadimos separación superior. */
+  margin-top: 20px;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño. */
+  font-size: 14px;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 700;
+
+  /* Añadimos transición. */
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+/* Efecto del enlace inferior. */
+.activity-card__link:hover {
+  /* Aplicamos el dorado. */
+  color: #967c62;
+
+  /* Separamos ligeramente la flecha. */
+  gap: 12px;
+}
+
+/* Adaptación para pantallas medianas. */
+@media (max-width: 1050px) {
+  /* Cambiamos a dos columnas. */
+  .upcoming-activities__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos el espacio de la sección. */
+  .upcoming-activities {
+    padding: 75px 18px;
+  }
+
+  /* Colocamos el encabezado en columna. */
+  .upcoming-activities__header {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 32px;
+  }
+
+  /* Reducimos el icono principal. */
+  .upcoming-activities__heading-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  /* Cambiamos a una sola columna. */
+  .upcoming-activities__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el título. */
+  .upcoming-activities__title {
+    font-size: 32px;
+  }
+
+  /* Reducimos el espacio entre icono y título. */
+  .upcoming-activities__heading {
+    gap: 12px;
+  }
+}

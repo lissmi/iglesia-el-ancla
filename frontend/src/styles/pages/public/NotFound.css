@@ -1,0 +1,745 @@
+/* Importamos la tipografía estilo videojuego. */
+@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&display=swap");
+
+/* Contenedor principal de la página 404. */
+.not-found {
+  /* Aplicamos un fondo claro coherente con el sitio. */
+  background-color: #f9f8f5;
+
+  /* Aplicamos el azul marino como color general. */
+  color: #24364b;
+}
+
+/* Contenido principal de la página. */
+.not-found__main {
+  /* Añadimos espacio superior para compensar el Header absoluto. */
+  padding: 145px 24px 100px;
+
+  /* Permitimos ocupar al menos la altura visible. */
+  min-height: 850px;
+
+  /* Aplicamos un fondo suave. */
+  background:
+    radial-gradient(
+      circle at 12% 15%,
+      rgba(183, 160, 135, 0.15),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #f9f8f5 0%,
+      #f2f4f5 55%,
+      #f7f2ed 100%
+    );
+}
+
+/* Introducción superior de la página. */
+.not-found__intro {
+  /* Limitamos el ancho del contenido. */
+  max-width: 820px;
+
+  /* Centramos el bloque. */
+  margin: 0 auto;
+
+  /* Centramos los textos. */
+  text-align: center;
+}
+
+/* Código 404. */
+.not-found__code {
+  /* Eliminamos los márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos la tipografía del juego. */
+  font-family: "Kode Mono", monospace;
+
+  /* Creamos un tamaño adaptable. */
+  font-size: clamp(72px, 10vw, 125px);
+
+  /* Destacamos el código. */
+  font-weight: 700;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #b29a7e;
+
+  /* Reducimos la separación vertical. */
+  line-height: 0.9;
+
+  /* Añadimos una sombra muy discreta. */
+  text-shadow: 0 8px 26px rgba(36, 54, 75, 0.1);
+}
+
+/* Título principal. */
+.not-found__title {
+  /* Añadimos separación respecto al número. */
+  margin: 25px 0 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Creamos un tamaño adaptable. */
+  font-size: clamp(34px, 5vw, 58px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.15;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción del error. */
+.not-found__description {
+  /* Añadimos separación superior. */
+  margin: 22px auto 0;
+
+  /* Limitamos el ancho para facilitar la lectura. */
+  max-width: 680px;
+
+  /* Aplicamos un color secundario. */
+  color: #5e6a79;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Botón para volver al inicio. */
+.not-found__home-button {
+  /* Mostramos el enlace como botón. */
+  display: inline-flex;
+
+  /* Centramos horizontalmente el texto. */
+  justify-content: center;
+
+  /* Centramos verticalmente el texto. */
+  align-items: center;
+
+  /* Añadimos separación superior. */
+  margin-top: 28px;
+
+  /* Añadimos espacio interior. */
+  padding: 13px 24px;
+
+  /* Aplicamos el azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Redondeamos los bordes. */
+  border-radius: 8px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 8px 20px rgba(24, 40, 56, 0.2);
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto del botón al pasar el cursor. */
+.not-found__home-button:hover {
+  /* Oscurecemos el fondo. */
+  background-color: #182838;
+
+  /* Elevamos ligeramente el botón. */
+  transform: translateY(-2px);
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 11px 24px rgba(24, 40, 56, 0.27);
+}
+
+/* Contenedor general del juego. */
+.not-found-game {
+  /* Limitamos el ancho máximo. */
+  max-width: 760px;
+
+  /* Centramos el juego y añadimos separación superior. */
+  margin: 65px auto 0;
+
+  /* Añadimos espacio interior. */
+  padding: 25px 30px 30px;
+
+  /* Aplicamos un fondo claro. */
+  background-color: rgba(255, 255, 255, 0.88);
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.12);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 22px;
+
+  /* Aplicamos desenfoque al fondo. */
+  backdrop-filter: blur(10px);
+
+  /* Añadimos compatibilidad con Safari. */
+  -webkit-backdrop-filter: blur(10px);
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 20px 50px rgba(24, 40, 56, 0.11);
+}
+
+/* Barra superior del juego. */
+.not-found-game__top {
+  /* Organizamos instrucciones y puntaje en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente ambos bloques. */
+  align-items: center;
+
+  /* Separamos ambos bloques. */
+  justify-content: space-between;
+
+  /* Añadimos separación de seguridad. */
+  gap: 20px;
+
+  /* Añadimos espacio inferior. */
+  margin-bottom: 18px;
+}
+
+/* Instrucciones del juego. */
+.not-found-game__instructions {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos la tipografía del juego. */
+  font-family: "Kode Mono", monospace;
+
+  /* Aplicamos un color secundario. */
+  color: #687483;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.5;
+}
+
+/* Bloque de puntajes. */
+.not-found-game__score {
+  /* Mostramos los puntajes en una fila. */
+  display: flex;
+
+  /* Añadimos separación. */
+  gap: 18px;
+
+  /* Evitamos que el bloque se comprima. */
+  flex-shrink: 0;
+
+  /* Aplicamos la tipografía del videojuego. */
+  font-family: "Kode Mono", monospace;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aplicamos un color secundario. */
+  color: #7f8995;
+}
+
+/* Eliminamos el margen de cada puntaje. */
+.not-found-game__score p {
+  margin: 0;
+}
+
+/* Valor numérico de los puntajes. */
+.not-found-game__score span {
+  /* Aplicamos el dorado sobrio. */
+  color: #9a8066;
+}
+
+/* Área principal del juego. */
+.not-found-game__stage {
+  /* Permitimos posicionar los elementos internos. */
+  position: relative;
+
+  /* Definimos el ancho completo. */
+  width: 100%;
+
+  /* Definimos la altura del juego. */
+  height: 230px;
+
+  /* Ocultamos los personajes cuando salen de los límites. */
+  overflow: hidden;
+
+  /* Cambiamos el cursor para mostrar que es interactivo. */
+  cursor: pointer;
+
+  /* Eliminamos el contorno predeterminado. */
+  outline: none;
+
+  /* Aplicamos un cielo muy suave. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(229, 220, 208, 0.5) 0%,
+      rgba(250, 248, 244, 0.9) 70%,
+      rgba(229, 220, 208, 0.35) 100%
+    );
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos sus esquinas. */
+  border-radius: 15px;
+
+  /* Evitamos seleccionar accidentalmente elementos. */
+  user-select: none;
+
+  /* Mejoramos la interacción táctil. */
+  touch-action: manipulation;
+}
+
+/* Contorno accesible al navegar con teclado. */
+.not-found-game__stage:focus-visible {
+  /* Mostramos un borde de enfoque visible. */
+  outline: 3px solid rgba(183, 160, 135, 0.55);
+
+  /* Separamos el contorno del borde. */
+  outline-offset: 4px;
+}
+
+/* Botón para comenzar el juego. */
+.not-found-game__start-button {
+  /* Posicionamos el botón sobre el área del juego. */
+  position: absolute;
+
+  /* Lo ubicamos cerca de la parte superior. */
+  top: 24px;
+
+  /* Lo centramos horizontalmente. */
+  left: 50%;
+
+  /* Completamos el centrado. */
+  transform: translateX(-50%);
+
+  /* Lo colocamos por encima de los demás elementos. */
+  z-index: 10;
+
+  /* Aplicamos la tipografía del juego. */
+  font-family: "Kode Mono", monospace;
+
+  /* Eliminamos el borde predeterminado. */
+  border: none;
+
+  /* Añadimos espacio interior. */
+  padding: 9px 18px;
+
+  /* Aplicamos el azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Redondeamos las esquinas. */
+  border-radius: 7px;
+
+  /* Cambiamos el cursor. */
+  cursor: pointer;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Efecto del botón. */
+.not-found-game__start-button:hover {
+  /* Mantenemos el centrado y aumentamos el tamaño. */
+  transform: translateX(-50%) scale(1.06);
+
+  /* Oscurecemos el fondo. */
+  background-color: #182838;
+}
+
+/* Mensaje de finalización. */
+.not-found-game__game-over {
+  /* Posicionamos el mensaje sobre el juego. */
+  position: absolute;
+
+  /* Lo ubicamos en la zona central. */
+  top: 72px;
+
+  /* Lo centramos horizontalmente. */
+  left: 50%;
+
+  /* Completamos el centrado. */
+  transform: translateX(-50%);
+
+  /* Lo colocamos por encima de los elementos. */
+  z-index: 9;
+
+  /* Permitimos que ocupe casi todo el ancho. */
+  width: 90%;
+
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos los textos en columna. */
+  flex-direction: column;
+
+  /* Centramos los textos. */
+  align-items: center;
+
+  /* Centramos la alineación. */
+  text-align: center;
+
+  /* Añadimos separación. */
+  gap: 6px;
+
+  /* Evitamos que bloquee clics. */
+  pointer-events: none;
+}
+
+/* Texto principal de Game Over. */
+.not-found-game__game-over strong {
+  /* Aplicamos la tipografía del juego. */
+  font-family: "Kode Mono", monospace;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 34px;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Texto secundario del Game Over. */
+.not-found-game__game-over span {
+  /* Aplicamos un color secundario. */
+  color: #687483;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+}
+
+/* Contenedor principal del gatito. */
+.not-found-game__cat {
+  /* Posicionamos el gato dentro del área del juego. */
+  position: absolute;
+
+  /* Lo ubicamos cerca del borde izquierdo. */
+  left: 34px;
+
+  /* Lo situamos sobre el suelo. */
+  bottom: 21px;
+
+  /* Definimos un tamaño más visible. */
+  width: 66px;
+
+  /* Definimos la altura del contenedor. */
+  height: 66px;
+
+  /* Colocamos el gato sobre el fondo. */
+  z-index: 4;
+}
+
+/* Imagen personalizada del gatito. */
+.not-found-game__cat-image {
+  /* Permitimos que ocupe todo su contenedor. */
+  display: block;
+
+  /* Definimos el ancho completo. */
+  width: 100%;
+
+  /* Definimos la altura completa. */
+  height: 100%;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+
+  /* Definimos el punto desde donde se transformará. */
+  transform-origin: center bottom;
+
+  /* Evitamos que la imagen sea arrastrada. */
+  pointer-events: none;
+
+  /* Evitamos selecciones accidentales. */
+  user-select: none;
+}
+
+/* Movimiento suave del gatito mientras corre. */
+.not-found-game__cat-image--running {
+  /* Simulamos un pequeño rebote al correr. */
+  animation: not-found-cat-running 0.35s infinite ease-in-out;
+}
+
+/* Estado de salto del gato. */
+.not-found-game__cat--jumping {
+  /* Ejecutamos la animación de salto. */
+  animation: not-found-cat-jump 0.45s ease-out;
+}
+
+/* Contenedor del cactus. */
+.not-found-game__cactus {
+  /* Posicionamos el cactus dentro del escenario. */
+  position: absolute;
+
+  /* Lo ubicamos fuera del borde derecho inicialmente. */
+  right: -58px;
+
+  /* Lo colocamos sobre el suelo. */
+  bottom: 21px;
+
+  /* Definimos su ancho. */
+  width: 52px;
+
+  /* Definimos su altura. */
+  height: 64px;
+
+  /* Lo colocamos sobre el fondo. */
+  z-index: 4;
+}
+
+/* Imagen personalizada del cactus. */
+.not-found-game__cactus-image {
+  /* Permitimos que ocupe todo el contenedor. */
+  display: block;
+
+  /* Definimos el ancho completo. */
+  width: 100%;
+
+  /* Definimos la altura completa. */
+  height: 100%;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+
+  /* Evitamos interacción accidental. */
+  pointer-events: none;
+
+  /* Evitamos selecciones accidentales. */
+  user-select: none;
+}
+
+/* Estado activo del cactus. */
+.not-found-game__cactus--moving {
+  /* Ejecutamos el movimiento de derecha a izquierda. */
+  animation: not-found-cactus-movement 1.65s infinite linear;
+}
+
+/* Línea que representa el suelo. */
+.not-found-game__ground {
+  /* Posicionamos el suelo en la parte inferior. */
+  position: absolute;
+
+  /* Lo ubicamos a una distancia pequeña del borde. */
+  bottom: 20px;
+
+  /* Lo extendemos horizontalmente. */
+  left: 20px;
+  right: 20px;
+
+  /* Definimos el grosor. */
+  height: 1px;
+
+  /* Aplicamos el azul marino transparente. */
+  background-color: rgba(36, 54, 75, 0.45);
+
+  /* Lo colocamos detrás de los personajes. */
+  z-index: 2;
+}
+
+/* Animación que mueve el cactus. */
+@keyframes not-found-cactus-movement {
+  /* Posición inicial fuera del lado derecho. */
+  from {
+    right: -58px;
+  }
+
+  /* Posición final fuera del lado izquierdo. */
+  to {
+    right: calc(100% + 58px);
+  }
+}
+
+/* Animación del salto. */
+@keyframes not-found-cat-jump {
+  /* Posición inicial sobre el suelo. */
+  0% {
+    transform: translateY(0);
+  }
+
+  /* Punto más alto del salto. */
+  50% {
+    transform: translateY(-95px);
+  }
+
+  /* Regreso al suelo. */
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Movimiento ligero del gatito mientras corre. */
+@keyframes not-found-cat-running {
+  /* Posición inicial. */
+  0% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  /* Pequeño rebote. */
+  50% {
+    transform: translateY(-3px) rotate(1deg);
+  }
+
+  /* Regreso a la posición inicial. */
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos el espacio principal. */
+  .not-found__main {
+    padding: 125px 18px 75px;
+  }
+
+  /* Reducimos la separación antes del juego. */
+  .not-found-game {
+    margin-top: 48px;
+
+    /* Reducimos su espacio interior. */
+    padding: 20px 16px 22px;
+
+    /* Reducimos el redondeo. */
+    border-radius: 17px;
+  }
+
+  /* Organizamos la barra superior verticalmente. */
+  .not-found-game__top {
+    /* Colocamos las instrucciones sobre el puntaje. */
+    flex-direction: column;
+
+    /* Alineamos el contenido hacia la izquierda. */
+    align-items: flex-start;
+
+    /* Reducimos la separación. */
+    gap: 12px;
+  }
+
+  /* Permitimos que los puntajes ocupen todo el ancho. */
+  .not-found-game__score {
+    /* Permitimos que ocupe todo el ancho. */
+    width: 100%;
+
+    /* Distribuimos los dos puntajes. */
+    justify-content: space-between;
+  }
+
+  /* Reducimos ligeramente la altura del juego. */
+  .not-found-game__stage {
+    height: 210px;
+  }
+
+  /* Ajustamos el gato para celulares. */
+  .not-found-game__cat {
+    /* Lo acercamos al borde izquierdo. */
+    left: 18px;
+
+    /* Reducimos su ancho. */
+    width: 58px;
+
+    /* Reducimos su altura. */
+    height: 58px;
+  }
+
+  /* Ajustamos el cactus para celulares. */
+  .not-found-game__cactus {
+    /* Reducimos su ancho. */
+    width: 46px;
+
+    /* Reducimos su altura. */
+    height: 58px;
+
+    /* Actualizamos su posición inicial. */
+    right: -52px;
+  }
+
+  /* Reducimos el texto de Game Over. */
+  .not-found-game__game-over strong {
+    font-size: 27px;
+  }
+
+  /* Ajustamos el movimiento del cactus en celular. */
+  @keyframes not-found-cactus-movement {
+    /* Posición inicial fuera del lado derecho. */
+    from {
+      right: -52px;
+    }
+
+    /* Posición final fuera del lado izquierdo. */
+    to {
+      right: calc(100% + 52px);
+    }
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el título principal. */
+  .not-found__title {
+    font-size: 33px;
+  }
+
+  /* Reducimos el texto de las instrucciones. */
+  .not-found-game__instructions {
+    font-size: 11px;
+  }
+
+  /* Reducimos el puntaje. */
+  .not-found-game__score {
+    font-size: 10px;
+  }
+
+  /* Reducimos ligeramente el gato. */
+  .not-found-game__cat {
+    width: 54px;
+    height: 54px;
+  }
+
+  /* Reducimos ligeramente el cactus. */
+  .not-found-game__cactus {
+    width: 42px;
+    height: 54px;
+  }
+}
+
+/* Respetamos a usuarios que prefieren menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  /* Reducimos la velocidad del cactus. */
+  .not-found-game__cactus--moving {
+    animation-duration: 3.2s;
+  }
+
+  /* Reducimos el movimiento del gato al correr. */
+  .not-found-game__cat-image--running {
+    animation-duration: 0.8s;
+  }
+
+  /* Hacemos más pausado el salto. */
+  .not-found-game__cat--jumping {
+    animation-duration: 0.65s;
+  }
+}

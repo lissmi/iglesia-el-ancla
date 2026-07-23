@@ -1,0 +1,281 @@
+/* Sección principal de valores de la comunidad. */
+.community-values {
+  /* Aplicamos un fondo claro y sobrio. */
+  background-color: #f9f8f5;
+
+  /* Añadimos espacio vertical. */
+  padding: 90px 24px;
+}
+
+/* Contenedor principal de la sección. */
+.community-values__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos el contenido. */
+  margin: 0 auto;
+}
+
+/* Encabezado introductorio. */
+.community-values__header {
+  /* Limitamos el ancho del bloque de texto. */
+  max-width: 700px;
+
+  /* Centramos el bloque. */
+  margin: 0 auto 50px;
+
+  /* Centramos el texto. */
+  text-align: center;
+}
+
+/* Texto pequeño sobre el título. */
+.community-values__eyebrow {
+  /* Eliminamos el margen superior. */
+  margin: 0 0 12px;
+
+  /* Aplicamos el dorado del diseño. */
+  color: #a58b6e;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal. */
+.community-values__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos la tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(34px, 4vw, 50px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la altura de línea. */
+  line-height: 1.15;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción introductoria. */
+.community-values__description {
+  /* Añadimos separación respecto al título. */
+  margin: 18px auto 0;
+
+  /* Limitamos el ancho del párrafo. */
+  max-width: 610px;
+
+  /* Aplicamos un color secundario. */
+  color: #586575;
+
+  /* Definimos un tamaño legible. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.7;
+}
+
+/* Cuadrícula de tarjetas. */
+.community-values__grid {
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos cuatro columnas iguales. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  /* Añadimos separación entre tarjetas. */
+  gap: 24px;
+}
+
+/* Tarjeta individual. */
+.community-values__card {
+  /* Organizamos el contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente el contenido. */
+  align-items: center;
+
+  /* Permitimos que todas las tarjetas tengan una altura equilibrada. */
+  min-height: 260px;
+
+  /* Añadimos espacio interno. */
+  padding: 32px 24px;
+
+  /* Aplicamos un fondo blanco cálido. */
+  background-color: rgba(255, 255, 255, 0.82);
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos suavemente las esquinas. */
+  border-radius: 18px;
+
+  /* Centramos el texto. */
+  text-align: center;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 12px 30px rgba(24, 40, 56, 0.07);
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Efecto al pasar el cursor sobre la tarjeta. */
+.community-values__card:hover {
+  /* Elevamos ligeramente la tarjeta. */
+  transform: translateY(-6px);
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 18px 38px rgba(24, 40, 56, 0.12);
+
+  /* Destacamos ligeramente el borde. */
+  border-color: rgba(165, 139, 110, 0.3);
+}
+
+/* Contenedor del icono. */
+.community-values__icon-wrapper {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos un ancho consistente. */
+  width: 150px;
+
+  /* Definimos una altura consistente. */
+  height: 150px;
+
+  /* Redondeamos completamente el fondo. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo dorado muy suave. */
+  background-color: rgba(183, 160, 135, 0.12);
+
+  /* Añadimos separación inferior. */
+  margin-bottom: 22px;
+}
+
+/* Imagen del icono. */
+.community-values__icon {
+  /* Definimos un tamaño uniforme. */
+  width: 120px;
+
+  /* Definimos una altura uniforme. */
+  height: 120px;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+}
+
+/* Título de cada tarjeta. */
+.community-values__card-title {
+  /* Eliminamos márgenes innecesarios. */
+  margin: 0;
+
+  /* Aplicamos la tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 23px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+}
+
+/* Descripción de cada tarjeta. */
+.community-values__card-description {
+  /* Añadimos separación respecto al título. */
+  margin: 12px 0 0;
+
+  /* Aplicamos un color secundario. */
+  color: #667281;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.6;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 950px) {
+  /* Cambiamos a dos columnas. */
+  .community-values__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 600px) {
+  /* Reducimos el espacio vertical. */
+  .community-values {
+    padding: 70px 18px;
+  }
+
+  /* Reducimos la separación del encabezado. */
+  .community-values__header {
+    margin-bottom: 36px;
+  }
+
+  /* Cambiamos a una sola columna. */
+  .community-values__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos la altura mínima de las tarjetas. */
+  .community-values__card {
+    min-height: auto;
+    padding: 28px 22px;
+  }
+
+  /* Reducimos ligeramente el título. */
+  .community-values__title {
+    font-size: 36px;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el tamaño del título. */
+  .community-values__title {
+    font-size: 32px;
+  }
+
+  /* Reducimos el icono. */
+  .community-values__icon-wrapper {
+    width: 84px;
+    height: 84px;
+  }
+
+  /* Reducimos la imagen del icono. */
+  .community-values__icon {
+    width: 64px;
+    height: 64px;
+  }
+}

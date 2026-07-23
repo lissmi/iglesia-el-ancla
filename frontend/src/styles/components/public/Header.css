@@ -1,0 +1,456 @@
+/* Encabezado principal situado sobre el video del Home. */
+.header {
+  /* Posicionamos el Header sobre el Hero. */
+  position: absolute;
+
+  /* Lo ubicamos en la parte superior. */
+  top: 0;
+
+  /* Lo ubicamos desde el borde izquierdo. */
+  left: 0;
+
+  /* Permitimos que ocupe todo el ancho. */
+  width: 100%;
+
+  /* Lo mantenemos por encima del video y el contenido. */
+  z-index: 1000;
+
+  /* Agregamos una línea inferior discreta. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* Creamos un degradado para mejorar la lectura. */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.68) 100%
+  );
+
+  /* Aplicamos desenfoque al contenido detrás del Header. */
+  backdrop-filter: blur(10px);
+
+  /* Agregamos compatibilidad con Safari. */
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Contenedor interno del Header. */
+.header__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1320px;
+
+  /* Centramos el contenido. */
+  margin: 0 auto;
+
+  /* Añadimos espacio horizontal y vertical. */
+  padding: 10px 32px;
+
+  /* Organizamos los elementos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Separamos logo, navegación y acciones. */
+  justify-content: space-between;
+
+  /* Añadimos separación entre los elementos. */
+  gap: 24px;
+}
+
+/* Enlace que contiene el logo. */
+.header__brand {
+  /* Mostramos el logo como un bloque flexible. */
+  display: flex;
+
+  /* Centramos verticalmente el logo. */
+  align-items: center;
+
+  /* Evitamos que el logo se comprima. */
+  flex-shrink: 0;
+
+  /* Eliminamos el subrayado del enlace. */
+  text-decoration: none;
+}
+
+/* Logo oficial de la iglesia. */
+.header__logo {
+  /* Definimos un ancho apropiado para escritorio. */
+  width: 205px;
+
+  /* Permitimos que la altura se adapte proporcionalmente. */
+  height: 66px;
+
+  /* Evitamos deformar el logo. */
+  object-fit: contain;
+
+  /* Alineamos el contenido hacia la izquierda. */
+  object-position: left center;
+}
+
+/* Navegación principal del escritorio. */
+.header__navigation {
+  /* Mostramos los enlaces en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los enlaces. */
+  align-items: center;
+
+  /* Añadimos separación entre enlaces. */
+  gap: 24px;
+}
+
+/* Estilo general de los enlaces. */
+.header__link {
+  /* Permitimos agregar elementos decorativos. */
+  position: relative;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos el azul marino principal. */
+  color: #24364b;
+
+  /* Definimos un tamaño sobrio. */
+  font-size: 14px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Mejoramos el espacio entre letras. */
+  letter-spacing: 0.15px;
+
+  /* Creamos una transición suave. */
+  transition: color 0.2s ease;
+}
+
+/* Efecto al pasar el cursor sobre los enlaces. */
+.header__link:hover {
+  /* Aplicamos el dorado secundario. */
+  color: #a78d70;
+}
+
+/* Enlace correspondiente a la página actual. */
+.header__link--active {
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+
+  /* Destacamos ligeramente el enlace. */
+  font-weight: 600;
+}
+
+/* Línea inferior del enlace activo. */
+.header__link--active::after {
+  /* Creamos un elemento decorativo vacío. */
+  content: "";
+
+  /* Lo posicionamos respecto al enlace. */
+  position: absolute;
+
+  /* Lo ubicamos debajo del texto. */
+  bottom: -10px;
+
+  /* Lo centramos horizontalmente. */
+  left: 50%;
+
+  /* Definimos su ancho. */
+  width: 24px;
+
+  /* Definimos su grosor. */
+  height: 2px;
+
+  /* Aplicamos el dorado del logo. */
+  background-color: #b7a087;
+
+  /* Redondeamos sus extremos. */
+  border-radius: 10px;
+
+  /* Completamos el centrado horizontal. */
+  transform: translateX(-50%);
+}
+
+/* Contenedor de las acciones del Header. */
+.header__actions {
+  /* Mostramos los elementos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Añadimos espacio entre los elementos. */
+  gap: 14px;
+}
+
+/* Botón destacado del Header. */
+.header__join-button {
+  /* Mostramos el botón como elemento flexible. */
+  display: inline-flex;
+
+  /* Centramos su contenido horizontalmente. */
+  justify-content: center;
+
+  /* Centramos su contenido verticalmente. */
+  align-items: center;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Agregamos espacio interior. */
+  padding: 11px 20px;
+
+  /* Creamos bordes suavemente redondeados. */
+  border-radius: 8px;
+
+  /* Usamos azul marino como fondo principal. */
+  background-color: #24364b;
+
+  /* Usamos texto blanco. */
+  color: #ffffff;
+
+  /* Definimos un tamaño sobrio. */
+  font-size: 14px;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 600;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 6px 18px rgba(24, 40, 56, 0.18);
+
+  /* Preparamos las animaciones. */
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto del botón al pasar el cursor. */
+.header__join-button:hover {
+  /* Oscurecemos ligeramente el azul. */
+  background-color: #182838;
+
+  /* Elevamos suavemente el botón. */
+  transform: translateY(-2px);
+
+  /* Aumentamos ligeramente la sombra. */
+  box-shadow: 0 9px 22px rgba(24, 40, 56, 0.24);
+}
+
+/* Ocultamos el botón interno del menú en escritorio. */
+.header__join-button--mobile {
+  display: none;
+}
+
+/* Botón hamburguesa. */
+.header__menu-button {
+  /* Lo ocultamos en escritorio. */
+  display: none;
+
+  /* Definimos su tamaño. */
+  width: 44px;
+
+  /* Definimos su altura. */
+  height: 44px;
+
+  /* Organizamos las líneas verticalmente. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente las líneas. */
+  align-items: center;
+
+  /* Centramos verticalmente las líneas. */
+  justify-content: center;
+
+  /* Añadimos espacio entre las líneas. */
+  gap: 6px;
+
+  /* Eliminamos el borde predeterminado. */
+  border: none;
+
+  /* Creamos un fondo claro. */
+  background-color: rgba(255, 255, 255, 0.82);
+
+  /* Redondeamos el botón. */
+  border-radius: 8px;
+
+  /* Cambiamos el cursor. */
+  cursor: pointer;
+
+  /* Lo colocamos sobre el menú móvil. */
+  z-index: 1002;
+}
+
+/* Líneas del icono hamburguesa. */
+.header__menu-line {
+  /* Definimos el ancho. */
+  width: 24px;
+
+  /* Definimos el grosor. */
+  height: 2px;
+
+  /* Aplicamos el azul marino. */
+  background-color: #24364b;
+
+  /* Redondeamos las líneas. */
+  border-radius: 10px;
+
+  /* Animamos su transformación. */
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Primera línea cuando el menú está abierto. */
+.header__menu-button--open .header__menu-line:nth-child(1) {
+  /* La movemos y rotamos para formar una X. */
+  transform: translateY(8px) rotate(45deg);
+}
+
+/* Segunda línea cuando el menú está abierto. */
+.header__menu-button--open .header__menu-line:nth-child(2) {
+  /* Ocultamos visualmente la línea central. */
+  opacity: 0;
+}
+
+/* Tercera línea cuando el menú está abierto. */
+.header__menu-button--open .header__menu-line:nth-child(3) {
+  /* La movemos y rotamos para formar una X. */
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Adaptación para tablets y pantallas medianas. */
+@media (max-width: 1100px) {
+  /* Mostramos el botón hamburguesa. */
+  .header__menu-button {
+    display: flex;
+  }
+
+  /* Ocultamos el botón de escritorio. */
+  .header__join-button--desktop {
+    display: none;
+  }
+
+  /* Transformamos la navegación en un panel desplegable. */
+  .header__navigation {
+    /* Posicionamos el menú bajo el Header. */
+    position: absolute;
+
+    /* Lo colocamos inmediatamente después del Header. */
+    top: 100%;
+
+    /* Lo alineamos al borde izquierdo. */
+    left: 0;
+
+    /* Permitimos que ocupe todo el ancho. */
+    width: 100%;
+
+    /* Organizamos los enlaces verticalmente. */
+    flex-direction: column;
+
+    /* Estiramos los enlaces horizontalmente. */
+    align-items: stretch;
+
+    /* Eliminamos la separación de escritorio. */
+    gap: 0;
+
+    /* Creamos un fondo sobrio y claro. */
+    background-color: rgba(249, 248, 245, 0.98);
+
+    /* Añadimos espacio horizontal. */
+    padding: 0 24px;
+
+    /* Inicialmente ocultamos la altura del menú. */
+    max-height: 0;
+
+    /* Inicialmente lo hacemos transparente. */
+    opacity: 0;
+
+    /* Evitamos clics cuando está cerrado. */
+    pointer-events: none;
+
+    /* Ocultamos el contenido que sobresale. */
+    overflow: hidden;
+
+    /* Añadimos una sombra inferior. */
+    box-shadow: 0 18px 30px rgba(24, 40, 56, 0.16);
+
+    /* Aplicamos desenfoque. */
+    backdrop-filter: blur(14px);
+
+    /* Animamos su apertura. */
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease,
+      padding 0.35s ease;
+  }
+
+  /* Menú móvil abierto. */
+  .header__navigation--open {
+    /* Permitimos una altura suficiente. */
+    max-height: 650px;
+
+    /* Lo hacemos visible. */
+    opacity: 1;
+
+    /* Permitimos interacción. */
+    pointer-events: auto;
+
+    /* Añadimos espacio vertical. */
+    padding-top: 15px;
+    padding-bottom: 24px;
+  }
+
+  /* Adaptamos los enlaces al menú móvil. */
+  .header__link {
+    /* Mostramos cada enlace como un bloque. */
+    display: block;
+
+    /* Añadimos espacio interior. */
+    padding: 15px 4px;
+
+    /* Separamos cada opción. */
+    border-bottom: 1px solid rgba(36, 54, 75, 0.1);
+
+    /* Aumentamos ligeramente el tamaño. */
+    font-size: 16px;
+  }
+
+  /* Eliminamos la línea inferior activa en móvil. */
+  .header__link--active::after {
+    display: none;
+  }
+
+  /* Mostramos el botón dentro del menú móvil. */
+  .header__join-button--mobile {
+    /* Mostramos el botón como Flexbox. */
+    display: flex;
+
+    /* Añadimos separación superior. */
+    margin-top: 20px;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 600px) {
+  /* Reducimos el espacio horizontal. */
+  .header__container {
+    padding: 8px 16px;
+  }
+
+  /* Reducimos el tamaño del logo. */
+  .header__logo {
+    width: 165px;
+    height: 58px;
+  }
+
+  /* Reducimos el espacio horizontal del menú móvil. */
+  .header__navigation {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos aún más el logo. */
+  .header__logo {
+    width: 145px;
+  }
+}

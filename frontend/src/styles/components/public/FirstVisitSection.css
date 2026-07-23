@@ -1,0 +1,499 @@
+/* Sección destinada a orientar a personas nuevas. */
+.first-visit {
+  /* Añadimos espacio alrededor de la sección. */
+  padding: 100px 24px;
+
+  /* Aplicamos un fondo claro ligeramente azulado. */
+  background:
+    linear-gradient(
+      135deg,
+      #f8f8f6 0%,
+      #f2f4f5 55%,
+      #f7f3ed 100%
+    );
+}
+
+/* Contenedor principal de la sección. */
+.first-visit__container {
+  /* Limitamos el ancho máximo del contenido. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente el contenedor. */
+  margin: 0 auto;
+
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos una columna para texto y otra para la parte visual. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+
+  /* Centramos verticalmente ambos bloques. */
+  align-items: center;
+
+  /* Añadimos separación entre las columnas. */
+  gap: 80px;
+}
+
+/* Contenedor del contenido textual. */
+.first-visit__content {
+  /* Limitamos el ancho para facilitar la lectura. */
+  max-width: 680px;
+}
+
+/* Texto introductorio ubicado sobre el título. */
+.first-visit__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 12px;
+
+  /* Aplicamos el dorado sobrio del sitio. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal de la sección. */
+.first-visit__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(38px, 4.5vw, 58px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la separación vertical. */
+  line-height: 1.12;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción principal. */
+.first-visit__description {
+  /* Añadimos separación respecto al título. */
+  margin: 22px 0 0;
+
+  /* Limitamos el ancho del párrafo. */
+  max-width: 620px;
+
+  /* Aplicamos un color secundario. */
+  color: #586575;
+
+  /* Definimos un tamaño legible. */
+  font-size: 17px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.75;
+}
+
+/* Lista de información útil. */
+.first-visit__list {
+  /* Eliminamos los estilos predeterminados de la lista. */
+  list-style: none;
+
+  /* Eliminamos el espacio interno predeterminado. */
+  padding: 0;
+
+  /* Añadimos separación superior. */
+  margin: 28px 0 0;
+
+  /* Organizamos los elementos verticalmente. */
+  display: flex;
+
+  /* Colocamos cada elemento uno debajo del otro. */
+  flex-direction: column;
+
+  /* Añadimos separación entre elementos. */
+  gap: 14px;
+}
+
+/* Elemento individual de la lista. */
+.first-visit__list-item {
+  /* Organizamos el marcador y el texto en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente ambos elementos. */
+  align-items: center;
+
+  /* Añadimos separación entre marcador y texto. */
+  gap: 13px;
+
+  /* Aplicamos el color principal del texto. */
+  color: #344252;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.5;
+}
+
+/* Marcador decorativo de la lista. */
+.first-visit__list-marker {
+  /* Evitamos que el marcador se comprima. */
+  flex-shrink: 0;
+
+  /* Definimos el ancho. */
+  width: 9px;
+
+  /* Definimos la altura. */
+  height: 9px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos el dorado del sitio. */
+  background-color: #b7a087;
+
+  /* Añadimos un borde exterior suave. */
+  box-shadow: 0 0 0 5px rgba(183, 160, 135, 0.14);
+}
+
+/* Contenedor de los botones. */
+.first-visit__actions {
+  /* Mostramos los botones en una fila. */
+  display: flex;
+
+  /* Permitimos que bajen de línea si falta espacio. */
+  flex-wrap: wrap;
+
+  /* Añadimos separación entre los botones. */
+  gap: 14px;
+
+  /* Añadimos separación superior. */
+  margin-top: 34px;
+}
+
+/* Estilos compartidos por los botones. */
+.first-visit__button {
+  /* Centramos el contenido del botón. */
+  display: inline-flex;
+
+  /* Centramos horizontalmente el texto. */
+  justify-content: center;
+
+  /* Centramos verticalmente el texto. */
+  align-items: center;
+
+  /* Definimos una altura mínima. */
+  min-height: 48px;
+
+  /* Añadimos espacio interior. */
+  padding: 12px 23px;
+
+  /* Redondeamos suavemente los bordes. */
+  border-radius: 8px;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Destacamos ligeramente el texto. */
+  font-size: 14px;
+  font-weight: 700;
+
+  /* Preparamos las animaciones. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto compartido al pasar el cursor. */
+.first-visit__button:hover {
+  /* Elevamos suavemente el botón. */
+  transform: translateY(-2px);
+}
+
+/* Botón principal. */
+.first-visit__button--primary {
+  /* Aplicamos el fondo azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 8px 20px rgba(24, 40, 56, 0.2);
+}
+
+/* Efecto del botón principal. */
+.first-visit__button--primary:hover {
+  /* Oscurecemos ligeramente el fondo. */
+  background-color: #182838;
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 11px 24px rgba(24, 40, 56, 0.26);
+}
+
+/* Botón secundario. */
+.first-visit__button--secondary {
+  /* Aplicamos un fondo transparente. */
+  background-color: transparent;
+
+  /* Aplicamos el azul marino al texto. */
+  color: #24364b;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.28);
+}
+
+/* Efecto del botón secundario. */
+.first-visit__button--secondary:hover {
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos una sombra muy suave. */
+  box-shadow: 0 8px 20px rgba(24, 40, 56, 0.08);
+}
+
+/* Contenedor visual del costado derecho. */
+.first-visit__visual {
+  /* Permitimos posicionar la tarjeta flotante. */
+  position: relative;
+
+  /* Centramos su contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos una altura mínima. */
+  min-height: 410px;
+}
+
+/* Círculo principal que contiene el icono. */
+.first-visit__visual-circle {
+  /* Centramos el icono en el círculo. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos el ancho. */
+  width: 310px;
+
+  /* Definimos la altura. */
+  height: 310px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo blanco cálido. */
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffffff 0%,
+      #f5f2ed 70%,
+      #ece5dc 100%
+    );
+
+  /* Añadimos un borde suave. */
+  border: 1px solid rgba(183, 160, 135, 0.24);
+
+  /* Añadimos una sombra elegante. */
+  box-shadow: 0 24px 55px rgba(24, 40, 56, 0.12);
+}
+
+/* Icono ubicado dentro del círculo. */
+.first-visit__icon {
+  /* Definimos el ancho del icono. */
+  width: 155px;
+
+  /* Definimos la altura del icono. */
+  height: 155px;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+}
+
+/* Tarjeta flotante con la dirección. */
+.first-visit__info-card {
+  /* Posicionamos la tarjeta sobre el círculo. */
+  position: absolute;
+
+  /* La ubicamos en la parte inferior. */
+  bottom: 12px;
+
+  /* La desplazamos hacia la izquierda. */
+  left: 0;
+
+  /* Organizamos su contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos cada texto uno debajo del otro. */
+  flex-direction: column;
+
+  /* Añadimos espacio interior. */
+  padding: 19px 22px;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: rgba(255, 255, 255, 0.94);
+
+  /* Añadimos desenfoque al fondo. */
+  backdrop-filter: blur(10px);
+
+  /* Redondeamos sus esquinas. */
+  border-radius: 14px;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Añadimos una sombra. */
+  box-shadow: 0 14px 35px rgba(24, 40, 56, 0.15);
+}
+
+/* Etiqueta superior de la tarjeta. */
+.first-visit__info-label {
+  /* Aplicamos un color secundario. */
+  color: #8a94a0;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.2px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Dirección principal. */
+.first-visit__info-address {
+  /* Añadimos separación superior. */
+  margin-top: 6px;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 16px;
+}
+
+/* Ciudad mostrada bajo la dirección. */
+.first-visit__info-city {
+  /* Añadimos separación superior. */
+  margin-top: 4px;
+
+  /* Aplicamos un color secundario. */
+  color: #697585;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 950px) {
+  /* Cambiamos la sección a una sola columna. */
+  .first-visit__container {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  /* Permitimos que el contenido ocupe todo el ancho. */
+  .first-visit__content {
+    max-width: 760px;
+  }
+
+  /* Limitamos el ancho de la parte visual. */
+  .first-visit__visual {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 600px) {
+  /* Reducimos el espacio exterior. */
+  .first-visit {
+    padding: 75px 18px;
+  }
+
+  /* Reducimos el espacio entre las partes. */
+  .first-visit__container {
+    gap: 42px;
+  }
+
+  /* Ajustamos el tamaño del título. */
+  .first-visit__title {
+    font-size: 38px;
+  }
+
+  /* Organizamos los botones verticalmente. */
+  .first-visit__actions {
+    flex-direction: column;
+  }
+
+  /* Permitimos que los botones ocupen todo el ancho. */
+  .first-visit__button {
+    width: 100%;
+  }
+
+  /* Reducimos la altura de la zona visual. */
+  .first-visit__visual {
+    min-height: 350px;
+  }
+
+  /* Reducimos el círculo. */
+  .first-visit__visual-circle {
+    width: 260px;
+    height: 260px;
+  }
+
+  /* Reducimos el icono. */
+  .first-visit__icon {
+    width: 125px;
+    height: 125px;
+  }
+
+  /* Centramos la tarjeta flotante. */
+  .first-visit__info-card {
+    left: 50%;
+    bottom: 0;
+    width: min(290px, 90%);
+    transform: translateX(-50%);
+  }
+}
+
+/* Adaptación para celulares pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el título. */
+  .first-visit__title {
+    font-size: 34px;
+  }
+
+  /* Reducimos el círculo visual. */
+  .first-visit__visual-circle {
+    width: 230px;
+    height: 230px;
+  }
+
+  /* Reducimos el icono. */
+  .first-visit__icon {
+    width: 110px;
+    height: 110px;
+  }
+}

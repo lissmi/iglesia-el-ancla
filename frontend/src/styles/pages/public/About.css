@@ -1,0 +1,1112 @@
+/* Contenedor principal de la página Nosotros. */
+.about {
+  /* Aplicamos el fondo general de la página. */
+  background-color: #f9f8f5;
+
+  /* Aplicamos el azul marino como color base. */
+  color: #24364b;
+}
+
+/* Hero principal de la página. */
+.about-hero {
+  /* Permitimos posicionar elementos decorativos. */
+  position: relative;
+
+  /* Definimos una altura amplia, pero no excesiva. */
+  min-height: 590px;
+
+  /* Centramos verticalmente el contenido. */
+  display: flex;
+
+  /* Alineamos el contenido al centro. */
+  align-items: center;
+
+  /* Ocultamos cualquier decoración que sobresalga. */
+  overflow: hidden;
+
+  /* Creamos un fondo sobrio y elegante. */
+  background:
+    radial-gradient(
+      circle at 76% 32%,
+      rgba(183, 160, 135, 0.2),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #e9e4dc 0%,
+      #f6f4f0 45%,
+      #dfe4e7 100%
+    );
+}
+
+/* Forma decorativa del Hero. */
+.about-hero::before {
+  /* Creamos un elemento decorativo vacío. */
+  content: "";
+
+  /* Lo posicionamos de forma absoluta. */
+  position: absolute;
+
+  /* Lo desplazamos hacia el lado derecho. */
+  top: 80px;
+  right: 8%;
+
+  /* Definimos su tamaño. */
+  width: 330px;
+  height: 330px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un borde dorado muy suave. */
+  border: 1px solid rgba(183, 160, 135, 0.25);
+
+  /* Evitamos que interfiera con la interacción. */
+  pointer-events: none;
+}
+
+/* Segunda forma decorativa. */
+.about-hero::after {
+  /* Creamos otro elemento vacío. */
+  content: "";
+
+  /* Lo posicionamos de forma absoluta. */
+  position: absolute;
+
+  /* Lo ubicamos en el costado derecho. */
+  top: 135px;
+  right: 12%;
+
+  /* Definimos su tamaño. */
+  width: 220px;
+  height: 220px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo azul suave. */
+  background-color: rgba(36, 54, 75, 0.06);
+
+  /* Evitamos que interfiera con la interacción. */
+  pointer-events: none;
+}
+
+/* Capa decorativa del Hero. */
+.about-hero__overlay {
+  /* Posicionamos la capa sobre toda la sección. */
+  position: absolute;
+
+  /* Cubrimos toda la sección. */
+  inset: 0;
+
+  /* Aplicamos un degradado para mantener buena lectura. */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(249, 248, 245, 0.96) 0%,
+      rgba(249, 248, 245, 0.78) 52%,
+      rgba(249, 248, 245, 0.25) 100%
+    );
+
+  /* Colocamos la capa detrás del contenido. */
+  z-index: 1;
+}
+
+/* Contenedor central del Hero. */
+.about-hero__container {
+  /* Limitamos el ancho máximo. */
+  width: 100%;
+  max-width: 1240px;
+
+  /* Centramos el contenido. */
+  margin: 0 auto;
+
+  /* Añadimos espacio considerando el Header absoluto. */
+  padding: 155px 24px 120px;
+
+  /* Colocamos el contenido sobre las decoraciones. */
+  position: relative;
+
+  /* Aumentamos la prioridad visual. */
+  z-index: 2;
+}
+
+/* Texto introductorio del Hero. */
+.about-hero__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 18px;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #9a8066;
+
+  /* Definimos un tamaño discreto. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal del Hero. */
+.about-hero__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Limitamos el ancho del título. */
+  max-width: 720px;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(48px, 6vw, 78px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la altura de línea. */
+  line-height: 1.06;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Parte destacada del título. */
+.about-hero__title-highlight {
+  /* Mostramos el texto en una línea nueva. */
+  display: block;
+
+  /* Añadimos una pequeña separación. */
+  margin-top: 7px;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #9a8066;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Reducimos ligeramente el peso. */
+  font-weight: 400;
+}
+
+/* Descripción del Hero. */
+.about-hero__description {
+  /* Añadimos separación respecto al título. */
+  margin: 27px 0 0;
+
+  /* Limitamos el ancho del párrafo. */
+  max-width: 650px;
+
+  /* Aplicamos un color secundario. */
+  color: #4f5d6c;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 18px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Versículo del Hero. */
+.about-hero__verse {
+  /* Añadimos separación superior. */
+  margin: 24px 0 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la separación. */
+  line-height: 1.55;
+}
+
+/* Referencia del versículo. */
+.about-hero__verse span {
+  /* Mostramos la referencia en una línea nueva. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 6px;
+
+  /* Quitamos la cursiva. */
+  font-style: normal;
+
+  /* Aplicamos la tipografía general. */
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos la referencia. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.4px;
+
+  /* Aplicamos el dorado. */
+  color: #967c62;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Curva inferior del Hero. */
+.about-hero__curve {
+  /* Posicionamos la curva al final del Hero. */
+  position: absolute;
+
+  /* La pegamos al borde inferior. */
+  bottom: -1px;
+
+  /* La ubicamos desde el borde izquierdo. */
+  left: 0;
+
+  /* Permitimos que ocupe todo el ancho. */
+  width: 100%;
+
+  /* Definimos una altura moderada. */
+  height: 45px;
+
+  /* Aplicamos el fondo de la sección siguiente. */
+  background-color: #ffffff;
+
+  /* Creamos una curva suave. */
+  clip-path: ellipse(72% 65% at 50% 100%);
+
+  /* Colocamos la curva sobre el fondo. */
+  z-index: 3;
+
+  /* Evitamos que bloquee interacciones. */
+  pointer-events: none;
+}
+
+/* Estilo compartido de textos introductorios. */
+.about-section__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 13px;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Estilo compartido de títulos de sección. */
+.about-section__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(37px, 4.5vw, 56px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la altura de línea. */
+  line-height: 1.15;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Sección introductoria. */
+.about-intro {
+  /* Añadimos espacio exterior. */
+  padding: 105px 24px;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
+}
+
+/* Contenedor de la introducción. */
+.about-intro__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos texto y visual en dos columnas. */
+  display: grid;
+
+  /* Definimos el tamaño de las columnas. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+
+  /* Centramos verticalmente ambos bloques. */
+  align-items: center;
+
+  /* Añadimos separación entre columnas. */
+  gap: 85px;
+}
+
+/* Contenido textual de la introducción. */
+.about-intro__content {
+  /* Limitamos el ancho del contenido. */
+  max-width: 720px;
+}
+
+/* Párrafos de la introducción. */
+.about-intro__paragraph {
+  /* Añadimos separación superior. */
+  margin: 20px 0 0;
+
+  /* Aplicamos un color secundario. */
+  color: #5d6977;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.8;
+}
+
+/* Contenedor visual. */
+.about-intro__visual {
+  /* Centramos el contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+}
+
+/* Marco visual. */
+.about-intro__visual-frame {
+  /* Organizamos el contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos en columna. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente. */
+  align-items: center;
+
+  /* Añadimos espacio interior. */
+  padding: 45px 35px;
+
+  /* Aplicamos un fondo claro. */
+  background:
+    linear-gradient(
+      145deg,
+      #f8f5f0 0%,
+      #ffffff 60%,
+      #f0f2f3 100%
+    );
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 28px;
+
+  /* Centramos el texto. */
+  text-align: center;
+
+  /* Añadimos una sombra elegante. */
+  box-shadow: 0 24px 55px rgba(24, 40, 56, 0.1);
+}
+
+/* Icono del bloque visual. */
+.about-intro__visual-icon {
+  /* Definimos un tamaño visible. */
+  width: 165px;
+  height: 165px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Frase del bloque visual. */
+.about-intro__visual-text {
+  /* Añadimos separación superior. */
+  margin: 25px 0 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 19px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.6;
+}
+
+/* Sección de misión y visión. */
+.about-purpose {
+  /* Añadimos espacio exterior. */
+  padding: 95px 24px;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #f4f3f0;
+}
+
+/* Contenedor de misión y visión. */
+.about-purpose__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Creamos dos columnas iguales. */
+  display: grid;
+
+  /* Definimos dos columnas. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  /* Añadimos separación. */
+  gap: 30px;
+}
+
+/* Tarjeta de misión o visión. */
+.about-purpose__card {
+  /* Añadimos espacio interior. */
+  padding: 42px 38px;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 22px;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 15px 36px rgba(24, 40, 56, 0.08);
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Efecto al pasar el cursor. */
+.about-purpose__card:hover {
+  /* Elevamos ligeramente la tarjeta. */
+  transform: translateY(-6px);
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 22px 45px rgba(24, 40, 56, 0.13);
+}
+
+/* Contenedor del icono de misión o visión. */
+.about-purpose__icon-wrapper {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos su tamaño. */
+  width: 92px;
+  height: 92px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo dorado suave. */
+  background-color: rgba(183, 160, 135, 0.13);
+
+  /* Añadimos separación inferior. */
+  margin-bottom: 25px;
+}
+
+/* Icono de misión o visión. */
+.about-purpose__icon {
+  /* Definimos el tamaño. */
+  width: 70px;
+  height: 70px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Texto pequeño de misión o visión. */
+.about-purpose__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 10px;
+
+  /* Aplicamos el dorado. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título de misión o visión. */
+.about-purpose__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 31px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.25;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción de misión o visión. */
+.about-purpose__description {
+  /* Añadimos separación superior. */
+  margin: 18px 0 0;
+
+  /* Aplicamos un color secundario. */
+  color: #64707e;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 16px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Sección de valores. */
+.about-values {
+  /* Añadimos espacio exterior. */
+  padding: 105px 24px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+}
+
+/* Contenedor de valores. */
+.about-values__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+}
+
+/* Encabezado de valores. */
+.about-values__header {
+  /* Limitamos el ancho. */
+  max-width: 760px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto 50px;
+
+  /* Centramos el texto. */
+  text-align: center;
+}
+
+/* Descripción de valores. */
+.about-values__description {
+  /* Añadimos separación superior. */
+  margin: 18px auto 0;
+
+  /* Limitamos el ancho. */
+  max-width: 650px;
+
+  /* Aplicamos un color secundario. */
+  color: #667281;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.7;
+}
+
+/* Cuadrícula de valores. */
+.about-values__grid {
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos tres columnas. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* Añadimos separación. */
+  gap: 24px;
+}
+
+/* Tarjeta individual de valor. */
+.about-value-card {
+  /* Organizamos el contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos en columna. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente. */
+  align-items: center;
+
+  /* Añadimos espacio interior. */
+  padding: 32px 24px;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #fbfaf7;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.09);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 18px;
+
+  /* Centramos el texto. */
+  text-align: center;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 12px 30px rgba(24, 40, 56, 0.06);
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Efecto de la tarjeta. */
+.about-value-card:hover {
+  /* Elevamos la tarjeta. */
+  transform: translateY(-5px);
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 18px 38px rgba(24, 40, 56, 0.11);
+}
+
+/* Contenedor del icono. */
+.about-value-card__icon-wrapper {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos el tamaño. */
+  width: 92px;
+  height: 92px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo dorado suave. */
+  background-color: rgba(183, 160, 135, 0.12);
+
+  /* Añadimos separación inferior. */
+  margin-bottom: 21px;
+}
+
+/* Icono del valor. */
+.about-value-card__icon {
+  /* Definimos su tamaño. */
+  width: 70px;
+  height: 70px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Título del valor. */
+.about-value-card__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 23px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+}
+
+/* Descripción del valor. */
+.about-value-card__description {
+  /* Añadimos separación superior. */
+  margin: 12px 0 0;
+
+  /* Aplicamos un color secundario. */
+  color: #667281;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.65;
+}
+
+/* Sección final de invitación. */
+.about-invitation {
+  /* Añadimos espacio exterior. */
+  padding: 90px 24px;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #f3f1ed;
+}
+
+/* Contenedor de la invitación. */
+.about-invitation__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos contenido y botones en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Separamos ambos bloques. */
+  justify-content: space-between;
+
+  /* Añadimos separación. */
+  gap: 50px;
+
+  /* Añadimos espacio interior. */
+  padding: 52px 58px;
+
+  /* Aplicamos un fondo azul marino. */
+  background:
+    linear-gradient(
+      135deg,
+      #182838 0%,
+      #24364b 65%,
+      #30495f 100%
+    );
+
+  /* Redondeamos las esquinas. */
+  border-radius: 24px;
+
+  /* Añadimos una sombra elegante. */
+  box-shadow: 0 22px 50px rgba(24, 40, 56, 0.2);
+}
+
+/* Contenido textual de la invitación. */
+.about-invitation__content {
+  /* Limitamos el ancho. */
+  max-width: 730px;
+}
+
+/* Texto pequeño de la invitación. */
+.about-invitation__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 11px;
+
+  /* Aplicamos dorado claro. */
+  color: #d8c4aa;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título de invitación. */
+.about-invitation__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(34px, 4vw, 49px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.18;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+}
+
+/* Descripción de la invitación. */
+.about-invitation__description {
+  /* Añadimos separación superior. */
+  margin: 17px 0 0;
+
+  /* Aplicamos un tono claro. */
+  color: rgba(255, 255, 255, 0.74);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 16px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.7;
+}
+
+/* Contenedor de botones. */
+.about-invitation__actions {
+  /* Mostramos los botones en una fila. */
+  display: flex;
+
+  /* Permitimos que bajen de línea. */
+  flex-wrap: wrap;
+
+  /* Añadimos separación. */
+  gap: 13px;
+
+  /* Evitamos que se compriman. */
+  flex-shrink: 0;
+}
+
+/* Estilo compartido de botones. */
+.about-invitation__button {
+  /* Centramos el contenido. */
+  display: inline-flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos una altura mínima. */
+  min-height: 48px;
+
+  /* Añadimos espacio interior. */
+  padding: 12px 22px;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Redondeamos las esquinas. */
+  border-radius: 8px;
+
+  /* Destacamos el texto. */
+  font-size: 14px;
+  font-weight: 700;
+
+  /* Preparamos la animación. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Efecto común de botones. */
+.about-invitation__button:hover {
+  /* Elevamos ligeramente el botón. */
+  transform: translateY(-2px);
+}
+
+/* Botón principal. */
+.about-invitation__button--primary {
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+}
+
+/* Botón secundario. */
+.about-invitation__button--secondary {
+  /* Aplicamos un fondo transparente. */
+  background-color: transparent;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Añadimos un borde claro. */
+  border: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+/* Efecto del botón secundario. */
+.about-invitation__button--secondary:hover {
+  /* Aplicamos un fondo suave. */
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 950px) {
+  /* Cambiamos la introducción a una sola columna. */
+  .about-intro__container {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  /* Limitamos el ancho del bloque visual. */
+  .about-intro__visual {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Cambiamos valores a dos columnas. */
+  .about-values__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Organizamos la invitación verticalmente. */
+  .about-invitation__container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos la altura del Hero. */
+  .about-hero {
+    min-height: 560px;
+  }
+
+  /* Ajustamos el espacio del Hero. */
+  .about-hero__container {
+    padding: 135px 18px 100px;
+  }
+
+  /* Ocultamos las formas grandes para evitar saturar la pantalla. */
+  .about-hero::before,
+  .about-hero::after {
+    display: none;
+  }
+
+  /* Ajustamos el título principal. */
+  .about-hero__title {
+    font-size: 48px;
+  }
+
+  /* Ajustamos el párrafo principal. */
+  .about-hero__description {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* Reducimos el espacio de la introducción. */
+  .about-intro {
+    padding: 78px 18px;
+  }
+
+  /* Reducimos el espacio de misión y visión. */
+  .about-purpose {
+    padding: 75px 18px;
+  }
+
+  /* Cambiamos misión y visión a una columna. */
+  .about-purpose__container {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos el espacio de las tarjetas. */
+  .about-purpose__card {
+    padding: 34px 26px;
+  }
+
+  /* Reducimos el espacio de valores. */
+  .about-values {
+    padding: 78px 18px;
+  }
+
+  /* Cambiamos los valores a una columna. */
+  .about-values__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos el espacio de invitación. */
+  .about-invitation {
+    padding: 70px 18px;
+  }
+
+  /* Reducimos el espacio interior de invitación. */
+  .about-invitation__container {
+    padding: 40px 25px;
+  }
+
+  /* Organizamos los botones verticalmente. */
+  .about-invitation__actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  /* Hacemos que los botones ocupen todo el ancho. */
+  .about-invitation__button {
+    width: 100%;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el título del Hero. */
+  .about-hero__title {
+    font-size: 42px;
+  }
+
+  /* Reducimos los títulos generales. */
+  .about-section__title {
+    font-size: 34px;
+  }
+
+  /* Reducimos el bloque visual. */
+  .about-intro__visual-frame {
+    padding: 36px 24px;
+  }
+
+  /* Reducimos el icono visual. */
+  .about-intro__visual-icon {
+    width: 140px;
+    height: 140px;
+  }
+}

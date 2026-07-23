@@ -1,0 +1,437 @@
+/* Sección general del banner de notificaciones. */
+.notification-banner {
+  /* Añadimos espacio exterior. */
+  padding: 90px 24px;
+
+  /* Aplicamos un fondo blanco cálido. */
+  background-color: #ffffff;
+}
+
+/* Contenedor principal del banner. */
+.notification-banner__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos el componente horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos la parte visual y el contenido en dos columnas. */
+  display: grid;
+
+  /* La parte visual ocupa menos espacio que el texto. */
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+
+  /* Centramos verticalmente ambas columnas. */
+  align-items: center;
+
+  /* Añadimos separación entre las columnas. */
+  gap: 70px;
+
+  /* Añadimos espacio interior. */
+  padding: 58px 64px;
+
+  /* Creamos un fondo sobrio con azul marino. */
+  background:
+    linear-gradient(
+      135deg,
+      #182838 0%,
+      #24364b 58%,
+      #31485f 100%
+    );
+
+  /* Redondeamos las esquinas. */
+  border-radius: 26px;
+
+  /* Ocultamos elementos decorativos que sobresalgan. */
+  overflow: hidden;
+
+  /* Añadimos una sombra elegante. */
+  box-shadow: 0 24px 60px rgba(24, 40, 56, 0.2);
+
+  /* Permitimos posicionar decoraciones internas. */
+  position: relative;
+}
+
+/* Resplandor dorado decorativo del banner. */
+.notification-banner__container::before {
+  /* Creamos el elemento decorativo. */
+  content: "";
+
+  /* Lo posicionamos de forma absoluta. */
+  position: absolute;
+
+  /* Lo desplazamos hacia la esquina superior derecha. */
+  top: -190px;
+  right: -140px;
+
+  /* Definimos su tamaño. */
+  width: 430px;
+  height: 430px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un dorado muy suave. */
+  background:
+    radial-gradient(
+      circle,
+      rgba(183, 160, 135, 0.22) 0%,
+      rgba(183, 160, 135, 0) 70%
+    );
+
+  /* Evitamos que interfiera con los clics. */
+  pointer-events: none;
+}
+
+/* Contenedor visual del icono. */
+.notification-banner__visual {
+  /* Permitimos posicionar las ondas alrededor del icono. */
+  position: relative;
+
+  /* Centramos el contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos una altura mínima. */
+  min-height: 280px;
+
+  /* Colocamos el contenido por encima de las decoraciones. */
+  z-index: 1;
+}
+
+/* Círculo principal del icono. */
+.notification-banner__icon-circle {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos el tamaño del círculo. */
+  width: 190px;
+  height: 190px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo claro. */
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffffff 0%,
+      #f7f1e9 70%,
+      #e8dccd 100%
+    );
+
+  /* Añadimos un borde dorado discreto. */
+  border: 1px solid rgba(216, 196, 170, 0.7);
+
+  /* Añadimos una sombra. */
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22);
+
+  /* Colocamos el círculo sobre las ondas. */
+  position: relative;
+  z-index: 2;
+}
+
+/* Imagen del icono. */
+.notification-banner__icon {
+  /* Definimos un tamaño visible. */
+  width: 220px;
+  height: 220px;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+}
+
+/* Estilo compartido por las ondas decorativas. */
+.notification-banner__wave {
+  /* Posicionamos cada onda alrededor del icono. */
+  position: absolute;
+
+  /* Centramos horizontalmente. */
+  left: 50%;
+
+  /* Centramos verticalmente. */
+  top: 50%;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un borde dorado transparente. */
+  border: 1px solid rgba(216, 196, 170, 0.25);
+
+  /* Centramos correctamente la onda. */
+  transform: translate(-50%, -50%);
+
+  /* Evitamos interacción con las ondas. */
+  pointer-events: none;
+}
+
+/* Primera onda decorativa. */
+.notification-banner__wave--one {
+  /* Definimos su tamaño. */
+  width: 235px;
+  height: 235px;
+}
+
+/* Segunda onda decorativa. */
+.notification-banner__wave--two {
+  /* Definimos un tamaño mayor. */
+  width: 285px;
+  height: 285px;
+
+  /* Usamos un borde más tenue. */
+  border-color: rgba(216, 196, 170, 0.13);
+}
+
+/* Contenedor textual del banner. */
+.notification-banner__content {
+  /* Colocamos el contenido sobre las decoraciones. */
+  position: relative;
+
+  /* Aumentamos su prioridad visual. */
+  z-index: 1;
+}
+
+/* Texto pequeño sobre el título. */
+.notification-banner__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 12px;
+
+  /* Aplicamos el dorado claro. */
+  color: #d8c4aa;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal del banner. */
+.notification-banner__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Creamos un tamaño adaptable. */
+  font-size: clamp(36px, 4vw, 52px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la separación vertical. */
+  line-height: 1.14;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+}
+
+/* Descripción del banner. */
+.notification-banner__description {
+  /* Añadimos separación superior. */
+  margin: 20px 0 0;
+
+  /* Limitamos el ancho del texto. */
+  max-width: 680px;
+
+  /* Aplicamos un tono claro secundario. */
+  color: rgba(255, 255, 255, 0.78);
+
+  /* Definimos un tamaño legible. */
+  font-size: 16px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Lista de funciones de las notificaciones. */
+.notification-banner__features {
+  /* Eliminamos los estilos predeterminados. */
+  list-style: none;
+
+  /* Eliminamos el espacio interno predeterminado. */
+  padding: 0;
+
+  /* Añadimos separación superior. */
+  margin: 25px 0 0;
+
+  /* Organizamos los elementos verticalmente. */
+  display: flex;
+
+  /* Colocamos cada elemento uno debajo del otro. */
+  flex-direction: column;
+
+  /* Añadimos separación entre ellos. */
+  gap: 12px;
+}
+
+/* Elemento individual de la lista. */
+.notification-banner__feature {
+  /* Organizamos el marcador y el texto en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente ambos elementos. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 13px;
+
+  /* Aplicamos texto claro. */
+  color: rgba(255, 255, 255, 0.88);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.5;
+}
+
+/* Marcador de cada característica. */
+.notification-banner__feature-marker {
+  /* Evitamos que el marcador se comprima. */
+  flex-shrink: 0;
+
+  /* Definimos su tamaño. */
+  width: 8px;
+  height: 8px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos el dorado claro. */
+  background-color: #d8c4aa;
+
+  /* Añadimos un resplandor discreto. */
+  box-shadow: 0 0 0 5px rgba(216, 196, 170, 0.12);
+}
+
+/* Mensaje temporal de estado. */
+.notification-banner__status {
+  /* Añadimos separación superior. */
+  margin: 27px 0 0;
+
+  /* Permitimos que el ancho se adapte al contenido. */
+  display: inline-block;
+
+  /* Añadimos espacio interior. */
+  padding: 10px 14px;
+
+  /* Aplicamos un fondo claro y transparente. */
+  background-color: rgba(255, 255, 255, 0.08);
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 8px;
+
+  /* Aplicamos un color claro. */
+  color: rgba(255, 255, 255, 0.67);
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.5;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 900px) {
+  /* Cambiamos la estructura a una sola columna. */
+  .notification-banner__container {
+    grid-template-columns: 1fr;
+
+    /* Reducimos la separación. */
+    gap: 35px;
+
+    /* Reducimos el espacio interno. */
+    padding: 50px 42px;
+  }
+
+  /* Reducimos la altura de la zona visual. */
+  .notification-banner__visual {
+    min-height: 230px;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 600px) {
+  /* Reducimos el espacio exterior. */
+  .notification-banner {
+    padding: 75px 18px;
+  }
+
+  /* Reducimos el espacio interior. */
+  .notification-banner__container {
+    padding: 42px 24px;
+
+    /* Reducimos el redondeo. */
+    border-radius: 20px;
+  }
+
+  /* Reducimos la zona visual. */
+  .notification-banner__visual {
+    min-height: 200px;
+  }
+
+  /* Reducimos el círculo principal. */
+  .notification-banner__icon-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  /* Reducimos el icono. */
+  .notification-banner__icon {
+    width: 95px;
+    height: 95px;
+  }
+
+  /* Reducimos la primera onda. */
+  .notification-banner__wave--one {
+    width: 190px;
+    height: 190px;
+  }
+
+  /* Reducimos la segunda onda. */
+  .notification-banner__wave--two {
+    width: 225px;
+    height: 225px;
+  }
+
+  /* Ajustamos el título. */
+  .notification-banner__title {
+    font-size: 36px;
+  }
+}
+
+/* Adaptación para celulares pequeños. */
+@media (max-width: 380px) {
+  /* Reducimos el espacio interior. */
+  .notification-banner__container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Reducimos el título. */
+  .notification-banner__title {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,459 @@
+/* Página principal. */
+.home {
+  /* Aplicamos el color de fondo general. */
+  background-color: #f9f8f5;
+
+  /* Definimos un color general de texto. */
+  color: #24364b;
+}
+
+/* Hero principal de la página. */
+.home-hero {
+  /* Permite posicionar el video y las capas internas. */
+  position: relative;
+
+  /* Mantiene una altura compacta, pero permite crecer si el contenido lo necesita. */
+  min-height: 640px;
+
+  /* Eliminamos la altura fija para evitar que el contenido se corte. */
+  height: auto;
+
+  /* Centramos verticalmente el contenido. */
+  display: flex;
+
+  /* Alineamos el contenido al centro. */
+  align-items: center;
+
+  /* Ocultamos únicamente las partes del video que sobresalgan. */
+  overflow: hidden;
+
+  /* Color de respaldo mientras carga el video. */
+  background-color: #c9a988;
+}
+
+/* Video utilizado como fondo. */
+.home-hero__video {
+  /* Posicionamos el video como fondo. */
+  position: absolute;
+
+  /* Permitimos que cubra todos los bordes. */
+  inset: 0;
+
+  /* Definimos el ancho completo. */
+  width: 100%;
+
+  /* Definimos la altura completa. */
+  height: 100%;
+
+  /* Permitimos que el video cubra toda el área. */
+  object-fit: cover;
+
+  /* Ajustamos el punto principal del paisaje. */
+   object-position: center 55%;
+
+  /* Colocamos el video detrás del contenido. */
+  z-index: 0;
+}
+
+/* Capa de contraste sobre el video. */
+.home-hero__overlay {
+  /* Posicionamos la capa sobre todo el video. */
+  position: absolute;
+
+  /* Cubrimos toda la sección. */
+  inset: 0;
+
+  /* Aplicamos un degradado sobrio. */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(249, 246, 239, 0.96) 0%,
+      rgba(249, 246, 239, 0.86) 34%,
+      rgba(249, 246, 239, 0.48) 58%,
+      rgba(24, 40, 56, 0.12) 100%
+    );
+
+  /* Colocamos la capa sobre el video. */
+  z-index: 1;
+}
+
+/* Contenedor central del Hero. */
+.home-hero__container {
+  /* Permitimos que ocupe todo el ancho. */
+  width: 100%;
+
+  /* Limitamos el ancho del contenido. */
+  max-width: 1320px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Añadimos espacio considerando el Header. */
+    padding: 115px 32px 80px;
+
+  /* Colocamos el contenido sobre el video y la capa. */
+  position: relative;
+
+  /* Aumentamos su prioridad visual. */
+  z-index: 2;
+}
+
+/* Contenido textual del Hero. */
+.home-hero__content {
+  /* Limitamos el ancho para mejorar la lectura. */
+  max-width: 610px;
+}
+
+/* Texto introductorio sobre el título. */
+.home-hero__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 18px;
+
+  /* Aplicamos el azul marino. */
+  color: #24364b;
+
+  /* Definimos un tamaño discreto. */
+  font-size: 13px;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal del Hero. */
+.home-hero__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Usamos una tipografía elegante y sobria. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Mantenemos el título grande, pero sin desbordar el Hero. */
+  font-size: clamp(42px, 4.7vw, 65px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Reducimos ligeramente la separación entre líneas. */
+  line-height: 1.02;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Parte destacada del título. */
+.home-hero__title-highlight {
+  /* Mostramos el texto en una nueva línea. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 8px;
+
+  /* Aplicamos un color dorado sobrio. */
+  color: #9a8066;
+
+  /* Usamos cursiva para diferenciarlo. */
+  font-style: italic;
+
+  /* Reducimos ligeramente el peso. */
+  font-weight: 400;
+}
+
+/* Versículo del Hero. */
+.home-hero__verse {
+  /* Reducimos la separación respecto al título. */
+  margin-top: 20px;
+
+  /* Limitamos su ancho. */
+  max-width: 510px;
+
+  /* Aplicamos el color principal. */
+  color: #24364b;
+
+  /* Usamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño legible. */
+  font-size: 17px;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.5;
+}
+
+/* Referencia del versículo. */
+.home-hero__verse span {
+  /* Mostramos la referencia en una nueva línea. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 6px;
+
+  /* Usamos una tipografía general. */
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* Quitamos la cursiva. */
+  font-style: normal;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.5px;
+
+  /* Aplicamos el dorado. */
+  color: #967c62;
+}
+
+
+/* Descripción de la comunidad. */
+.home-hero__description {
+  /* Reducimos la separación superior. */
+  margin-top: 18px;
+
+  /* Limitamos el ancho del párrafo. */
+  max-width: 510px;
+
+  /* Aplicamos un color oscuro. */
+  color: #344252;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 16px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.65;
+}
+
+
+/* Contenedor de los botones. */
+.home-hero__actions {
+  /* Organizamos los botones en una fila. */
+  display: flex;
+
+  /* Permitimos que bajen de línea si falta espacio. */
+  flex-wrap: wrap;
+
+  /* Añadimos separación entre botones. */
+  gap: 14px;
+
+  /* Reducimos la separación superior. */
+  margin-top: 24px;
+}
+
+/* Estilo compartido por ambos botones. */
+.home-hero__button {
+  /* Centramos el contenido del botón. */
+  display: inline-flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos una altura mínima. */
+  min-height: 48px;
+
+  /* Agregamos espacio interior. */
+  padding: 12px 25px;
+
+  /* Redondeamos suavemente los bordes. */
+  border-radius: 8px;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 600;
+
+  /* Preparamos las animaciones. */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Efecto común de los botones. */
+.home-hero__button:hover {
+  /* Elevamos suavemente el botón. */
+  transform: translateY(-2px);
+}
+
+/* Botón principal. */
+.home-hero__button--primary {
+  /* Aplicamos fondo azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Añadimos una sombra discreta. */
+  box-shadow: 0 8px 20px rgba(24, 40, 56, 0.22);
+}
+
+/* Efecto del botón principal. */
+.home-hero__button--primary:hover {
+  /* Oscurecemos el fondo. */
+  background-color: #182838;
+
+  /* Aumentamos la sombra. */
+  box-shadow: 0 11px 24px rgba(24, 40, 56, 0.28);
+}
+
+/* Botón secundario. */
+.home-hero__button--secondary {
+  /* Aplicamos un fondo claro transparente. */
+  background-color: rgba(255, 255, 255, 0.78);
+
+  /* Aplicamos texto azul marino. */
+  color: #24364b;
+
+  /* Añadimos un borde azul suave. */
+  border: 1px solid rgba(36, 54, 75, 0.28);
+
+  /* Aplicamos desenfoque de fondo. */
+  backdrop-filter: blur(8px);
+}
+
+/* Efecto del botón secundario. */
+.home-hero__button--secondary:hover {
+  /* Hacemos el fondo más sólido. */
+  background-color: rgba(255, 255, 255, 0.96);
+
+  /* Añadimos una sombra discreta. */
+  box-shadow: 0 9px 22px rgba(24, 40, 56, 0.14);
+}
+
+/* Curva decorativa al final del Hero. */
+.home-hero__curve {
+  /* Posicionamos la curva al final de la sección. */
+  position: absolute;
+
+  /* La pegamos al borde inferior. */
+  bottom: -1px;
+
+  /* La ubicamos desde la izquierda. */
+  left: 0;
+
+  /* Permitimos que ocupe todo el ancho. */
+  width: 100%;
+
+  /* Definimos su altura. */
+  height: 75px;
+
+  /* Aplicamos el color de la sección siguiente. */
+  background-color: #f9f8f5;
+
+  /* Creamos una curva amplia y suave. */
+  clip-path: ellipse(72% 62% at 50% 100%);
+
+  /* Colocamos la curva sobre el video. */
+  z-index: 3;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 900px) {
+  .home-hero {
+    min-height: 620px;
+    height: auto;
+    max-height: none;
+  }
+
+  /* Modificamos el degradado para mejorar la lectura. */
+  .home-hero__overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(249, 246, 239, 0.94) 0%,
+        rgba(249, 246, 239, 0.78) 58%,
+        rgba(24, 40, 56, 0.18) 100%
+      );
+  }
+
+  /* Reducimos el espacio horizontal. */
+  .home-hero__container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 600px) {
+  /* Definimos una altura apropiada para celular. */
+  .home-hero {
+    min-height: 680px;
+  }
+
+  /* Reubicamos ligeramente el video. */
+  .home-hero__video {
+    object-position: 62% center;
+  }
+
+  /* Oscurecemos y aclaramos el fondo para asegurar lectura. */
+  .home-hero__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(249, 246, 239, 0.9) 0%,
+        rgba(249, 246, 239, 0.82) 55%,
+        rgba(24, 40, 56, 0.22) 100%
+      );
+  }
+
+  /* Ajustamos el espacio del contenido. */
+  .home-hero__container {
+    padding: 115px 18px 95px;
+  }
+
+  /* Limitamos ligeramente el ancho del contenido. */
+  .home-hero__content {
+    max-width: 100%;
+  }
+
+  /* Reducimos el espacio del texto introductorio. */
+  .home-hero__eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  /* Ajustamos el título para celular. */
+  .home-hero__title {
+    font-size: 44px;
+  }
+
+  /* Ajustamos el versículo. */
+  .home-hero__verse {
+    font-size: 17px;
+  }
+
+  /* Ajustamos la descripción. */
+  .home-hero__description {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* Organizamos los botones verticalmente. */
+  .home-hero__actions {
+    flex-direction: column;
+  }
+
+  /* Hacemos que los botones ocupen todo el ancho. */
+  .home-hero__button {
+    width: 100%;
+  }
+
+  /* Reducimos la curva inferior. */
+  .home-hero__curve {
+    height: 48px;
+  }
+}
