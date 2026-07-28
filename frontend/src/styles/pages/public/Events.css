@@ -1,0 +1,1180 @@
+/* Contenedor general de la página Eventos. */
+.events {
+  /* Aplicamos el fondo principal. */
+  background-color: #f9f8f5;
+
+  /* Aplicamos el azul marino como color base. */
+  color: #24364b;
+}
+
+/* Hero principal de Eventos. */
+.events-hero {
+  /* Permitimos posicionar elementos internos. */
+  position: relative;
+
+  /* Definimos una altura equilibrada. */
+  min-height: 560px;
+
+  /* Centramos verticalmente el contenido. */
+  display: flex;
+
+  /* Alineamos el contenido al centro. */
+  align-items: center;
+
+  /* Ocultamos decoraciones que sobresalgan. */
+  overflow: hidden;
+
+  /* Aplicamos un fondo suave. */
+  background:
+    radial-gradient(
+      circle at 82% 35%,
+      rgba(183, 160, 135, 0.25),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #e8e3dc 0%,
+      #f7f5f1 50%,
+      #dce3e7 100%
+    );
+}
+
+/* Capa de contraste del Hero. */
+.events-hero__overlay {
+  /* Cubrimos toda la sección. */
+  position: absolute;
+  inset: 0;
+
+  /* Aplicamos un degradado de contraste. */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(249, 248, 245, 0.96) 0%,
+      rgba(249, 248, 245, 0.8) 55%,
+      rgba(249, 248, 245, 0.35) 100%
+    );
+
+  /* La colocamos detrás del contenido. */
+  z-index: 1;
+}
+
+/* Contenedor principal del Hero. */
+.events-hero__container {
+  /* Limitamos el ancho máximo. */
+  width: 100%;
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos texto e icono en dos columnas. */
+  display: grid;
+
+  /* La columna de texto ocupa más espacio. */
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 70px;
+
+  /* Añadimos espacio considerando el Header. */
+  padding: 155px 24px 115px;
+
+  /* Colocamos el contenido sobre la capa. */
+  position: relative;
+  z-index: 2;
+}
+
+/* Texto introductorio. */
+.events-hero__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 17px;
+
+  /* Aplicamos dorado sobrio. */
+  color: #9a8066;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Aumentamos separación entre letras. */
+  letter-spacing: 3px;
+
+  /* Mostramos en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal. */
+.events-hero__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño adaptable. */
+  font-size: clamp(50px, 6vw, 78px);
+
+  /* Aplicamos peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la altura de línea. */
+  line-height: 1.06;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Parte destacada del título. */
+.events-hero__title-highlight {
+  /* Mostramos en una línea nueva. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 7px;
+
+  /* Aplicamos dorado sobrio. */
+  color: #9a8066;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Reducimos el peso. */
+  font-weight: 400;
+}
+
+/* Descripción del Hero. */
+.events-hero__description {
+  /* Añadimos separación superior. */
+  margin: 27px 0 0;
+
+  /* Limitamos el ancho. */
+  max-width: 660px;
+
+  /* Aplicamos un color secundario. */
+  color: #4f5d6c;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 18px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Zona visual del Hero. */
+.events-hero__visual {
+  /* Centramos el contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+}
+
+/* Círculo del icono principal. */
+.events-hero__icon-circle {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos el tamaño. */
+  width: 265px;
+  height: 265px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo claro. */
+  background-color: rgba(255, 255, 255, 0.7);
+
+  /* Añadimos borde dorado. */
+  border: 1px solid rgba(183, 160, 135, 0.35);
+
+  /* Añadimos sombra. */
+  box-shadow: 0 22px 50px rgba(24, 40, 56, 0.12);
+}
+
+/* Icono del Hero. */
+.events-hero__icon {
+  /* Definimos su tamaño. */
+  width: 175px;
+  height: 175px;
+
+  /* Evitamos deformación. */
+  object-fit: contain;
+}
+
+/* Curva inferior. */
+.events-hero__curve {
+  /* Posicionamos la curva abajo. */
+  position: absolute;
+
+  /* La pegamos al borde. */
+  bottom: -1px;
+
+  /* La alineamos desde la izquierda. */
+  left: 0;
+
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Definimos su altura. */
+  height: 42px;
+
+  /* Aplicamos el color de la siguiente sección. */
+  background-color: #ffffff;
+
+  /* Creamos la forma curva. */
+  clip-path: ellipse(72% 65% at 50% 100%);
+
+  /* La colocamos sobre el fondo. */
+  z-index: 3;
+}
+
+/* Texto pequeño compartido entre secciones. */
+.events-section__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 12px;
+
+  /* Aplicamos dorado. */
+  color: #9a8066;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Mostramos texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título compartido entre secciones. */
+.events-section__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño adaptable. */
+  font-size: clamp(38px, 4.5vw, 56px);
+
+  /* Aplicamos peso medio. */
+  font-weight: 500;
+
+  /* Mejoramos altura. */
+  line-height: 1.15;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Sección del evento destacado. */
+.events-featured {
+  /* Añadimos espacio exterior. */
+  padding: 100px 24px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+}
+
+/* Contenedor del evento destacado. */
+.events-featured__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+}
+
+/* Encabezado del evento destacado. */
+.events-featured__header {
+  /* Añadimos separación inferior. */
+  margin-bottom: 42px;
+}
+
+/* Tarjeta del evento destacado. */
+.featured-event {
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Creamos dos columnas. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  /* Ocultamos elementos que sobresalgan. */
+  overflow: hidden;
+
+  /* Aplicamos fondo claro. */
+  background-color: #fbfaf7;
+
+  /* Añadimos borde. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos esquinas. */
+  border-radius: 24px;
+
+  /* Añadimos sombra. */
+  box-shadow: 0 22px 55px rgba(24, 40, 56, 0.12);
+}
+
+/* Contenedor de la imagen destacada. */
+.featured-event__image-wrapper {
+  /* Permitimos posicionar la categoría. */
+  position: relative;
+
+  /* Definimos una altura mínima. */
+  min-height: 480px;
+
+  /* Ocultamos partes sobrantes. */
+  overflow: hidden;
+}
+
+/* Imagen del evento destacado. */
+.featured-event__image {
+  /* Mostramos como bloque. */
+  display: block;
+
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Permitimos ocupar toda la altura. */
+  height: 100%;
+
+  /* Cubrimos completamente el espacio. */
+  object-fit: cover;
+
+  /* Centramos la imagen. */
+  object-position: center;
+}
+
+/* Categoría sobre la fotografía. */
+.featured-event__category,
+.events-card__category {
+  /* Posicionamos sobre la imagen. */
+  position: absolute;
+
+  /* La ubicamos arriba a la izquierda. */
+  top: 18px;
+  left: 18px;
+
+  /* Añadimos espacio interior. */
+  padding: 7px 11px;
+
+  /* Aplicamos fondo azul marino. */
+  background-color: rgba(24, 40, 56, 0.92);
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Redondeamos. */
+  border-radius: 999px;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación entre letras. */
+  letter-spacing: 1.3px;
+
+  /* Mostramos en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Contenido del evento destacado. */
+.featured-event__content {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos elementos en columna. */
+  flex-direction: column;
+
+  /* Justificamos al centro. */
+  justify-content: center;
+
+  /* Añadimos espacio interior. */
+  padding: 50px;
+}
+
+/* Estado del evento destacado y tarjetas. */
+.featured-event__status,
+.events-card__status {
+  /* Permitimos adaptar el ancho al contenido. */
+  width: fit-content;
+
+  /* Añadimos espacio interior. */
+  padding: 6px 10px;
+
+  /* Redondeamos. */
+  border-radius: 999px;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación entre letras. */
+  letter-spacing: 1px;
+
+  /* Mostramos en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Estado disponible. */
+.events-card__status--available {
+  /* Aplicamos fondo verde suave. */
+  background-color: rgba(77, 119, 91, 0.13);
+
+  /* Aplicamos verde oscuro. */
+  color: #456a50;
+}
+
+/* Estado de advertencia. */
+.events-card__status--warning {
+  /* Aplicamos fondo dorado suave. */
+  background-color: rgba(183, 137, 69, 0.14);
+
+  /* Aplicamos tono dorado oscuro. */
+  color: #8c682f;
+}
+
+/* Estado pendiente. */
+.events-card__status--pending {
+  /* Aplicamos fondo azul suave. */
+  background-color: rgba(36, 54, 75, 0.11);
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+}
+
+/* Título del evento destacado. */
+.featured-event__title {
+  /* Añadimos separación superior. */
+  margin: 18px 0 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño. */
+  font-size: 42px;
+
+  /* Aplicamos peso medio. */
+  font-weight: 600;
+
+  /* Ajustamos altura. */
+  line-height: 1.16;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción del evento destacado. */
+.featured-event__description {
+  /* Añadimos separación superior. */
+  margin: 18px 0 0;
+
+  /* Aplicamos color secundario. */
+  color: #5d6977;
+
+  /* Definimos tamaño cómodo. */
+  font-size: 16px;
+
+  /* Mejoramos lectura. */
+  line-height: 1.75;
+}
+
+/* Detalles del evento destacado. */
+.featured-event__details {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación. */
+  gap: 17px;
+
+  /* Añadimos espacio superior. */
+  margin-top: 28px;
+
+  /* Añadimos bordes. */
+  padding: 24px 0;
+
+  /* Añadimos líneas superior e inferior. */
+  border-top: 1px solid rgba(36, 54, 75, 0.1);
+  border-bottom: 1px solid rgba(36, 54, 75, 0.1);
+}
+
+/* Detalle individual. */
+.featured-event__detail {
+  /* Organizamos icono y texto. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 14px;
+}
+
+/* Icono de detalle. */
+.featured-event__detail-icon {
+  /* Evitamos que se comprima. */
+  flex-shrink: 0;
+
+  /* Definimos tamaño. */
+  width: 44px;
+  height: 44px;
+
+  /* Evitamos deformación. */
+  object-fit: contain;
+}
+
+/* Bloque textual del detalle. */
+.featured-event__detail-text {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación. */
+  gap: 4px;
+}
+
+/* Etiqueta del detalle. */
+.featured-event__detail-label {
+  /* Aplicamos color discreto. */
+  color: #8a94a0;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Mostramos en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Valor del detalle. */
+.featured-event__detail-value {
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Definimos tamaño. */
+  font-size: 14px;
+}
+
+/* Contenedor de acciones. */
+.featured-event__actions {
+  /* Mostramos botones en una fila. */
+  display: flex;
+
+  /* Permitimos salto de línea. */
+  flex-wrap: wrap;
+
+  /* Añadimos separación. */
+  gap: 13px;
+
+  /* Añadimos espacio superior. */
+  margin-top: 28px;
+}
+
+/* Estilos compartidos de botones. */
+.featured-event__button {
+  /* Centramos contenido. */
+  display: inline-flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos espacio interior. */
+  padding: 12px 20px;
+
+  /* Eliminamos subrayado. */
+  text-decoration: none;
+
+  /* Redondeamos. */
+  border-radius: 8px;
+
+  /* Destacamos texto. */
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Botón principal. */
+.featured-event__button--primary {
+  /* Aplicamos fondo azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+}
+
+/* Botón secundario. */
+.featured-event__button--secondary {
+  /* Aplicamos fondo transparente. */
+  background-color: transparent;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Añadimos borde. */
+  border: 1px solid rgba(36, 54, 75, 0.25);
+}
+
+/* Sección de próximos eventos. */
+.events-upcoming {
+  /* Añadimos espacio exterior. */
+  padding: 105px 24px;
+
+  /* Aplicamos fondo claro. */
+  background-color: #f4f2ee;
+}
+
+/* Contenedor de próximos eventos. */
+.events-upcoming__container {
+  /* Limitamos ancho. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+}
+
+/* Encabezado de próximos eventos. */
+.events-upcoming__header {
+  /* Organizamos título y texto. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: flex-end;
+
+  /* Separamos bloques. */
+  justify-content: space-between;
+
+  /* Añadimos separación. */
+  gap: 40px;
+
+  /* Añadimos espacio inferior. */
+  margin-bottom: 45px;
+}
+
+/* Texto introductorio. */
+.events-upcoming__intro {
+  /* Eliminamos márgenes. */
+  margin: 0;
+
+  /* Limitamos el ancho. */
+  max-width: 440px;
+
+  /* Aplicamos color secundario. */
+  color: #667281;
+
+  /* Definimos tamaño. */
+  font-size: 16px;
+
+  /* Mejoramos lectura. */
+  line-height: 1.7;
+}
+
+/* Cuadrícula de eventos. */
+.events-upcoming__grid {
+  /* Activamos Grid. */
+  display: grid;
+
+  /* Creamos tres columnas. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* Añadimos separación. */
+  gap: 24px;
+}
+
+/* Tarjeta individual de evento. */
+.events-card {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos en columna. */
+  flex-direction: column;
+
+  /* Ocultamos sobrantes. */
+  overflow: hidden;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos borde. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos. */
+  border-radius: 18px;
+
+  /* Añadimos sombra. */
+  box-shadow: 0 12px 30px rgba(24, 40, 56, 0.07);
+
+  /* Preparamos transición. */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Efecto de tarjeta. */
+.events-card:hover {
+  /* Elevamos tarjeta. */
+  transform: translateY(-6px);
+
+  /* Aumentamos sombra. */
+  box-shadow: 0 20px 42px rgba(24, 40, 56, 0.13);
+}
+
+/* Contenedor de imagen. */
+.events-card__image-wrapper {
+  /* Permitimos posicionar categoría. */
+  position: relative;
+
+  /* Definimos altura. */
+  height: 220px;
+
+  /* Ocultamos sobrantes. */
+  overflow: hidden;
+}
+
+/* Imagen de tarjeta. */
+.events-card__image {
+  /* Mostramos como bloque. */
+  display: block;
+
+  /* Permitimos ocupar ancho completo. */
+  width: 100%;
+
+  /* Permitimos ocupar altura completa. */
+  height: 100%;
+
+  /* Cubrimos el espacio. */
+  object-fit: cover;
+
+  /* Centramos imagen. */
+  object-position: center;
+
+  /* Preparamos animación. */
+  transition: transform 0.35s ease;
+}
+
+/* Acercamiento de imagen. */
+.events-card:hover .events-card__image {
+  /* Aumentamos ligeramente la imagen. */
+  transform: scale(1.04);
+}
+
+/* Contenido de tarjeta. */
+.events-card__content {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos en columna. */
+  flex-direction: column;
+
+  /* Permitimos ocupar altura restante. */
+  flex: 1;
+
+  /* Añadimos espacio interior. */
+  padding: 25px 22px 23px;
+}
+
+/* Título de tarjeta. */
+.events-card__title {
+  /* Añadimos separación superior. */
+  margin: 15px 0 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño. */
+  font-size: 25px;
+
+  /* Aplicamos peso medio. */
+  font-weight: 600;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción de tarjeta. */
+.events-card__description {
+  /* Añadimos separación superior. */
+  margin: 12px 0 0;
+
+  /* Permitimos empujar contenido inferior. */
+  flex: 1;
+
+  /* Aplicamos color secundario. */
+  color: #667281;
+
+  /* Definimos tamaño. */
+  font-size: 14px;
+
+  /* Mejoramos lectura. */
+  line-height: 1.65;
+}
+
+/* Detalles de tarjeta. */
+.events-card__details {
+  /* Añadimos separación superior. */
+  margin-top: 20px;
+
+  /* Añadimos espacio vertical. */
+  padding: 17px 0;
+
+  /* Añadimos líneas. */
+  border-top: 1px solid rgba(36, 54, 75, 0.09);
+  border-bottom: 1px solid rgba(36, 54, 75, 0.09);
+}
+
+/* Dato individual. */
+.events-card__detail {
+  /* Eliminamos márgenes. */
+  margin: 0;
+
+  /* Aplicamos color secundario. */
+  color: #667281;
+
+  /* Definimos tamaño. */
+  font-size: 13px;
+
+  /* Mejoramos separación. */
+  line-height: 1.7;
+}
+
+/* Separación entre datos. */
+.events-card__detail + .events-card__detail {
+  /* Añadimos separación superior. */
+  margin-top: 4px;
+}
+
+/* Parte destacada del dato. */
+.events-card__detail strong {
+  /* Aplicamos azul marino. */
+  color: #344252;
+}
+
+/* Enlace de tarjeta. */
+.events-card__link {
+  /* Mostramos en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 8px;
+
+  /* Ajustamos ancho. */
+  align-self: flex-start;
+
+  /* Añadimos espacio superior. */
+  margin-top: 19px;
+
+  /* Eliminamos subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Destacamos texto. */
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Sección final. */
+.events-invitation {
+  /* Añadimos espacio exterior. */
+  padding: 90px 24px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+}
+
+/* Contenedor de invitación. */
+.events-invitation__container {
+  /* Limitamos ancho. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos contenido y botón. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Separamos bloques. */
+  justify-content: space-between;
+
+  /* Añadimos separación. */
+  gap: 50px;
+
+  /* Añadimos espacio interior. */
+  padding: 50px 56px;
+
+  /* Aplicamos fondo azul marino. */
+  background:
+    linear-gradient(
+      135deg,
+      #182838 0%,
+      #24364b 65%,
+      #30495f 100%
+    );
+
+  /* Redondeamos. */
+  border-radius: 24px;
+
+  /* Añadimos sombra. */
+  box-shadow: 0 22px 50px rgba(24, 40, 56, 0.2);
+}
+
+/* Texto pequeño de invitación. */
+.events-invitation__eyebrow {
+  /* Eliminamos márgenes. */
+  margin: 0 0 10px;
+
+  /* Aplicamos dorado claro. */
+  color: #d8c4aa;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 11px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación. */
+  letter-spacing: 2.2px;
+
+  /* Mostramos en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título de invitación. */
+.events-invitation__title {
+  /* Eliminamos márgenes. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño adaptable. */
+  font-size: clamp(34px, 4vw, 48px);
+
+  /* Aplicamos peso medio. */
+  font-weight: 500;
+
+  /* Aplicamos blanco. */
+  color: #ffffff;
+}
+
+/* Descripción de invitación. */
+.events-invitation__description {
+  /* Añadimos separación superior. */
+  margin: 16px 0 0;
+
+  /* Limitamos ancho. */
+  max-width: 730px;
+
+  /* Aplicamos blanco suave. */
+  color: rgba(255, 255, 255, 0.74);
+
+  /* Definimos tamaño. */
+  font-size: 15px;
+
+  /* Mejoramos lectura. */
+  line-height: 1.7;
+}
+
+/* Botón final. */
+.events-invitation__button {
+  /* Evitamos que se comprima. */
+  flex-shrink: 0;
+
+  /* Mostramos como botón. */
+  display: inline-flex;
+
+  /* Centramos contenido. */
+  justify-content: center;
+  align-items: center;
+
+  /* Añadimos espacio interior. */
+  padding: 13px 22px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Eliminamos subrayado. */
+  text-decoration: none;
+
+  /* Redondeamos. */
+  border-radius: 8px;
+
+  /* Destacamos texto. */
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 1000px) {
+  /* Cambiamos Hero a una columna. */
+  .events-hero__container {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ocultamos el icono decorativo para reducir altura. */
+  .events-hero__visual {
+    display: none;
+  }
+
+  /* Cambiamos evento destacado a una columna. */
+  .featured-event {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos altura de imagen destacada. */
+  .featured-event__image-wrapper {
+    min-height: 360px;
+  }
+
+  /* Cambiamos tarjetas a dos columnas. */
+  .events-upcoming__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Organizamos invitación verticalmente. */
+  .events-invitation__container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos altura del Hero. */
+  .events-hero {
+    min-height: 510px;
+  }
+
+  /* Ajustamos espacio del Hero. */
+  .events-hero__container {
+    padding: 135px 18px 95px;
+  }
+
+  /* Reducimos título del Hero. */
+  .events-hero__title {
+    font-size: 47px;
+  }
+
+  /* Reducimos descripción. */
+  .events-hero__description {
+    font-size: 16px;
+  }
+
+  /* Reducimos espacio del evento destacado. */
+  .events-featured {
+    padding: 75px 18px;
+  }
+
+  /* Reducimos altura de fotografía. */
+  .featured-event__image-wrapper {
+    min-height: 280px;
+  }
+
+  /* Reducimos contenido destacado. */
+  .featured-event__content {
+    padding: 32px 24px;
+  }
+
+  /* Reducimos título destacado. */
+  .featured-event__title {
+    font-size: 34px;
+  }
+
+  /* Organizamos botones verticalmente. */
+  .featured-event__actions {
+    flex-direction: column;
+  }
+
+  /* Permitimos botones de ancho completo. */
+  .featured-event__button {
+    width: 100%;
+  }
+
+  /* Reducimos espacio de próximos eventos. */
+  .events-upcoming {
+    padding: 78px 18px;
+  }
+
+  /* Organizamos encabezado verticalmente. */
+  .events-upcoming__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Cambiamos tarjetas a una columna. */
+  .events-upcoming__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos espacio final. */
+  .events-invitation {
+    padding: 70px 18px;
+  }
+
+  /* Reducimos espacio interior final. */
+  .events-invitation__container {
+    padding: 40px 25px;
+  }
+
+  /* Permitimos botón completo. */
+  .events-invitation__button {
+    width: 100%;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 390px) {
+  /* Reducimos título principal. */
+  .events-hero__title {
+    font-size: 41px;
+  }
+
+  /* Reducimos fotografía destacada. */
+  .featured-event__image-wrapper {
+    min-height: 235px;
+  }
+
+  /* Reducimos título de evento. */
+  .featured-event__title {
+    font-size: 30px;
+  }
+}

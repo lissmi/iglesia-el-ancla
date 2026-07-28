@@ -1,0 +1,1126 @@
+/* Contenedor general de la página. */
+.bible-tools {
+    background-color: #f9f8f5;
+    color: #24364b;
+}
+
+/* Hero principal. */
+.bible-tools-hero {
+    position: relative;
+    min-height: 590px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 82% 34%,
+            rgba(183, 160, 135, 0.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #e8e3dc 0%,
+            #f7f5f1 50%,
+            #dce3e7 100%
+        );
+}
+
+/* Capa de contraste. */
+.bible-tools-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(249, 248, 245, 0.97) 0%,
+        rgba(249, 248, 245, 0.82) 55%,
+        rgba(249, 248, 245, 0.25) 100%
+    );
+}
+
+/* Contenedor principal. */
+.bible-tools-hero__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 150px 24px 115px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
+    align-items: center;
+    gap: 75px;
+}
+
+/* Ruta de navegación. */
+.bible-tools-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 23px;
+    color: #7b8692;
+    font-size: 12px;
+}
+
+/* Enlace del breadcrumb. */
+.bible-tools-breadcrumb a {
+    color: #725d48;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Texto pequeño del Hero. */
+.bible-tools-hero__eyebrow {
+    margin: 0 0 15px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+}
+
+/* Título principal. */
+.bible-tools-hero__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(49px, 6vw, 74px);
+    font-weight: 500;
+    line-height: 1.07;
+}
+
+/* Parte destacada. */
+.bible-tools-hero__highlight {
+    display: block;
+    margin-top: 8px;
+    color: #9a8066;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Descripción. */
+.bible-tools-hero__description {
+    max-width: 650px;
+    margin: 26px 0 0;
+    color: #4f5d6c;
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+/* Zona visual. */
+.bible-tools-hero__visual {
+    display: flex;
+    justify-content: center;
+}
+
+/* Contenedor de imagen. */
+.bible-tools-hero__image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 350px;
+    padding: 13px;
+    border: 1px solid rgba(183, 160, 135, 0.3);
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 22px 50px rgba(24, 40, 56, 0.14);
+}
+
+/* Imagen. */
+.bible-tools-hero__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 17px;
+    object-fit: cover;
+}
+
+/* Icono flotante. */
+.bible-tools-hero__icon {
+    position: absolute;
+    right: -23px;
+    bottom: -23px;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 12px 28px rgba(24, 40, 56, 0.16);
+    object-fit: contain;
+}
+
+/* Curva inferior. */
+.bible-tools-hero__curve {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 42px;
+    background-color: #ffffff;
+    clip-path: ellipse(72% 65% at 50% 100%);
+}
+
+/* Texto pequeño compartido. */
+.bible-tools-section__eyebrow {
+    margin: 0 0 12px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.3px;
+    text-transform: uppercase;
+}
+
+/* Títulos compartidos. */
+.bible-tools-section__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(37px, 4.5vw, 54px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+/* Introducción. */
+.bible-tools-intro {
+    padding: 100px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor de introducción. */
+.bible-tools-intro__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.8fr);
+    align-items: center;
+    gap: 70px;
+}
+
+/* Descripción introductoria. */
+.bible-tools-intro__description {
+    margin: 21px 0 0;
+    color: #5d6977;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Datos rápidos. */
+.bible-tools-intro__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 18px;
+    background-color: #fbfaf7;
+}
+
+/* Dato individual. */
+.bible-tools-fact {
+    min-height: 170px;
+    padding: 25px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Separador entre datos. */
+.bible-tools-fact + .bible-tools-fact {
+    border-left: 1px solid rgba(36, 54, 75, 0.1);
+}
+
+/* Número. */
+.bible-tools-fact strong {
+    color: #9a8066;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 43px;
+}
+
+/* Etiqueta. */
+.bible-tools-fact span {
+    margin-top: 9px;
+    color: #667281;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Sección de libros. */
+.bible-books {
+    padding: 105px 24px;
+    background-color: #f4f2ee;
+}
+
+/* Contenedor de libros. */
+.bible-books__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado. */
+.bible-books__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 35px;
+}
+
+/* Introducción. */
+.bible-books__intro {
+    max-width: 440px;
+    margin: 0;
+    color: #667281;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Cuadrícula de libros. */
+.bible-books__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+/* Tarjeta de libro. */
+.bible-book-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 17px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 27px rgba(24, 40, 56, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Hover. */
+.bible-book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 38px rgba(24, 40, 56, 0.12);
+}
+
+/* Cabecera de la tarjeta. */
+.bible-book-card__top {
+    min-height: 82px;
+    padding: 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(183, 160, 135, 0.27),
+            transparent 37%
+        ),
+        linear-gradient(135deg, #24364b, #30495f);
+}
+
+/* Testamento. */
+.bible-book-card__testament {
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Capítulos. */
+.bible-book-card__chapters {
+    color: rgba(255, 255, 255, 0.67);
+    font-size: 9px;
+}
+
+/* Contenido. */
+.bible-book-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 23px 20px;
+}
+
+/* Grupo. */
+.bible-book-card__group {
+    margin: 0;
+    color: #9a8066;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+/* Título. */
+.bible-book-card__title {
+    margin: 10px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+}
+
+/* Tema. */
+.bible-book-card__theme {
+    flex: 1;
+    margin: 12px 0 0;
+    color: #667281;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* Botón. */
+.bible-book-card__button {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 19px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #24364b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Efecto del enlace para conocer el libro. */
+.bible-book-card__button:hover {
+    color: #9a8066;
+}
+
+/* Flecha del enlace para conocer el libro. */
+.bible-book-card__button span {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+/* Movimiento de la flecha al pasar el cursor. */
+.bible-book-card__button:hover span {
+    transform: translateX(4px);
+}
+
+/* Sección de herramientas. */
+.study-tools {
+    padding: 105px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor. */
+.study-tools__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado. */
+.study-tools__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 39px;
+}
+
+/* Introducción. */
+.study-tools__intro {
+    max-width: 440px;
+    margin: 0;
+    color: #667281;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Navegación. */
+.study-tools__navigation {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+}
+
+/* Botón de herramienta. */
+.study-tools__navigation-button {
+    padding: 19px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    border: 1px solid rgba(36, 54, 75, 0.12);
+    border-radius: 12px;
+    background-color: #fbfaf7;
+    color: #52606f;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Categoría. */
+.study-tools__navigation-button span {
+    color: #9a8066;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Nombre. */
+.study-tools__navigation-button strong {
+    font-size: 14px;
+}
+
+/* Botón activo. */
+.study-tools__navigation-button--active {
+    border-color: #24364b;
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+/* Herramienta seleccionada. */
+.selected-study-tool {
+    margin-top: 29px;
+    padding: 46px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);
+    gap: 60px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 22px;
+    background-color: #f4f2ee;
+}
+
+/* Texto pequeño. */
+.selected-study-tool__eyebrow {
+    margin: 0 0 10px;
+    color: #9a8066;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Título. */
+.selected-study-tool__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(35px, 4.5vw, 48px);
+    font-weight: 500;
+}
+
+/* Resumen. */
+.selected-study-tool__summary {
+    margin: 17px 0 0;
+    color: #725d48;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* Descripción. */
+.selected-study-tool__description {
+    margin: 17px 0 0;
+    color: #5d6977;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Preguntas. */
+.selected-study-tool__questions {
+    padding: 27px;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+
+/* Título preguntas. */
+.selected-study-tool__questions h4 {
+    margin: 0;
+    color: #344252;
+    font-size: 14px;
+}
+
+/* Lista. */
+.selected-study-tool__questions ul {
+    margin: 17px 0 0;
+    padding-left: 20px;
+    color: #5d6977;
+}
+
+/* Elementos. */
+.selected-study-tool__questions li {
+    padding-left: 5px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Separación. */
+.selected-study-tool__questions li + li {
+    margin-top: 7px;
+}
+
+/* Recomendación. */
+.selected-study-tool__recommendation {
+    margin-top: 22px;
+    padding-left: 17px;
+    border-left: 3px solid #b7a087;
+}
+
+/* Etiqueta. */
+.selected-study-tool__recommendation span {
+    color: #725d48;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* Texto. */
+.selected-study-tool__recommendation p {
+    margin: 8px 0 0;
+    color: #52606f;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* Método de estudio. */
+.bible-study-method {
+    padding: 100px 24px;
+    background-color: #f4f2ee;
+}
+
+/* Contenedor. */
+.bible-study-method__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado. */
+.bible-study-method__header {
+    max-width: 760px;
+    margin-bottom: 43px;
+}
+
+/* Descripción. */
+.bible-study-method__description {
+    margin: 18px 0 0;
+    color: #667281;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Cuadrícula. */
+.bible-study-method__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 21px;
+}
+
+/* Tarjeta. */
+.bible-study-method-card {
+    padding: 29px 24px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 16px;
+    background-color: #ffffff;
+}
+
+/* Número. */
+.bible-study-method-card__number {
+    color: #b7a087;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Título. */
+.bible-study-method-card h3 {
+    margin: 15px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+}
+
+/* Texto. */
+.bible-study-method-card p {
+    margin: 11px 0 0;
+    color: #667281;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Recordatorio. */
+.bible-tools-reminder {
+    padding: 100px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor. */
+.bible-tools-reminder__container {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(350px, 0.85fr);
+    align-items: center;
+    gap: 65px;
+}
+
+/* Texto pequeño. */
+.bible-tools-reminder__eyebrow {
+    margin: 0 0 11px;
+    color: #9a8066;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Título. */
+.bible-tools-reminder__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 4.5vw, 51px);
+    font-weight: 500;
+    line-height: 1.16;
+}
+
+/* Descripción. */
+.bible-tools-reminder__description {
+    margin: 20px 0 0;
+    color: #5d6977;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Cita. */
+.bible-tools-reminder__quote {
+    margin: 0;
+    padding: 32px;
+    border-left: 4px solid #b7a087;
+    border-radius: 0 17px 17px 0;
+    background-color: #f4f2ee;
+    color: #344252;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.65;
+}
+
+/* Sección final. */
+.bible-tools-help {
+    padding: 90px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor final. */
+.bible-tools-help__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 50px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        #182838 0%,
+        #24364b 65%,
+        #30495f 100%
+    );
+    box-shadow: 0 22px 50px rgba(24, 40, 56, 0.2);
+}
+
+/* Texto pequeño. */
+.bible-tools-help__eyebrow {
+    margin: 0 0 10px;
+    color: #d8c4aa;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+/* Título. */
+.bible-tools-help__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(33px, 4vw, 47px);
+    font-weight: 500;
+}
+
+/* Descripción. */
+.bible-tools-help__description {
+    max-width: 670px;
+    margin: 15px 0 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Acciones. */
+.bible-tools-help__actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Botones. */
+.bible-tools-help__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 190px;
+    padding: 12px 19px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Botón principal. */
+.bible-tools-help__button--primary {
+    background-color: #ffffff;
+    color: #24364b;
+}
+
+/* Botón secundario. */
+.bible-tools-help__button--secondary {
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    color: #ffffff;
+}
+
+/* Enlace para volver. */
+.bible-tools-help__back {
+    margin-top: 3px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Tablets. */
+@media (max-width: 1050px) {
+    .bible-tools-hero__container,
+    .bible-tools-intro__container,
+    .bible-tools-reminder__container {
+        grid-template-columns: 1fr;
+    }
+
+    .bible-tools-hero__visual {
+        display: none;
+    }
+
+    .bible-books__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .selected-study-tool {
+        grid-template-columns: 1fr;
+    }
+
+    .bible-study-method__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Tablets pequeñas. */
+@media (max-width: 800px) {
+    .bible-books__header,
+    .study-tools__header,
+    .bible-tools-help__container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bible-books__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .study-tools__navigation {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celulares. */
+@media (max-width: 650px) {
+    .bible-tools-hero {
+        min-height: 530px;
+    }
+
+    .bible-tools-hero__container {
+        padding: 135px 18px 95px;
+    }
+
+    .bible-tools-hero__title {
+        font-size: 44px;
+    }
+
+    .bible-tools-intro,
+    .bible-books,
+    .study-tools,
+    .bible-study-method,
+    .bible-tools-reminder {
+        padding: 75px 18px;
+    }
+
+    .bible-tools-intro__facts {
+        grid-template-columns: 1fr;
+    }
+
+    .bible-tools-fact {
+        min-height: 125px;
+    }
+
+    .bible-tools-fact + .bible-tools-fact {
+        border-top: 1px solid rgba(36, 54, 75, 0.1);
+        border-left: none;
+    }
+
+    .bible-books__grid,
+    .study-tools__navigation,
+    .bible-study-method__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .selected-study-tool {
+        padding: 31px 23px;
+        gap: 30px;
+    }
+
+    .bible-tools-help {
+        padding: 70px 18px;
+    }
+
+    .bible-tools-help__container {
+        padding: 39px 25px;
+    }
+
+    .bible-tools-help__actions {
+        width: 100%;
+    }
+
+    .bible-tools-help__button {
+        width: 100%;
+    }
+}
+
+/* Celulares pequeños. */
+@media (max-width: 390px) {
+    .bible-tools-hero__title {
+        font-size: 39px;
+    }
+
+    .bible-tools-reminder__quote {
+        padding: 25px 21px;
+        font-size: 19px;
+    }
+}
+
+/* Sección correspondiente a cada testamento. */
+.bible-testament-section {
+    margin-top: 42px;
+}
+
+/* Separación entre el Antiguo y el Nuevo Testamento. */
+.bible-testament-section + .bible-testament-section {
+    margin-top: 90px;
+    padding-top: 75px;
+    border-top: 1px solid rgba(36, 54, 75, 0.12);
+}
+
+/* Encabezado de cada testamento. */
+.bible-testament-section__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 32px;
+}
+
+/* Título del testamento. */
+.bible-testament-section__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 4vw, 46px);
+    font-weight: 500;
+}
+
+/* Descripción del testamento. */
+.bible-testament-section__description {
+    max-width: 460px;
+    margin: 0;
+    color: #667281;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Contenedor de los botones de cada libro. */
+.bible-book-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 13px;
+    margin-top: 19px;
+}
+
+/*
+El botón original tenía un margen superior.
+Ahora el espacio lo controla el contenedor de acciones.
+*/
+.bible-book-card__actions .bible-book-card__button {
+    margin-top: 0;
+}
+
+/* Enlace hacia el futuro lector bíblico. */
+.bible-book-card__reader-link {
+    flex-shrink: 0;
+    color: #9a8066;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Efecto del enlace de lectura. */
+.bible-book-card__reader-link:hover {
+    color: #24364b;
+    text-decoration: underline;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 800px) {
+    .bible-testament-section__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Adaptación para celulares pequeños. */
+@media (max-width: 390px) {
+    .bible-book-card__actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* Contenedor del botón para explorar todo un testamento. */
+.bible-testament-section__actions {
+    /* Utilizamos flexbox para alinear el botón. */
+    display: flex;
+
+    /* Centramos el botón horizontalmente. */
+    justify-content: center;
+
+    /* Separamos el botón de las tarjetas. */
+    margin-top: 2rem;
+}
+
+/* Botón para ver todos los libros de un testamento. */
+.bible-testament-section__button {
+    /* Organizamos el texto y la flecha horizontalmente. */
+    display: inline-flex;
+
+    /* Centramos verticalmente los elementos. */
+    align-items: center;
+
+    /* Creamos una separación entre el texto y la flecha. */
+    gap: 0.7rem;
+
+    /* Agregamos espacio interno. */
+    padding: 0.9rem 1.5rem;
+
+    /* Utilizamos un fondo azul oscuro. */
+    background-color: #16324f;
+
+    /* Mostramos el texto en color blanco. */
+    color: #ffffff;
+
+    /* Eliminamos el subrayado del enlace. */
+    text-decoration: none;
+
+    /* Redondeamos el botón. */
+    border-radius: 999px;
+
+    /* Destacamos ligeramente el texto. */
+    font-weight: 700;
+
+    /* Agregamos una transición suave. */
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Estado al pasar el mouse sobre el botón. */
+.bible-testament-section__button:hover {
+    /* Cambiamos ligeramente el fondo. */
+    background-color: #214b70;
+
+    /* Elevamos suavemente el botón. */
+    transform: translateY(-2px);
+
+    /* Agregamos una sombra delicada. */
+    box-shadow: 0 10px 24px rgba(22, 50, 79, 0.2);
+}
+
+/* Estado visible al navegar utilizando el teclado. */
+.bible-testament-section__button:focus-visible {
+    /* Creamos un contorno accesible. */
+    outline: 3px solid rgba(201, 164, 92, 0.55);
+
+    /* Separamos el contorno del botón. */
+    outline-offset: 4px;
+}
+
+/* Animamos ligeramente la flecha. */
+.bible-testament-section__button span {
+    /* Permitimos aplicar transformaciones. */
+    display: inline-block;
+
+    /* Agregamos una transición suave. */
+    transition: transform 0.25s ease;
+}
+
+/* Movemos la flecha al pasar el mouse. */
+.bible-testament-section__button:hover span {
+    /* Desplazamos la flecha hacia la derecha. */
+    transform: translateX(4px);
+}
+
+
+
+
+
+
+
+
+
+
+/* Contador de libros mostrado en la página completa. */
+.bible-books-page__counter {
+    margin: 0 0 28px;
+    color: #7b8692;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Contenedor del botón para regresar. */
+.bible-books-page__back {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+/* Adaptación del botón inferior para celulares. */
+@media (max-width: 650px) {
+    .bible-books-page__back {
+        margin-top: 38px;
+    }
+
+    .bible-books-page__back .bible-testament-section__button {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}

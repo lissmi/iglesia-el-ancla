@@ -1,0 +1,651 @@
+/* Contenedor general de la página. */
+.new-testament-page {
+    background-color: #f9f8f5;
+    color: #24364b;
+}
+
+/* Hero principal. */
+.new-testament-hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 85% 30%,
+            rgba(183, 160, 135, 0.28),
+            transparent 29%
+        ),
+        linear-gradient(
+            135deg,
+            #e8e3dc 0%,
+            #f7f5f1 52%,
+            #dce3e7 100%
+        );
+}
+
+/* Capa que mejora el contraste del texto. */
+.new-testament-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(249, 248, 245, 0.98) 0%,
+        rgba(249, 248, 245, 0.82) 62%,
+        rgba(249, 248, 245, 0.3) 100%
+    );
+}
+
+/* Contenedor del hero. */
+.new-testament-hero__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 145px 24px 110px;
+}
+
+/* Ruta de navegación. */
+.new-testament-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+    color: #7b8692;
+    font-size: 12px;
+}
+
+/* Enlaces del breadcrumb. */
+.new-testament-breadcrumb a {
+    color: #725d48;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.new-testament-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Texto pequeño superior. */
+.new-testament-hero__eyebrow {
+    margin: 0 0 15px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.7px;
+    text-transform: uppercase;
+}
+
+/* Título principal. */
+.new-testament-hero__title {
+    max-width: 790px;
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(47px, 6vw, 70px);
+    font-weight: 500;
+    line-height: 1.08;
+}
+
+/* Parte destacada del título. */
+.new-testament-hero__title span {
+    display: block;
+    margin-top: 7px;
+    color: #9a8066;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Descripción del hero. */
+.new-testament-hero__description {
+    max-width: 690px;
+    margin: 25px 0 0;
+    color: #4f5d6c;
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+/* Dato rápido del hero. */
+.new-testament-hero__fact {
+    width: fit-content;
+    margin-top: 28px;
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.67);
+}
+
+.new-testament-hero__fact strong {
+    color: #9a8066;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+}
+
+.new-testament-hero__fact span {
+    color: #5d6977;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Curva inferior del hero. */
+.new-testament-hero__curve {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 42px;
+    background-color: #f4f2ee;
+    clip-path: ellipse(72% 65% at 50% 100%);
+}
+
+/* Sección principal de libros. */
+.new-testament-books {
+    padding: 100px 24px;
+    background-color: #f4f2ee;
+}
+
+.new-testament-books__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado de la sección. */
+.new-testament-books__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 55px;
+    margin-bottom: 38px;
+}
+
+.new-testament-section__eyebrow {
+    margin: 0 0 11px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.3px;
+    text-transform: uppercase;
+}
+
+.new-testament-section__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(37px, 4.5vw, 52px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.new-testament-books__description {
+    max-width: 480px;
+    margin: 0;
+    color: #667281;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+/* Panel de búsqueda y filtros. */
+.new-testament-controls {
+    padding: 28px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 12px 32px rgba(24, 40, 56, 0.06);
+}
+
+.new-testament-search {
+    width: 100%;
+}
+
+.new-testament-search__label,
+.new-testament-filters__label {
+    display: block;
+    margin: 0 0 10px;
+    color: #344252;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.new-testament-search__field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.new-testament-search__icon {
+    position: absolute;
+    left: 17px;
+    z-index: 1;
+    color: #9a8066;
+    font-size: 22px;
+    pointer-events: none;
+}
+
+.new-testament-search__field input {
+    width: 100%;
+    height: 53px;
+    padding: 0 50px;
+    border: 1px solid rgba(36, 54, 75, 0.14);
+    border-radius: 12px;
+    outline: none;
+    background-color: #fbfaf7;
+    color: #24364b;
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.new-testament-search__field input::placeholder {
+    color: #929ba5;
+}
+
+.new-testament-search__field input:focus {
+    border-color: #9a8066;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(154, 128, 102, 0.12);
+}
+
+.new-testament-search__clear {
+    position: absolute;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #7b8692;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.new-testament-search__clear:hover {
+    background-color: #f0ede8;
+    color: #24364b;
+}
+
+/* Filtros. */
+.new-testament-filters {
+    margin-top: 23px;
+}
+
+.new-testament-filters__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.new-testament-filter {
+    padding: 10px 17px;
+    border: 1px solid rgba(36, 54, 75, 0.14);
+    border-radius: 999px;
+    background-color: #fbfaf7;
+    color: #52606f;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.new-testament-filter:hover {
+    border-color: #9a8066;
+    color: #725d48;
+    transform: translateY(-1px);
+}
+
+.new-testament-filter--active {
+    border-color: #24364b;
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+.new-testament-filter--active:hover {
+    border-color: #24364b;
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+/* Resumen de resultados. */
+.new-testament-results {
+    min-height: 24px;
+    margin: 27px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.new-testament-results__counter {
+    margin: 0;
+    color: #7b8692;
+    font-size: 13px;
+}
+
+.new-testament-results__counter strong {
+    color: #24364b;
+}
+
+.new-testament-results__clear {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #725d48;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Cuadrícula de libros. */
+.new-testament-books__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+/* Tarjeta individual. */
+.new-testament-book-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 17px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 27px rgba(24, 40, 56, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.new-testament-book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 38px rgba(24, 40, 56, 0.12);
+}
+
+.new-testament-book-card__top {
+    min-height: 82px;
+    padding: 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(183, 160, 135, 0.27),
+            transparent 37%
+        ),
+        linear-gradient(135deg, #24364b, #30495f);
+}
+
+.new-testament-book-card__testament {
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.new-testament-book-card__chapters {
+    color: rgba(255, 255, 255, 0.67);
+    font-size: 9px;
+}
+
+.new-testament-book-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 23px 20px;
+}
+
+.new-testament-book-card__group {
+    margin: 0;
+    color: #9a8066;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+.new-testament-book-card__title {
+    margin: 10px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.new-testament-book-card__theme {
+    flex: 1;
+    margin: 12px 0 0;
+    color: #667281;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.new-testament-book-card__actions {
+    margin-top: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 13px;
+}
+
+.new-testament-book-card__details {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #24364b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.new-testament-book-card__details span {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.new-testament-book-card__details:hover {
+    color: #9a8066;
+}
+
+.new-testament-book-card__details:hover span {
+    transform: translateX(4px);
+}
+
+.new-testament-book-card__reader {
+    flex-shrink: 0;
+    color: #9a8066;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.new-testament-book-card__reader:hover {
+    color: #24364b;
+    text-decoration: underline;
+}
+
+/* Mensaje cuando no existen resultados. */
+.new-testament-empty {
+    padding: 70px 24px;
+    border: 1px dashed rgba(36, 54, 75, 0.2);
+    border-radius: 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.new-testament-empty__icon {
+    display: block;
+    color: #b7a087;
+    font-size: 42px;
+}
+
+.new-testament-empty h3 {
+    margin: 15px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+}
+
+.new-testament-empty p {
+    max-width: 480px;
+    margin: 13px auto 0;
+    color: #667281;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.new-testament-empty button {
+    margin-top: 23px;
+    padding: 11px 19px;
+    border: none;
+    border-radius: 999px;
+    background-color: #24364b;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Navegación inferior. */
+.new-testament-books__back {
+    margin-top: 52px;
+    display: flex;
+    justify-content: center;
+}
+
+.new-testament-books__back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 19px;
+    border: 1px solid rgba(36, 54, 75, 0.16);
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #24364b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.new-testament-books__back a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(24, 40, 56, 0.1);
+}
+
+/* Tablets. */
+@media (max-width: 1050px) {
+    .new-testament-books__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Tablets pequeñas. */
+@media (max-width: 800px) {
+    .new-testament-books__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .new-testament-books__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celulares. */
+@media (max-width: 650px) {
+    .new-testament-hero {
+        min-height: 500px;
+    }
+
+    .new-testament-hero__container {
+        padding: 130px 18px 95px;
+    }
+
+    .new-testament-hero__title {
+        font-size: 43px;
+    }
+
+    .new-testament-hero__description {
+        font-size: 15px;
+    }
+
+    .new-testament-books {
+        padding: 75px 18px;
+    }
+
+    .new-testament-controls {
+        padding: 21px 17px;
+    }
+
+    .new-testament-search__field input {
+        padding-left: 45px;
+        font-size: 13px;
+    }
+
+    .new-testament-filters__buttons {
+        flex-wrap: nowrap;
+        padding-bottom: 7px;
+        overflow-x: auto;
+    }
+
+    .new-testament-filter {
+        flex-shrink: 0;
+    }
+
+    .new-testament-results {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .new-testament-books__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .new-testament-empty {
+        padding: 55px 20px;
+    }
+
+    .new-testament-books__back a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Celulares pequeños. */
+@media (max-width: 390px) {
+    .new-testament-hero__title {
+        font-size: 38px;
+    }
+
+    .new-testament-book-card__actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

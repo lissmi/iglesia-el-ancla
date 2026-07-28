@@ -1,0 +1,969 @@
+/* Contenedor general de la página. */
+.personal-devotional {
+    background-color: #f9f8f5;
+    color: #24364b;
+}
+
+/* Hero principal. */
+.personal-devotional-hero {
+    position: relative;
+    min-height: 590px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 82% 34%,
+            rgba(183, 160, 135, 0.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #e8e3dc 0%,
+            #f7f5f1 50%,
+            #dce3e7 100%
+        );
+}
+
+/* Capa de contraste. */
+.personal-devotional-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(249, 248, 245, 0.97) 0%,
+        rgba(249, 248, 245, 0.82) 55%,
+        rgba(249, 248, 245, 0.25) 100%
+    );
+}
+
+/* Contenedor central del Hero. */
+.personal-devotional-hero__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 150px 24px 115px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
+    align-items: center;
+    gap: 75px;
+}
+
+/* Ruta de navegación. */
+.personal-devotional-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 23px;
+    color: #7b8692;
+    font-size: 12px;
+}
+
+/* Enlace de la ruta. */
+.personal-devotional-breadcrumb a {
+    color: #725d48;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Texto pequeño del Hero. */
+.personal-devotional-hero__eyebrow {
+    margin: 0 0 15px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+}
+
+/* Título principal. */
+.personal-devotional-hero__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(49px, 6vw, 74px);
+    font-weight: 500;
+    line-height: 1.07;
+}
+
+/* Parte destacada. */
+.personal-devotional-hero__highlight {
+    display: block;
+    margin-top: 8px;
+    color: #9a8066;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Descripción del Hero. */
+.personal-devotional-hero__description {
+    max-width: 650px;
+    margin: 26px 0 0;
+    color: #4f5d6c;
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+/* Zona visual. */
+.personal-devotional-hero__visual {
+    display: flex;
+    justify-content: center;
+}
+
+/* Contenedor de imagen. */
+.personal-devotional-hero__image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 350px;
+    padding: 13px;
+    border: 1px solid rgba(183, 160, 135, 0.3);
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 22px 50px rgba(24, 40, 56, 0.14);
+}
+
+/* Imagen principal. */
+.personal-devotional-hero__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 17px;
+    object-fit: cover;
+}
+
+/* Icono flotante. */
+.personal-devotional-hero__icon {
+    position: absolute;
+    right: -23px;
+    bottom: -23px;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 12px 28px rgba(24, 40, 56, 0.16);
+    object-fit: contain;
+}
+
+/* Curva inferior. */
+.personal-devotional-hero__curve {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 42px;
+    background-color: #ffffff;
+    clip-path: ellipse(72% 65% at 50% 100%);
+}
+
+/* Texto pequeño compartido. */
+.personal-devotional-section__eyebrow {
+    margin: 0 0 12px;
+    color: #9a8066;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.3px;
+    text-transform: uppercase;
+}
+
+/* Títulos compartidos. */
+.personal-devotional-section__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(37px, 4.5vw, 54px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+/* Sección introductoria. */
+.personal-devotional-intro {
+    padding: 100px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor introductorio. */
+.personal-devotional-intro__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
+    align-items: center;
+    gap: 75px;
+}
+
+/* Párrafos de introducción. */
+.personal-devotional-intro__paragraph {
+    margin: 20px 0 0;
+    color: #5d6977;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Tarjeta de recordatorio. */
+.personal-devotional-intro__reminder {
+    padding: 36px;
+    border-left: 4px solid #b7a087;
+    border-radius: 0 18px 18px 0;
+    background-color: #f4f2ee;
+}
+
+/* Etiqueta de recordatorio. */
+.personal-devotional-intro__reminder-label {
+    color: #725d48;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+/* Cita del recordatorio. */
+.personal-devotional-intro__reminder blockquote {
+    margin: 17px 0 0;
+    color: #344252;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    font-style: italic;
+    line-height: 1.55;
+}
+
+/* Sección de guía. */
+.personal-devotional-guide {
+    padding: 105px 24px;
+    background-color: #f4f2ee;
+}
+
+/* Contenedor de guía. */
+.personal-devotional-guide__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado de guía. */
+.personal-devotional-guide__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 40px;
+}
+
+/* Introducción de guía. */
+.personal-devotional-guide__intro {
+    max-width: 440px;
+    margin: 0;
+    color: #667281;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Navegación horizontal de pasos. */
+.personal-devotional-steps {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0 18px;
+    overflow-x: auto;
+}
+
+/* Botón de paso. */
+.personal-devotional-steps__button {
+    flex-shrink: 0;
+    min-width: 150px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border: 1px solid rgba(36, 54, 75, 0.13);
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #52606f;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Efecto del botón. */
+.personal-devotional-steps__button:hover {
+    transform: translateY(-2px);
+    border-color: #b7a087;
+}
+
+/* Paso activo. */
+.personal-devotional-steps__button--active {
+    border-color: #24364b;
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+/* Número del botón. */
+.personal-devotional-steps__number {
+    color: #b7a087;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+/* Número dentro del botón activo. */
+.personal-devotional-steps__button--active
+    .personal-devotional-steps__number {
+    color: #d8c4aa;
+}
+
+/* Nombre del paso. */
+.personal-devotional-steps__name {
+    max-width: 95px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+/* Contenido del paso seleccionado. */
+.personal-devotional-step-content {
+    position: relative;
+    margin-top: 25px;
+    padding: 52px;
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 50px;
+    overflow: hidden;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 20px 50px rgba(24, 40, 56, 0.1);
+}
+
+/* Número grande decorativo. */
+.personal-devotional-step-content__number {
+    color: rgba(183, 160, 135, 0.35);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 125px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Texto pequeño del paso. */
+.personal-devotional-step-content__eyebrow {
+    margin: 0 0 10px;
+    color: #9a8066;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+/* Título del paso. */
+.personal-devotional-step-content__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(34px, 5vw, 49px);
+    font-weight: 500;
+}
+
+/* Resumen destacado. */
+.personal-devotional-step-content__summary {
+    margin: 17px 0 0;
+    color: #725d48;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* Descripción completa. */
+.personal-devotional-step-content__description {
+    margin: 17px 0 0;
+    color: #5d6977;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Bloque de consejos. */
+.personal-devotional-step-content__tips {
+    margin-top: 27px;
+    padding: 24px;
+    border-radius: 13px;
+    background-color: #f4f2ee;
+}
+
+/* Título de consejos. */
+.personal-devotional-step-content__tips h4 {
+    margin: 0;
+    color: #344252;
+    font-size: 14px;
+}
+
+/* Lista de consejos. */
+.personal-devotional-step-content__tips ul {
+    margin: 16px 0 0;
+    padding-left: 20px;
+    color: #5d6977;
+}
+
+/* Elementos de consejos. */
+.personal-devotional-step-content__tips li {
+    padding-left: 5px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Separación de consejos. */
+.personal-devotional-step-content__tips li + li {
+    margin-top: 7px;
+}
+
+/* Recordatorio del paso. */
+.personal-devotional-step-content__reminder {
+    margin-top: 25px;
+    padding-left: 20px;
+    border-left: 3px solid #b7a087;
+}
+
+/* Etiqueta del recordatorio. */
+.personal-devotional-step-content__reminder span {
+    color: #725d48;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+/* Texto del recordatorio. */
+.personal-devotional-step-content__reminder p {
+    margin: 8px 0 0;
+    color: #52606f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* Navegación del paso. */
+.personal-devotional-step-content__navigation {
+    margin-top: 31px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* Botones de navegación. */
+.personal-devotional-step-content__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 17px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Botón principal. */
+.personal-devotional-step-content__button--primary {
+    border: 1px solid #24364b;
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+/* Botón secundario. */
+.personal-devotional-step-content__button--secondary {
+    border: 1px solid rgba(36, 54, 75, 0.2);
+    background-color: #ffffff;
+    color: #24364b;
+}
+
+/* Botón deshabilitado. */
+.personal-devotional-step-content__button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+/* Sección del método. */
+.personal-devotional-method {
+    padding: 100px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor del método. */
+.personal-devotional-method__container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Encabezado del método. */
+.personal-devotional-method__header {
+    max-width: 780px;
+    margin-bottom: 44px;
+}
+
+/* Descripción del método. */
+.personal-devotional-method__description {
+    margin: 19px 0 0;
+    color: #667281;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Cuadrícula del método. */
+.personal-devotional-method__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+/* Tarjeta del método. */
+.personal-devotional-method-card {
+    padding: 30px 25px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 17px;
+    background-color: #fbfaf7;
+}
+
+/* Letra principal. */
+.personal-devotional-method-card__letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #24364b;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Título de tarjeta. */
+.personal-devotional-method-card h3 {
+    margin: 19px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+}
+
+/* Texto de tarjeta. */
+.personal-devotional-method-card p {
+    margin: 11px 0 0;
+    color: #667281;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Sección del cuaderno. */
+.personal-devotional-journal {
+    padding: 105px 24px;
+    background-color: #f4f2ee;
+}
+
+/* Contenedor del cuaderno. */
+.personal-devotional-journal__container {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+/* Encabezado del cuaderno. */
+.personal-devotional-journal__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 40px;
+}
+
+/* Introducción del cuaderno. */
+.personal-devotional-journal__intro {
+    max-width: 430px;
+    margin: 0;
+    color: #667281;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Formulario del cuaderno. */
+.personal-devotional-journal__form {
+    padding: 42px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 22px;
+    background-color: #ffffff;
+    box-shadow: 0 18px 45px rgba(24, 40, 56, 0.09);
+}
+
+/* Grupo del formulario. */
+.personal-devotional-journal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+/* Campo completo. */
+.personal-devotional-journal__field--full {
+    grid-column: 1 / -1;
+}
+
+/* Etiquetas. */
+.personal-devotional-journal__field label {
+    color: #344252;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Campos de texto. */
+.personal-devotional-journal__field input,
+.personal-devotional-journal__field textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid rgba(36, 54, 75, 0.15);
+    border-radius: 9px;
+    outline: none;
+    background-color: #faf9f6;
+    color: #24364b;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Área redimensionable. */
+.personal-devotional-journal__field textarea {
+    resize: vertical;
+}
+
+/* Estado de enfoque. */
+.personal-devotional-journal__field input:focus,
+.personal-devotional-journal__field textarea:focus {
+    border-color: #b7a087;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(183, 160, 135, 0.12);
+}
+
+/* Acciones del formulario. */
+.personal-devotional-journal__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Botón para limpiar. */
+.personal-devotional-journal__clear {
+    padding: 10px 15px;
+    border: 1px solid rgba(36, 54, 75, 0.17);
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #52606f;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Sección de oración. */
+.personal-devotional-prayer {
+    padding: 100px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor de oración. */
+.personal-devotional-prayer__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(330px, 0.8fr);
+    align-items: center;
+    gap: 65px;
+}
+
+/* Texto pequeño de oración. */
+.personal-devotional-prayer__eyebrow {
+    margin: 0 0 12px;
+    color: #9a8066;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+/* Título de oración. */
+.personal-devotional-prayer__title {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 4.5vw, 52px);
+    font-weight: 500;
+    line-height: 1.16;
+}
+
+/* Modelo de oración. */
+.personal-devotional-prayer__quote {
+    margin: 29px 0 0;
+    padding: 28px;
+    border-left: 4px solid #b7a087;
+    border-radius: 0 14px 14px 0;
+    background-color: #f4f2ee;
+    color: #52606f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.8;
+}
+
+/* Tarjeta de hábitos. */
+.personal-devotional-prayer__habits {
+    padding: 34px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #182838 0%,
+        #24364b 100%
+    );
+    box-shadow: 0 18px 42px rgba(24, 40, 56, 0.17);
+}
+
+/* Título de hábitos. */
+.personal-devotional-prayer__habits h3 {
+    margin: 0;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+}
+
+/* Lista de hábitos. */
+.personal-devotional-prayer__habits ul {
+    margin: 21px 0 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+/* Elementos de hábitos. */
+.personal-devotional-prayer__habits li {
+    padding-left: 5px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Separación de hábitos. */
+.personal-devotional-prayer__habits li + li {
+    margin-top: 10px;
+}
+
+/* Sección final. */
+.personal-devotional-help {
+    padding: 90px 24px;
+    background-color: #ffffff;
+}
+
+/* Contenedor final. */
+.personal-devotional-help__container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 50px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        #182838 0%,
+        #24364b 65%,
+        #30495f 100%
+    );
+    box-shadow: 0 22px 50px rgba(24, 40, 56, 0.2);
+}
+
+/* Texto pequeño final. */
+.personal-devotional-help__eyebrow {
+    margin: 0 0 10px;
+    color: #d8c4aa;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+/* Título final. */
+.personal-devotional-help__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(33px, 4vw, 47px);
+    font-weight: 500;
+}
+
+/* Descripción final. */
+.personal-devotional-help__description {
+    max-width: 670px;
+    margin: 15px 0 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Contenedor de acciones. */
+.personal-devotional-help__actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+/* Botones finales. */
+.personal-devotional-help__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 185px;
+    padding: 12px 19px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Botón principal. */
+.personal-devotional-help__button--primary {
+    background-color: #ffffff;
+    color: #24364b;
+}
+
+/* Botón secundario. */
+.personal-devotional-help__button--secondary {
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    color: #ffffff;
+}
+
+/* Tablets. */
+@media (max-width: 1050px) {
+    .personal-devotional-hero__container,
+    .personal-devotional-intro__container,
+    .personal-devotional-prayer__container {
+        grid-template-columns: 1fr;
+    }
+
+    .personal-devotional-hero__visual {
+        display: none;
+    }
+
+    .personal-devotional-method__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Tablets pequeñas. */
+@media (max-width: 800px) {
+    .personal-devotional-guide__header,
+    .personal-devotional-journal__header,
+    .personal-devotional-help__container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .personal-devotional-step-content {
+        grid-template-columns: 1fr;
+    }
+
+    .personal-devotional-step-content__number {
+        font-size: 75px;
+    }
+
+    .personal-devotional-journal__form {
+        grid-template-columns: 1fr;
+    }
+
+    .personal-devotional-journal__field--full,
+    .personal-devotional-journal__actions {
+        grid-column: auto;
+    }
+}
+
+/* Celulares. */
+@media (max-width: 650px) {
+    .personal-devotional-hero {
+        min-height: 530px;
+    }
+
+    .personal-devotional-hero__container {
+        padding: 135px 18px 95px;
+    }
+
+    .personal-devotional-hero__title {
+        font-size: 44px;
+    }
+
+    .personal-devotional-intro,
+    .personal-devotional-guide,
+    .personal-devotional-method,
+    .personal-devotional-journal,
+    .personal-devotional-prayer {
+        padding: 75px 18px;
+    }
+
+    .personal-devotional-step-content {
+        padding: 31px 23px;
+        gap: 20px;
+    }
+
+    .personal-devotional-step-content__navigation {
+        flex-direction: column;
+    }
+
+    .personal-devotional-step-content__button {
+        width: 100%;
+    }
+
+    .personal-devotional-method__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .personal-devotional-journal__form {
+        padding: 29px 22px;
+    }
+
+    .personal-devotional-help {
+        padding: 70px 18px;
+    }
+
+    .personal-devotional-help__container {
+        padding: 39px 25px;
+    }
+
+    .personal-devotional-help__actions {
+        width: 100%;
+    }
+
+    .personal-devotional-help__button {
+        width: 100%;
+    }
+}
+
+/* Celulares pequeños. */
+@media (max-width: 390px) {
+    .personal-devotional-hero__title {
+        font-size: 39px;
+    }
+
+    .personal-devotional-intro__reminder {
+        padding: 27px 22px;
+    }
+
+    .personal-devotional-intro__reminder blockquote {
+        font-size: 20px;
+    }
+
+    .personal-devotional-step-content__number {
+        font-size: 60px;
+    }
+}

@@ -97,8 +97,7 @@ function NotificationBanner() {
 
           {/* Mensaje temporal mientras Firebase todavía no está conectado. */}
           <p className="notification-banner__status">
-            La activación estará disponible cuando integremos Firebase
-            Cloud Messaging.
+            Próximamente.
           </p>
         </div>
       </div>

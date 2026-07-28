@@ -1,166 +1,170 @@
-// Importamos useState para controlar la apertura del menú móvil.
 import { useState } from "react";
+import {
+    Link,
+    NavLink,
+} from "react-router-dom";
 
-// Importamos el logo oficial de El Ancla.
 import logoElAncla from "../../assets/images/logo-el-ancla.png";
 
-// Importamos los estilos exclusivos del Header.
 import "../../styles/components/public/Header.css";
 
-// Creamos el componente Header.
 function Header() {
-  // Guardamos si el menú móvil está abierto o cerrado.
-  const [menuOpen, setMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] =
+        useState(false);
 
-  // Esta función alterna el estado del menú.
-  const toggleMenu = () => {
-    // Cambiamos el estado anterior por su valor contrario.
-    setMenuOpen((previousState) => !previousState);
-  };
+    const toggleMenu = () => {
+        setMenuOpen(
+            (previousState) => !previousState
+        );
+    };
 
-  // Esta función cierra el menú móvil.
-  const closeMenu = () => {
-    // Establecemos el estado como falso.
-    setMenuOpen(false);
-  };
+    const closeMenu = () => {
+        setMenuOpen(false);
+    };
 
-  // Retornamos la estructura del encabezado.
-  return (
-    // Representa el encabezado principal de la aplicación.
-    <header className="header">
-      {/* Contenedor que centra y limita el ancho del Header. */}
-      <div className="header__container">
-        {/* Enlace que contiene la identidad visual de la iglesia. */}
-        <a
-          className="header__brand"
-          href="/"
-          onClick={closeMenu}
-          aria-label="Ir al inicio de El Ancla Comunidad Cristiana"
-        >
-          {/* Mostramos el logo oficial. */}
-          <img
-            className="header__logo"
-            src={logoElAncla}
-            alt="Logo de El Ancla Comunidad Cristiana"
-          />
-        </a>
+    /*
+     * Agrega la clase activa únicamente cuando
+     * NavLink detecta que la ruta corresponde
+     * a la página actual.
+     */
+    const getNavigationClass = ({
+        isActive,
+    }) =>
+        isActive
+            ? "header__link header__link--active"
+            : "header__link";
 
-        {/* Navegación principal. */}
-        <nav
-          id="main-navigation"
-          className={`header__navigation ${
-            menuOpen ? "header__navigation--open" : ""
-          }`}
-          aria-label="Navegación principal"
-        >
-          {/* Enlace de inicio. */}
-          <a
-            className="header__link header__link--active"
-            href="/"
-            onClick={closeMenu}
-          >
-            Inicio
-          </a>
+    return (
+        <header className="header">
+            <div className="header__container">
+                {/* Logo e inicio. */}
+                <Link
+                    className="header__brand"
+                    to="/"
+                    onClick={closeMenu}
+                    aria-label="Ir al inicio de El Ancla Comunidad Cristiana"
+                >
+                    <img
+                        className="header__logo"
+                        src={logoElAncla}
+                        alt="Logo de El Ancla Comunidad Cristiana"
+                    />
+                </Link>
 
-          {/* Enlace institucional. */}
-          <a
-            className="header__link"
-            href="/nosotros"
-            onClick={closeMenu}
-          >
-            Nosotros
-          </a>
+                {/* Navegación principal. */}
+                <nav
+                    id="main-navigation"
+                    className={`header__navigation ${
+                        menuOpen
+                            ? "header__navigation--open"
+                            : ""
+                    }`}
+                    aria-label="Navegación principal"
+                >
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/"
+                        end
+                        onClick={closeMenu}
+                    >
+                        Inicio
+                    </NavLink>
 
-          {/* Enlace de actividades. */}
-          <a
-            className="header__link"
-            href="/actividades"
-            onClick={closeMenu}
-          >
-            Actividades
-          </a>
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/nosotros"
+                        onClick={closeMenu}
+                    >
+                        Nosotros
+                    </NavLink>
 
-          {/* Enlace de eventos. */}
-          <a
-            className="header__link"
-            href="/eventos"
-            onClick={closeMenu}
-          >
-            Eventos
-          </a>
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/recomendados"
+                        onClick={closeMenu}
+                    >
+                        Recomendados
+                    </NavLink>
 
-          {/* Enlace de recursos. */}
-          <a
-            className="header__link"
-            href="/recursos"
-            onClick={closeMenu}
-          >
-            Recursos
-          </a>
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/eventos"
+                        onClick={closeMenu}
+                    >
+                        Eventos
+                    </NavLink>
 
-          {/* Enlace de galería. */}
-          <a
-            className="header__link"
-            href="/galeria"
-            onClick={closeMenu}
-          >
-            Galería
-          </a>
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/recursos"
+                        onClick={closeMenu}
+                    >
+                        Recursos
+                    </NavLink>
 
-          {/* Enlace de contacto. */}
-          <a
-            className="header__link"
-            href="/contacto"
-            onClick={closeMenu}
-          >
-            Contacto
-          </a>
+                    <NavLink
+                        className={getNavigationClass}
+                        to="/contacto"
+                        onClick={closeMenu}
+                    >
+                        Contacto
+                    </NavLink>
 
-          {/* Botón para personas nuevas, visible dentro del menú móvil. */}
-          <a
-            className="header__join-button header__join-button--mobile"
-            href="/primera-visita"
-            onClick={closeMenu}
-          >
-            Primera vez aquí
-          </a>
-        </nav>
+                    {/* Primera visita en menú móvil. */}
+                    <NavLink
+                        className={({
+                            isActive,
+                        }) =>
+                            isActive
+                                ? "header__join-button header__join-button--mobile header__join-button--active"
+                                : "header__join-button header__join-button--mobile"
+                        }
+                        to="/primera-visita"
+                        onClick={closeMenu}
+                    >
+                        Primera vez aquí
+                    </NavLink>
+                </nav>
 
-        {/* Acciones ubicadas a la derecha del Header. */}
-        <div className="header__actions">
-          {/* Botón visible solamente en escritorio. */}
-          <a
-            className="header__join-button header__join-button--desktop"
-            href="/primera-visita"
-          >
-            Primera vez aquí
-          </a>
+                {/* Acciones laterales. */}
+                <div className="header__actions">
+                    <NavLink
+                        className={({
+                            isActive,
+                        }) =>
+                            isActive
+                                ? "header__join-button header__join-button--desktop header__join-button--active"
+                                : "header__join-button header__join-button--desktop"
+                        }
+                        to="/primera-visita"
+                    >
+                        Primera vez aquí
+                    </NavLink>
 
-          {/* Botón hamburguesa para tablets y celulares. */}
-          <button
-            className={`header__menu-button ${
-              menuOpen ? "header__menu-button--open" : ""
-            }`}
-            type="button"
-            onClick={toggleMenu}
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={menuOpen}
-            aria-controls="main-navigation"
-          >
-            {/* Primera línea del icono hamburguesa. */}
-            <span className="header__menu-line"></span>
-
-            {/* Segunda línea del icono hamburguesa. */}
-            <span className="header__menu-line"></span>
-
-            {/* Tercera línea del icono hamburguesa. */}
-            <span className="header__menu-line"></span>
-          </button>
-        </div>
-      </div>
-    </header>
-  );
+                    <button
+                        className={`header__menu-button ${
+                            menuOpen
+                                ? "header__menu-button--open"
+                                : ""
+                        }`}
+                        type="button"
+                        onClick={toggleMenu}
+                        aria-label={
+                            menuOpen
+                                ? "Cerrar menú"
+                                : "Abrir menú"
+                        }
+                        aria-expanded={menuOpen}
+                        aria-controls="main-navigation"
+                    >
+                        <span className="header__menu-line" />
+                        <span className="header__menu-line" />
+                        <span className="header__menu-line" />
+                    </button>
+                </div>
+            </div>
+        </header>
+    );
 }
 
-// Exportamos el Header para usarlo en otras páginas.
 export default Header;

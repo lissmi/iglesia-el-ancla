@@ -1,3 +1,6 @@
+// Importamos Link para navegar sin recargar completamente la aplicación.
+import { Link } from "react-router-dom";
+
 // Importamos el icono principal de la sección.
 import actividadesIcon from "../../assets/icons/actividades.png";
 
@@ -6,6 +9,7 @@ import "../../styles/components/public/UpcomingActivities.css";
 
 // Creamos el componente de próximas actividades.
 function UpcomingActivities() {
+
   // Creamos datos temporales mientras todavía no usamos MongoDB.
   const activities = [
     {
@@ -13,23 +17,23 @@ function UpcomingActivities() {
       id: 1,
 
       // Categoría que aparecerá sobre el título.
-      category: "Estudio bíblico",
+      category: "Reunión principal",
 
       // Nombre de la actividad.
-      title: "Estudio Bíblico",
+      title: "Culto general",
 
       // Día en que se realiza.
-      day: "Domingo",
+      day: "Todos los domingos",
 
       // Hora de inicio.
       time: "11:00 hrs",
 
       // Modalidad de participación.
-      modality: "Online",
+      modality: "Presencial y online",
 
       // Texto descriptivo breve.
       description:
-        "Un espacio para aprender, compartir y crecer juntos en la Palabra.",
+        "Nos reunimos para adorar a Dios, aprender de Su Palabra y compartir como comunidad. También puedes acompañarnos por Facebook.",
     },
     {
       // Identificador temporal de la actividad.
@@ -39,66 +43,66 @@ function UpcomingActivities() {
       category: "Oración",
 
       // Nombre de la actividad.
-      title: "Reunión de Oración",
+      title: "Reunión de oración dominical",
 
       // Día en que se realiza.
-      day: "Martes",
+      day: "Todos los domingos",
 
       // Hora de inicio.
-      time: "20:00 hrs",
+      time: "09:30 hrs",
 
       // Modalidad de participación.
       modality: "Presencial",
 
       // Texto descriptivo breve.
       description:
-        "Nos reunimos como comunidad para orar y acompañarnos mutuamente.",
+        "Comenzamos el domingo reuniéndonos para orar juntos y presentar nuestras necesidades delante de Dios.",
     },
     {
       // Identificador temporal de la actividad.
       id: 3,
 
       // Categoría de la actividad.
-      category: "Discipulado",
+      category: "Formación bíblica",
 
       // Nombre de la actividad.
-      title: "Discipulado",
+      title: "Taller Descubriendo la Biblia",
 
       // Día en que se realiza.
-      day: "Sábado",
+      day: "Todos los martes",
 
       // Hora de inicio.
-      time: "17:00 hrs",
+      time: "20:00 hrs",
 
       // Modalidad de participación.
-      modality: "Presencial",
+      modality: "Online",
 
       // Texto descriptivo breve.
       description:
-        "Un encuentro para profundizar en la fe y avanzar en nuestro crecimiento espiritual.",
+        "Un taller para conocer mejor la Biblia, comprender su mensaje y aprender a estudiarla de manera ordenada.",
     },
     {
       // Identificador temporal de la actividad.
       id: 4,
 
       // Categoría de la actividad.
-      category: "Jóvenes",
+      category: "Estudio bíblico",
 
       // Nombre de la actividad.
-      title: "Reunión de Jóvenes",
+      title: "Estudio bíblico online",
 
       // Día en que se realiza.
-      day: "Viernes",
+      day: "Todos los jueves",
 
       // Hora de inicio.
-      time: "19:30 hrs",
+      time: "20:00 hrs",
 
       // Modalidad de participación.
-      modality: "Presencial",
+      modality: "Online",
 
       // Texto descriptivo breve.
       description:
-        "Un espacio para compartir, aprender y fortalecer la fe entre jóvenes.",
+        "Un espacio semanal para profundizar en la Palabra de Dios, aprender juntos y resolver preguntas bíblicas.",
     },
   ];
 
@@ -135,7 +139,7 @@ function UpcomingActivities() {
                 className="upcoming-activities__title"
                 id="upcoming-activities-title"
               >
-                Próximas actividades
+                Eventos y actividades
               </h2>
             </div>
           </div>
@@ -143,7 +147,7 @@ function UpcomingActivities() {
           {/* Enlace para ver todas las actividades. */}
           <a
             className="upcoming-activities__view-all"
-            href="/actividades"
+            href="/eventos"
           >
             Ver todas
             <span aria-hidden="true">→</span>
@@ -168,11 +172,10 @@ function UpcomingActivities() {
 
                 {/* Modalidad de la actividad. */}
                 <span
-                  className={`activity-card__modality ${
-                    activity.modality === "Online"
-                      ? "activity-card__modality--online"
-                      : ""
-                  }`}
+                  className={`activity-card__modality ${activity.modality.toLowerCase().includes("online")
+                    ? "activity-card__modality--online"
+                    : ""
+                    }`}
                 >
                   {activity.modality}
                 </span>
@@ -220,14 +223,14 @@ function UpcomingActivities() {
                 </div>
 
                 {/* Enlace hacia el detalle de la actividad. */}
-                <a
+                <Link
                   className="activity-card__link"
-                  href={`/actividades/${activity.id}`}
-                  aria-label={`Ver detalles de ${activity.title}`}
+                  to="/eventos"
+                  aria-label={`Ver más información sobre ${activity.title}`}
                 >
                   Ver detalles
                   <span aria-hidden="true">→</span>
-                </a>
+                </Link>
               </div>
             </article>
           ))}

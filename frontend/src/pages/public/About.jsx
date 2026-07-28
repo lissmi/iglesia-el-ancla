@@ -4,14 +4,24 @@ import { Link } from "react-router-dom";
 // Importamos el encabezado público.
 import Header from "../../components/public/Header";
 
-// Importamos el pie de página público.
-import Footer from "../../components/public/Footer";
+
+// Importamos una fotografía de la iglesia.
+import iglesiaElAncla from "../../assets/images/iglesia-el-ancla.png";
 
 // Importamos el icono que representa la comunidad.
 import comunidadIcon from "../../assets/icons/comunidad.png";
 
 // Importamos el icono que representa la fe.
 import feIcon from "../../assets/icons/fe.png";
+
+// Importamos el icono que representa la conviccion.
+import conviccionIcon from "../../assets/icons/conviccion.png";
+
+// Importamos el icono que representa el mision.
+import misionIcon from "../../assets/icons/mision.png";
+
+// Importamos el icono que representa el vision.
+import visionIcon from "../../assets/icons/vision.png";
 
 // Importamos el icono que representa el propósito.
 import propositoIcon from "../../assets/icons/proposito.png";
@@ -24,6 +34,9 @@ import servimosIcon from "../../assets/icons/servimos.png";
 
 // Importamos el icono que representa el crecimiento espiritual.
 import crecemosIcon from "../../assets/icons/crecemos.png";
+
+// Importamos la fotografía del pastor Sebastián Ortiz.
+import pastorSebastian from "../../assets/images/seba.jpg";
 
 // Importamos los estilos exclusivos de la página Nosotros.
 import "../../styles/pages/public/About.css";
@@ -140,10 +153,11 @@ function About() {
             </p>
 
             {/* Título principal. */}
+            {/* Lema oficial de El Ancla Comunidad Cristiana. */}
             <h1 className="about-hero__title">
-              Una comunidad firme
+              Firmes en Cristo,
               <span className="about-hero__title-highlight">
-                en Cristo
+                anclados en Su Palabra.
               </span>
             </h1>
 
@@ -205,21 +219,20 @@ function About() {
 
             {/* Bloque visual de la sección. */}
             <div className="about-intro__visual">
-              {/* Marco decorativo exterior. */}
-              <div className="about-intro__visual-frame">
-                {/* Mostramos el icono de comunidad. */}
+              {/* Fotografía representativa de la iglesia. */}
+              <figure className="about-intro__image-card">
+                {/* Imagen de la comunidad o del templo. */}
                 <img
-                  className="about-intro__visual-icon"
-                  src={comunidadIcon}
-                  alt="Representación de la comunidad cristiana"
+                  className="about-intro__image"
+                  src={iglesiaElAncla}
+                  alt="Comunidad de la Iglesia El Ancla reunida"
                 />
 
-                {/* Frase destacada. */}
-                <p className="about-intro__visual-text">
-                  Crecemos juntos, servimos juntos y permanecemos firmes en la
-                  Palabra.
-                </p>
-              </div>
+                {/* Texto descriptivo ubicado bajo la imagen. */}
+                <figcaption className="about-intro__image-caption">
+                  Crecemos juntos, servimos juntos y permanecemos firmes en la Palabra.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </section>
@@ -235,7 +248,7 @@ function About() {
                 {/* Icono de propósito. */}
                 <img
                   className="about-purpose__icon"
-                  src={propositoIcon}
+                  src={misionIcon}
                   alt=""
                   aria-hidden="true"
                 />
@@ -253,9 +266,10 @@ function About() {
 
               {/* Descripción de la misión. */}
               <p className="about-purpose__description">
-                Acompañar a las personas para que conozcan a Jesucristo,
-                crezcan en su Palabra y vivan su fe sirviendo con amor a la
-                comunidad.
+                Existimos para glorificar a Dios haciendo discípulos de Jesucristo
+                mediante la proclamación fiel de Su Palabra, la vida en comunidad
+                y el servicio, para que personas de toda edad conozcan a Cristo,
+                crezcan en madurez y participen en la extensión del evangelio.
               </p>
             </article>
 
@@ -266,7 +280,7 @@ function About() {
                 {/* Icono de esperanza. */}
                 <img
                   className="about-purpose__icon"
-                  src={esperanzaIcon}
+                  src={visionIcon}
                   alt=""
                   aria-hidden="true"
                 />
@@ -284,11 +298,55 @@ function About() {
 
               {/* Descripción de la visión. */}
               <p className="about-purpose__description">
-                Ser una iglesia que permanezca firme en Cristo, fortalezca a
-                las familias y genere un impacto positivo en Playa Ancha,
-                Valparaíso y sus alrededores.
+                Anhelamos ser una comunidad cristiana profundamente arraigada en el
+                evangelio, reconocida por su fidelidad a las Escrituras, su amor
+                fraternal y su compromiso con hacer discípulos que hagan discípulos,
+                para la gloria de Dios.
               </p>
             </article>
+          </div>
+        </section>
+
+        {/* Sección que presenta la convicción principal de la iglesia. */}
+        <section className="about-conviction">
+          {/* Contenedor central de la sección. */}
+          <div className="about-conviction__container">
+            {/* Icono representativo de la fe y la Palabra. */}
+            <div className="about-conviction__icon-wrapper">
+              <img
+                className="about-conviction__icon"
+                src={conviccionIcon}
+                alt=""
+                aria-hidden="true"
+              />
+            </div>
+
+            {/* Contenido textual de la convicción. */}
+            <div className="about-conviction__content">
+              {/* Etiqueta de la sección. */}
+              <p className="about-section__eyebrow">
+                Nuestra convicción
+              </p>
+
+              {/* Título principal. */}
+              <h2 className="about-section__title">
+                Fundamentados en la Palabra de Dios
+              </h2>
+
+              {/* Texto oficial de la convicción. */}
+              <p className="about-conviction__description">
+                Creemos que la Palabra de Dios es suficiente para conducir a
+                las personas al conocimiento de Cristo, transformarlas a Su
+                imagen y equiparlas para toda buena obra.
+              </p>
+
+              {/* Continuación del texto oficial. */}
+              <p className="about-conviction__description">
+                Por eso, buscamos que cada ministerio, enseñanza y decisión de
+                nuestra iglesia esté fundamentado en las Escrituras y centrado
+                en el evangelio.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -355,6 +413,61 @@ function About() {
           </div>
         </section>
 
+        {/* Sección de presentación del pastor de la iglesia. */}
+        <section className="about-pastor">
+          {/* Contenedor principal de la sección. */}
+          <div className="about-pastor__container">
+            {/* Contenedor de la fotografía. */}
+            <div className="about-pastor__image-wrapper">
+              <img
+                className="about-pastor__image"
+                src={pastorSebastian}
+                alt="Pastor Sebastián Ortiz"
+              />
+
+              <div
+                className="about-pastor__image-decoration"
+                aria-hidden="true"
+              ></div>
+            </div>
+
+            {/* Contenido textual del pastor. */}
+            <div className="about-pastor__content">
+              {/* Texto introductorio pequeño. */}
+              <p className="about-section__eyebrow">
+                Un mensaje de nuestro pastor
+              </p>
+
+              {/* Nombre del pastor. */}
+              <h2 className="about-pastor__name">
+                Sebastián Ortiz
+              </h2>
+
+              {/* Cargo dentro de la iglesia. */}
+              <p className="about-pastor__role">
+                Pastor de El Ancla Comunidad Cristiana
+              </p>
+
+              {/* Mensaje enviado por el pastor. */}
+              <blockquote className="about-pastor__message">
+                <p>
+                  Todos necesitamos una esperanza firme.
+                </p>
+
+                <p>
+                  Esa esperanza no está en una iglesia ni en una persona, sino
+                  en Jesucristo.
+                </p>
+
+                <p>
+                  Si nos visitas, deseamos que encuentres una comunidad que ama
+                  a Dios, ama Su Palabra y quiere caminar contigo hacia Él.
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </section>
+
         {/* Sección final de invitación. */}
         <section className="about-invitation">
           {/* Contenedor principal. */}
@@ -383,9 +496,9 @@ function About() {
               {/* Enlace hacia la sección de actividades. */}
               <Link
                 className="about-invitation__button about-invitation__button--primary"
-                to="/actividades"
+                to="/eventos"
               >
-                Ver actividades
+                Ver eventos y actividades
               </Link>
 
               {/* Enlace hacia la sección de contacto. */}
@@ -400,8 +513,6 @@ function About() {
         </section>
       </main>
 
-      {/* Mostramos el pie de página público. */}
-      <Footer />
     </div>
   );
 }

@@ -1,0 +1,952 @@
+/* Contenedor general de la página Contacto. */
+.contact {
+  /* Aplicamos el fondo principal. */
+  background-color: #f9f8f5;
+
+  /* Aplicamos el color general del texto. */
+  color: #24364b;
+}
+
+/* Hero principal de Contacto. */
+.contact-hero {
+  /* Permitimos posicionar capas decorativas. */
+  position: relative;
+
+  /* Definimos una altura equilibrada. */
+  min-height: 520px;
+
+  /* Centramos verticalmente el contenido. */
+  display: flex;
+
+  /* Alineamos el contenido al centro. */
+  align-items: center;
+
+  /* Ocultamos elementos que sobresalgan. */
+  overflow: hidden;
+
+  /* Aplicamos un fondo sobrio. */
+  background:
+    radial-gradient(
+      circle at 80% 32%,
+      rgba(183, 160, 135, 0.25),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #e9e4dc 0%,
+      #f7f5f1 48%,
+      #dfe4e7 100%
+    );
+}
+
+
+/* Capa de contraste del Hero. */
+.contact-hero__overlay {
+  /* Cubrimos todo el Hero. */
+  position: absolute;
+  inset: 0;
+
+  /* Aplicamos un degradado de contraste. */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(249, 248, 245, 0.96) 0%,
+      rgba(249, 248, 245, 0.78) 55%,
+      rgba(249, 248, 245, 0.25) 100%
+    );
+
+  /* Colocamos la capa detrás del contenido. */
+  z-index: 1;
+}
+
+/* Contenedor central del Hero. */
+.contact-hero__container {
+  /* Permitimos utilizar todo el ancho. */
+  width: 100%;
+
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Añadimos espacio considerando el Header absoluto. */
+  padding: 150px 24px 105px;
+
+  /* Colocamos el contenido sobre las capas. */
+  position: relative;
+
+  /* Aumentamos su prioridad visual. */
+  z-index: 2;
+}
+
+/* Texto pequeño del Hero. */
+.contact-hero__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 17px;
+
+  /* Aplicamos el dorado. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 3px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal del Hero. */
+.contact-hero__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Limitamos su ancho. */
+  max-width: 720px;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(50px, 6vw, 78px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos la altura de línea. */
+  line-height: 1.06;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Parte destacada del título. */
+.contact-hero__title-highlight {
+  /* Mostramos el texto en otra línea. */
+  display: block;
+
+  /* Añadimos separación superior. */
+  margin-top: 7px;
+
+  /* Aplicamos dorado sobrio. */
+  color: #9a8066;
+
+  /* Aplicamos cursiva. */
+  font-style: italic;
+
+  /* Reducimos el peso. */
+  font-weight: 400;
+}
+
+/* Descripción del Hero. */
+.contact-hero__description {
+  /* Añadimos separación superior. */
+  margin: 27px 0 0;
+
+  /* Limitamos el ancho del párrafo. */
+  max-width: 630px;
+
+  /* Aplicamos un color secundario. */
+  color: #4f5d6c;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 18px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Curva inferior del Hero. */
+.contact-hero__curve {
+  /* Posicionamos la curva abajo. */
+  position: absolute;
+
+  /* La pegamos al borde inferior. */
+  bottom: -1px;
+
+  /* La alineamos desde la izquierda. */
+  left: 0;
+
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Definimos su altura. */
+  height: 42px;
+
+  /* Aplicamos el color de la sección siguiente. */
+  background-color: #ffffff;
+
+  /* Creamos una curva suave. */
+  clip-path: ellipse(72% 65% at 50% 100%);
+
+  /* La colocamos sobre el fondo. */
+  z-index: 3;
+}
+
+/* Sección de información rápida. */
+.contact-information {
+  /* Añadimos espacio exterior. */
+  padding: 90px 24px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+}
+
+/* Contenedor de tarjetas informativas. */
+.contact-information__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Creamos tres columnas. */
+  display: grid;
+
+  /* Definimos columnas iguales. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* Añadimos separación. */
+  gap: 24px;
+}
+
+/* Tarjeta individual de información. */
+.contact-information__card {
+  /* Organizamos icono y contenido en una fila. */
+  display: flex;
+
+  /* Alineamos los elementos al inicio. */
+  align-items: flex-start;
+
+  /* Añadimos separación. */
+  gap: 20px;
+
+  /* Añadimos espacio interior. */
+  padding: 30px 26px;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #fbfaf7;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 18px;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 12px 30px rgba(24, 40, 56, 0.07);
+}
+
+/* Contenedor del icono informativo. */
+.contact-information__icon-wrapper,
+.contact-information__schedule-icon {
+  /* Evitamos que se comprima. */
+  flex-shrink: 0;
+
+  /* Centramos su contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos su tamaño. */
+  width: 76px;
+  height: 76px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos fondo dorado suave. */
+  background-color: rgba(183, 160, 135, 0.13);
+}
+
+/* Icono de las tarjetas. */
+.contact-information__icon {
+  /* Definimos su tamaño. */
+  width: 56px;
+  height: 56px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Icono de las tarjetas. */
+.contact-information__icon_reunion {
+  /* Definimos su tamaño. */
+  width: 100px;
+  height: 100px;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+}
+
+/* Número decorativo de horarios. */
+.contact-information__schedule-icon span {
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño visible. */
+  font-size: 34px;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+}
+
+/* Etiqueta de la información. */
+.contact-information__label {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 7px;
+
+  /* Aplicamos dorado. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos el texto. */
+  font-weight: 700;
+
+  /* Añadimos separación entre letras. */
+  letter-spacing: 1.8px;
+
+  /* Mostramos texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título de la tarjeta. */
+.contact-information__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño destacado. */
+  font-size: 22px;
+
+  /* Aplicamos un peso medio. */
+  font-weight: 600;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción de la tarjeta. */
+.contact-information__description {
+  /* Añadimos separación superior. */
+  margin: 11px 0 0;
+
+  /* Aplicamos color secundario. */
+  color: #667281;
+
+  /* Definimos tamaño cómodo. */
+  font-size: 14px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.65;
+}
+
+/* Enlace del correo. */
+.contact-information__email {
+  /* Mostramos el enlace como bloque. */
+  display: inline-block;
+
+  /* Añadimos separación superior. */
+  margin-top: 11px;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Destacamos el texto. */
+  font-size: 14px;
+  font-weight: 700;
+
+  /* Permitimos dividir correos largos. */
+  overflow-wrap: anywhere;
+}
+
+/* Sección principal de contacto. */
+.contact-main {
+  /* Añadimos espacio exterior. */
+  padding: 105px 24px;
+
+  /* Aplicamos un fondo claro. */
+  background:
+    linear-gradient(
+      135deg,
+      #f4f2ee 0%,
+      #ffffff 55%,
+      #edf1f3 100%
+    );
+}
+
+/* Contenedor de las dos columnas. */
+.contact-main__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1240px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Activamos CSS Grid. */
+  display: grid;
+
+  /* Definimos las dos columnas. */
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+
+  /* Alineamos ambos bloques al inicio. */
+  align-items: start;
+
+  /* Añadimos separación. */
+  gap: 75px;
+}
+
+/* Texto pequeño compartido. */
+.contact-section__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 12px;
+
+  /* Aplicamos dorado. */
+  color: #9a8066;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 12px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación entre letras. */
+  letter-spacing: 2.5px;
+
+  /* Convertimos a mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título principal de sección. */
+.contact-section__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño adaptable. */
+  font-size: clamp(40px, 5vw, 60px);
+
+  /* Aplicamos peso medio. */
+  font-weight: 500;
+
+  /* Ajustamos altura. */
+  line-height: 1.14;
+
+  /* Aplicamos azul marino oscuro. */
+  color: #182838;
+}
+
+/* Descripción principal. */
+.contact-main__description {
+  /* Añadimos separación superior. */
+  margin: 22px 0 0;
+
+  /* Aplicamos color secundario. */
+  color: #5d6977;
+
+  /* Definimos tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Tarjeta informativa secundaria. */
+.contact-main__notice {
+  /* Añadimos separación superior. */
+  margin-top: 32px;
+
+  /* Añadimos espacio interior. */
+  padding: 26px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: rgba(255, 255, 255, 0.74);
+
+  /* Añadimos borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos esquinas. */
+  border-radius: 16px;
+}
+
+/* Título del aviso. */
+.contact-main__notice-title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño destacado. */
+  font-size: 22px;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+}
+
+/* Lista del aviso. */
+.contact-main__notice-list {
+  /* Añadimos espacio superior. */
+  margin: 17px 0 0;
+
+  /* Añadimos espacio interno izquierdo. */
+  padding-left: 20px;
+
+  /* Aplicamos color secundario. */
+  color: #667281;
+
+  /* Mejoramos la separación. */
+  line-height: 1.9;
+}
+
+/* Bloque de redes sociales. */
+.contact-social {
+  /* Añadimos separación superior. */
+  margin-top: 32px;
+}
+
+/* Título de redes sociales. */
+.contact-social__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Destacamos el texto. */
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Contenedor de enlaces sociales. */
+.contact-social__links {
+  /* Mostramos enlaces en una fila. */
+  display: flex;
+
+  /* Permitimos que bajen de línea. */
+  flex-wrap: wrap;
+
+  /* Añadimos separación. */
+  gap: 13px;
+
+  /* Añadimos espacio superior. */
+  margin-top: 16px;
+}
+
+/* Enlace individual de red social. */
+.contact-social__link {
+  /* Organizamos icono y texto en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 10px;
+
+  /* Añadimos espacio interior. */
+  padding: 10px 15px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.12);
+
+  /* Redondeamos esquinas. */
+  border-radius: 10px;
+
+  /* Eliminamos subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos azul marino. */
+  color: #24364b;
+
+  /* Destacamos texto. */
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Icono de red social. */
+.contact-social__icon {
+  /* Definimos su tamaño. */
+  width: 30px;
+  height: 30px;
+
+  /* Evitamos deformación. */
+  object-fit: contain;
+}
+
+/* Formulario principal. */
+.contact-form {
+  /* Añadimos espacio interior. */
+  padding: 40px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.1);
+
+  /* Redondeamos las esquinas. */
+  border-radius: 22px;
+
+  /* Añadimos sombra. */
+  box-shadow: 0 22px 55px rgba(24, 40, 56, 0.12);
+}
+
+/* Texto pequeño del formulario. */
+.contact-form__eyebrow {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0 0 9px;
+
+  /* Aplicamos dorado. */
+  color: #9a8066;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 10px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+
+  /* Añadimos separación. */
+  letter-spacing: 2px;
+
+  /* Convertimos a mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Título del formulario. */
+.contact-form__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos tamaño. */
+  font-size: 31px;
+
+  /* Aplicamos peso medio. */
+  font-weight: 600;
+
+  /* Ajustamos altura. */
+  line-height: 1.25;
+
+  /* Aplicamos azul marino. */
+  color: #182838;
+}
+
+/* Grupo de formulario. */
+.contact-form__group {
+  /* Permitimos posicionar el contador. */
+  position: relative;
+
+  /* Organizamos etiqueta y campo verticalmente. */
+  display: flex;
+
+  /* Colocamos elementos en columna. */
+  flex-direction: column;
+
+  /* Añadimos separación superior. */
+  margin-top: 24px;
+
+  /* Añadimos separación interna. */
+  gap: 9px;
+}
+
+/* Etiqueta del formulario. */
+.contact-form__label {
+  /* Aplicamos azul marino. */
+  color: #344252;
+
+  /* Definimos tamaño. */
+  font-size: 13px;
+
+  /* Destacamos texto. */
+  font-weight: 700;
+}
+
+/* Campos y área de texto. */
+.contact-form__input,
+.contact-form__textarea {
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Añadimos espacio interior. */
+  padding: 13px 15px;
+
+  /* Aplicamos fondo claro. */
+  background-color: #faf9f6;
+
+  /* Añadimos un borde discreto. */
+  border: 1px solid rgba(36, 54, 75, 0.16);
+
+  /* Redondeamos esquinas. */
+  border-radius: 9px;
+
+  /* Aplicamos color del texto. */
+  color: #24364b;
+
+  /* Definimos tamaño. */
+  font-size: 15px;
+
+  /* Eliminamos el contorno predeterminado. */
+  outline: none;
+
+  /* Preparamos transición. */
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Área de texto. */
+.contact-form__textarea {
+  /* Permitimos cambiar solo su altura. */
+  resize: vertical;
+
+  /* Definimos altura mínima. */
+  min-height: 165px;
+
+  /* Añadimos espacio inferior para el contador. */
+  padding-bottom: 32px;
+}
+
+/* Estado de enfoque. */
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Destacamos el borde. */
+  border-color: #b7a087;
+
+  /* Añadimos resplandor suave. */
+  box-shadow: 0 0 0 4px rgba(183, 160, 135, 0.13);
+}
+
+/* Contador del mensaje. */
+.contact-form__counter {
+  /* Lo posicionamos en el área de texto. */
+  position: absolute;
+
+  /* Lo ubicamos abajo a la derecha. */
+  right: 12px;
+  bottom: 10px;
+
+  /* Aplicamos color discreto. */
+  color: #8c96a1;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 10px;
+}
+
+/* Mensaje de estado. */
+.contact-form__status {
+  /* Añadimos espacio superior. */
+  margin: 20px 0 0;
+
+  /* Añadimos espacio interior. */
+  padding: 11px 13px;
+
+  /* Aplicamos fondo dorado suave. */
+  background-color: rgba(183, 160, 135, 0.12);
+
+  /* Añadimos borde. */
+  border: 1px solid rgba(183, 160, 135, 0.28);
+
+  /* Redondeamos esquinas. */
+  border-radius: 8px;
+
+  /* Aplicamos color del texto. */
+  color: #725d48;
+
+  /* Definimos tamaño. */
+  font-size: 13px;
+}
+
+/* Botón de envío. */
+.contact-form__submit {
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Añadimos separación superior. */
+  margin-top: 25px;
+
+  /* Añadimos espacio interior. */
+  padding: 14px 22px;
+
+  /* Eliminamos el borde predeterminado. */
+  border: none;
+
+  /* Aplicamos fondo azul marino. */
+  background-color: #24364b;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Redondeamos esquinas. */
+  border-radius: 9px;
+
+  /* Destacamos el texto. */
+  font-size: 14px;
+  font-weight: 700;
+
+  /* Cambiamos cursor. */
+  cursor: pointer;
+
+  /* Añadimos sombra. */
+  box-shadow: 0 8px 20px rgba(24, 40, 56, 0.2);
+
+  /* Preparamos transición. */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto del botón. */
+.contact-form__submit:hover {
+  /* Oscurecemos el fondo. */
+  background-color: #182838;
+
+  /* Elevamos el botón. */
+  transform: translateY(-2px);
+
+  /* Aumentamos sombra. */
+  box-shadow: 0 11px 24px rgba(24, 40, 56, 0.28);
+}
+
+/* Aviso de privacidad actual. */
+.contact-form__privacy {
+  /* Añadimos separación superior. */
+  margin: 14px 0 0;
+
+  /* Centramos el texto. */
+  text-align: center;
+
+  /* Aplicamos color discreto. */
+  color: #87919c;
+
+  /* Definimos tamaño pequeño. */
+  font-size: 11px;
+
+  /* Mejoramos lectura. */
+  line-height: 1.55;
+}
+
+/* Adaptación para tablets. */
+@media (max-width: 1000px) {
+  /* Cambiamos tarjetas a una columna. */
+  .contact-information__container {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cambiamos la sección principal a una columna. */
+  .contact-main__container {
+    grid-template-columns: 1fr;
+
+    /* Reducimos separación. */
+    gap: 55px;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  /* Reducimos altura del Hero. */
+  .contact-hero {
+    min-height: 500px;
+  }
+
+  /* Ocultamos la decoración grande. */
+  .contact-hero::before {
+    display: none;
+  }
+
+  /* Reducimos espacio del Hero. */
+  .contact-hero__container {
+    padding: 135px 18px 95px;
+  }
+
+  /* Reducimos el título. */
+  .contact-hero__title {
+    font-size: 47px;
+  }
+
+  /* Reducimos descripción. */
+  .contact-hero__description {
+    font-size: 16px;
+  }
+
+  /* Reducimos espacio de tarjetas. */
+  .contact-information {
+    padding: 72px 18px;
+  }
+
+  /* Permitimos que una tarjeta se adapte mejor. */
+  .contact-information__card {
+    padding: 26px 21px;
+  }
+
+  /* Reducimos los iconos. */
+  .contact-information__icon-wrapper,
+  .contact-information__schedule-icon {
+    width: 66px;
+    height: 66px;
+  }
+
+  /* Reducimos imagen de icono. */
+  .contact-information__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Reducimos espacio principal. */
+  .contact-main {
+    padding: 78px 18px;
+  }
+
+  /* Reducimos el formulario. */
+  .contact-form {
+    padding: 30px 22px;
+  }
+
+  /* Reducimos el título del formulario. */
+  .contact-form__title {
+    font-size: 27px;
+  }
+}
+
+/* Adaptación para celulares muy pequeños. */
+@media (max-width: 390px) {
+  /* Organizamos la tarjeta verticalmente. */
+  .contact-information__card {
+    flex-direction: column;
+  }
+
+  /* Reducimos título principal. */
+  .contact-hero__title {
+    font-size: 41px;
+  }
+
+  /* Reducimos aún más el formulario. */
+  .contact-form {
+    padding: 26px 18px;
+  }
+}

@@ -8,8 +8,7 @@ import UpcomingActivities from "../../components/public/UpcomingActivities";
 import FirstVisitSection from "../../components/public/FirstVisitSection";
 // Importamos el banner informativo sobre notificaciones.
 import NotificationBanner from "../../components/public/NotificationBanner";
-// Importamos el pie de página público.
-import Footer from "../../components/public/Footer";
+
 
 // Importamos el video del atardecer.
 import videoAtardecer from "../../assets/images/atardecer-el-ancla.mp4";
@@ -90,9 +89,9 @@ function Home() {
                                 {/* Botón secundario. */}
                                 <a
                                     className="home-hero__button home-hero__button--secondary"
-                                    href="/actividades"
+                                    href="/eventos"
                                 >
-                                    Ver actividades
+                                    Ver eventos
                                 </a>
                             </div>
                         </div>
@@ -109,8 +108,7 @@ function Home() {
                 <FirstVisitSection />
                 {/* Presentamos la futura función de notificaciones de la PWA. */}
                 <NotificationBanner />
-                {/* Pie de página principal. */}
-                <Footer />
+
             </main>
         </div>
     );

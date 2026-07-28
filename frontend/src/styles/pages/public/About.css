@@ -26,70 +26,15 @@
 
   /* Creamos un fondo sobrio y elegante. */
   background:
-    radial-gradient(
-      circle at 76% 32%,
+    radial-gradient(circle at 76% 32%,
       rgba(183, 160, 135, 0.2),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
+      transparent 30%),
+    linear-gradient(135deg,
       #e9e4dc 0%,
       #f6f4f0 45%,
-      #dfe4e7 100%
-    );
+      #dfe4e7 100%);
 }
 
-/* Forma decorativa del Hero. */
-.about-hero::before {
-  /* Creamos un elemento decorativo vacío. */
-  content: "";
-
-  /* Lo posicionamos de forma absoluta. */
-  position: absolute;
-
-  /* Lo desplazamos hacia el lado derecho. */
-  top: 80px;
-  right: 8%;
-
-  /* Definimos su tamaño. */
-  width: 330px;
-  height: 330px;
-
-  /* Creamos una forma circular. */
-  border-radius: 50%;
-
-  /* Aplicamos un borde dorado muy suave. */
-  border: 1px solid rgba(183, 160, 135, 0.25);
-
-  /* Evitamos que interfiera con la interacción. */
-  pointer-events: none;
-}
-
-/* Segunda forma decorativa. */
-.about-hero::after {
-  /* Creamos otro elemento vacío. */
-  content: "";
-
-  /* Lo posicionamos de forma absoluta. */
-  position: absolute;
-
-  /* Lo ubicamos en el costado derecho. */
-  top: 135px;
-  right: 12%;
-
-  /* Definimos su tamaño. */
-  width: 220px;
-  height: 220px;
-
-  /* Creamos una forma circular. */
-  border-radius: 50%;
-
-  /* Aplicamos un fondo azul suave. */
-  background-color: rgba(36, 54, 75, 0.06);
-
-  /* Evitamos que interfiera con la interacción. */
-  pointer-events: none;
-}
 
 /* Capa decorativa del Hero. */
 .about-hero__overlay {
@@ -101,12 +46,10 @@
 
   /* Aplicamos un degradado para mantener buena lectura. */
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(249, 248, 245, 0.96) 0%,
       rgba(249, 248, 245, 0.78) 52%,
-      rgba(249, 248, 245, 0.25) 100%
-    );
+      rgba(249, 248, 245, 0.25) 100%);
 
   /* Colocamos la capa detrás del contenido. */
   z-index: 1;
@@ -398,56 +341,72 @@
   align-items: center;
 }
 
-/* Marco visual. */
-.about-intro__visual-frame {
-  /* Organizamos el contenido verticalmente. */
+/* Contenedor visual de la sección Quiénes somos. */
+.about-intro__visual {
+  /* Centramos la tarjeta visual dentro de su columna. */
   display: flex;
 
-  /* Colocamos los elementos en columna. */
-  flex-direction: column;
-
   /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
   align-items: center;
+}
 
-  /* Añadimos espacio interior. */
-  padding: 45px 35px;
+/* Tarjeta que contiene la fotografía de la iglesia. */
+.about-intro__image-card {
+  /* Permitimos que la tarjeta utilice todo el ancho disponible. */
+  width: 100%;
 
-  /* Aplicamos un fondo claro. */
-  background:
-    linear-gradient(
-      145deg,
-      #f8f5f0 0%,
-      #ffffff 60%,
-      #f0f2f3 100%
-    );
+  /* Limitamos el ancho máximo para mantener equilibrio visual. */
+  max-width: 500px;
+
+  /* Eliminamos los márgenes predeterminados de figure. */
+  margin: 0;
+
+  /* Ocultamos cualquier parte que sobresalga. */
+  overflow: hidden;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
 
   /* Añadimos un borde discreto. */
   border: 1px solid rgba(36, 54, 75, 0.1);
 
   /* Redondeamos las esquinas. */
-  border-radius: 28px;
+  border-radius: 24px;
+
+  /* Añadimos una sombra suave. */
+  box-shadow: 0 24px 55px rgba(24, 40, 56, 0.12);
+}
+
+/* Fotografía de la iglesia. */
+.about-intro__image {
+  /* Mostramos la imagen como bloque. */
+  display: block;
+
+  /* Permitimos que ocupe todo el ancho de la tarjeta. */
+  width: 100%;
+
+  /* Definimos una altura equilibrada en escritorio. */
+  height: 340px;
+
+  /* Permitimos que la fotografía cubra completamente el espacio. */
+  object-fit: cover;
+
+  /* Centramos el punto principal de la fotografía. */
+  object-position: center;
+
+
+}
+
+/* Texto ubicado bajo la fotografía. */
+.about-intro__image-caption {
+  /* Añadimos espacio interior. */
+  padding: 22px 26px;
 
   /* Centramos el texto. */
   text-align: center;
-
-  /* Añadimos una sombra elegante. */
-  box-shadow: 0 24px 55px rgba(24, 40, 56, 0.1);
-}
-
-/* Icono del bloque visual. */
-.about-intro__visual-icon {
-  /* Definimos un tamaño visible. */
-  width: 165px;
-  height: 165px;
-
-  /* Evitamos deformaciones. */
-  object-fit: contain;
-}
-
-/* Frase del bloque visual. */
-.about-intro__visual-text {
-  /* Añadimos separación superior. */
-  margin: 25px 0 0;
 
   /* Aplicamos una tipografía elegante. */
   font-family: Georgia, "Times New Roman", serif;
@@ -459,7 +418,7 @@
   color: #24364b;
 
   /* Definimos un tamaño cómodo. */
-  font-size: 19px;
+  font-size: 18px;
 
   /* Mejoramos la lectura. */
   line-height: 1.6;
@@ -552,8 +511,8 @@
 /* Icono de misión o visión. */
 .about-purpose__icon {
   /* Definimos el tamaño. */
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
 
   /* Evitamos deformaciones. */
   object-fit: contain;
@@ -748,8 +707,8 @@
 /* Icono del valor. */
 .about-value-card__icon {
   /* Definimos su tamaño. */
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
 
   /* Evitamos deformaciones. */
   object-fit: contain;
@@ -822,12 +781,10 @@
 
   /* Aplicamos un fondo azul marino. */
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #182838 0%,
       #24364b 65%,
-      #30495f 100%
-    );
+      #30495f 100%);
 
   /* Redondeamos las esquinas. */
   border-radius: 24px;
@@ -980,8 +937,414 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Sección de presentación del pastor. */
+.about-pastor {
+  /* Añadimos espacio exterior. */
+  padding: 110px 24px;
+
+  /* Aplicamos un fondo claro y sobrio. */
+  background:
+    linear-gradient(135deg,
+      #f4f2ee 0%,
+      #ffffff 55%,
+      #eef1f3 100%);
+}
+
+/* Contenedor principal del pastor. */
+.about-pastor__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1180px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos la fotografía y el texto en dos columnas. */
+  display: grid;
+
+  /* Definimos el tamaño de ambas columnas. */
+  grid-template-columns: minmax(340px, 0.85fr) minmax(0, 1.15fr);
+
+  /* Centramos verticalmente ambos bloques. */
+  align-items: center;
+
+  /* Añadimos separación. */
+  gap: 90px;
+}
+
+/* Contenedor limpio para la fotografía del pastor. */
+.about-pastor__image-wrapper {
+  /* Permitimos que el contenedor use todo el ancho disponible. */
+  width: 100%;
+
+  /* Limitamos el ancho para mantener una proporción equilibrada. */
+  max-width: 430px;
+
+  /* Centramos la fotografía dentro de su columna. */
+  margin: 0 auto;
+
+  /* Aplicamos un fondo claro detrás de la fotografía. */
+  background-color: #f4f1ec;
+
+  /* Añadimos espacio interior uniforme. */
+  padding: 18px;
+
+  /* Redondeamos las esquinas del contenedor. */
+  border-radius: 24px;
+
+  /* Añadimos una sombra suave y limpia. */
+  box-shadow: 0 24px 55px rgba(24, 40, 56, 0.13);
+}
+
+/* Fotografía del pastor Sebastián Ortiz. */
+.about-pastor__image {
+  /* Mostramos la imagen como bloque. */
+  display: block;
+
+  /* Permitimos que ocupe todo el ancho del contenedor. */
+  width: 100%;
+
+  /* Conservamos la proporción original de la fotografía. */
+  height: auto;
+
+  /* Evitamos deformaciones. */
+  object-fit: contain;
+
+  /* Redondeamos las esquinas de la fotografía. */
+  border-radius: 16px;
+}
+
+/* Contenido textual del pastor. */
+.about-pastor__content {
+  /* Limitamos el ancho para mejorar la lectura. */
+  max-width: 650px;
+}
+
+/* Nombre del pastor. */
+.about-pastor__name {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño adaptable. */
+  font-size: clamp(40px, 5vw, 62px);
+
+  /* Aplicamos un peso medio. */
+  font-weight: 500;
+
+  /* Aplicamos el azul marino oscuro. */
+  color: #182838;
+}
+
+/* Cargo del pastor. */
+.about-pastor__role {
+  /* Añadimos separación superior. */
+  margin: 9px 0 0;
+
+  /* Aplicamos el dorado sobrio. */
+  color: #9a8066;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+
+  /* Destacamos ligeramente el texto. */
+  font-weight: 700;
+
+  /* Aumentamos el espacio entre letras. */
+  letter-spacing: 1.4px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+/* Mensaje del pastor. */
+.about-pastor__message {
+  /* Permitimos posicionar la comilla decorativa. */
+  position: relative;
+
+  /* Añadimos separación superior. */
+  margin: 34px 0 0;
+
+  /* Eliminamos el margen predeterminado del lado izquierdo. */
+  padding: 4px 0 4px 34px;
+
+  /* Añadimos una línea dorada lateral. */
+  border-left: 3px solid #b7a087;
+}
+
+/* Comilla decorativa. */
+.about-pastor__message::before {
+  /* Agregamos una comilla visual. */
+  content: "“";
+
+  /* Posicionamos la comilla. */
+  position: absolute;
+
+  /* La ubicamos cerca del texto. */
+  top: -30px;
+  left: 20px;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Definimos un tamaño grande. */
+  font-size: 92px;
+
+  /* Aplicamos un dorado transparente. */
+  color: rgba(183, 160, 135, 0.25);
+
+  /* Evitamos que interfiera con el contenido. */
+  pointer-events: none;
+}
+
+/* Párrafos del mensaje. */
+.about-pastor__message p {
+  /* Eliminamos el margen inferior predeterminado. */
+  margin: 0;
+
+  /* Aplicamos una tipografía elegante. */
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Aplicamos el azul marino. */
+  color: #344252;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 20px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.75;
+}
+
+/* Añadimos separación entre párrafos. */
+.about-pastor__message p+p {
+  /* Separamos cada parte del mensaje. */
+  margin-top: 16px;
+}
+
+/* Sección dedicada a la convicción de la iglesia. */
+.about-conviction {
+  /* Añadimos espacio alrededor del contenido. */
+  padding: 95px 24px;
+
+  /* Aplicamos un fondo azul marino sobrio. */
+  background:
+    linear-gradient(135deg,
+      #182838 0%,
+      #24364b 65%,
+      #30495f 100%);
+}
+
+/* Contenedor central de la convicción. */
+.about-conviction__container {
+  /* Limitamos el ancho máximo. */
+  max-width: 1120px;
+
+  /* Centramos horizontalmente. */
+  margin: 0 auto;
+
+  /* Organizamos el icono y el texto en dos columnas. */
+  display: grid;
+
+  /* Dejamos más espacio para el contenido textual. */
+  grid-template-columns: 230px minmax(0, 1fr);
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Añadimos separación entre ambos bloques. */
+  gap: 65px;
+}
+
+/* Contenedor del icono. */
+.about-conviction__icon-wrapper {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos un tamaño uniforme. */
+  width: 220px;
+  height: 220px;
+
+  /* Creamos una forma circular. */
+  border-radius: 50%;
+
+  /* Aplicamos un fondo claro. */
+  background-color: #f8f5f0;
+
+  /* Añadimos un borde dorado discreto. */
+  border: 1px solid rgba(216, 196, 170, 0.55);
+
+  /* Aplicamos una sombra suave. */
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* Icono de la convicción. */
+.about-conviction__icon {
+  /* Definimos un tamaño visible. */
+  width: 145px;
+  height: 145px;
+
+  /* Evitamos deformar la imagen. */
+  object-fit: contain;
+}
+
+/* Aplicamos dorado claro a la etiqueta. */
+.about-conviction .about-section__eyebrow {
+  color: #d8c4aa;
+}
+
+/* Aplicamos blanco al título. */
+.about-conviction .about-section__title {
+  color: #ffffff;
+}
+
+/* Párrafos de la convicción. */
+.about-conviction__description {
+  /* Añadimos separación superior. */
+  margin: 20px 0 0;
+
+  /* Usamos un blanco suave. */
+  color: rgba(255, 255, 255, 0.78);
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 17px;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.8;
+}
+
+/* Adaptación para tablets y celulares. */
+@media (max-width: 800px) {
+  .about-conviction__container {
+    /* Cambiamos a una sola columna. */
+    grid-template-columns: 1fr;
+
+    /* Reducimos la separación. */
+    gap: 42px;
+  }
+
+  .about-conviction__icon-wrapper {
+    /* Centramos el círculo. */
+    margin: 0 auto;
+  }
+}
+
+/* Adaptación para celulares. */
+@media (max-width: 650px) {
+  .about-conviction {
+    /* Reducimos el espacio exterior. */
+    padding: 75px 18px;
+  }
+
+  .about-conviction__icon-wrapper {
+    /* Reducimos el círculo. */
+    width: 190px;
+    height: 190px;
+  }
+
+  .about-conviction__icon {
+    /* Reducimos el icono. */
+    width: 125px;
+    height: 125px;
+  }
+
+  .about-conviction__description {
+    /* Reducimos ligeramente el texto. */
+    font-size: 16px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 950px) {
+
+  /* Cambiamos la sección del pastor a una sola columna. */
+  .about-pastor__container {
+    grid-template-columns: 1fr;
+    gap: 70px;
+  }
+
+  /* Permitimos que el contenido textual tenga más ancho. */
+  .about-pastor__content {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 650px) {
+
+  /* Reducimos el espacio exterior. */
+  .about-pastor {
+    padding: 80px 18px;
+  }
+
+  /* Reducimos la fotografía. */
+  .about-pastor__image {
+    height: 430px;
+  }
+
+  /* Reducimos el mensaje. */
+  .about-pastor__message p {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  /* Reducimos el espacio lateral del mensaje. */
+  .about-pastor__message {
+    padding-left: 23px;
+  }
+
+  /* Ajustamos el contenedor de la fotografía en celular. */
+.about-pastor__image-wrapper {
+  /* Reducimos un poco el espacio interior. */
+  padding: 12px;
+
+  /* Reducimos suavemente el redondeo. */
+  border-radius: 20px;
+}
+
+/* Conservamos la fotografía completa en celular. */
+.about-pastor__image {
+  /* Permitimos que la altura siga siendo proporcional. */
+  height: auto;
+
+  /* Eliminamos cualquier límite anterior. */
+  max-height: none;
+}
+
+/* Ajustamos la tarjeta de la iglesia en celular. */
+.about-intro__image-card {
+  /* Permitimos ocupar todo el ancho disponible. */
+  max-width: 100%;
+
+  /* Reducimos ligeramente el redondeo. */
+  border-radius: 18px;
+}
+
+/* Ajustamos la fotografía en celular. */
+.about-intro__image {
+  /* Reducimos la altura para evitar que ocupe demasiado espacio. */
+  height: 260px;
+}
+
+/* Ajustamos el texto bajo la imagen. */
+.about-intro__image-caption {
+  /* Reducimos el espacio interior. */
+  padding: 18px 20px;
+
+  /* Reducimos ligeramente el tamaño. */
+  font-size: 16px;
+}
+}
+
+
 /* Adaptación para tablets. */
 @media (max-width: 950px) {
+
   /* Cambiamos la introducción a una sola columna. */
   .about-intro__container {
     grid-template-columns: 1fr;
@@ -1008,6 +1371,7 @@
 
 /* Adaptación para celulares. */
 @media (max-width: 650px) {
+
   /* Reducimos la altura del Hero. */
   .about-hero {
     min-height: 560px;
@@ -1089,6 +1453,7 @@
 
 /* Adaptación para celulares muy pequeños. */
 @media (max-width: 380px) {
+
   /* Reducimos el título del Hero. */
   .about-hero__title {
     font-size: 42px;

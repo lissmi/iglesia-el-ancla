@@ -185,7 +185,7 @@ function Footer() {
               {/* Enlace de Facebook. */}
               <a
                 className="footer__social-link"
-                href="https://www.facebook.com/"
+                href="https://www.facebook.com/elanclacomunidad"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visitar Facebook de El Ancla"
@@ -202,7 +202,7 @@ function Footer() {
               {/* Enlace de Instagram. */}
               <a
                 className="footer__social-link"
-                href="https://www.instagram.com/"
+                href="https://www.instagram.com/el.ancla.comunidad.cristiana/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visitar Instagram de El Ancla"

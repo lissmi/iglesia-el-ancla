@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 // Importamos el encabezado público.
 import Header from "../../components/public/Header";
 
-// Importamos el pie de página público.
-import Footer from "../../components/public/Footer";
 
 // Importamos los estilos exclusivos de la página 404.
 import "../../styles/pages/public/NotFound.css";
@@ -353,8 +351,6 @@ function NotFound() {
                 </section>
             </main>
 
-            {/* Mostramos el pie de página público. */}
-            <Footer />
         </div>
     );
 }
