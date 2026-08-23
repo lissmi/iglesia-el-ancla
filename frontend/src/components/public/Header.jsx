@@ -110,36 +110,12 @@ function Header() {
                         Contacto
                     </NavLink>
 
-                    {/* Primera visita en menú móvil. */}
-                    <NavLink
-                        className={({
-                            isActive,
-                        }) =>
-                            isActive
-                                ? "header__join-button header__join-button--mobile header__join-button--active"
-                                : "header__join-button header__join-button--mobile"
-                        }
-                        to="/primera-visita"
-                        onClick={closeMenu}
-                    >
-                        Primera vez aquí
-                    </NavLink>
+                  
                 </nav>
 
                 {/* Acciones laterales. */}
                 <div className="header__actions">
-                    <NavLink
-                        className={({
-                            isActive,
-                        }) =>
-                            isActive
-                                ? "header__join-button header__join-button--desktop header__join-button--active"
-                                : "header__join-button header__join-button--desktop"
-                        }
-                        to="/primera-visita"
-                    >
-                        Primera vez aquí
-                    </NavLink>
+                   
 
                     <button
                         className={`header__menu-button ${

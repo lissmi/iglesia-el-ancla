@@ -196,7 +196,7 @@ function Events() {
 
             // Descripción breve.
             description:
-                "Un taller online para conocer mejor la Biblia, comprender su mensaje y aprender a estudiarla de manera ordenada.",
+                "Aprende a estudiar la Biblia respetando su contexto y descubriendo el mensaje que Dios inspiró en Su Palabra.",
 
             // Día de realización.
             date: "Todos los martes",
@@ -256,11 +256,11 @@ function Events() {
             category: "Estudio bíblico",
 
             // Nombre de la actividad.
-            title: "Estudio bíblico online",
+            title: "Crecimiento espiritual",
 
             // Descripción breve.
             description:
-                "Un espacio semanal para profundizar en la Palabra de Dios, aprender juntos y resolver preguntas bíblicas.",
+                "Un espacio de conversación en torno a la Biblia, donde una reflexión devocional nos guía a profundizar juntos en la enseñanza del texto.",
 
             // Día de realización.
             date: "Todos los jueves",
@@ -288,7 +288,7 @@ function Events() {
             category: "Niños",
 
             // Nombre de la actividad.
-            title: "Taller para niños",
+            title: "Clase para niños",
 
             // Descripción breve.
             description:
@@ -320,7 +320,7 @@ function Events() {
             category: "Jóvenes",
 
             // Nombre de la actividad.
-            title: "Taller de jóvenes",
+            title: "Clase de adolescentes",
 
             // Descripción breve.
             description:

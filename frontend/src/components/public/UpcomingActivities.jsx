@@ -1,4 +1,4 @@
-// Importamos Link para navegar sin recargar completamente la aplicación.
+// Importamos Link para navegar entre páginas sin recargar completamente la aplicación.
 import { Link } from "react-router-dom";
 
 // Importamos el icono principal de la sección.
@@ -11,6 +11,8 @@ import "../../styles/components/public/UpcomingActivities.css";
 function UpcomingActivities() {
 
   // Creamos datos temporales mientras todavía no usamos MongoDB.
+  // Las actividades están ordenadas según el día de la semana:
+  // domingo, martes, miércoles y jueves.
   const activities = [
     {
       // Identificador temporal de la actividad.
@@ -66,7 +68,7 @@ function UpcomingActivities() {
       category: "Formación bíblica",
 
       // Nombre de la actividad.
-      title: "Taller Descubriendo la Biblia",
+      title: "Taller Descubrir la Biblia",
 
       // Día en que se realiza.
       day: "Todos los martes",
@@ -86,10 +88,33 @@ function UpcomingActivities() {
       id: 4,
 
       // Categoría de la actividad.
+      category: "Oración",
+
+      // Nombre de la actividad.
+      title: "Reunión de oración",
+
+      // Día en que se realiza.
+      day: "Todos los miércoles",
+
+      // Hora de inicio.
+      time: "21:00 hrs",
+
+      // Modalidad de participación.
+      modality: "Online",
+
+      // Texto descriptivo breve.
+      description:
+        "Un espacio semanal de oración online para reunirnos como comunidad, agradecer a Dios y presentar juntos nuestras peticiones.",
+    },
+    {
+      // Identificador temporal de la actividad.
+      id: 5,
+
+      // Categoría de la actividad.
       category: "Estudio bíblico",
 
       // Nombre de la actividad.
-      title: "Estudio bíblico online",
+      title: "Crecimiento espiritual",
 
       // Día en que se realiza.
       day: "Todos los jueves",
@@ -115,10 +140,13 @@ function UpcomingActivities() {
     >
       {/* Contenedor central de la sección. */}
       <div className="upcoming-activities__container">
+
         {/* Encabezado de la sección. */}
         <div className="upcoming-activities__header">
+
           {/* Contenedor del título y del icono. */}
           <div className="upcoming-activities__heading">
+
             {/* Icono de actividades. */}
             <img
               className="upcoming-activities__heading-icon"
@@ -129,6 +157,7 @@ function UpcomingActivities() {
 
             {/* Contenedor de los textos del encabezado. */}
             <div>
+
               {/* Texto introductorio pequeño. */}
               <p className="upcoming-activities__eyebrow">
                 Participa con nosotros
@@ -145,26 +174,30 @@ function UpcomingActivities() {
           </div>
 
           {/* Enlace para ver todas las actividades. */}
-          <a
+          <Link
             className="upcoming-activities__view-all"
-            href="/eventos"
+            to="/eventos"
           >
             Ver todas
             <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
 
         {/* Cuadrícula de actividades. */}
         <div className="upcoming-activities__grid">
+
           {/* Recorremos cada actividad del arreglo. */}
           {activities.map((activity) => (
+
             // Creamos una tarjeta por cada actividad.
             <article
               className="activity-card"
               key={activity.id}
             >
+
               {/* Parte superior decorativa de la tarjeta. */}
               <div className="activity-card__top">
+
                 {/* Categoría de la actividad. */}
                 <span className="activity-card__category">
                   {activity.category}
@@ -172,10 +205,11 @@ function UpcomingActivities() {
 
                 {/* Modalidad de la actividad. */}
                 <span
-                  className={`activity-card__modality ${activity.modality.toLowerCase().includes("online")
-                    ? "activity-card__modality--online"
-                    : ""
-                    }`}
+                  className={`activity-card__modality ${
+                    activity.modality.toLowerCase().includes("online")
+                      ? "activity-card__modality--online"
+                      : ""
+                  }`}
                 >
                   {activity.modality}
                 </span>
@@ -183,26 +217,29 @@ function UpcomingActivities() {
 
               {/* Contenido principal de la tarjeta. */}
               <div className="activity-card__content">
+
                 {/* Nombre de la actividad. */}
                 <h3 className="activity-card__title">
                   {activity.title}
                 </h3>
 
-                {/* Descripción breve. */}
+                {/* Descripción breve de la actividad. */}
                 <p className="activity-card__description">
                   {activity.description}
                 </p>
 
-                {/* Información de horario. */}
+                {/* Información correspondiente al día y horario. */}
                 <div className="activity-card__schedule">
+
                   {/* Día de realización. */}
                   <div className="activity-card__schedule-item">
+
                     {/* Etiqueta del dato. */}
                     <span className="activity-card__schedule-label">
                       Día
                     </span>
 
-                    {/* Valor del dato. */}
+                    {/* Día correspondiente a la actividad. */}
                     <span className="activity-card__schedule-value">
                       {activity.day}
                     </span>
@@ -210,19 +247,20 @@ function UpcomingActivities() {
 
                   {/* Hora de realización. */}
                   <div className="activity-card__schedule-item">
+
                     {/* Etiqueta del dato. */}
                     <span className="activity-card__schedule-label">
                       Horario
                     </span>
 
-                    {/* Valor del dato. */}
+                    {/* Hora correspondiente a la actividad. */}
                     <span className="activity-card__schedule-value">
                       {activity.time}
                     </span>
                   </div>
                 </div>
 
-                {/* Enlace hacia el detalle de la actividad. */}
+                {/* Enlace hacia la página completa de eventos. */}
                 <Link
                   className="activity-card__link"
                   to="/eventos"
@@ -240,5 +278,5 @@ function UpcomingActivities() {
   );
 }
 
-// Exportamos el componente para utilizarlo en Home.
+// Exportamos el componente para poder utilizarlo en Home.
 export default UpcomingActivities;

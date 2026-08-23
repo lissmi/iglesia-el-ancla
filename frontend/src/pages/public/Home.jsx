@@ -71,9 +71,7 @@ function Home() {
 
                             {/* Descripción breve de la iglesia. */}
                             <p className="home-hero__description">
-                                Somos una iglesia cristiana no denominacional que cree en
-                                el poder transformador de Dios y en la comunión que nos
-                                une como familia.
+                                Somos una comunidad cristiana centrada en Cristo, fundada en Su Palabra y transformada por Su gracia.
                             </p>
 
                             {/* Contenedor de acciones principales. */}

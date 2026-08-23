@@ -92,13 +92,12 @@ function CommunityValues() {
             className="community-values__title"
             id="community-values-title"
           >
-            Lo que nos une como comunidad
+            Lo que creemos y vivimos
           </h2>
 
           {/* Texto descriptivo de la sección. */}
           <p className="community-values__description">
-            Queremos vivir nuestra fe de manera cercana, servir con
-            propósito y acompañarnos con esperanza.
+            Estas convicciones nos unen y guían nuestro caminar como comunidad cristiana.
           </p>
         </div>
 

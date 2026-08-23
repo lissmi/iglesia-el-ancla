@@ -77,13 +77,7 @@ function FirstVisitSection() {
 
           {/* Contenedor de los botones principales. */}
           <div className="first-visit__actions">
-            {/* Botón principal hacia la página para nuevos visitantes. */}
-            <a
-              className="first-visit__button first-visit__button--primary"
-              href="/primera-visita"
-            >
-              Información para tu visita
-            </a>
+           
 
             {/* Botón secundario hacia la página de contacto. */}
             <a

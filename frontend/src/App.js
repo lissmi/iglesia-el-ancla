@@ -24,7 +24,7 @@ import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMa
 import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
 import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
 import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
-import FirstVisit from "./pages/public/FirstVisit";
+
 
 // Importamos las páginas de usuarios registrados.
 
@@ -63,7 +63,7 @@ function App() {
           <Route path="/recursos/preguntas-frecuentes" element={<FrequentlyAskedQuestions />} />
           <Route path="/recursos/material-descargable" element={<DownloadableMaterials />} />
           <Route path="/recursos/material-descargable/:slug" element={<DownloadableMaterialDetails />} />
-          <Route path="/primera-visita" element={<FirstVisit />} />
+
 
           {/* Rutas correspondientes a usuarios registrados. */}
 

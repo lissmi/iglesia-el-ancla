@@ -163,9 +163,9 @@ function About() {
 
             {/* Descripción principal. */}
             <p className="about-hero__description">
-              Somos una iglesia cristiana no denominacional que desea
-              acompañar a las personas en su crecimiento espiritual y
-              compartir el amor de Dios de una manera cercana y genuina.
+              Somos una iglesia cristiana  que busca glorificar a Dios en todo. 
+              Creemos que la Biblia es nuestra autoridad para la fe y la vida, que la salvación es por gracia mediante la fe en Jesucristo, 
+              y que el evangelio transforma a quienes Dios llama a vivir para Su gloria.
             </p>
 
             {/* Referencia bíblica representativa. */}
@@ -192,28 +192,23 @@ function About() {
 
               {/* Título de la sección. */}
               <h2 className="about-section__title">
-                Una iglesia para crecer, compartir y servir
+                Cristo es nuestro centro
               </h2>
 
               {/* Primer párrafo explicativo. */}
               <p className="about-intro__paragraph">
-                El Ancla Comunidad Cristiana es una iglesia que busca
-                mantener a Jesucristo como centro de su fe, su servicio y su
-                vida comunitaria.
+                Existimos para glorificar a Dios haciendo discípulos que amen a Cristo, vivan conforme a Su Palabra y reflejen el evangelio en cada área de su vida.
               </p>
 
               {/* Segundo párrafo explicativo. */}
               <p className="about-intro__paragraph">
-                Queremos ser un lugar donde cada persona pueda conocer más de
-                Dios, encontrar apoyo, desarrollar sus dones y construir
-                relaciones basadas en el amor, el respeto y la esperanza.
+                Como iglesia, buscamos crecer juntos en el conocimiento de Dios mediante la enseñanza fiel de las Escrituras, la oración, la comunión y el servicio mutuo. 
+                Deseamos ser una familia de fe donde cada persona encuentre ánimo para seguir a Cristo y oportunidades para servir con los dones que Él ha dado.
               </p>
 
               {/* Tercer párrafo explicativo. */}
               <p className="about-intro__paragraph">
-                Nuestra comunidad está abierta a quienes desean acercarse a
-                Dios, aprender de la Biblia y compartir junto a otras personas
-                en un ambiente sencillo, familiar y acogedor.
+                Creemos que la iglesia es el lugar donde Dios forma a Su pueblo, fortalece su fe y lo envía a anunciar el evangelio con amor y verdad.
               </p>
             </div>
 
@@ -230,7 +225,7 @@ function About() {
 
                 {/* Texto descriptivo ubicado bajo la imagen. */}
                 <figcaption className="about-intro__image-caption">
-                  Crecemos juntos, servimos juntos y permanecemos firmes en la Palabra.
+                  Caminamos juntos para conocer más a Cristo, amar Su Palabra y vivir el evangelio cada día.
                 </figcaption>
               </figure>
             </div>
