@@ -28,57 +28,191 @@ import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMa
 
 // Importamos las páginas de usuarios registrados.
 
+
 // Importamos las páginas del administrador.
+
+// Importamos la página de gestión de gastos financieros.
+import ExpenseManagement from "./pages/admin/ExpenseManagement";
+
 
 // Importamos la página 404.
 import NotFound from "./pages/public/NotFound";
 
+
 // Creamos el componente principal.
 function App() {
+
   // Retornamos el sistema de rutas y el Footer general.
   return (
+
     // BrowserRouter permite que React controle la navegación del sitio.
     <BrowserRouter>
+
       {/* Contenedor general de la aplicación. */}
       <div className="app">
+
         {/* Routes mostrará solamente la página asociada a la URL actual. */}
         <Routes>
-          {/* Rutas correspondientes a páginas públicas. */}
-          <Route path="/" element={<Home />} />
-          <Route path="/nosotros" element={<About />} />
-          <Route path="/contacto" element={<Contact />} />
-          <Route path="/eventos" element={<Events />} />
-          <Route path="/recomendados" element={<Recommendations />} />
-          <Route path="/recursos" element={<Resources />} />
-          <Route path="/recursos/estudios" element={<BibleStudies />} />
-          <Route path="/recursos/devocional" element={<PersonalDevotionalGuide />} />
-          <Route path="/recursos/biblia" element={<BibleStudyTools />} />
-          <Route path="/recursos/biblia/libros/antiguo-testamento" element={<OldTestamentBooks />} />
-          <Route path="/recursos/biblia/libros/nuevo-testamento" element={<NewTestamentBooks />} />
-          <Route path="/recursos/biblia/libro/:slug" element={<BibleBookDetails />} />
-          <Route path="/recursos/guias-oracion" element={<PrayerGuides />} />
-          <Route path="/recursos/guias-oracion/:slug" element={<PrayerGuideDetails />} />
-          <Route path="/recursos/discipulado" element={<DiscipleshipMaterials />} />
-          <Route path="/recursos/discipulado/:slug" element={<DiscipleshipMaterialDetails />} />
-          <Route path="/recursos/preguntas-frecuentes" element={<FrequentlyAskedQuestions />} />
-          <Route path="/recursos/material-descargable" element={<DownloadableMaterials />} />
-          <Route path="/recursos/material-descargable/:slug" element={<DownloadableMaterialDetails />} />
+
+          {/* ================================================= */}
+          {/* RUTAS PÚBLICAS */}
+          {/* ================================================= */}
+
+          {/* Ruta correspondiente a la página principal. */}
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+          {/* Ruta correspondiente a la página Nosotros. */}
+          <Route
+            path="/nosotros"
+            element={<About />}
+          />
+
+          {/* Ruta correspondiente a la página de contacto. */}
+          <Route
+            path="/contacto"
+            element={<Contact />}
+          />
+
+          {/* Ruta correspondiente a eventos y actividades. */}
+          <Route
+            path="/eventos"
+            element={<Events />}
+          />
+
+          {/* Ruta correspondiente a los contenidos recomendados. */}
+          <Route
+            path="/recomendados"
+            element={<Recommendations />}
+          />
+
+          {/* Ruta principal de recursos. */}
+          <Route
+            path="/recursos"
+            element={<Resources />}
+          />
+
+          {/* Ruta correspondiente a estudios bíblicos. */}
+          <Route
+            path="/recursos/estudios"
+            element={<BibleStudies />}
+          />
+
+          {/* Ruta correspondiente a la guía devocional personal. */}
+          <Route
+            path="/recursos/devocional"
+            element={<PersonalDevotionalGuide />}
+          />
+
+          {/* Ruta principal de Biblia y herramientas de estudio. */}
+          <Route
+            path="/recursos/biblia"
+            element={<BibleStudyTools />}
+          />
+
+          {/* Ruta que muestra todos los libros del Antiguo Testamento. */}
+          <Route
+            path="/recursos/biblia/libros/antiguo-testamento"
+            element={<OldTestamentBooks />}
+          />
+
+          {/* Ruta que muestra todos los libros del Nuevo Testamento. */}
+          <Route
+            path="/recursos/biblia/libros/nuevo-testamento"
+            element={<NewTestamentBooks />}
+          />
+
+          {/* Ruta reutilizable para mostrar el detalle de un libro bíblico. */}
+          <Route
+            path="/recursos/biblia/libro/:slug"
+            element={<BibleBookDetails />}
+          />
+
+          {/* Ruta correspondiente a las guías de oración. */}
+          <Route
+            path="/recursos/guias-oracion"
+            element={<PrayerGuides />}
+          />
+
+          {/* Ruta reutilizable para mostrar una guía de oración específica. */}
+          <Route
+            path="/recursos/guias-oracion/:slug"
+            element={<PrayerGuideDetails />}
+          />
+
+          {/* Ruta correspondiente a los materiales de discipulado. */}
+          <Route
+            path="/recursos/discipulado"
+            element={<DiscipleshipMaterials />}
+          />
+
+          {/* Ruta reutilizable para mostrar un material de discipulado. */}
+          <Route
+            path="/recursos/discipulado/:slug"
+            element={<DiscipleshipMaterialDetails />}
+          />
+
+          {/* Ruta correspondiente a las preguntas frecuentes. */}
+          <Route
+            path="/recursos/preguntas-frecuentes"
+            element={<FrequentlyAskedQuestions />}
+          />
+
+          {/* Ruta correspondiente a los materiales descargables. */}
+          <Route
+            path="/recursos/material-descargable"
+            element={<DownloadableMaterials />}
+          />
+
+          {/* Ruta reutilizable para mostrar el detalle
+              de un material descargable. */}
+          <Route
+            path="/recursos/material-descargable/:slug"
+            element={<DownloadableMaterialDetails />}
+          />
 
 
-          {/* Rutas correspondientes a usuarios registrados. */}
+          {/* ================================================= */}
+          {/* RUTAS DE USUARIOS REGISTRADOS */}
+          {/* ================================================= */}
 
-          {/* Rutas correspondientes al administrador. */}
+
+
+          {/* ================================================= */}
+          {/* RUTAS DEL ADMINISTRADOR */}
+          {/* ================================================= */}
+
+          {/* Ruta correspondiente a la gestión administrativa
+              de los gastos financieros de la iglesia. */}
+          <Route
+            path="/admin/finanzas/gastos"
+            element={<ExpenseManagement />}
+          />
+
+
+          {/* ================================================= */}
+          {/* RUTA 404 */}
+          {/* ================================================= */}
 
           {/* Cualquier ruta inexistente mostrará la página 404. */}
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+
         </Routes>
 
         {/* Footer visible en todas las páginas de la aplicación. */}
         <Footer />
+
       </div>
+
     </BrowserRouter>
   );
 }
+
 
 // Exportamos la aplicación.
 export default App;

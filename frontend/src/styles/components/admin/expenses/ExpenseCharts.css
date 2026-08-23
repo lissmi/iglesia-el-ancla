@@ -1,0 +1,278 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+/* Creamos la cuadrícula que contendrá los dos gráficos. */
+.expense-charts {
+  /* Utilizamos Grid para distribuir las tarjetas. */
+  display: grid;
+
+  /* El gráfico histórico utilizará más espacio
+     que el gráfico de categorías. */
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr);
+
+  /* Dejamos separación entre ambos gráficos. */
+  gap: 20px;
+
+  /* Separamos esta sección de las tarjetas superiores. */
+  margin-top: 24px;
+}
+
+
+/* ========================================================= */
+/* TARJETAS DE GRÁFICOS */
+/* ========================================================= */
+
+/* Diseñamos cada tarjeta que contiene un gráfico. */
+.expense-chart-card {
+  /* Evitamos problemas de desbordamiento dentro de Grid. */
+  min-width: 0;
+
+  /* Añadimos espacio interno. */
+  padding: 26px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 20px;
+
+  /* Añadimos un borde muy suave. */
+  border: 1px solid rgba(30, 52, 72, 0.08);
+
+  /* Agregamos una sombra discreta. */
+  box-shadow: 0 8px 25px rgba(30, 52, 72, 0.055);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+/* Organizamos el encabezado de cada tarjeta. */
+.expense-chart-card__header {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Separamos ambos extremos. */
+  justify-content: space-between;
+
+  /* Alineamos los elementos al comienzo. */
+  align-items: flex-start;
+
+  /* Dejamos espacio entre elementos. */
+  gap: 20px;
+
+  /* Separamos el encabezado del gráfico. */
+  margin-bottom: 18px;
+}
+
+
+/* Diseñamos el título. */
+.expense-chart-card__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Definimos un tamaño adecuado. */
+  font-size: 1.15rem;
+
+  /* Aumentamos el peso. */
+  font-weight: 700;
+
+  /* Utilizamos azul oscuro. */
+  color: #1e3448;
+}
+
+
+/* Diseñamos la descripción. */
+.expense-chart-card__description {
+  /* Dejamos separación con el título. */
+  margin: 7px 0 0;
+
+  /* Limitamos el ancho. */
+  max-width: 520px;
+
+  /* Utilizamos un tamaño secundario. */
+  font-size: 0.88rem;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.5;
+
+  /* Utilizamos un tono secundario. */
+  color: #7a8791;
+}
+
+
+/* Diseñamos la pequeña etiqueta informativa. */
+.expense-chart-card__badge {
+  /* Evitamos saltos de línea. */
+  white-space: nowrap;
+
+  /* Añadimos espacio interior. */
+  padding: 7px 11px;
+
+  /* Creamos bordes redondeados. */
+  border-radius: 20px;
+
+  /* Utilizamos un fondo dorado muy suave. */
+  background-color: #f4eee6;
+
+  /* Utilizamos un tono dorado oscuro. */
+  color: #967044;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 0.76rem;
+
+  /* Aumentamos el peso. */
+  font-weight: 600;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO DEL GRÁFICO */
+/* ========================================================= */
+
+/* Definimos el área donde se renderiza Recharts. */
+.expense-chart-card__content {
+  /* Ocupamos todo el ancho. */
+  width: 100%;
+
+  /* Evitamos problemas dentro de Grid. */
+  min-width: 0;
+}
+
+
+/* ========================================================= */
+/* TOOLTIP */
+/* ========================================================= */
+
+/* Diseñamos la pequeña tarjeta flotante
+   que aparece al posicionarse sobre los gráficos. */
+.expense-chart-tooltip {
+  /* Organizamos la información verticalmente. */
+  display: flex;
+
+  /* Colocamos los elementos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Dejamos separación. */
+  gap: 4px;
+
+  /* Añadimos espacio interior. */
+  padding: 10px 13px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 10px;
+
+  /* Añadimos un borde suave. */
+  border: 1px solid rgba(30, 52, 72, 0.1);
+
+  /* Añadimos sombra. */
+  box-shadow: 0 8px 22px rgba(30, 52, 72, 0.12);
+}
+
+
+/* Diseñamos la etiqueta del tooltip. */
+.expense-chart-tooltip__label {
+  /* Utilizamos tamaño pequeño. */
+  font-size: 0.76rem;
+
+  /* Utilizamos un tono secundario. */
+  color: #7d8992;
+}
+
+
+/* Diseñamos el valor principal del tooltip. */
+.expense-chart-tooltip__value {
+  /* Definimos tamaño. */
+  font-size: 0.95rem;
+
+  /* Utilizamos azul principal. */
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+
+  /* Colocamos los gráficos uno debajo del otro. */
+  .expense-charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Reducimos el espacio superior. */
+  .expense-charts {
+    margin-top: 18px;
+
+    /* Reducimos la separación entre tarjetas. */
+    gap: 14px;
+  }
+
+
+  /* Reducimos el padding interior. */
+  .expense-chart-card {
+    padding: 20px 14px;
+
+    /* Reducimos ligeramente el radio. */
+    border-radius: 18px;
+  }
+
+
+  /* Organizamos el encabezado verticalmente. */
+  .expense-chart-card__header {
+    flex-direction: column;
+
+    /* Reducimos la separación. */
+    gap: 10px;
+
+    /* Dejamos un poco menos de margen inferior. */
+    margin-bottom: 12px;
+  }
+
+
+  /* Permitimos que la etiqueta se ajuste
+     al contenido en teléfonos. */
+  .expense-chart-card__badge {
+    align-self: flex-start;
+  }
+
+
+  /* Reducimos ligeramente el título. */
+  .expense-chart-card__title {
+    font-size: 1.05rem;
+  }
+
+
+  /* Reducimos ligeramente la descripción. */
+  .expense-chart-card__description {
+    font-size: 0.83rem;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS MUY PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 380px) {
+
+  /* Reducimos todavía más el padding. */
+  .expense-chart-card {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

@@ -1,0 +1,216 @@
+/* ========================================================= */
+/* CONTENEDOR DE INDICADORES */
+/* ========================================================= */
+
+/* Creamos la cuadrícula donde aparecerán
+   los indicadores financieros principales. */
+.expense-summary {
+  /* Utilizamos Grid porque resulta ideal
+     para distribuir tarjetas del mismo nivel. */
+  display: grid;
+
+  /* En escritorio mostramos cuatro tarjetas. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  /* Dejamos separación entre tarjetas. */
+  gap: 18px;
+
+  /* Separamos esta sección del encabezado. */
+  margin-top: 24px;
+}
+
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+/* Diseñamos cada indicador financiero. */
+.expense-summary__card {
+  /* Permitimos organizar los contenidos verticalmente. */
+  display: flex;
+
+  /* Colocamos cada elemento uno debajo del otro. */
+  flex-direction: column;
+
+  /* Separamos los elementos internos. */
+  gap: 7px;
+
+  /* Damos un poco de altura mínima
+     para mantener uniformidad entre tarjetas. */
+  min-height: 145px;
+
+  /* Añadimos espacio interno. */
+  padding: 24px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 18px;
+
+  /* Utilizamos un borde muy suave. */
+  border: 1px solid rgba(30, 52, 72, 0.08);
+
+  /* Añadimos una sombra discreta. */
+  box-shadow: 0 8px 25px rgba(30, 52, 72, 0.055);
+
+  /* Añadimos una transición visual. */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* Elevamos ligeramente la tarjeta al pasar el mouse. */
+.expense-summary__card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 12px 30px rgba(30, 52, 72, 0.09);
+
+  border-color: rgba(167, 123, 72, 0.18);
+}
+
+
+/* ========================================================= */
+/* TEXTO DE LAS TARJETAS */
+/* ========================================================= */
+
+/* Diseñamos el nombre del indicador. */
+.expense-summary__label {
+  /* Tamaño discreto. */
+  font-size: 0.86rem;
+
+  /* Aplicamos peso visual. */
+  font-weight: 600;
+
+  /* Utilizamos un color secundario. */
+  color: #6d7983;
+}
+
+
+/* Diseñamos el número principal. */
+.expense-summary__value {
+  /* Dejamos un poco de separación superior. */
+  margin-top: 4px;
+
+  /* Adaptamos automáticamente el tamaño. */
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+
+  /* Destacamos el valor. */
+  font-weight: 700;
+
+  /* Mejoramos la compactación. */
+  line-height: 1.2;
+
+  /* Utilizamos azul oscuro. */
+  color: #1e3448;
+
+  /* Permitimos romper texto cuando sea necesario. */
+  overflow-wrap: anywhere;
+}
+
+
+/* Variante utilizada cuando el valor principal
+   corresponde al nombre de una categoría. */
+.expense-summary__value--text {
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+}
+
+
+/* Diseñamos la explicación secundaria. */
+.expense-summary__detail {
+  /* Empujamos el texto hacia la zona inferior
+     si sobra espacio dentro de la tarjeta. */
+  margin-top: auto;
+
+  /* Tamaño secundario. */
+  font-size: 0.82rem;
+
+  /* Altura cómoda. */
+  line-height: 1.4;
+
+  /* Color secundario. */
+  color: #82909a;
+}
+
+
+/* Si aumenta el gasto, utilizamos un tono de advertencia. */
+.expense-summary__detail--increase {
+  color: #b55e59;
+}
+
+
+/* Si disminuye el gasto,
+   utilizamos un tono positivo. */
+.expense-summary__detail--decrease {
+  color: #4f8065;
+}
+
+
+/* ========================================================= */
+/* TABLETS GRANDES */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+  /* Reducimos las cuatro columnas a dos. */
+  .expense-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ========================================================= */
+/* TABLETS PEQUEÑAS Y TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+  /* Utilizamos una sola columna. */
+  .expense-summary {
+    grid-template-columns: 1fr;
+
+    /* Dejamos un poco menos de separación. */
+    gap: 14px;
+
+    /* Reducimos el margen superior. */
+    margin-top: 18px;
+  }
+
+
+  /* En teléfonos ya no necesitamos
+     tanta altura mínima. */
+  .expense-summary__card {
+    min-height: auto;
+
+    /* Reducimos el padding. */
+    padding: 20px;
+  }
+
+
+  /* Eliminamos el efecto de elevar las tarjetas
+     porque en pantallas táctiles no aporta demasiado. */
+  .expense-summary__card:hover {
+    transform: none;
+  }
+
+
+  /* Ya no necesitamos empujar la información inferior. */
+  .expense-summary__detail {
+    margin-top: 4px;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS MUY PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 380px) {
+
+  /* Reducimos todavía más el padding. */
+  .expense-summary__card {
+    padding: 18px 16px;
+  }
+}

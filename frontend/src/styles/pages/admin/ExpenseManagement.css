@@ -1,0 +1,92 @@
+/* ========================================================= */
+/* PÁGINA GENERAL */
+/* ========================================================= */
+
+/* Definimos la apariencia principal de la página
+   correspondiente a la gestión de gastos. */
+.expense-management {
+  /* Permitimos que la página ocupe como mínimo
+     toda la altura visible del navegador. */
+  min-height: 100vh;
+
+  /* Utilizamos un fondo claro y ligeramente cálido
+     para mantener coherencia con la identidad visual. */
+  background-color: #f8f6f2;
+
+  /* Añadimos espacio vertical alrededor del contenido. */
+  padding: 48px 24px 70px;
+}
+
+
+/* Creamos el contenedor central de toda la página. */
+.expense-management__container {
+  /* Limitamos el ancho máximo para evitar que
+     el contenido se extienda demasiado en monitores grandes. */
+  max-width: 1400px;
+
+  /* Centramos horizontalmente el contenido. */
+  margin: 0 auto;
+
+  /* Permitimos ocupar todo el ancho disponible
+     hasta alcanzar el máximo definido. */
+  width: 100%;
+}
+
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1024px) {
+
+  /* Reducimos los márgenes exteriores
+     en pantallas medianas. */
+  .expense-management {
+    padding: 38px 20px 60px;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Aprovechamos mejor el espacio disponible
+     en dispositivos móviles. */
+  .expense-management {
+    padding: 28px 16px 50px;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 380px) {
+
+  /* Reducimos todavía más el espacio lateral
+     en dispositivos muy pequeños. */
+  .expense-management {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* ========================================================= */
+/* CONTENIDO CAMBIANTE DEL MENÚ */
+/* ========================================================= */
+
+/* Creamos el espacio donde aparecerá
+   la sección actualmente seleccionada. */
+.expense-management__content {
+  /* Evitamos que cambios de contenido
+     generen problemas de ancho. */
+  width: 100%;
+
+  /* Permitimos trabajar correctamente
+     con componentes que usan Grid. */
+  min-width: 0;
+}

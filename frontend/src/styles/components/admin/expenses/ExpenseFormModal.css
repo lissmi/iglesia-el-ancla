@@ -1,0 +1,743 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.expense-modal__overlay {
+  /* Fijamos el fondo sobre toda la pantalla. */
+  position: fixed;
+
+  /* Ocupamos toda el área visible. */
+  inset: 0;
+
+  /* Colocamos el modal por encima del resto de la página. */
+  z-index: 2000;
+
+  /* Utilizamos Flexbox para centrar el modal. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente en escritorio. */
+  align-items: center;
+
+  /* Dejamos espacio alrededor del modal. */
+  padding: 24px;
+
+  /* Oscurecemos el contenido que queda detrás. */
+  background-color: rgba(18, 33, 45, 0.6);
+
+  /* Aplicamos un desenfoque suave al fondo. */
+  backdrop-filter: blur(3px);
+
+  /* Permitimos desplazamiento vertical
+     si el modal supera la altura de la pantalla. */
+  overflow-y: auto;
+
+  /* Evitamos cualquier desplazamiento lateral. */
+  overflow-x: hidden;
+
+  /* Incluimos padding dentro del tamaño total. */
+  box-sizing: border-box;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.expense-modal {
+  /* Permitimos ocupar todo el ancho disponible. */
+  width: 100%;
+
+  /* Limitamos el tamaño máximo en escritorio. */
+  max-width: 720px;
+
+  /* Incluimos padding y bordes
+     dentro del ancho calculado. */
+  box-sizing: border-box;
+
+  /* Limitamos la altura del modal. */
+  max-height: calc(100vh - 48px);
+
+  /* Permitimos desplazamiento vertical interno. */
+  overflow-y: auto;
+
+  /* Evitamos cualquier desbordamiento horizontal. */
+  overflow-x: hidden;
+
+  /* Añadimos espacio interior. */
+  padding: 30px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 22px;
+
+  /* Añadimos profundidad visual. */
+  box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.expense-modal__header {
+  /* Organizamos el texto y el botón de cerrar. */
+  display: flex;
+
+  /* Separamos ambos extremos. */
+  justify-content: space-between;
+
+  /* Alineamos los elementos desde arriba. */
+  align-items: flex-start;
+
+  /* Dejamos separación entre ambos bloques. */
+  gap: 24px;
+
+  /* Añadimos espacio inferior. */
+  padding-bottom: 22px;
+
+  /* Creamos una separación visual con el formulario. */
+  border-bottom: 1px solid rgba(30, 52, 72, 0.08);
+}
+
+
+.expense-modal__eyebrow {
+  /* Permitimos manejar correctamente sus espacios. */
+  display: inline-block;
+
+  /* Dejamos separación con el título. */
+  margin-bottom: 6px;
+
+  /* Utilizamos el tono dorado del proyecto. */
+  color: #a77b48;
+
+  /* Tamaño reducido. */
+  font-size: 0.75rem;
+
+  /* Aumentamos peso visual. */
+  font-weight: 700;
+
+  /* Separamos ligeramente las letras. */
+  letter-spacing: 0.06em;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+
+.expense-modal__header h2 {
+  /* Eliminamos margen predeterminado. */
+  margin: 0;
+
+  /* Utilizamos el azul principal. */
+  color: #1e3448;
+
+  /* Destacamos el título. */
+  font-size: 1.5rem;
+}
+
+
+.expense-modal__header p {
+  /* Limitamos el ancho del texto. */
+  max-width: 510px;
+
+  /* Dejamos separación superior. */
+  margin: 8px 0 0;
+
+  /* Utilizamos un color secundario. */
+  color: #78858e;
+
+  /* Tamaño cómodo. */
+  font-size: 0.87rem;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.expense-modal__close {
+  /* Centramos el símbolo dentro del botón. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos tamaño fijo. */
+  width: 38px;
+
+  height: 38px;
+
+  /* Evitamos que Flexbox lo reduzca. */
+  flex-shrink: 0;
+
+  /* Eliminamos padding predeterminado. */
+  padding: 0;
+
+  /* Eliminamos borde. */
+  border: none;
+
+  /* Convertimos el botón en círculo. */
+  border-radius: 50%;
+
+  /* Fondo suave. */
+  background-color: #f5f2ee;
+
+  /* Color del símbolo. */
+  color: #64727b;
+
+  /* Aumentamos el tamaño de la X. */
+  font-size: 1.5rem;
+
+  /* Indicamos interacción. */
+  cursor: pointer;
+}
+
+
+.expense-modal__close:hover {
+  /* Oscurecemos ligeramente el fondo. */
+  background-color: #ebe6df;
+
+  /* Utilizamos azul principal. */
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.expense-form {
+  /* Utilizamos Grid para organizar los campos. */
+  display: grid;
+
+  /* En escritorio mostramos dos columnas. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  /* Dejamos separación entre campos. */
+  gap: 19px;
+
+  /* Separamos el formulario del encabezado. */
+  padding-top: 24px;
+
+  /* Permitimos que el formulario pueda reducirse
+     correctamente dentro del modal. */
+  min-width: 0;
+
+  /* Evitamos desbordamientos laterales. */
+  width: 100%;
+
+  /* Incluimos padding y bordes dentro del ancho. */
+  box-sizing: border-box;
+}
+
+
+.expense-form__field {
+  /* Organizamos etiqueta y campo verticalmente. */
+  display: flex;
+
+  /* Apilamos los elementos. */
+  flex-direction: column;
+
+  /* Dejamos separación entre ellos. */
+  gap: 7px;
+
+  /* Permite que Grid reduzca correctamente
+     el ancho de los campos. */
+  min-width: 0;
+
+  /* Evitamos superar el ancho disponible. */
+  max-width: 100%;
+}
+
+
+.expense-form__field--full {
+  /* Hacemos que ciertos campos
+     ocupen las dos columnas. */
+  grid-column: 1 / -1;
+}
+
+
+.expense-form__field label {
+  /* Color de las etiquetas. */
+  color: #53636e;
+
+  /* Tamaño reducido. */
+  font-size: 0.78rem;
+
+  /* Aumentamos ligeramente el peso. */
+  font-weight: 650;
+}
+
+
+/* Diseñamos todos los campos del formulario. */
+.expense-form__field input,
+.expense-form__field select,
+.expense-form__field textarea {
+  /* Ocupamos todo el ancho disponible. */
+  width: 100%;
+
+  /* Nunca permitimos que superen el contenedor. */
+  max-width: 100%;
+
+  /* Permitimos que puedan reducirse correctamente. */
+  min-width: 0;
+
+  /* Incluimos padding y bordes dentro del ancho. */
+  box-sizing: border-box;
+
+  /* Definimos una altura cómoda. */
+  min-height: 46px;
+
+  /* Añadimos espacio interior. */
+  padding: 11px 13px;
+
+  /* Añadimos un borde suave. */
+  border: 1px solid rgba(30, 52, 72, 0.14);
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 10px;
+
+  /* Fondo ligeramente cálido. */
+  background-color: #faf9f7;
+
+  /* Color del texto. */
+  color: #31495c;
+
+  /* Heredamos la tipografía de la aplicación. */
+  font: inherit;
+
+  /* Ajustamos el tamaño. */
+  font-size: 0.87rem;
+
+  /* Quitamos el outline predeterminado. */
+  outline: none;
+
+  /* Añadimos una transición suave. */
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+/* Reforzamos específicamente los select. */
+.expense-form__field select {
+  /* Garantizamos que el selector cerrado
+     nunca pueda superar el contenedor. */
+  width: 100%;
+
+  /* Limitamos su ancho máximo. */
+  max-width: 100%;
+
+  /* Incluimos borde y padding
+     dentro del ancho total. */
+  box-sizing: border-box;
+
+  /* Permitimos que el navegador
+     gestione correctamente el control nativo. */
+  display: block;
+}
+
+
+.expense-form__field textarea {
+  /* Definimos altura mínima. */
+  min-height: 105px;
+
+  /* Permitimos cambiar únicamente su altura. */
+  resize: vertical;
+}
+
+
+.expense-form__field input:focus,
+.expense-form__field select:focus,
+.expense-form__field textarea:focus {
+  /* Destacamos el campo activo. */
+  border-color: #b98a54;
+
+  /* Cambiamos a fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos un halo suave. */
+  box-shadow: 0 0 0 3px rgba(185, 138, 84, 0.12);
+}
+
+
+/* ========================================================= */
+/* CAMPO MONTO */
+/* ========================================================= */
+
+.expense-form__amount {
+  /* Organizamos símbolo e input horizontalmente. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Ocupamos todo el ancho disponible. */
+  width: 100%;
+
+  /* Evitamos superar el contenedor. */
+  max-width: 100%;
+
+  /* Permitimos reducir el componente dentro de Grid. */
+  min-width: 0;
+
+  /* Incluimos bordes dentro del ancho. */
+  box-sizing: border-box;
+
+  /* Evitamos desbordes internos. */
+  overflow: hidden;
+
+  /* Añadimos borde. */
+  border: 1px solid rgba(30, 52, 72, 0.14);
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 10px;
+
+  /* Fondo suave. */
+  background-color: #faf9f7;
+}
+
+
+.expense-form__amount span {
+  /* Centramos el símbolo. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Hacemos que ocupe toda la altura. */
+  align-self: stretch;
+
+  /* Añadimos espacio lateral. */
+  padding: 0 14px;
+
+  /* Separamos visualmente del input. */
+  border-right: 1px solid rgba(30, 52, 72, 0.1);
+
+  /* Color secundario. */
+  color: #778690;
+
+  /* Destacamos el símbolo. */
+  font-weight: 700;
+}
+
+
+.expense-form__amount input {
+  /* Permitimos que el input use
+     todo el espacio restante. */
+  flex: 1;
+
+  /* Muy importante para evitar overflow en Flexbox. */
+  min-width: 0;
+
+  /* Eliminamos su borde porque el contenedor ya tiene uno. */
+  border: none;
+
+  /* Eliminamos radio interno. */
+  border-radius: 0;
+
+  /* Hacemos el fondo transparente. */
+  background-color: transparent;
+
+  /* Eliminamos sombras propias. */
+  box-shadow: none;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.expense-form__actions {
+  /* Los botones ocupan las dos columnas. */
+  grid-column: 1 / -1;
+
+  /* Organizamos horizontalmente. */
+  display: flex;
+
+  /* Los alineamos a la derecha. */
+  justify-content: flex-end;
+
+  /* Dejamos separación. */
+  gap: 10px;
+
+  /* Añadimos un pequeño espacio superior. */
+  padding-top: 5px;
+}
+
+
+.expense-form__cancel,
+.expense-form__submit {
+  /* Dejamos una altura cómoda. */
+  min-height: 44px;
+
+  /* Añadimos espacio lateral. */
+  padding: 0 19px;
+
+  /* Redondeamos esquinas. */
+  border-radius: 10px;
+
+  /* Tamaño del texto. */
+  font-size: 0.84rem;
+
+  /* Destacamos los botones. */
+  font-weight: 650;
+
+  /* Indicamos interacción. */
+  cursor: pointer;
+}
+
+
+.expense-form__cancel {
+  /* Borde suave. */
+  border: 1px solid rgba(30, 52, 72, 0.14);
+
+  /* Fondo blanco. */
+  background-color: #ffffff;
+
+  /* Color secundario. */
+  color: #5d6c76;
+}
+
+
+.expense-form__submit {
+  /* Borde del color principal. */
+  border: 1px solid #1e3448;
+
+  /* Fondo azul. */
+  background-color: #1e3448;
+
+  /* Texto blanco. */
+  color: #ffffff;
+}
+
+
+.expense-form__submit:hover {
+  /* Oscurecemos ligeramente el botón principal. */
+  background-color: #152b3e;
+}
+
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+  .expense-modal {
+    /* Reducimos ligeramente el padding
+       antes de llegar al diseño móvil. */
+    padding: 26px;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+  .expense-modal__overlay {
+    /* Ubicamos el modal desde arriba
+       porque puede superar la altura visible. */
+    align-items: flex-start;
+
+    /* Dejamos márgenes pequeños. */
+    padding: 10px;
+  }
+
+
+  .expense-modal {
+    /* Ocupamos todo el ancho disponible. */
+    width: 100%;
+
+    /* Nunca superamos el ancho disponible. */
+    max-width: 100%;
+
+    /* Incluimos padding dentro del tamaño. */
+    box-sizing: border-box;
+
+    /* Utilizamos dvh para adaptarnos mejor
+       a navegadores móviles. */
+    max-height: calc(100dvh - 20px);
+
+    /* Permitimos desplazamiento vertical. */
+    overflow-y: auto;
+
+    /* Evitamos completamente
+       el desplazamiento horizontal. */
+    overflow-x: hidden;
+
+    /* Reducimos el padding. */
+    padding: 22px 18px;
+
+    /* Ajustamos las esquinas. */
+    border-radius: 18px;
+  }
+
+
+  .expense-modal__header {
+    /* Reducimos la separación entre
+       contenido y botón de cerrar. */
+    gap: 14px;
+  }
+
+
+  .expense-modal__header h2 {
+    /* Reducimos el título. */
+    font-size: 1.3rem;
+  }
+
+
+  .expense-modal__header p {
+    /* Reducimos ligeramente la descripción. */
+    font-size: 0.82rem;
+  }
+
+
+  /* En móvil mostramos todos los campos
+     en una sola columna. */
+  .expense-form {
+    grid-template-columns: minmax(0, 1fr);
+
+    /* Reducimos separación. */
+    gap: 16px;
+
+    /* Ocupamos todo el ancho. */
+    width: 100%;
+
+    /* Evitamos cualquier desborde. */
+    min-width: 0;
+  }
+
+
+  .expense-form__field--full {
+    /* Ya no necesitamos ocupar dos columnas. */
+    grid-column: auto;
+  }
+
+
+  .expense-form__field {
+    /* Reforzamos el control de ancho. */
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+  }
+
+
+  .expense-form__field input,
+  .expense-form__field select,
+  .expense-form__field textarea {
+    /* Ocupamos exactamente el espacio disponible. */
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    /* Incluimos padding y borde dentro del ancho. */
+    box-sizing: border-box;
+  }
+
+
+  .expense-form__field input,
+  .expense-form__field select {
+    /* Altura cómoda para interacción táctil. */
+    min-height: 48px;
+  }
+
+
+  .expense-form__actions {
+    /* Ya no necesitamos ocupar varias columnas. */
+    grid-column: auto;
+
+    /* Utilizamos Grid para repartir los botones. */
+    display: grid;
+
+    /* Dos botones del mismo tamaño. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    /* Ocupamos todo el ancho. */
+    width: 100%;
+  }
+
+
+  .expense-form__cancel,
+  .expense-form__submit {
+    /* Botones cómodos para tocar. */
+    min-height: 48px;
+
+    /* Evitamos que puedan desbordarse. */
+    width: 100%;
+
+    min-width: 0;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS MUY PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 390px) {
+
+  .expense-modal__overlay {
+    /* Reducimos todavía más el margen exterior. */
+    padding: 6px;
+  }
+
+
+  .expense-modal {
+    /* Aprovechamos mejor las pantallas pequeñas. */
+    max-height: calc(100dvh - 12px);
+
+    /* Reducimos espacio interior. */
+    padding: 20px 14px;
+
+    /* Reducimos ligeramente las esquinas. */
+    border-radius: 15px;
+  }
+
+
+  .expense-modal__eyebrow {
+    /* Reducimos ligeramente la etiqueta. */
+    font-size: 0.68rem;
+  }
+
+
+  .expense-modal__header h2 {
+    /* Adaptamos el título. */
+    font-size: 1.2rem;
+  }
+
+
+  .expense-modal__close {
+    /* Reducimos ligeramente el botón cerrar
+       sin hacerlo demasiado pequeño. */
+    width: 34px;
+
+    height: 34px;
+  }
+
+
+  /* Apilamos los botones para evitar
+     que queden demasiado estrechos. */
+  .expense-form__actions {
+    grid-template-columns: 1fr;
+  }
+}

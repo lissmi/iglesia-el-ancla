@@ -1,0 +1,184 @@
+/* ========================================================= */
+/* MENÚ PRINCIPAL */
+/* ========================================================= */
+
+/* Creamos la barra que contendrá
+   las diferentes secciones financieras. */
+.expense-navigation {
+  /* Organizamos los botones horizontalmente. */
+  display: flex;
+
+  /* Dejamos una pequeña separación. */
+  gap: 8px;
+
+  /* Separamos el menú del encabezado. */
+  margin-top: 22px;
+
+  /* Añadimos espacio interior. */
+  padding: 7px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Añadimos un borde suave. */
+  border: 1px solid rgba(30, 52, 72, 0.08);
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 15px;
+
+  /* Agregamos una sombra discreta. */
+  box-shadow: 0 6px 20px rgba(30, 52, 72, 0.05);
+
+  /* Permitimos desplazamiento horizontal
+     en pantallas pequeñas. */
+  overflow-x: auto;
+
+  /* Evitamos mostrar una barra visual muy invasiva. */
+  scrollbar-width: thin;
+}
+
+
+/* Diseñamos cada opción. */
+.expense-navigation__button {
+  /* Permitimos que los botones compartan
+     el espacio disponible. */
+  flex: 1;
+
+  /* Evitamos que sean demasiado pequeños. */
+  min-width: max-content;
+
+  /* Añadimos espacio interior. */
+  padding: 11px 18px;
+
+  /* Eliminamos borde predeterminado. */
+  border: none;
+
+  /* Creamos esquinas suaves. */
+  border-radius: 10px;
+
+  /* Fondo transparente inicialmente. */
+  background-color: transparent;
+
+  /* Utilizamos un tono secundario. */
+  color: #6d7b85;
+
+  /* Definimos tamaño. */
+  font-size: 0.86rem;
+
+  /* Aplicamos peso visual. */
+  font-weight: 600;
+
+  /* Indicamos interacción. */
+  cursor: pointer;
+
+  /* Añadimos transición suave. */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Respuesta visual al pasar el mouse. */
+.expense-navigation__button:hover {
+  background-color: #f5f2ed;
+  color: #1e3448;
+}
+
+
+/* Diseñamos la sección actualmente seleccionada. */
+.expense-navigation__button--active {
+  /* Utilizamos el azul principal. */
+  background-color: #1e3448;
+
+  /* Texto blanco. */
+  color: #ffffff;
+
+  /* Añadimos una sombra ligera. */
+  box-shadow: 0 5px 12px rgba(30, 52, 72, 0.14);
+}
+
+
+/* Evitamos que el hover cambie el botón activo. */
+.expense-navigation__button--active:hover {
+  background-color: #1e3448;
+  color: #ffffff;
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .expense-navigation {
+    /* Cambiamos Flexbox por Grid para mostrar
+       todas las opciones sin desplazamiento horizontal. */
+    display: grid;
+
+    /* Creamos dos columnas del mismo tamaño. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    /* Dejamos separación entre los botones. */
+    gap: 6px;
+
+    /* Reducimos ligeramente el espacio interior. */
+    padding: 6px;
+
+    /* Ya no necesitamos desplazamiento horizontal. */
+    overflow-x: visible;
+  }
+
+
+  .expense-navigation__button {
+    /* Eliminamos el comportamiento flex
+       utilizado en escritorio. */
+    flex: initial;
+
+    /* Permitimos que el botón pueda reducirse
+       correctamente dentro de su celda. */
+    min-width: 0;
+
+    /* Hacemos que ocupe todo el ancho disponible. */
+    width: 100%;
+
+    /* Dejamos una altura cómoda para teléfonos. */
+    min-height: 44px;
+
+    /* Reducimos el padding horizontal. */
+    padding: 10px 8px;
+
+    /* Centramos el texto. */
+    text-align: center;
+
+    /* Reducimos ligeramente el tamaño del texto. */
+    font-size: 0.8rem;
+
+    /* Permitimos que "Próximos gastos"
+       pueda dividirse en dos líneas si fuese necesario. */
+    white-space: normal;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS MUY PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 360px) {
+
+  .expense-navigation__button {
+    /* Ajustamos ligeramente el texto
+       para pantallas muy pequeñas. */
+    font-size: 0.75rem;
+
+    /* Reducimos todavía más el espacio lateral. */
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}

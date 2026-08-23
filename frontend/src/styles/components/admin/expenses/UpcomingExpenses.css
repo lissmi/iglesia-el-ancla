@@ -1,0 +1,564 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+/* Creamos la tarjeta principal de gastos próximos. */
+.upcoming-expenses {
+  /* Separamos la sección de los gráficos anteriores. */
+  margin-top: 24px;
+
+  /* Añadimos espacio interior. */
+  padding: 28px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos esquinas redondeadas. */
+  border-radius: 20px;
+
+  /* Añadimos un borde suave. */
+  border: 1px solid rgba(30, 52, 72, 0.08);
+
+  /* Utilizamos una sombra discreta. */
+  box-shadow: 0 8px 25px rgba(30, 52, 72, 0.055);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+/* Organizamos el encabezado de la sección. */
+.upcoming-expenses__header {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Distribuimos los elementos en extremos opuestos. */
+  justify-content: space-between;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Dejamos separación. */
+  gap: 24px;
+
+  /* Separamos el encabezado del listado. */
+  margin-bottom: 22px;
+}
+
+
+/* Diseñamos el título principal. */
+.upcoming-expenses__title {
+  /* Eliminamos márgenes predeterminados. */
+  margin: 0;
+
+  /* Definimos tamaño. */
+  font-size: 1.2rem;
+
+  /* Aumentamos el peso. */
+  font-weight: 700;
+
+  /* Utilizamos azul oscuro. */
+  color: #1e3448;
+}
+
+
+/* Diseñamos la descripción. */
+.upcoming-expenses__description {
+  /* Dejamos espacio con respecto al título. */
+  margin: 7px 0 0;
+
+  /* Tamaño secundario. */
+  font-size: 0.88rem;
+
+  /* Mejoramos la lectura. */
+  line-height: 1.5;
+
+  /* Utilizamos color secundario. */
+  color: #7a8791;
+}
+
+
+/* ========================================================= */
+/* TOTAL COMPROMETIDO */
+/* ========================================================= */
+
+/* Organizamos el total verticalmente. */
+.upcoming-expenses__total {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Colocamos sus elementos verticalmente. */
+  flex-direction: column;
+
+  /* Alineamos hacia la derecha en escritorio. */
+  align-items: flex-end;
+
+  /* Evitamos que se comprima. */
+  flex-shrink: 0;
+}
+
+
+/* Diseñamos la etiqueta. */
+.upcoming-expenses__total-label {
+  /* Tamaño pequeño. */
+  font-size: 0.76rem;
+
+  /* Color secundario. */
+  color: #7b8790;
+}
+
+
+/* Diseñamos el monto total. */
+.upcoming-expenses__total-value {
+  /* Dejamos un pequeño espacio superior. */
+  margin-top: 3px;
+
+  /* Tamaño destacado. */
+  font-size: 1.3rem;
+
+  /* Utilizamos azul oscuro. */
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* LISTADO */
+/* ========================================================= */
+
+/* Organizamos las filas verticalmente. */
+.upcoming-expenses__list {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Colocamos los elementos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Dejamos separación entre filas. */
+  gap: 10px;
+}
+
+
+/* Diseñamos cada gasto pendiente. */
+.upcoming-expenses__item {
+  /* Utilizamos Grid para organizar las columnas. */
+  display: grid;
+
+  /* Definimos las columnas principales. */
+  grid-template-columns:
+    minmax(240px, 1.7fr)
+    minmax(120px, 0.8fr)
+    minmax(140px, 0.9fr)
+    100px
+    minmax(110px, 0.7fr);
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Dejamos separación entre columnas. */
+  gap: 18px;
+
+  /* Añadimos espacio interior. */
+  padding: 17px 18px;
+
+  /* Utilizamos un fondo ligeramente diferente. */
+  background-color: #faf9f7;
+
+  /* Creamos esquinas suaves. */
+  border-radius: 14px;
+
+  /* Añadimos un borde muy ligero. */
+  border: 1px solid rgba(30, 52, 72, 0.06);
+
+  /* Añadimos una transición sencilla. */
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* Añadimos una pequeña respuesta visual. */
+.upcoming-expenses__item:hover {
+  /* Cambiamos ligeramente el fondo. */
+  background-color: #f7f4ef;
+
+  /* Destacamos un poco más el borde. */
+  border-color: rgba(167, 123, 72, 0.18);
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN PRINCIPAL */
+/* ========================================================= */
+
+/* Organizamos el icono y la información principal. */
+.upcoming-expenses__main {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Dejamos separación. */
+  gap: 13px;
+
+  /* Evitamos problemas de desbordamiento. */
+  min-width: 0;
+}
+
+
+/* Diseñamos el pequeño icono. */
+.upcoming-expenses__icon {
+  /* Centramos su contenido. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos tamaño fijo. */
+  width: 42px;
+  height: 42px;
+
+  /* Evitamos que se comprima. */
+  flex-shrink: 0;
+
+  /* Fondo dorado muy suave. */
+  background-color: #f1e8dc;
+
+  /* Color dorado oscuro. */
+  color: #987044;
+
+  /* Forma circular. */
+  border-radius: 50%;
+
+  /* Destacamos el símbolo. */
+  font-weight: 700;
+}
+
+
+/* Permitimos que el contenido textual
+   utilice correctamente el espacio disponible. */
+.upcoming-expenses__info {
+  min-width: 0;
+}
+
+
+/* Diseñamos el nombre del gasto. */
+.upcoming-expenses__name {
+  /* Eliminamos márgenes. */
+  margin: 0;
+
+  /* Tamaño legible. */
+  font-size: 0.94rem;
+
+  /* Peso medio-alto. */
+  font-weight: 650;
+
+  /* Azul oscuro. */
+  color: #273d50;
+
+  /* Permitimos dividir textos largos. */
+  overflow-wrap: anywhere;
+}
+
+
+/* Diseñamos la categoría. */
+.upcoming-expenses__category {
+  /* Mostramos como bloque. */
+  display: block;
+
+  /* Dejamos espacio superior. */
+  margin-top: 4px;
+
+  /* Tamaño secundario. */
+  font-size: 0.78rem;
+
+  /* Color secundario. */
+  color: #8a949c;
+}
+
+
+/* ========================================================= */
+/* COLUMNAS SECUNDARIAS */
+/* ========================================================= */
+
+/* Organizamos la información secundaria. */
+.upcoming-expenses__column {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Colocamos los elementos verticalmente. */
+  flex-direction: column;
+
+  /* Dejamos una pequeña separación. */
+  gap: 4px;
+}
+
+
+/* Diseñamos las etiquetas pequeñas. */
+.upcoming-expenses__column-label {
+  /* Tamaño reducido. */
+  font-size: 0.7rem;
+
+  /* Utilizamos color secundario. */
+  color: #9aa3aa;
+}
+
+
+/* Diseñamos los valores secundarios. */
+.upcoming-expenses__column-value {
+  /* Tamaño legible. */
+  font-size: 0.83rem;
+
+  /* Color principal secundario. */
+  color: #52626e;
+}
+
+
+/* ========================================================= */
+/* ESTADO */
+/* ========================================================= */
+
+/* Centramos la etiqueta de estado. */
+.upcoming-expenses__status-wrapper {
+  display: flex;
+}
+
+
+/* Diseñamos el estado pendiente. */
+.upcoming-expenses__status {
+  /* Creamos espacio interior. */
+  padding: 6px 10px;
+
+  /* Redondeamos completamente. */
+  border-radius: 999px;
+
+  /* Fondo de advertencia suave. */
+  background-color: #fff3dc;
+
+  /* Color de advertencia. */
+  color: #9b702a;
+
+  /* Tamaño pequeño. */
+  font-size: 0.73rem;
+
+  /* Aumentamos el peso. */
+  font-weight: 650;
+}
+
+
+/* ========================================================= */
+/* MONTO */
+/* ========================================================= */
+
+/* Organizamos el monto. */
+.upcoming-expenses__amount {
+  /* Utilizamos Flexbox. */
+  display: flex;
+
+  /* Colocamos sus elementos verticalmente. */
+  flex-direction: column;
+
+  /* Alineamos a la derecha. */
+  align-items: flex-end;
+
+  /* Dejamos separación. */
+  gap: 4px;
+}
+
+
+/* Destacamos el monto individual. */
+.upcoming-expenses__amount strong {
+  /* Tamaño ligeramente mayor. */
+  font-size: 0.95rem;
+
+  /* Azul oscuro. */
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* SIN RESULTADOS */
+/* ========================================================= */
+
+/* Diseñamos el estado vacío. */
+.upcoming-expenses__empty {
+  /* Organizamos verticalmente. */
+  display: flex;
+
+  /* Colocamos elementos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente. */
+  align-items: center;
+
+  /* Centramos el texto. */
+  text-align: center;
+
+  /* Dejamos separación. */
+  gap: 6px;
+
+  /* Añadimos bastante espacio. */
+  padding: 36px 20px;
+
+  /* Fondo suave. */
+  background-color: #faf9f7;
+
+  /* Bordes suaves. */
+  border-radius: 14px;
+
+  /* Color secundario. */
+  color: #7d8991;
+}
+
+
+/* Destacamos el mensaje principal. */
+.upcoming-expenses__empty strong {
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+
+  /* Reducimos la cantidad de columnas. */
+  .upcoming-expenses__item {
+    grid-template-columns:
+      minmax(220px, 1.6fr)
+      minmax(120px, 0.8fr)
+      100px
+      minmax(110px, 0.7fr);
+  }
+
+
+  /* Ocultamos la columna del medio de pago
+     en tablets para evitar saturar la fila. */
+  .upcoming-expenses__column:nth-of-type(3) {
+    display: none;
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+  /* Reducimos el espacio exterior. */
+  .upcoming-expenses {
+    margin-top: 18px;
+
+    /* Reducimos el padding. */
+    padding: 20px;
+
+    /* Ajustamos las esquinas. */
+    border-radius: 18px;
+  }
+
+
+  /* Cambiamos el encabezado a disposición vertical. */
+  .upcoming-expenses__header {
+    flex-direction: column;
+
+    /* Alineamos todo a la izquierda. */
+    align-items: flex-start;
+
+    /* Reducimos la separación. */
+    gap: 16px;
+  }
+
+
+  /* Alineamos el total a la izquierda. */
+  .upcoming-expenses__total {
+    align-items: flex-start;
+  }
+
+
+  /* Transformamos cada fila en una tarjeta móvil. */
+  .upcoming-expenses__item {
+    /* Utilizamos una sola columna. */
+    grid-template-columns: 1fr;
+
+    /* Reducimos la separación. */
+    gap: 14px;
+
+    /* Aumentamos ligeramente el padding vertical. */
+    padding: 18px;
+  }
+
+
+  /* Mostramos nuevamente todas las columnas
+     porque ahora hay suficiente espacio vertical. */
+  .upcoming-expenses__column:nth-of-type(3) {
+    display: flex;
+  }
+
+
+  /* Organizamos fecha y medio de pago
+     utilizando filas compactas. */
+  .upcoming-expenses__column {
+    flex-direction: row;
+
+    /* Separamos etiqueta y valor. */
+    justify-content: space-between;
+
+    /* Dejamos espacio. */
+    gap: 12px;
+
+    /* Añadimos una línea divisoria superior. */
+    padding-top: 11px;
+
+    /* Borde suave. */
+    border-top: 1px solid rgba(30, 52, 72, 0.06);
+  }
+
+
+  /* Centramos verticalmente el estado. */
+  .upcoming-expenses__status-wrapper {
+    justify-content: flex-start;
+  }
+
+
+  /* Colocamos el monto horizontalmente. */
+  .upcoming-expenses__amount {
+    flex-direction: row;
+
+    /* Distribuimos etiqueta y monto. */
+    justify-content: space-between;
+
+    /* Centramos verticalmente. */
+    align-items: center;
+
+    /* Añadimos línea superior. */
+    padding-top: 12px;
+
+    /* Añadimos borde. */
+    border-top: 1px solid rgba(30, 52, 72, 0.06);
+  }
+}
+
+
+/* ========================================================= */
+/* TELÉFONOS PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 380px) {
+
+  /* Reducimos el espacio interior general. */
+  .upcoming-expenses {
+    padding: 16px;
+  }
+
+
+  /* Reducimos el padding de cada gasto. */
+  .upcoming-expenses__item {
+    padding: 16px 14px;
+  }
+}
