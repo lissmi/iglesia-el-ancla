@@ -1,0 +1,489 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.admin-sidebar {
+  /* Permitimos organizar el contenido verticalmente. */
+  display: flex;
+
+  /* Colocamos sus elementos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Definimos un ancho estable para el menú. */
+  width: 280px;
+
+  /* Evitamos que el menú se encoja. */
+  flex-shrink: 0;
+
+  /* Garantizamos que cubra toda la pantalla. */
+  min-height: 100vh;
+
+  /* Agregamos espacio interior. */
+  padding: 28px 20px 22px;
+
+  /* Utilizamos el azul oscuro institucional. */
+  background-color: #1e3448;
+
+  /* Aplicamos texto blanco como color general. */
+  color: #ffffff;
+}
+
+
+/* ========================================================= */
+/* IDENTIDAD */
+/* ========================================================= */
+
+.admin-sidebar__brand {
+  /* Colocamos el icono junto a los textos. */
+  display: flex;
+
+  /* Centramos verticalmente sus elementos. */
+  align-items: center;
+
+  /* Creamos separación entre ellos. */
+  gap: 14px;
+
+  /* Separamos la identidad del menú. */
+  margin-bottom: 34px;
+
+  /* Agregamos espacio horizontal. */
+  padding: 0 6px;
+}
+
+
+.admin-sidebar__brand-icon {
+  /* Centramos el símbolo. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 46px;
+  height: 46px;
+
+  /* Evitamos que cambie de tamaño. */
+  flex-shrink: 0;
+
+  /* Aplicamos el dorado institucional. */
+  background-color: #b98a54;
+
+  /* Redondeamos sus esquinas. */
+  border-radius: 13px;
+
+  /* Aumentamos el tamaño del símbolo. */
+  font-size: 22px;
+
+  /* Aplicamos una sombra suave. */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+
+.admin-sidebar__brand-text {
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos un texto debajo del otro. */
+  flex-direction: column;
+
+  /* Agregamos una separación pequeña. */
+  gap: 3px;
+}
+
+
+.admin-sidebar__brand-text strong {
+  /* Destacamos el nombre. */
+  font-size: 18px;
+
+  /* Definimos un peso más visible. */
+  font-weight: 700;
+}
+
+
+.admin-sidebar__brand-text span {
+  /* Reducimos el texto secundario. */
+  font-size: 12px;
+
+  /* Suavizamos su color. */
+  color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* ========================================================= */
+/* NAVEGACIÓN */
+/* ========================================================= */
+
+.admin-sidebar__navigation {
+  /* Permitimos que el menú ocupe el espacio disponible. */
+  flex: 1;
+
+  /* Permitimos desplazamiento si aparecen más opciones. */
+  overflow-y: auto;
+
+  /* Creamos espacio a la derecha del scroll. */
+  padding-right: 3px;
+}
+
+
+.admin-sidebar__group {
+  /* Separamos cada grupo. */
+  margin-bottom: 24px;
+}
+
+
+.admin-sidebar__group-title {
+  /* Eliminamos el margen superior predeterminado. */
+  margin: 0 0 9px;
+
+  /* Agregamos espacio horizontal. */
+  padding: 0 12px;
+
+  /* Mostramos títulos pequeños. */
+  font-size: 11px;
+
+  /* Utilizamos mayúsculas para diferenciar los grupos. */
+  text-transform: uppercase;
+
+  /* Separamos ligeramente las letras. */
+  letter-spacing: 1.1px;
+
+  /* Suavizamos su color. */
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+.admin-sidebar__list {
+  /* Eliminamos los puntos de la lista. */
+  list-style: none;
+
+  /* Eliminamos el margen predeterminado. */
+  margin: 0;
+
+  /* Eliminamos el espacio interior predeterminado. */
+  padding: 0;
+}
+
+
+.admin-sidebar__list li {
+  /* Separamos ligeramente cada opción. */
+  margin-bottom: 4px;
+}
+
+
+/* ========================================================= */
+/* ENLACES */
+/* ========================================================= */
+
+.admin-sidebar__link {
+  /* Permitimos alinear icono, texto y etiqueta. */
+  display: flex;
+
+  /* Centramos verticalmente sus elementos. */
+  align-items: center;
+
+  /* Creamos separación entre icono y texto. */
+  gap: 12px;
+
+  /* Permitimos ocupar todo el ancho disponible. */
+  width: 100%;
+
+  /* Definimos una altura cómoda para presionar. */
+  min-height: 44px;
+
+  /* Agregamos espacio interior. */
+  padding: 10px 12px;
+
+  /* Eliminamos los estilos visuales de botón. */
+  border: none;
+
+  /* Redondeamos cada opción. */
+  border-radius: 10px;
+
+  /* Mantenemos el fondo transparente. */
+  background-color: transparent;
+
+  /* Heredamos la tipografía del proyecto. */
+  font: inherit;
+
+  /* Ajustamos el tamaño del texto. */
+  font-size: 14px;
+
+  /* Alineamos el contenido hacia la izquierda. */
+  text-align: left;
+
+  /* Eliminamos la línea inferior de los enlaces. */
+  text-decoration: none;
+
+  /* Aplicamos un color suave. */
+  color: rgba(255, 255, 255, 0.78);
+
+  /* Mostramos que las opciones disponibles son presionables. */
+  cursor: pointer;
+
+  /* Suavizamos los cambios visuales. */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.admin-sidebar__link:hover {
+  /* Agregamos un fondo suave al pasar el cursor. */
+  background-color: rgba(255, 255, 255, 0.08);
+
+  /* Destacamos el texto. */
+  color: #ffffff;
+
+  /* Movemos ligeramente el contenido. */
+  transform: translateX(2px);
+}
+
+
+.admin-sidebar__link--active {
+  /* Destacamos la página seleccionada. */
+  background-color: #b98a54;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Agregamos una sombra suave. */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+
+.admin-sidebar__link--active:hover {
+  /* Mantenemos el dorado al pasar el cursor. */
+  background-color: #c29561;
+}
+
+
+/* ========================================================= */
+/* OPCIONES DESHABILITADAS */
+/* ========================================================= */
+
+.admin-sidebar__link--disabled {
+  /* Reducimos la intensidad de la opción. */
+  opacity: 0.48;
+
+  /* Mostramos que todavía no puede utilizarse. */
+  cursor: not-allowed;
+}
+
+
+.admin-sidebar__link--disabled:hover {
+  /* Evitamos cambios visuales al pasar el cursor. */
+  background-color: transparent;
+
+  /* Evitamos el desplazamiento. */
+  transform: none;
+}
+
+
+.admin-sidebar__link small {
+  /* Empujamos la etiqueta hacia la derecha. */
+  margin-left: auto;
+
+  /* Reducimos el tamaño. */
+  font-size: 9px;
+
+  /* Evitamos saltos de línea. */
+  white-space: nowrap;
+
+  /* Mostramos la etiqueta con menor intensidad. */
+  color: rgba(255, 255, 255, 0.58);
+}
+
+
+/* ========================================================= */
+/* PARTE INFERIOR */
+/* ========================================================= */
+
+.admin-sidebar__footer {
+  /* Colocamos una línea divisoria. */
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* Separamos las acciones de la línea. */
+  padding-top: 18px;
+}
+
+
+.admin-sidebar__public-link,
+.admin-sidebar__logout {
+  /* Colocamos icono y texto en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación entre los elementos. */
+  gap: 11px;
+
+  /* Permitimos ocupar todo el ancho. */
+  width: 100%;
+
+  /* Definimos espacio interior. */
+  padding: 11px 12px;
+
+  /* Eliminamos bordes predeterminados. */
+  border: none;
+
+  /* Aplicamos esquinas redondeadas. */
+  border-radius: 9px;
+
+  /* Eliminamos estilos predeterminados. */
+  background-color: transparent;
+
+  /* Heredamos la tipografía. */
+  font: inherit;
+
+  /* Ajustamos el tamaño. */
+  font-size: 14px;
+
+  /* Eliminamos el subrayado del enlace. */
+  text-decoration: none;
+
+  /* Aplicamos un color suave. */
+  color: rgba(255, 255, 255, 0.75);
+
+  /* Mostramos el cursor correspondiente. */
+  cursor: pointer;
+
+  /* Suavizamos los cambios. */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.admin-sidebar__public-link:hover,
+.admin-sidebar__logout:hover {
+  /* Agregamos un fondo suave. */
+  background-color: rgba(255, 255, 255, 0.08);
+
+  /* Destacamos el texto. */
+  color: #ffffff;
+}
+
+
+.admin-sidebar__logout {
+  /* Separamos el cierre de sesión del enlace anterior. */
+  margin-top: 4px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-sidebar {
+    /* Permitimos ocupar todo el ancho disponible. */
+    width: 100%;
+
+    /* En móviles no necesitamos cubrir toda la altura. */
+    min-height: auto;
+  }
+
+}
+
+/* ========================================================= */
+/* BOTÓN PARA CERRAR */
+/* ========================================================= */
+
+.admin-sidebar__close {
+  /* Ocultamos el botón en escritorio. */
+  display: none;
+
+  /* Eliminamos bordes predeterminados. */
+  border: none;
+
+  /* Mantenemos un fondo transparente. */
+  background-color: transparent;
+
+  /* Aplicamos texto blanco. */
+  color: #ffffff;
+
+  /* Permitimos presionarlo. */
+  cursor: pointer;
+}
+
+
+/* ========================================================= */
+/* SIDEBAR MÓVIL */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-sidebar {
+    /* Fijamos el menú sobre la pantalla. */
+    position: fixed;
+
+    /* Lo ubicamos arriba y a la izquierda. */
+    top: 0;
+    left: 0;
+
+    /* Lo colocamos sobre el overlay. */
+    z-index: 3000;
+
+    /* Definimos su ancho móvil. */
+    width: min(86vw, 310px);
+
+    /* Cubrimos toda la altura. */
+    height: 100vh;
+
+    /* Permitimos desplazamiento interno. */
+    overflow-y: auto;
+
+    /* Ocultamos inicialmente el menú hacia la izquierda. */
+    transform: translateX(-100%);
+
+    /* Animamos su apertura. */
+    transition: transform 0.28s ease;
+  }
+
+
+  .admin-sidebar--open {
+    /* Mostramos el sidebar. */
+    transform: translateX(0);
+  }
+
+
+  .admin-sidebar__brand {
+    /* Permitimos que el botón se vaya hacia la derecha. */
+    width: 100%;
+  }
+
+
+  .admin-sidebar__close {
+    /* Mostramos el botón en celulares. */
+    display: flex;
+
+    /* Centramos el icono. */
+    justify-content: center;
+
+    /* Centramos verticalmente. */
+    align-items: center;
+
+    /* Lo empujamos hacia la derecha. */
+    margin-left: auto;
+
+    /* Definimos sus dimensiones. */
+    width: 38px;
+    height: 38px;
+
+    /* Redondeamos el botón. */
+    border-radius: 9px;
+  }
+
+
+  .admin-sidebar__close:hover {
+    /* Agregamos un fondo suave. */
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+}

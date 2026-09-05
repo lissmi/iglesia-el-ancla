@@ -1,0 +1,1215 @@
+/* ========================================================= */
+/* CONFIGURACIÓN GENERAL */
+/* ========================================================= */
+
+.admin-dashboard {
+  /* Limitamos el ancho para evitar contenido demasiado extendido. */
+  width: 100%;
+
+  /* Definimos un ancho máximo cómodo para pantallas grandes. */
+  max-width: 1500px;
+
+  /* Centramos el dashboard horizontalmente. */
+  margin: 0 auto;
+
+  /* Aplicamos el color principal de los textos. */
+  color: #1e3448;
+}
+
+
+.admin-dashboard *,
+.admin-dashboard *::before,
+.admin-dashboard *::after {
+  /* Incluimos padding y bordes dentro del tamaño calculado. */
+  box-sizing: border-box;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO DE BIENVENIDA */
+/* ========================================================= */
+
+.admin-dashboard__welcome {
+  /* Colocamos el contenido y el botón en una fila. */
+  display: flex;
+
+  /* Separamos ambos extremos. */
+  justify-content: space-between;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Creamos una separación cuando falta espacio. */
+  gap: 28px;
+
+  /* Separamos el encabezado del resumen. */
+  margin-bottom: 28px;
+
+  /* Agregamos espacio interior. */
+  padding: 30px 32px;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Agregamos un borde suave. */
+  border: 1px solid #e5e9ec;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 18px;
+
+  /* Aplicamos una sombra discreta. */
+  box-shadow: 0 10px 30px rgba(22, 43, 59, 0.06);
+}
+
+
+.admin-dashboard__welcome-content {
+  /* Limitamos el ancho del texto principal. */
+  max-width: 750px;
+}
+
+
+.admin-dashboard__eyebrow {
+  /* Permitimos que la etiqueta respete sus espacios. */
+  display: inline-block;
+
+  /* Separamos la etiqueta del título. */
+  margin-bottom: 8px;
+
+  /* Aplicamos el color dorado institucional. */
+  color: #a77643;
+
+  /* Mostramos un texto pequeño. */
+  font-size: 12px;
+
+  /* Destacamos la etiqueta. */
+  font-weight: 700;
+
+  /* Separamos ligeramente las letras. */
+  letter-spacing: 1px;
+
+  /* Mostramos el texto en mayúsculas. */
+  text-transform: uppercase;
+}
+
+
+.admin-dashboard__title {
+  /* Eliminamos el margen predeterminado. */
+  margin: 0;
+
+  /* Ajustamos el tamaño del título. */
+  font-size: clamp(25px, 3vw, 34px);
+
+  /* Definimos un peso fuerte. */
+  font-weight: 750;
+
+  /* Mejoramos la lectura del título. */
+  line-height: 1.2;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+}
+
+
+.admin-dashboard__description {
+  /* Separamos la descripción del título. */
+  margin: 11px 0 0;
+
+  /* Limitamos el ancho de las líneas. */
+  max-width: 680px;
+
+  /* Aplicamos un tamaño cómodo. */
+  font-size: 15px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.65;
+
+  /* Aplicamos un tono secundario. */
+  color: #647580;
+}
+
+
+.admin-dashboard__public-button {
+  /* Colocamos texto e icono en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación entre texto e icono. */
+  gap: 9px;
+
+  /* Evitamos que el botón se encoja. */
+  flex-shrink: 0;
+
+  /* Agregamos espacio interior. */
+  padding: 12px 17px;
+
+  /* Aplicamos un borde institucional. */
+  border: 1px solid #1e3448;
+
+  /* Redondeamos el botón. */
+  border-radius: 10px;
+
+  /* Mantenemos el fondo transparente. */
+  background-color: transparent;
+
+  /* Aplicamos el azul institucional. */
+  color: #1e3448;
+
+  /* Definimos el tamaño del texto. */
+  font-size: 14px;
+
+  /* Destacamos el texto. */
+  font-weight: 650;
+
+  /* Eliminamos el subrayado del enlace. */
+  text-decoration: none;
+
+  /* Suavizamos los cambios visuales. */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.admin-dashboard__public-button:hover {
+  /* Aplicamos fondo azul. */
+  background-color: #1e3448;
+
+  /* Cambiamos el texto a blanco. */
+  color: #ffffff;
+
+  /* Elevamos ligeramente el botón. */
+  transform: translateY(-1px);
+}
+
+
+/* ========================================================= */
+/* TARJETAS DE RESUMEN */
+/* ========================================================= */
+
+.admin-dashboard__summary {
+  /* Organizamos las tarjetas con una cuadrícula. */
+  display: grid;
+
+  /* Creamos cuatro columnas iguales. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  /* Definimos la separación entre tarjetas. */
+  gap: 18px;
+
+  /* Separamos el resumen de la siguiente sección. */
+  margin-bottom: 28px;
+}
+
+
+.admin-dashboard-summary-card {
+  /* Colocamos el icono junto a la información. */
+  display: flex;
+
+  /* Alineamos los elementos al comienzo. */
+  align-items: flex-start;
+
+  /* Creamos separación entre icono y contenido. */
+  gap: 16px;
+
+  /* Agregamos espacio interior. */
+  padding: 22px;
+
+  /* Aplicamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Creamos un borde discreto. */
+  border: 1px solid #e4e9ec;
+
+  /* Redondeamos las esquinas. */
+  border-radius: 16px;
+
+  /* Aplicamos una sombra suave. */
+  box-shadow: 0 8px 24px rgba(22, 43, 59, 0.05);
+
+  /* Suavizamos los movimientos. */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.admin-dashboard-summary-card:hover {
+  /* Elevamos ligeramente la tarjeta. */
+  transform: translateY(-2px);
+
+  /* Aumentamos suavemente la sombra. */
+  box-shadow: 0 12px 30px rgba(22, 43, 59, 0.09);
+}
+
+
+.admin-dashboard-summary-card__icon {
+  /* Centramos el icono horizontalmente. */
+  display: flex;
+
+  /* Centramos el icono verticalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 48px;
+  height: 48px;
+
+  /* Evitamos que el icono se encoja. */
+  flex-shrink: 0;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 13px;
+}
+
+
+.admin-dashboard-summary-card__icon--blue {
+  /* Aplicamos un fondo azul suave. */
+  background-color: #e7eff5;
+
+  /* Aplicamos azul oscuro al icono. */
+  color: #315a78;
+}
+
+
+.admin-dashboard-summary-card__icon--gold {
+  /* Aplicamos un fondo dorado suave. */
+  background-color: #f3e8da;
+
+  /* Aplicamos dorado oscuro al icono. */
+  color: #9b6d3d;
+}
+
+
+.admin-dashboard-summary-card__icon--green {
+  /* Aplicamos un fondo verde suave. */
+  background-color: #e2f0e9;
+
+  /* Aplicamos verde oscuro al icono. */
+  color: #347058;
+}
+
+
+.admin-dashboard-summary-card__icon--red {
+  /* Aplicamos un fondo rojo suave. */
+  background-color: #f5e4e1;
+
+  /* Aplicamos rojo oscuro al icono. */
+  color: #a24e45;
+}
+
+
+.admin-dashboard-summary-card__content {
+  /* Organizamos la información verticalmente. */
+  display: flex;
+
+  /* Colocamos cada elemento debajo del anterior. */
+  flex-direction: column;
+
+  /* Permitimos que ocupe el espacio restante. */
+  flex: 1;
+
+  /* Evitamos desbordamientos. */
+  min-width: 0;
+}
+
+
+.admin-dashboard-summary-card__label {
+  /* Definimos el tamaño de la etiqueta. */
+  font-size: 13px;
+
+  /* Aplicamos un tono secundario. */
+  color: #6b7983;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.35;
+}
+
+
+.admin-dashboard-summary-card__value {
+  /* Separamos el valor de la etiqueta. */
+  margin-top: 5px;
+
+  /* Destacamos el valor principal. */
+  font-size: 27px;
+
+  /* Aplicamos un peso fuerte. */
+  font-weight: 750;
+
+  /* Aplicamos el azul institucional. */
+  color: #1e3448;
+
+  /* Mejoramos la altura del número. */
+  line-height: 1.15;
+}
+
+
+.admin-dashboard-summary-card__detail {
+  /* Separamos el detalle del valor. */
+  margin-top: 5px;
+
+  /* Reducimos su tamaño. */
+  font-size: 12px;
+
+  /* Aplicamos un color secundario. */
+  color: #89949c;
+}
+
+
+/* ========================================================= */
+/* SECCIONES GENERALES */
+/* ========================================================= */
+
+.admin-dashboard-section {
+  /* Agregamos espacio interior. */
+  padding: 24px;
+
+  /* Aplicamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Agregamos un borde sutil. */
+  border: 1px solid #e4e9ec;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 16px;
+
+  /* Aplicamos una sombra suave. */
+  box-shadow: 0 8px 24px rgba(22, 43, 59, 0.05);
+}
+
+
+.admin-dashboard > .admin-dashboard-section {
+  /* Separamos las secciones directas del dashboard. */
+  margin-bottom: 28px;
+}
+
+
+.admin-dashboard-section__header {
+  /* Colocamos el contenido y la acción en una fila. */
+  display: flex;
+
+  /* Separamos ambos extremos. */
+  justify-content: space-between;
+
+  /* Alineamos los elementos al comienzo. */
+  align-items: flex-start;
+
+  /* Creamos separación cuando falta espacio. */
+  gap: 20px;
+
+  /* Separamos el encabezado de su contenido. */
+  margin-bottom: 21px;
+}
+
+
+.admin-dashboard-section__header h2 {
+  /* Eliminamos el margen predeterminado. */
+  margin: 0;
+
+  /* Definimos el tamaño del título. */
+  font-size: 19px;
+
+  /* Aplicamos un peso visible. */
+  font-weight: 700;
+
+  /* Utilizamos el azul institucional. */
+  color: #1e3448;
+}
+
+
+.admin-dashboard-section__header p {
+  /* Separamos la descripción del título. */
+  margin: 6px 0 0;
+
+  /* Definimos un tamaño secundario. */
+  font-size: 13px;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.5;
+
+  /* Aplicamos un tono secundario. */
+  color: #76848e;
+}
+
+
+.admin-dashboard-section__link {
+  /* Colocamos texto e icono en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación entre texto e icono. */
+  gap: 6px;
+
+  /* Evitamos que el enlace se encoja. */
+  flex-shrink: 0;
+
+  /* Eliminamos espacios interiores innecesarios. */
+  padding: 4px 0;
+
+  /* Eliminamos bordes predeterminados. */
+  border: none;
+
+  /* Mantenemos el fondo transparente. */
+  background-color: transparent;
+
+  /* Heredamos la tipografía. */
+  font: inherit;
+
+  /* Definimos un tamaño pequeño. */
+  font-size: 13px;
+
+  /* Destacamos el texto. */
+  font-weight: 650;
+
+  /* Eliminamos el subrayado. */
+  text-decoration: none;
+
+  /* Aplicamos el color dorado. */
+  color: #9b6d3d;
+
+  /* Mostramos que puede presionarse. */
+  cursor: pointer;
+
+  /* Suavizamos el cambio de color. */
+  transition: color 0.2s ease;
+}
+
+
+.admin-dashboard-section__link:hover {
+  /* Oscurecemos el enlace al pasar el cursor. */
+  color: #704a28;
+}
+
+
+.admin-dashboard-section__link:disabled {
+  /* Reducimos la intensidad si está deshabilitado. */
+  opacity: 0.5;
+
+  /* Indicamos que todavía no está disponible. */
+  cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* ACCIONES RÁPIDAS */
+/* ========================================================= */
+
+.admin-dashboard__quick-actions {
+  /* Organizamos las acciones mediante cuadrícula. */
+  display: grid;
+
+  /* Creamos cinco columnas iguales. */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  /* Definimos la separación. */
+  gap: 13px;
+}
+
+
+.admin-quick-action {
+  /* Colocamos icono, contenido y flecha en una fila. */
+  display: flex;
+
+  /* Alineamos los elementos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación interna. */
+  gap: 12px;
+
+  /* Permitimos ocupar todo el ancho de su columna. */
+  width: 100%;
+
+  /* Definimos una altura mínima uniforme. */
+  min-height: 82px;
+
+  /* Agregamos espacio interior. */
+  padding: 14px;
+
+  /* Aplicamos un borde discreto. */
+  border: 1px solid #e1e7ea;
+
+  /* Redondeamos las esquinas. */
+  border-radius: 13px;
+
+  /* Utilizamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Heredamos la tipografía. */
+  font: inherit;
+
+  /* Alineamos el texto hacia la izquierda. */
+  text-align: left;
+
+  /* Eliminamos el subrayado del enlace. */
+  text-decoration: none;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+
+  /* Mostramos que puede presionarse. */
+  cursor: pointer;
+
+  /* Suavizamos los cambios visuales. */
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.admin-quick-action:hover {
+  /* Destacamos el borde. */
+  border-color: #ccb08e;
+
+  /* Aplicamos un fondo cálido suave. */
+  background-color: #fdfaf6;
+
+  /* Elevamos ligeramente la acción. */
+  transform: translateY(-1px);
+}
+
+
+.admin-quick-action__icon {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 42px;
+  height: 42px;
+
+  /* Evitamos que se encoja. */
+  flex-shrink: 0;
+
+  /* Aplicamos un fondo azul suave. */
+  background-color: #eaf0f4;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 11px;
+
+  /* Aplicamos el azul institucional. */
+  color: #315a78;
+}
+
+
+.admin-quick-action__content {
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos un texto debajo del otro. */
+  flex-direction: column;
+
+  /* Permitimos que ocupe el espacio disponible. */
+  flex: 1;
+
+  /* Evitamos problemas de desbordamiento. */
+  min-width: 0;
+
+  /* Creamos separación entre los textos. */
+  gap: 4px;
+}
+
+
+.admin-quick-action__content strong {
+  /* Definimos un tamaño compacto. */
+  font-size: 13px;
+
+  /* Aplicamos un peso visible. */
+  font-weight: 700;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+}
+
+
+.admin-quick-action__content span {
+  /* Definimos un tamaño secundario. */
+  font-size: 11px;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.4;
+
+  /* Aplicamos un tono suave. */
+  color: #7a8790;
+}
+
+
+.admin-quick-action__arrow {
+  /* Evitamos que la flecha cambie de tamaño. */
+  flex-shrink: 0;
+
+  /* Aplicamos un tono secundario. */
+  color: #96a0a7;
+}
+
+
+.admin-quick-action--disabled {
+  /* Reducimos la intensidad del botón. */
+  opacity: 0.58;
+
+  /* Indicamos que no puede presionarse. */
+  cursor: not-allowed;
+}
+
+
+.admin-quick-action--disabled:hover {
+  /* Conservamos el borde original. */
+  border-color: #e1e7ea;
+
+  /* Conservamos el fondo blanco. */
+  background-color: #ffffff;
+
+  /* Evitamos el movimiento. */
+  transform: none;
+}
+
+
+/* ========================================================= */
+/* DISTRIBUCIÓN EN DOS COLUMNAS */
+/* ========================================================= */
+
+.admin-dashboard__columns {
+  /* Creamos una cuadrícula de dos columnas. */
+  display: grid;
+
+  /* Permitimos que ambas columnas ocupen el mismo espacio. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  /* Definimos la separación entre columnas. */
+  gap: 20px;
+
+  /* Separamos este bloque del resumen financiero. */
+  margin-bottom: 28px;
+}
+
+
+/* ========================================================= */
+/* LISTA DE EVENTOS */
+/* ========================================================= */
+
+.admin-dashboard-events {
+  /* Organizamos los eventos verticalmente. */
+  display: flex;
+
+  /* Colocamos los eventos uno debajo del otro. */
+  flex-direction: column;
+}
+
+
+.admin-dashboard-event {
+  /* Colocamos el icono junto al contenido. */
+  display: flex;
+
+  /* Alineamos los elementos al comienzo. */
+  align-items: flex-start;
+
+  /* Creamos separación entre icono y texto. */
+  gap: 13px;
+
+  /* Agregamos espacio vertical. */
+  padding: 15px 0;
+
+  /* Separamos cada evento con una línea. */
+  border-bottom: 1px solid #edf0f2;
+}
+
+
+.admin-dashboard-event:first-child {
+  /* Reducimos el espacio superior del primer evento. */
+  padding-top: 2px;
+}
+
+
+.admin-dashboard-event:last-child {
+  /* Eliminamos la línea del último evento. */
+  border-bottom: none;
+
+  /* Eliminamos su espacio inferior. */
+  padding-bottom: 0;
+}
+
+
+.admin-dashboard-event__icon {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 42px;
+  height: 42px;
+
+  /* Evitamos que se encoja. */
+  flex-shrink: 0;
+
+  /* Aplicamos un fondo cálido. */
+  background-color: #f2e7d9;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 11px;
+
+  /* Aplicamos el color dorado. */
+  color: #946638;
+}
+
+
+.admin-dashboard-event__content {
+  /* Permitimos que ocupe el espacio restante. */
+  flex: 1;
+
+  /* Evitamos desbordamientos. */
+  min-width: 0;
+}
+
+
+.admin-dashboard-event__content h3 {
+  /* Eliminamos el margen predeterminado. */
+  margin: 0;
+
+  /* Definimos el tamaño del título. */
+  font-size: 14px;
+
+  /* Aplicamos un peso visible. */
+  font-weight: 700;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+}
+
+
+.admin-dashboard-event__details {
+  /* Colocamos los detalles en una fila adaptable. */
+  display: flex;
+
+  /* Permitimos que bajen si no existe espacio. */
+  flex-wrap: wrap;
+
+  /* Creamos separación horizontal y vertical. */
+  gap: 7px 14px;
+
+  /* Separamos los detalles del título. */
+  margin-top: 7px;
+}
+
+
+.admin-dashboard-event__details span {
+  /* Colocamos icono y texto en una fila. */
+  display: inline-flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos una separación pequeña. */
+  gap: 5px;
+
+  /* Definimos un tamaño secundario. */
+  font-size: 12px;
+
+  /* Aplicamos un color suave. */
+  color: #76848e;
+}
+
+
+/* ========================================================= */
+/* PETICIONES DE ORACIÓN */
+/* ========================================================= */
+
+.admin-dashboard-prayers {
+  /* Organizamos las peticiones verticalmente. */
+  display: flex;
+
+  /* Colocamos una debajo de la otra. */
+  flex-direction: column;
+
+  /* Creamos separación entre peticiones. */
+  gap: 12px;
+}
+
+
+.admin-dashboard-prayer {
+  /* Agregamos espacio interior. */
+  padding: 15px;
+
+  /* Aplicamos un fondo muy suave. */
+  background-color: #f8fafb;
+
+  /* Agregamos un borde discreto. */
+  border: 1px solid #e8edef;
+
+  /* Redondeamos la tarjeta. */
+  border-radius: 12px;
+}
+
+
+.admin-dashboard-prayer__header {
+  /* Colocamos nombre y estado en una fila. */
+  display: flex;
+
+  /* Separamos ambos extremos. */
+  justify-content: space-between;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación si falta espacio. */
+  gap: 12px;
+}
+
+
+.admin-dashboard-prayer__header strong {
+  /* Definimos el tamaño del nombre. */
+  font-size: 13px;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+}
+
+
+.admin-dashboard-prayer__status {
+  /* Evitamos que el estado se encoja. */
+  flex-shrink: 0;
+
+  /* Agregamos espacio interior. */
+  padding: 4px 8px;
+
+  /* Redondeamos la etiqueta. */
+  border-radius: 20px;
+
+  /* Reducimos el tamaño del texto. */
+  font-size: 10px;
+
+  /* Destacamos el estado. */
+  font-weight: 700;
+}
+
+
+.admin-dashboard-prayer__status--pending {
+  /* Aplicamos un fondo dorado suave. */
+  background-color: #f3e8da;
+
+  /* Aplicamos texto dorado oscuro. */
+  color: #936337;
+}
+
+
+.admin-dashboard-prayer__status--active {
+  /* Aplicamos un fondo verde suave. */
+  background-color: #e1f0e8;
+
+  /* Aplicamos texto verde oscuro. */
+  color: #347058;
+}
+
+
+.admin-dashboard-prayer p {
+  /* Separamos la petición del encabezado. */
+  margin: 9px 0 7px;
+
+  /* Definimos un tamaño cómodo. */
+  font-size: 12px;
+
+  /* Mejoramos la altura de línea. */
+  line-height: 1.55;
+
+  /* Aplicamos un tono secundario. */
+  color: #657680;
+}
+
+
+.admin-dashboard-prayer__time {
+  /* Mostramos la fecha con menor intensidad. */
+  font-size: 10px;
+
+  /* Aplicamos un color suave. */
+  color: #929ca3;
+}
+
+
+/* ========================================================= */
+/* RESUMEN FINANCIERO */
+/* ========================================================= */
+
+.admin-dashboard-financial {
+  /* Organizamos los indicadores en una cuadrícula. */
+  display: grid;
+
+  /* Creamos tres columnas iguales. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  /* Definimos la separación. */
+  gap: 16px;
+}
+
+
+.admin-dashboard-financial__item {
+  /* Colocamos el icono junto a la información. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación interna. */
+  gap: 14px;
+
+  /* Agregamos espacio interior. */
+  padding: 18px;
+
+  /* Aplicamos un fondo suave. */
+  background-color: #f8fafb;
+
+  /* Creamos un borde discreto. */
+  border: 1px solid #e8edef;
+
+  /* Redondeamos las esquinas. */
+  border-radius: 13px;
+}
+
+
+.admin-dashboard-financial__icon {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 45px;
+  height: 45px;
+
+  /* Evitamos que se encoja. */
+  flex-shrink: 0;
+
+  /* Aplicamos el azul institucional. */
+  background-color: #1e3448;
+
+  /* Redondeamos el contenedor. */
+  border-radius: 12px;
+
+  /* Aplicamos el color blanco. */
+  color: #ffffff;
+}
+
+
+.admin-dashboard-financial__item > div:last-child {
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Evitamos desbordamientos. */
+  min-width: 0;
+
+  /* Creamos separación. */
+  gap: 4px;
+}
+
+
+.admin-dashboard-financial__item span {
+  /* Definimos un tamaño secundario. */
+  font-size: 12px;
+
+  /* Aplicamos un tono suave. */
+  color: #72818b;
+}
+
+
+.admin-dashboard-financial__item strong {
+  /* Definimos el tamaño del valor. */
+  font-size: 19px;
+
+  /* Aplicamos un peso visible. */
+  font-weight: 750;
+
+  /* Aplicamos el azul institucional. */
+  color: #1e3448;
+
+  /* Permitimos cortar textos demasiado extensos. */
+  overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.admin-dashboard a:focus-visible,
+.admin-dashboard button:focus-visible {
+  /* Mostramos un contorno visible al navegar con teclado. */
+  outline: 3px solid rgba(185, 138, 84, 0.35);
+
+  /* Separamos el contorno del elemento. */
+  outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MEDIANAS */
+/* ========================================================= */
+
+@media (max-width: 1250px) {
+
+  .admin-dashboard__summary {
+    /* Cambiamos las tarjetas a dos columnas. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+
+  .admin-dashboard__quick-actions {
+    /* Mostramos tres acciones por fila. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+
+  .admin-dashboard__columns {
+    /* Mostramos las secciones una debajo de la otra. */
+    grid-template-columns: 1fr;
+  }
+
+
+  .admin-dashboard-financial {
+    /* Permitimos mostrar los indicadores en dos columnas. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* ========================================================= */
+/* DISPOSITIVOS MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 700px) {
+
+  .admin-dashboard__welcome {
+    /* Colocamos el botón debajo del contenido. */
+    flex-direction: column;
+
+    /* Alineamos los elementos hacia la izquierda. */
+    align-items: flex-start;
+
+    /* Reducimos el espacio interior. */
+    padding: 23px 20px;
+  }
+
+
+  .admin-dashboard__public-button {
+    /* Permitimos que el botón ocupe todo el ancho. */
+    width: 100%;
+
+    /* Centramos su contenido. */
+    justify-content: center;
+  }
+
+
+  .admin-dashboard__summary {
+    /* Mostramos una tarjeta por fila. */
+    grid-template-columns: 1fr;
+
+    /* Reducimos la separación. */
+    gap: 13px;
+  }
+
+
+  .admin-dashboard-summary-card {
+    /* Reducimos el espacio interior. */
+    padding: 18px;
+  }
+
+
+  .admin-dashboard-section {
+    /* Reducimos el espacio interior. */
+    padding: 20px 17px;
+  }
+
+
+  .admin-dashboard__quick-actions {
+    /* Mostramos una acción por fila. */
+    grid-template-columns: 1fr;
+  }
+
+
+  .admin-dashboard-financial {
+    /* Mostramos un indicador por fila. */
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* ========================================================= */
+/* CELULARES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 430px) {
+
+  .admin-dashboard-section__header {
+    /* Permitimos que la acción baje de línea. */
+    flex-direction: column;
+
+    /* Reducimos la separación. */
+    gap: 10px;
+  }
+
+
+  .admin-dashboard-event__details {
+    /* Colocamos los detalles uno debajo del otro. */
+    flex-direction: column;
+  }
+
+
+  .admin-dashboard-prayer__header {
+    /* Permitimos que el estado baje de línea. */
+    align-items: flex-start;
+
+    /* Colocamos los elementos verticalmente. */
+    flex-direction: column;
+
+    /* Reducimos la separación. */
+    gap: 7px;
+  }
+
+}
+
+
+/* ========================================================= */
+/* REDUCCIÓN DE MOVIMIENTO */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .admin-dashboard__public-button,
+  .admin-dashboard-summary-card,
+  .admin-quick-action {
+    /* Eliminamos animaciones para usuarios
+       que prefieren menos movimiento. */
+    transition: none;
+  }
+
+}

@@ -1,0 +1,101 @@
+/* ========================================================= */
+/* ESTRUCTURA GENERAL */
+/* ========================================================= */
+
+.admin-layout {
+  /* Colocamos el sidebar y el contenido en una fila. */
+  display: flex;
+
+  /* Garantizamos que cubra toda la pantalla. */
+  min-height: 100vh;
+
+  /* Aplicamos el fondo administrativo. */
+  background-color: #f4f6f8;
+
+  /* Definimos el color principal del texto. */
+  color: #1e3448;
+}
+
+
+/* ========================================================= */
+/* ÁREA PRINCIPAL */
+/* ========================================================= */
+
+.admin-layout__main {
+  /* Permitimos que ocupe el espacio restante. */
+  flex: 1;
+
+  /* Evitamos que tablas y gráficos rompan el layout. */
+  min-width: 0;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+.admin-layout__content {
+  /* Agregamos separación alrededor de cada página. */
+  padding: 32px;
+}
+
+
+/* ========================================================= */
+/* FONDO MÓVIL */
+/* ========================================================= */
+
+.admin-layout__overlay {
+  /* El overlay solamente se utilizará en móviles. */
+  display: none;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-layout__content {
+    /* Reducimos el espacio en pantallas pequeñas. */
+    padding: 22px 20px;
+  }
+
+
+  .admin-layout__overlay {
+    /* Fijamos el fondo sobre toda la pantalla. */
+    position: fixed;
+
+    /* Cubrimos todos los extremos. */
+    inset: 0;
+
+    /* Lo colocamos detrás del sidebar. */
+    z-index: 2990;
+
+    /* Mostramos el botón como bloque. */
+    display: block;
+
+    /* Eliminamos el borde. */
+    border: none;
+
+    /* Oscurecemos el contenido del fondo. */
+    background-color: rgba(17, 30, 41, 0.56);
+
+    /* Aplicamos un desenfoque suave. */
+    backdrop-filter: blur(2px);
+
+    /* Permitimos cerrarlo al presionarlo. */
+    cursor: pointer;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .admin-layout__content {
+    /* Reducimos el espacio para celulares. */
+    padding: 18px 15px;
+  }
+
+}
