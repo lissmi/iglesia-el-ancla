@@ -1,6 +1,4 @@
-// Garantizamos que las variables de entorno
-// estén disponibles antes de configurar Express.
-import "./config/env.js";
+
 
 
 // Importamos Express para crear la aplicación.
