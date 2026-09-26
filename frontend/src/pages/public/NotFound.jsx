@@ -4,9 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // Importamos Link para volver al inicio sin recargar la aplicación.
 import { Link } from "react-router-dom";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
-
 
 // Importamos los estilos exclusivos de la página 404.
 import "../../styles/pages/public/NotFound.css";
@@ -214,8 +211,6 @@ function NotFound() {
     return (
         // Contenedor completo de la página.
         <div className="not-found">
-            {/* Mostramos el encabezado público. */}
-            <Header />
 
             {/* Contenido principal de la página 404. */}
             <main className="not-found__main">

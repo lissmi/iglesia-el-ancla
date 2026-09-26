@@ -4,8 +4,6 @@ import { useState } from "react";
 // Importamos Link para navegar dentro de la aplicación.
 import { Link } from "react-router-dom";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
 
 // Importamos el icono principal de Recursos.
 import recursosIcon from "../../assets/icons/recursos.png";
@@ -242,8 +240,6 @@ function Resources() {
     return (
         // Contenedor general de Recursos.
         <div className="resources">
-            {/* Mostramos el encabezado público. */}
-            <Header />
 
             {/* Contenido principal de la página. */}
             <main>

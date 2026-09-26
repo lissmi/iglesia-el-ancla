@@ -54,11 +54,10 @@ function Header() {
                 {/* Navegación principal. */}
                 <nav
                     id="main-navigation"
-                    className={`header__navigation ${
-                        menuOpen
+                    className={`header__navigation ${menuOpen
                             ? "header__navigation--open"
                             : ""
-                    }`}
+                        }`}
                     aria-label="Navegación principal"
                 >
                     <NavLink
@@ -110,19 +109,31 @@ function Header() {
                         Contacto
                     </NavLink>
 
-                  
+
                 </nav>
 
                 {/* Acciones laterales. */}
                 <div className="header__actions">
-                   
 
+                    {/* Enlace público para iniciar sesión. */}
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive
+                                ? "header__login-button header__login-button--active"
+                                : "header__login-button"
+                        }
+                        to="/login"
+                        onClick={closeMenu}
+                    >
+                        Iniciar sesión
+                    </NavLink>
+
+                    {/* Botón para abrir o cerrar el menú en dispositivos móviles. */}
                     <button
-                        className={`header__menu-button ${
-                            menuOpen
+                        className={`header__menu-button ${menuOpen
                                 ? "header__menu-button--open"
                                 : ""
-                        }`}
+                            }`}
                         type="button"
                         onClick={toggleMenu}
                         aria-label={
@@ -137,6 +148,7 @@ function Header() {
                         <span className="header__menu-line" />
                         <span className="header__menu-line" />
                     </button>
+
                 </div>
             </div>
         </header>

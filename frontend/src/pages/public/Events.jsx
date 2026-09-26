@@ -1,8 +1,6 @@
 // Importamos Link para navegar entre páginas sin recargar el sitio.
 import { Link } from "react-router-dom";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
 
 // Importamos el icono principal de eventos.
 import eventosIcon from "../../assets/icons/eventos.png";
@@ -368,8 +366,6 @@ function Events() {
     return (
         // Contenedor principal de la página Eventos.
         <div className="events">
-            {/* Mostramos el encabezado público. */}
-            <Header />
 
             {/* Contenido principal de la página. */}
             <main>

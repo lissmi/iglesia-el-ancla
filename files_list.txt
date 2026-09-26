@@ -8,8 +8,10 @@ MONGODB_URI=mongodb+srv://anclasop_db_user:8uhgyYjJmWjqAYP3@cluster0.cqxvnak.mon
 
 FRONTEND_URL=http://localhost:3000
 
-JWT_SECRET=una_clave_temporal_para_desarrollo
-JWT_EXPIRES_IN=7d
+JWT_SECRET=cbcc8c0c4d44a78b62bd27eab539f24c5b72f989b90e1411d9e8156c58f76a39f561e4d346778f9a137d33cc9e8a6b4603308e95481dadfbf03924caeed2fef1
+JWT_EXPIRES_IN=4h
+
+AUTH_COOKIE_MAX_AGE_MS=14400000
 
 NODE_ENV=development
 
@@ -25,7 +27,8 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "setup:initial-admin": "node src/scripts/createInitialAdmin.js"
   },
   "keywords": [
     "node",
@@ -38,6 +41,7 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -54,122 +58,454 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
 
 
 
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\server.js
+
+// Cargamos las variables de entorno
+// antes de iniciar el resto del backend.
+import "./src/config/env.js";
+
+// Importamos la aplicación de Express.
+import app from "./src/app.js";
+
+// Importamos la función que conecta con MongoDB.
+import connectDatabase from "./src/config/database.js";
+
+
+// Definimos el puerto del servidor.
+//
+// Si no existe PORT en el archivo .env,
+// utilizamos el puerto 5000.
+const PORT = process.env.PORT || 5000;
+
+
+// Creamos la función principal
+// encargada de iniciar el backend.
+const startServer = async () => {
+
+  try {
+    // Primero establecemos
+    // la conexión con MongoDB.
+    await connectDatabase();
+
+
+    // Iniciamos Express únicamente
+    // si MongoDB se conectó correctamente.
+    app.listen(PORT, () => {
+
+      // Mostramos la dirección local.
+      console.log(
+        `Servidor de El Ancla funcionando en http://localhost:${PORT}`
+      );
+    });
+  } catch (error) {
+
+    // Mostramos un mensaje controlado
+    // si el servidor no puede iniciarse.
+    console.error(
+      "No se pudo iniciar el servidor:",
+      error.message
+    );
+
+
+    // Cerramos el proceso indicando
+    // que ocurrió un error.
+    process.exit(1);
+  }
+};
+
+
+// Ejecutamos la función principal.
+startServer();
+
+
+
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\app.js
+
+// Garantizamos que las variables de entorno
+// estén disponibles antes de configurar Express.
+import "./config/env.js";
+
 
 // Importamos Express para crear la aplicación.
 import express from "express";
 
+
 // Importamos CORS para permitir solicitudes
-// desde el frontend.
+// desde el frontend autorizado.
 import cors from "cors";
+
 
 // Importamos Helmet para agregar encabezados
 // de seguridad a las respuestas.
 import helmet from "helmet";
 
+
 // Importamos Morgan para mostrar las solicitudes
 // recibidas durante el desarrollo.
 import morgan from "morgan";
+
 
 // Importamos express-rate-limit para limitar
 // la cantidad de solicitudes por dirección IP.
 import rateLimit from "express-rate-limit";
 
+
+// Importamos cookie-parser para poder leer
+// las cookies enviadas por el navegador.
+import cookieParser from "cookie-parser";
+
+
+// Importamos las rutas generales
+// de inicio de sesión.
+//
+// Estas rutas servirán para:
+// - Miembros.
+// - Administradores.
+// - Superadministradores.
+import loginRoutes from "./routes/loginRoutes.js";
+
+
 // Creamos la aplicación de Express.
 const app = express();
 
-// Configuramos CORS.
-// Solo permitimos solicitudes desde la URL
-// definida en el archivo .env.
-app.use(
-    cors({
-        origin: process.env.FRONTEND_URL || "http://localhost:3000",
-        credentials: true,
-    })
+
+// Desactivamos el encabezado X-Powered-By.
+//
+// Evitamos revelar innecesariamente
+// que el servidor utiliza Express.
+app.disable(
+  "x-powered-by"
 );
 
-// Agregamos encabezados de seguridad.
-app.use(helmet());
 
-// Permitimos recibir datos en formato JSON.
-app.use(
-    express.json({
-        limit: "10mb",
-    })
-);
-
-// Permitimos recibir datos enviados desde formularios.
-app.use(
-    express.urlencoded({
-        extended: true,
-        limit: "10mb",
-    })
-);
-
-// Mostramos información de las solicitudes
-// solamente durante el desarrollo.
-if (process.env.NODE_ENV === "development") {
-    app.use(morgan("dev"));
+// Si el backend se encuentra en producción,
+// confiamos en el primer proxy del alojamiento.
+//
+// Esto será útil cuando despleguemos
+// el backend en un servicio como Render.
+if (
+  process.env.NODE_ENV ===
+  "production"
+) {
+  app.set(
+    "trust proxy",
+    1
+  );
 }
 
-// Creamos un límite general de solicitudes.
-// Cada dirección IP podrá realizar hasta
-// 200 solicitudes cada 15 minutos.
+
+// =========================================================
+// CONFIGURACIÓN DE CORS
+// =========================================================
+
+// Configuramos CORS.
+//
+// Solamente permitimos solicitudes
+// desde la dirección definida en FRONTEND_URL.
+app.use(
+  cors({
+    // Definimos el frontend autorizado.
+    origin:
+      process.env.FRONTEND_URL ||
+      "http://localhost:3000",
+
+    // Permitimos enviar y recibir cookies
+    // entre frontend y backend.
+    credentials: true,
+
+    // Definimos los métodos HTTP permitidos.
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+
+    // Definimos los encabezados
+    // permitidos desde el frontend.
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+
+      // Dejamos preparado este encabezado
+      // para la futura protección CSRF.
+      "X-CSRF-Token",
+    ],
+  })
+);
+
+
+// =========================================================
+// SEGURIDAD Y PROCESAMIENTO DE DATOS
+// =========================================================
+
+// Agregamos encabezados de seguridad
+// a todas las respuestas del servidor.
+app.use(
+  helmet()
+);
+
+
+// Permitimos recibir información
+// enviada en formato JSON.
+app.use(
+  express.json({
+    // Limitamos el tamaño del contenido
+    // para reducir solicitudes excesivas.
+    limit: "1mb",
+  })
+);
+
+
+// Permitimos recibir información enviada
+// desde formularios tradicionales.
+app.use(
+  express.urlencoded({
+    // Permitimos procesar objetos sencillos.
+    extended: true,
+
+    // Aplicamos el mismo límite
+    // utilizado para JSON.
+    limit: "1mb",
+  })
+);
+
+
+// Permitimos leer las cookies
+// enviadas por el navegador.
+app.use(
+  cookieParser()
+);
+
+
+// =========================================================
+// REGISTRO DE SOLICITUDES
+// =========================================================
+
+// Mostramos las solicitudes recibidas
+// solamente durante el desarrollo.
+if (
+  process.env.NODE_ENV ===
+  "development"
+) {
+  app.use(
+    morgan("dev")
+  );
+}
+
+
+// =========================================================
+// LÍMITE GENERAL DE LA API
+// =========================================================
+
+// Creamos un límite general.
+//
+// Cada dirección IP podrá realizar
+// hasta 200 solicitudes en quince minutos.
 const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 200,
-    standardHeaders: "draft-8",
-    legacyHeaders: false,
-    message: {
-        success: false,
-        message:
-            "Se realizaron demasiadas solicitudes. Intente nuevamente más tarde.",
-    },
+  // Duración de la ventana.
+  windowMs:
+    15 * 60 * 1000,
+
+  // Cantidad máxima de solicitudes.
+  limit: 200,
+
+  // Utilizamos encabezados modernos.
+  standardHeaders:
+    "draft-8",
+
+  // Desactivamos encabezados antiguos.
+  legacyHeaders: false,
+
+  // Retornamos una respuesta JSON
+  // cuando se supera el límite.
+  message: {
+    success: false,
+
+    message:
+      "Se realizaron demasiadas solicitudes. Intente nuevamente más tarde.",
+  },
 });
 
-// Aplicamos el límite a todas las rutas que
-// comiencen con /api.
-app.use("/api", apiLimiter);
 
-// Ruta inicial para comprobar que la API funciona.
-app.get("/api", (req, res) => {
+// Aplicamos el límite general a todas
+// las rutas que comiencen con /api.
+app.use(
+  "/api",
+  apiLimiter
+);
+
+
+// =========================================================
+// RUTAS GENERALES
+// =========================================================
+
+// Ruta inicial para comprobar
+// que la API funciona.
+app.get(
+  "/api",
+  (
+    req,
+    res
+  ) => {
+
+    // Retornamos una respuesta exitosa.
     res.status(200).json({
-        success: true,
-        message:
-            "API de Iglesia El Ancla funcionando correctamente",
-    });
-});
+      success: true,
 
-// Ruta de comprobación del estado del servidor.
-app.get("/api/status", (req, res) => {
+      message:
+        "API de Iglesia El Ancla funcionando correctamente",
+    });
+  }
+);
+
+
+// Ruta para comprobar
+// el estado actual del servidor.
+app.get(
+  "/api/status",
+  (
+    req,
+    res
+  ) => {
+
+    // Retornamos información básica
+    // sobre el servidor.
     res.status(200).json({
-        success: true,
-        status: "online",
-        environment:
-            process.env.NODE_ENV || "development",
-        timestamp: new Date().toISOString(),
-    });
-});
+      success: true,
 
-// Middleware para rutas que no existen.
-app.use((req, res) => {
+      status:
+        "online",
+
+      environment:
+        process.env.NODE_ENV ||
+        "development",
+
+      timestamp:
+        new Date().toISOString(),
+    });
+  }
+);
+
+
+// =========================================================
+// RUTAS GENERALES DE AUTENTICACIÓN
+// =========================================================
+
+// Registramos las rutas de autenticación.
+//
+// Como loginRoutes contiene:
+//
+// router.post("/login", ...)
+//
+// La dirección completa será:
+//
+// POST /api/auth/login
+app.use(
+  "/api/auth",
+  loginRoutes
+);
+
+
+// =========================================================
+// RUTAS ADMINISTRATIVAS
+// =========================================================
+
+// Más adelante registraremos aquí
+// las rutas administrativas protegidas.
+//
+// Ejemplo futuro:
+//
+// import adminRoutes
+//   from "./routes/adminRoutes.js";
+//
+// app.use(
+//   "/api/admin",
+//   adminRoutes
+// );
+
+
+// =========================================================
+// RUTAS INEXISTENTES
+// =========================================================
+
+// Este middleware se ejecuta cuando
+// ninguna ruta anterior coincide.
+app.use(
+  (
+    req,
+    res
+  ) => {
+
+    // Retornamos un error 404.
     res.status(404).json({
-        success: false,
-        message: `La ruta ${req.originalUrl} no existe`,
-    });
-});
+      success: false,
 
-// Middleware global para manejar errores.
-app.use((error, req, res, next) => {
+      message:
+        `La ruta ${req.originalUrl} no existe`,
+    });
+  }
+);
+
+
+// =========================================================
+// MANEJO GLOBAL DE ERRORES
+// =========================================================
+
+// Este middleware recibe errores enviados
+// desde cualquier ruta o controlador.
+app.use(
+  (
+    error,
+    req,
+    res,
+    next
+  ) => {
+
+    // Mostramos el error en la terminal
+    // para poder revisarlo durante el desarrollo.
     console.error(error);
 
-    res.status(error.status || 500).json({
+
+    // Obtenemos el código HTTP del error.
+    const statusCode =
+      error.status ||
+      error.statusCode ||
+      500;
+
+
+    // Comprobamos si estamos
+    // trabajando en producción.
+    const isProduction =
+      process.env.NODE_ENV ===
+      "production";
+
+
+    // En producción no mostramos detalles
+    // de errores internos.
+    const responseMessage =
+      isProduction &&
+      statusCode === 500
+        ? "Ocurrió un error interno en el servidor"
+        : error.message ||
+          "Ocurrió un error interno en el servidor";
+
+
+    // Retornamos una respuesta controlada.
+    res
+      .status(statusCode)
+      .json({
         success: false,
+
         message:
-            error.message ||
-            "Ocurrió un error interno en el servidor",
-    });
-});
+          responseMessage,
+      });
+  }
+);
+
 
 // Exportamos la aplicación para utilizarla
 // dentro de server.js.
@@ -219,62 +555,3265 @@ export default connectDatabase;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\server.js
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\config\env.js
 
-// Importamos dotenv para cargar las variables de entorno.
+// Importamos dotenv para cargar
+// las variables de entorno.
 import dotenv from "dotenv";
 
-// Importamos path para construir rutas compatibles con Windows, Linux y Vercel.
+// Importamos path para construir
+// una ruta compatible con distintos sistemas.
 import path from "node:path";
 
-// Importamos fileURLToPath para obtener la ruta real del archivo actual.
-import { fileURLToPath } from "node:url";
+// Importamos fileURLToPath para conocer
+// la ubicación real de este archivo.
+import {
+  fileURLToPath,
+} from "node:url";
 
-// Importamos la aplicación de Express.
-import app from "./app.js";
 
-// Importamos la función que conecta con MongoDB.
-import connectDatabase from "./config/database.js";
+// Obtenemos la ruta completa
+// del archivo env.js.
+const __filename = fileURLToPath(
+  import.meta.url
+);
 
-// Obtenemos la ruta completa del archivo server.js.
-const __filename = fileURLToPath(import.meta.url);
 
-// Obtenemos la carpeta donde se encuentra server.js.
-const __dirname = path.dirname(__filename);
+// Obtenemos la carpeta config.
+const __dirname = path.dirname(
+  __filename
+);
 
-// Cargamos el archivo .env ubicado en la raíz de backend.
-dotenv.config({
-  path: path.resolve(__dirname, "../.env"),
+
+// Cargamos el archivo .env ubicado
+// en la raíz de backend.
+const environmentResult = dotenv.config({
+  path: path.resolve(
+    __dirname,
+    "../../.env"
+  ),
 });
 
-// Definimos el puerto del servidor.
-// Si no existe PORT en el archivo .env, usamos 5000.
-const PORT = process.env.PORT || 5000;
 
-// Función principal para iniciar el backend.
-const startServer = async () => {
+// Si el archivo no puede cargarse,
+// detenemos el inicio del backend.
+if (environmentResult.error) {
+  throw new Error(
+    `No se pudo cargar el archivo .env: ${environmentResult.error.message}`
+  );
+}
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\middleware\authenticateAdmin.js
+
+// Importamos el modelo de administradores.
+import Admin from "../models/Admin.js";
+
+// Importamos las herramientas necesarias
+// para leer y verificar la sesión.
+import {
+  ADMIN_COOKIE_NAME,
+  verifyAdminToken,
+  getAdminCookieClearOptions,
+} from "../utils/tokenUtils.js";
+
+
+// Creamos el middleware encargado
+// de autenticar administradores.
+const authenticateAdmin = async (
+  req,
+  res,
+  next
+) => {
+
   try {
-    // Primero intentamos conectarnos con MongoDB.
-    await connectDatabase();
+    // Obtenemos el token desde
+    // la cookie HttpOnly.
+    const token =
+      req.cookies?.[ADMIN_COOKIE_NAME];
 
-    // Solo iniciamos Express si la conexión fue exitosa.
-    app.listen(PORT, () => {
-      // Mostramos un mensaje confirmando que el servidor está funcionando.
-      console.log(
-        `Servidor de El Ancla funcionando en http://localhost:${PORT}`
+
+    // Si no existe una cookie,
+    // rechazamos la solicitud.
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message:
+          "Debes iniciar sesión para continuar",
+      });
+    }
+
+
+    // Verificamos la firma, duración,
+    // emisor y audiencia del JWT.
+    const decodedToken =
+      verifyAdminToken(token);
+
+
+    // Comprobamos que el token
+    // corresponda a un administrador.
+    if (
+      decodedToken.type !== "admin"
+    ) {
+      throw new Error(
+        "El tipo de token no es válido"
       );
-    });
-  } catch (error) {
-    // Mostramos el error si el servidor no puede iniciar.
-    console.error("No se pudo iniciar el servidor:", error.message);
+    }
 
-    // Cerramos el proceso indicando que ocurrió un error.
-    process.exit(1);
+
+    // Obtenemos el identificador almacenado
+    // en el campo estándar subject.
+    const adminId =
+      decodedToken.sub;
+
+
+    // Buscamos al administrador actual.
+    const admin = await Admin.findById(
+      adminId
+    )
+
+      // Seleccionamos la versión interna
+      // utilizada para invalidar sesiones.
+      .select(
+        "+tokenVersion"
+      )
+
+      // Obtenemos sus sucursales autorizadas.
+      .populate({
+        path: "sucursales",
+        select:
+          "code name slug timezone isActive",
+      })
+
+      // Obtenemos su sucursal principal.
+      .populate({
+        path: "sucursalPrincipal",
+        select:
+          "code name slug timezone isActive",
+      });
+
+
+    // Si la cuenta ya no existe,
+    // rechazamos la sesión.
+    if (!admin) {
+      throw new Error(
+        "El administrador no existe"
+      );
+    }
+
+
+    // Comprobamos que la cuenta
+    // continúe activa.
+    if (!admin.isActive) {
+      throw new Error(
+        "La cuenta se encuentra desactivada"
+      );
+    }
+
+
+    // Obtenemos la versión actual
+    // almacenada en MongoDB.
+    const currentTokenVersion =
+      admin.tokenVersion ?? 0;
+
+
+    // Obtenemos la versión
+    // incluida dentro del JWT.
+    const receivedTokenVersion =
+      decodedToken.tokenVersion ?? 0;
+
+
+    // Si las versiones no coinciden,
+    // el token fue invalidado.
+    if (
+      currentTokenVersion !==
+      receivedTokenVersion
+    ) {
+      throw new Error(
+        "La sesión fue invalidada"
+      );
+    }
+
+
+    // Dejamos solamente
+    // las sucursales activas.
+    const activeSucursales =
+      admin.sucursales.filter(
+        (sucursal) =>
+          sucursal.isActive
+      );
+
+
+    // Comprobamos que exista al menos
+    // una sucursal activa.
+    if (
+      activeSucursales.length === 0
+    ) {
+      throw new Error(
+        "No existen sucursales activas autorizadas"
+      );
+    }
+
+
+    // Comprobamos que la sucursal principal
+    // continúe activa.
+    if (
+      !admin.sucursalPrincipal ||
+      !admin.sucursalPrincipal.isActive
+    ) {
+      throw new Error(
+        "La sucursal principal no está disponible"
+      );
+    }
+
+
+    // Reemplazamos el arreglo original
+    // por sus sucursales activas.
+    admin.sucursales =
+      activeSucursales;
+
+
+    // Guardamos el administrador dentro
+    // de la solicitud actual.
+    //
+    // Las rutas posteriores podrán acceder
+    // a esta información mediante req.admin.
+    req.admin = admin;
+
+
+    // Guardamos también la información
+    // decodificada del token.
+    req.adminToken =
+      decodedToken;
+
+
+    // Permitimos continuar
+    // hacia la ruta protegida.
+    next();
+  } catch (error) {
+
+    // Eliminamos cualquier cookie
+    // inválida, vencida o manipulada.
+    res.clearCookie(
+      ADMIN_COOKIE_NAME,
+      getAdminCookieClearOptions()
+    );
+
+
+    // Retornamos un mensaje genérico.
+    return res.status(401).json({
+      success: false,
+      message:
+        "La sesión no es válida o ha expirado",
+    });
   }
 };
 
-// Ejecutamos la función que inicia el servidor.
-startServer();
+
+// Exportamos el middleware.
+export default authenticateAdmin;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\middleware\authenticateUser.js
+
+// Importamos Mongoose para validar el identificador del token.
+import mongoose from "mongoose";
+
+// Importamos el modelo común de miembros y administradores.
+import User from "../models/User.js";
+
+// Importamos el nombre de la cookie y el verificador del JWT actual.
+import {
+  AUTH_COOKIE_NAME,
+  verifyAuthToken,
+} from "../utils/tokenUtils.js";
+
+// Este middleware comprueba la sesión antes de acceder a datos protegidos.
+const authenticateUser = async (req, res, next) => {
+  try {
+    // Leemos el JWT desde la cookie HttpOnly.
+    const token = req.cookies?.[AUTH_COOKIE_NAME];
+
+    // Rechazamos las peticiones que no tienen sesión.
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Debes iniciar sesión",
+      });
+    }
+
+    // Verificamos firma, expiración, emisor y audiencia del JWT.
+    const decoded = verifyAuthToken(token);
+
+    // Rechazamos identificadores que no sean ObjectId válidos.
+    if (!mongoose.isObjectIdOrHexString(decoded.sub)) {
+      return res.status(401).json({
+        success: false,
+        message: "La sesión no es válida",
+      });
+    }
+
+    // Buscamos el estado actual de la cuenta en MongoDB.
+    const user = await User.findById(decoded.sub)
+      .select("+tokenVersion");
+
+    // Una cuenta eliminada o desactivada no puede seguir usando su JWT.
+    if (!user || !user.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: "La sesión no es válida",
+      });
+    }
+
+    // Comparamos la versión del JWT con la versión actual de la cuenta.
+    if (user.tokenVersion !== decoded.tokenVersion) {
+      return res.status(401).json({
+        success: false,
+        message: "La sesión no es válida",
+      });
+    }
+
+    // Dejamos el usuario verificado disponible para la siguiente protección.
+    req.user = user;
+
+    // Continuamos hacia la siguiente función de la ruta.
+    return next();
+  } catch (error) {
+    // Un JWT vencido, alterado o mal formado no autoriza el acceso.
+    return res.status(401).json({
+      success: false,
+      message: "La sesión no es válida o ha expirado",
+    });
+  }
+};
+
+// Exportamos el middleware para usarlo en las rutas protegidas.
+export default authenticateUser;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\models\Sucursal.js
+
+// Importamos mongoose para crear
+// el esquema y el modelo de la sucursal.
+import mongoose from "mongoose";
+
+
+// Extraemos Schema desde mongoose
+// para escribir el modelo de forma más clara.
+const { Schema } = mongoose;
+
+
+// Creamos un esquema reutilizable
+// para almacenar la dirección de la sucursal.
+const addressSchema = new Schema(
+  {
+    // Nombre de la calle.
+    street: {
+      type: String,
+      required: [
+        true,
+        "La calle de la sucursal es obligatoria",
+      ],
+      trim: true,
+      maxlength: [
+        100,
+        "La calle no puede superar los 100 caracteres",
+      ],
+    },
+
+    // Número de la dirección.
+    number: {
+      type: String,
+      required: [
+        true,
+        "El número de la dirección es obligatorio",
+      ],
+      trim: true,
+      maxlength: [
+        20,
+        "El número no puede superar los 20 caracteres",
+      ],
+    },
+
+    // Sector, barrio o localidad.
+    sector: {
+      type: String,
+      trim: true,
+      maxlength: [
+        100,
+        "El sector no puede superar los 100 caracteres",
+      ],
+      default: "",
+    },
+
+    // Ciudad donde se encuentra la sucursal.
+    city: {
+      type: String,
+      required: [
+        true,
+        "La ciudad es obligatoria",
+      ],
+      trim: true,
+      maxlength: [
+        100,
+        "La ciudad no puede superar los 100 caracteres",
+      ],
+    },
+
+    // Región donde se encuentra la sucursal.
+    region: {
+      type: String,
+      required: [
+        true,
+        "La región es obligatoria",
+      ],
+      trim: true,
+      maxlength: [
+        100,
+        "La región no puede superar los 100 caracteres",
+      ],
+    },
+
+    // País donde se encuentra la sucursal.
+    country: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "Chile",
+      maxlength: [
+        100,
+        "El país no puede superar los 100 caracteres",
+      ],
+    },
+  },
+  {
+    // Evitamos crear un _id adicional
+    // dentro del objeto de dirección.
+    _id: false,
+  }
+);
+
+
+// Creamos el esquema principal de las sucursales.
+const sucursalSchema = new Schema(
+  {
+    // Código interno y estable de la sucursal.
+    //
+    // La primera sucursal utilizará SUC-001.
+    code: {
+      type: String,
+      required: [
+        true,
+        "El código de la sucursal es obligatorio",
+      ],
+      unique: true,
+      trim: true,
+      uppercase: true,
+      match: [
+        /^SUC-\d{3,}$/,
+        "El código debe utilizar el formato SUC-001",
+      ],
+    },
+
+    // Nombre completo de la sucursal.
+    name: {
+      type: String,
+      required: [
+        true,
+        "El nombre de la sucursal es obligatorio",
+      ],
+      trim: true,
+      minlength: [
+        3,
+        "El nombre debe tener al menos 3 caracteres",
+      ],
+      maxlength: [
+        150,
+        "El nombre no puede superar los 150 caracteres",
+      ],
+    },
+
+    // Nombre utilizado dentro de las URL.
+    //
+    // Ejemplo:
+    // iglesia-el-ancla-valparaiso
+    slug: {
+      type: String,
+      required: [
+        true,
+        "El slug de la sucursal es obligatorio",
+      ],
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+        "El slug contiene caracteres no permitidos",
+      ],
+    },
+
+    // Dirección física de la sucursal.
+    address: {
+      type: addressSchema,
+      required: [
+        true,
+        "La dirección de la sucursal es obligatoria",
+      ],
+    },
+
+    // Correo electrónico público de contacto.
+    contactEmail: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      maxlength: [
+        150,
+        "El correo no puede superar los 150 caracteres",
+      ],
+      default: "",
+    },
+
+    // Teléfono público de contacto.
+    contactPhone: {
+      type: String,
+      trim: true,
+      maxlength: [
+        30,
+        "El teléfono no puede superar los 30 caracteres",
+      ],
+      default: "",
+    },
+
+    // Zona horaria utilizada por la sucursal.
+    //
+    // Esto permitirá que eventos, publicaciones
+    // y notificaciones utilicen la hora correcta.
+    timezone: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "America/Santiago",
+    },
+
+    // Identifica si esta sucursal corresponde
+    // a la sede principal de la organización.
+    isHeadquarters: {
+      type: Boolean,
+      default: false,
+    },
+
+    // Determina si la sucursal
+    // se encuentra actualmente operativa.
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
+    },
+  },
+  {
+    // Creamos automáticamente
+    // los campos createdAt y updatedAt.
+    timestamps: true,
+
+    // Definimos explícitamente el nombre
+    // de la colección dentro de MongoDB.
+    collection: "sucursales",
+  }
+);
+
+
+// Creamos un índice para facilitar
+// la búsqueda de sucursales activas.
+sucursalSchema.index({
+  isActive: 1,
+  name: 1,
+});
+
+
+// Creamos el modelo Sucursal
+// utilizando el esquema anterior.
+const Sucursal = mongoose.model(
+  "Sucursal",
+  sucursalSchema
+);
+
+
+// Exportamos el modelo para utilizarlo
+// en controladores, servicios y scripts.
+export default Sucursal;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\models\User.js
+
+// Importamos mongoose para crear
+// el esquema y modelo de los usuarios.
+import mongoose from "mongoose";
+
+
+// Extraemos Schema desde mongoose
+// para escribir el modelo de forma más clara.
+const {
+    Schema,
+} = mongoose;
+
+
+// Creamos el esquema principal
+// de todos los usuarios registrados.
+//
+// Este modelo incluirá:
+// - Miembros.
+// - Administradores.
+// - Superadministradores.
+const userSchema = new Schema(
+    {
+        // Nombre del usuario.
+        firstName: {
+            type: String,
+
+            required: [
+                true,
+                "El nombre del usuario es obligatorio",
+            ],
+
+            trim: true,
+
+            minlength: [
+                2,
+                "El nombre debe tener al menos 2 caracteres",
+            ],
+
+            maxlength: [
+                60,
+                "El nombre no puede superar los 60 caracteres",
+            ],
+        },
+
+
+        // Apellido del usuario.
+        lastName: {
+            type: String,
+
+            required: [
+                true,
+                "El apellido del usuario es obligatorio",
+            ],
+
+            trim: true,
+
+            minlength: [
+                2,
+                "El apellido debe tener al menos 2 caracteres",
+            ],
+
+            maxlength: [
+                60,
+                "El apellido no puede superar los 60 caracteres",
+            ],
+        },
+
+
+        // Fecha de nacimiento del usuario.
+        //
+        // Nos permitirá crear posteriormente
+        // el calendario y los recordatorios
+        // de cumpleaños de la iglesia.
+        birthDate: {
+            type: Date,
+
+            required: [
+                true,
+                "La fecha de nacimiento del usuario es obligatoria",
+            ],
+
+            validate: {
+                validator: function (value) {
+
+                    // Si todavía no existe un valor,
+                    // required se encargará del error.
+                    if (!value) {
+                        return true;
+                    }
+
+                    // La fecha no puede pertenecer
+                    // al futuro.
+                    return value <= new Date();
+                },
+
+                message:
+                    "La fecha de nacimiento no puede estar en el futuro",
+            },
+        },
+
+
+        // Teléfono de contacto del usuario.
+        //
+        // Recomendamos guardarlo utilizando
+        // el formato internacional.
+        //
+        // Ejemplo chileno:
+        // +56912345678
+        phone: {
+            type: String,
+
+            required: [
+                true,
+                "El teléfono del usuario es obligatorio",
+            ],
+
+            trim: true,
+
+            maxlength: [
+                30,
+                "El teléfono no puede superar los 30 caracteres",
+            ],
+
+            match: [
+                /^\+?[0-9\s()-]{8,30}$/,
+                "El número telefónico no es válido",
+            ],
+        },
+
+
+        // Correo utilizado para iniciar sesión.
+        //
+        // Será único para todos los usuarios,
+        // independientemente de su rol.
+        email: {
+            type: String,
+
+            required: [
+                true,
+                "El correo electrónico es obligatorio",
+            ],
+
+            unique: true,
+
+            trim: true,
+
+            lowercase: true,
+
+            maxlength: [
+                150,
+                "El correo no puede superar los 150 caracteres",
+            ],
+
+            match: [
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                "El correo electrónico no es válido",
+            ],
+        },
+
+
+        // Contraseña cifrada del usuario.
+        //
+        // Nunca guardaremos la contraseña original.
+        passwordHash: {
+            type: String,
+
+            required: [
+                true,
+                "La contraseña cifrada es obligatoria",
+            ],
+
+            // Impedimos que el hash aparezca
+            // automáticamente en las consultas.
+            select: false,
+        },
+
+
+        // Nivel de acceso general del usuario.
+        //
+        // member:
+        // Puede ingresar al área de miembros.
+        //
+        // admin:
+        // Puede ingresar al panel administrativo
+        // y gestionar las sucursales autorizadas.
+        //
+        // super_admin:
+        // Puede gestionar administradores
+        // y eliminar usuarios.
+        role: {
+            type: String,
+
+            required: true,
+
+            enum: {
+                values: [
+                    "member",
+                    "admin",
+                    "super_admin",
+                ],
+
+                message:
+                    "El rol seleccionado no es válido",
+            },
+
+            // Todas las cuentas nuevas comienzan
+            // como miembros normales.
+            default: "member",
+
+            index: true,
+        },
+
+
+        // Sucursales relacionadas con el usuario.
+        //
+        // Para un miembro representa las sucursales
+        // en las que participa.
+        //
+        // Para un administrador representa las
+        // sucursales que puede gestionar.
+        sucursales: [
+            {
+                // Guardamos el ObjectId
+                // de la sucursal.
+                type: Schema.Types.ObjectId,
+
+                // Relacionamos el identificador
+                // con el modelo Sucursal.
+                ref: "Sucursal",
+
+                // Cada identificador incluido
+                // debe tener un valor.
+                required: true,
+            },
+        ],
+
+
+        // Sucursal principal del usuario.
+        //
+        // En el caso de los miembros será
+        // su congregación principal.
+        //
+        // En el caso de los administradores será
+        // la sucursal seleccionada inicialmente.
+        sucursalPrincipal: {
+            type: Schema.Types.ObjectId,
+
+            ref: "Sucursal",
+
+            required: [
+                true,
+                "La sucursal principal es obligatoria",
+            ],
+
+            index: true,
+        },
+
+
+        // Posición exclusiva de superadministrador.
+        //
+        // Solamente existirán las posiciones
+        // 1 y 2, impidiendo tener más de
+        // dos superadministradores.
+        superAdminSlot: {
+            type: Number,
+
+            enum: {
+                values: [
+                    1,
+                    2,
+                ],
+
+                message:
+                    "La posición de superadministrador debe ser 1 o 2",
+            },
+
+            // Los miembros y administradores normales
+            // no tendrán este campo.
+            default: undefined,
+
+            // Ocultamos este dato interno
+            // en las consultas normales.
+            select: false,
+        },
+
+
+        // Determina si el usuario
+        // puede iniciar sesión.
+        //
+        // Si cambia a false, el usuario
+        // no podrá acceder a ninguna sección.
+        isActive: {
+            type: Boolean,
+
+            default: true,
+
+            index: true,
+        },
+
+
+        // Fecha en que la cuenta fue
+        // desactivada administrativamente.
+        deactivatedAt: {
+            type: Date,
+
+            default: null,
+        },
+
+
+        // Motivo opcional por el que
+        // se desactivó la cuenta.
+        deactivationReason: {
+            type: String,
+
+            trim: true,
+
+            maxlength: [
+                300,
+                "El motivo de desactivación no puede superar los 300 caracteres",
+            ],
+
+            default: "",
+        },
+
+
+        // Fecha en que se verificó
+        // el correo electrónico.
+        //
+        // La utilizaremos posteriormente
+        // en el sistema de invitaciones.
+        emailVerifiedAt: {
+            type: Date,
+
+            default: null,
+        },
+
+
+        // Cuenta los intentos consecutivos
+        // de acceso fallidos.
+        loginAttempts: {
+            type: Number,
+
+            default: 0,
+
+            min: 0,
+
+            select: false,
+        },
+
+
+        // Fecha hasta la que permanecerá
+        // bloqueada temporalmente la cuenta.
+        lockUntil: {
+            type: Date,
+
+            default: null,
+
+            select: false,
+        },
+
+
+        // Fecha del último inicio
+        // de sesión exitoso.
+        lastLoginAt: {
+            type: Date,
+
+            default: null,
+        },
+
+
+        // Fecha del último cambio
+        // de contraseña.
+        passwordChangedAt: {
+            type: Date,
+
+            default: Date.now,
+
+            select: false,
+        },
+
+
+        // Indica si el usuario debe cambiar
+        // su contraseña durante el próximo acceso.
+        //
+        // Las cuentas creadas por un administrador
+        // comenzarán con una contraseña temporal.
+        mustChangePassword: {
+            type: Boolean,
+
+            default: true,
+        },
+
+
+        // Número utilizado para invalidar
+        // las sesiones anteriores del usuario.
+        //
+        // Aumentaremos este número cuando:
+        // - Cambie su contraseña.
+        // - Cambie su rol.
+        // - Se desactive su cuenta.
+        // - Cierre todas sus sesiones.
+        tokenVersion: {
+            type: Number,
+
+            default: 0,
+
+            min: 0,
+
+            select: false,
+        },
+    },
+    {
+        // Creamos automáticamente
+        // createdAt y updatedAt.
+        timestamps: true,
+
+        // Guardamos todos los usuarios
+        // dentro de la colección users.
+        collection: "users",
+
+        // Permitimos propiedades virtuales
+        // al transformar el documento en JSON.
+        toJSON: {
+            virtuals: true,
+        },
+
+        // Permitimos propiedades virtuales
+        // al transformarlo en un objeto normal.
+        toObject: {
+            virtuals: true,
+        },
+    }
+);
+
+
+// Creamos una propiedad virtual
+// que une el nombre y el apellido.
+//
+// Esta propiedad no se guarda en MongoDB.
+userSchema
+    .virtual("fullName")
+    .get(function () {
+
+        // Retornamos el nombre completo.
+        return `${this.firstName} ${this.lastName}`;
+    });
+
+
+// Validamos que cada usuario tenga
+// al menos una sucursal relacionada.
+userSchema
+    .path("sucursales")
+    .validate(
+        function (sucursales) {
+
+            // La validación será correcta
+            // si existe al menos una sucursal.
+            return (
+                Array.isArray(sucursales) &&
+                sucursales.length > 0
+            );
+        },
+
+        "El usuario debe tener al menos una sucursal"
+    );
+
+
+// Antes de validar el documento,
+// comprobamos la sucursal principal
+// y la posición del superadministrador.
+userSchema.pre(
+    "validate",
+    function () {
+
+        // Evitamos errores si todavía
+        // no existe el arreglo.
+        const sucursales =
+            Array.isArray(this.sucursales)
+                ? this.sucursales
+                : [];
+
+
+        // Convertimos los identificadores
+        // de las sucursales a texto.
+        const identificadoresSucursales =
+            sucursales.map(
+                (sucursal) => {
+
+                    // Si la sucursal fue poblada,
+                    // utilizamos su propiedad _id.
+                    const sucursalId =
+                        sucursal?._id ??
+                        sucursal;
+
+                    // Convertimos el identificador
+                    // en una cadena comparable.
+                    return sucursalId?.toString();
+                }
+            );
+
+
+        // Si existe una sucursal principal,
+        // obtenemos su identificador.
+        const sucursalPrincipalId =
+            this.sucursalPrincipal?._id ??
+            this.sucursalPrincipal;
+
+
+        // Convertimos el identificador
+        // principal a texto.
+        const identificadorSucursalPrincipal =
+            sucursalPrincipalId?.toString();
+
+
+        // Comprobamos que la sucursal principal
+        // aparezca dentro de las sucursales asignadas.
+        const incluyeSucursalPrincipal =
+            identificadoresSucursales.includes(
+                identificadorSucursalPrincipal
+            );
+
+
+        // Si no está incluida, generamos
+        // un error de validación.
+        if (
+            identificadorSucursalPrincipal &&
+            !incluyeSucursalPrincipal
+        ) {
+            this.invalidate(
+                "sucursalPrincipal",
+                "La sucursal principal debe estar incluida en las sucursales asignadas"
+            );
+        }
+
+
+        // Si el usuario es superadministrador,
+        // debe ocupar una de las dos posiciones.
+        if (
+            this.role === "super_admin" &&
+            ![
+                1,
+                2,
+            ].includes(this.superAdminSlot)
+        ) {
+            this.invalidate(
+                "superAdminSlot",
+                "El superadministrador debe ocupar la posición 1 o 2"
+            );
+        }
+
+
+        // Si el usuario no es superadministrador,
+        // eliminamos cualquier posición anterior.
+        if (
+            this.role !== "super_admin"
+        ) {
+            this.superAdminSlot = undefined;
+        }
+    }
+);
+
+
+// Creamos un índice para consultar usuarios
+// por sucursal, rol y estado.
+userSchema.index({
+    sucursales: 1,
+    role: 1,
+    isActive: 1,
+});
+
+
+// Creamos un índice para facilitar
+// futuros listados de cumpleaños.
+userSchema.index({
+    birthDate: 1,
+    isActive: 1,
+});
+
+
+// Creamos un índice único parcial.
+//
+// Solamente indexará documentos que tengan
+// una posición numérica de superadministrador.
+//
+// Como las únicas posiciones permitidas son
+// 1 y 2, MongoDB impedirá que existan
+// más de dos superadministradores.
+userSchema.index(
+    {
+        superAdminSlot: 1,
+    },
+    {
+        unique: true,
+
+        partialFilterExpression: {
+            superAdminSlot: {
+                $type: "number",
+            },
+        },
+    }
+);
+
+
+// Antes de entregar información como JSON,
+// eliminamos los datos internos sensibles
+// que pudieran haber sido seleccionados.
+userSchema.set(
+    "toJSON",
+    {
+        virtuals: true,
+
+        transform: function (
+            document,
+            returnedObject
+        ) {
+
+            // Eliminamos el hash
+            // de la contraseña.
+            delete returnedObject.passwordHash;
+
+            // Eliminamos los intentos fallidos.
+            delete returnedObject.loginAttempts;
+
+            // Eliminamos la fecha de bloqueo.
+            delete returnedObject.lockUntil;
+
+            // Eliminamos la fecha interna
+            // del cambio de contraseña.
+            delete returnedObject.passwordChangedAt;
+
+            // Eliminamos la versión utilizada
+            // para invalidar sesiones.
+            delete returnedObject.tokenVersion;
+
+            // Eliminamos la posición interna
+            // de superadministrador.
+            delete returnedObject.superAdminSlot;
+
+            // Eliminamos la versión
+            // interna de MongoDB.
+            delete returnedObject.__v;
+
+            // Retornamos el objeto limpio.
+            return returnedObject;
+        },
+    }
+);
+
+
+// Creamos el modelo User.
+const User = mongoose.model(
+    "User",
+    userSchema
+);
+
+
+// Exportamos el modelo para utilizarlo
+// en autenticación, usuarios y administración.
+export default User;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\routes\loginRoutes.js
+
+// Importamos Router para crear
+// las rutas de inicio de sesión.
+import {
+    Router,
+} from "express";
+
+
+// Importamos express-rate-limit para limitar
+// los intentos enviados desde una dirección IP.
+import rateLimit from "express-rate-limit";
+
+
+// Importamos el modelo único de usuarios.
+//
+// Este modelo contiene miembros,
+// administradores y superadministradores.
+import User from "../models/User.js";
+
+
+// Importamos el modelo Sucursal.
+//
+// Lo utilizaremos expresamente en populate()
+// para obtener la información de las sucursales.
+import Sucursal from "../models/Sucursal.js";
+
+
+// Importamos las funciones relacionadas
+// con las contraseñas.
+import {
+    comparePassword,
+    hashPassword,
+} from "../utils/passwordUtils.js";
+
+
+// Importamos las funciones relacionadas
+// con el token y la cookie de sesión.
+//
+// Estos nombres reemplazarán las antiguas
+// funciones exclusivas del administrador.
+import {
+    AUTH_COOKIE_NAME,
+    generateAuthToken,
+    getAuthCookieOptions,
+} from "../utils/tokenUtils.js";
+
+
+// Creamos el router de inicio de sesión.
+const router = Router();
+
+
+// Definimos la cantidad máxima
+// de intentos permitidos por cuenta.
+const MAX_LOGIN_ATTEMPTS = 5;
+
+
+// Definimos un bloqueo temporal
+// de quince minutos.
+const ACCOUNT_LOCK_TIME_MS =
+    15 * 60 * 1000;
+
+
+// Creamos un mensaje genérico.
+//
+// Usaremos el mismo mensaje cuando:
+// - El correo no exista.
+// - La contraseña sea incorrecta.
+// - La cuenta esté bloqueada.
+// - La cuenta esté desactivada.
+//
+// Esto ayuda a impedir que una persona
+// descubra qué correos están registrados.
+const LOGIN_FAILED_MESSAGE =
+    "No fue posible iniciar sesión con las credenciales proporcionadas";
+
+
+// Creamos una contraseña ficticia cifrada.
+//
+// La utilizaremos cuando el correo no exista,
+// reduciendo diferencias en los tiempos
+// de respuesta del servidor.
+const dummyPasswordHashPromise =
+    hashPassword(
+        "DummyAccessPassword1!"
+    );
+
+
+// =========================================================
+// LÍMITE DE INTENTOS POR DIRECCIÓN IP
+// =========================================================
+
+// Creamos un límite específico
+// para el endpoint de inicio de sesión.
+const loginLimiter = rateLimit({
+    // Utilizamos una ventana
+    // de quince minutos.
+    windowMs:
+        15 * 60 * 1000,
+
+    // Permitimos diez solicitudes
+    // por dirección IP.
+    limit: 10,
+
+    // Enviamos encabezados modernos
+    // informando el límite.
+    standardHeaders:
+        "draft-8",
+
+    // Desactivamos los encabezados antiguos.
+    legacyHeaders: false,
+
+    // Los accesos exitosos no cuentan
+    // dentro del límite.
+    skipSuccessfulRequests: true,
+
+    // Retornamos una respuesta
+    // JSON controlada.
+    message: {
+        success: false,
+
+        message:
+            "Se realizaron demasiados intentos. Inténtalo nuevamente más tarde.",
+    },
+});
+
+
+// =========================================================
+// REGISTRO DE INTENTOS FALLIDOS
+// =========================================================
+
+// Creamos una función que registra
+// un intento fallido de acceso.
+const registerFailedLogin = async (
+    user
+) => {
+
+    // Obtenemos la fecha actual.
+    const currentDate =
+        new Date();
+
+
+    // Comprobamos si existía
+    // un bloqueo anterior ya vencido.
+    const previousLockExpired =
+        user.lockUntil &&
+        user.lockUntil <= currentDate;
+
+
+    // Si el bloqueo anterior terminó,
+    // comenzamos el contador desde cero.
+    const currentAttempts =
+        previousLockExpired
+            ? 0
+            : user.loginAttempts || 0;
+
+
+    // Sumamos el nuevo intento.
+    const newAttempts =
+        currentAttempts + 1;
+
+
+    // Preparamos los campos
+    // que serán actualizados.
+    const updateData = {
+        loginAttempts:
+            newAttempts,
+    };
+
+
+    // Si se alcanzó el límite,
+    // bloqueamos temporalmente la cuenta.
+    if (
+        newAttempts >=
+        MAX_LOGIN_ATTEMPTS
+    ) {
+        updateData.lockUntil =
+            new Date(
+                Date.now() +
+                ACCOUNT_LOCK_TIME_MS
+            );
+    } else if (
+        previousLockExpired
+    ) {
+
+        // Si el bloqueo anterior venció,
+        // eliminamos su fecha.
+        updateData.lockUntil =
+            null;
+    }
+
+
+    // Actualizamos solamente
+    // los datos de autenticación.
+    await User.updateOne(
+        {
+            _id: user._id,
+        },
+        {
+            $set: updateData,
+        }
+    );
+};
+
+
+// =========================================================
+// INICIO DE SESIÓN GENERAL
+// =========================================================
+
+// Creamos el endpoint:
+//
+// POST /api/auth/login
+//
+// Esta ruta permitirá iniciar sesión a:
+// - Miembros.
+// - Administradores.
+// - Superadministradores.
+router.post(
+    "/login",
+
+    // Aplicamos el límite
+    // específico del login.
+    loginLimiter,
+
+    // Creamos el controlador
+    // de la ruta.
+    async (
+        req,
+        res,
+        next
+    ) => {
+
+        try {
+            // Obtenemos las credenciales
+            // enviadas desde React.
+            const {
+                email,
+                password,
+            } = req.body;
+
+
+            // Comprobamos que el correo
+            // sea una cadena no vacía.
+            if (
+                typeof email !== "string" ||
+                !email.trim()
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Debes ingresar el correo electrónico",
+                });
+            }
+
+
+            // Evitamos procesar correos
+            // excesivamente largos.
+            if (
+                email.trim().length > 150
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "El correo electrónico ingresado no es válido",
+                });
+            }
+
+
+            // Comprobamos que la contraseña
+            // sea una cadena no vacía.
+            if (
+                typeof password !== "string" ||
+                !password
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "Debes ingresar la contraseña",
+                });
+            }
+
+
+            // bcrypt procesa como máximo
+            // 72 bytes de una contraseña.
+            //
+            // Rechazamos valores más largos
+            // para evitar truncamientos silenciosos.
+            if (
+                Buffer.byteLength(
+                    password,
+                    "utf8"
+                ) > 72
+            ) {
+                return res.status(400).json({
+                    success: false,
+
+                    message:
+                        "La contraseña ingresada no es válida",
+                });
+            }
+
+
+            // Normalizamos el correo recibido.
+            const normalizedEmail =
+                email
+                    .trim()
+                    .toLowerCase();
+
+
+            // Buscamos la cuenta sin importar
+            // si corresponde a un miembro,
+            // administrador o superadministrador.
+            const user =
+                await User.findOne({
+                    email:
+                        normalizedEmail,
+                })
+
+                    // Seleccionamos manualmente
+                    // los campos privados necesarios
+                    // para comprobar el acceso.
+                    .select(
+                        "+passwordHash +loginAttempts +lockUntil +tokenVersion"
+                    )
+
+                    // Obtenemos las sucursales
+                    // relacionadas con el usuario.
+                    .populate({
+                        // Campo que será poblado.
+                        path:
+                            "sucursales",
+
+                        // Modelo relacionado.
+                        model:
+                            Sucursal,
+
+                        // Campos que necesitamos.
+                        select:
+                            "code name slug timezone isActive",
+                    })
+
+                    // Obtenemos la sucursal
+                    // principal del usuario.
+                    .populate({
+                        // Campo que será poblado.
+                        path:
+                            "sucursalPrincipal",
+
+                        // Modelo relacionado.
+                        model:
+                            Sucursal,
+
+                        // Campos que necesitamos.
+                        select:
+                            "code name slug timezone isActive",
+                    });
+
+
+            // Si el correo no existe,
+            // realizamos una comparación ficticia.
+            if (!user) {
+                // Esperamos el hash
+                // ficticio preparado.
+                const dummyPasswordHash =
+                    await dummyPasswordHashPromise;
+
+
+                // Ejecutamos una comparación
+                // para reducir diferencias
+                // en los tiempos de respuesta.
+                await comparePassword(
+                    password,
+                    dummyPasswordHash
+                );
+
+
+                // Retornamos el mensaje genérico.
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Obtenemos el momento actual.
+            const currentDate =
+                new Date();
+
+
+            // Comprobamos si la cuenta
+            // está temporalmente bloqueada.
+            const accountIsLocked =
+                user.lockUntil &&
+                user.lockUntil >
+                    currentDate;
+
+
+            // Rechazamos una cuenta bloqueada
+            // utilizando el mensaje genérico.
+            if (accountIsLocked) {
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Comparamos la contraseña recibida
+            // con el hash almacenado.
+            const passwordIsValid =
+                await comparePassword(
+                    password,
+                    user.passwordHash
+                );
+
+
+            // Si la contraseña es incorrecta,
+            // registramos el intento fallido.
+            if (!passwordIsValid) {
+                await registerFailedLogin(
+                    user
+                );
+
+
+                // Retornamos el mensaje genérico.
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Impedimos el acceso
+            // si la cuenta está desactivada.
+            if (!user.isActive) {
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Dejamos solamente
+            // las sucursales activas.
+            const activeSucursales =
+                user.sucursales.filter(
+                    (sucursal) =>
+                        sucursal &&
+                        sucursal.isActive
+                );
+
+
+            // Comprobamos que el usuario
+            // tenga al menos una sucursal activa.
+            if (
+                activeSucursales.length === 0
+            ) {
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Comprobamos que la sucursal
+            // principal exista y esté activa.
+            if (
+                !user.sucursalPrincipal ||
+                !user.sucursalPrincipal.isActive
+            ) {
+                return res.status(401).json({
+                    success: false,
+
+                    message:
+                        LOGIN_FAILED_MESSAGE,
+                });
+            }
+
+
+            // Reiniciamos los intentos fallidos
+            // y registramos el acceso exitoso.
+            await User.updateOne(
+                {
+                    _id: user._id,
+                },
+                {
+                    $set: {
+                        loginAttempts: 0,
+                        lockUntil: null,
+                        lastLoginAt:
+                            currentDate,
+                    },
+                }
+            );
+
+
+            // Obtenemos la versión actual
+            // de las sesiones del usuario.
+            const tokenVersion =
+                user.tokenVersion ?? 0;
+
+
+            // Generamos un token general.
+            //
+            // No incluimos el rol dentro del token,
+            // porque el middleware lo comprobará
+            // directamente en MongoDB.
+            const token =
+                generateAuthToken({
+                    userId:
+                        user._id,
+
+                    tokenVersion,
+                });
+
+
+            // Guardamos el token dentro
+            // de una cookie HttpOnly.
+            res.cookie(
+                AUTH_COOKIE_NAME,
+                token,
+                getAuthCookieOptions()
+            );
+
+
+            // Comprobamos si el usuario
+            // tiene acceso administrativo.
+            const hasAdministrativeAccess =
+                [
+                    "admin",
+                    "super_admin",
+                ].includes(
+                    user.role
+                );
+
+
+            // Determinamos la página
+            // sugerida después del acceso.
+            const destination =
+                hasAdministrativeAccess
+                    ? "/admin"
+                    : "/miembros";
+
+
+            // Retornamos solamente
+            // información segura y necesaria.
+            return res.status(200).json({
+                success: true,
+
+                message:
+                    "Inicio de sesión realizado correctamente",
+
+                // Esta dirección sirve solamente
+                // para la navegación de React.
+                //
+                // La autorización real siempre
+                // será comprobada por el backend.
+                destination,
+
+                user: {
+                    // Identificador del usuario.
+                    id:
+                        user._id,
+
+                    // Nombre.
+                    firstName:
+                        user.firstName,
+
+                    // Apellido.
+                    lastName:
+                        user.lastName,
+
+                    // Nombre completo.
+                    fullName:
+                        `${user.firstName} ${user.lastName}`,
+
+                    // Correo.
+                    email:
+                        user.email,
+
+                    // Rol actual.
+                    role:
+                        user.role,
+
+                    // Indica si debe cambiar
+                    // la contraseña temporal.
+                    mustChangePassword:
+                        user.mustChangePassword,
+
+                    // Sucursal principal.
+                    sucursalPrincipal:
+                        user.sucursalPrincipal,
+
+                    // Sucursales relacionadas.
+                    sucursales:
+                        activeSucursales,
+                },
+            });
+        } catch (error) {
+
+            // Enviamos cualquier error inesperado
+            // al middleware global.
+            next(error);
+        }
+    }
+);
+
+
+// Exportamos el router
+// para montarlo dentro de app.js.
+export default router;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\scripts\createInitialAdmin.js
+
+// Cargamos las variables de entorno
+// antes de utilizar la conexión con MongoDB.
+import "../config/env.js";
+
+
+// Importamos mongoose para cerrar
+// correctamente la conexión al terminar.
+import mongoose from "mongoose";
+
+
+// Importamos crypto para generar
+// una contraseña temporal aleatoria y segura.
+import crypto from "node:crypto";
+
+
+// Importamos la función encargada
+// de conectar el backend con MongoDB.
+import connectDatabase from "../config/database.js";
+
+
+// Importamos el modelo de sucursales.
+import Sucursal from "../models/Sucursal.js";
+
+
+// Importamos el modelo único de usuarios.
+//
+// Este modelo incluye miembros,
+// administradores y superadministradores.
+import User from "../models/User.js";
+
+
+// Importamos la utilidad
+// encargada de cifrar contraseñas.
+import {
+    hashPassword,
+} from "../utils/passwordUtils.js";
+
+
+// Creamos una función que obtiene
+// un argumento enviado desde la terminal.
+//
+// Ejemplo:
+//
+// --firstName=Lisett
+const getCommandArgument = (
+    argumentName
+) => {
+
+    // Creamos el prefijo
+    // que queremos encontrar.
+    const prefix =
+        `--${argumentName}=`;
+
+
+    // Buscamos el argumento dentro
+    // de los parámetros de la terminal.
+    const argument =
+        process.argv.find(
+            (currentArgument) =>
+                currentArgument.startsWith(
+                    prefix
+                )
+        );
+
+
+    // Si el argumento no existe,
+    // retornamos una cadena vacía.
+    if (!argument) {
+        return "";
+    }
+
+
+    // Eliminamos el prefijo
+    // y retornamos el valor recibido.
+    return argument
+        .slice(prefix.length)
+        .trim();
+};
+
+
+// Creamos una función que genera
+// una contraseña temporal segura.
+const generateTemporaryPassword = () => {
+
+    // Generamos 18 bytes aleatorios
+    // utilizando el módulo criptográfico de Node.
+    const randomPart =
+        crypto
+            .randomBytes(18)
+            .toString("base64url");
+
+
+    // Agregamos diferentes tipos
+    // de caracteres para cumplir
+    // las reglas de contraseña.
+    const temporaryPassword =
+        `${randomPart}aA1!`;
+
+
+    // Retornamos la contraseña generada.
+    return temporaryPassword;
+};
+
+
+// Creamos una función que convierte
+// la fecha recibida desde la terminal.
+//
+// El formato obligatorio será:
+//
+// AAAA-MM-DD
+const parseBirthDate = (
+    birthDateValue
+) => {
+
+    // Comprobamos que exista
+    // una fecha de nacimiento.
+    if (!birthDateValue) {
+        throw new Error(
+            "Debes proporcionar --birthDate utilizando el formato AAAA-MM-DD"
+        );
+    }
+
+
+    // Comprobamos la estructura
+    // general de la fecha.
+    const birthDatePattern =
+        /^\d{4}-\d{2}-\d{2}$/;
+
+
+    // Rechazamos formatos diferentes.
+    if (
+        !birthDatePattern.test(
+            birthDateValue
+        )
+    ) {
+        throw new Error(
+            "La fecha de nacimiento debe utilizar el formato AAAA-MM-DD"
+        );
+    }
+
+
+    // Separamos el año,
+    // el mes y el día.
+    const [
+        yearValue,
+        monthValue,
+        dayValue,
+    ] = birthDateValue.split("-");
+
+
+    // Convertimos los valores
+    // recibidos a números.
+    const year = Number(yearValue);
+    const month = Number(monthValue);
+    const day = Number(dayValue);
+
+
+    // Creamos la fecha utilizando UTC.
+    //
+    // Usamos las 12:00 para reducir problemas
+    // de visualización por zona horaria.
+    const parsedBirthDate =
+        new Date(
+            Date.UTC(
+                year,
+                month - 1,
+                day,
+                12,
+                0,
+                0
+            )
+        );
+
+
+    // Comprobamos que JavaScript no haya
+    // corregido automáticamente una fecha inválida.
+    //
+    // Por ejemplo:
+    // 2026-02-31 no debe convertirse en marzo.
+    const dateIsValid =
+        parsedBirthDate.getUTCFullYear() ===
+            year &&
+        parsedBirthDate.getUTCMonth() ===
+            month - 1 &&
+        parsedBirthDate.getUTCDate() ===
+            day;
+
+
+    // Rechazamos fechas inexistentes.
+    if (!dateIsValid) {
+        throw new Error(
+            "La fecha de nacimiento ingresada no existe"
+        );
+    }
+
+
+    // Comprobamos que la fecha
+    // no pertenezca al futuro.
+    if (
+        parsedBirthDate >
+        new Date()
+    ) {
+        throw new Error(
+            "La fecha de nacimiento no puede estar en el futuro"
+        );
+    }
+
+
+    // Retornamos la fecha preparada
+    // para guardarse en MongoDB.
+    return parsedBirthDate;
+};
+
+
+// Creamos una función que normaliza
+// el número telefónico.
+const normalizePhone = (
+    phoneValue
+) => {
+
+    // Comprobamos que exista
+    // un número telefónico.
+    if (!phoneValue) {
+        throw new Error(
+            "Debes proporcionar --phone"
+        );
+    }
+
+
+    // Eliminamos espacios,
+    // guiones y paréntesis.
+    let normalizedPhone =
+        phoneValue.replace(
+            /[\s()-]/g,
+            ""
+        );
+
+
+    // Si se ingresó un número móvil chileno
+    // sin código de país, agregamos +56.
+    //
+    // Ejemplo:
+    // 931458575
+    // se convierte en:
+    // +56931458575
+    if (
+        /^9\d{8}$/.test(
+            normalizedPhone
+        )
+    ) {
+        normalizedPhone =
+            `+56${normalizedPhone}`;
+    }
+
+
+    // Si se ingresó el código de Chile
+    // sin el signo +, lo agregamos.
+    //
+    // Ejemplo:
+    // 56931458575
+    // se convierte en:
+    // +56931458575
+    if (
+        /^56\d{9}$/.test(
+            normalizedPhone
+        )
+    ) {
+        normalizedPhone =
+            `+${normalizedPhone}`;
+    }
+
+
+    // Utilizamos una validación compatible
+    // con números telefónicos internacionales.
+    const internationalPhonePattern =
+        /^\+[1-9]\d{7,14}$/;
+
+
+    // Rechazamos números
+    // que no tengan un formato válido.
+    if (
+        !internationalPhonePattern.test(
+            normalizedPhone
+        )
+    ) {
+        throw new Error(
+            "El teléfono debe utilizar un formato válido, por ejemplo +56912345678"
+        );
+    }
+
+
+    // Retornamos el teléfono normalizado.
+    return normalizedPhone;
+};
+
+
+// Creamos una función que comprueba
+// los datos recibidos desde la terminal.
+const validateArguments = ({
+    firstName,
+    lastName,
+    email,
+    confirmation,
+}) => {
+
+    // Comprobamos que exista el nombre.
+    if (!firstName) {
+        throw new Error(
+            "Debes proporcionar --firstName"
+        );
+    }
+
+
+    // Comprobamos que exista el apellido.
+    if (!lastName) {
+        throw new Error(
+            "Debes proporcionar --lastName"
+        );
+    }
+
+
+    // Comprobamos que exista el correo.
+    if (!email) {
+        throw new Error(
+            "Debes proporcionar --email"
+        );
+    }
+
+
+    // Comprobamos que el correo tenga
+    // una estructura básica válida.
+    if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            email
+        )
+    ) {
+        throw new Error(
+            "El correo electrónico ingresado no es válido"
+        );
+    }
+
+
+    // Exigimos una confirmación explícita
+    // para evitar ejecutar el script por accidente.
+    if (
+        confirmation !==
+        "CREATE_INITIAL_ADMIN"
+    ) {
+        throw new Error(
+            "Debes confirmar la operación con --confirm=CREATE_INITIAL_ADMIN"
+        );
+    }
+};
+
+
+// Creamos la función principal
+// encargada de crear al superadministrador.
+const createInitialAdmin = async () => {
+
+    // Obtenemos el nombre
+    // desde la terminal.
+    const firstName =
+        getCommandArgument(
+            "firstName"
+        );
+
+
+    // Obtenemos el apellido
+    // desde la terminal.
+    const lastName =
+        getCommandArgument(
+            "lastName"
+        );
+
+
+    // Obtenemos la fecha de nacimiento
+    // en formato AAAA-MM-DD.
+    const birthDateValue =
+        getCommandArgument(
+            "birthDate"
+        );
+
+
+    // Obtenemos el teléfono.
+    const phoneValue =
+        getCommandArgument(
+            "phone"
+        );
+
+
+    // Obtenemos y normalizamos el correo.
+    const email =
+        getCommandArgument(
+            "email"
+        ).toLowerCase();
+
+
+    // Obtenemos la confirmación
+    // de seguridad.
+    const confirmation =
+        getCommandArgument(
+            "confirm"
+        );
+
+
+    // Validamos el nombre,
+    // apellido, correo y confirmación.
+    validateArguments({
+        firstName,
+        lastName,
+        email,
+        confirmation,
+    });
+
+
+    // Convertimos y validamos
+    // la fecha de nacimiento.
+    const birthDate =
+        parseBirthDate(
+            birthDateValue
+        );
+
+
+    // Normalizamos y validamos
+    // el teléfono recibido.
+    const phone =
+        normalizePhone(
+            phoneValue
+        );
+
+
+    // Establecemos la conexión
+    // con MongoDB.
+    await connectDatabase();
+
+
+    // Esperamos a que Mongoose prepare
+    // los índices del modelo User.
+    //
+    // Esto incluye el índice único
+    // de las posiciones de superadministrador.
+    await User.init();
+
+
+    // Buscamos si ya existe
+    // un superadministrador.
+    const existingSuperAdmin =
+        await User.exists({
+            role: "super_admin",
+        });
+
+
+    // Impedimos ejecutar nuevamente
+    // el proceso inicial.
+    if (existingSuperAdmin) {
+        throw new Error(
+            "Ya existe un superadministrador. El script inicial no puede ejecutarse nuevamente."
+        );
+    }
+
+
+    // Comprobamos si el correo recibido
+    // ya pertenece a otra cuenta.
+    const existingUserWithEmail =
+        await User.exists({
+            email,
+        });
+
+
+    // Impedimos utilizar
+    // un correo repetido.
+    if (existingUserWithEmail) {
+        throw new Error(
+            "Ya existe un usuario registrado con ese correo electrónico."
+        );
+    }
+
+
+    // Buscamos si la sucursal inicial
+    // ya existe en MongoDB.
+    let sucursal =
+        await Sucursal.findOne({
+            code: "SUC-001",
+        });
+
+
+    // Si la sucursal todavía no existe,
+    // la creamos con la información
+    // de la iglesia de Valparaíso.
+    if (!sucursal) {
+        sucursal =
+            await Sucursal.create({
+                // Código permanente
+                // de la primera sucursal.
+                code: "SUC-001",
+
+                // Nombre de la sucursal.
+                name:
+                    "Iglesia El Ancla - Valparaíso",
+
+                // Nombre utilizado
+                // dentro de las URL.
+                slug:
+                    "iglesia-el-ancla-valparaiso",
+
+                // Dirección física
+                // de la iglesia.
+                address: {
+                    // Nombre de la calle.
+                    street:
+                        "Artillería",
+
+                    // Número de la dirección.
+                    number:
+                        "199",
+
+                    // Sector de la ciudad.
+                    sector:
+                        "Playa Ancha",
+
+                    // Ciudad.
+                    city:
+                        "Valparaíso",
+
+                    // Región.
+                    region:
+                        "Región de Valparaíso",
+
+                    // País.
+                    country:
+                        "Chile",
+                },
+
+                // Correo público
+                // todavía no definido.
+                contactEmail: "",
+
+                // Teléfono público
+                // todavía no definido.
+                contactPhone: "",
+
+                // Zona horaria utilizada
+                // por la sucursal.
+                timezone:
+                    "America/Santiago",
+
+                // Indicamos que corresponde
+                // a la sede principal.
+                isHeadquarters: true,
+
+                // Dejamos activa la sucursal.
+                isActive: true,
+            });
+    }
+
+
+    // Comprobamos que la sucursal
+    // encontrada continúe activa.
+    if (!sucursal.isActive) {
+        throw new Error(
+            "La sucursal SUC-001 está desactivada y no puede asignarse al superadministrador."
+        );
+    }
+
+
+    // Generamos una contraseña temporal
+    // que no fue escrita en ningún archivo.
+    const temporaryPassword =
+        generateTemporaryPassword();
+
+
+    // Ciframos la contraseña temporal
+    // antes de crear el usuario.
+    const passwordHash =
+        await hashPassword(
+            temporaryPassword
+        );
+
+
+    // Creamos el primer usuario
+    // con permisos de superadministrador.
+    const user =
+        await User.create({
+            // Nombre recibido
+            // desde la terminal.
+            firstName,
+
+            // Apellido recibido
+            // desde la terminal.
+            lastName,
+
+            // Fecha de nacimiento validada.
+            birthDate,
+
+            // Teléfono normalizado.
+            phone,
+
+            // Correo normalizado.
+            email,
+
+            // Guardamos solamente
+            // el hash de la contraseña.
+            passwordHash,
+
+            // Asignamos el nivel
+            // máximo de acceso.
+            role:
+                "super_admin",
+
+            // Asignamos la primera sucursal.
+            sucursales: [
+                sucursal._id,
+            ],
+
+            // Definimos Valparaíso
+            // como sucursal principal.
+            sucursalPrincipal:
+                sucursal._id,
+
+            // Ocupamos la primera de las
+            // dos posiciones permitidas.
+            superAdminSlot: 1,
+
+            // Dejamos activa la cuenta.
+            isActive: true,
+
+            // El correo se considera verificado
+            // porque la cuenta fue creada mediante
+            // el script interno del servidor.
+            emailVerifiedAt:
+                new Date(),
+
+            // Exigiremos cambiar la contraseña
+            // después del primer inicio de sesión.
+            mustChangePassword: true,
+
+            // La primera versión
+            // de sus sesiones será cero.
+            tokenVersion: 0,
+        });
+
+
+    // Mostramos un separador visual.
+    console.log(
+        "\n========================================"
+    );
+
+
+    // Informamos que el proceso terminó.
+    console.log(
+        "SUPERADMINISTRADOR INICIAL CREADO"
+    );
+
+
+    // Mostramos el identificador
+    // de la sucursal relacionada.
+    console.log(
+        `Sucursal: ${sucursal.code} - ${sucursal.name}`
+    );
+
+
+    // Mostramos el nombre completo
+    // del nuevo usuario.
+    console.log(
+        `Usuario: ${user.fullName}`
+    );
+
+
+    // Mostramos el rol asignado.
+    console.log(
+        `Rol: ${user.role}`
+    );
+
+
+    // Mostramos el correo de acceso.
+    console.log(
+        `Correo: ${user.email}`
+    );
+
+
+    // Mostramos la contraseña temporal
+    // una sola vez.
+    console.log(
+        `Contraseña temporal: ${temporaryPassword}`
+    );
+
+
+    // Recordamos que debe guardarse
+    // temporalmente en un lugar seguro.
+    console.log(
+        "Guarda esta contraseña de forma segura."
+    );
+
+
+    // Informamos que deberá cambiarse
+    // durante el primer acceso.
+    console.log(
+        "El sistema solicitará cambiarla durante el primer acceso."
+    );
+
+
+    // Cerramos el separador visual.
+    console.log(
+        "========================================\n"
+    );
+};
+
+
+// Ejecutamos la función principal.
+createInitialAdmin()
+
+    // Si todo finaliza correctamente,
+    // mostramos una confirmación.
+    .then(() => {
+        console.log(
+            "Configuración inicial finalizada correctamente."
+        );
+    })
+
+    // Si ocurre un error,
+    // mostramos un mensaje controlado.
+    .catch((error) => {
+        console.error(
+            "No se pudo completar la configuración inicial:"
+        );
+
+        console.error(
+            error.message
+        );
+
+        // Indicamos que el proceso
+        // terminó con error.
+        process.exitCode = 1;
+    })
+
+    // Sin importar el resultado,
+    // cerramos la conexión con MongoDB.
+    .finally(async () => {
+        await mongoose.disconnect();
+    });
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\utils\passwordUtils.js
+
+// Importamos bcryptjs para cifrar
+// y comparar contraseñas.
+import bcrypt from "bcryptjs";
+
+
+// Definimos el costo utilizado por bcrypt.
+//
+// Un valor de 12 ofrece un equilibrio razonable
+// entre seguridad y tiempo de procesamiento.
+const BCRYPT_ROUNDS = 12;
+
+
+// Definimos el largo mínimo permitido.
+const MIN_PASSWORD_LENGTH = 12;
+
+
+// Bcrypt procesa como máximo 72 bytes.
+//
+// No es exactamente lo mismo que 72 caracteres,
+// porque algunos símbolos pueden utilizar varios bytes.
+const MAX_PASSWORD_BYTES = 72;
+
+
+// Creamos una función que valida
+// si una contraseña cumple las reglas de seguridad.
+const validatePassword = (password) => {
+
+  // Creamos un arreglo para guardar
+  // todos los problemas encontrados.
+  const errors = [];
+
+
+  // Comprobamos que la contraseña
+  // realmente sea un texto.
+  if (typeof password !== "string") {
+    return {
+      isValid: false,
+      errors: [
+        "La contraseña debe ser una cadena de texto",
+      ],
+    };
+  }
+
+
+  // Comprobamos la cantidad mínima de caracteres.
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    errors.push(
+      `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`
+    );
+  }
+
+
+  // Calculamos el tamaño real
+  // de la contraseña en bytes UTF-8.
+  const passwordBytes = Buffer.byteLength(
+    password,
+    "utf8"
+  );
+
+
+  // Evitamos superar el límite procesado por bcrypt.
+  if (passwordBytes > MAX_PASSWORD_BYTES) {
+    errors.push(
+      "La contraseña no puede superar los 72 bytes"
+    );
+  }
+
+
+  // Comprobamos que exista al menos
+  // una letra minúscula.
+  if (!/[a-záéíóúñ]/u.test(password)) {
+    errors.push(
+      "La contraseña debe incluir al menos una letra minúscula"
+    );
+  }
+
+
+  // Comprobamos que exista al menos
+  // una letra mayúscula.
+  if (!/[A-ZÁÉÍÓÚÑ]/u.test(password)) {
+    errors.push(
+      "La contraseña debe incluir al menos una letra mayúscula"
+    );
+  }
+
+
+  // Comprobamos que exista al menos un número.
+  if (!/\d/u.test(password)) {
+    errors.push(
+      "La contraseña debe incluir al menos un número"
+    );
+  }
+
+
+  // Comprobamos que exista al menos
+  // un carácter especial.
+  if (
+    !/[!@#$%^&*(),.?":{}|<>_\-+=/\\[\];'`~]/u.test(
+      password
+    )
+  ) {
+    errors.push(
+      "La contraseña debe incluir al menos un carácter especial"
+    );
+  }
+
+
+  // Retornamos el resultado completo
+  // de la validación.
+  return {
+    // Será válido solamente si no existen errores.
+    isValid: errors.length === 0,
+
+    // Entregamos todos los errores encontrados.
+    errors,
+  };
+};
+
+
+// Creamos una función que cifra
+// una contraseña segura.
+const hashPassword = async (password) => {
+
+  // Validamos la contraseña antes de cifrarla.
+  const validation = validatePassword(password);
+
+
+  // Si no cumple las reglas,
+  // detenemos el proceso.
+  if (!validation.isValid) {
+
+    // Creamos un error con un mensaje comprensible.
+    const error = new Error(
+      validation.errors.join(". ")
+    );
+
+
+    // Agregamos un código interno para identificarlo.
+    error.code = "INVALID_PASSWORD";
+
+
+    // Lanzamos el error.
+    throw error;
+  }
+
+
+  // Generamos el hash utilizando bcrypt.
+  //
+  // bcrypt incorporará automáticamente
+  // una sal aleatoria dentro del resultado.
+  const passwordHash = await bcrypt.hash(
+    password,
+    BCRYPT_ROUNDS
+  );
+
+
+  // Retornamos solamente el hash.
+  return passwordHash;
+};
+
+
+// Creamos una función para comparar
+// la contraseña ingresada con el hash almacenado.
+const comparePassword = async (
+  password,
+  passwordHash
+) => {
+
+  // Evitamos ejecutar bcrypt si alguno
+  // de los valores no es válido.
+  if (
+    typeof password !== "string" ||
+    typeof passwordHash !== "string" ||
+    !password ||
+    !passwordHash
+  ) {
+    return false;
+  }
+
+
+  // bcrypt cifra internamente la contraseña
+  // y la compara con el hash guardado.
+  const passwordsMatch = await bcrypt.compare(
+    password,
+    passwordHash
+  );
+
+
+  // Retornamos true o false.
+  return passwordsMatch;
+};
+
+
+// Exportamos las funciones para reutilizarlas
+// en el script inicial y en el endpoint de login.
+export {
+  validatePassword,
+  hashPassword,
+  comparePassword,
+};
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\utils\tokenUtils.js
+
+// Importamos jsonwebtoken para crear
+// y verificar los tokens de sesión.
+import jwt from "jsonwebtoken";
+
+
+// Definimos el emisor esperado del token.
+//
+// Esto permite comprobar que el token
+// fue generado por nuestro propio backend.
+const TOKEN_ISSUER =
+  "iglesia-el-ancla-api";
+
+
+// Definimos la aplicación
+// que puede utilizar el token.
+const TOKEN_AUDIENCE =
+  "iglesia-el-ancla-app";
+
+
+// Comprobamos si el backend
+// está ejecutándose en producción.
+const isProduction =
+  process.env.NODE_ENV === "production";
+
+
+// Definimos el nombre de la cookie.
+//
+// En producción utilizamos el prefijo __Host-,
+// que exige HTTPS, path "/" y evita que
+// otro subdominio configure esta misma cookie.
+const AUTH_COOKIE_NAME =
+  isProduction
+    ? "__Host-el_ancla_session"
+    : "el_ancla_session";
+
+
+// Creamos una función para obtener
+// el secreto utilizado por JWT.
+const getJwtSecret = () => {
+
+  // Obtenemos el secreto
+  // desde las variables de entorno.
+  const jwtSecret =
+    process.env.JWT_SECRET;
+
+
+  // Comprobamos que el secreto exista
+  // y que sea una cadena de texto.
+  if (
+    typeof jwtSecret !== "string" ||
+    !jwtSecret
+  ) {
+    throw new Error(
+      "La variable JWT_SECRET no está definida"
+    );
+  }
+
+
+  // Calculamos la longitud real
+  // del secreto en bytes.
+  const secretLength =
+    Buffer.byteLength(
+      jwtSecret,
+      "utf8"
+    );
+
+
+  // Comprobamos que el secreto tenga
+  // al menos 64 bytes.
+  if (
+    secretLength < 64
+  ) {
+    throw new Error(
+      "JWT_SECRET debe tener al menos 64 bytes"
+    );
+  }
+
+
+  // Retornamos el secreto validado.
+  return jwtSecret;
+};
+
+
+// Creamos una función que valida
+// la versión de sesión recibida.
+const validateTokenVersion = (
+  tokenVersion
+) => {
+
+  // Comprobamos que sea un número entero
+  // igual o superior a cero.
+  const tokenVersionIsValid =
+    Number.isInteger(
+      tokenVersion
+    ) &&
+    tokenVersion >= 0;
+
+
+  // Si no es válida,
+  // detenemos la operación.
+  if (!tokenVersionIsValid) {
+    throw new Error(
+      "La versión de la sesión no es válida"
+    );
+  }
+};
+
+
+// Creamos una función que genera
+// el token de cualquier usuario registrado.
+const generateAuthToken = ({
+  userId,
+  tokenVersion = 0,
+}) => {
+
+  // Comprobamos que exista
+  // el identificador del usuario.
+  if (!userId) {
+    throw new Error(
+      "No se puede generar un token sin usuario"
+    );
+  }
+
+
+  // Validamos la versión
+  // de la sesión.
+  validateTokenVersion(
+    tokenVersion
+  );
+
+
+  // Obtenemos el secreto JWT
+  // previamente validado.
+  const jwtSecret =
+    getJwtSecret();
+
+
+  // Obtenemos la duración configurada.
+  //
+  // Si no existe, utilizamos dos horas.
+  const expiresIn =
+    process.env.JWT_EXPIRES_IN ||
+    "2h";
+
+
+  // Creamos y retornamos
+  // el token firmado.
+  return jwt.sign(
+    {
+      // Identificamos el contenido
+      // como una sesión de usuario.
+      type:
+        "session",
+
+      // Incluimos la versión utilizada
+      // para invalidar sesiones anteriores.
+      tokenVersion,
+    },
+
+    // Utilizamos el secreto
+    // para firmar el token.
+    jwtSecret,
+
+    {
+      // Guardamos el identificador del usuario
+      // dentro del campo estándar subject.
+      subject:
+        userId.toString(),
+
+      // Definimos cuánto durará el token.
+      expiresIn,
+
+      // Indicamos quién emitió el token.
+      issuer:
+        TOKEN_ISSUER,
+
+      // Indicamos quién puede utilizarlo.
+      audience:
+        TOKEN_AUDIENCE,
+
+      // Aceptamos únicamente
+      // el algoritmo HS256.
+      algorithm:
+        "HS256",
+    }
+  );
+};
+
+
+// Creamos una función para verificar
+// un token recibido desde la cookie.
+const verifyAuthToken = (
+  token
+) => {
+
+  // Comprobamos que el token exista
+  // y sea una cadena de texto.
+  if (
+    typeof token !== "string" ||
+    !token
+  ) {
+    throw new Error(
+      "No se recibió un token de sesión"
+    );
+  }
+
+
+  // Obtenemos el secreto
+  // previamente validado.
+  const jwtSecret =
+    getJwtSecret();
+
+
+  // Verificamos:
+// - La firma.
+// - La expiración.
+// - El emisor.
+// - La audiencia.
+// - El algoritmo.
+  const decodedToken =
+    jwt.verify(
+      token,
+      jwtSecret,
+      {
+        // Exigimos el emisor esperado.
+        issuer:
+          TOKEN_ISSUER,
+
+        // Exigimos la audiencia esperada.
+        audience:
+          TOKEN_AUDIENCE,
+
+        // Aceptamos solamente HS256.
+        algorithms: [
+          "HS256",
+        ],
+      }
+    );
+
+
+  // Comprobamos que el contenido decodificado
+  // sea un objeto y no una cadena.
+  if (
+    typeof decodedToken !== "object" ||
+    decodedToken === null
+  ) {
+    throw new Error(
+      "El contenido del token no es válido"
+    );
+  }
+
+
+  // Comprobamos que corresponda
+  // a una sesión de usuario.
+  if (
+    decodedToken.type !==
+    "session"
+  ) {
+    throw new Error(
+      "El tipo de token no es válido"
+    );
+  }
+
+
+  // Comprobamos que exista
+  // el identificador del usuario.
+  if (
+    typeof decodedToken.sub !== "string" ||
+    !decodedToken.sub
+  ) {
+    throw new Error(
+      "El token no contiene un usuario válido"
+    );
+  }
+
+
+  // Validamos la versión incluida
+  // dentro del token.
+  validateTokenVersion(
+    decodedToken.tokenVersion
+  );
+
+
+  // Retornamos el contenido
+  // verificado del token.
+  return decodedToken;
+};
+
+
+// Creamos una función que obtiene
+// la duración de la cookie.
+const getCookieMaxAge = () => {
+
+  // Obtenemos la duración configurada
+  // y la convertimos a número.
+  const configuredMaxAge =
+    Number(
+      process.env
+        .AUTH_COOKIE_MAX_AGE_MS ||
+      7200000
+    );
+
+
+  // Comprobamos que sea:
+// - Un número entero seguro.
+// - Mayor que cero.
+  const maxAgeIsValid =
+    Number.isSafeInteger(
+      configuredMaxAge
+    ) &&
+    configuredMaxAge > 0;
+
+
+  // Si el valor no es válido,
+  // utilizamos dos horas.
+  if (!maxAgeIsValid) {
+    return 7200000;
+  }
+
+
+  // Retornamos la duración validada.
+  return configuredMaxAge;
+};
+
+
+// Creamos una función para obtener
+// las opciones de la cookie de sesión.
+const getAuthCookieOptions = () => {
+
+  // Retornamos la configuración
+  // segura de la cookie.
+  return {
+    // Impedimos que JavaScript del navegador
+    // pueda leer directamente el token.
+    httpOnly: true,
+
+    // En producción la cookie solamente
+    // podrá enviarse mediante HTTPS.
+    secure:
+      isProduction,
+
+    // Durante el desarrollo utilizamos lax.
+    //
+    // En producción utilizamos none
+    // porque el frontend y el backend
+    // podrían estar en dominios diferentes.
+    sameSite:
+      isProduction
+        ? "none"
+        : "lax",
+
+    // Permitimos enviar la cookie
+    // a todas las rutas del backend.
+    path:
+      "/",
+
+    // Definimos la duración
+    // de la cookie.
+    maxAge:
+      getCookieMaxAge(),
+
+    // Solicitamos al navegador dar
+    // prioridad alta a esta cookie.
+    priority:
+      "high",
+  };
+};
+
+
+// Creamos una función para obtener
+// las opciones utilizadas al eliminar
+// la cookie de sesión.
+const getAuthCookieClearOptions = () => {
+
+  // Obtenemos las opciones principales.
+  const {
+    // Separamos maxAge porque no debe
+    // utilizarse al eliminar la cookie.
+    maxAge,
+
+    // Conservamos todas las demás opciones.
+    ...clearOptions
+  } = getAuthCookieOptions();
+
+
+  // Evitamos una advertencia por
+  // la variable extraída y no utilizada.
+  void maxAge;
+
+
+  // Retornamos las mismas opciones
+  // con las que se creó la cookie.
+  return clearOptions;
+};
+
+
+// Exportamos las herramientas necesarias
+// para la autenticación general.
+export {
+  // Exportamos el nombre de la cookie.
+  AUTH_COOKIE_NAME,
+
+  // Exportamos la generación del token.
+  generateAuthToken,
+
+  // Exportamos la verificación del token.
+  verifyAuthToken,
+
+  // Exportamos las opciones
+  // para crear la cookie.
+  getAuthCookieOptions,
+
+  // Exportamos las opciones
+  // para eliminar la cookie.
+  getAuthCookieClearOptions,
+};
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\.env
+
+
+
+
+REACT_APP_API_URL=http://localhost:5000/api
 
 
 
@@ -289,6 +3828,8 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\package.json
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.20.0",
+    "lucide-react": "^1.41.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.1",
@@ -327,214 +3868,391 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\package.json
 
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\App.js
 
-// Importamos las herramientas necesarias para crear las rutas.
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+// Importamos las herramientas necesarias
+// para crear y organizar las rutas.
+import {
+  BrowserRouter,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-// Importamos el pie de página que estará presente en todo el sitio.
+// Importamos el encabezado
+// utilizado solamente en el sitio público.
+import Header from "./components/public/Header";
+
+// Importamos el pie de página
+// utilizado solamente en el sitio público.
 import Footer from "./components/public/Footer";
 
-// Importamos las páginas públicas.
+
+// Importamos el layout general
+// utilizado por las páginas administrativas.
+import AdminLayout from "./components/super-admin/layout/AdminLayout";
+
+
+// =========================================================
+// PÁGINAS PÚBLICAS
+// =========================================================
+
+// Importamos la página principal.
 import Home from "./pages/public/Home";
+
+// Importamos la página Nosotros.
 import About from "./pages/public/About";
+
+// Importamos la página de contacto.
 import Contact from "./pages/public/Contact";
+
+// Importamos la página de eventos.
 import Events from "./pages/public/Events";
+
+// Importamos la página de contenidos recomendados.
 import Recommendations from "./pages/public/Recommendations";
+
+// Importamos la página principal de recursos.
 import Resources from "./pages/public/Resources";
+
+// Importamos la página de estudios bíblicos.
 import BibleStudies from "./pages/public/resources/BibleStudies";
+
+// Importamos la guía devocional personal.
 import PersonalDevotionalGuide from "./pages/public/resources/PersonalDevotionalGuide";
+
+// Importamos la página de herramientas de estudio bíblico.
 import BibleStudyTools from "./pages/public/resources/BibleStudyTools";
+
+// Importamos la página de libros del Antiguo Testamento.
 import OldTestamentBooks from "./pages/public/resources/OldTestamentBooks";
+
+// Importamos la página de libros del Nuevo Testamento.
 import NewTestamentBooks from "./pages/public/resources/NewTestamentBooks";
+
+// Importamos la página reutilizable
+// para mostrar el detalle de un libro bíblico.
 import BibleBookDetails from "./pages/public/resources/BibleBookDetails";
+
+// Importamos la página de guías de oración.
 import PrayerGuides from "./pages/public/resources/PrayerGuides";
+
+// Importamos la página reutilizable
+// para mostrar el detalle de una guía.
 import PrayerGuideDetails from "./pages/public/resources/PrayerGuideDetails";
+
+// Importamos la página de materiales de discipulado.
 import DiscipleshipMaterials from "./pages/public/resources/DiscipleshipMaterials";
+
+// Importamos la página reutilizable
+// para mostrar un material de discipulado.
 import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMaterialDetails";
+
+// Importamos la página de preguntas frecuentes.
 import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
+
+// Importamos la página de materiales descargables.
 import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
+
+// Importamos la página reutilizable
+// para mostrar un material descargable.
 import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
 
-
-// Importamos las páginas de usuarios registrados.
-
-
-// Importamos las páginas del administrador.
-
-// Importamos la página de gestión de gastos financieros.
-import ExpenseManagement from "./pages/admin/ExpenseManagement";
+// Importamos la página pública de inicio de sesión.
+import Login from "./pages/public/Login";
 
 
-// Importamos la página 404.
+// =========================================================
+// PÁGINAS DE USUARIOS REGISTRADOS
+// =========================================================
+
+// Más adelante importaremos aquí
+// las páginas destinadas a los miembros registrados.
+
+
+// =========================================================
+// PÁGINAS ADMINISTRATIVAS
+// =========================================================
+
+
+// Importamos la página principal del administrador.
+import AdminDashboard from "./pages/super-admin/AdminDashboard";
+
+// Importamos la página de gestión de gastos.
+import ExpenseManagement from "./pages/super-admin/ExpenseManagement";
+
+
+// =========================================================
+// PÁGINA 404
+// =========================================================
+
+// Importamos la página que se mostrará
+// cuando una ruta pública no exista.
 import NotFound from "./pages/public/NotFound";
 
 
-// Creamos el componente principal.
+// =========================================================
+// LAYOUT PÚBLICO
+// =========================================================
+
+// Creamos la estructura compartida
+// por todas las páginas públicas.
+function PublicLayout() {
+
+  // Retornamos la estructura completa del sitio público.
+  return (
+    <>
+
+      {/* Mostramos el encabezado en todas las páginas públicas. */}
+      <Header />
+
+      {/* Outlet mostrará la página correspondiente
+          según la dirección visitada por el usuario. */}
+      <main>
+        <Outlet />
+      </main>
+
+      {/* Mostramos el pie de página en todas las páginas públicas. */}
+      <Footer />
+
+    </>
+  );
+}
+
+
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
+
+// Creamos el componente principal de la aplicación.
 function App() {
 
-  // Retornamos el sistema de rutas y el Footer general.
+  // Retornamos todo el sistema de rutas.
   return (
 
-    // BrowserRouter permite que React controle la navegación del sitio.
+    // BrowserRouter permite que React controle
+    // la navegación sin recargar completamente el sitio.
     <BrowserRouter>
 
-      {/* Contenedor general de la aplicación. */}
+      {/* Creamos el contenedor general de la aplicación. */}
       <div className="app">
 
-        {/* Routes mostrará solamente la página asociada a la URL actual. */}
+        {/* Routes mostrará únicamente
+            la página asociada a la URL actual. */}
         <Routes>
+
 
           {/* ================================================= */}
           {/* RUTAS PÚBLICAS */}
           {/* ================================================= */}
 
-          {/* Ruta correspondiente a la página principal. */}
-          <Route
-            path="/"
-            element={<Home />}
-          />
+          {/* Todas las rutas contenidas aquí
+              utilizarán PublicLayout y mostrarán el Footer. */}
+          <Route element={<PublicLayout />}>
 
-          {/* Ruta correspondiente a la página Nosotros. */}
-          <Route
-            path="/nosotros"
-            element={<About />}
-          />
+            {/* Ruta correspondiente a la página principal. */}
+            <Route
+              path="/"
+              element={<Home />}
+            />
 
-          {/* Ruta correspondiente a la página de contacto. */}
-          <Route
-            path="/contacto"
-            element={<Contact />}
-          />
 
-          {/* Ruta correspondiente a eventos y actividades. */}
-          <Route
-            path="/eventos"
-            element={<Events />}
-          />
+            {/* Ruta correspondiente a la página Nosotros. */}
+            <Route
+              path="/nosotros"
+              element={<About />}
+            />
 
-          {/* Ruta correspondiente a los contenidos recomendados. */}
-          <Route
-            path="/recomendados"
-            element={<Recommendations />}
-          />
 
-          {/* Ruta principal de recursos. */}
-          <Route
-            path="/recursos"
-            element={<Resources />}
-          />
+            {/* Ruta correspondiente a la página de contacto. */}
+            <Route
+              path="/contacto"
+              element={<Contact />}
+            />
 
-          {/* Ruta correspondiente a estudios bíblicos. */}
-          <Route
-            path="/recursos/estudios"
-            element={<BibleStudies />}
-          />
 
-          {/* Ruta correspondiente a la guía devocional personal. */}
-          <Route
-            path="/recursos/devocional"
-            element={<PersonalDevotionalGuide />}
-          />
+            {/* Ruta correspondiente a eventos y actividades. */}
+            <Route
+              path="/eventos"
+              element={<Events />}
+            />
 
-          {/* Ruta principal de Biblia y herramientas de estudio. */}
-          <Route
-            path="/recursos/biblia"
-            element={<BibleStudyTools />}
-          />
 
-          {/* Ruta que muestra todos los libros del Antiguo Testamento. */}
-          <Route
-            path="/recursos/biblia/libros/antiguo-testamento"
-            element={<OldTestamentBooks />}
-          />
+            {/* Ruta correspondiente
+                a los contenidos recomendados. */}
+            <Route
+              path="/recomendados"
+              element={<Recommendations />}
+            />
 
-          {/* Ruta que muestra todos los libros del Nuevo Testamento. */}
-          <Route
-            path="/recursos/biblia/libros/nuevo-testamento"
-            element={<NewTestamentBooks />}
-          />
 
-          {/* Ruta reutilizable para mostrar el detalle de un libro bíblico. */}
-          <Route
-            path="/recursos/biblia/libro/:slug"
-            element={<BibleBookDetails />}
-          />
+            {/* Ruta principal de recursos. */}
+            <Route
+              path="/recursos"
+              element={<Resources />}
+            />
 
-          {/* Ruta correspondiente a las guías de oración. */}
-          <Route
-            path="/recursos/guias-oracion"
-            element={<PrayerGuides />}
-          />
 
-          {/* Ruta reutilizable para mostrar una guía de oración específica. */}
-          <Route
-            path="/recursos/guias-oracion/:slug"
-            element={<PrayerGuideDetails />}
-          />
+            {/* Ruta correspondiente a estudios bíblicos. */}
+            <Route
+              path="/recursos/estudios"
+              element={<BibleStudies />}
+            />
 
-          {/* Ruta correspondiente a los materiales de discipulado. */}
-          <Route
-            path="/recursos/discipulado"
-            element={<DiscipleshipMaterials />}
-          />
 
-          {/* Ruta reutilizable para mostrar un material de discipulado. */}
-          <Route
-            path="/recursos/discipulado/:slug"
-            element={<DiscipleshipMaterialDetails />}
-          />
+            {/* Ruta correspondiente
+                a la guía devocional personal. */}
+            <Route
+              path="/recursos/devocional"
+              element={<PersonalDevotionalGuide />}
+            />
 
-          {/* Ruta correspondiente a las preguntas frecuentes. */}
-          <Route
-            path="/recursos/preguntas-frecuentes"
-            element={<FrequentlyAskedQuestions />}
-          />
 
-          {/* Ruta correspondiente a los materiales descargables. */}
-          <Route
-            path="/recursos/material-descargable"
-            element={<DownloadableMaterials />}
-          />
+            {/* Ruta principal de Biblia
+                y herramientas de estudio. */}
+            <Route
+              path="/recursos/biblia"
+              element={<BibleStudyTools />}
+            />
 
-          {/* Ruta reutilizable para mostrar el detalle
-              de un material descargable. */}
-          <Route
-            path="/recursos/material-descargable/:slug"
-            element={<DownloadableMaterialDetails />}
-          />
+
+            {/* Ruta que muestra todos los libros
+                del Antiguo Testamento. */}
+            <Route
+              path="/recursos/biblia/libros/antiguo-testamento"
+              element={<OldTestamentBooks />}
+            />
+
+
+            {/* Ruta que muestra todos los libros
+                del Nuevo Testamento. */}
+            <Route
+              path="/recursos/biblia/libros/nuevo-testamento"
+              element={<NewTestamentBooks />}
+            />
+
+
+            {/* Ruta reutilizable que muestra
+                el detalle de un libro bíblico. */}
+            <Route
+              path="/recursos/biblia/libro/:slug"
+              element={<BibleBookDetails />}
+            />
+
+
+            {/* Ruta correspondiente a las guías de oración. */}
+            <Route
+              path="/recursos/guias-oracion"
+              element={<PrayerGuides />}
+            />
+
+
+            {/* Ruta reutilizable que muestra
+                una guía de oración específica. */}
+            <Route
+              path="/recursos/guias-oracion/:slug"
+              element={<PrayerGuideDetails />}
+            />
+
+
+            {/* Ruta correspondiente
+                a los materiales de discipulado. */}
+            <Route
+              path="/recursos/discipulado"
+              element={<DiscipleshipMaterials />}
+            />
+
+
+            {/* Ruta reutilizable que muestra
+                un material de discipulado. */}
+            <Route
+              path="/recursos/discipulado/:slug"
+              element={<DiscipleshipMaterialDetails />}
+            />
+
+
+            {/* Ruta correspondiente
+                a las preguntas frecuentes. */}
+            <Route
+              path="/recursos/preguntas-frecuentes"
+              element={<FrequentlyAskedQuestions />}
+            />
+
+
+            {/* Ruta correspondiente
+                a los materiales descargables. */}
+            <Route
+              path="/recursos/material-descargable"
+              element={<DownloadableMaterials />}
+            />
+
+
+            {/* Ruta reutilizable que muestra el detalle
+                de un material descargable. */}
+            <Route
+              path="/recursos/material-descargable/:slug"
+              element={<DownloadableMaterialDetails />}
+            />
+
+            {/* ================================================= */}
+            {/* RUTA PÚBLICA DE INICIO DE SESIÓN */}
+            {/* ================================================= */}
+
+            {/* La página de acceso utiliza su propio diseño,
+    por lo que no muestra el Footer público. */}
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+
+
+            {/* Cualquier ruta pública inexistente
+                mostrará la página 404 y el Footer. */}
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
+
+          </Route>
 
 
           {/* ================================================= */}
           {/* RUTAS DE USUARIOS REGISTRADOS */}
           {/* ================================================= */}
 
+          {/* Más adelante agregaremos aquí
+              el layout y las páginas para miembros. */}
+
 
 
           {/* ================================================= */}
-          {/* RUTAS DEL ADMINISTRADOR */}
+          {/* RUTAS ADMINISTRATIVAS */}
           {/* ================================================= */}
 
-          {/* Ruta correspondiente a la gestión administrativa
-              de los gastos financieros de la iglesia. */}
+          {/* Todas las rutas administrativas contenidas aquí
+              utilizarán el sidebar y el encabezado
+              proporcionados por AdminLayout. */}
           <Route
-            path="/admin/finanzas/gastos"
-            element={<ExpenseManagement />}
-          />
+            path="/admin"
+            element={<AdminLayout />}
+          >
+
+            {/* La ruta /admin mostrará
+                la página principal del administrador. */}
+            <Route
+              index
+              element={<AdminDashboard />}
+            />
 
 
-          {/* ================================================= */}
-          {/* RUTA 404 */}
-          {/* ================================================= */}
+            {/* La ruta /admin/finanzas/gastos mostrará
+                el módulo existente de gestión de gastos. */}
+            <Route
+              path="finanzas/gastos"
+              element={<ExpenseManagement />}
+            />
 
-          {/* Cualquier ruta inexistente mostrará la página 404. */}
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
+          </Route>
 
         </Routes>
-
-        {/* Footer visible en todas las páginas de la aplicación. */}
-        <Footer />
 
       </div>
 
@@ -543,12 +4261,12 @@ function App() {
 }
 
 
-// Exportamos la aplicación.
+// Exportamos la aplicación para utilizarla desde index.js.
 export default App;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseCharts.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseCharts.jsx
 
 // Importamos useMemo desde React.
 // Lo utilizaremos para calcular la distribución
@@ -578,7 +4296,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/admin/expenses/ExpenseCharts.css";
+import "../../../styles/components/super-admin/expenses/ExpenseCharts.css";
 
 
 // Creamos el componente encargado
@@ -1013,7 +4731,7 @@ export default ExpenseCharts;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseFormModal.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseFormModal.jsx
 
 // Importamos las categorías que ya utilizamos
 // dentro del módulo financiero.
@@ -1022,7 +4740,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del modal.
-import "../../../styles/components/admin/expenses/ExpenseFormModal.css";
+import "../../../styles/components/super-admin/expenses/ExpenseFormModal.css";
 
 
 // Creamos el modal de registro de gastos.
@@ -1313,10 +5031,10 @@ export default ExpenseFormModal;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseHeader.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseHeader.jsx
 
 // Importamos los estilos específicos del encabezado.
-import "../../../styles/components/admin/expenses/ExpenseHeader.css";
+import "../../../styles/components/super-admin/expenses/ExpenseHeader.css";
 
 
 // Creamos el componente del encabezado.
@@ -1380,10 +5098,10 @@ export default ExpenseHeader;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseNavigation.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseNavigation.jsx
 
 // Importamos los estilos exclusivos del menú.
-import "../../../styles/components/admin/expenses/ExpenseNavigation.css";
+import "../../../styles/components/super-admin/expenses/ExpenseNavigation.css";
 
 
 // Creamos el componente encargado de navegar
@@ -1470,7 +5188,7 @@ export default ExpenseNavigation;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseSummary.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseSummary.jsx
 
 // Importamos useMemo desde React.
 // Nos permitirá memorizar cálculos derivados de los gastos
@@ -1483,7 +5201,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/admin/expenses/ExpenseSummary.css";
+import "../../../styles/components/super-admin/expenses/ExpenseSummary.css";
 
 // Creamos el componente encargado de mostrar
 // los principales indicadores relacionados con los gastos.
@@ -1817,7 +5535,7 @@ export default ExpenseSummary;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\ExpenseTable.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseTable.jsx
 
 // Importamos useMemo y useState desde React.
 // useState nos permitirá controlar los filtros.
@@ -1832,7 +5550,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/admin/expenses/ExpenseTable.css";
+import "../../../styles/components/super-admin/expenses/ExpenseTable.css";
 
 
 // Creamos el componente encargado de mostrar
@@ -2472,7 +6190,7 @@ export default ExpenseTable;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\admin\expenses\UpcomingExpenses.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\UpcomingExpenses.jsx
 
 // Importamos useMemo desde React.
 // Lo utilizaremos para obtener solamente
@@ -2484,7 +6202,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/admin/expenses/UpcomingExpenses.css";
+import "../../../styles/components/super-admin/expenses/UpcomingExpenses.css";
 
 
 // Creamos el componente que mostrará
@@ -2792,6 +6510,639 @@ function UpcomingExpenses() {
 // Exportamos el componente para utilizarlo
 // dentro de ExpenseManagement.
 export default UpcomingExpenses;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminHeader.jsx
+
+// Importamos los iconos utilizados en el encabezado.
+import {
+  Bell,
+  Menu,
+  UserRound,
+} from "lucide-react";
+
+// Importamos los estilos exclusivos del encabezado.
+import "../../../styles/components/super-admin/layout/AdminHeader.css";
+
+
+// Creamos el encabezado del panel administrativo.
+//
+// onOpenSidebar será la función encargada
+// de abrir el menú lateral en celulares.
+function AdminHeader({
+  onOpenSidebar,
+}) {
+
+  // Creamos un formateador para mostrar
+  // la fecha actual en español.
+  const formattedDate = new Intl.DateTimeFormat(
+    "es-CL",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }
+  ).format(new Date());
+
+
+  // Retornamos el encabezado.
+  return (
+    <header className="admin-header">
+
+      {/* ================================================= */}
+      {/* PARTE IZQUIERDA */}
+      {/* ================================================= */}
+
+      <div className="admin-header__left">
+
+        {/* Este botón solamente aparecerá en móviles. */}
+        <button
+          className="admin-header__menu-button"
+          type="button"
+          onClick={onOpenSidebar}
+          aria-label="Abrir menú administrativo"
+        >
+          <Menu
+            size={23}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
+        </button>
+
+
+        {/* Agrupamos el nombre del panel y la fecha. */}
+        <div className="admin-header__information">
+
+          {/* Identificamos el área actual. */}
+          <span className="admin-header__section">
+            Panel administrativo
+          </span>
+
+          {/* Mostramos la fecha actual. */}
+          <span className="admin-header__date">
+            {formattedDate}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* PARTE DERECHA */}
+      {/* ================================================= */}
+
+      <div className="admin-header__right">
+
+        {/* Este botón se conectará posteriormente
+            con el sistema de notificaciones. */}
+        <button
+          className="admin-header__notification"
+          type="button"
+          aria-label="Ver notificaciones"
+          title="Notificaciones"
+        >
+          <Bell
+            size={21}
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
+
+          {/* Indicador visual temporal de notificaciones. */}
+          <span
+            className="admin-header__notification-indicator"
+            aria-hidden="true"
+          />
+        </button>
+
+
+        {/* Mostramos la información del administrador. */}
+        <div className="admin-header__profile">
+
+          {/* Utilizamos un avatar temporal. */}
+          <div
+            className="admin-header__avatar"
+            aria-hidden="true"
+          >
+            <UserRound
+              size={20}
+              strokeWidth={1.8}
+            />
+          </div>
+
+
+          {/* Agrupamos el nombre y el rol. */}
+          <div className="admin-header__profile-text">
+
+            {/* Este nombre será reemplazado posteriormente
+                por la información obtenida desde la sesión. */}
+            <strong>
+              Administrador
+            </strong>
+
+            {/* Mostramos el rol actual. */}
+            <span>
+              Acceso administrativo
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+  );
+}
+
+
+// Exportamos el componente.
+export default AdminHeader;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminLayout.jsx
+
+// Importamos useState para controlar
+// el menú lateral en dispositivos móviles.
+import { useState } from "react";
+
+// Importamos Outlet para mostrar
+// la página administrativa seleccionada.
+import { Outlet } from "react-router-dom";
+
+// Importamos el menú lateral.
+import AdminSidebar from "./AdminSidebar";
+
+// Importamos el encabezado.
+import AdminHeader from "./AdminHeader";
+
+// Importamos los estilos exclusivos del layout.
+import "../../../styles/components/super-admin/layout/AdminLayout.css";
+
+
+// Creamos la estructura general del área administrativa.
+function AdminLayout() {
+
+  // Guardamos si el sidebar móvil está abierto.
+  const [isSidebarOpen, setIsSidebarOpen] =
+    useState(false);
+
+
+  // Creamos una función para abrir el menú.
+  const handleOpenSidebar = () => {
+
+    // Cambiamos el estado a verdadero.
+    setIsSidebarOpen(true);
+  };
+
+
+  // Creamos una función para cerrar el menú.
+  const handleCloseSidebar = () => {
+
+    // Cambiamos el estado a falso.
+    setIsSidebarOpen(false);
+  };
+
+
+  // Retornamos la estructura completa.
+  return (
+    <div className="admin-layout">
+
+      {/* Mostramos el menú lateral. */}
+      <AdminSidebar
+        isOpen={isSidebarOpen}
+        onClose={handleCloseSidebar}
+      />
+
+
+      {/* Mostramos un fondo oscuro detrás del menú
+          solamente cuando está abierto en móviles. */}
+      {isSidebarOpen && (
+        <button
+          className="admin-layout__overlay"
+          type="button"
+          onClick={handleCloseSidebar}
+          aria-label="Cerrar menú administrativo"
+        />
+      )}
+
+
+      {/* Creamos el área principal. */}
+      <div className="admin-layout__main">
+
+        {/* Mostramos el encabezado administrativo. */}
+        <AdminHeader
+          onOpenSidebar={handleOpenSidebar}
+        />
+
+
+        {/* Mostramos la página asociada a la ruta actual. */}
+        <div className="admin-layout__content">
+          <Outlet />
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+
+// Exportamos el componente.
+export default AdminLayout;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminSidebar.jsx
+
+// Importamos NavLink para navegar entre las páginas
+// y detectar automáticamente cuál ruta está activa.
+import { NavLink } from "react-router-dom";
+
+// Importamos los iconos utilizados dentro del menú.
+import {
+  LayoutDashboard,
+  CalendarDays,
+  HandHeart,
+  Users,
+  BookOpen,
+  BadgeDollarSign,
+  ReceiptText,
+  UserRoundCog,
+  Settings,
+  LogOut,
+  ExternalLink,
+  X,
+} from "lucide-react";
+
+// Importamos los estilos exclusivos del sidebar.
+import "../../../styles/components/super-admin/layout/AdminSidebar.css";
+
+
+// Creamos el componente del menú lateral.
+//
+// isOpen indica si el menú está abierto en celulares.
+// onClose permite cerrar el menú desde AdminLayout.
+function AdminSidebar({
+  isOpen,
+  onClose,
+}) {
+
+  // Creamos los grupos que organizan
+  // las diferentes opciones administrativas.
+  const navigationGroups = [
+    {
+      // Título del grupo principal.
+      title: "Principal",
+
+      // Opciones pertenecientes a este grupo.
+      items: [
+        {
+          // Texto visible de la opción.
+          label: "Inicio",
+
+          // Ruta a la que dirigirá.
+          path: "/admin",
+
+          // Icono correspondiente.
+          icon: LayoutDashboard,
+
+          // Indicamos que la página está disponible.
+          available: true,
+
+          // Evitamos que Inicio permanezca activo
+          // al navegar por otras rutas de /admin.
+          end: true,
+        },
+      ],
+    },
+    {
+      // Título del grupo comunitario.
+      title: "Comunidad",
+
+      // Opciones relacionadas con la comunidad.
+      items: [
+        {
+          label: "Eventos",
+          path: "/admin/eventos",
+          icon: CalendarDays,
+          available: false,
+        },
+        {
+          label: "Peticiones de oración",
+          path: "/admin/peticiones-oracion",
+          icon: HandHeart,
+          available: false,
+        },
+        {
+          label: "Miembros",
+          path: "/admin/miembros",
+          icon: Users,
+          available: false,
+        },
+      ],
+    },
+    {
+      // Título del grupo de contenidos.
+      title: "Contenidos",
+
+      // Opciones para gestionar materiales.
+      items: [
+        {
+          label: "Recursos",
+          path: "/admin/recursos",
+          icon: BookOpen,
+          available: false,
+        },
+      ],
+    },
+    {
+      // Título del grupo financiero.
+      title: "Finanzas",
+
+      // Opciones relacionadas con ingresos y gastos.
+      items: [
+        {
+          label: "Ingresos",
+          path: "/admin/finanzas/ingresos",
+          icon: BadgeDollarSign,
+          available: false,
+        },
+        {
+          label: "Gastos",
+          path: "/admin/finanzas/gastos",
+          icon: ReceiptText,
+          available: true,
+        },
+      ],
+    },
+    {
+      // Título del grupo de configuración.
+      title: "Sistema",
+
+      // Opciones relacionadas con la administración.
+      items: [
+        {
+          label: "Administradores",
+          path: "/admin/administradores",
+          icon: UserRoundCog,
+          available: false,
+        },
+        {
+          label: "Configuración",
+          path: "/admin/configuracion",
+          icon: Settings,
+          available: false,
+        },
+      ],
+    },
+  ];
+
+
+  // Retornamos el contenido completo del sidebar.
+  return (
+    <aside
+      className={`admin-sidebar ${
+        isOpen
+          ? "admin-sidebar--open"
+          : ""
+      }`}
+    >
+
+      {/* ================================================= */}
+      {/* IDENTIDAD DEL PANEL */}
+      {/* ================================================= */}
+
+      <div className="admin-sidebar__brand">
+
+        {/* Mostramos un símbolo visual de El Ancla. */}
+        <div
+          className="admin-sidebar__brand-icon"
+          aria-hidden="true"
+        >
+          ⚓
+        </div>
+
+
+        {/* Agrupamos el nombre y la descripción. */}
+        <div className="admin-sidebar__brand-text">
+
+          {/* Nombre abreviado de la iglesia. */}
+          <strong>
+            El Ancla
+          </strong>
+
+          {/* Nombre del área privada. */}
+          <span>
+            Panel administrativo
+          </span>
+
+        </div>
+
+
+        {/* Este botón permite cerrar el menú
+            cuando se utiliza un dispositivo móvil. */}
+        <button
+          className="admin-sidebar__close"
+          type="button"
+          onClick={onClose}
+          aria-label="Cerrar menú administrativo"
+        >
+          <X
+            size={22}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
+        </button>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* NAVEGACIÓN ADMINISTRATIVA */}
+      {/* ================================================= */}
+
+      <nav
+        className="admin-sidebar__navigation"
+        aria-label="Navegación administrativa"
+      >
+
+        {/* Recorremos todos los grupos del menú. */}
+        {navigationGroups.map((group) => (
+
+          // Creamos una sección por cada grupo.
+          <section
+            className="admin-sidebar__group"
+            key={group.title}
+          >
+
+            {/* Mostramos el título del grupo. */}
+            <h2 className="admin-sidebar__group-title">
+              {group.title}
+            </h2>
+
+
+            {/* Creamos la lista de opciones. */}
+            <ul className="admin-sidebar__list">
+
+              {/* Recorremos las opciones del grupo actual. */}
+              {group.items.map((item) => {
+
+                // Guardamos el componente del icono.
+                const Icon = item.icon;
+
+
+                // Comprobamos si el módulo todavía
+                // no se encuentra disponible.
+                if (!item.available) {
+                  return (
+                    <li key={item.path}>
+
+                      {/* Mostramos una opción deshabilitada
+                          para impedir la navegación. */}
+                      <button
+                        className="
+                          admin-sidebar__link
+                          admin-sidebar__link--disabled
+                        "
+                        type="button"
+                        disabled
+                        title="Módulo disponible próximamente"
+                      >
+
+                        {/* Mostramos el icono correspondiente. */}
+                        <Icon
+                          size={19}
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+
+                        {/* Mostramos el nombre del módulo. */}
+                        <span>
+                          {item.label}
+                        </span>
+
+                        {/* Informamos que la página
+                            todavía se encuentra pendiente. */}
+                        <small>
+                          Próximamente
+                        </small>
+
+                      </button>
+
+                    </li>
+                  );
+                }
+
+
+                // Si la ruta está disponible,
+                // retornamos un enlace de navegación.
+                return (
+                  <li key={item.path}>
+
+                    <NavLink
+                      to={item.path}
+                      end={item.end}
+                      onClick={onClose}
+                      className={({ isActive }) =>
+                        `admin-sidebar__link ${
+                          isActive
+                            ? "admin-sidebar__link--active"
+                            : ""
+                        }`
+                      }
+                    >
+
+                      {/* Mostramos el icono de la opción. */}
+                      <Icon
+                        size={19}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                      />
+
+                      {/* Mostramos el nombre de la opción. */}
+                      <span>
+                        {item.label}
+                      </span>
+
+                    </NavLink>
+
+                  </li>
+                );
+
+              })}
+
+            </ul>
+
+          </section>
+
+        ))}
+
+      </nav>
+
+
+      {/* ================================================= */}
+      {/* ACCIONES INFERIORES */}
+      {/* ================================================= */}
+
+      <div className="admin-sidebar__footer">
+
+        {/* Abrimos el sitio público en otra pestaña
+            para no cerrar el panel administrativo. */}
+        <a
+          className="admin-sidebar__public-link"
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {/* Mostramos el icono de enlace externo. */}
+          <ExternalLink
+            size={18}
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
+
+          {/* Texto visible del enlace. */}
+          <span>
+            Ver sitio público
+          </span>
+
+        </a>
+
+
+        {/* Este botón se conectará posteriormente
+            con la función real de cierre de sesión. */}
+        <button
+          className="admin-sidebar__logout"
+          type="button"
+        >
+          {/* Mostramos el icono de salida. */}
+          <LogOut
+            size={18}
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
+
+          {/* Texto visible del botón. */}
+          <span>
+            Cerrar sesión
+          </span>
+
+        </button>
+
+      </div>
+
+    </aside>
+  );
+}
+
+
+// Exportamos el componente para utilizarlo
+// dentro de AdminLayout.
+export default AdminSidebar;
 
 
 
@@ -9688,7 +14039,1126 @@ root.render(
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\admin\ExpenseManagement.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\member\MemberDashboard.jsx
+
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  ChevronRight,
+  Clock3,
+  Compass,
+  HeartHandshake,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  UserRound,
+  Video,
+} from "lucide-react";
+
+import logoElAncla from "../../assets/images/logo-el-ancla.png";
+import "../../styles/pages/member/MemberDashboard.css";
+
+// Estas actividades son contenido informativo; no representan inscripciones del miembro.
+const weeklyActivities = [
+  { id: "sunday", day: "Domingo", title: "Culto general", time: "11:00", mode: "Presencial", icon: MapPin },
+  { id: "tuesday", day: "Martes", title: "Descubriendo la Biblia", time: "20:00", mode: "Online", icon: Video },
+  { id: "wednesday", day: "Miércoles", title: "Reunión de oración", time: "21:00", mode: "Online", icon: Video },
+  { id: "thursday", day: "Jueves", title: "Estudio bíblico", time: "20:00", mode: "Online", icon: Video },
+];
+
+// Solo enlazamos secciones públicas que ya aparecen en App.js.
+const resourceLinks = [
+  { title: "Guías de oración", description: "Un espacio para acompañar tus momentos de oración.", to: "/recursos/guias-oracion", icon: HeartHandshake },
+  { title: "Estudios bíblicos", description: "Material para aprender y compartir en comunidad.", to: "/recursos/estudios", icon: BookOpen },
+  { title: "Guía devocional", description: "Ideas sencillas para dedicar tiempo a la reflexión.", to: "/recursos/devocional", icon: Compass },
+];
+
+// El usuario debe provenir de una sesión verificada por el backend.
+function MemberDashboard({ user }) {
+  // Evitamos usar información del navegador como prueba de identidad.
+  const firstName = typeof user?.firstName === "string" ? user.firstName.trim() : "";
+  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+  const primaryBranch = user?.sucursalPrincipal?.name;
+
+  return (
+    <div className="member-page">
+      <a className="member-page__skip" href="#contenido-miembro">Ir al contenido</a>
+
+      <header className="member-topbar">
+        <div className="member-container member-topbar__inner">
+          <Link className="member-topbar__brand" to="/" aria-label="El Ancla: ir al inicio">
+            <img src={logoElAncla} alt="" />
+            <span><strong>El Ancla</strong><small>Mi espacio</small></span>
+          </Link>
+
+          <nav className="member-topbar__links" aria-label="Navegación de miembros">
+            <a href="#actividades">Actividades</a>
+            <a href="#recursos-miembro">Recursos</a>
+            <a href="#mi-perfil">Mi perfil</a>
+          </nav>
+
+          <Link className="member-topbar__public-link" to="/">
+            Ver sitio público <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+      </header>
+
+      <main className="member-container member-main" id="contenido-miembro">
+        <div className="member-breadcrumb" aria-label="Ubicación actual">
+          <Link to="/">Inicio</Link><ChevronRight size={15} aria-hidden="true" />
+          <span aria-current="page">Mi espacio</span>
+        </div>
+
+        <section className="member-hero" aria-labelledby="member-welcome-title">
+          <div className="member-hero__content">
+            <span className="member-eyebrow"><Sparkles size={16} aria-hidden="true" /> Tu espacio en comunidad</span>
+            <h1 id="member-welcome-title">{firstName ? `¡Qué bueno verte, ${firstName}!` : "Bienvenido a tu espacio"}</h1>
+            <p>Encuentra nuestras actividades, explora recursos para crecer en la fe y mantente cerca de la comunidad de El Ancla.</p>
+            <div className="member-hero__actions">
+              <a className="member-button member-button--light" href="#actividades">Explorar actividades <ArrowRight size={17} aria-hidden="true" /></a>
+              <Link className="member-button member-button--outline" to="/contacto">Contáctanos</Link>
+            </div>
+          </div>
+          <div className="member-hero__art" aria-hidden="true">
+            <span className="member-hero__ring member-hero__ring--outer" />
+            <span className="member-hero__ring member-hero__ring--inner" />
+            <span className="member-hero__symbol"><img src={logoElAncla} alt="" /></span>
+            <span className="member-hero__verse">Juntos en comunidad</span>
+          </div>
+        </section>
+
+        <div className="member-grid">
+          <div className="member-grid__main">
+            <section className="member-section" id="actividades" aria-labelledby="member-activities-title">
+              <div className="member-section__heading">
+                <div>
+                  <span className="member-section__kicker">Compartamos juntos</span>
+                  <h2 id="member-activities-title">Actividades de la semana</h2>
+                  <p>Horarios habituales de nuestra comunidad. Consulta los detalles antes de asistir.</p>
+                </div>
+                <Link className="member-text-link" to="/eventos">Ver eventos <ArrowRight size={17} aria-hidden="true" /></Link>
+              </div>
+
+              <div className="member-activities">
+                {weeklyActivities.map((activity) => {
+                  const ActivityIcon = activity.icon;
+                  return (
+                    <article className="member-activity" key={activity.id}>
+                      <div className="member-activity__day"><CalendarDays size={19} aria-hidden="true" /><span>{activity.day}</span></div>
+                      <div className="member-activity__body"><h3>{activity.title}</h3><span><ActivityIcon size={15} aria-hidden="true" /> {activity.mode}</span></div>
+                      <div className="member-activity__time"><Clock3 size={16} aria-hidden="true" /> {activity.time}</div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="member-section" id="recursos-miembro" aria-labelledby="member-resources-title">
+              <div className="member-section__heading">
+                <div>
+                  <span className="member-section__kicker">Para tu día a día</span>
+                  <h2 id="member-resources-title">Recursos para acompañarte</h2>
+                  <p>Un punto de partida para estudiar, reflexionar y orar.</p>
+                </div>
+                <Link className="member-text-link" to="/recursos">Todos los recursos <ArrowRight size={17} aria-hidden="true" /></Link>
+              </div>
+
+              <div className="member-resources">
+                {resourceLinks.map((resource) => {
+                  const ResourceIcon = resource.icon;
+                  return (
+                    <Link className="member-resource" key={resource.to} to={resource.to}>
+                      <span className="member-resource__icon"><ResourceIcon size={23} strokeWidth={1.8} aria-hidden="true" /></span>
+                      <strong>{resource.title}</strong>
+                      <span>{resource.description}</span>
+                      <span className="member-resource__arrow">Explorar <ArrowRight size={16} aria-hidden="true" /></span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          </div>
+
+          <aside className="member-grid__aside" aria-label="Información personal y comunidad">
+            <section className="member-profile" id="mi-perfil" aria-labelledby="member-profile-title">
+              <div className="member-profile__heading"><span className="member-profile__icon"><UserRound size={22} aria-hidden="true" /></span><div><span>Cuenta de miembro</span><h2 id="member-profile-title">Mi perfil</h2></div></div>
+              {user ? (
+                <dl className="member-profile__details">
+                  <div><dt>Nombre</dt><dd>{fullName || "Sin registrar"}</dd></div>
+                  <div><dt>Correo</dt><dd className="member-profile__email">{user.email || "Sin registrar"}</dd></div>
+                  <div><dt>Sucursal principal</dt><dd>{primaryBranch || "Por confirmar"}</dd></div>
+                </dl>
+              ) : (
+                <p className="member-profile__empty">Tus datos aparecerán aquí cuando conectemos esta página con tu sesión verificada.</p>
+              )}
+              <p className="member-profile__note"><ShieldCheck size={17} aria-hidden="true" /> Tu información personal se mostrará solo en tu sesión.</p>
+            </section>
+
+            <section className="member-community" aria-labelledby="member-community-title">
+              <div className="member-community__icon"><HeartHandshake size={26} aria-hidden="true" /></div>
+              <h2 id="member-community-title">¿Necesitas conversar?</h2>
+              <p>Queremos acompañarte. Escríbenos si tienes una consulta o necesitas orientación.</p>
+              <Link to="/contacto">Ir a contacto <ArrowRight size={17} aria-hidden="true" /></Link>
+            </section>
+
+            <div className="member-help"><Mail size={19} aria-hidden="true" /><p>¿Buscas algo más? <Link to="/recursos/preguntas-frecuentes">Revisa las preguntas frecuentes</Link>.</p></div>
+          </aside>
+        </div>
+      </main>
+
+      <footer className="member-footer"><div className="member-container"><span>© {new Date().getFullYear()} Iglesia El Ancla</span><Link to="/">Volver al inicio</Link></div></footer>
+    </div>
+  );
+}
+
+export default MemberDashboard;
+
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\super-admin\AdminDashboard.jsx
+
+// Importamos Link para navegar hacia
+// las páginas administrativas disponibles.
+import { Link } from "react-router-dom";
+
+// Importamos useMemo para memorizar
+// los cálculos realizados con los gastos.
+import { useMemo } from "react";
+
+// Importamos los iconos utilizados en el dashboard.
+import {
+  CalendarDays,
+  HandHeart,
+  Users,
+  WalletCards,
+  ReceiptText,
+  BadgeDollarSign,
+  BookPlus,
+  Megaphone,
+  ArrowRight,
+  Clock3,
+  MapPin,
+  CircleDollarSign,
+} from "lucide-react";
+
+// Importamos los gastos temporales
+// que actualmente simulan la información de MongoDB.
+import {
+  expenses,
+} from "../../data/admin/expensesData";
+
+// Importamos los estilos exclusivos de la página.
+import "../../styles/pages/super-admin/AdminDashboard.css";
+
+
+// Creamos el componente principal
+// de la página de inicio administrativa.
+function AdminDashboard() {
+
+  // ---------------------------------------------------------
+  // DATOS TEMPORALES DE EVENTOS
+  // ---------------------------------------------------------
+
+  // Estos eventos serán reemplazados posteriormente
+  // por información obtenida desde MongoDB.
+  const upcomingEvents = [
+    {
+      // Identificador temporal del evento.
+      id: 1,
+
+      // Nombre de la actividad.
+      title: "Culto general",
+
+      // Día en el que se realizará.
+      date: "Domingo",
+
+      // Hora de inicio.
+      time: "11:00 hrs",
+
+      // Modalidad o ubicación.
+      location: "Presencial y online",
+    },
+    {
+      id: 2,
+      title: "Descubriendo la Biblia",
+      date: "Martes",
+      time: "20:00 hrs",
+      location: "Online",
+    },
+    {
+      id: 3,
+      title: "Reunión de oración",
+      date: "Miércoles",
+      time: "21:00 hrs",
+      location: "Online",
+    },
+    {
+      id: 4,
+      title: "Estudio bíblico",
+      date: "Jueves",
+      time: "20:00 hrs",
+      location: "Online",
+    },
+  ];
+
+
+  // ---------------------------------------------------------
+  // PETICIONES DE ORACIÓN TEMPORALES
+  // ---------------------------------------------------------
+
+  // Estas peticiones también llegarán posteriormente
+  // desde la API del backend.
+  const recentPrayerRequests = [
+    {
+      // Identificador temporal.
+      id: 1,
+
+      // Nombre mostrado al administrador.
+      requester: "Solicitud anónima",
+
+      // Texto resumido de la petición.
+      summary:
+        "Oración por una situación familiar y dirección para tomar decisiones.",
+
+      // Estado actual de la solicitud.
+      status: "Pendiente",
+
+      // Tiempo transcurrido desde su recepción.
+      receivedAt: "Hace 2 horas",
+    },
+    {
+      id: 2,
+      requester: "María",
+      summary:
+        "Oración por la recuperación de un familiar que se encuentra enfermo.",
+
+      status: "En oración",
+      receivedAt: "Hace 5 horas",
+    },
+    {
+      id: 3,
+      requester: "Solicitud privada",
+      summary:
+        "Esta petición contiene información privada para el equipo de liderazgo.",
+
+      status: "Pendiente",
+      receivedAt: "Ayer",
+    },
+  ];
+
+
+  // ---------------------------------------------------------
+  // FORMATEADOR DE MONEDA
+  // ---------------------------------------------------------
+
+  // Creamos una función reutilizable para mostrar
+  // valores utilizando pesos chilenos.
+  const formatCurrency = (value) => {
+
+    // Utilizamos Intl.NumberFormat para aplicar
+    // correctamente el formato monetario nacional.
+    return new Intl.NumberFormat("es-CL", {
+
+      // Indicamos que queremos mostrar una moneda.
+      style: "currency",
+
+      // Definimos el peso chileno.
+      currency: "CLP",
+
+      // Evitamos mostrar decimales.
+      maximumFractionDigits: 0,
+
+    }).format(value);
+  };
+
+
+  // ---------------------------------------------------------
+  // RESUMEN DE GASTOS
+  // ---------------------------------------------------------
+
+  // Calculamos los valores financieros utilizando
+  // los gastos temporales que ya existen en el proyecto.
+  const financialSummary = useMemo(() => {
+
+    // Sumamos todos los gastos que fueron pagados.
+    const paidTotal = expenses
+
+      // Dejamos solamente los movimientos pagados.
+      .filter(
+        (expense) =>
+          expense.status === "Pagado"
+      )
+
+      // Sumamos sus montos.
+      .reduce(
+        (total, expense) =>
+          total + expense.amount,
+        0
+      );
+
+
+    // Sumamos todos los gastos pendientes.
+    const pendingTotal = expenses
+
+      // Dejamos solamente los movimientos pendientes.
+      .filter(
+        (expense) =>
+          expense.status === "Pendiente"
+      )
+
+      // Sumamos sus montos.
+      .reduce(
+        (total, expense) =>
+          total + expense.amount,
+        0
+      );
+
+
+    // Contamos cuántos gastos siguen pendientes.
+    const pendingCount = expenses.filter(
+      (expense) =>
+        expense.status === "Pendiente"
+    ).length;
+
+
+    // Retornamos todos los resultados calculados.
+    return {
+      paidTotal,
+      pendingTotal,
+      pendingCount,
+    };
+
+  }, []);
+
+
+  // ---------------------------------------------------------
+  // TARJETAS DE INDICADORES
+  // ---------------------------------------------------------
+
+  // Creamos la información que aparecerá
+  // en las tarjetas superiores del dashboard.
+  const summaryCards = [
+    {
+      // Nombre del indicador.
+      label: "Próximas actividades",
+
+      // Valor principal.
+      value: upcomingEvents.length,
+
+      // Información complementaria.
+      detail: "Actividades semanales",
+
+      // Icono correspondiente.
+      icon: CalendarDays,
+
+      // Clase utilizada para personalizar su color.
+      color: "blue",
+    },
+    {
+      label: "Peticiones pendientes",
+      value: 2,
+      detail: "Requieren revisión",
+      icon: HandHeart,
+      color: "gold",
+    },
+    {
+      label: "Miembros registrados",
+      value: 48,
+      detail: "Información temporal",
+      icon: Users,
+      color: "green",
+    },
+    {
+      label: "Gastos pendientes",
+      value: financialSummary.pendingCount,
+      detail: formatCurrency(
+        financialSummary.pendingTotal
+      ),
+      icon: WalletCards,
+      color: "red",
+    },
+  ];
+
+
+  // ---------------------------------------------------------
+  // ACCIONES RÁPIDAS
+  // ---------------------------------------------------------
+
+  // Creamos las principales acciones que podrá
+  // realizar el administrador desde el inicio.
+  const quickActions = [
+    {
+      // Nombre visible de la acción.
+      label: "Crear evento",
+
+      // Descripción breve.
+      description:
+        "Publicar una nueva actividad para la comunidad.",
+
+      // Icono de la acción.
+      icon: CalendarDays,
+
+      // Ruta futura de la acción.
+      path: "/admin/eventos/nuevo",
+
+      // Indicamos que todavía no está disponible.
+      available: false,
+    },
+    {
+      label: "Publicar aviso",
+      description:
+        "Enviar información importante a la comunidad.",
+
+      icon: Megaphone,
+      path: "/admin/avisos/nuevo",
+      available: false,
+    },
+    {
+      label: "Registrar ingreso",
+      description:
+        "Agregar un nuevo movimiento de entrada.",
+
+      icon: BadgeDollarSign,
+      path: "/admin/finanzas/ingresos",
+      available: false,
+    },
+    {
+      label: "Registrar gasto",
+      description:
+        "Ir al módulo de gastos de la iglesia.",
+
+      icon: ReceiptText,
+      path: "/admin/finanzas/gastos",
+      available: true,
+    },
+    {
+      label: "Agregar recurso",
+      description:
+        "Publicar un nuevo material para la comunidad.",
+
+      icon: BookPlus,
+      path: "/admin/recursos/nuevo",
+      available: false,
+    },
+  ];
+
+
+  // ---------------------------------------------------------
+  // INTERFAZ
+  // ---------------------------------------------------------
+
+  // Retornamos la página completa.
+  return (
+    <main className="admin-dashboard">
+
+      {/* ================================================= */}
+      {/* ENCABEZADO DE BIENVENIDA */}
+      {/* ================================================= */}
+
+      <section className="admin-dashboard__welcome">
+
+        {/* Agrupamos el título y la descripción. */}
+        <div className="admin-dashboard__welcome-content">
+
+          {/* Texto pequeño superior. */}
+          <span className="admin-dashboard__eyebrow">
+            Administración general
+          </span>
+
+          {/* Título principal del dashboard. */}
+          <h1 className="admin-dashboard__title">
+            Bienvenido al panel administrativo
+          </h1>
+
+          {/* Explicamos brevemente el propósito de la página. */}
+          <p className="admin-dashboard__description">
+            Revisa la actividad de la iglesia y accede
+            rápidamente a sus principales herramientas
+            de gestión.
+          </p>
+
+        </div>
+
+
+        {/* Permitimos visitar la parte pública de la PWA. */}
+        <a
+          className="admin-dashboard__public-button"
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {/* Mostramos el texto del enlace. */}
+          Ver sitio público
+
+          {/* Mostramos una flecha complementaria. */}
+          <ArrowRight
+            size={18}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
+        </a>
+
+      </section>
+
+
+      {/* ================================================= */}
+      {/* TARJETAS DE INDICADORES */}
+      {/* ================================================= */}
+
+      <section
+        className="admin-dashboard__summary"
+        aria-label="Resumen administrativo"
+      >
+
+        {/* Recorremos las tarjetas de resumen. */}
+        {summaryCards.map((card) => {
+
+          // Guardamos el componente del icono.
+          const Icon = card.icon;
+
+
+          // Retornamos una tarjeta por indicador.
+          return (
+            <article
+              className="admin-dashboard-summary-card"
+              key={card.label}
+            >
+
+              {/* Mostramos el icono de la tarjeta. */}
+              <div
+                className={`
+                  admin-dashboard-summary-card__icon
+                  admin-dashboard-summary-card__icon--${card.color}
+                `}
+              >
+                <Icon
+                  size={23}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+              </div>
+
+
+              {/* Mostramos la información principal. */}
+              <div className="admin-dashboard-summary-card__content">
+
+                {/* Nombre del indicador. */}
+                <span className="admin-dashboard-summary-card__label">
+                  {card.label}
+                </span>
+
+                {/* Valor principal del indicador. */}
+                <strong className="admin-dashboard-summary-card__value">
+                  {card.value}
+                </strong>
+
+                {/* Información complementaria. */}
+                <span className="admin-dashboard-summary-card__detail">
+                  {card.detail}
+                </span>
+
+              </div>
+
+            </article>
+          );
+
+        })}
+
+      </section>
+
+
+      {/* ================================================= */}
+      {/* ACCIONES RÁPIDAS */}
+      {/* ================================================= */}
+
+      <section className="admin-dashboard-section">
+
+        {/* Creamos el encabezado de la sección. */}
+        <div className="admin-dashboard-section__header">
+
+          {/* Agrupamos título y descripción. */}
+          <div>
+
+            {/* Título de la sección. */}
+            <h2>
+              Acciones rápidas
+            </h2>
+
+            {/* Descripción de la sección. */}
+            <p>
+              Accede directamente a las tareas administrativas
+              más utilizadas.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        {/* Creamos la cuadrícula de acciones. */}
+        <div className="admin-dashboard__quick-actions">
+
+          {/* Recorremos todas las acciones. */}
+          {quickActions.map((action) => {
+
+            // Guardamos el componente del icono.
+            const Icon = action.icon;
+
+
+            // Si el módulo está disponible,
+            // mostramos un enlace de navegación.
+            if (action.available) {
+              return (
+                <Link
+                  className="admin-quick-action"
+                  to={action.path}
+                  key={action.label}
+                >
+
+                  {/* Mostramos el icono. */}
+                  <div className="admin-quick-action__icon">
+                    <Icon
+                      size={22}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </div>
+
+
+                  {/* Agrupamos los textos. */}
+                  <div className="admin-quick-action__content">
+
+                    {/* Nombre de la acción. */}
+                    <strong>
+                      {action.label}
+                    </strong>
+
+                    {/* Descripción de la acción. */}
+                    <span>
+                      {action.description}
+                    </span>
+
+                  </div>
+
+
+                  {/* Mostramos una flecha. */}
+                  <ArrowRight
+                    className="admin-quick-action__arrow"
+                    size={18}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+
+                </Link>
+              );
+            }
+
+
+            // Si el módulo todavía no existe,
+            // mostramos una acción deshabilitada.
+            return (
+              <button
+                className="
+                  admin-quick-action
+                  admin-quick-action--disabled
+                "
+                type="button"
+                disabled
+                key={action.label}
+              >
+
+                {/* Mostramos el icono. */}
+                <div className="admin-quick-action__icon">
+                  <Icon
+                    size={22}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                </div>
+
+
+                {/* Agrupamos los textos. */}
+                <div className="admin-quick-action__content">
+
+                  {/* Nombre de la acción. */}
+                  <strong>
+                    {action.label}
+                  </strong>
+
+                  {/* Informamos que todavía se encuentra pendiente. */}
+                  <span>
+                    Disponible próximamente
+                  </span>
+
+                </div>
+
+              </button>
+            );
+
+          })}
+
+        </div>
+
+      </section>
+
+
+      {/* ================================================= */}
+      {/* CONTENIDO PRINCIPAL EN DOS COLUMNAS */}
+      {/* ================================================= */}
+
+      <div className="admin-dashboard__columns">
+
+        {/* ================================================= */}
+        {/* PRÓXIMAS ACTIVIDADES */}
+        {/* ================================================= */}
+
+        <section className="admin-dashboard-section">
+
+          {/* Encabezado de la sección. */}
+          <div className="admin-dashboard-section__header">
+
+            {/* Agrupamos los textos. */}
+            <div>
+
+              {/* Título de la sección. */}
+              <h2>
+                Próximas actividades
+              </h2>
+
+              {/* Descripción complementaria. */}
+              <p>
+                Reuniones programadas para la comunidad.
+              </p>
+
+            </div>
+
+
+            {/* Botón pendiente hasta crear
+                la gestión administrativa de eventos. */}
+            <button
+              className="admin-dashboard-section__link"
+              type="button"
+              disabled
+            >
+              Ver todas
+            </button>
+
+          </div>
+
+
+          {/* Creamos la lista de eventos. */}
+          <div className="admin-dashboard-events">
+
+            {/* Recorremos los eventos temporales. */}
+            {upcomingEvents.map((event) => (
+
+              // Creamos una fila por evento.
+              <article
+                className="admin-dashboard-event"
+                key={event.id}
+              >
+
+                {/* Mostramos un icono de calendario. */}
+                <div className="admin-dashboard-event__icon">
+                  <CalendarDays
+                    size={21}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                </div>
+
+
+                {/* Mostramos la información del evento. */}
+                <div className="admin-dashboard-event__content">
+
+                  {/* Nombre de la actividad. */}
+                  <h3>
+                    {event.title}
+                  </h3>
+
+
+                  {/* Agrupamos fecha y hora. */}
+                  <div className="admin-dashboard-event__details">
+
+                    {/* Mostramos el día y la hora. */}
+                    <span>
+                      <Clock3
+                        size={14}
+                        aria-hidden="true"
+                      />
+
+                      {event.date}, {event.time}
+                    </span>
+
+
+                    {/* Mostramos la modalidad. */}
+                    <span>
+                      <MapPin
+                        size={14}
+                        aria-hidden="true"
+                      />
+
+                      {event.location}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </article>
+
+            ))}
+
+          </div>
+
+        </section>
+
+
+        {/* ================================================= */}
+        {/* PETICIONES DE ORACIÓN */}
+        {/* ================================================= */}
+
+        <section className="admin-dashboard-section">
+
+          {/* Encabezado de la sección. */}
+          <div className="admin-dashboard-section__header">
+
+            {/* Agrupamos título y descripción. */}
+            <div>
+
+              {/* Título principal. */}
+              <h2>
+                Peticiones recientes
+              </h2>
+
+              {/* Texto complementario. */}
+              <p>
+                Solicitudes recibidas desde la comunidad.
+              </p>
+
+            </div>
+
+
+            {/* Esta acción se habilitará
+                cuando construyamos el módulo correspondiente. */}
+            <button
+              className="admin-dashboard-section__link"
+              type="button"
+              disabled
+            >
+              Ver todas
+            </button>
+
+          </div>
+
+
+          {/* Creamos la lista de peticiones. */}
+          <div className="admin-dashboard-prayers">
+
+            {/* Recorremos las peticiones temporales. */}
+            {recentPrayerRequests.map((request) => (
+
+              // Creamos una tarjeta por petición.
+              <article
+                className="admin-dashboard-prayer"
+                key={request.id}
+              >
+
+                {/* Creamos el encabezado de la petición. */}
+                <div className="admin-dashboard-prayer__header">
+
+                  {/* Mostramos quién envió la solicitud. */}
+                  <strong>
+                    {request.requester}
+                  </strong>
+
+                  {/* Mostramos el estado actual. */}
+                  <span
+                    className={`
+                      admin-dashboard-prayer__status
+                      ${
+                        request.status === "Pendiente"
+                          ? "admin-dashboard-prayer__status--pending"
+                          : "admin-dashboard-prayer__status--active"
+                      }
+                    `}
+                  >
+                    {request.status}
+                  </span>
+
+                </div>
+
+
+                {/* Mostramos el resumen de la solicitud. */}
+                <p>
+                  {request.summary}
+                </p>
+
+
+                {/* Mostramos cuándo fue recibida. */}
+                <span className="admin-dashboard-prayer__time">
+                  {request.receivedAt}
+                </span>
+
+              </article>
+
+            ))}
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* RESUMEN FINANCIERO */}
+      {/* ================================================= */}
+
+      <section className="admin-dashboard-section">
+
+        {/* Encabezado del resumen financiero. */}
+        <div className="admin-dashboard-section__header">
+
+          {/* Agrupamos título y descripción. */}
+          <div>
+
+            {/* Título principal. */}
+            <h2>
+              Resumen financiero
+            </h2>
+
+            {/* Explicamos el origen temporal de la información. */}
+            <p>
+              Vista general de los gastos registrados.
+            </p>
+
+          </div>
+
+
+          {/* Permitimos ingresar al módulo existente. */}
+          <Link
+            className="admin-dashboard-section__link"
+            to="/admin/finanzas/gastos"
+          >
+            Ver gastos
+
+            <ArrowRight
+              size={16}
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </Link>
+
+        </div>
+
+
+        {/* Mostramos los indicadores financieros. */}
+        <div className="admin-dashboard-financial">
+
+          {/* Tarjeta de gastos pagados. */}
+          <article className="admin-dashboard-financial__item">
+
+            {/* Mostramos el icono. */}
+            <div className="admin-dashboard-financial__icon">
+              <CircleDollarSign
+                size={23}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </div>
+
+
+            {/* Mostramos la información. */}
+            <div>
+              <span>
+                Gastos pagados
+              </span>
+
+              <strong>
+                {formatCurrency(
+                  financialSummary.paidTotal
+                )}
+              </strong>
+            </div>
+
+          </article>
+
+
+          {/* Tarjeta de gastos pendientes. */}
+          <article className="admin-dashboard-financial__item">
+
+            {/* Mostramos el icono. */}
+            <div className="admin-dashboard-financial__icon">
+              <WalletCards
+                size={23}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </div>
+
+
+            {/* Mostramos la información. */}
+            <div>
+              <span>
+                Total comprometido
+              </span>
+
+              <strong>
+                {formatCurrency(
+                  financialSummary.pendingTotal
+                )}
+              </strong>
+            </div>
+
+          </article>
+
+
+          {/* Tarjeta con cantidad de movimientos. */}
+          <article className="admin-dashboard-financial__item">
+
+            {/* Mostramos el icono. */}
+            <div className="admin-dashboard-financial__icon">
+              <ReceiptText
+                size={23}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </div>
+
+
+            {/* Mostramos la información. */}
+            <div>
+              <span>
+                Movimientos registrados
+              </span>
+
+              <strong>
+                {expenses.length}
+              </strong>
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </main>
+  );
+}
+
+
+// Exportamos la página para utilizarla en App.js.
+export default AdminDashboard;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\super-admin\ExpenseManagement.jsx
 
 // Importamos useState para controlar
 // la sección seleccionada y el modal.
@@ -9696,31 +15166,31 @@ import { useState } from "react";
 
 // Importamos el componente que contiene el encabezado
 // de la página de gestión de gastos.
-import ExpenseHeader from "../../components/admin/expenses/ExpenseHeader";
+import ExpenseHeader from "../../components/super-admin/expenses/ExpenseHeader";
 
 // Importamos el menú interno del módulo.
-import ExpenseNavigation from "../../components/admin/expenses/ExpenseNavigation";
+import ExpenseNavigation from "../../components/super-admin/expenses/ExpenseNavigation";
 
 // Importamos las tarjetas con los indicadores
 // principales de los gastos.
-import ExpenseSummary from "../../components/admin/expenses/ExpenseSummary";
+import ExpenseSummary from "../../components/super-admin/expenses/ExpenseSummary";
 
 // Importamos los gráficos correspondientes
 // al análisis de los gastos.
-import ExpenseCharts from "../../components/admin/expenses/ExpenseCharts";
+import ExpenseCharts from "../../components/super-admin/expenses/ExpenseCharts";
 
 // Importamos la sección de gastos próximos.
-import UpcomingExpenses from "../../components/admin/expenses/UpcomingExpenses";
+import UpcomingExpenses from "../../components/super-admin/expenses/UpcomingExpenses";
 
 // Importamos el historial completo de gastos.
-import ExpenseTable from "../../components/admin/expenses/ExpenseTable";
+import ExpenseTable from "../../components/super-admin/expenses/ExpenseTable";
 
 // Importamos el modal visual
 // para registrar un nuevo gasto.
-import ExpenseFormModal from "../../components/admin/expenses/ExpenseFormModal";
+import ExpenseFormModal from "../../components/super-admin/expenses/ExpenseFormModal";
 
 // Importamos los estilos generales de la página.
-import "../../styles/pages/admin/ExpenseManagement.css";
+import "../../styles/pages/super-admin/ExpenseManagement.css";
 
 
 // Creamos el componente principal de la página.
@@ -9824,6 +15294,46 @@ function ExpenseManagement() {
 
 // Exportamos el componente.
 export default ExpenseManagement;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\services\api.js
+
+// Importamos Axios para realizar
+// solicitudes HTTP al backend.
+import axios from "axios";
+
+
+// Creamos una instancia reutilizable
+// para toda la aplicación.
+const api = axios.create({
+  // Obtenemos la URL desde el .env del frontend.
+  //
+  // Si no existe, utilizamos el backend local.
+  baseURL:
+    process.env.REACT_APP_API_URL ||
+    "http://localhost:5000/api",
+
+  // Permitimos que el navegador envíe
+  // y reciba cookies HttpOnly.
+  withCredentials: true,
+
+  // Definimos un tiempo máximo
+  // de espera de diez segundos.
+  timeout: 10000,
+
+  // Indicamos que enviaremos
+  // y recibiremos información JSON.
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+
+
+// Exportamos la instancia para utilizarla
+// en login, gastos, eventos y demás módulos.
+export default api;
 
 
 

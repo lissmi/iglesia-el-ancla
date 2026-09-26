@@ -1,0 +1,374 @@
+/* ========================================================= */
+/* ENCABEZADO PRINCIPAL */
+/* ========================================================= */
+
+.admin-header {
+  /* Colocamos los bloques principales en una fila. */
+  display: flex;
+
+  /* Separamos la parte izquierda de la derecha. */
+  justify-content: space-between;
+
+  /* Centramos verticalmente los elementos. */
+  align-items: center;
+
+  /* Definimos una altura mínima cómoda. */
+  min-height: 76px;
+
+  /* Agregamos espacio horizontal. */
+  padding: 12px 32px;
+
+  /* Utilizamos un fondo blanco. */
+  background-color: #ffffff;
+
+  /* Separamos visualmente el encabezado del contenido. */
+  border-bottom: 1px solid #e4e9ed;
+}
+
+
+/* ========================================================= */
+/* PARTE IZQUIERDA */
+/* ========================================================= */
+
+.admin-header__left {
+  /* Colocamos sus elementos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación entre sus elementos. */
+  gap: 14px;
+}
+
+
+.admin-header__menu-button {
+  /* Ocultamos inicialmente el botón para escritorio. */
+  display: none;
+
+  /* Centramos el icono. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 42px;
+  height: 42px;
+
+  /* Agregamos un borde discreto. */
+  border: 1px solid #dfe5e9;
+
+  /* Redondeamos sus esquinas. */
+  border-radius: 10px;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Aplicamos el azul institucional. */
+  color: #1e3448;
+
+  /* Mostramos que puede presionarse. */
+  cursor: pointer;
+
+  /* Suavizamos sus cambios. */
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.admin-header__menu-button:hover {
+  /* Destacamos el botón al pasar el cursor. */
+  background-color: #f4f6f8;
+
+  /* Oscurecemos ligeramente el borde. */
+  border-color: #cbd4da;
+}
+
+
+.admin-header__information {
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos un texto debajo del otro. */
+  flex-direction: column;
+
+  /* Creamos una pequeña separación. */
+  gap: 3px;
+}
+
+
+.admin-header__section {
+  /* Destacamos el nombre de la sección. */
+  font-size: 15px;
+
+  /* Aplicamos un peso seminegrita. */
+  font-weight: 650;
+
+  /* Utilizamos el azul institucional. */
+  color: #1e3448;
+}
+
+
+.admin-header__date {
+  /* Reducimos el tamaño de la fecha. */
+  font-size: 12px;
+
+  /* Aplicamos un tono secundario. */
+  color: #71808c;
+
+  /* Permitimos que la primera letra
+     del día aparezca en mayúscula. */
+  text-transform: capitalize;
+}
+
+
+/* ========================================================= */
+/* PARTE DERECHA */
+/* ========================================================= */
+
+.admin-header__right {
+  /* Colocamos las acciones en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación entre ellas. */
+  gap: 18px;
+}
+
+
+/* ========================================================= */
+/* NOTIFICACIONES */
+/* ========================================================= */
+
+.admin-header__notification {
+  /* Necesitamos posición relativa para ubicar el indicador. */
+  position: relative;
+
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 42px;
+  height: 42px;
+
+  /* Agregamos un borde discreto. */
+  border: 1px solid #e0e5e9;
+
+  /* Redondeamos el botón. */
+  border-radius: 50%;
+
+  /* Utilizamos fondo blanco. */
+  background-color: #ffffff;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+
+  /* Mostramos que es interactivo. */
+  cursor: pointer;
+
+  /* Suavizamos el fondo. */
+  transition: background-color 0.2s ease;
+}
+
+
+.admin-header__notification:hover {
+  /* Aplicamos un fondo suave al pasar el cursor. */
+  background-color: #f4f6f8;
+}
+
+
+.admin-header__notification-indicator {
+  /* Posicionamos el indicador sobre la campana. */
+  position: absolute;
+
+  /* Lo ubicamos en la esquina superior derecha. */
+  top: 8px;
+  right: 8px;
+
+  /* Definimos sus dimensiones. */
+  width: 8px;
+  height: 8px;
+
+  /* Aplicamos un color visible. */
+  background-color: #b98a54;
+
+  /* Lo convertimos en un círculo. */
+  border-radius: 50%;
+
+  /* Creamos separación con el fondo. */
+  border: 2px solid #ffffff;
+}
+
+
+/* ========================================================= */
+/* PERFIL */
+/* ========================================================= */
+
+.admin-header__profile {
+  /* Colocamos avatar y textos en una fila. */
+  display: flex;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Creamos separación. */
+  gap: 11px;
+
+  /* Agregamos una línea divisoria. */
+  padding-left: 18px;
+
+  /* Separamos el perfil de la campana. */
+  border-left: 1px solid #e3e8eb;
+}
+
+
+.admin-header__avatar {
+  /* Centramos el icono. */
+  display: flex;
+
+  /* Centramos horizontalmente. */
+  justify-content: center;
+
+  /* Centramos verticalmente. */
+  align-items: center;
+
+  /* Definimos sus dimensiones. */
+  width: 42px;
+  height: 42px;
+
+  /* Aplicamos un fondo cálido. */
+  background-color: #f0e5d7;
+
+  /* Convertimos el contenedor en un círculo. */
+  border-radius: 50%;
+
+  /* Utilizamos el dorado institucional. */
+  color: #9b6d3d;
+}
+
+
+.admin-header__profile-text {
+  /* Organizamos los textos verticalmente. */
+  display: flex;
+
+  /* Colocamos uno debajo del otro. */
+  flex-direction: column;
+
+  /* Creamos una separación pequeña. */
+  gap: 2px;
+}
+
+
+.admin-header__profile-text strong {
+  /* Ajustamos el tamaño del nombre. */
+  font-size: 14px;
+
+  /* Aplicamos el color principal. */
+  color: #1e3448;
+}
+
+.admin-header__profile-text span {
+  /* Permitimos alinear correctamente
+     el icono y el texto del rol. */
+  display: flex;
+
+  /* Centramos verticalmente
+     el icono con el texto. */
+  align-items: center;
+
+  /* Dejamos una pequeña separación
+     entre el icono y el texto. */
+  gap: 5px;
+
+  /* Reducimos el tamaño del rol. */
+  font-size: 11px;
+
+  /* Aplicamos un tono secundario. */
+  color: #7a8791;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-header {
+    /* Reducimos el espacio horizontal. */
+    padding: 10px 20px;
+  }
+
+
+  .admin-header__menu-button {
+    /* Mostramos el botón para abrir el sidebar. */
+    display: flex;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .admin-header {
+    /* Reducimos todavía más el espacio horizontal. */
+    padding: 10px 15px;
+  }
+
+
+  .admin-header__date {
+    /* Ocultamos la fecha para ganar espacio. */
+    display: none;
+  }
+
+
+  .admin-header__profile-text {
+    /* Ocultamos los textos y dejamos solamente el avatar. */
+    display: none;
+  }
+
+
+  .admin-header__profile {
+    /* Reducimos la separación izquierda. */
+    padding-left: 12px;
+  }
+
+
+  .admin-header__right {
+    /* Reducimos la separación entre acciones. */
+    gap: 10px;
+  }
+
+}
+
+/* ========================================================= */
+/* INDICADOR DE CARGA DEL PERFIL */
+/* ========================================================= */
+
+.admin-header__loading-icon {
+  animation:
+    admin-header-spin 0.9s linear infinite;
+}
+
+
+@keyframes admin-header-spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}

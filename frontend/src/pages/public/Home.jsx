@@ -1,5 +1,4 @@
-// Importamos el Header público.
-import Header from "../../components/public/Header";
+
 // Importamos la sección de valores de la comunidad.
 import CommunityValues from "../../components/public/CommunityValues";
 // Importamos la sección de próximas actividades.
@@ -22,8 +21,6 @@ function Home() {
     return (
         // Contenedor principal de la página.
         <div className="home">
-            {/* Mostramos el encabezado sobre el video. */}
-            <Header />
 
             {/* Sección principal de presentación. */}
             <main>

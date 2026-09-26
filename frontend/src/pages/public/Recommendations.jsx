@@ -2,8 +2,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
 
 // Importamos el icono principal de recomendados.
 import recomendadosIcon from "../../assets/icons/recomendados.png";
@@ -151,8 +149,6 @@ function Recommendations() {
     // Retornamos la estructura visual.
     return (
         <div className="recommendations">
-            {/* Mostramos el encabezado público. */}
-            <Header />
 
             <main>
                 {/* Hero principal. */}

@@ -1,0 +1,71 @@
+/* ========================================================= */
+/* CONTENEDOR */
+/* ========================================================= */
+
+.protected-route {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #f5f7f8;
+}
+
+
+/* ========================================================= */
+/* INDICADOR DE CARGA */
+/* ========================================================= */
+
+.protected-route__loader {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  color: #506570;
+}
+
+
+.protected-route__loader span {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.protected-route__spinner {
+  color: #b78b4a;
+
+  animation:
+    protected-route-spin
+    0.9s
+    linear
+    infinite;
+}
+
+
+/* ========================================================= */
+/* ANIMACIÓN */
+/* ========================================================= */
+
+@keyframes protected-route-spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}

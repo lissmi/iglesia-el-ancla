@@ -1,8 +1,6 @@
 // Importamos useState para controlar los campos y mensajes del formulario.
 import { useState } from "react";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
 
 // Importamos el icono de ubicación.
 import ubicacionIcon from "../../assets/icons/ubicacion.png";
@@ -111,8 +109,6 @@ ${formData.message}
     return (
         // Contenedor principal de Contacto.
         <div className="contact">
-            {/* Mostramos el encabezado público. */}
-            <Header />
 
             {/* Contenido principal de la página. */}
             <main>

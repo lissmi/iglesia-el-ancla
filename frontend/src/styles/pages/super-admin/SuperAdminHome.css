@@ -1,0 +1,171 @@
+/* ========================================================= */
+/* PÁGINA PRINCIPAL */
+/* ========================================================= */
+
+.super-admin-home {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+
+  background-color: #f5f7f9;
+}
+
+
+.super-admin-home__container {
+  width: 100%;
+  max-width: 1450px;
+
+  margin: 0 auto;
+}
+
+
+/* ========================================================= */
+/* BIENVENIDA */
+/* ========================================================= */
+
+.super-admin-home__welcome {
+  margin-bottom: 32px;
+}
+
+
+.super-admin-home__eyebrow {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #b78b4a;
+}
+
+
+.super-admin-home__welcome h1 {
+  margin: 0 0 10px;
+
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+
+  color: #162b3a;
+}
+
+
+.super-admin-home__welcome p {
+  max-width: 720px;
+
+  margin: 0;
+
+  line-height: 1.7;
+
+  color: #657581;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.super-admin-home__section {
+  margin-bottom: 24px;
+  padding: 26px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e4e9ed;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 24px rgba(20, 42, 56, 0.05);
+}
+
+
+.super-admin-home__section-header {
+  margin-bottom: 20px;
+}
+
+
+.super-admin-home__section-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: #b78b4a;
+}
+
+
+.super-admin-home__section h2 {
+  margin: 0 0 7px;
+
+  font-size: 1.25rem;
+
+  color: #1c3444;
+}
+
+
+.super-admin-home__section p {
+  margin: 0;
+
+  line-height: 1.6;
+
+  color: #72818b;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO TEMPORAL */
+/* ========================================================= */
+
+.super-admin-home__placeholder {
+  padding: 22px;
+
+  border: 1px dashed #ccd5db;
+  border-radius: 14px;
+
+  background-color: #f8fafb;
+
+  font-size: 0.92rem;
+
+  color: #75848d;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+  .super-admin-home {
+    padding: 20px;
+  }
+
+
+  .super-admin-home__section {
+    padding: 20px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .super-admin-home {
+    padding: 16px;
+  }
+
+
+  .super-admin-home__section {
+    padding: 18px;
+
+    border-radius: 15px;
+  }
+
+}

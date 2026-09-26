@@ -1,8 +1,7 @@
 // Importamos Link para navegar sin recargar completamente la aplicación.
 import { Link } from "react-router-dom";
 
-// Importamos el encabezado público.
-import Header from "../../components/public/Header";
+
 
 
 // Importamos una fotografía de la iglesia.
@@ -135,8 +134,6 @@ function About() {
   return (
     // Contenedor principal de la página Nosotros.
     <div className="about">
-      {/* Mostramos el encabezado público. */}
-      <Header />
 
       {/* Contenido principal de la página. */}
       <main>
