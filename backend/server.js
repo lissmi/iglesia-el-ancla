@@ -6,81 +6,85 @@ import dotenv from "dotenv";
 // Importamos la aplicación de Express.
 import app from "./src/app.js";
 
-// Importamos la función que conecta con MongoDB.
+// Importamos la función que conecta
+// con MongoDB.
 import connectDatabase from "./src/config/database.js";
 
 
-// Verificamos si estamos ejecutando
+// Comprobamos si estamos ejecutando
 // el backend en producción.
 const isProduction =
   process.env.NODE_ENV === "production";
 
 
-// Si NO estamos en producción,
-// cargamos las variables desde backend/.env.
+// En desarrollo local cargamos
+// las variables desde backend/.env.
 //
-// En Vercel no necesitamos un archivo .env físico,
-// porque las variables están configuradas
-// directamente en la plataforma.
+// En Vercel las variables ya existen
+// directamente en process.env.
 if (!isProduction) {
   dotenv.config();
 }
 
 
-// Definimos el puerto del servidor.
+// Creamos una función para conectar
+// la aplicación con MongoDB.
 //
-// En desarrollo local, si no existe PORT,
-// utilizamos el puerto 5000.
-//
-// En Vercel, la plataforma puede asignar
-// el puerto automáticamente.
-const PORT =
-  process.env.PORT || 5000;
-
-
-// Creamos la función principal
-// encargada de iniciar el backend.
-const startServer = async () => {
+// Esto permite reutilizar la conexión
+// tanto en local como en Vercel.
+const initializeDatabase = async () => {
   try {
-    // Primero establecemos
-    // la conexión con MongoDB.
+    // Intentamos conectar con MongoDB.
     await connectDatabase();
 
-
-    // Iniciamos Express únicamente
-    // si MongoDB se conectó correctamente.
-    app.listen(PORT, () => {
-      // Si estamos trabajando localmente,
-      // mostramos la dirección completa.
-      if (!isProduction) {
-        console.log(
-          `Servidor de El Ancla funcionando en http://localhost:${PORT}`
-        );
-      } else {
-        // En producción mostramos un mensaje
-        // más general, ya que la URL real
-        // la administra Vercel.
-        console.log(
-          `Servidor de El Ancla funcionando en producción en el puerto ${PORT}`
-        );
-      }
-    });
-
+    // Informamos que la conexión
+    // se realizó correctamente.
+    console.log(
+      "Base de datos inicializada correctamente."
+    );
   } catch (error) {
-    // Mostramos un mensaje controlado
-    // si el servidor no puede iniciarse.
+    // Mostramos el error sin exponer
+    // información sensible.
     console.error(
-      "No se pudo iniciar el servidor:",
+      "No se pudo conectar con MongoDB:",
       error.message
     );
 
-
-    // Cerramos el proceso indicando
-    // que ocurrió un error.
-    process.exit(1);
+    // Propagamos el error para que
+    // Vercel pueda manejar correctamente
+    // el fallo de inicialización.
+    throw error;
   }
 };
 
 
-// Ejecutamos la función principal.
-startServer();
+// Inicializamos la conexión
+// con MongoDB.
+await initializeDatabase();
+
+
+// Si NO estamos en producción,
+// iniciamos el servidor localmente.
+if (!isProduction) {
+  // Definimos el puerto local.
+  const PORT =
+    process.env.PORT || 5000;
+
+
+  // Iniciamos Express en localhost.
+  app.listen(
+    PORT,
+    () => {
+      console.log(
+        `Servidor de El Ancla funcionando en http://localhost:${PORT}`
+      );
+    }
+  );
+}
+
+
+// Exportamos la aplicación Express.
+//
+// Vercel utiliza este export para
+// ejecutar el backend como servicio.
+export default app;
