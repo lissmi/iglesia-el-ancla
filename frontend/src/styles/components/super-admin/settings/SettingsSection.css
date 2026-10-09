@@ -1,0 +1,240 @@
+
+.settings-section {
+  min-width: 0;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 19px;
+  box-shadow: 0 5px 22px rgba(25, 48, 61, 0.035);
+}
+
+.settings-section__title {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #edf0f2;
+  color: #b96c56;
+}
+
+.settings-section__title h2 {
+  margin: 0 0 8px;
+  color: #203c4b;
+  font-size: 21px;
+}
+
+.settings-section__title p {
+  margin: 0;
+  color: #798a95;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.settings-section__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.settings-section__field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  padding: 18px;
+  background: #f8fafb;
+  border: 1px solid #eaf0f2;
+  border-radius: 12px;
+}
+
+.settings-section__field > span {
+  color: #82919b;
+  font-size: 12px;
+}
+
+.settings-section__field strong {
+  color: #304d5c;
+  font-size: 14px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.settings-section__field small {
+  color: #94a0a7;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-section__subheading {
+  margin: 30px 0 17px;
+}
+
+.settings-section__subheading h3 {
+  margin: 0 0 8px;
+  color: #294555;
+  font-size: 16px;
+}
+
+.settings-section__subheading p {
+  margin: 0;
+  color: #82919b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.settings-section__options {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-top: 24px;
+}
+
+.settings-section__subheading + .settings-section__options {
+  margin-top: 0;
+}
+
+.settings-section__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid #e9eef0;
+  border-radius: 13px;
+}
+
+.settings-section__option-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  color: #b96c56;
+  background: #fbf0ec;
+  border-radius: 12px;
+}
+
+.settings-section__option-content h3 {
+  margin: 0 0 7px;
+  color: #304b59;
+  font-size: 14px;
+}
+
+.settings-section__option-content p {
+  margin: 0 0 10px;
+  color: #788a94;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.settings-section__option-content > span {
+  display: inline-block;
+  padding: 5px 10px;
+  color: #8a746a;
+  background: #f8f2ee;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.settings-section__branch {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #e5ebee;
+  border-radius: 14px;
+}
+
+.settings-section__branch-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  color: #b96c56;
+  background: #fbf0ec;
+  border-radius: 13px;
+}
+
+.settings-section__branch-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.settings-section__branch-content strong {
+  color: #294555;
+  font-size: 14px;
+}
+
+.settings-section__branch-content span,
+.settings-section__branch-content small {
+  color: #81909a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.settings-section__reference {
+  padding: 7px 11px;
+  color: #5b7a89;
+  background: #eef5f7;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.settings-section__security-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 24px;
+  padding: 17px;
+  color: #996c56;
+  background: #fcf5f0;
+  border: 1px solid #f0e3d8;
+  border-radius: 12px;
+}
+
+.settings-section__security-notice svg {
+  flex-shrink: 0;
+}
+
+.settings-section__security-notice p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.settings-section__footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding-top: 19px;
+  color: #8a98a0;
+  border-top: 1px solid #edf0f2;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.settings-section__footer svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 650px) {
+  .settings-section {
+    padding: 20px;
+  }
+
+  .settings-section__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-section__branch {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,534 @@
+
+/* ========================================================= */
+/* DISTRIBUCIÓN GENERAL */
+/* ========================================================= */
+
+.register-user-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  align-items: start;
+  gap: 22px;
+  width: 100%;
+}
+
+.register-user-form-card,
+.register-user-preview {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e7edf0;
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(24, 49, 64, 0.035);
+}
+
+.register-user-form-card {
+  padding: 28px;
+}
+
+
+/* ========================================================= */
+/* SECCIONES DEL FORMULARIO */
+/* ========================================================= */
+
+.register-user-form__section {
+  padding-bottom: 27px;
+  margin-bottom: 27px;
+  border-bottom: 1px solid #edf1f3;
+}
+
+.register-user-form__section-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 24px;
+}
+
+.register-user-form__section-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b97450;
+  background: #fcf1ea;
+  border-radius: 12px;
+}
+
+.register-user-form__section-header h2 {
+  margin: 0 0 5px;
+  color: #233c4c;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.register-user-form__section-header p {
+  margin: 0;
+  color: #8a9aa5;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.register-user-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.register-user-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  margin-bottom: 18px;
+}
+
+.register-user-form__field label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #465e6e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.register-user-form__field label svg {
+  color: #819ba7;
+}
+
+.register-user-form__field label span {
+  color: #c36f55;
+}
+
+.register-user-form__field input,
+.register-user-form__field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid #dce6eb;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #29485a;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.register-user-form__field input::placeholder {
+  color: #a8b6be;
+}
+
+.register-user-form__field input:focus,
+.register-user-form__field select:focus {
+  border-color: #6bafbe;
+  box-shadow: 0 0 0 3px rgba(107, 175, 190, 0.12);
+}
+
+.register-user-form__field input[aria-invalid="true"],
+.register-user-form__field select[aria-invalid="true"] {
+  border-color: #cf8179;
+}
+
+.register-user-form__hint {
+  margin: 0;
+  color: #91a0a9;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.register-user-form__error {
+  color: #bc6157;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* SUCURSALES */
+/* ========================================================= */
+
+.register-user-form__branches {
+  margin: 20px 0 25px;
+}
+
+.register-user-form__subheading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 9px;
+  color: #3d6172;
+  font-size: 13px;
+}
+
+.register-user-form__subheading svg {
+  color: #428c9d;
+}
+
+.register-user-form__branch-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.register-user-form__branch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e1eaed;
+  border-radius: 11px;
+  background: #f9fbfc;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.register-user-form__branch:hover {
+  background: #f1f8fa;
+  border-color: #bcdbe2;
+}
+
+.register-user-form__branch input {
+  width: 16px;
+  height: 16px;
+  accent-color: #27899d;
+}
+
+.register-user-form__branch-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.register-user-form__branch-info strong {
+  color: #3a5869;
+  font-size: 12px;
+}
+
+.register-user-form__branch-info small {
+  color: #91a1aa;
+  font-size: 11px;
+}
+
+.register-user-form__branch > svg {
+  color: #348e9d;
+}
+
+
+/* ========================================================= */
+/* AVISOS */
+/* ========================================================= */
+
+.register-user-form__notice,
+.register-user-form__validation,
+.register-user-form__confirmation,
+.register-user-form__demo-success {
+  border-radius: 12px;
+  padding: 17px;
+  margin-bottom: 20px;
+}
+
+.register-user-form__notice,
+.register-user-form__demo-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.register-user-form__notice {
+  color: #427e8d;
+  background: #eef7f9;
+  border: 1px solid #d6e9ee;
+}
+
+.register-user-form__notice svg,
+.register-user-form__demo-success svg {
+  flex-shrink: 0;
+}
+
+.register-user-form__notice strong,
+.register-user-form__demo-success strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.register-user-form__notice p,
+.register-user-form__demo-success p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.register-user-form__validation {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #a85e53;
+  background: #fff3f0;
+  border: 1px solid #f0d9d4;
+  font-size: 12px;
+}
+
+.register-user-form__confirmation {
+  background: #f5fafb;
+  border: 1px solid #d1e7ec;
+}
+
+.register-user-form__confirmation-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #307d90;
+  font-size: 13px;
+}
+
+.register-user-form__confirmation p {
+  color: #5c7786;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.register-user-form__confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.register-user-form__demo-success {
+  color: #347b66;
+  background: #eef8f3;
+  border: 1px solid #d2e9dc;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.register-user-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 5px;
+}
+
+.register-user-form__button-primary,
+.register-user-form__button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 43px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-user-form__button-primary {
+  color: #ffffff;
+  background: #b87956;
+  border: 1px solid #b87956;
+}
+
+.register-user-form__button-primary:hover {
+  background: #a76847;
+}
+
+.register-user-form__button-secondary {
+  color: #607987;
+  background: #ffffff;
+  border: 1px solid #dce6eb;
+}
+
+.register-user-form__button-secondary:hover {
+  background: #f4f8fa;
+}
+
+.register-user-form__button-primary:focus-visible,
+.register-user-form__button-secondary:focus-visible {
+  outline: 3px solid #77b6c4;
+  outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* PANEL DE VISTA PREVIA */
+/* ========================================================= */
+
+.register-user-preview {
+  position: sticky;
+  top: 20px;
+  padding: 23px;
+}
+
+.register-user-preview__heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #bd805d;
+}
+
+.register-user-preview__heading h2 {
+  margin: 0;
+  color: #304b5b;
+  font-size: 14px;
+}
+
+.register-user-preview__description {
+  margin: 12px 0 22px;
+  color: #8b9ca6;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.register-user-preview__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 9px;
+  padding: 25px 12px;
+  background: #f8fbfc;
+  border: 1px solid #edf1f3;
+  border-radius: 13px;
+}
+
+.register-user-preview__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 7px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #438d9e, #255b72);
+  border-radius: 19px;
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.register-user-preview__profile > strong {
+  color: #2b4657;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.register-user-preview__profile > span {
+  color: #93a2ab;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.register-user-preview__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  padding: 7px 11px;
+  color: #2f8195;
+  background: #e9f5f8;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.register-user-preview__details {
+  display: grid;
+  gap: 17px;
+  padding: 24px 0;
+}
+
+.register-user-preview__details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.register-user-preview__details span {
+  color: #96a5ae;
+  font-size: 11px;
+}
+
+.register-user-preview__details strong {
+  color: #3c596a;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.register-user-preview__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 14px;
+  background: #fbf6f1;
+  border-radius: 10px;
+  color: #9b806b;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.register-user-preview__footer svg {
+  flex-shrink: 0;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+  .register-user-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .register-user-preview {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-user-form-card {
+    padding: 19px;
+  }
+
+  .register-user-form__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .register-user-form__actions,
+  .register-user-form__confirmation-actions {
+    flex-direction: column;
+  }
+
+  .register-user-form__actions button,
+  .register-user-form__confirmation-actions button {
+    width: 100%;
+  }
+
+  .register-user-preview {
+    padding: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-user-form__field input,
+  .register-user-form__field select,
+  .register-user-form__branch,
+  .register-user-form__button-primary,
+  .register-user-form__button-secondary {
+    transition: none;
+  }
+}

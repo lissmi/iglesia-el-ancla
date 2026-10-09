@@ -14,6 +14,7 @@ import AdminOverview from "../../components/administration/home/AdminOverview";
 // exclusivas del super administrador.
 import SuperAdminOverview from "../../components/super-admin/home/SuperAdminOverview";
 
+import ActivityHistoryShortcut from "../../components/administration/activity/ActivityHistoryShortcut";
 
 // Creamos la página principal
 // de la sesión del super administrador.
@@ -68,6 +69,12 @@ function SuperAdminHome() {
                 {/* ================================================= */}
 
                 <SuperAdminOverview />
+
+                {/* ============================================= */}
+                {/* HISTORIAL DE ACTIVIDAD */}
+                {/* ============================================= */}
+
+                <ActivityHistoryShortcut />
 
             </div>
 

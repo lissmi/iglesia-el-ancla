@@ -13,24 +13,26 @@ import {
 // COMPONENTES
 // =========================================================
 
-import UsersHeader from "../../../components/administration/users/UsersHeader";
+import UsersHeader from "../../components/administration/users/UsersHeader";
 
-import UsersSummary from "../../../components/administration/users/UsersSummary";
+import UsersSummary from "../../components/administration/users/UsersSummary";
 
-import UsersFilters from "../../../components/administration/users/UsersFilters";
+import UsersFilters from "../../components/administration/users/UsersFilters";
 
-import UsersTable from "../../../components/administration/users/UsersTable";
+import UsersTable from "../../components/administration/users/UsersTable";
 
-import UserDetailsModal from "../../../components/administration/users/UserDetailsModal";
+import UserDetailsModal from "../../components/administration/users/UserDetailsModal";
 
-import UserEditModal from "../../../components/administration/users/UserEditModal";
+import UserEditModal from "../../components/administration/users/UserEditModal";
 
 
 // =========================================================
 // ESTILOS
 // =========================================================
 
-import "../../../styles/pages/super-admin/system/UsersManagement.css";
+
+import "../../styles/pages/administration/UsersManagement.css";
+
 
 
 // =========================================================

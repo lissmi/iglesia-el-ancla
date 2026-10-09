@@ -1,0 +1,187 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.system-settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 0 35px;
+}
+
+/* ========================================================= */
+/* VOLVER AL PANEL */
+/* ========================================================= */
+
+.system-settings-page__navigation {
+  display: flex;
+  align-items: center;
+}
+
+.system-settings-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 0;
+  color: #647784;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.system-settings-page__back:hover {
+  color: #b96c56;
+  transform: translateX(-3px);
+}
+
+.system-settings-page__back:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.system-settings-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.system-settings-page__eyebrow {
+  display: inline-block;
+  margin-bottom: 11px;
+  color: #b96c56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.system-settings-page__header h1 {
+  margin: 0 0 10px;
+  color: #203c4b;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 750;
+}
+
+.system-settings-page__header p {
+  max-width: 680px;
+  margin: 0;
+  color: #70818c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.system-settings-page__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  padding: 11px 15px;
+  color: #9d5e4e;
+  background: #fbefeb;
+  border: 1px solid #f0dcd5;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ========================================================= */
+/* AVISO INFORMATIVO */
+/* ========================================================= */
+
+.system-settings-page__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 19px 22px;
+  color: #507284;
+  background: #eef5f8;
+  border: 1px solid #dbe9ef;
+  border-radius: 15px;
+}
+
+.system-settings-page__notice > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.system-settings-page__notice strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #365e72;
+  font-size: 13px;
+}
+
+.system-settings-page__notice p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ========================================================= */
+/* DISTRIBUCIÓN DE CONFIGURACIÓN */
+/* ========================================================= */
+
+.system-settings-page__layout {
+  display: grid;
+  grid-template-columns: minmax(245px, 290px) minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN INFERIOR */
+/* ========================================================= */
+
+.system-settings-page__footer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 5px 2px;
+  color: #84939c;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.system-settings-page__footer svg {
+  flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+  .system-settings-page__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .system-settings-page__header {
+    flex-direction: column;
+  }
+
+  .system-settings-page__badge {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .system-settings-page {
+    gap: 20px;
+  }
+
+  .system-settings-page__notice {
+    padding: 16px;
+  }
+}

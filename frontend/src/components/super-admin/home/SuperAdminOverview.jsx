@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 // IMPORTACIÓN DE ICONOS
 // =========================================================
 
-// Importamos los iconos utilizados dentro
-// del control avanzado del sistema.
 import {
   ArrowRight,
   Settings,
@@ -16,10 +14,11 @@ import {
   UsersRound,
 } from "lucide-react";
 
+// =========================================================
+// ESTILOS
+// =========================================================
 
-// Importamos los estilos exclusivos del componente.
 import "../../../styles/components/super-admin/home/SuperAdminOverview.css";
-
 
 // =========================================================
 // MÓDULOS DEL SUPERADMINISTRADOR
@@ -28,8 +27,8 @@ import "../../../styles/components/super-admin/home/SuperAdminOverview.css";
 // Estas tarjetas representan las herramientas
 // disponibles desde el panel super_admin.
 //
-// Algunas funcionalidades serán exclusivas,
-// mientras que otras reutilizarán componentes
+// Algunas funcionalidades son exclusivas,
+// mientras que otras reutilizan componentes
 // compartidos con el administrador normal.
 //
 // Cada módulo contiene:
@@ -39,7 +38,7 @@ import "../../../styles/components/super-admin/home/SuperAdminOverview.css";
 // description: descripción de la funcionalidad.
 // icon: icono correspondiente.
 // path: ruta de navegación.
-// available: indica si la página ya está implementada.
+// available: indica si la página está implementada.
 
 const superAdminModules = [
 
@@ -59,10 +58,8 @@ const superAdminModules = [
 
     path: "/super-admin/sistema/usuarios",
 
-    // Página pendiente de implementación.
     available: true,
   },
-
 
   // -------------------------------------------------------
   // REGISTRAR USUARIO
@@ -74,20 +71,22 @@ const superAdminModules = [
     title: "Registrar usuario",
 
     description:
-      "Crea nuevas cuentas para miembros y administradores de la iglesia.",
+      "Accede al formulario de registro de nuevas cuentas para miembros y administradores de la iglesia.",
 
     icon: UserPlus,
 
-    path: "/super-admin/usuarios/registrar",
+    path: "/super-admin/sistema/registrar-usuario",
 
-    // Esta funcionalidad utilizará un componente
-    // compartido con el administrador normal.
+    available: true,
+
+    // Este módulo utiliza componentes compartidos.
     //
-    // super_admin podrá registrar miembros y admins.
-    // admin podrá registrar únicamente miembros.
-    available: false,
+    // super_admin: podrá registrar miembros y admins.
+    // admin: podrá registrar únicamente miembros.
+    //
+    // Estas restricciones deberán validarse
+    // también desde el backend.
   },
-
 
   // -------------------------------------------------------
   // ADMINISTRADORES
@@ -99,15 +98,15 @@ const superAdminModules = [
     title: "Administradores",
 
     description:
-      "Revisa y administra las cuentas que poseen permisos administrativos.",
+      "Consulta las cuentas administrativas, revisa sus roles, sucursales y estados dentro del sistema.",
 
     icon: ShieldCheck,
 
-    path: "/super-admin/administradores",
+    // Ruta exclusiva del superadministrador.
+    path: "/super-admin/sistema/administradores",
 
-    available: false,
+    available: true,
   },
-
 
   // -------------------------------------------------------
   // ROLES Y PERMISOS
@@ -119,15 +118,15 @@ const superAdminModules = [
     title: "Roles y permisos",
 
     description:
-      "Modifica los niveles de acceso asignados a las cuentas registradas.",
+      "Consulta los niveles de acceso, responsabilidades y permisos asociados a cada rol del sistema.",
 
     icon: UserCog,
 
-    path: "/super-admin/sistema/roles",
+    // Ruta exclusiva del superadministrador.
+    path: "/super-admin/sistema/roles-permisos",
 
-    available: false,
+    available: true,
   },
-
 
   // -------------------------------------------------------
   // CONFIGURACIÓN DEL SISTEMA
@@ -139,36 +138,27 @@ const superAdminModules = [
     title: "Configuración",
 
     description:
-      "Administra opciones sensibles relacionadas con el funcionamiento general del sistema.",
+      "Consulta la información institucional, las sucursales, las políticas de seguridad y las preferencias generales del sistema.",
 
     icon: Settings,
 
-    path: "/super-admin/configuracion",
+    // Ruta exclusiva del superadministrador.
+    path: "/super-admin/sistema/configuracion",
 
-    available: false,
+    // Página construida y disponible.
+    available: true,
   },
 
 ];
-
 
 // =========================================================
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-// Creamos el resumen de herramientas avanzadas
-// que se muestra en SuperAdminHome.
-//
-// Este componente presenta las tarjetas
-// correspondientes al panel super_admin.
 function SuperAdminOverview() {
-
-  // =========================================================
-  // INTERFAZ
-  // =========================================================
 
   return (
     <section className="super-admin-control">
-
 
       {/* ================================================= */}
       {/* ENCABEZADO */}
@@ -178,19 +168,14 @@ function SuperAdminOverview() {
 
         <div>
 
-          {/* Identificador de la sección. */}
           <span className="super-admin-control__eyebrow">
             Control del sistema
           </span>
 
-
-          {/* Título principal. */}
           <h2>
             Administración avanzada
           </h2>
 
-
-          {/* Descripción de las funcionalidades. */}
           <p>
             Gestiona cuentas, administradores,
             roles y configuraciones sensibles
@@ -199,9 +184,8 @@ function SuperAdminOverview() {
 
         </div>
 
+        {/* Indicador de acceso exclusivo al panel. */}
 
-        {/* Indicador de acceso exclusivo
-            al panel del superadministrador. */}
         <div className="super-admin-control__badge">
 
           <ShieldCheck
@@ -218,27 +202,21 @@ function SuperAdminOverview() {
 
       </div>
 
-
       {/* ================================================= */}
       {/* TARJETAS DE MÓDULOS */}
       {/* ================================================= */}
 
       <div className="super-admin-control__grid">
 
-        {/* Recorremos todos los módulos configurados. */}
         {superAdminModules.map((module) => {
 
-          // Obtenemos el componente del icono
-          // correspondiente a cada módulo.
+          // Obtenemos el icono correspondiente.
           const ModuleIcon = module.icon;
-
 
           // =================================================
           // MÓDULO DISPONIBLE
           // =================================================
 
-          // Cuando la página esté construida,
-          // utilizaremos Link para navegar.
           if (module.available) {
 
             return (
@@ -249,6 +227,7 @@ function SuperAdminOverview() {
               >
 
                 {/* Icono del módulo. */}
+
                 <div className="super-admin-control-card__icon">
 
                   <ModuleIcon
@@ -259,8 +238,8 @@ function SuperAdminOverview() {
 
                 </div>
 
-
                 {/* Información del módulo. */}
+
                 <div className="super-admin-control-card__content">
 
                   <strong>
@@ -273,8 +252,8 @@ function SuperAdminOverview() {
 
                 </div>
 
+                {/* Indicador de navegación. */}
 
-                {/* Flecha indicadora de navegación. */}
                 <ArrowRight
                   className="super-admin-control-card__arrow"
                   size={18}
@@ -286,13 +265,10 @@ function SuperAdminOverview() {
             );
           }
 
-
           // =================================================
           // MÓDULO PENDIENTE
           // =================================================
 
-          // Si la página todavía no está construida,
-          // mostramos la tarjeta deshabilitada.
           return (
             <button
               className="
@@ -305,6 +281,7 @@ function SuperAdminOverview() {
             >
 
               {/* Icono del módulo. */}
+
               <div className="super-admin-control-card__icon">
 
                 <ModuleIcon
@@ -315,8 +292,8 @@ function SuperAdminOverview() {
 
               </div>
 
-
               {/* Información del módulo. */}
+
               <div className="super-admin-control-card__content">
 
                 <strong>
@@ -327,8 +304,8 @@ function SuperAdminOverview() {
                   {module.description}
                 </span>
 
-
                 {/* Indicador de módulo pendiente. */}
+
                 <small>
                   Disponible próximamente
                 </small>
@@ -346,7 +323,8 @@ function SuperAdminOverview() {
   );
 }
 
+// =========================================================
+// EXPORTACIÓN
+// =========================================================
 
-// Exportamos el componente para utilizarlo
-// dentro de SuperAdminHome.
 export default SuperAdminOverview;

@@ -1,0 +1,183 @@
+
+.administrators-table__scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.administrators-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.administrators-table th {
+  padding: 16px 19px;
+  color: #8d9ca6;
+  background: #fafcfd;
+  border-bottom: 1px solid #edf1f3;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.administrators-table td {
+  padding: 17px 19px;
+  border-bottom: 1px solid #f0f3f5;
+  vertical-align: middle;
+}
+
+.administrators-table tbody tr:hover {
+  background: #fcfdfd;
+}
+
+.administrators-table__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.administrators-table__avatar {
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  color: #387e92;
+  background: #eaf4f7;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.administrators-table__avatar--super {
+  color: #a96c48;
+  background: #fbefe7;
+}
+
+.administrators-table__identity strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #344d5d;
+  font-size: 12px;
+}
+
+.administrators-table__identity span {
+  color: #9aa8b1;
+  font-size: 11px;
+}
+
+.administrators-table__role,
+.administrators-table__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.administrators-table__role {
+  color: #387f96;
+  background: #eaf5f8;
+}
+
+.administrators-table__role--super {
+  color: #a87550;
+  background: #fcf0e7;
+}
+
+.administrators-table__status--active {
+  color: #438a6d;
+  background: #eaf7ef;
+}
+
+.administrators-table__status--inactive {
+  color: #b97569;
+  background: #fbefed;
+}
+
+.administrators-table__branch,
+.administrators-table__date {
+  color: #708695;
+  font-size: 11px;
+}
+
+.administrators-table__view {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  color: #578698;
+  background: #eff7f9;
+  border: 1px solid #e0eef1;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.administrators-table__view:hover {
+  color: #ffffff;
+  background: #408ba0;
+}
+
+.administrators-table__view:focus-visible,
+.administrators-table__pagination button:focus-visible {
+  outline: 2px solid #70b2c0;
+  outline-offset: 2px;
+}
+
+.administrators-table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #94a5ae;
+}
+
+.administrators-table__empty strong {
+  color: #516c7c;
+  font-size: 13px;
+}
+
+.administrators-table__empty p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.administrators-table__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 17px 20px;
+  color: #91a0aa;
+  font-size: 11px;
+}
+
+.administrators-table__pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.administrators-table__pagination button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: #647f8f;
+  background: #ffffff;
+  border: 1px solid #e1e9ed;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.administrators-table__pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

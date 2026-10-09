@@ -1,0 +1,111 @@
+
+/* ========================================================= */
+/* CONTENEDOR DE FILTROS */
+/* ========================================================= */
+
+.activity-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 17px;
+}
+
+/* ========================================================= */
+/* BUSCADOR */
+/* ========================================================= */
+
+.activity-filters__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 15px;
+  color: #82939e;
+  background: #f8fafb;
+  border: 1px solid #e4ebee;
+  border-radius: 11px;
+}
+
+.activity-filters__search input {
+  width: 100%;
+  min-width: 0;
+  color: #294656;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 13px;
+}
+
+.activity-filters__search input::placeholder {
+  color: #9aa7af;
+}
+
+/* ========================================================= */
+/* FILTRO POR FECHA */
+/* ========================================================= */
+
+.activity-filters__date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  color: #82939e;
+  background: #f8fafb;
+  border: 1px solid #e4ebee;
+  border-radius: 11px;
+}
+
+.activity-filters__date input {
+  color: #294656;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 13px;
+}
+
+/* ========================================================= */
+/* LIMPIAR FILTROS */
+/* ========================================================= */
+
+.activity-filters__reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: #657d8a;
+  background: #ffffff;
+  border: 1px solid #e2e9ec;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.activity-filters__reset:hover {
+  color: #b96c56;
+  background: #fcf5f2;
+}
+
+.activity-filters__search:focus-within,
+.activity-filters__date:focus-within,
+.activity-filters__reset:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .activity-filters__search,
+  .activity-filters__date,
+  .activity-filters__reset {
+    width: 100%;
+  }
+}

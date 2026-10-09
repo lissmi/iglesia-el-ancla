@@ -1,0 +1,175 @@
+
+/* ========================================================= */
+/* PÁGINA REGISTRAR USUARIO */
+/* ========================================================= */
+
+.register-user-page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px 35px 55px;
+}
+
+
+/* ========================================================= */
+/* NAVEGACIÓN */
+/* ========================================================= */
+
+.register-user-page__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.register-user-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #718995;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.register-user-page__back:hover {
+  color: #b87956;
+}
+
+.register-user-page__breadcrumb {
+  color: #a0afb7;
+  font-size: 11px;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.register-user-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.register-user-page__header-main {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.register-user-page__icon {
+  width: 57px;
+  height: 57px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b87956;
+  background: #f8eee7;
+  border-radius: 16px;
+}
+
+.register-user-page__eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #b87956;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+}
+
+.register-user-page__header h1 {
+  margin: 0 0 8px;
+  color: #243b4b;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.register-user-page__header p {
+  margin: 0;
+  color: #8496a1;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.register-user-page__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 9px 13px;
+  color: #967048;
+  background: #f9f0e6;
+  border: 1px solid #f0e1d1;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* AVISO DE DEMOSTRACIÓN */
+/* ========================================================= */
+
+.register-user-page__demo-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding: 15px 18px;
+  background: #f0f7f9;
+  border: 1px solid #dbeaf0;
+  border-radius: 12px;
+  color: #538092;
+}
+
+.register-user-page__demo-notice svg {
+  flex-shrink: 0;
+}
+
+.register-user-page__demo-notice p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+  .register-user-page {
+    padding: 25px 22px 40px;
+  }
+
+  .register-user-page__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-user-page {
+    padding: 20px 15px 35px;
+  }
+
+  .register-user-page__header-main {
+    align-items: flex-start;
+  }
+
+  .register-user-page__header h1 {
+    font-size: 21px;
+  }
+
+  .register-user-page__icon {
+    width: 46px;
+    height: 46px;
+  }
+}

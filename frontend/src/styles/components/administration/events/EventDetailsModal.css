@@ -1,0 +1,128 @@
+/* ========================================================= */
+/* FICHA DE DETALLES DE EVENTO - EL ANCLA                    */
+/* ========================================================= */
+.event-details__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2450;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: rgba(18, 33, 45, .65);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+}
+.event-details {
+  width: 100%;
+  max-width: 720px;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 28px 75px rgba(15, 30, 42, .3);
+}
+.event-details__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 28px 30px;
+  border-bottom: 1px solid #e9eef0;
+}
+.event-details__eyebrow {
+  color: #b96c56;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+.event-details__header h2 {
+  margin: 8px 0 13px;
+  color: #203c4b;
+  font-size: 24px;
+}
+.event-details__badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.event-details__badges span {
+  padding: 6px 10px;
+  background: #edf2f5;
+  border-radius: 20px;
+  color: #486473;
+  font-size: 11px;
+  font-weight: 700;
+}
+.event-details__badges .event-details__published { background: #e7f5ed; color: #287b51; }
+.event-details__badges .event-details__draft { background: #fff2e6; color: #a46b32; }
+.event-details__close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  color: #758995;
+  background: #f4f7f8;
+  cursor: pointer;
+}
+.event-details__close:hover { color: #b96c56; background: #fbefeb; }
+.event-details__body { padding: 4px 30px; }
+.event-details__section { padding: 22px 0; border-bottom: 1px solid #edf1f3; }
+.event-details__section:last-child { border-bottom: 0; }
+.event-details__section h3 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 15px;
+  color: #294656;
+  font-size: 15px;
+}
+.event-details__section h3 svg { color: #b96c56; }
+.event-details__section p { margin: 0; color: #536c7a; font-size: 13px; line-height: 1.7; white-space: pre-wrap; }
+.event-details__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 0; }
+.event-details__grid div { min-width: 0; }
+.event-details__grid dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  color: #81919b;
+  font-size: 11px;
+  font-weight: 700;
+}
+.event-details__grid dd { margin: 0; color: #294656; font-size: 13px; overflow-wrap: anywhere; }
+.event-details__grid a { color: #a75f4b; font-weight: 700; }
+.event-details__section .event-details__hint { margin-top: 14px; color: #91a0a9; font-size: 11px; }
+.event-details__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 22px 30px;
+  background: #fafcfd;
+}
+.event-details__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 19px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.event-details__secondary { color: #627986; background: #eaf0f3; }
+.event-details__primary { color: #fff; background: #b96c56; }
+.event-details__primary:hover { background: #a65b47; }
+.event-details button:focus-visible { outline: 2px solid #b96c56; outline-offset: 3px; }
+@media (max-width: 650px) {
+  .event-details__overlay { padding: 10px; align-items: flex-start; }
+  .event-details { max-height: calc(100dvh - 20px); border-radius: 15px; }
+  .event-details__header { padding: 21px 18px; }
+  .event-details__header h2 { font-size: 20px; }
+  .event-details__body { padding: 0 18px; }
+  .event-details__grid { grid-template-columns: 1fr; gap: 13px; }
+  .event-details__actions { padding: 18px; flex-direction: column-reverse; }
+  .event-details__actions button { width: 100%; }
+}

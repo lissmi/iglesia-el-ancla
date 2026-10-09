@@ -125,19 +125,25 @@ function AdminSidebar({ isOpen, onClose }) {
   };
 
 
+
   // =========================================================
   // GRUPOS DE NAVEGACIÓN
   // =========================================================
 
-  // Todos los módulos utilizan la ruta base
-  // correspondiente al panel actual.
+  // adminBasePath identifica el panel actual:
   //
-  // available indica si la página ya está construida.
-  // superAdminOnly identifica las opciones exclusivas.
+  // admin       -> /admin
+  // super_admin -> /super-admin
+  //
+  // Los módulos compartidos utilizan la misma
+  // estructura de rutas para ambos paneles.
+  //
+  // Los módulos exclusivos del superadministrador
+  // se agrupan dentro de Sistema.
   //
   // IMPORTANTE:
-  // Estas propiedades controlan únicamente la interfaz.
-  // El backend deberá validar los permisos reales.
+  // La disponibilidad controla únicamente la interfaz.
+  // ProtectedRoute y el backend deben validar el acceso.
 
   const navigationGroups = [
 
@@ -159,7 +165,6 @@ function AdminSidebar({ isOpen, onClose }) {
       ],
     },
 
-
     // -------------------------------------------------------
     // COMUNIDAD
     // -------------------------------------------------------
@@ -172,7 +177,7 @@ function AdminSidebar({ isOpen, onClose }) {
           label: "Eventos",
           path: `${adminBasePath}/eventos`,
           icon: CalendarDays,
-          available: false,
+          available: true,
         },
         {
           label: "Peticiones de oración",
@@ -188,7 +193,6 @@ function AdminSidebar({ isOpen, onClose }) {
         },
       ],
     },
-
 
     // -------------------------------------------------------
     // CONTENIDOS
@@ -213,7 +217,6 @@ function AdminSidebar({ isOpen, onClose }) {
       ],
     },
 
-
     // -------------------------------------------------------
     // FINANZAS
     // -------------------------------------------------------
@@ -233,16 +236,15 @@ function AdminSidebar({ isOpen, onClose }) {
           path: `${adminBasePath}/finanzas/gastos`,
           icon: ReceiptText,
 
-          // Actualmente está implementado
-          // en el panel del superadministrador.
+          // Actualmente la ruta está implementada
+          // solamente en el panel super_admin.
           available: isSuperAdminPanel,
         },
       ],
     },
 
-
     // -------------------------------------------------------
-    // ADMINISTRACIÓN
+    // ADMINISTRACIÓN - MÓDULOS COMPARTIDOS
     // -------------------------------------------------------
 
     {
@@ -250,58 +252,78 @@ function AdminSidebar({ isOpen, onClose }) {
 
       items: [
         {
+          label: "Gestión de usuarios",
+
+          path: `${adminBasePath}/sistema/usuarios`,
+
+          icon: UsersRound,
+
+          available: true,
+        },
+        {
           label: "Registrar usuario",
-          path: `${adminBasePath}/usuarios/registrar`,
+
+          path: `${adminBasePath}/sistema/registrar-usuario`,
+
           icon: UserPlus,
-          available: false,
+
+          available: true,
         },
         {
           label: "Historial de actividad",
+
           path: `${adminBasePath}/historial`,
+
           icon: History,
-          available: false,
+
+          available: true,
         },
       ],
     },
 
-
     // -------------------------------------------------------
-    // SISTEMA - SOLO SUPER ADMIN
+    // SISTEMA - EXCLUSIVO SUPERADMINISTRADOR
     // -------------------------------------------------------
 
     {
       title: "Sistema",
 
+      // Este grupo no se muestra en /admin.
       superAdminOnly: true,
 
       items: [
         {
-          label: "Gestión de usuarios",
-          path: `${adminBasePath}/sistema/usuarios`,
-          icon: UsersRound,
-          available: false,
-        },
-        {
           label: "Administradores",
-          path: `${adminBasePath}/administradores`,
+
+          path: `${adminBasePath}/sistema/administradores`,
+
           icon: ShieldCheck,
-          available: false,
+
+          available: true,
         },
         {
           label: "Roles y permisos",
-          path: `${adminBasePath}/sistema/roles`,
+
+          path: `${adminBasePath}/sistema/roles-permisos`,
+
           icon: UserRoundCog,
-          available: false,
+
+          available: true,
         },
         {
           label: "Configuración",
-          path: `${adminBasePath}/configuracion`,
+
+          path: `${adminBasePath}/sistema/configuracion`,
+
           icon: Settings,
-          available: false,
+
+          available: true,
         },
       ],
     },
+
   ];
+
 
 
   // =========================================================
@@ -331,9 +353,8 @@ function AdminSidebar({ isOpen, onClose }) {
 
   return (
     <aside
-      className={`admin-sidebar ${
-        isOpen ? "admin-sidebar--open" : ""
-      }`}
+      className={`admin-sidebar ${isOpen ? "admin-sidebar--open" : ""
+        }`}
     >
 
       {/* ================================================= */}
@@ -466,10 +487,9 @@ function AdminSidebar({ isOpen, onClose }) {
                       end={item.end}
                       onClick={onClose}
                       className={({ isActive }) =>
-                        `admin-sidebar__link ${
-                          isActive
-                            ? "admin-sidebar__link--active"
-                            : ""
+                        `admin-sidebar__link ${isActive
+                          ? "admin-sidebar__link--active"
+                          : ""
                         }`
                       }
                     >

@@ -1,0 +1,702 @@
+
+/* ========================================================= */
+/* PÁGINA PRINCIPAL */
+/* ========================================================= */
+
+.events-management-page {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 0 35px;
+}
+
+/* ========================================================= */
+/* VOLVER AL PANEL */
+/* ========================================================= */
+
+.events-management-page__navigation {
+  display: flex;
+}
+
+.events-management-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 0;
+  color: #647784;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.events-management-page__back:hover {
+  color: #b96c56;
+  transform: translateX(-3px);
+}
+
+.events-management-page__back:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.events-management-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.events-management-page__heading {
+  min-width: 0;
+}
+
+.events-management-page__eyebrow {
+  display: inline-block;
+  margin-bottom: 11px;
+  color: #b96c56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.events-management-page__header h1 {
+  margin: 0 0 10px;
+  color: #203c4b;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 750;
+}
+
+.events-management-page__header p {
+  max-width: 680px;
+  margin: 0;
+  color: #70818c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ========================================================= */
+/* BOTÓN NUEVO EVENTO */
+/* ========================================================= */
+
+.events-management-page__create {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 14px 20px;
+  color: #ffffff;
+  background: #b96c56;
+  border: none;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.events-management-page__create:hover:not(:disabled) {
+  background: #a65b47;
+  transform: translateY(-2px);
+}
+
+.events-management-page__create:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* AVISO INFORMATIVO */
+/* ========================================================= */
+
+.events-management-page__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 21px;
+  color: #527487;
+  background: #eef5f8;
+  border: 1px solid #dbe9ef;
+  border-radius: 14px;
+}
+
+.events-management-page__notice > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.events-management-page__notice strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #355e72;
+  font-size: 13px;
+}
+
+.events-management-page__notice p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ========================================================= */
+/* TARJETAS DE RESUMEN */
+/* ========================================================= */
+
+.events-management-page__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.events-management-summary-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  padding: 21px;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(25, 48, 61, 0.035);
+}
+
+.events-management-summary-card__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  color: #b96c56;
+  background: #fbefeb;
+  border-radius: 13px;
+}
+
+.events-management-summary-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.events-management-summary-card span {
+  color: #748894;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.events-management-summary-card strong {
+  color: #244252;
+  font-size: 27px;
+  line-height: 1.2;
+}
+
+.events-management-summary-card small {
+  color: #9aa7ae;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ========================================================= */
+/* LISTADO DE EVENTOS */
+/* ========================================================= */
+
+.events-management-page__listing {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(25, 48, 61, 0.035);
+}
+
+.events-management-page__listing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px;
+}
+
+.events-management-page__listing-header h2 {
+  margin: 0 0 7px;
+  color: #254252;
+  font-size: 18px;
+}
+
+.events-management-page__listing-header p {
+  margin: 0;
+  color: #81919b;
+  font-size: 12px;
+}
+
+.events-management-page__count {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 13px;
+  color: #547587;
+  background: #eef5f7;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ========================================================= */
+/* BUSCADOR */
+/* ========================================================= */
+
+.events-management-page__toolbar {
+  padding: 0 24px 23px;
+}
+
+.events-management-page__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 520px;
+  padding: 12px 15px;
+  color: #82939e;
+  background: #f8fafb;
+  border: 1px solid #e4ebee;
+  border-radius: 11px;
+}
+
+.events-management-page__search:focus-within {
+  border-color: #b96c56;
+}
+
+.events-management-page__search input {
+  width: 100%;
+  min-width: 0;
+  color: #294656;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 13px;
+}
+
+.events-management-page__search input::placeholder {
+  color: #9aa7af;
+}
+
+/* ========================================================= */
+/* TABLA */
+/* ========================================================= */
+
+.events-management-page__table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.events-management-page__table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.events-management-page__table thead {
+  background: #f8fafb;
+}
+
+.events-management-page__table th {
+  padding: 16px 20px;
+  color: #718592;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.events-management-page__table td {
+  padding: 18px 20px;
+  color: #647b88;
+  border-top: 1px solid #edf1f3;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.events-management-page__table tbody tr:hover {
+  background: #fbfcfd;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN DEL EVENTO */
+/* ========================================================= */
+
+.events-management-page__event {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.events-management-page__event strong {
+  color: #2a4757;
+  font-size: 13px;
+}
+
+.events-management-page__event span {
+  color: #8a9aa4;
+  font-size: 11px;
+}
+
+/* ========================================================= */
+/* FECHA Y HORA */
+/* ========================================================= */
+
+.events-management-page__datetime {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.events-management-page__datetime span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.events-management-page__datetime svg {
+  color: #9aa9b1;
+}
+
+/* ========================================================= */
+/* MODALIDAD */
+/* ========================================================= */
+
+.events-management-page__modality {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.events-management-page__modality svg {
+  color: #8ca0ab;
+}
+
+/* ========================================================= */
+/* FRECUENCIA */
+/* ========================================================= */
+
+.events-management-page__frequency {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  color: #647a86;
+  background: #f0f3f5;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.events-management-page__frequency--recurring {
+  color: #527b8e;
+  background: #eaf3f7;
+}
+
+/* ========================================================= */
+/* ESTADO DE PUBLICACIÓN */
+/* ========================================================= */
+
+.events-management-page__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.events-management-page__status--published {
+  color: #46816c;
+  background: #eaf6ee;
+}
+
+.events-management-page__status--draft {
+  color: #a77740;
+  background: #fff3e4;
+}
+
+/* ========================================================= */
+/* ASISTENCIA */
+/* ========================================================= */
+
+.events-management-page__attendance {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #617d8b;
+  font-weight: 700;
+}
+
+.events-management-page__attendance svg {
+  color: #8da2ae;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.events-management-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 55px 20px;
+  color: #9aabb4;
+  text-align: center;
+}
+
+.events-management-page__empty h3 {
+  margin: 14px 0 8px;
+  color: #355262;
+  font-size: 16px;
+}
+
+.events-management-page__empty p {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* ========================================================= */
+/* NOTA INFERIOR */
+/* ========================================================= */
+
+.events-management-page__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 19px 21px;
+  color: #647e8d;
+  background: #f6f9fa;
+  border: 1px solid #e8eef0;
+  border-radius: 14px;
+}
+
+.events-management-page__footer > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #b96c56;
+}
+
+.events-management-page__footer strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #355262;
+  font-size: 13px;
+}
+
+.events-management-page__footer p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1200px) {
+  .events-management-page__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .events-management-page__header {
+    flex-direction: column;
+  }
+
+  .events-management-page__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .events-management-page__create {
+    width: 100%;
+  }
+
+  .events-management-page__listing-header,
+  .events-management-page__toolbar {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+}
+
+/* ========================================================= */
+/* BOTÓN EDITAR EVENTO */
+/* ========================================================= */
+
+.events-management-page__edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  color: #a75f4b;
+  background: #fbefeb;
+
+  border: 1px solid #f1ded8;
+  border-radius: 9px;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.events-management-page__edit-button:hover {
+  color: #ffffff;
+  background: #b96c56;
+  transform: translateY(-1px);
+}
+
+.events-management-page__edit-button:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* FILTROS AVANZADOS */
+/* ========================================================= */
+
+.events-management-page__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.events-management-page__filters select {
+  min-height: 42px;
+  padding: 10px 13px;
+
+  color: #405c6b;
+  background: #ffffff;
+
+  border: 1px solid #dfe7eb;
+  border-radius: 10px;
+
+  font: inherit;
+  font-size: 12px;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.events-management-page__filters select:focus {
+  border-color: #b96c56;
+  box-shadow: 0 0 0 3px rgba(185, 108, 86, 0.1);
+}
+
+.events-management-page__clear-filters {
+  min-height: 42px;
+  padding: 10px 15px;
+
+  color: #a75f4b;
+  background: #fbefeb;
+
+  border: 1px solid #f1ded8;
+  border-radius: 10px;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.events-management-page__clear-filters:hover {
+  background: #f5dfd8;
+}
+
+@media (max-width: 650px) {
+  .events-management-page__filters {
+    width: 100%;
+  }
+
+  .events-management-page__filters select {
+    flex: 1 1 150px;
+    min-width: 0;
+  }
+
+  .events-management-page__clear-filters {
+    flex: 1 1 100%;
+  }
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR DE ACCIONES */
+/* ========================================================= */
+
+.events-management-page__actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+/* ========================================================= */
+/* BOTÓN VER DETALLES */
+/* ========================================================= */
+
+.events-management-page__details-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  color: #294b5c;
+  background: #edf3f6;
+
+  border: 1px solid #dce8ee;
+  border-radius: 9px;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.events-management-page__details-button:hover {
+  color: #ffffff;
+  background: #203c4b;
+  transform: translateY(-1px);
+}
+
+.events-management-page__details-button:focus-visible {
+  outline: 2px solid #203c4b;
+  outline-offset: 3px;
+}

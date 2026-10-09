@@ -38,6 +38,7 @@ import cookieParser from "cookie-parser";
 // - Administradores.
 // - Superadministradores.
 import loginRoutes from "./routes/loginRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 
 // Creamos la aplicación de Express.
@@ -284,22 +285,27 @@ app.use(
 );
 
 
+
 // =========================================================
 // RUTAS ADMINISTRATIVAS
 // =========================================================
 
-// Más adelante registraremos aquí
-// las rutas administrativas protegidas.
+// Registramos las rutas de gestión de usuarios.
 //
-// Ejemplo futuro:
+// Estas rutas permiten al superadministrador:
 //
-// import adminRoutes
-//   from "./routes/adminRoutes.js";
+// - Consultar los usuarios registrados.
+// - Consultar las estadísticas de usuarios.
 //
-// app.use(
-//   "/api/admin",
-//   adminRoutes
-// );
+// El archivo userRoutes.js utiliza los middlewares
+// authenticateUser y authorizeRoles para comprobar
+// la autenticación y los permisos correspondientes.
+
+app.use(
+  "/api/users",
+  userRoutes
+);
+
 
 
 // =========================================================

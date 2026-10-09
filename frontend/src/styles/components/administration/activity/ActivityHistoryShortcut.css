@@ -1,0 +1,104 @@
+
+/* ========================================================= */
+/* TARJETA DE ACCESO AL HISTORIAL */
+/* ========================================================= */
+
+.activity-shortcut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 27px;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(25, 48, 61, 0.035);
+}
+
+.activity-shortcut__information {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.activity-shortcut__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  color: #b96c56;
+  background: #fbf0ec;
+  border-radius: 14px;
+}
+
+.activity-shortcut__eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #b96c56;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.activity-shortcut h2 {
+  margin: 0 0 9px;
+  color: #244252;
+  font-size: 19px;
+}
+
+.activity-shortcut p {
+  max-width: 620px;
+  margin: 0 0 13px;
+  color: #758995;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.activity-shortcut__readonly {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #668578;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.activity-shortcut__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 17px;
+  color: #ffffff;
+  background: #294a5b;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.activity-shortcut__link:hover {
+  color: #ffffff;
+  background: #b96c56;
+  transform: translateY(-2px);
+}
+
+.activity-shortcut__link:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .activity-shortcut {
+    padding: 20px;
+  }
+
+  .activity-shortcut__link {
+    width: 100%;
+  }
+}

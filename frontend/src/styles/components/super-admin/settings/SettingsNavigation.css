@@ -1,0 +1,113 @@
+
+.settings-navigation {
+  align-self: start;
+  padding: 23px 15px;
+  background: #ffffff;
+  border: 1px solid #e5ebee;
+  border-radius: 19px;
+  box-shadow: 0 5px 22px rgba(25, 48, 61, 0.035);
+}
+
+.settings-navigation__heading {
+  padding: 0 12px 20px;
+}
+
+.settings-navigation__heading span {
+  color: #b96c56;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.settings-navigation__heading h2 {
+  margin: 7px 0 0;
+  color: #203c4b;
+  font-size: 18px;
+}
+
+.settings-navigation__items {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.settings-navigation__item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 14px 12px;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.settings-navigation__item:hover {
+  background: #f5f8f9;
+}
+
+.settings-navigation__item--active {
+  background: #fbf1ed;
+  border-color: #f0ddd5;
+}
+
+.settings-navigation__item--active:hover {
+  background: #fbf1ed;
+}
+
+.settings-navigation__icon {
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  color: #597887;
+  background: #edf3f5;
+  border-radius: 11px;
+}
+
+.settings-navigation__item--active
+.settings-navigation__icon {
+  color: #b96c56;
+  background: #f6e2da;
+}
+
+.settings-navigation__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.settings-navigation__content strong {
+  color: #2b4757;
+  font-size: 13px;
+}
+
+.settings-navigation__content small {
+  color: #83919a;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-navigation__item:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .settings-navigation__items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .settings-navigation__items {
+    grid-template-columns: 1fr;
+  }
+}

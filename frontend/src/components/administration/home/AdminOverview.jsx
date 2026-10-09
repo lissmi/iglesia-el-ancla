@@ -60,7 +60,7 @@
 
      path: "/eventos",
 
-     available: false,
+     available: true,
    },
 
 
