@@ -5,7 +5,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del modal.
-import "../../../styles/components/super-admin/expenses/ExpenseFormModal.css";
+import "../../../styles/components/administration/expenses/ExpenseFormModal.css";
 
 
 // Creamos el modal de registro de gastos.

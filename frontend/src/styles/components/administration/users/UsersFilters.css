@@ -1,0 +1,275 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.users-filters {
+  width: 100%;
+
+  padding: 22px;
+
+  background-color: #f8fbfc;
+
+  border: 1px solid #e1ebef;
+  border-radius: 16px;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.users-filters__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.users-filters__heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #315b70;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.users-filters__heading svg {
+  color: #27899e;
+}
+
+
+/* ========================================================= */
+/* BOTÓN LIMPIAR FILTROS */
+/* ========================================================= */
+
+.users-filters__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 36px;
+  padding: 8px 12px;
+
+  color: #28778b;
+  background-color: #ffffff;
+
+  border: 1px solid #d7e6eb;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.users-filters__clear:hover:not(:disabled) {
+  color: #17677d;
+  background-color: #eaf6f9;
+  border-color: #b8dce4;
+}
+
+.users-filters__clear:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.users-filters__clear:focus-visible {
+  outline: 3px solid #75bbca;
+  outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* DISTRIBUCIÓN DE CONTROLES */
+/* ========================================================= */
+
+.users-filters__grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(150px, 1fr)
+    minmax(150px, 1fr);
+
+  gap: 16px;
+}
+
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.users-filters__field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.users-filters__field label {
+  color: #4c6879;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* BUSCADOR */
+/* ========================================================= */
+
+.users-filters__search {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+}
+
+.users-filters__search svg {
+  position: absolute;
+  left: 14px;
+
+  color: #7d9ba9;
+
+  pointer-events: none;
+}
+
+.users-filters__search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+
+  padding: 11px 14px 11px 43px;
+
+  color: #29485a;
+  background-color: #ffffff;
+
+  border: 1px solid #d8e5e9;
+  border-radius: 11px;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.users-filters__search input::placeholder {
+  color: #9aabb4;
+}
+
+.users-filters__search input:focus {
+  border-color: #58a5b6;
+  box-shadow: 0 0 0 3px rgba(88, 165, 182, 0.13);
+}
+
+
+/* ========================================================= */
+/* SELECTORES */
+/* ========================================================= */
+
+.users-filters__field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+
+  padding: 10px 12px;
+
+  color: #29485a;
+  background-color: #ffffff;
+
+  border: 1px solid #d8e5e9;
+  border-radius: 11px;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  cursor: pointer;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.users-filters__field select:focus {
+  border-color: #58a5b6;
+  box-shadow: 0 0 0 3px rgba(88, 165, 182, 0.13);
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .users-filters__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .users-filters__field--search {
+    grid-column: 1 / -1;
+  }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - CELULARES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .users-filters {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .users-filters__header {
+    align-items: flex-start;
+  }
+
+  .users-filters__grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .users-filters__field--search {
+    grid-column: auto;
+  }
+
+  .users-filters__search input,
+  .users-filters__field select {
+    font-size: 14px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .users-filters__clear,
+  .users-filters__search input,
+  .users-filters__field select {
+    transition: none;
+  }
+
+}

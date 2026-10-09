@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseSummary.css";
+import "../../../styles/components/administration/expenses/ExpenseSummary.css";
 
 // Creamos el componente encargado de mostrar
 // los principales indicadores relacionados con los gastos.

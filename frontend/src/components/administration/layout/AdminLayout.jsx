@@ -13,7 +13,7 @@ import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 
 // Importamos los estilos exclusivos del layout.
-import "../../../styles/components/super-admin/layout/AdminLayout.css";
+import "../../../styles/components/administration/layout/AdminLayout.css";
 
 
 // Creamos la estructura general del área administrativa.

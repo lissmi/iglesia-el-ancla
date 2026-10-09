@@ -1,0 +1,289 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.users-summary {
+  width: 100%;
+
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5edf0;
+  border-radius: 20px;
+
+  box-shadow: 0 5px 22px rgba(22, 54, 73, 0.035);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.users-summary__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.users-summary__title {
+  margin: 0 0 7px;
+
+  color: #193b4e;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.users-summary__description {
+  margin: 0;
+
+  color: #7b8d98;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE ESTADÍSTICAS */
+/* ========================================================= */
+
+.users-summary__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+
+/* ========================================================= */
+/* TARJETA */
+/* ========================================================= */
+
+.users-summary-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 175px;
+
+  padding: 20px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5edf0;
+  border-radius: 16px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.users-summary-card:hover {
+  border-color: #c7e0e7;
+
+  box-shadow: 0 8px 24px rgba(23, 67, 87, 0.07);
+
+  transform: translateY(-2px);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO DE TARJETA */
+/* ========================================================= */
+
+.users-summary-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.users-summary-card__label {
+  color: #657d8b;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.users-summary-card__icon {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 39px;
+  height: 39px;
+
+  border-radius: 12px;
+}
+
+
+/* ========================================================= */
+/* VALOR */
+/* ========================================================= */
+
+.users-summary-card__value {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #193b4e;
+  font-size: 31px;
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: -0.8px;
+
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ========================================================= */
+/* DESCRIPCIÓN */
+/* ========================================================= */
+
+.users-summary-card__description {
+  margin: auto 0 0;
+
+  color: #8799a3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* VARIANTE - TOTAL DE USUARIOS */
+/* ========================================================= */
+
+.users-summary-card--total .users-summary-card__icon {
+  color: #287d99;
+  background-color: #e5f2f7;
+}
+
+
+/* ========================================================= */
+/* VARIANTE - USUARIOS ACTIVOS */
+/* ========================================================= */
+
+.users-summary-card--active .users-summary-card__icon {
+  color: #39866c;
+  background-color: #e6f4ed;
+}
+
+
+/* ========================================================= */
+/* VARIANTE - USUARIOS BLOQUEADOS */
+/* ========================================================= */
+
+.users-summary-card--blocked .users-summary-card__icon {
+  color: #b56c62;
+  background-color: #f9edeb;
+}
+
+
+/* ========================================================= */
+/* VARIANTE - ADMINISTRADORES */
+/* ========================================================= */
+
+.users-summary-card--administrators .users-summary-card__icon {
+  color: #776aab;
+  background-color: #f0edfa;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .users-summary__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - CELULARES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .users-summary {
+    padding: 22px 18px;
+    border-radius: 17px;
+  }
+
+  .users-summary__title {
+    font-size: 17px;
+  }
+
+  .users-summary__grid {
+    gap: 12px;
+  }
+
+  .users-summary-card {
+    min-height: 155px;
+    padding: 15px;
+  }
+
+  .users-summary-card__header {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .users-summary-card__label {
+    font-size: 11px;
+  }
+
+  .users-summary-card__icon {
+    width: 33px;
+    height: 33px;
+  }
+
+  .users-summary-card__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .users-summary-card__value {
+    font-size: 26px;
+  }
+
+  .users-summary-card__description {
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 380px) {
+
+  .users-summary__grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .users-summary-card {
+    transition: none;
+  }
+
+  .users-summary-card:hover {
+    transform: none;
+  }
+
+}

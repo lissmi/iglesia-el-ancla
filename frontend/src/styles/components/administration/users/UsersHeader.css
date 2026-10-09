@@ -1,0 +1,222 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 32px 36px;
+  margin-bottom: 30px;
+
+  background: linear-gradient(
+    125deg,
+    #ffffff 0%,
+    #f0f8fa 100%
+  );
+
+  border: 1px solid #e1edf0;
+  border-radius: 22px;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+.users-header__content {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* ========================================================= */
+/* IDENTIFICADOR */
+/* ========================================================= */
+
+.users-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 14px;
+
+  color: #25849a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* TÍTULO Y DESCRIPCIÓN */
+/* ========================================================= */
+
+.users-header__title {
+  margin: 0 0 12px;
+
+  color: #18384b;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.users-header__description {
+  max-width: 670px;
+  margin: 0;
+
+  color: #647886;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* ACCIONES DEL ENCABEZADO */
+/* ========================================================= */
+
+.users-header__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+
+/* ========================================================= */
+/* BOTÓN VOLVER */
+/* ========================================================= */
+
+.users-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 42px;
+  padding: 10px 16px;
+
+  color: #28576b;
+  background-color: #ffffff;
+
+  border: 1px solid #d7e6eb;
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.users-header__back:hover {
+  color: #1d7188;
+  background-color: #edf8fa;
+  border-color: #acd6df;
+  transform: translateY(-1px);
+}
+
+.users-header__back:focus-visible {
+  outline: 3px solid #75bbca;
+  outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* ICONO PRINCIPAL */
+/* ========================================================= */
+
+.users-header__icon {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 76px;
+  height: 76px;
+
+  color: #238ca2;
+  background-color: #e2f2f5;
+
+  border: 1px solid #cde8ed;
+  border-radius: 22px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .users-header {
+    padding: 26px;
+  }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - CELULARES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .users-header {
+    align-items: flex-start;
+    gap: 15px;
+
+    padding: 24px 20px;
+    margin-bottom: 22px;
+
+    border-radius: 17px;
+  }
+
+  .users-header__title {
+    font-size: 25px;
+  }
+
+  .users-header__description {
+    font-size: 13px;
+  }
+
+  .users-header__actions {
+    margin-top: 20px;
+  }
+
+  .users-header__icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+  }
+
+  .users-header__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .users-header__back {
+    transition: none;
+  }
+
+  .users-header__back:hover {
+    transform: none;
+  }
+
+}

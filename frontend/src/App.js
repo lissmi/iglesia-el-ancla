@@ -1,649 +1,537 @@
-//frontend/src/App.js
 
-// Importamos las herramientas necesarias
-// para crear y organizar las rutas.
-import {
-  BrowserRouter,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+ // =========================================================
+ // FRONTEND - APP.JS
+ // =========================================================
 
+ // Importamos las herramientas necesarias
+ // para organizar las rutas de la aplicación.
+ import {
+   BrowserRouter,
+   Outlet,
+   Route,
+   Routes,
+ } from "react-router-dom";
 
-// =========================================================
-// COMPONENTES DEL SITIO PÚBLICO
-// =========================================================
 
-// Importamos el encabezado
-// utilizado solamente en el sitio público.
-import Header from "./components/public/Header";
+ // =========================================================
+ // COMPONENTES DEL SITIO PÚBLICO
+ // =========================================================
 
+ import Header from "./components/public/Header";
 
-// Importamos el pie de página
-// utilizado solamente en el sitio público.
-import Footer from "./components/public/Footer";
+ import Footer from "./components/public/Footer";
 
 
-// =========================================================
-// PROTECCIÓN DE RUTAS
-// =========================================================
+ // =========================================================
+ // PROTECCIÓN DE RUTAS
+ // =========================================================
 
-// Importamos el componente encargado
-// de comprobar:
-//
-// - La existencia de una sesión válida.
-// - El usuario autenticado.
-// - El rol autorizado para cada área.
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+ // Comprueba la sesión y los roles autorizados.
+ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
-// =========================================================
-// LAYOUT DEL SUPER ADMINISTRADOR
-// =========================================================
+ // =========================================================
+ // LAYOUT ADMINISTRATIVO COMPARTIDO
+ // =========================================================
 
-// Importamos el layout administrativo
-// utilizado por la sesión del super administrador.
-//
-// Este layout contiene elementos compartidos
-// como:
-//
-// - Sidebar.
-// - Header.
-// - Área de contenido.
-import AdminLayout from "./components/super-admin/layout/AdminLayout";
+ // Contiene el sidebar, el header
+ // y el área de contenido administrativo.
+ import AdminLayout from "./components/administration/layout/AdminLayout";
 
 
-// =========================================================
-// PÁGINAS PÚBLICAS
-// =========================================================
+ // =========================================================
+ // PÁGINAS PÚBLICAS
+ // =========================================================
 
-// Importamos la página principal.
-import Home from "./pages/public/Home";
+ import Home from "./pages/public/Home";
 
+ import About from "./pages/public/About";
 
-// Importamos la página Nosotros.
-import About from "./pages/public/About";
+ import Contact from "./pages/public/Contact";
 
+ import Events from "./pages/public/Events";
 
-// Importamos la página de contacto.
-import Contact from "./pages/public/Contact";
+ import Recommendations from "./pages/public/Recommendations";
 
+ import Resources from "./pages/public/Resources";
 
-// Importamos la página de eventos.
-import Events from "./pages/public/Events";
 
+ // =========================================================
+ // PÁGINAS DE RECURSOS
+ // =========================================================
 
-// Importamos la página
-// de contenidos recomendados.
-import Recommendations from "./pages/public/Recommendations";
+ import BibleStudies from "./pages/public/resources/BibleStudies";
 
+ import PersonalDevotionalGuide from "./pages/public/resources/PersonalDevotionalGuide";
 
-// Importamos la página principal
-// de recursos.
-import Resources from "./pages/public/Resources";
+ import BibleStudyTools from "./pages/public/resources/BibleStudyTools";
 
+ import OldTestamentBooks from "./pages/public/resources/OldTestamentBooks";
 
-// Importamos la página
-// de estudios bíblicos.
-import BibleStudies from "./pages/public/resources/BibleStudies";
+ import NewTestamentBooks from "./pages/public/resources/NewTestamentBooks";
 
+ import BibleBookDetails from "./pages/public/resources/BibleBookDetails";
 
-// Importamos la guía
-// devocional personal.
-import PersonalDevotionalGuide from "./pages/public/resources/PersonalDevotionalGuide";
+ import PrayerGuides from "./pages/public/resources/PrayerGuides";
 
+ import PrayerGuideDetails from "./pages/public/resources/PrayerGuideDetails";
 
-// Importamos la página de herramientas
-// de estudio bíblico.
-import BibleStudyTools from "./pages/public/resources/BibleStudyTools";
+ import DiscipleshipMaterials from "./pages/public/resources/DiscipleshipMaterials";
 
+ import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMaterialDetails";
 
-// Importamos la página de libros
-// del Antiguo Testamento.
-import OldTestamentBooks from "./pages/public/resources/OldTestamentBooks";
+ import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
 
+ import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
 
-// Importamos la página de libros
-// del Nuevo Testamento.
-import NewTestamentBooks from "./pages/public/resources/NewTestamentBooks";
+ import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
 
 
-// Importamos la página reutilizable
-// para mostrar el detalle
-// de un libro bíblico.
-import BibleBookDetails from "./pages/public/resources/BibleBookDetails";
+ // =========================================================
+ // LOGIN PÚBLICO
+ // =========================================================
 
+ import Login from "./pages/public/Login";
 
-// Importamos la página
-// de guías de oración.
-import PrayerGuides from "./pages/public/resources/PrayerGuides";
 
+ // =========================================================
+ // PÁGINAS DE MIEMBROS REGISTRADOS
+ // =========================================================
 
-// Importamos la página reutilizable
-// para mostrar el detalle
-// de una guía.
-import PrayerGuideDetails from "./pages/public/resources/PrayerGuideDetails";
+ // Panel exclusivo de usuarios con rol "member".
+ import MemberDashboard from "./pages/member/MemberDashboard";
 
 
-// Importamos la página
-// de materiales de discipulado.
-import DiscipleshipMaterials from "./pages/public/resources/DiscipleshipMaterials";
+ // =========================================================
+ // PÁGINAS DEL ADMINISTRADOR
+ // =========================================================
 
+ // Página principal del administrador normal.
+ import AdminHome from "./pages/admin/AdminHome";
 
-// Importamos la página reutilizable
-// para mostrar un material
-// de discipulado.
-import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMaterialDetails";
 
+ // =========================================================
+ // PÁGINAS DEL SUPERADMINISTRADOR
+ // =========================================================
 
-// Importamos la página
-// de preguntas frecuentes.
-import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
+ // Página principal del superadministrador.
+ import SuperAdminHome from "./pages/super-admin/SuperAdminHome";
 
 
-// Importamos la página
-// de materiales descargables.
-import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
+ // =========================================================
+ // GESTIÓN DE USUARIOS - SUPERADMINISTRADOR
+ // =========================================================
 
+ // Nueva página para consultar y administrar
+ // las cuentas registradas en el sistema.
+ import UsersManagement from "./pages/super-admin/system/UsersManagement";
 
-// Importamos la página reutilizable
-// para mostrar un material descargable.
-import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
 
+ // =========================================================
+ // PÁGINAS ADMINISTRATIVAS COMPARTIDAS
+ // =========================================================
 
-// Importamos la página pública
-// de inicio de sesión.
-import Login from "./pages/public/Login";
+ // Página de gestión de gastos.
+ import ExpenseManagement from "./pages/administration/ExpenseManagement";
 
 
-// =========================================================
-// PÁGINAS DE MIEMBROS REGISTRADOS
-// =========================================================
+ // =========================================================
+ // PÁGINA 404
+ // =========================================================
 
-// Importamos el panel principal
-// de los miembros registrados.
-//
-// Esta página será utilizada
-// por usuarios con rol "member".
-import MemberDashboard from "./pages/member/MemberDashboard";
+ import NotFound from "./pages/public/NotFound";
 
 
-// =========================================================
-// PÁGINAS DEL ADMINISTRADOR
-// =========================================================
+ // =========================================================
+ // LAYOUT PÚBLICO
+ // =========================================================
 
-// Importamos la página principal
-// del administrador.
-//
-// Esta página será utilizada
-// por usuarios con rol "admin".
-import AdminHome from "./pages/admin/AdminHome";
+ // Esta estructura es utilizada por las páginas
+ // públicas de Iglesia El Ancla.
+ //
+ // Header: encabezado del sitio.
+ // Outlet: página pública seleccionada.
+ // Footer: pie de página.
 
+ function PublicLayout() {
 
-// =========================================================
-// PÁGINAS DEL SUPER ADMINISTRADOR
-// =========================================================
+   return (
+     <>
 
-// Importamos la página principal
-// del super administrador.
-//
-// Esta página reúne:
-//
-// - Funciones personales como miembro.
-// - Herramientas administrativas.
-// - Funciones exclusivas del super administrador.
-import SuperAdminHome from "./pages/super-admin/SuperAdminHome";
+       <Header />
 
+       <main>
+         <Outlet />
+       </main>
 
-// Importamos la página
-// de gestión de gastos.
-import ExpenseManagement from "./pages/super-admin/ExpenseManagement";
+       <Footer />
 
+     </>
+   );
+ }
 
-// =========================================================
-// PÁGINA 404
-// =========================================================
 
-// Importamos la página que se mostrará
-// cuando una ruta no exista.
-import NotFound from "./pages/public/NotFound";
+ // =========================================================
+ // COMPONENTE PRINCIPAL
+ // =========================================================
 
+ function App() {
 
-// =========================================================
-// LAYOUT PÚBLICO
-// =========================================================
+   return (
 
-// Creamos la estructura compartida
-// por todas las páginas públicas.
-function PublicLayout() {
+     <BrowserRouter>
 
-  // Retornamos la estructura
-  // completa del sitio público.
-  return (
-    <>
+       <div className="app">
 
-      {/* Mostramos el encabezado
-          en todas las páginas públicas. */}
-      <Header />
+         <Routes>
 
 
-      {/* Outlet mostrará la página
-          correspondiente según
-          la dirección visitada. */}
-      <main>
-        <Outlet />
-      </main>
+           {/* ================================================= */}
+           {/* RUTAS PÚBLICAS */}
+           {/* ================================================= */}
 
+           {/* Todas las páginas de esta sección
+               utilizan PublicLayout. */}
 
-      {/* Mostramos el pie de página
-          en todas las páginas públicas. */}
-      <Footer />
+           <Route element={<PublicLayout />}>
 
-    </>
-  );
-}
 
+             {/* Página principal. */}
+             <Route
+               path="/"
+               element={<Home />}
+             />
 
-// =========================================================
-// COMPONENTE PRINCIPAL
-// =========================================================
 
-// Creamos el componente principal
-// de la aplicación.
-function App() {
+             {/* Nosotros. */}
+             <Route
+               path="/nosotros"
+               element={<About />}
+             />
 
-  // Retornamos todo
-  // el sistema de rutas.
-  return (
 
-    // BrowserRouter permite que React
-    // controle la navegación
-    // sin recargar completamente el sitio.
-    <BrowserRouter>
+             {/* Contacto. */}
+             <Route
+               path="/contacto"
+               element={<Contact />}
+             />
 
-      {/* Creamos el contenedor
-          general de la aplicación. */}
-      <div className="app">
 
-        {/* Routes mostrará únicamente
-            la página asociada
-            a la URL actual. */}
-        <Routes>
+             {/* Eventos y actividades. */}
+             <Route
+               path="/eventos"
+               element={<Events />}
+             />
 
 
-          {/* ================================================= */}
-          {/* RUTAS PÚBLICAS */}
-          {/* ================================================= */}
+             {/* Contenidos recomendados. */}
+             <Route
+               path="/recomendados"
+               element={<Recommendations />}
+             />
 
-          {/* Todas estas rutas
-              utilizan PublicLayout. */}
-          <Route
-            element={
-              <PublicLayout />
-            }
-          >
 
+             {/* Página principal de recursos. */}
+             <Route
+               path="/recursos"
+               element={<Resources />}
+             />
 
-            {/* Página principal pública. */}
-            <Route
-              path="/"
-              element={
-                <Home />
-              }
-            />
 
+             {/* Estudios bíblicos. */}
+             <Route
+               path="/recursos/estudios"
+               element={<BibleStudies />}
+             />
 
-            {/* Página Nosotros. */}
-            <Route
-              path="/nosotros"
-              element={
-                <About />
-              }
-            />
 
+             {/* Guía devocional personal. */}
+             <Route
+               path="/recursos/devocional"
+               element={<PersonalDevotionalGuide />}
+             />
 
-            {/* Página de contacto. */}
-            <Route
-              path="/contacto"
-              element={
-                <Contact />
-              }
-            />
 
+             {/* Herramientas de estudio bíblico. */}
+             <Route
+               path="/recursos/biblia"
+               element={<BibleStudyTools />}
+             />
 
-            {/* Página de eventos
-                y actividades. */}
-            <Route
-              path="/eventos"
-              element={
-                <Events />
-              }
-            />
 
+             {/* Libros del Antiguo Testamento. */}
+             <Route
+               path="/recursos/biblia/libros/antiguo-testamento"
+               element={<OldTestamentBooks />}
+             />
 
-            {/* Página de contenidos
-                recomendados. */}
-            <Route
-              path="/recomendados"
-              element={
-                <Recommendations />
-              }
-            />
 
+             {/* Libros del Nuevo Testamento. */}
+             <Route
+               path="/recursos/biblia/libros/nuevo-testamento"
+               element={<NewTestamentBooks />}
+             />
 
-            {/* Página principal
-                de recursos. */}
-            <Route
-              path="/recursos"
-              element={
-                <Resources />
-              }
-            />
 
+             {/* Detalle de un libro bíblico. */}
+             <Route
+               path="/recursos/biblia/libro/:slug"
+               element={<BibleBookDetails />}
+             />
 
-            {/* Estudios bíblicos. */}
-            <Route
-              path="/recursos/estudios"
-              element={
-                <BibleStudies />
-              }
-            />
 
+             {/* Guías de oración. */}
+             <Route
+               path="/recursos/guias-oracion"
+               element={<PrayerGuides />}
+             />
 
-            {/* Guía devocional personal. */}
-            <Route
-              path="/recursos/devocional"
-              element={
-                <PersonalDevotionalGuide />
-              }
-            />
 
+             {/* Detalle de una guía de oración. */}
+             <Route
+               path="/recursos/guias-oracion/:slug"
+               element={<PrayerGuideDetails />}
+             />
 
-            {/* Biblia y herramientas
-                de estudio. */}
-            <Route
-              path="/recursos/biblia"
-              element={
-                <BibleStudyTools />
-              }
-            />
 
+             {/* Materiales de discipulado. */}
+             <Route
+               path="/recursos/discipulado"
+               element={<DiscipleshipMaterials />}
+             />
 
-            {/* Libros del
-                Antiguo Testamento. */}
-            <Route
-              path="/recursos/biblia/libros/antiguo-testamento"
-              element={
-                <OldTestamentBooks />
-              }
-            />
 
+             {/* Detalle de material de discipulado. */}
+             <Route
+               path="/recursos/discipulado/:slug"
+               element={<DiscipleshipMaterialDetails />}
+             />
 
-            {/* Libros del
-                Nuevo Testamento. */}
-            <Route
-              path="/recursos/biblia/libros/nuevo-testamento"
-              element={
-                <NewTestamentBooks />
-              }
-            />
 
+             {/* Preguntas frecuentes. */}
+             <Route
+               path="/recursos/preguntas-frecuentes"
+               element={<FrequentlyAskedQuestions />}
+             />
 
-            {/* Detalle reutilizable
-                de un libro bíblico. */}
-            <Route
-              path="/recursos/biblia/libro/:slug"
-              element={
-                <BibleBookDetails />
-              }
-            />
 
+             {/* Materiales descargables. */}
+             <Route
+               path="/recursos/material-descargable"
+               element={<DownloadableMaterials />}
+             />
 
-            {/* Guías de oración. */}
-            <Route
-              path="/recursos/guias-oracion"
-              element={
-                <PrayerGuides />
-              }
-            />
 
+             {/* Detalle de material descargable. */}
+             <Route
+               path="/recursos/material-descargable/:slug"
+               element={<DownloadableMaterialDetails />}
+             />
 
-            {/* Detalle de una
-                guía de oración. */}
-            <Route
-              path="/recursos/guias-oracion/:slug"
-              element={
-                <PrayerGuideDetails />
-              }
-            />
 
+           </Route>
 
-            {/* Materiales
-                de discipulado. */}
-            <Route
-              path="/recursos/discipulado"
-              element={
-                <DiscipleshipMaterials />
-              }
-            />
 
+           {/* ================================================= */}
+           {/* LOGIN */}
+           {/* ================================================= */}
 
-            {/* Detalle de material
-                de discipulado. */}
-            <Route
-              path="/recursos/discipulado/:slug"
-              element={
-                <DiscipleshipMaterialDetails />
-              }
-            />
+           {/* El login utiliza su propio diseño
+               y permanece fuera de PublicLayout. */}
 
+           <Route
+             path="/login"
+             element={<Login />}
+           />
 
-            {/* Preguntas frecuentes. */}
-            <Route
-              path="/recursos/preguntas-frecuentes"
-              element={
-                <FrequentlyAskedQuestions />
-              }
-            />
-
-
-            {/* Materiales descargables. */}
-            <Route
-              path="/recursos/material-descargable"
-              element={
-                <DownloadableMaterials />
-              }
-            />
-
-
-            {/* Detalle de material
-                descargable. */}
-            <Route
-              path="/recursos/material-descargable/:slug"
-              element={
-                <DownloadableMaterialDetails />
-              }
-            />
-
-
-          </Route>
-
-
-          {/* ================================================= */}
-          {/* LOGIN */}
-          {/* ================================================= */}
 
-          {/* Login permanece fuera
-              del layout público.
-
-              De esta forma conserva
-              su diseño independiente. */}
-          <Route
-            path="/login"
-            element={
-              <Login />
-            }
-          />
-
-
-          {/* ================================================= */}
-          {/* RUTAS PROTEGIDAS - MIEMBRO */}
-          {/* ================================================= */}
-
-          {/*
-            ProtectedRoute consultará:
-
-            GET /api/auth/me
-
-            y solamente permitirá continuar
-            si la cuenta autenticada posee:
-
-            role === "member"
-          */}
-          <Route
-            element={
-              <ProtectedRoute
-                allowedRoles={[
-                  "member",
-                ]}
-              />
-            }
-          >
-
-            {/* Página principal
-                del miembro registrado. */}
-            <Route
-              path="/member"
-              element={
-                <MemberDashboard />
-              }
-            />
-
-          </Route>
-
-
-          {/* ================================================= */}
-          {/* RUTAS PROTEGIDAS - ADMINISTRADOR */}
-          {/* ================================================= */}
-
-          {/*
-            Esta sección solamente
-            puede ser utilizada
-            por cuentas con rol:
-
-            admin
-          */}
-          <Route
-            element={
-              <ProtectedRoute
-                allowedRoles={[
-                  "admin",
-                ]}
-              />
-            }
-          >
-
-            {/* Página principal
-                del administrador. */}
-            <Route
-              path="/admin"
-              element={
-                <AdminHome />
-              }
-            />
-
-          </Route>
-
-
-          {/* ================================================= */}
-          {/* RUTAS PROTEGIDAS - SUPER ADMINISTRADOR */}
-          {/* ================================================= */}
-
-          {/*
-            Esta sección solamente
-            puede ser utilizada
-            por cuentas con rol:
-
-            super_admin
-
-            Primero ProtectedRoute comprueba
-            la sesión y el rol.
-
-            Después AdminLayout crea
-            el sidebar y el header.
-
-            Finalmente Outlet muestra
-            la página interna correspondiente.
-          */}
-          <Route
-            element={
-              <ProtectedRoute
-                allowedRoles={[
-                  "super_admin",
-                ]}
-              />
-            }
-          >
-
-            <Route
-              path="/super-admin"
-              element={
-                <AdminLayout />
-              }
-            >
-
-
-              {/* Página principal
-                  del super administrador. */}
-              <Route
-                index
-                element={
-                  <SuperAdminHome />
-                }
-              />
-
-
-              {/* Gestión de gastos
-                  del super administrador. */}
-              <Route
-                path="finanzas/gastos"
-                element={
-                  <ExpenseManagement />
-                }
-              />
-
-
-            </Route>
-
-          </Route>
-
-
-          {/* ================================================= */}
-          {/* RUTA 404 */}
-          {/* ================================================= */}
-
-          {/* Esta ruta debe permanecer
-              siempre al final.
-
-              Si ninguna ruta anterior coincide,
-              React mostrará NotFound. */}
-          <Route
-            path="*"
-            element={
-              <NotFound />
-            }
-          />
-
-
-        </Routes>
-
-      </div>
-
-    </BrowserRouter>
-  );
-}
-
-
-// Exportamos la aplicación
-// para utilizarla desde index.js.
-export default App;
+           {/* ================================================= */}
+           {/* RUTAS PROTEGIDAS - MIEMBROS */}
+           {/* ================================================= */}
+
+           {/* Solo se permite el acceso a usuarios
+               autenticados con rol "member". */}
+
+           <Route
+             element={
+               <ProtectedRoute
+                 allowedRoles={["member"]}
+               />
+             }
+           >
+
+             {/* Panel principal del miembro. */}
+             <Route
+               path="/member"
+               element={<MemberDashboard />}
+             />
+
+           </Route>
+
+
+           {/* ================================================= */}
+           {/* RUTAS PROTEGIDAS - ADMINISTRADOR */}
+           {/* ================================================= */}
+
+           {/* Solo se permite el acceso a usuarios
+               autenticados con rol "admin". */}
+
+           <Route
+             element={
+               <ProtectedRoute
+                 allowedRoles={["admin"]}
+               />
+             }
+           >
+
+             {/* El administrador utiliza
+                 el layout administrativo compartido. */}
+
+             <Route
+               path="/admin"
+               element={<AdminLayout />}
+             >
+
+               {/* Página principal del administrador. */}
+               <Route
+                 index
+                 element={<AdminHome />}
+               />
+
+
+               {/* Aquí incorporaremos posteriormente
+                   los módulos compartidos:
+
+                   - Registrar usuario.
+                   - Eventos.
+                   - Peticiones de oración.
+                   - Miembros.
+                   - Recursos.
+                   - Otras herramientas administrativas.
+               */}
+
+             </Route>
+
+           </Route>
+
+
+           {/* ================================================= */}
+           {/* RUTAS PROTEGIDAS - SUPERADMINISTRADOR */}
+           {/* ================================================= */}
+
+           {/* Solo se permite el acceso a usuarios
+               autenticados con rol "super_admin".
+
+               ProtectedRoute comprueba el acceso.
+
+               AdminLayout muestra el menú lateral,
+               el encabezado y el contenido interno.
+           */}
+
+           <Route
+             element={
+               <ProtectedRoute
+                 allowedRoles={["super_admin"]}
+               />
+             }
+           >
+
+             <Route
+               path="/super-admin"
+               element={<AdminLayout />}
+             >
+
+
+               {/* ============================================= */}
+               {/* INICIO DEL SUPERADMINISTRADOR */}
+               {/* ============================================= */}
+
+               <Route
+                 index
+                 element={<SuperAdminHome />}
+               />
+
+
+               {/* ============================================= */}
+               {/* GESTIÓN DE GASTOS */}
+               {/* ============================================= */}
+
+               {/* Conservamos la ruta existente
+                   para no afectar su funcionamiento. */}
+
+               <Route
+                 path="finanzas/gastos"
+                 element={<ExpenseManagement />}
+               />
+
+
+               {/* ============================================= */}
+               {/* GESTIÓN DE USUARIOS - NUEVA RUTA */}
+               {/* ============================================= */}
+
+               {/* Página exclusiva del superadministrador.
+
+                   Dirección completa:
+
+                   /super-admin/sistema/usuarios
+
+                   Aquí se mostrarán posteriormente:
+
+                   - Resumen de usuarios.
+                   - Buscador y filtros.
+                   - Tabla de cuentas.
+                   - Herramientas de administración.
+               */}
+
+               <Route
+                 path="sistema/usuarios"
+                 element={<UsersManagement />}
+               />
+
+
+               {/* ============================================= */}
+               {/* PRÓXIMOS MÓDULOS */}
+               {/* ============================================= */}
+
+               {/* Incorporaremos sus rutas cuando
+                   construyamos las páginas:
+
+                   - Registrar usuario.
+                   - Administradores.
+                   - Roles y permisos.
+                   - Configuración.
+               */}
+
+
+             </Route>
+
+           </Route>
+
+
+           {/* ================================================= */}
+           {/* RUTA 404 */}
+           {/* ================================================= */}
+
+           {/* Si ninguna ruta coincide,
+               mostramos la página de error. */}
+
+           <Route
+             path="*"
+             element={<NotFound />}
+           />
+
+
+         </Routes>
+
+       </div>
+
+     </BrowserRouter>
+   );
+ }
+
+
+ // =========================================================
+ // EXPORTACIÓN
+ // =========================================================
+
+ export default App;

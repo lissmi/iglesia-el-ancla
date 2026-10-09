@@ -1,5 +1,5 @@
 // Importamos los estilos específicos del encabezado.
-import "../../../styles/components/super-admin/expenses/ExpenseHeader.css";
+import "../../../styles/components/administration/expenses/ExpenseHeader.css";
 
 
 // Creamos el componente del encabezado.

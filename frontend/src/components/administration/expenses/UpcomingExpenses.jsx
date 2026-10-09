@@ -8,7 +8,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/super-admin/expenses/UpcomingExpenses.css";
+import "../../../styles/components/administration/expenses/UpcomingExpenses.css";
 
 
 // Creamos el componente que mostrará

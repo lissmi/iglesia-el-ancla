@@ -11,7 +11,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseTable.css";
+import "../../../styles/components/administration/expenses/ExpenseTable.css";
 
 
 // Creamos el componente encargado de mostrar

@@ -33,7 +33,7 @@ import api from "../../../services/api";
 
 // Importamos los estilos
 // exclusivos del encabezado.
-import "../../../styles/components/super-admin/layout/AdminHeader.css";
+import "../../../styles/components/administration/layout/AdminHeader.css";
 
 
 // =========================================================

@@ -8,7 +8,7 @@ import {
 
 // Importamos los estilos
 // exclusivos del componente.
-import "../../../styles/components/super-admin/home/MemberOverview.css";
+import "../../../styles/components/administration/home/MemberOverview.css";
 
 
 // Importamos los iconos

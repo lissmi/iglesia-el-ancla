@@ -26,7 +26,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseCharts.css";
+import "../../../styles/components/administration/expenses/ExpenseCharts.css";
 
 
 // Creamos el componente encargado

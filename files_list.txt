@@ -23,13 +23,17 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
   "name": "iglesia-el-ancla-backend",
   "version": "1.0.0",
   "description": "API backend para la PWA de Iglesia El Ancla",
-  "main": "src/server.js",
+
+  "main": "server.js",
+
   "type": "module",
+
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "setup:initial-admin": "node src/scripts/createInitialAdmin.js"
   },
+
   "keywords": [
     "node",
     "express",
@@ -37,8 +41,11 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
     "mongoose",
     "iglesia-el-ancla"
   ],
+
   "author": "",
+
   "license": "ISC",
+
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -51,6 +58,7 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
     "mongoose": "^8.24.2",
     "morgan": "^1.11.0"
   },
+
   "devDependencies": {
     "nodemon": "^3.1.14"
   }
@@ -58,73 +66,116 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\package.json
 
 
 
-
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\server.js
 
-// Cargamos las variables de entorno
-// antes de iniciar el resto del backend.
-import "./src/config/env.js";
+// Cargamos las variables del archivo .env
+// cuando trabajamos localmente.
+//
+// En Vercel las variables ya existen en process.env.
+// dotenv NO reemplaza esas variables por defecto,
+// por lo que también es seguro en producción.
+import "dotenv/config";
+
 
 // Importamos la aplicación de Express.
+//
+// Aquí se encuentran:
+// - CORS.
+// - Helmet.
+// - Rate limiting.
+// - Cookies.
+// - Rutas.
+// - Manejo de errores.
 import app from "./src/app.js";
 
-// Importamos la función que conecta con MongoDB.
+
+// Importamos la función encargada
+// de conectar con MongoDB Atlas.
 import connectDatabase from "./src/config/database.js";
 
 
-// Definimos el puerto del servidor.
+// Detectamos si estamos ejecutando
+// la aplicación en producción.
+const isProduction =
+  process.env.NODE_ENV === "production";
+
+
+// Definimos el puerto.
 //
-// Si no existe PORT en el archivo .env,
-// utilizamos el puerto 5000.
-const PORT = process.env.PORT || 5000;
+// Este puerto se utiliza principalmente
+// durante el desarrollo local.
+const PORT =
+  process.env.PORT || 5000;
 
 
-// Creamos la función principal
-// encargada de iniciar el backend.
-const startServer = async () => {
-
+// Creamos la función encargada
+// de inicializar los servicios necesarios
+// antes de recibir solicitudes.
+const initializeApplication = async () => {
   try {
-    // Primero establecemos
-    // la conexión con MongoDB.
+
+    // Conectamos primero con MongoDB.
     await connectDatabase();
 
 
-    // Iniciamos Express únicamente
-    // si MongoDB se conectó correctamente.
-    app.listen(PORT, () => {
+    // Informamos que la base de datos
+    // quedó disponible correctamente.
+    console.log(
+      "Base de datos inicializada correctamente."
+    );
 
-      // Mostramos la dirección local.
-      console.log(
-        `Servidor de El Ancla funcionando en http://localhost:${PORT}`
+
+    // En desarrollo local debemos abrir
+    // manualmente el puerto con app.listen().
+    //
+    // En Vercel NO lo hacemos porque
+    // Vercel administra el servidor HTTP.
+    if (!isProduction) {
+
+      app.listen(
+        PORT,
+        () => {
+          console.log(
+            `Servidor de El Ancla funcionando en http://localhost:${PORT}`
+          );
+        }
       );
-    });
+    }
+
   } catch (error) {
 
-    // Mostramos un mensaje controlado
-    // si el servidor no puede iniciarse.
+    // Registramos un mensaje controlado
+    // cuando falla la inicialización.
     console.error(
-      "No se pudo iniciar el servidor:",
+      "No se pudo iniciar el backend:",
       error.message
     );
 
 
-    // Cerramos el proceso indicando
-    // que ocurrió un error.
-    process.exit(1);
+    // Propagamos el error para impedir
+    // que el backend funcione sin conexión
+    // a los servicios necesarios.
+    throw error;
   }
 };
 
 
-// Ejecutamos la función principal.
-startServer();
+// Inicializamos MongoDB y el servidor
+// según el entorno actual.
+await initializeApplication();
+
+
+// Exportamos la aplicación Express.
+//
+// Vercel reconoce este export como
+// el servidor HTTP de nuestro servicio backend.
+export default app;
 
 
 
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\app.js
 
-// Garantizamos que las variables de entorno
-// estén disponibles antes de configurar Express.
-import "./config/env.js";
+
 
 
 // Importamos Express para crear la aplicación.
@@ -555,255 +606,289 @@ export default connectDatabase;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\config\env.js
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\middleware\authenticateUser.js
 
-// Importamos dotenv para cargar
-// las variables de entorno.
-import dotenv from "dotenv";
+//backend/src/middleware/authenticateUser.js
 
-// Importamos path para construir
-// una ruta compatible con distintos sistemas.
-import path from "node:path";
+// Importamos Mongoose para validar
+// el identificador contenido en el token.
+import mongoose from "mongoose";
 
-// Importamos fileURLToPath para conocer
-// la ubicación real de este archivo.
+
+// Importamos el modelo común
+// de miembros y administradores.
+import User from "../models/User.js";
+
+
+// Importamos el modelo de sucursales.
+//
+// Lo utilizaremos para obtener
+// la información completa de las
+// sucursales relacionadas con el usuario.
+import Sucursal from "../models/Sucursal.js";
+
+
+// Importamos el nombre de la cookie
+// y el verificador del JWT actual.
 import {
-  fileURLToPath,
-} from "node:url";
-
-
-// Obtenemos la ruta completa
-// del archivo env.js.
-const __filename = fileURLToPath(
-  import.meta.url
-);
-
-
-// Obtenemos la carpeta config.
-const __dirname = path.dirname(
-  __filename
-);
-
-
-// Cargamos el archivo .env ubicado
-// en la raíz de backend.
-const environmentResult = dotenv.config({
-  path: path.resolve(
-    __dirname,
-    "../../.env"
-  ),
-});
-
-
-// Si el archivo no puede cargarse,
-// detenemos el inicio del backend.
-if (environmentResult.error) {
-  throw new Error(
-    `No se pudo cargar el archivo .env: ${environmentResult.error.message}`
-  );
-}
-
-
-
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\middleware\authenticateAdmin.js
-
-// Importamos el modelo de administradores.
-import Admin from "../models/Admin.js";
-
-// Importamos las herramientas necesarias
-// para leer y verificar la sesión.
-import {
-  ADMIN_COOKIE_NAME,
-  verifyAdminToken,
-  getAdminCookieClearOptions,
+  AUTH_COOKIE_NAME,
+  verifyAuthToken,
 } from "../utils/tokenUtils.js";
 
 
-// Creamos el middleware encargado
-// de autenticar administradores.
-const authenticateAdmin = async (
+// =========================================================
+// AUTENTICACIÓN DEL USUARIO
+// =========================================================
+
+// Este middleware comprueba que:
+//
+// - Exista una cookie de sesión.
+// - El JWT sea válido.
+// - El usuario continúe existiendo.
+// - La cuenta permanezca activa.
+// - La sesión no haya sido invalidada.
+// - Exista al menos una sucursal activa.
+// - La sucursal principal continúe activa.
+const authenticateUser = async (
   req,
   res,
   next
 ) => {
 
   try {
-    // Obtenemos el token desde
+
+    // =====================================================
+    // OBTENEMOS EL TOKEN
+    // =====================================================
+
+    // Leemos el JWT desde
     // la cookie HttpOnly.
     const token =
-      req.cookies?.[ADMIN_COOKIE_NAME];
+      req.cookies?.[AUTH_COOKIE_NAME];
 
 
     // Si no existe una cookie,
-    // rechazamos la solicitud.
+    // el usuario no tiene una
+    // sesión autenticada.
     if (!token) {
+
       return res.status(401).json({
         success: false,
+
         message:
-          "Debes iniciar sesión para continuar",
+          "Debes iniciar sesión",
       });
     }
 
 
-    // Verificamos la firma, duración,
-    // emisor y audiencia del JWT.
-    const decodedToken =
-      verifyAdminToken(token);
+    // =====================================================
+    // VERIFICAMOS EL JWT
+    // =====================================================
 
-
-    // Comprobamos que el token
-    // corresponda a un administrador.
-    if (
-      decodedToken.type !== "admin"
-    ) {
-      throw new Error(
-        "El tipo de token no es válido"
+    // Verificamos:
+    //
+    // - Firma.
+    // - Expiración.
+    // - Emisor.
+    // - Audiencia.
+    const decoded =
+      verifyAuthToken(
+        token
       );
+
+
+    // =====================================================
+    // VALIDAMOS EL IDENTIFICADOR
+    // =====================================================
+
+    // El identificador incluido
+    // en el JWT debe ser un
+    // ObjectId válido de MongoDB.
+    if (
+      !mongoose.isObjectIdOrHexString(
+        decoded.sub
+      )
+    ) {
+
+      return res.status(401).json({
+        success: false,
+
+        message:
+          "La sesión no es válida",
+      });
     }
 
 
-    // Obtenemos el identificador almacenado
-    // en el campo estándar subject.
-    const adminId =
-      decodedToken.sub;
+    // =====================================================
+    // BUSCAMOS EL USUARIO ACTUAL
+    // =====================================================
 
-
-    // Buscamos al administrador actual.
-    const admin = await Admin.findById(
-      adminId
-    )
-
-      // Seleccionamos la versión interna
-      // utilizada para invalidar sesiones.
-      .select(
-        "+tokenVersion"
+    // Buscamos nuevamente al usuario
+    // directamente en MongoDB.
+    //
+    // No confiamos solamente
+    // en la información del JWT.
+    const user =
+      await User.findById(
+        decoded.sub
       )
 
-      // Obtenemos sus sucursales autorizadas.
-      .populate({
-        path: "sucursales",
-        select:
-          "code name slug timezone isActive",
-      })
-
-      // Obtenemos su sucursal principal.
-      .populate({
-        path: "sucursalPrincipal",
-        select:
-          "code name slug timezone isActive",
-      });
+        // Seleccionamos tokenVersion
+        // porque normalmente se encuentra
+        // oculto en las consultas.
+        .select(
+          "+tokenVersion"
+        )
 
 
-    // Si la cuenta ya no existe,
-    // rechazamos la sesión.
-    if (!admin) {
-      throw new Error(
-        "El administrador no existe"
-      );
-    }
+        // Obtenemos las sucursales
+        // relacionadas con el usuario.
+        .populate({
+          path:
+            "sucursales",
+
+          model:
+            Sucursal,
+
+          select:
+            "code name slug timezone isActive",
+        })
 
 
-    // Comprobamos que la cuenta
-    // continúe activa.
-    if (!admin.isActive) {
-      throw new Error(
-        "La cuenta se encuentra desactivada"
-      );
-    }
+        // Obtenemos también
+        // la sucursal principal.
+        .populate({
+          path:
+            "sucursalPrincipal",
+
+          model:
+            Sucursal,
+
+          select:
+            "code name slug timezone isActive",
+        });
 
 
-    // Obtenemos la versión actual
-    // almacenada en MongoDB.
-    const currentTokenVersion =
-      admin.tokenVersion ?? 0;
+    // =====================================================
+    // VALIDAMOS LA CUENTA
+    // =====================================================
 
-
-    // Obtenemos la versión
-    // incluida dentro del JWT.
-    const receivedTokenVersion =
-      decodedToken.tokenVersion ?? 0;
-
-
-    // Si las versiones no coinciden,
-    // el token fue invalidado.
+    // Una cuenta eliminada
+    // o desactivada no puede
+    // continuar usando su sesión.
     if (
-      currentTokenVersion !==
-      receivedTokenVersion
+      !user ||
+      !user.isActive
     ) {
-      throw new Error(
-        "La sesión fue invalidada"
-      );
+
+      return res.status(401).json({
+        success: false,
+
+        message:
+          "La sesión no es válida",
+      });
     }
 
 
-    // Dejamos solamente
-    // las sucursales activas.
+    // =====================================================
+    // VALIDAMOS LA VERSIÓN DEL TOKEN
+    // =====================================================
+
+    // tokenVersion permite invalidar
+    // sesiones anteriores cuando:
+    //
+    // - Cambia la contraseña.
+    // - Cambia el rol.
+    // - Se desactiva la cuenta.
+    // - Se cierran todas las sesiones.
+    if (
+      user.tokenVersion !==
+      decoded.tokenVersion
+    ) {
+
+      return res.status(401).json({
+        success: false,
+
+        message:
+          "La sesión no es válida",
+      });
+    }
+
+
+    // =====================================================
+    // VALIDAMOS LAS SUCURSALES
+    // =====================================================
+
+    // Dejamos solamente las sucursales
+    // que actualmente se encuentran activas.
     const activeSucursales =
-      admin.sucursales.filter(
+      user.sucursales.filter(
         (sucursal) =>
+          sucursal &&
           sucursal.isActive
       );
 
 
-    // Comprobamos que exista al menos
-    // una sucursal activa.
+    // El usuario debe mantener
+    // al menos una sucursal activa.
     if (
       activeSucursales.length === 0
     ) {
-      throw new Error(
-        "No existen sucursales activas autorizadas"
-      );
+
+      return res.status(401).json({
+        success: false,
+
+        message:
+          "La sesión no es válida",
+      });
     }
 
 
-    // Comprobamos que la sucursal principal
-    // continúe activa.
+    // La sucursal principal
+    // también debe seguir activa.
     if (
-      !admin.sucursalPrincipal ||
-      !admin.sucursalPrincipal.isActive
+      !user.sucursalPrincipal ||
+      !user.sucursalPrincipal.isActive
     ) {
-      throw new Error(
-        "La sucursal principal no está disponible"
-      );
+
+      return res.status(401).json({
+        success: false,
+
+        message:
+          "La sesión no es válida",
+      });
     }
 
 
     // Reemplazamos el arreglo original
-    // por sus sucursales activas.
-    admin.sucursales =
+    // por las sucursales activas.
+    user.sucursales =
       activeSucursales;
 
 
-    // Guardamos el administrador dentro
-    // de la solicitud actual.
-    //
-    // Las rutas posteriores podrán acceder
-    // a esta información mediante req.admin.
-    req.admin = admin;
+    // =====================================================
+    // GUARDAMOS EL USUARIO AUTENTICADO
+    // =====================================================
+
+    // Dejamos el usuario verificado
+    // disponible para las siguientes
+    // protecciones o controladores.
+    req.user =
+      user;
 
 
-    // Guardamos también la información
-    // decodificada del token.
-    req.adminToken =
-      decodedToken;
+    // Continuamos hacia
+    // la siguiente función.
+    return next();
 
-
-    // Permitimos continuar
-    // hacia la ruta protegida.
-    next();
   } catch (error) {
 
-    // Eliminamos cualquier cookie
-    // inválida, vencida o manipulada.
-    res.clearCookie(
-      ADMIN_COOKIE_NAME,
-      getAdminCookieClearOptions()
-    );
-
-
-    // Retornamos un mensaje genérico.
+    // Un JWT vencido, alterado
+    // o mal formado no autoriza
+    // el acceso.
     return res.status(401).json({
       success: false,
+
       message:
         "La sesión no es válida o ha expirado",
     });
@@ -811,85 +896,8 @@ const authenticateAdmin = async (
 };
 
 
-// Exportamos el middleware.
-export default authenticateAdmin;
-
-
-
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\middleware\authenticateUser.js
-
-// Importamos Mongoose para validar el identificador del token.
-import mongoose from "mongoose";
-
-// Importamos el modelo común de miembros y administradores.
-import User from "../models/User.js";
-
-// Importamos el nombre de la cookie y el verificador del JWT actual.
-import {
-  AUTH_COOKIE_NAME,
-  verifyAuthToken,
-} from "../utils/tokenUtils.js";
-
-// Este middleware comprueba la sesión antes de acceder a datos protegidos.
-const authenticateUser = async (req, res, next) => {
-  try {
-    // Leemos el JWT desde la cookie HttpOnly.
-    const token = req.cookies?.[AUTH_COOKIE_NAME];
-
-    // Rechazamos las peticiones que no tienen sesión.
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "Debes iniciar sesión",
-      });
-    }
-
-    // Verificamos firma, expiración, emisor y audiencia del JWT.
-    const decoded = verifyAuthToken(token);
-
-    // Rechazamos identificadores que no sean ObjectId válidos.
-    if (!mongoose.isObjectIdOrHexString(decoded.sub)) {
-      return res.status(401).json({
-        success: false,
-        message: "La sesión no es válida",
-      });
-    }
-
-    // Buscamos el estado actual de la cuenta en MongoDB.
-    const user = await User.findById(decoded.sub)
-      .select("+tokenVersion");
-
-    // Una cuenta eliminada o desactivada no puede seguir usando su JWT.
-    if (!user || !user.isActive) {
-      return res.status(401).json({
-        success: false,
-        message: "La sesión no es válida",
-      });
-    }
-
-    // Comparamos la versión del JWT con la versión actual de la cuenta.
-    if (user.tokenVersion !== decoded.tokenVersion) {
-      return res.status(401).json({
-        success: false,
-        message: "La sesión no es válida",
-      });
-    }
-
-    // Dejamos el usuario verificado disponible para la siguiente protección.
-    req.user = user;
-
-    // Continuamos hacia la siguiente función de la ruta.
-    return next();
-  } catch (error) {
-    // Un JWT vencido, alterado o mal formado no autoriza el acceso.
-    return res.status(401).json({
-      success: false,
-      message: "La sesión no es válida o ha expirado",
-    });
-  }
-};
-
-// Exportamos el middleware para usarlo en las rutas protegidas.
+// Exportamos el middleware
+// para utilizarlo en rutas protegidas.
 export default authenticateUser;
 
 
@@ -1148,6 +1156,8 @@ export default Sucursal;
 
 
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\models\User.js
+
+//backend/src/models/User.js
 
 // Importamos mongoose para crear
 // el esquema y modelo de los usuarios.
@@ -1812,6 +1822,8 @@ export default User;
 
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\backend\src\routes\loginRoutes.js
 
+//backend/src/routes/loginRoutes.js
+
 // Importamos Router para crear
 // las rutas de inicio de sesión.
 import {
@@ -1855,7 +1867,12 @@ import {
     AUTH_COOKIE_NAME,
     generateAuthToken,
     getAuthCookieOptions,
+    getAuthCookieClearOptions,
 } from "../utils/tokenUtils.js";
+
+// Importamos el middleware que comprueba
+// si existe una sesión válida.
+import authenticateUser from "../middleware/authenticateUser.js";
 
 
 // Creamos el router de inicio de sesión.
@@ -2209,7 +2226,7 @@ router.post(
             const accountIsLocked =
                 user.lockUntil &&
                 user.lockUntil >
-                    currentDate;
+                currentDate;
 
 
             // Rechazamos una cuenta bloqueada
@@ -2348,23 +2365,40 @@ router.post(
             );
 
 
-            // Comprobamos si el usuario
-            // tiene acceso administrativo.
-            const hasAdministrativeAccess =
-                [
-                    "admin",
-                    "super_admin",
-                ].includes(
-                    user.role
-                );
+            // Creamos un mapa cerrado
+            // que relaciona cada rol
+            // con su página principal.
+            //
+            // Esto nos permite diferenciar
+            // correctamente entre:
+            //
+            // - Miembro.
+            // - Administrador.
+            // - Superadministrador.
+            const destinationsByRole = {
+                // Los miembros registrados
+                // ingresan a su área privada.
+                member: "/member",
+
+                // Los administradores normales
+                // ingresan al panel limitado.
+                admin: "/admin",
+
+                // Los superadministradores
+                // ingresan al panel completo.
+                super_admin: "/super-admin",
+            };
 
 
-            // Determinamos la página
-            // sugerida después del acceso.
+            // Obtenemos la ruta correspondiente
+            // al rol actual del usuario.
+            //
+            // El rol proviene de MongoDB,
+            // no del navegador.
             const destination =
-                hasAdministrativeAccess
-                    ? "/admin"
-                    : "/miembros";
+                destinationsByRole[
+                user.role
+                ];
 
 
             // Retornamos solamente
@@ -2427,6 +2461,145 @@ router.post(
             // al middleware global.
             next(error);
         }
+    }
+);
+
+
+// =========================================================
+// SESIÓN ACTUAL
+// =========================================================
+
+// Creamos el endpoint:
+//
+// GET /api/auth/me
+//
+// Esta ruta permite saber qué usuario
+// tiene actualmente una sesión válida.
+//
+// A diferencia del login,
+// aquí no recibimos correo ni contraseña.
+//
+// El usuario se obtiene directamente
+// desde la cookie JWT mediante authenticateUser.
+router.get(
+    "/me",
+
+    // Primero comprobamos
+    // que exista una sesión válida.
+    authenticateUser,
+
+    // Si la sesión es válida,
+    // authenticateUser habrá dejado
+    // el usuario actual dentro de req.user.
+    async (
+        req,
+        res,
+        next
+    ) => {
+
+        try {
+
+            // Obtenemos el usuario
+            // previamente autenticado.
+            const user =
+                req.user;
+
+
+            // Retornamos solamente
+            // la información necesaria
+            // para identificar la sesión.
+            return res.status(200).json({
+                success: true,
+
+                user: {
+
+                    // Identificador.
+                    id:
+                        user._id,
+
+                    // Nombre.
+                    firstName:
+                        user.firstName,
+
+                    // Apellido.
+                    lastName:
+                        user.lastName,
+
+                    // Nombre completo.
+                    fullName:
+                        `${user.firstName} ${user.lastName}`,
+
+                    // Correo electrónico.
+                    email:
+                        user.email,
+
+                    // Rol actual.
+                    role:
+                        user.role,
+
+                    // Indica si el usuario
+                    // debe cambiar su contraseña.
+                    mustChangePassword:
+                        user.mustChangePassword,
+
+                    // Sucursal principal.
+                    sucursalPrincipal:
+                        user.sucursalPrincipal,
+
+                    // Sucursales asignadas.
+                    sucursales:
+                        user.sucursales,
+                },
+            });
+
+        } catch (error) {
+
+            // Enviamos cualquier error inesperado
+            // al middleware global de errores.
+            return next(error);
+        }
+    }
+);
+
+// =========================================================
+// CIERRE DE SESIÓN
+// =========================================================
+
+// Creamos el endpoint:
+//
+// POST /api/auth/logout
+//
+// Esta ruta elimina la cookie
+// que contiene la sesión del usuario.
+//
+// No necesitamos recibir correo,
+// contraseña ni ningún otro dato.
+router.post(
+    "/logout",
+
+    (
+        req,
+        res
+    ) => {
+
+        // Eliminamos la cookie
+        // utilizando las mismas opciones
+        // con las que fue creada.
+        res.clearCookie(
+            AUTH_COOKIE_NAME,
+            getAuthCookieClearOptions()
+        );
+
+
+        // Confirmamos al frontend
+        // que el cierre de sesión
+        // se realizó correctamente.
+        return res.status(200).json({
+            success: true,
+
+            message:
+                "Sesión cerrada correctamente",
+        });
     }
 );
 
@@ -3868,6 +4041,8 @@ File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\package.json
 
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\App.js
 
+//frontend/src/App.js
+
 // Importamos las herramientas necesarias
 // para crear y organizar las rutas.
 import {
@@ -3877,18 +4052,48 @@ import {
   Routes,
 } from "react-router-dom";
 
+
+// =========================================================
+// COMPONENTES DEL SITIO PÚBLICO
+// =========================================================
+
 // Importamos el encabezado
 // utilizado solamente en el sitio público.
 import Header from "./components/public/Header";
+
 
 // Importamos el pie de página
 // utilizado solamente en el sitio público.
 import Footer from "./components/public/Footer";
 
 
-// Importamos el layout general
-// utilizado por las páginas administrativas.
-import AdminLayout from "./components/super-admin/layout/AdminLayout";
+// =========================================================
+// PROTECCIÓN DE RUTAS
+// =========================================================
+
+// Importamos el componente encargado
+// de comprobar:
+//
+// - La existencia de una sesión válida.
+// - El usuario autenticado.
+// - El rol autorizado para cada área.
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+
+
+// =========================================================
+// LAYOUT DEL SUPER ADMINISTRADOR
+// =========================================================
+
+// Importamos el layout administrativo
+// utilizado por la sesión del super administrador.
+//
+// Este layout contiene elementos compartidos
+// como:
+//
+// - Sidebar.
+// - Header.
+// - Área de contenido.
+import AdminLayout from "./components/administration/layout/AdminLayout";
 
 
 // =========================================================
@@ -3898,86 +4103,143 @@ import AdminLayout from "./components/super-admin/layout/AdminLayout";
 // Importamos la página principal.
 import Home from "./pages/public/Home";
 
+
 // Importamos la página Nosotros.
 import About from "./pages/public/About";
+
 
 // Importamos la página de contacto.
 import Contact from "./pages/public/Contact";
 
+
 // Importamos la página de eventos.
 import Events from "./pages/public/Events";
 
-// Importamos la página de contenidos recomendados.
+
+// Importamos la página
+// de contenidos recomendados.
 import Recommendations from "./pages/public/Recommendations";
 
-// Importamos la página principal de recursos.
+
+// Importamos la página principal
+// de recursos.
 import Resources from "./pages/public/Resources";
 
-// Importamos la página de estudios bíblicos.
+
+// Importamos la página
+// de estudios bíblicos.
 import BibleStudies from "./pages/public/resources/BibleStudies";
 
-// Importamos la guía devocional personal.
+
+// Importamos la guía
+// devocional personal.
 import PersonalDevotionalGuide from "./pages/public/resources/PersonalDevotionalGuide";
 
-// Importamos la página de herramientas de estudio bíblico.
+
+// Importamos la página de herramientas
+// de estudio bíblico.
 import BibleStudyTools from "./pages/public/resources/BibleStudyTools";
 
-// Importamos la página de libros del Antiguo Testamento.
+
+// Importamos la página de libros
+// del Antiguo Testamento.
 import OldTestamentBooks from "./pages/public/resources/OldTestamentBooks";
 
-// Importamos la página de libros del Nuevo Testamento.
+
+// Importamos la página de libros
+// del Nuevo Testamento.
 import NewTestamentBooks from "./pages/public/resources/NewTestamentBooks";
 
+
 // Importamos la página reutilizable
-// para mostrar el detalle de un libro bíblico.
+// para mostrar el detalle
+// de un libro bíblico.
 import BibleBookDetails from "./pages/public/resources/BibleBookDetails";
 
-// Importamos la página de guías de oración.
+
+// Importamos la página
+// de guías de oración.
 import PrayerGuides from "./pages/public/resources/PrayerGuides";
 
+
 // Importamos la página reutilizable
-// para mostrar el detalle de una guía.
+// para mostrar el detalle
+// de una guía.
 import PrayerGuideDetails from "./pages/public/resources/PrayerGuideDetails";
 
-// Importamos la página de materiales de discipulado.
+
+// Importamos la página
+// de materiales de discipulado.
 import DiscipleshipMaterials from "./pages/public/resources/DiscipleshipMaterials";
 
+
 // Importamos la página reutilizable
-// para mostrar un material de discipulado.
+// para mostrar un material
+// de discipulado.
 import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMaterialDetails";
 
-// Importamos la página de preguntas frecuentes.
+
+// Importamos la página
+// de preguntas frecuentes.
 import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
 
-// Importamos la página de materiales descargables.
+
+// Importamos la página
+// de materiales descargables.
 import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
+
 
 // Importamos la página reutilizable
 // para mostrar un material descargable.
 import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
 
-// Importamos la página pública de inicio de sesión.
+
+// Importamos la página pública
+// de inicio de sesión.
 import Login from "./pages/public/Login";
 
 
 // =========================================================
-// PÁGINAS DE USUARIOS REGISTRADOS
+// PÁGINAS DE MIEMBROS REGISTRADOS
 // =========================================================
 
-// Más adelante importaremos aquí
-// las páginas destinadas a los miembros registrados.
+// Importamos el panel principal
+// de los miembros registrados.
+//
+// Esta página será utilizada
+// por usuarios con rol "member".
+import MemberDashboard from "./pages/member/MemberDashboard";
 
 
 // =========================================================
-// PÁGINAS ADMINISTRATIVAS
+// PÁGINAS DEL ADMINISTRADOR
 // =========================================================
 
+// Importamos la página principal
+// del administrador.
+//
+// Esta página será utilizada
+// por usuarios con rol "admin".
+import AdminHome from "./pages/admin/AdminHome";
 
-// Importamos la página principal del administrador.
-import AdminDashboard from "./pages/super-admin/AdminDashboard";
 
-// Importamos la página de gestión de gastos.
-import ExpenseManagement from "./pages/super-admin/ExpenseManagement";
+// =========================================================
+// PÁGINAS DEL SUPER ADMINISTRADOR
+// =========================================================
+
+// Importamos la página principal
+// del super administrador.
+//
+// Esta página reúne:
+//
+// - Funciones personales como miembro.
+// - Herramientas administrativas.
+// - Funciones exclusivas del super administrador.
+import SuperAdminHome from "./pages/super-admin/SuperAdminHome";
+
+
+// Importamos la página compartida de gestión de gastos.
+import ExpenseManagement from "./pages/administration/ExpenseManagement";
 
 
 // =========================================================
@@ -3985,7 +4247,7 @@ import ExpenseManagement from "./pages/super-admin/ExpenseManagement";
 // =========================================================
 
 // Importamos la página que se mostrará
-// cuando una ruta pública no exista.
+// cuando una ruta no exista.
 import NotFound from "./pages/public/NotFound";
 
 
@@ -3997,20 +4259,26 @@ import NotFound from "./pages/public/NotFound";
 // por todas las páginas públicas.
 function PublicLayout() {
 
-  // Retornamos la estructura completa del sitio público.
+  // Retornamos la estructura
+  // completa del sitio público.
   return (
     <>
 
-      {/* Mostramos el encabezado en todas las páginas públicas. */}
+      {/* Mostramos el encabezado
+          en todas las páginas públicas. */}
       <Header />
 
-      {/* Outlet mostrará la página correspondiente
-          según la dirección visitada por el usuario. */}
+
+      {/* Outlet mostrará la página
+          correspondiente según
+          la dirección visitada. */}
       <main>
         <Outlet />
       </main>
 
-      {/* Mostramos el pie de página en todas las páginas públicas. */}
+
+      {/* Mostramos el pie de página
+          en todas las páginas públicas. */}
       <Footer />
 
     </>
@@ -4022,21 +4290,26 @@ function PublicLayout() {
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-// Creamos el componente principal de la aplicación.
+// Creamos el componente principal
+// de la aplicación.
 function App() {
 
-  // Retornamos todo el sistema de rutas.
+  // Retornamos todo
+  // el sistema de rutas.
   return (
 
-    // BrowserRouter permite que React controle
-    // la navegación sin recargar completamente el sitio.
+    // BrowserRouter permite que React
+    // controle la navegación
+    // sin recargar completamente el sitio.
     <BrowserRouter>
 
-      {/* Creamos el contenedor general de la aplicación. */}
+      {/* Creamos el contenedor
+          general de la aplicación. */}
       <div className="app">
 
         {/* Routes mostrará únicamente
-            la página asociada a la URL actual. */}
+            la página asociada
+            a la URL actual. */}
         <Routes>
 
 
@@ -4044,213 +4317,365 @@ function App() {
           {/* RUTAS PÚBLICAS */}
           {/* ================================================= */}
 
-          {/* Todas las rutas contenidas aquí
-              utilizarán PublicLayout y mostrarán el Footer. */}
-          <Route element={<PublicLayout />}>
-
-            {/* Ruta correspondiente a la página principal. */}
-            <Route
-              path="/"
-              element={<Home />}
-            />
-
-
-            {/* Ruta correspondiente a la página Nosotros. */}
-            <Route
-              path="/nosotros"
-              element={<About />}
-            />
-
-
-            {/* Ruta correspondiente a la página de contacto. */}
-            <Route
-              path="/contacto"
-              element={<Contact />}
-            />
-
-
-            {/* Ruta correspondiente a eventos y actividades. */}
-            <Route
-              path="/eventos"
-              element={<Events />}
-            />
-
-
-            {/* Ruta correspondiente
-                a los contenidos recomendados. */}
-            <Route
-              path="/recomendados"
-              element={<Recommendations />}
-            />
-
-
-            {/* Ruta principal de recursos. */}
-            <Route
-              path="/recursos"
-              element={<Resources />}
-            />
-
-
-            {/* Ruta correspondiente a estudios bíblicos. */}
-            <Route
-              path="/recursos/estudios"
-              element={<BibleStudies />}
-            />
-
-
-            {/* Ruta correspondiente
-                a la guía devocional personal. */}
-            <Route
-              path="/recursos/devocional"
-              element={<PersonalDevotionalGuide />}
-            />
-
-
-            {/* Ruta principal de Biblia
-                y herramientas de estudio. */}
-            <Route
-              path="/recursos/biblia"
-              element={<BibleStudyTools />}
-            />
-
-
-            {/* Ruta que muestra todos los libros
-                del Antiguo Testamento. */}
-            <Route
-              path="/recursos/biblia/libros/antiguo-testamento"
-              element={<OldTestamentBooks />}
-            />
-
-
-            {/* Ruta que muestra todos los libros
-                del Nuevo Testamento. */}
-            <Route
-              path="/recursos/biblia/libros/nuevo-testamento"
-              element={<NewTestamentBooks />}
-            />
-
-
-            {/* Ruta reutilizable que muestra
-                el detalle de un libro bíblico. */}
-            <Route
-              path="/recursos/biblia/libro/:slug"
-              element={<BibleBookDetails />}
-            />
-
-
-            {/* Ruta correspondiente a las guías de oración. */}
-            <Route
-              path="/recursos/guias-oracion"
-              element={<PrayerGuides />}
-            />
-
-
-            {/* Ruta reutilizable que muestra
-                una guía de oración específica. */}
-            <Route
-              path="/recursos/guias-oracion/:slug"
-              element={<PrayerGuideDetails />}
-            />
-
-
-            {/* Ruta correspondiente
-                a los materiales de discipulado. */}
-            <Route
-              path="/recursos/discipulado"
-              element={<DiscipleshipMaterials />}
-            />
-
-
-            {/* Ruta reutilizable que muestra
-                un material de discipulado. */}
-            <Route
-              path="/recursos/discipulado/:slug"
-              element={<DiscipleshipMaterialDetails />}
-            />
-
-
-            {/* Ruta correspondiente
-                a las preguntas frecuentes. */}
-            <Route
-              path="/recursos/preguntas-frecuentes"
-              element={<FrequentlyAskedQuestions />}
-            />
-
-
-            {/* Ruta correspondiente
-                a los materiales descargables. */}
-            <Route
-              path="/recursos/material-descargable"
-              element={<DownloadableMaterials />}
-            />
-
-
-            {/* Ruta reutilizable que muestra el detalle
-                de un material descargable. */}
-            <Route
-              path="/recursos/material-descargable/:slug"
-              element={<DownloadableMaterialDetails />}
-            />
-
-            {/* ================================================= */}
-            {/* RUTA PÚBLICA DE INICIO DE SESIÓN */}
-            {/* ================================================= */}
-
-            {/* La página de acceso utiliza su propio diseño,
-    por lo que no muestra el Footer público. */}
-            <Route
-              path="/login"
-              element={<Login />}
-            />
-
-
-            {/* Cualquier ruta pública inexistente
-                mostrará la página 404 y el Footer. */}
-            <Route
-              path="*"
-              element={<NotFound />}
-            />
-
-          </Route>
-
-
-          {/* ================================================= */}
-          {/* RUTAS DE USUARIOS REGISTRADOS */}
-          {/* ================================================= */}
-
-          {/* Más adelante agregaremos aquí
-              el layout y las páginas para miembros. */}
-
-
-
-          {/* ================================================= */}
-          {/* RUTAS ADMINISTRATIVAS */}
-          {/* ================================================= */}
-
-          {/* Todas las rutas administrativas contenidas aquí
-              utilizarán el sidebar y el encabezado
-              proporcionados por AdminLayout. */}
+          {/* Todas estas rutas
+              utilizan PublicLayout. */}
           <Route
-            path="/admin"
-            element={<AdminLayout />}
+            element={
+              <PublicLayout />
+            }
           >
 
-            {/* La ruta /admin mostrará
-                la página principal del administrador. */}
+
+            {/* Página principal pública. */}
             <Route
-              index
-              element={<AdminDashboard />}
+              path="/"
+              element={
+                <Home />
+              }
             />
 
 
-            {/* La ruta /admin/finanzas/gastos mostrará
-                el módulo existente de gestión de gastos. */}
+            {/* Página Nosotros. */}
             <Route
-              path="finanzas/gastos"
-              element={<ExpenseManagement />}
+              path="/nosotros"
+              element={
+                <About />
+              }
+            />
+
+
+            {/* Página de contacto. */}
+            <Route
+              path="/contacto"
+              element={
+                <Contact />
+              }
+            />
+
+
+            {/* Página de eventos
+                y actividades. */}
+            <Route
+              path="/eventos"
+              element={
+                <Events />
+              }
+            />
+
+
+            {/* Página de contenidos
+                recomendados. */}
+            <Route
+              path="/recomendados"
+              element={
+                <Recommendations />
+              }
+            />
+
+
+            {/* Página principal
+                de recursos. */}
+            <Route
+              path="/recursos"
+              element={
+                <Resources />
+              }
+            />
+
+
+            {/* Estudios bíblicos. */}
+            <Route
+              path="/recursos/estudios"
+              element={
+                <BibleStudies />
+              }
+            />
+
+
+            {/* Guía devocional personal. */}
+            <Route
+              path="/recursos/devocional"
+              element={
+                <PersonalDevotionalGuide />
+              }
+            />
+
+
+            {/* Biblia y herramientas
+                de estudio. */}
+            <Route
+              path="/recursos/biblia"
+              element={
+                <BibleStudyTools />
+              }
+            />
+
+
+            {/* Libros del
+                Antiguo Testamento. */}
+            <Route
+              path="/recursos/biblia/libros/antiguo-testamento"
+              element={
+                <OldTestamentBooks />
+              }
+            />
+
+
+            {/* Libros del
+                Nuevo Testamento. */}
+            <Route
+              path="/recursos/biblia/libros/nuevo-testamento"
+              element={
+                <NewTestamentBooks />
+              }
+            />
+
+
+            {/* Detalle reutilizable
+                de un libro bíblico. */}
+            <Route
+              path="/recursos/biblia/libro/:slug"
+              element={
+                <BibleBookDetails />
+              }
+            />
+
+
+            {/* Guías de oración. */}
+            <Route
+              path="/recursos/guias-oracion"
+              element={
+                <PrayerGuides />
+              }
+            />
+
+
+            {/* Detalle de una
+                guía de oración. */}
+            <Route
+              path="/recursos/guias-oracion/:slug"
+              element={
+                <PrayerGuideDetails />
+              }
+            />
+
+
+            {/* Materiales
+                de discipulado. */}
+            <Route
+              path="/recursos/discipulado"
+              element={
+                <DiscipleshipMaterials />
+              }
+            />
+
+
+            {/* Detalle de material
+                de discipulado. */}
+            <Route
+              path="/recursos/discipulado/:slug"
+              element={
+                <DiscipleshipMaterialDetails />
+              }
+            />
+
+
+            {/* Preguntas frecuentes. */}
+            <Route
+              path="/recursos/preguntas-frecuentes"
+              element={
+                <FrequentlyAskedQuestions />
+              }
+            />
+
+
+            {/* Materiales descargables. */}
+            <Route
+              path="/recursos/material-descargable"
+              element={
+                <DownloadableMaterials />
+              }
+            />
+
+
+            {/* Detalle de material
+                descargable. */}
+            <Route
+              path="/recursos/material-descargable/:slug"
+              element={
+                <DownloadableMaterialDetails />
+              }
+            />
+
+
+          </Route>
+
+
+          {/* ================================================= */}
+          {/* LOGIN */}
+          {/* ================================================= */}
+
+          {/* Login permanece fuera
+              del layout público.
+
+              De esta forma conserva
+              su diseño independiente. */}
+          <Route
+            path="/login"
+            element={
+              <Login />
+            }
+          />
+
+
+          {/* ================================================= */}
+          {/* RUTAS PROTEGIDAS - MIEMBRO */}
+          {/* ================================================= */}
+
+          {/*
+            ProtectedRoute consultará:
+
+            GET /api/auth/me
+
+            y solamente permitirá continuar
+            si la cuenta autenticada posee:
+
+            role === "member"
+          */}
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "member",
+                ]}
+              />
+            }
+          >
+
+            {/* Página principal
+                del miembro registrado. */}
+            <Route
+              path="/member"
+              element={
+                <MemberDashboard />
+              }
             />
 
           </Route>
+
+
+          {/* ================================================= */}
+          {/* RUTAS PROTEGIDAS - ADMINISTRADOR */}
+          {/* ================================================= */}
+
+          {/*
+            Esta sección solamente
+            puede ser utilizada
+            por cuentas con rol:
+
+            admin
+          */}
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "admin",
+                ]}
+              />
+            }
+          >
+
+            {/* Página principal
+                del administrador. */}
+            <Route
+              path="/admin"
+              element={
+                <AdminHome />
+              }
+            />
+
+          </Route>
+
+
+          {/* ================================================= */}
+          {/* RUTAS PROTEGIDAS - SUPER ADMINISTRADOR */}
+          {/* ================================================= */}
+
+          {/*
+            Esta sección solamente
+            puede ser utilizada
+            por cuentas con rol:
+
+            super_admin
+
+            Primero ProtectedRoute comprueba
+            la sesión y el rol.
+
+            Después AdminLayout crea
+            el sidebar y el header.
+
+            Finalmente Outlet muestra
+            la página interna correspondiente.
+          */}
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "super_admin",
+                ]}
+              />
+            }
+          >
+
+            <Route
+              path="/super-admin"
+              element={
+                <AdminLayout />
+              }
+            >
+
+
+              {/* Página principal
+                  del super administrador. */}
+              <Route
+                index
+                element={
+                  <SuperAdminHome />
+                }
+              />
+
+
+              {/* Gestión de gastos
+                  del super administrador. */}
+              <Route
+                path="finanzas/gastos"
+                element={
+                  <ExpenseManagement />
+                }
+              />
+
+
+            </Route>
+
+          </Route>
+
+
+          {/* ================================================= */}
+          {/* RUTA 404 */}
+          {/* ================================================= */}
+
+          {/* Esta ruta debe permanecer
+              siempre al final.
+
+              Si ninguna ruta anterior coincide,
+              React mostrará NotFound. */}
+          <Route
+            path="*"
+            element={
+              <NotFound />
+            }
+          />
+
 
         </Routes>
 
@@ -4261,12 +4686,13 @@ function App() {
 }
 
 
-// Exportamos la aplicación para utilizarla desde index.js.
+// Exportamos la aplicación
+// para utilizarla desde index.js.
 export default App;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseCharts.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseCharts.jsx
 
 // Importamos useMemo desde React.
 // Lo utilizaremos para calcular la distribución
@@ -4296,7 +4722,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseCharts.css";
+import "../../../styles/components/administration/expenses/ExpenseCharts.css";
 
 
 // Creamos el componente encargado
@@ -4731,7 +5157,7 @@ export default ExpenseCharts;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseFormModal.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseFormModal.jsx
 
 // Importamos las categorías que ya utilizamos
 // dentro del módulo financiero.
@@ -4740,7 +5166,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del modal.
-import "../../../styles/components/super-admin/expenses/ExpenseFormModal.css";
+import "../../../styles/components/administration/expenses/ExpenseFormModal.css";
 
 
 // Creamos el modal de registro de gastos.
@@ -5031,10 +5457,10 @@ export default ExpenseFormModal;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseHeader.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseHeader.jsx
 
 // Importamos los estilos específicos del encabezado.
-import "../../../styles/components/super-admin/expenses/ExpenseHeader.css";
+import "../../../styles/components/administration/expenses/ExpenseHeader.css";
 
 
 // Creamos el componente del encabezado.
@@ -5098,10 +5524,10 @@ export default ExpenseHeader;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseNavigation.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseNavigation.jsx
 
 // Importamos los estilos exclusivos del menú.
-import "../../../styles/components/super-admin/expenses/ExpenseNavigation.css";
+import "../../../styles/components/administration/expenses/ExpenseNavigation.css";
 
 
 // Creamos el componente encargado de navegar
@@ -5188,7 +5614,7 @@ export default ExpenseNavigation;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseSummary.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseSummary.jsx
 
 // Importamos useMemo desde React.
 // Nos permitirá memorizar cálculos derivados de los gastos
@@ -5201,7 +5627,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseSummary.css";
+import "../../../styles/components/administration/expenses/ExpenseSummary.css";
 
 // Creamos el componente encargado de mostrar
 // los principales indicadores relacionados con los gastos.
@@ -5535,7 +5961,7 @@ export default ExpenseSummary;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\ExpenseTable.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\ExpenseTable.jsx
 
 // Importamos useMemo y useState desde React.
 // useState nos permitirá controlar los filtros.
@@ -5550,7 +5976,7 @@ import {
 } from "../../../data/admin/expensesData";
 
 // Importamos los estilos exclusivos del componente.
-import "../../../styles/components/super-admin/expenses/ExpenseTable.css";
+import "../../../styles/components/administration/expenses/ExpenseTable.css";
 
 
 // Creamos el componente encargado de mostrar
@@ -6190,7 +6616,7 @@ export default ExpenseTable;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\expenses\UpcomingExpenses.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\expenses\UpcomingExpenses.jsx
 
 // Importamos useMemo desde React.
 // Lo utilizaremos para obtener solamente
@@ -6202,7 +6628,7 @@ import { useMemo } from "react";
 import { expenses } from "../../../data/admin/expensesData";
 
 // Importamos los estilos específicos del componente.
-import "../../../styles/components/super-admin/expenses/UpcomingExpenses.css";
+import "../../../styles/components/administration/expenses/UpcomingExpenses.css";
 
 
 // Creamos el componente que mostrará
@@ -6513,43 +6939,1181 @@ export default UpcomingExpenses;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminHeader.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\home\AdminOverview.jsx
 
-// Importamos los iconos utilizados en el encabezado.
+// Importamos Link para navegar
+// hacia los módulos administrativos disponibles.
+import {
+  Link,
+} from "react-router-dom";
+
+
+// Importamos los iconos utilizados
+// dentro del resumen administrativo.
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  HandHeart,
+  ReceiptText,
+  Users,
+} from "lucide-react";
+
+
+// Importamos los estilos
+// exclusivos del componente.
+import "../../../styles/components/administration/home/AdminOverview.css";
+
+
+// =========================================================
+// MÓDULOS ADMINISTRATIVOS
+// =========================================================
+
+// Definimos los principales módulos
+// que pueden utilizar tanto:
+//
+// - admin
+// - super_admin
+//
+// Las rutas que todavía no existen
+// permanecerán temporalmente deshabilitadas.
+const administrativeModules = [
+
+  {
+    id: "events",
+
+    title:
+      "Eventos",
+
+    description:
+      "Crea, modifica y organiza las actividades publicadas para la comunidad.",
+
+    icon:
+      CalendarDays,
+
+    path:
+      "/super-admin/eventos",
+
+    available:
+      false,
+  },
+
+
+  {
+    id: "prayer-requests",
+
+    title:
+      "Peticiones de oración",
+
+    description:
+      "Revisa y administra las solicitudes de oración recibidas.",
+
+    icon:
+      HandHeart,
+
+    path:
+      "/super-admin/peticiones-oracion",
+
+    available:
+      false,
+  },
+
+
+  {
+    id: "members",
+
+    title:
+      "Miembros",
+
+    description:
+      "Consulta la información de los miembros registrados de la iglesia.",
+
+    icon:
+      Users,
+
+    path:
+      "/super-admin/miembros",
+
+    available:
+      false,
+  },
+
+
+  {
+    id: "resources",
+
+    title:
+      "Recursos",
+
+    description:
+      "Administra los estudios, guías y materiales disponibles para la comunidad.",
+
+    icon:
+      BookOpen,
+
+    path:
+      "/super-admin/recursos",
+
+    available:
+      false,
+  },
+
+
+  {
+    id: "expenses",
+
+    title:
+      "Finanzas",
+
+    description:
+      "Consulta y registra los gastos asociados a la gestión de la iglesia.",
+
+    icon:
+      ReceiptText,
+
+    // Este módulo ya existe actualmente.
+    path:
+      "/super-admin/finanzas/gastos",
+
+    available:
+      true,
+  },
+
+];
+
+
+// =========================================================
+// COMPONENTE
+// =========================================================
+
+// Creamos el resumen de las funciones
+// administrativas generales.
+//
+// Estas herramientas serán compartidas
+// posteriormente por admin y super_admin.
+function AdminOverview() {
+
+  return (
+    <section className="super-admin-management">
+
+
+      {/* ================================================= */}
+      {/* ENCABEZADO */}
+      {/* ================================================= */}
+
+      <div className="super-admin-management__header">
+
+        <div>
+
+          <span className="super-admin-management__eyebrow">
+            Administración
+          </span>
+
+
+          <h2>
+            Gestión de la iglesia
+          </h2>
+
+
+          <p>
+            Accede a las principales herramientas para
+            organizar la información y los servicios
+            de la comunidad.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* MÓDULOS */}
+      {/* ================================================= */}
+
+      <div className="super-admin-management__grid">
+
+        {administrativeModules.map(
+          (module) => {
+
+            // Guardamos el componente
+            // correspondiente al icono.
+            const ModuleIcon =
+              module.icon;
+
+
+            // =================================================
+            // MÓDULO DISPONIBLE
+            // =================================================
+
+            // Cuando la página correspondiente
+            // ya existe utilizamos Link.
+            if (module.available) {
+
+              return (
+                <Link
+                  className="super-admin-management-card"
+                  to={module.path}
+                  key={module.id}
+                >
+
+                  {/* Icono del módulo. */}
+                  <div className="super-admin-management-card__icon">
+
+                    <ModuleIcon
+                      size={23}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+
+                  </div>
+
+
+                  {/* Información del módulo. */}
+                  <div className="super-admin-management-card__content">
+
+                    <strong>
+                      {module.title}
+                    </strong>
+
+                    <span>
+                      {module.description}
+                    </span>
+
+                  </div>
+
+
+                  {/* Flecha indicadora de navegación. */}
+                  <ArrowRight
+                    className="super-admin-management-card__arrow"
+                    size={18}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+
+                </Link>
+              );
+            }
+
+
+            // =================================================
+            // MÓDULO PENDIENTE
+            // =================================================
+
+            // Los módulos que todavía no hemos
+            // construido se muestran deshabilitados.
+            return (
+              <button
+                className="
+                  super-admin-management-card
+                  super-admin-management-card--disabled
+                "
+                type="button"
+                disabled
+                key={module.id}
+              >
+
+                {/* Icono del módulo. */}
+                <div className="super-admin-management-card__icon">
+
+                  <ModuleIcon
+                    size={23}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+
+                </div>
+
+
+                {/* Información del módulo. */}
+                <div className="super-admin-management-card__content">
+
+                  <strong>
+                    {module.title}
+                  </strong>
+
+                  <span>
+                    Disponible próximamente
+                  </span>
+
+                </div>
+
+              </button>
+            );
+          }
+        )}
+
+      </div>
+
+    </section>
+  );
+}
+
+
+// Exportamos el componente
+// para utilizarlo dentro de SuperAdminHome.
+export default AdminOverview;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\home\MemberOverview.jsx
+
+//frontend/src/components/super-admin/home/
+
+// Importamos Link para navegar
+// hacia las distintas secciones de la aplicación.
+import {
+  Link,
+} from "react-router-dom";
+
+// Importamos los estilos
+// exclusivos del componente.
+import "../../../styles/components/administration/home/MemberOverview.css";
+
+
+// Importamos los iconos
+// utilizados dentro de este resumen.
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  HeartHandshake,
+  MapPin,
+  Video,
+} from "lucide-react";
+
+
+// =========================================================
+// ACTIVIDADES TEMPORALES
+// =========================================================
+
+// Estas actividades son temporales.
+//
+// Más adelante serán obtenidas
+// desde MongoDB mediante la API.
+const upcomingActivities = [
+  {
+    id: "sunday",
+    day: "Domingo",
+    title: "Culto general",
+    time: "11:00 hrs",
+    mode: "Presencial",
+    icon: MapPin,
+  },
+  {
+    id: "tuesday",
+    day: "Martes",
+    title: "Descubriendo la Biblia",
+    time: "20:00 hrs",
+    mode: "Online",
+    icon: Video,
+  },
+  {
+    id: "wednesday",
+    day: "Miércoles",
+    title: "Reunión de oración",
+    time: "21:00 hrs",
+    mode: "Online",
+    icon: Video,
+  },
+];
+
+
+// =========================================================
+// ACCESOS PERSONALES
+// =========================================================
+
+// Estas opciones representan acciones
+// disponibles para cualquier miembro,
+// incluso si posee un rol administrativo.
+const memberActions = [
+  {
+    id: "prayer",
+    title: "Petición de oración",
+    description:
+      "Comparte una petición para que la comunidad pueda acompañarte en oración.",
+    icon: HeartHandshake,
+
+    // Esta ruta todavía podrá cambiar
+    // cuando creemos el módulo privado
+    // de peticiones de oración.
+    path: "/member/oracion",
+
+    available: false,
+  },
+  {
+    id: "resources",
+    title: "Recursos",
+    description:
+      "Accede a estudios, guías y materiales para tu crecimiento personal.",
+    icon: BookOpen,
+    path: "/recursos",
+    available: true,
+  },
+  {
+    id: "events",
+    title: "Actividades",
+    description:
+      "Consulta las reuniones y actividades disponibles para la comunidad.",
+    icon: CalendarDays,
+    path: "/eventos",
+    available: true,
+  },
+];
+
+
+// =========================================================
+// COMPONENTE
+// =========================================================
+
+// Creamos el resumen correspondiente
+// a la experiencia personal del super administrador.
+//
+// Aunque tenga permisos administrativos,
+// sigue siendo también miembro de la iglesia.
+function MemberOverview() {
+
+  return (
+    <section className="super-admin-member">
+
+      {/* ================================================= */}
+      {/* ENCABEZADO */}
+      {/* ================================================= */}
+
+      <div className="super-admin-member__header">
+
+        <div>
+
+          <span className="super-admin-member__eyebrow">
+            Mi comunidad
+          </span>
+
+          <h2>
+            Tu espacio como miembro
+          </h2>
+
+          <p>
+            Mantente al día con las actividades,
+            participa de la comunidad y accede
+            a los recursos disponibles para ti.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* CONTENIDO PRINCIPAL */}
+      {/* ================================================= */}
+
+      <div className="super-admin-member__grid">
+
+
+        {/* ================================================= */}
+        {/* PRÓXIMAS ACTIVIDADES */}
+        {/* ================================================= */}
+
+        <article className="super-admin-member__card">
+
+          <div className="super-admin-member__card-header">
+
+            <div className="super-admin-member__card-title">
+
+              <CalendarDays
+                size={21}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+
+              <div>
+                <h3>
+                  Próximas actividades
+                </h3>
+
+                <span>
+                  Reuniones de la comunidad
+                </span>
+              </div>
+
+            </div>
+
+
+            <Link
+              className="super-admin-member__header-link"
+              to="/eventos"
+            >
+              Ver todas
+
+              <ArrowRight
+                size={16}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </Link>
+
+          </div>
+
+
+          <div className="super-admin-member__activities">
+
+            {upcomingActivities.map(
+              (activity) => {
+
+                // Guardamos el icono
+                // correspondiente a la actividad.
+                const ActivityIcon =
+                  activity.icon;
+
+                return (
+                  <div
+                    className="super-admin-member__activity"
+                    key={activity.id}
+                  >
+
+                    <div className="super-admin-member__activity-icon">
+
+                      <ActivityIcon
+                        size={19}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                      />
+
+                    </div>
+
+
+                    <div className="super-admin-member__activity-content">
+
+                      <div className="super-admin-member__activity-top">
+
+                        <strong>
+                          {activity.title}
+                        </strong>
+
+                        <span>
+                          {activity.day}
+                        </span>
+
+                      </div>
+
+
+                      <div className="super-admin-member__activity-details">
+
+                        <span>
+                          {activity.time}
+                        </span>
+
+                        <span>
+                          {activity.mode}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                );
+              }
+            )}
+
+          </div>
+
+        </article>
+
+
+        {/* ================================================= */}
+        {/* PARTICIPACIÓN PERSONAL */}
+        {/* ================================================= */}
+
+        <article className="super-admin-member__card">
+
+          <div className="super-admin-member__card-header">
+
+            <div className="super-admin-member__card-title">
+
+              <HeartHandshake
+                size={21}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+
+              <div>
+                <h3>
+                  Participa de la comunidad
+                </h3>
+
+                <span>
+                  Accesos personales
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div className="super-admin-member__actions">
+
+            {memberActions.map(
+              (action) => {
+
+                // Guardamos el componente
+                // correspondiente al icono.
+                const ActionIcon =
+                  action.icon;
+
+
+                // Si la sección ya existe,
+                // mostramos un enlace normal.
+                if (action.available) {
+
+                  return (
+                    <Link
+                      className="super-admin-member-action"
+                      to={action.path}
+                      key={action.id}
+                    >
+
+                      <div className="super-admin-member-action__icon">
+
+                        <ActionIcon
+                          size={20}
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+
+                      </div>
+
+
+                      <div className="super-admin-member-action__content">
+
+                        <strong>
+                          {action.title}
+                        </strong>
+
+                        <span>
+                          {action.description}
+                        </span>
+
+                      </div>
+
+
+                      <ArrowRight
+                        className="super-admin-member-action__arrow"
+                        size={17}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+
+                    </Link>
+                  );
+                }
+
+
+                // Las funciones que todavía
+                // no existen se muestran deshabilitadas.
+                return (
+                  <button
+                    className="
+                      super-admin-member-action
+                      super-admin-member-action--disabled
+                    "
+                    type="button"
+                    disabled
+                    key={action.id}
+                  >
+
+                    <div className="super-admin-member-action__icon">
+
+                      <ActionIcon
+                        size={20}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                      />
+
+                    </div>
+
+
+                    <div className="super-admin-member-action__content">
+
+                      <strong>
+                        {action.title}
+                      </strong>
+
+                      <span>
+                        Disponible próximamente
+                      </span>
+
+                    </div>
+
+                  </button>
+                );
+              }
+            )}
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+  );
+}
+
+
+// Exportamos el componente
+// para utilizarlo dentro de SuperAdminHome.
+export default MemberOverview;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\home\SuperAdminOverview.jsx
+
+// Importamos los iconos utilizados
+// dentro del control avanzado del sistema.
+import {
+  Settings,
+  ShieldCheck,
+  UserCog,
+  UserPlus,
+  UsersRound,
+} from "lucide-react";
+
+
+// Importamos los estilos
+// exclusivos del componente.
+import "../../../styles/components/administration/home/SuperAdminOverview.css";
+
+
+// =========================================================
+// FUNCIONES EXCLUSIVAS DEL SUPER ADMINISTRADOR
+// =========================================================
+
+// Estas acciones estarán disponibles únicamente
+// para usuarios con rol "super_admin".
+//
+// Por ahora se mostrarán como módulos
+// pendientes hasta crear sus páginas correspondientes.
+const superAdminModules = [
+  {
+    id: "users",
+
+    title:
+      "Gestión de usuarios",
+
+    description:
+      "Consulta las cuentas registradas y administra su estado dentro del sistema.",
+
+    icon:
+      UsersRound,
+  },
+
+
+  {
+    id: "register-user",
+
+    title:
+      "Registrar usuario",
+
+    description:
+      "Crea nuevas cuentas para miembros y administradores de la iglesia.",
+
+    icon:
+      UserPlus,
+  },
+
+
+  {
+    id: "administrators",
+
+    title:
+      "Administradores",
+
+    description:
+      "Revisa y administra las cuentas que poseen permisos administrativos.",
+
+    icon:
+      ShieldCheck,
+  },
+
+
+  {
+    id: "roles",
+
+    title:
+      "Roles y permisos",
+
+    description:
+      "Modifica los niveles de acceso asignados a las cuentas registradas.",
+
+    icon:
+      UserCog,
+  },
+
+
+  {
+    id: "settings",
+
+    title:
+      "Configuración",
+
+    description:
+      "Administra opciones sensibles relacionadas con el funcionamiento general del sistema.",
+
+    icon:
+      Settings,
+  },
+];
+
+
+// =========================================================
+// COMPONENTE
+// =========================================================
+
+// Creamos el resumen correspondiente
+// a las herramientas exclusivas del super administrador.
+function SuperAdminOverview() {
+
+  return (
+    <section className="super-admin-control">
+
+
+      {/* ================================================= */}
+      {/* ENCABEZADO */}
+      {/* ================================================= */}
+
+      <div className="super-admin-control__header">
+
+        <div>
+
+          <span className="super-admin-control__eyebrow">
+            Control del sistema
+          </span>
+
+
+          <h2>
+            Administración avanzada
+          </h2>
+
+
+          <p>
+            Gestiona cuentas, administradores,
+            roles y configuraciones sensibles
+            de Iglesia El Ancla.
+          </p>
+
+        </div>
+
+
+        {/* Indicamos visualmente que se trata
+            de una sección exclusiva. */}
+        <div className="super-admin-control__badge">
+
+          <ShieldCheck
+            size={16}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
+
+          <span>
+            Solo super administrador
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* MÓDULOS */}
+      {/* ================================================= */}
+
+      <div className="super-admin-control__grid">
+
+        {superAdminModules.map(
+          (module) => {
+
+            // Guardamos el componente
+            // correspondiente al icono.
+            const ModuleIcon =
+              module.icon;
+
+
+            // Por ahora todos estos módulos
+            // se encuentran pendientes.
+            return (
+              <button
+                className="
+                  super-admin-control-card
+                  super-admin-control-card--disabled
+                "
+                type="button"
+                disabled
+                key={module.id}
+              >
+
+                {/* Icono del módulo. */}
+                <div className="super-admin-control-card__icon">
+
+                  <ModuleIcon
+                    size={23}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+
+                </div>
+
+
+                {/* Información del módulo. */}
+                <div className="super-admin-control-card__content">
+
+                  <strong>
+                    {module.title}
+                  </strong>
+
+                  <span>
+                    {module.description}
+                  </span>
+
+
+                  {/* Mostramos que el módulo
+                      todavía no está disponible. */}
+                  <small>
+                    Disponible próximamente
+                  </small>
+
+                </div>
+
+              </button>
+            );
+          }
+        )}
+
+      </div>
+
+    </section>
+  );
+}
+
+
+// Exportamos el componente
+// para utilizarlo dentro de SuperAdminHome.
+export default SuperAdminOverview;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\layout\AdminHeader.jsx
+
+//frontend/src/components/super-admin/layout/AdminHeader.jsx
+
+// Importamos las herramientas necesarias
+// para manejar el estado y cargar
+// la información de la sesión.
+import {
+  useEffect,
+  useState,
+} from "react";
+
+
+// Importamos los iconos utilizados
+// dentro del encabezado.
 import {
   Bell,
+  LoaderCircle,
   Menu,
+  ShieldCheck,
   UserRound,
 } from "lucide-react";
 
-// Importamos los estilos exclusivos del encabezado.
-import "../../../styles/components/super-admin/layout/AdminHeader.css";
 
-
-// Creamos el encabezado del panel administrativo.
+// Importamos la instancia centralizada de Axios.
 //
-// onOpenSidebar será la función encargada
-// de abrir el menú lateral en celulares.
+// Esta instancia ya incluye:
+//
+// - La URL base del backend.
+// - withCredentials: true.
+// - Configuración JSON.
+// - Timeout.
+import api from "../../../services/api";
+
+
+// Importamos los estilos
+// exclusivos del encabezado.
+import "../../../styles/components/administration/layout/AdminHeader.css";
+
+
+// =========================================================
+// COMPONENTE
+// =========================================================
+
+// Creamos el encabezado principal
+// del panel del super administrador.
+//
+// onOpenSidebar:
+// permite abrir el menú lateral
+// cuando la aplicación se utiliza
+// desde dispositivos móviles.
 function AdminHeader({
   onOpenSidebar,
 }) {
 
-  // Creamos un formateador para mostrar
-  // la fecha actual en español.
-  const formattedDate = new Intl.DateTimeFormat(
-    "es-CL",
-    {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }
-  ).format(new Date());
+  // =========================================================
+  // ESTADO DEL USUARIO
+  // =========================================================
+
+  // Guardamos la información
+  // del usuario autenticado.
+  const [
+    currentUser,
+    setCurrentUser,
+  ] = useState(null);
 
 
-  // Retornamos el encabezado.
+  // Guardamos si todavía estamos
+  // consultando la sesión.
+  const [
+    isLoadingUser,
+    setIsLoadingUser,
+  ] = useState(true);
+
+
+  // =========================================================
+  // FECHA ACTUAL
+  // =========================================================
+
+  // Creamos un formateador
+  // para mostrar la fecha actual
+  // utilizando formato chileno.
+  const formattedDate =
+    new Intl.DateTimeFormat(
+      "es-CL",
+      {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }
+    ).format(
+      new Date()
+    );
+
+
+  // =========================================================
+  // OBTENER SESIÓN ACTUAL
+  // =========================================================
+
+  useEffect(() => {
+
+    // Creamos una función asíncrona
+    // para consultar al backend.
+    const loadCurrentUser = async () => {
+
+      try {
+
+        // Consultamos el endpoint protegido.
+        //
+        // Como api.js ya tiene
+        // withCredentials: true,
+        // la cookie HttpOnly será enviada
+        // automáticamente.
+        const response =
+          await api.get(
+            "/auth/me"
+          );
+
+
+        // Comprobamos que el backend
+        // haya confirmado la sesión.
+        if (
+          response.data?.success &&
+          response.data?.user
+        ) {
+
+          // Guardamos los datos
+          // reales del usuario.
+          setCurrentUser(
+            response.data.user
+          );
+        }
+
+      } catch (error) {
+
+        // Si la sesión no es válida,
+        // por ahora solamente registramos
+        // el problema en consola.
+        //
+        // Más adelante ProtectedRoute
+        // se encargará de redirigir
+        // automáticamente al login.
+        console.error(
+          "No fue posible obtener la sesión actual:",
+          error
+        );
+
+      } finally {
+
+        // Indicamos que la consulta terminó,
+        // independientemente de si fue
+        // exitosa o produjo un error.
+        setIsLoadingUser(false);
+      }
+    };
+
+
+    // Ejecutamos la consulta
+    // una vez al montar el componente.
+    loadCurrentUser();
+
+  }, []);
+
+
+  // =========================================================
+  // NOMBRE DEL USUARIO
+  // =========================================================
+
+  // Si todavía estamos cargando,
+  // mostramos un texto temporal.
+  //
+  // Cuando la información llegue,
+  // utilizaremos el nombre real.
+  const displayName =
+    currentUser?.fullName ||
+    "Super administrador";
+
+
+  // =========================================================
+  // NOMBRE DEL ROL
+  // =========================================================
+
+  // Traducimos el valor interno
+  // utilizado por MongoDB
+  // a un texto legible.
+  const roleLabels = {
+    member:
+      "Miembro",
+
+    admin:
+      "Administrador",
+
+    super_admin:
+      "Super administrador",
+  };
+
+
+  // Obtenemos el texto correspondiente
+  // al rol actual.
+  const displayRole =
+    roleLabels[currentUser?.role] ||
+    "Super administrador";
+
+
+  // =========================================================
+  // INTERFAZ
+  // =========================================================
+
   return (
     <header className="admin-header">
+
 
       {/* ================================================= */}
       {/* PARTE IZQUIERDA */}
@@ -6557,33 +8121,43 @@ function AdminHeader({
 
       <div className="admin-header__left">
 
-        {/* Este botón solamente aparecerá en móviles. */}
+
+        {/* Este botón aparece solamente
+            cuando el sidebar debe abrirse
+            desde una pantalla pequeña. */}
         <button
           className="admin-header__menu-button"
           type="button"
           onClick={onOpenSidebar}
           aria-label="Abrir menú administrativo"
         >
+
           <Menu
             size={23}
             strokeWidth={2}
             aria-hidden="true"
           />
+
         </button>
 
 
-        {/* Agrupamos el nombre del panel y la fecha. */}
+        {/* Agrupamos el nombre
+            del panel y la fecha actual. */}
         <div className="admin-header__information">
 
-          {/* Identificamos el área actual. */}
+
+          {/* Identificamos claramente
+              el área actual del sistema. */}
           <span className="admin-header__section">
-            Panel administrativo
+            Panel de super administración
           </span>
+
 
           {/* Mostramos la fecha actual. */}
           <span className="admin-header__date">
             {formattedDate}
           </span>
+
 
         </div>
 
@@ -6596,56 +8170,95 @@ function AdminHeader({
 
       <div className="admin-header__right">
 
-        {/* Este botón se conectará posteriormente
-            con el sistema de notificaciones. */}
+
+        {/* ================================================= */}
+        {/* NOTIFICACIONES */}
+        {/* ================================================= */}
+
         <button
           className="admin-header__notification"
           type="button"
           aria-label="Ver notificaciones"
           title="Notificaciones"
         >
+
           <Bell
             size={21}
             strokeWidth={1.8}
             aria-hidden="true"
           />
 
-          {/* Indicador visual temporal de notificaciones. */}
+
+          {/* Indicador visual temporal. */}
           <span
             className="admin-header__notification-indicator"
             aria-hidden="true"
           />
+
         </button>
 
 
-        {/* Mostramos la información del administrador. */}
+        {/* ================================================= */}
+        {/* PERFIL */}
+        {/* ================================================= */}
+
         <div className="admin-header__profile">
 
-          {/* Utilizamos un avatar temporal. */}
+
+          {/* Avatar temporal. */}
           <div
             className="admin-header__avatar"
             aria-hidden="true"
           >
-            <UserRound
-              size={20}
-              strokeWidth={1.8}
-            />
+
+            {isLoadingUser ? (
+
+              <LoaderCircle
+                className="admin-header__loading-icon"
+                size={20}
+                strokeWidth={1.8}
+              />
+
+            ) : (
+
+              <UserRound
+                size={20}
+                strokeWidth={1.8}
+              />
+
+            )}
+
           </div>
 
 
-          {/* Agrupamos el nombre y el rol. */}
+          {/* Agrupamos el nombre
+              y el rol del usuario. */}
           <div className="admin-header__profile-text">
 
-            {/* Este nombre será reemplazado posteriormente
-                por la información obtenida desde la sesión. */}
+
+            {/* Mostramos el nombre real
+                obtenido desde MongoDB. */}
             <strong>
-              Administrador
+              {isLoadingUser
+                ? "Cargando..."
+                : displayName}
             </strong>
 
-            {/* Mostramos el rol actual. */}
+
+            {/* Mostramos el rol real
+                de la cuenta autenticada. */}
             <span>
-              Acceso administrativo
+
+              <ShieldCheck
+                size={13}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+
+              {displayRole}
+
             </span>
+
 
           </div>
 
@@ -6658,12 +8271,13 @@ function AdminHeader({
 }
 
 
-// Exportamos el componente.
+// Exportamos el componente
+// para utilizarlo dentro de AdminLayout.
 export default AdminHeader;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminLayout.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\layout\AdminLayout.jsx
 
 // Importamos useState para controlar
 // el menú lateral en dispositivos móviles.
@@ -6680,7 +8294,7 @@ import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 
 // Importamos los estilos exclusivos del layout.
-import "../../../styles/components/super-admin/layout/AdminLayout.css";
+import "../../../styles/components/administration/layout/AdminLayout.css";
 
 
 // Creamos la estructura general del área administrativa.
@@ -6756,11 +8370,28 @@ export default AdminLayout;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\super-admin\layout\AdminSidebar.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\administration\layout\AdminSidebar.jsx
 
-// Importamos NavLink para navegar entre las páginas
-// y detectar automáticamente cuál ruta está activa.
-import { NavLink } from "react-router-dom";
+//frontend/src/components/super-admin/layout/AdminSidebar.jsx
+
+// Importamos las herramientas necesarias
+// para navegar entre las páginas
+// y redirigir después de cerrar sesión.
+import {
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
+
+// Importamos useState para controlar
+// el estado del cierre de sesión.
+import {
+  useState,
+} from "react";
+
+// Importamos la instancia de Axios
+// configurada para comunicarse con el backend.
+import api from "../../../services/api";
+
 
 // Importamos los iconos utilizados dentro del menú.
 import {
@@ -6778,123 +8409,304 @@ import {
   X,
 } from "lucide-react";
 
+
 // Importamos los estilos exclusivos del sidebar.
-import "../../../styles/components/super-admin/layout/AdminSidebar.css";
+import "../../../styles/components/administration/layout/AdminSidebar.css";
 
 
 // Creamos el componente del menú lateral.
 //
 // isOpen indica si el menú está abierto en celulares.
+//
 // onClose permite cerrar el menú desde AdminLayout.
 function AdminSidebar({
   isOpen,
   onClose,
 }) {
 
+
+  // =========================================================
+  // NAVEGACIÓN
+  // =========================================================
+
+  // Obtenemos la función utilizada
+  // para navegar desde React.
+  const navigate =
+    useNavigate();
+
+
+  // =========================================================
+  // ESTADO DEL CIERRE DE SESIÓN
+  // =========================================================
+
+  // Guardamos si actualmente
+  // estamos cerrando la sesión.
+  //
+  // Esto evita enviar varias solicitudes
+  // si el usuario presiona el botón
+  // repetidamente.
+  const [
+    isLoggingOut,
+    setIsLoggingOut,
+  ] = useState(false);
+
+
+  // =========================================================
+  // CERRAR SESIÓN
+  // =========================================================
+
+  // Esta función solicita al backend
+  // eliminar la cookie HttpOnly
+  // utilizada para autenticar al usuario.
+  const handleLogout = async () => {
+
+    // Evitamos ejecutar nuevamente
+    // la función mientras ya existe
+    // una solicitud en curso.
+    if (isLoggingOut) {
+      return;
+    }
+
+
+    // Indicamos que comenzó
+    // el cierre de sesión.
+    setIsLoggingOut(true);
+
+
+    try {
+
+      // Solicitamos al backend
+      // eliminar la cookie de sesión.
+      //
+      // api.js ya contiene:
+      //
+      // withCredentials: true
+      //
+      // por lo que la cookie será enviada
+      // automáticamente.
+      const response =
+        await api.post(
+          "/auth/logout"
+        );
+
+
+      // Comprobamos que el backend
+      // haya confirmado el cierre.
+      if (response.data?.success) {
+
+        // Cerramos el sidebar
+        // si se encuentra abierto
+        // en un dispositivo móvil.
+        onClose();
+
+
+        // Enviamos al usuario
+        // nuevamente al login.
+        //
+        // replace evita conservar
+        // la página privada anterior
+        // dentro del historial.
+        navigate(
+          "/login",
+          {
+            replace: true,
+          }
+        );
+
+        return;
+      }
+
+
+      // Si recibimos una respuesta inesperada,
+      // dejamos registro para desarrollo.
+      console.error(
+        "El servidor no confirmó el cierre de sesión."
+      );
+
+    } catch (error) {
+
+      // Si existe algún problema de conexión,
+      // no fingimos que la sesión fue cerrada,
+      // ya que la cookie podría continuar activa.
+      console.error(
+        "No fue posible cerrar la sesión:",
+        error
+      );
+
+    } finally {
+
+      // Permitimos volver a utilizar
+      // el botón cuando termina
+      // la solicitud.
+      setIsLoggingOut(false);
+    }
+  };
+
+  // =========================================================
+  // GRUPOS DE NAVEGACIÓN
+  // =========================================================
+
   // Creamos los grupos que organizan
-  // las diferentes opciones administrativas.
+  // las diferentes opciones disponibles
+  // para el super administrador.
   const navigationGroups = [
+
+    // =======================================================
+    // PRINCIPAL
+    // =======================================================
+
     {
-      // Título del grupo principal.
       title: "Principal",
 
-      // Opciones pertenecientes a este grupo.
       items: [
         {
-          // Texto visible de la opción.
           label: "Inicio",
 
-          // Ruta a la que dirigirá.
-          path: "/admin",
+          // Página principal
+          // del super administrador.
+          path: "/super-admin",
 
-          // Icono correspondiente.
           icon: LayoutDashboard,
 
-          // Indicamos que la página está disponible.
           available: true,
 
           // Evitamos que Inicio permanezca activo
-          // al navegar por otras rutas de /admin.
+          // al navegar por rutas internas
+          // de /super-admin.
           end: true,
         },
       ],
     },
+
+
+    // =======================================================
+    // COMUNIDAD
+    // =======================================================
+
     {
-      // Título del grupo comunitario.
       title: "Comunidad",
 
-      // Opciones relacionadas con la comunidad.
       items: [
         {
           label: "Eventos",
-          path: "/admin/eventos",
+
+          path: "/super-admin/eventos",
+
           icon: CalendarDays,
+
+          // Este módulo todavía
+          // no ha sido construido.
           available: false,
         },
+
         {
           label: "Peticiones de oración",
-          path: "/admin/peticiones-oracion",
+
+          path:
+            "/super-admin/peticiones-oracion",
+
           icon: HandHeart,
+
           available: false,
         },
+
         {
           label: "Miembros",
-          path: "/admin/miembros",
+
+          path: "/super-admin/miembros",
+
           icon: Users,
+
           available: false,
         },
       ],
     },
+
+
+    // =======================================================
+    // CONTENIDOS
+    // =======================================================
+
     {
-      // Título del grupo de contenidos.
       title: "Contenidos",
 
-      // Opciones para gestionar materiales.
       items: [
         {
           label: "Recursos",
-          path: "/admin/recursos",
+
+          path: "/super-admin/recursos",
+
           icon: BookOpen,
+
           available: false,
         },
       ],
     },
+
+
+    // =======================================================
+    // FINANZAS
+    // =======================================================
+
     {
-      // Título del grupo financiero.
       title: "Finanzas",
 
-      // Opciones relacionadas con ingresos y gastos.
       items: [
         {
           label: "Ingresos",
-          path: "/admin/finanzas/ingresos",
+
+          path:
+            "/super-admin/finanzas/ingresos",
+
           icon: BadgeDollarSign,
+
           available: false,
         },
+
         {
           label: "Gastos",
-          path: "/admin/finanzas/gastos",
+
+          // Este módulo ya existe.
+          path:
+            "/super-admin/finanzas/gastos",
+
           icon: ReceiptText,
+
           available: true,
         },
       ],
     },
+
+
+    // =======================================================
+    // SISTEMA
+    // =======================================================
+
     {
-      // Título del grupo de configuración.
       title: "Sistema",
 
-      // Opciones relacionadas con la administración.
+      // Estas herramientas corresponden
+      // específicamente al super administrador.
       items: [
         {
           label: "Administradores",
-          path: "/admin/administradores",
+
+          path:
+            "/super-admin/administradores",
+
           icon: UserRoundCog,
+
           available: false,
         },
+
         {
           label: "Configuración",
-          path: "/admin/configuracion",
+
+          path:
+            "/super-admin/configuracion",
+
           icon: Settings,
+
           available: false,
         },
       ],
@@ -6902,14 +8714,17 @@ function AdminSidebar({
   ];
 
 
+  // =========================================================
+  // INTERFAZ
+  // =========================================================
+
   // Retornamos el contenido completo del sidebar.
   return (
     <aside
-      className={`admin-sidebar ${
-        isOpen
-          ? "admin-sidebar--open"
-          : ""
-      }`}
+      className={`admin-sidebar ${isOpen
+        ? "admin-sidebar--open"
+        : ""
+        }`}
     >
 
       {/* ================================================= */}
@@ -6918,7 +8733,8 @@ function AdminSidebar({
 
       <div className="admin-sidebar__brand">
 
-        {/* Mostramos un símbolo visual de El Ancla. */}
+        {/* Mostramos un símbolo visual
+            de Iglesia El Ancla. */}
         <div
           className="admin-sidebar__brand-icon"
           aria-hidden="true"
@@ -6927,15 +8743,18 @@ function AdminSidebar({
         </div>
 
 
-        {/* Agrupamos el nombre y la descripción. */}
+        {/* Agrupamos el nombre
+            y la descripción. */}
         <div className="admin-sidebar__brand-text">
 
-          {/* Nombre abreviado de la iglesia. */}
+          {/* Nombre abreviado
+              de la iglesia. */}
           <strong>
             El Ancla
           </strong>
 
-          {/* Nombre del área privada. */}
+
+          {/* Identificamos el área privada. */}
           <span>
             Panel administrativo
           </span>
@@ -6943,19 +8762,21 @@ function AdminSidebar({
         </div>
 
 
-        {/* Este botón permite cerrar el menú
-            cuando se utiliza un dispositivo móvil. */}
+        {/* Este botón permite cerrar
+            el menú en dispositivos móviles. */}
         <button
           className="admin-sidebar__close"
           type="button"
           onClick={onClose}
           aria-label="Cerrar menú administrativo"
         >
+
           <X
             size={22}
             strokeWidth={2}
             aria-hidden="true"
           />
+
         </button>
 
       </div>
@@ -6967,119 +8788,140 @@ function AdminSidebar({
 
       <nav
         className="admin-sidebar__navigation"
-        aria-label="Navegación administrativa"
+        aria-label="Navegación del super administrador"
       >
 
-        {/* Recorremos todos los grupos del menú. */}
-        {navigationGroups.map((group) => (
+        {/* Recorremos todos
+            los grupos del menú. */}
+        {navigationGroups.map(
+          (group) => (
 
-          // Creamos una sección por cada grupo.
-          <section
-            className="admin-sidebar__group"
-            key={group.title}
-          >
+            // Creamos una sección
+            // por cada grupo.
+            <section
+              className="admin-sidebar__group"
+              key={group.title}
+            >
 
-            {/* Mostramos el título del grupo. */}
-            <h2 className="admin-sidebar__group-title">
-              {group.title}
-            </h2>
-
-
-            {/* Creamos la lista de opciones. */}
-            <ul className="admin-sidebar__list">
-
-              {/* Recorremos las opciones del grupo actual. */}
-              {group.items.map((item) => {
-
-                // Guardamos el componente del icono.
-                const Icon = item.icon;
+              {/* Mostramos el título
+                  del grupo. */}
+              <h2 className="admin-sidebar__group-title">
+                {group.title}
+              </h2>
 
 
-                // Comprobamos si el módulo todavía
-                // no se encuentra disponible.
-                if (!item.available) {
-                  return (
-                    <li key={item.path}>
+              {/* Creamos la lista
+                  de opciones. */}
+              <ul className="admin-sidebar__list">
 
-                      {/* Mostramos una opción deshabilitada
-                          para impedir la navegación. */}
-                      <button
-                        className="
-                          admin-sidebar__link
-                          admin-sidebar__link--disabled
-                        "
-                        type="button"
-                        disabled
-                        title="Módulo disponible próximamente"
-                      >
+                {/* Recorremos las opciones
+                    del grupo actual. */}
+                {group.items.map(
+                  (item) => {
 
-                        {/* Mostramos el icono correspondiente. */}
-                        <Icon
-                          size={19}
-                          strokeWidth={1.8}
-                          aria-hidden="true"
-                        />
-
-                        {/* Mostramos el nombre del módulo. */}
-                        <span>
-                          {item.label}
-                        </span>
-
-                        {/* Informamos que la página
-                            todavía se encuentra pendiente. */}
-                        <small>
-                          Próximamente
-                        </small>
-
-                      </button>
-
-                    </li>
-                  );
-                }
+                    // Guardamos el componente
+                    // correspondiente al icono.
+                    const Icon =
+                      item.icon;
 
 
-                // Si la ruta está disponible,
-                // retornamos un enlace de navegación.
-                return (
-                  <li key={item.path}>
+                    // =================================================
+                    // MÓDULO NO DISPONIBLE
+                    // =================================================
 
-                    <NavLink
-                      to={item.path}
-                      end={item.end}
-                      onClick={onClose}
-                      className={({ isActive }) =>
-                        `admin-sidebar__link ${
-                          isActive
-                            ? "admin-sidebar__link--active"
-                            : ""
-                        }`
-                      }
-                    >
+                    // Si el módulo todavía
+                    // no se encuentra construido,
+                    // mostramos un botón deshabilitado.
+                    if (!item.available) {
 
-                      {/* Mostramos el icono de la opción. */}
-                      <Icon
-                        size={19}
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
+                      return (
+                        <li key={item.path}>
 
-                      {/* Mostramos el nombre de la opción. */}
-                      <span>
-                        {item.label}
-                      </span>
+                          <button
+                            className="
+                              admin-sidebar__link
+                              admin-sidebar__link--disabled
+                            "
+                            type="button"
+                            disabled
+                            title="Módulo disponible próximamente"
+                          >
 
-                    </NavLink>
+                            {/* Icono del módulo. */}
+                            <Icon
+                              size={19}
+                              strokeWidth={1.8}
+                              aria-hidden="true"
+                            />
 
-                  </li>
-                );
 
-              })}
+                            {/* Nombre del módulo. */}
+                            <span>
+                              {item.label}
+                            </span>
 
-            </ul>
 
-          </section>
+                            {/* Indicamos que todavía
+                                no está disponible. */}
+                            <small>
+                              Próximamente
+                            </small>
 
-        ))}
+                          </button>
+
+                        </li>
+                      );
+                    }
+
+
+                    // =================================================
+                    // MÓDULO DISPONIBLE
+                    // =================================================
+
+                    // Si la ruta ya existe,
+                    // mostramos un NavLink normal.
+                    return (
+                      <li key={item.path}>
+
+                        <NavLink
+                          to={item.path}
+                          end={item.end}
+                          onClick={onClose}
+                          className={({
+                            isActive,
+                          }) =>
+                            `admin-sidebar__link ${isActive
+                              ? "admin-sidebar__link--active"
+                              : ""
+                            }`
+                          }
+                        >
+
+                          {/* Icono del módulo. */}
+                          <Icon
+                            size={19}
+                            strokeWidth={1.8}
+                            aria-hidden="true"
+                          />
+
+
+                          {/* Nombre del módulo. */}
+                          <span>
+                            {item.label}
+                          </span>
+
+                        </NavLink>
+
+                      </li>
+                    );
+                  }
+                )}
+
+              </ul>
+
+            </section>
+          )
+        )}
 
       </nav>
 
@@ -7090,22 +8932,22 @@ function AdminSidebar({
 
       <div className="admin-sidebar__footer">
 
-        {/* Abrimos el sitio público en otra pestaña
-            para no cerrar el panel administrativo. */}
+        {/* Abrimos el sitio público
+            en una pestaña nueva para conservar
+            abierta la sesión administrativa. */}
         <a
           className="admin-sidebar__public-link"
           href="/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* Mostramos el icono de enlace externo. */}
+
           <ExternalLink
             size={18}
             strokeWidth={1.8}
             aria-hidden="true"
           />
 
-          {/* Texto visible del enlace. */}
           <span>
             Ver sitio público
           </span>
@@ -7113,22 +8955,26 @@ function AdminSidebar({
         </a>
 
 
-        {/* Este botón se conectará posteriormente
-            con la función real de cierre de sesión. */}
+        {/* Permitimos cerrar la sesión
+    actual del super administrador. */}
         <button
           className="admin-sidebar__logout"
           type="button"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
         >
-          {/* Mostramos el icono de salida. */}
+
           <LogOut
             size={18}
             strokeWidth={1.8}
             aria-hidden="true"
           />
 
-          {/* Texto visible del botón. */}
+
           <span>
-            Cerrar sesión
+            {isLoggingOut
+              ? "Cerrando sesión..."
+              : "Cerrar sesión"}
           </span>
 
         </button>
@@ -7140,9 +8986,309 @@ function AdminSidebar({
 }
 
 
-// Exportamos el componente para utilizarlo
-// dentro de AdminLayout.
+// Exportamos el componente
+// para utilizarlo dentro de AdminLayout.
 export default AdminSidebar;
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\components\auth\ProtectedRoute.jsx
+
+//frontend/src/components/auth/ProtectedRoute.jsx
+
+// Importamos las herramientas necesarias
+// para controlar la navegación protegida.
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
+
+
+// Importamos las herramientas necesarias
+// para consultar la sesión al cargar
+// el componente.
+import {
+  useEffect,
+  useState,
+} from "react";
+
+
+// Importamos el icono
+// utilizado durante la carga.
+import {
+  LoaderCircle,
+} from "lucide-react";
+
+
+// Importamos nuestra instancia
+// centralizada de Axios.
+import api from "../../services/api";
+
+
+// Importamos los estilos
+// exclusivos del componente.
+import "../../styles/components/auth/ProtectedRoute.css";
+
+
+// =========================================================
+// COMPONENTE
+// =========================================================
+
+// ProtectedRoute permitirá proteger
+// grupos completos de rutas.
+//
+// allowedRoles:
+//
+// contiene los roles autorizados
+// para acceder a la ruta.
+//
+// Ejemplo:
+//
+// allowedRoles={["super_admin"]}
+//
+// o:
+//
+// allowedRoles={["admin", "super_admin"]}
+function ProtectedRoute({
+  allowedRoles = [],
+}) {
+
+  // Obtenemos la ruta
+  // que el usuario intenta visitar.
+  const location =
+    useLocation();
+
+
+  // =========================================================
+  // ESTADO
+  // =========================================================
+
+  // Guardamos el usuario
+  // autenticado obtenido desde el backend.
+  const [
+    currentUser,
+    setCurrentUser,
+  ] = useState(null);
+
+
+  // Indicamos si todavía estamos
+  // comprobando la sesión.
+  const [
+    isLoading,
+    setIsLoading,
+  ] = useState(true);
+
+
+  // Guardamos si la sesión
+  // es válida o no.
+  const [
+    isAuthenticated,
+    setIsAuthenticated,
+  ] = useState(false);
+
+
+  // =========================================================
+  // COMPROBAR SESIÓN
+  // =========================================================
+
+  useEffect(() => {
+
+    // Creamos la función encargada
+    // de comprobar la sesión actual.
+    const verifySession = async () => {
+
+      try {
+
+        // Consultamos nuestro endpoint protegido.
+        //
+        // api.js ya incluye:
+        //
+        // withCredentials: true
+        //
+        // por lo que la cookie HttpOnly
+        // será enviada automáticamente.
+        const response =
+          await api.get(
+            "/auth/me"
+          );
+
+
+        // Comprobamos que exista
+        // un usuario válido.
+        if (
+          response.data?.success &&
+          response.data?.user
+        ) {
+
+          // Guardamos el usuario.
+          setCurrentUser(
+            response.data.user
+          );
+
+
+          // Confirmamos que existe
+          // una sesión válida.
+          setIsAuthenticated(
+            true
+          );
+        }
+
+      } catch (error) {
+
+        // Si el backend rechaza la sesión,
+        // consideramos al usuario
+        // como no autenticado.
+        setCurrentUser(
+          null
+        );
+
+        setIsAuthenticated(
+          false
+        );
+
+      } finally {
+
+        // Indicamos que terminó
+        // la comprobación.
+        setIsLoading(
+          false
+        );
+      }
+    };
+
+
+    // Ejecutamos la comprobación
+    // al cargar la ruta privada.
+    verifySession();
+
+  }, []);
+
+
+  // =========================================================
+  // CARGANDO
+  // =========================================================
+
+  // Mientras comprobamos la sesión
+  // no mostramos todavía la página privada.
+  if (isLoading) {
+
+    return (
+      <main className="protected-route">
+
+        <div className="protected-route__loader">
+
+          <LoaderCircle
+            className="protected-route__spinner"
+            size={32}
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
+
+          <span>
+            Verificando sesión...
+          </span>
+
+        </div>
+
+      </main>
+    );
+  }
+
+
+  // =========================================================
+  // SIN SESIÓN
+  // =========================================================
+
+  // Si no existe una sesión válida,
+  // enviamos al usuario al login.
+  if (
+    !isAuthenticated ||
+    !currentUser
+  ) {
+
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{
+          from:
+            location.pathname,
+        }}
+      />
+    );
+  }
+
+
+  // =========================================================
+  // VALIDACIÓN DEL ROL
+  // =========================================================
+
+  // Si esta ruta tiene roles definidos
+  // comprobamos que el rol actual
+  // se encuentre permitido.
+  const roleIsAllowed =
+    allowedRoles.length === 0 ||
+    allowedRoles.includes(
+      currentUser.role
+    );
+
+
+  // Si el usuario tiene sesión,
+  // pero intenta acceder a una sección
+  // perteneciente a otro rol,
+  // lo enviamos a su propio panel.
+  if (!roleIsAllowed) {
+
+    // Creamos un mapa cerrado
+    // con la página correspondiente
+    // a cada rol.
+    const destinationsByRole = {
+
+      member:
+        "/member",
+
+      admin:
+        "/admin",
+
+      super_admin:
+        "/super-admin",
+    };
+
+
+    // Obtenemos el destino
+    // correspondiente al usuario.
+    const destination =
+      destinationsByRole[
+        currentUser.role
+      ] || "/";
+
+
+    return (
+      <Navigate
+        to={destination}
+        replace
+      />
+    );
+  }
+
+
+  // =========================================================
+  // ACCESO AUTORIZADO
+  // =========================================================
+
+  // Si existe sesión válida
+  // y el rol está permitido,
+  // mostramos las rutas hijas.
+  return (
+    <Outlet />
+  );
+}
+
+
+// Exportamos el componente
+// para utilizarlo dentro de App.js.
+export default ProtectedRoute;
 
 
 
@@ -14039,187 +16185,744 @@ root.render(
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\member\MemberDashboard.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\admin\AdminHome.jsx
 
-import { Link } from "react-router-dom";
+// Importamos Link y NavLink para navegar entre las páginas
+// sin recargar completamente la aplicación.
 import {
-  ArrowRight,
-  BookOpen,
-  CalendarDays,
-  ChevronRight,
-  Clock3,
-  Compass,
-  HeartHandshake,
-  Mail,
-  MapPin,
-  ShieldCheck,
-  Sparkles,
-  UserRound,
-  Video,
-} from "lucide-react";
+    Link,
+    NavLink,
+} from "react-router-dom";
 
-import logoElAncla from "../../assets/images/logo-el-ancla.png";
-import "../../styles/pages/member/MemberDashboard.css";
+// Importamos los estilos exclusivos del panel del administrador.
+import "../../styles/pages/admin/AdminHome.css";
 
-// Estas actividades son contenido informativo; no representan inscripciones del miembro.
-const weeklyActivities = [
-  { id: "sunday", day: "Domingo", title: "Culto general", time: "11:00", mode: "Presencial", icon: MapPin },
-  { id: "tuesday", day: "Martes", title: "Descubriendo la Biblia", time: "20:00", mode: "Online", icon: Video },
-  { id: "wednesday", day: "Miércoles", title: "Reunión de oración", time: "21:00", mode: "Online", icon: Video },
-  { id: "thursday", day: "Jueves", title: "Estudio bíblico", time: "20:00", mode: "Online", icon: Video },
-];
+// Creamos el componente principal del panel administrativo.
+function AdminHome() {
 
-// Solo enlazamos secciones públicas que ya aparecen en App.js.
-const resourceLinks = [
-  { title: "Guías de oración", description: "Un espacio para acompañar tus momentos de oración.", to: "/recursos/guias-oracion", icon: HeartHandshake },
-  { title: "Estudios bíblicos", description: "Material para aprender y compartir en comunidad.", to: "/recursos/estudios", icon: BookOpen },
-  { title: "Guía devocional", description: "Ideas sencillas para dedicar tiempo a la reflexión.", to: "/recursos/devocional", icon: Compass },
-];
+    // Esta función permite asignar una clase diferente
+    // al enlace correspondiente a la página activa.
+    const getNavigationClass = ({ isActive }) => {
+        return isActive
+            ? "limited-admin__nav-link limited-admin__nav-link--active"
+            : "limited-admin__nav-link";
+    };
 
-// El usuario debe provenir de una sesión verificada por el backend.
-function MemberDashboard({ user }) {
-  // Evitamos usar información del navegador como prueba de identidad.
-  const firstName = typeof user?.firstName === "string" ? user.firstName.trim() : "";
-  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
-  const primaryBranch = user?.sucursalPrincipal?.name;
+    return (
+        // Contenedor general del panel administrativo.
+        <div className="limited-admin">
 
-  return (
-    <div className="member-page">
-      <a className="member-page__skip" href="#contenido-miembro">Ir al contenido</a>
+            {/* ====================================================== */}
+            {/* SIDEBAR                                                */}
+            {/* ====================================================== */}
 
-      <header className="member-topbar">
-        <div className="member-container member-topbar__inner">
-          <Link className="member-topbar__brand" to="/" aria-label="El Ancla: ir al inicio">
-            <img src={logoElAncla} alt="" />
-            <span><strong>El Ancla</strong><small>Mi espacio</small></span>
-          </Link>
+            <aside className="limited-admin__sidebar">
 
-          <nav className="member-topbar__links" aria-label="Navegación de miembros">
-            <a href="#actividades">Actividades</a>
-            <a href="#recursos-miembro">Recursos</a>
-            <a href="#mi-perfil">Mi perfil</a>
-          </nav>
+                {/* Identidad visual del panel. */}
+                <div className="limited-admin__brand">
 
-          <Link className="member-topbar__public-link" to="/">
-            Ver sitio público <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-        </div>
-      </header>
+                    {/* Icono temporal del logo. */}
+                    <div className="limited-admin__brand-icon">
+                        ⚓
+                    </div>
 
-      <main className="member-container member-main" id="contenido-miembro">
-        <div className="member-breadcrumb" aria-label="Ubicación actual">
-          <Link to="/">Inicio</Link><ChevronRight size={15} aria-hidden="true" />
-          <span aria-current="page">Mi espacio</span>
-        </div>
+                    {/* Nombre y tipo de panel. */}
+                    <div>
+                        <h1 className="limited-admin__brand-title">
+                            El Ancla
+                        </h1>
 
-        <section className="member-hero" aria-labelledby="member-welcome-title">
-          <div className="member-hero__content">
-            <span className="member-eyebrow"><Sparkles size={16} aria-hidden="true" /> Tu espacio en comunidad</span>
-            <h1 id="member-welcome-title">{firstName ? `¡Qué bueno verte, ${firstName}!` : "Bienvenido a tu espacio"}</h1>
-            <p>Encuentra nuestras actividades, explora recursos para crecer en la fe y mantente cerca de la comunidad de El Ancla.</p>
-            <div className="member-hero__actions">
-              <a className="member-button member-button--light" href="#actividades">Explorar actividades <ArrowRight size={17} aria-hidden="true" /></a>
-              <Link className="member-button member-button--outline" to="/contacto">Contáctanos</Link>
-            </div>
-          </div>
-          <div className="member-hero__art" aria-hidden="true">
-            <span className="member-hero__ring member-hero__ring--outer" />
-            <span className="member-hero__ring member-hero__ring--inner" />
-            <span className="member-hero__symbol"><img src={logoElAncla} alt="" /></span>
-            <span className="member-hero__verse">Juntos en comunidad</span>
-          </div>
-        </section>
+                        <p className="limited-admin__brand-subtitle">
+                            Panel administrativo
+                        </p>
+                    </div>
 
-        <div className="member-grid">
-          <div className="member-grid__main">
-            <section className="member-section" id="actividades" aria-labelledby="member-activities-title">
-              <div className="member-section__heading">
-                <div>
-                  <span className="member-section__kicker">Compartamos juntos</span>
-                  <h2 id="member-activities-title">Actividades de la semana</h2>
-                  <p>Horarios habituales de nuestra comunidad. Consulta los detalles antes de asistir.</p>
                 </div>
-                <Link className="member-text-link" to="/eventos">Ver eventos <ArrowRight size={17} aria-hidden="true" /></Link>
-              </div>
 
-              <div className="member-activities">
-                {weeklyActivities.map((activity) => {
-                  const ActivityIcon = activity.icon;
-                  return (
-                    <article className="member-activity" key={activity.id}>
-                      <div className="member-activity__day"><CalendarDays size={19} aria-hidden="true" /><span>{activity.day}</span></div>
-                      <div className="member-activity__body"><h3>{activity.title}</h3><span><ActivityIcon size={15} aria-hidden="true" /> {activity.mode}</span></div>
-                      <div className="member-activity__time"><Clock3 size={16} aria-hidden="true" /> {activity.time}</div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
+                {/* Navegación principal. */}
+                <nav className="limited-admin__navigation">
 
-            <section className="member-section" id="recursos-miembro" aria-labelledby="member-resources-title">
-              <div className="member-section__heading">
-                <div>
-                  <span className="member-section__kicker">Para tu día a día</span>
-                  <h2 id="member-resources-title">Recursos para acompañarte</h2>
-                  <p>Un punto de partida para estudiar, reflexionar y orar.</p>
-                </div>
-                <Link className="member-text-link" to="/recursos">Todos los recursos <ArrowRight size={17} aria-hidden="true" /></Link>
-              </div>
+                    {/* Grupo principal. */}
+                    <div className="limited-admin__nav-group">
 
-              <div className="member-resources">
-                {resourceLinks.map((resource) => {
-                  const ResourceIcon = resource.icon;
-                  return (
-                    <Link className="member-resource" key={resource.to} to={resource.to}>
-                      <span className="member-resource__icon"><ResourceIcon size={23} strokeWidth={1.8} aria-hidden="true" /></span>
-                      <strong>{resource.title}</strong>
-                      <span>{resource.description}</span>
-                      <span className="member-resource__arrow">Explorar <ArrowRight size={16} aria-hidden="true" /></span>
+                        <p className="limited-admin__nav-title">
+                            Principal
+                        </p>
+
+                        <NavLink
+                            to="/admin"
+                            end
+                            className={getNavigationClass}
+                        >
+                            <span className="limited-admin__nav-icon">
+                                ▦
+                            </span>
+
+                            <span>Inicio</span>
+                        </NavLink>
+
+                    </div>
+
+                    {/* Grupo relacionado con la comunidad. */}
+                    <div className="limited-admin__nav-group">
+
+                        <p className="limited-admin__nav-title">
+                            Comunidad
+                        </p>
+
+                        <div className="limited-admin__nav-link limited-admin__nav-link--disabled">
+                            <span className="limited-admin__nav-icon">
+                                ▣
+                            </span>
+
+                            <span>Eventos</span>
+
+                            <span className="limited-admin__nav-status">
+                                Próximamente
+                            </span>
+                        </div>
+
+                        <div className="limited-admin__nav-link limited-admin__nav-link--disabled">
+                            <span className="limited-admin__nav-icon">
+                                ♡
+                            </span>
+
+                            <span>Peticiones de oración</span>
+
+                            <span className="limited-admin__nav-status">
+                                Próximamente
+                            </span>
+                        </div>
+
+                        <div className="limited-admin__nav-link limited-admin__nav-link--disabled">
+                            <span className="limited-admin__nav-icon">
+                                ♙
+                            </span>
+
+                            <span>Miembros</span>
+
+                            <span className="limited-admin__nav-status">
+                                Consulta
+                            </span>
+                        </div>
+
+                    </div>
+
+                    {/* Grupo de contenidos. */}
+                    <div className="limited-admin__nav-group">
+
+                        <p className="limited-admin__nav-title">
+                            Contenidos
+                        </p>
+
+                        <div className="limited-admin__nav-link limited-admin__nav-link--disabled">
+                            <span className="limited-admin__nav-icon">
+                                ▤
+                            </span>
+
+                            <span>Recursos</span>
+
+                            <span className="limited-admin__nav-status">
+                                Próximamente
+                            </span>
+                        </div>
+
+                    </div>
+
+                    {/* Grupo financiero. */}
+                    <div className="limited-admin__nav-group">
+
+                        <p className="limited-admin__nav-title">
+                            Finanzas
+                        </p>
+
+                        <div className="limited-admin__nav-link limited-admin__nav-link--disabled">
+                            <span className="limited-admin__nav-icon">
+                                $
+                            </span>
+
+                            <span>Ingresos</span>
+
+                            <span className="limited-admin__nav-status">
+                                Próximamente
+                            </span>
+                        </div>
+
+                        <NavLink
+                            to="/admin/gastos"
+                            className={getNavigationClass}
+                        >
+                            <span className="limited-admin__nav-icon">
+                                ▤
+                            </span>
+
+                            <span>Gastos</span>
+                        </NavLink>
+
+                    </div>
+
+                </nav>
+
+                {/* Acciones inferiores del sidebar. */}
+                <div className="limited-admin__sidebar-footer">
+
+                    <Link
+                        to="/"
+                        className="limited-admin__footer-link"
+                    >
+                        <span>↗</span>
+                        <span>Ver sitio público</span>
                     </Link>
-                  );
-                })}
-              </div>
-            </section>
-          </div>
 
-          <aside className="member-grid__aside" aria-label="Información personal y comunidad">
-            <section className="member-profile" id="mi-perfil" aria-labelledby="member-profile-title">
-              <div className="member-profile__heading"><span className="member-profile__icon"><UserRound size={22} aria-hidden="true" /></span><div><span>Cuenta de miembro</span><h2 id="member-profile-title">Mi perfil</h2></div></div>
-              {user ? (
-                <dl className="member-profile__details">
-                  <div><dt>Nombre</dt><dd>{fullName || "Sin registrar"}</dd></div>
-                  <div><dt>Correo</dt><dd className="member-profile__email">{user.email || "Sin registrar"}</dd></div>
-                  <div><dt>Sucursal principal</dt><dd>{primaryBranch || "Por confirmar"}</dd></div>
-                </dl>
-              ) : (
-                <p className="member-profile__empty">Tus datos aparecerán aquí cuando conectemos esta página con tu sesión verificada.</p>
-              )}
-              <p className="member-profile__note"><ShieldCheck size={17} aria-hidden="true" /> Tu información personal se mostrará solo en tu sesión.</p>
-            </section>
+                    <button
+                        className="limited-admin__footer-link limited-admin__logout"
+                        type="button"
+                    >
+                        <span>↪</span>
+                        <span>Cerrar sesión</span>
+                    </button>
 
-            <section className="member-community" aria-labelledby="member-community-title">
-              <div className="member-community__icon"><HeartHandshake size={26} aria-hidden="true" /></div>
-              <h2 id="member-community-title">¿Necesitas conversar?</h2>
-              <p>Queremos acompañarte. Escríbenos si tienes una consulta o necesitas orientación.</p>
-              <Link to="/contacto">Ir a contacto <ArrowRight size={17} aria-hidden="true" /></Link>
-            </section>
+                </div>
 
-            <div className="member-help"><Mail size={19} aria-hidden="true" /><p>¿Buscas algo más? <Link to="/recursos/preguntas-frecuentes">Revisa las preguntas frecuentes</Link>.</p></div>
-          </aside>
+            </aside>
+
+            {/* ====================================================== */}
+            {/* CONTENIDO PRINCIPAL                                    */}
+            {/* ====================================================== */}
+
+            <div className="limited-admin__main">
+
+                {/* Header superior. */}
+                <header className="limited-admin__header">
+
+                    <div>
+                        <h2 className="limited-admin__header-title">
+                            Panel administrativo
+                        </h2>
+
+                        <p className="limited-admin__header-date">
+                            Viernes, 25 de septiembre de 2026
+                        </p>
+                    </div>
+
+                    {/* Información del administrador conectado. */}
+                    <div className="limited-admin__profile">
+
+                        <div className="limited-admin__notification">
+                            ♧
+                        </div>
+
+                        <div className="limited-admin__profile-avatar">
+                            ♙
+                        </div>
+
+                        <div className="limited-admin__profile-info">
+                            <strong>
+                                Administrador
+                            </strong>
+
+                            <span>
+                                Acceso administrativo
+                            </span>
+                        </div>
+
+                    </div>
+
+                </header>
+
+                {/* ================================================== */}
+                {/* ÁREA DEL DASHBOARD                                 */}
+                {/* ================================================== */}
+
+                <main className="limited-admin__content">
+
+                    {/* Tarjeta de bienvenida. */}
+                    <section className="limited-admin__welcome-card">
+
+                        <div className="limited-admin__welcome-content">
+
+                            <span className="limited-admin__eyebrow">
+                                Administración general
+                            </span>
+
+                            <h2 className="limited-admin__welcome-title">
+                                Bienvenido al panel administrativo
+                            </h2>
+
+                            <p className="limited-admin__welcome-text">
+                                Revisa la actividad de la iglesia y
+                                accede rápidamente a las herramientas
+                                disponibles para tu gestión.
+                            </p>
+
+                        </div>
+
+                        <Link
+                            to="/"
+                            className="limited-admin__public-button"
+                        >
+                            Ver sitio público
+                            <span>→</span>
+                        </Link>
+
+                    </section>
+
+                    {/* ================================================== */}
+                    {/* TARJETAS DE ESTADÍSTICAS                            */}
+                    {/* ================================================== */}
+
+                    <section className="limited-admin__stats">
+
+                        <article className="limited-admin__stat-card">
+
+                            <div className="limited-admin__stat-icon limited-admin__stat-icon--blue">
+                                ▦
+                            </div>
+
+                            <div>
+                                <p className="limited-admin__stat-label">
+                                    Próximas actividades
+                                </p>
+
+                                <strong className="limited-admin__stat-value">
+                                    4
+                                </strong>
+
+                                <span className="limited-admin__stat-description">
+                                    Actividades semanales
+                                </span>
+                            </div>
+
+                        </article>
+
+                        <article className="limited-admin__stat-card">
+
+                            <div className="limited-admin__stat-icon limited-admin__stat-icon--gold">
+                                ♡
+                            </div>
+
+                            <div>
+                                <p className="limited-admin__stat-label">
+                                    Peticiones pendientes
+                                </p>
+
+                                <strong className="limited-admin__stat-value">
+                                    2
+                                </strong>
+
+                                <span className="limited-admin__stat-description">
+                                    Requieren revisión
+                                </span>
+                            </div>
+
+                        </article>
+
+                        <article className="limited-admin__stat-card">
+
+                            <div className="limited-admin__stat-icon limited-admin__stat-icon--green">
+                                ♙
+                            </div>
+
+                            <div>
+                                <p className="limited-admin__stat-label">
+                                    Miembros registrados
+                                </p>
+
+                                <strong className="limited-admin__stat-value">
+                                    48
+                                </strong>
+
+                                <span className="limited-admin__stat-description">
+                                    Información temporal
+                                </span>
+                            </div>
+
+                        </article>
+
+                        <article className="limited-admin__stat-card">
+
+                            <div className="limited-admin__stat-icon limited-admin__stat-icon--red">
+                                ▤
+                            </div>
+
+                            <div>
+                                <p className="limited-admin__stat-label">
+                                    Gastos pendientes
+                                </p>
+
+                                <strong className="limited-admin__stat-value">
+                                    2
+                                </strong>
+
+                                <span className="limited-admin__stat-description">
+                                    $70.990
+                                </span>
+                            </div>
+
+                        </article>
+
+                    </section>
+
+                    {/* ================================================== */}
+                    {/* ACCIONES RÁPIDAS                                   */}
+                    {/* ================================================== */}
+
+                    <section className="limited-admin__section">
+
+                        <div className="limited-admin__section-heading">
+
+                            <div>
+                                <h3 className="limited-admin__section-title">
+                                    Acciones rápidas
+                                </h3>
+
+                                <p className="limited-admin__section-description">
+                                    Accede directamente a las tareas
+                                    administrativas más utilizadas.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div className="limited-admin__quick-actions">
+
+                            <button
+                                type="button"
+                                className="limited-admin__quick-action limited-admin__quick-action--disabled"
+                            >
+                                <span className="limited-admin__quick-icon">
+                                    ▦
+                                </span>
+
+                                <span>
+                                    <strong>Crear evento</strong>
+                                    <small>Disponible próximamente</small>
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className="limited-admin__quick-action limited-admin__quick-action--disabled"
+                            >
+                                <span className="limited-admin__quick-icon">
+                                    ♫
+                                </span>
+
+                                <span>
+                                    <strong>Publicar aviso</strong>
+                                    <small>Disponible próximamente</small>
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className="limited-admin__quick-action limited-admin__quick-action--disabled"
+                            >
+                                <span className="limited-admin__quick-icon">
+                                    $
+                                </span>
+
+                                <span>
+                                    <strong>Registrar ingreso</strong>
+                                    <small>Disponible próximamente</small>
+                                </span>
+                            </button>
+
+                            <Link
+                                to="/admin/gastos"
+                                className="limited-admin__quick-action"
+                            >
+                                <span className="limited-admin__quick-icon">
+                                    ▤
+                                </span>
+
+                                <span>
+                                    <strong>Registrar gasto</strong>
+                                    <small>
+                                        Ir al módulo de gastos de la iglesia.
+                                    </small>
+                                </span>
+
+                                <span className="limited-admin__quick-arrow">
+                                    →
+                                </span>
+                            </Link>
+
+                            <button
+                                type="button"
+                                className="limited-admin__quick-action limited-admin__quick-action--disabled"
+                            >
+                                <span className="limited-admin__quick-icon">
+                                    ＋
+                                </span>
+
+                                <span>
+                                    <strong>Agregar recurso</strong>
+                                    <small>Disponible próximamente</small>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                    {/* ================================================== */}
+                    {/* ACTIVIDADES Y PETICIONES                           */}
+                    {/* ================================================== */}
+
+                    <div className="limited-admin__dashboard-grid">
+
+                        {/* Próximas actividades. */}
+                        <section className="limited-admin__section">
+
+                            <div className="limited-admin__section-heading">
+
+                                <div>
+                                    <h3 className="limited-admin__section-title">
+                                        Próximas actividades
+                                    </h3>
+
+                                    <p className="limited-admin__section-description">
+                                        Reuniones programadas para la comunidad.
+                                    </p>
+                                </div>
+
+                                <span className="limited-admin__section-link">
+                                    Ver todas
+                                </span>
+
+                            </div>
+
+                            <div className="limited-admin__activity-list">
+
+                                <div className="limited-admin__activity">
+                                    <div className="limited-admin__activity-icon">
+                                        ▦
+                                    </div>
+
+                                    <div>
+                                        <strong>Culto general</strong>
+                                        <p>
+                                            ◷ Domingo, 11:00 hrs
+                                            <span>⌖ Presencial y online</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="limited-admin__activity">
+                                    <div className="limited-admin__activity-icon">
+                                        ▦
+                                    </div>
+
+                                    <div>
+                                        <strong>Descubriendo la Biblia</strong>
+                                        <p>
+                                            ◷ Martes, 20:00 hrs
+                                            <span>⌖ Online</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="limited-admin__activity">
+                                    <div className="limited-admin__activity-icon">
+                                        ▦
+                                    </div>
+
+                                    <div>
+                                        <strong>Reunión de oración</strong>
+                                        <p>
+                                            ◷ Miércoles, 21:00 hrs
+                                            <span>⌖ Online</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="limited-admin__activity">
+                                    <div className="limited-admin__activity-icon">
+                                        ▦
+                                    </div>
+
+                                    <div>
+                                        <strong>Estudio bíblico</strong>
+                                        <p>
+                                            ◷ Jueves, 20:00 hrs
+                                            <span>⌖ Online</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        {/* Peticiones recientes. */}
+                        <section className="limited-admin__section">
+
+                            <div className="limited-admin__section-heading">
+
+                                <div>
+                                    <h3 className="limited-admin__section-title">
+                                        Peticiones recientes
+                                    </h3>
+
+                                    <p className="limited-admin__section-description">
+                                        Solicitudes recibidas desde la comunidad.
+                                    </p>
+                                </div>
+
+                                <span className="limited-admin__section-link">
+                                    Ver todas
+                                </span>
+
+                            </div>
+
+                            <div className="limited-admin__prayer-list">
+
+                                <article className="limited-admin__prayer-card">
+
+                                    <div className="limited-admin__prayer-header">
+                                        <strong>Solicitud anónima</strong>
+
+                                        <span className="limited-admin__badge limited-admin__badge--pending">
+                                            Pendiente
+                                        </span>
+                                    </div>
+
+                                    <p>
+                                        Oración por una situación familiar
+                                        y dirección para tomar decisiones.
+                                    </p>
+
+                                    <small>Hace 2 horas</small>
+
+                                </article>
+
+                                <article className="limited-admin__prayer-card">
+
+                                    <div className="limited-admin__prayer-header">
+                                        <strong>María</strong>
+
+                                        <span className="limited-admin__badge limited-admin__badge--active">
+                                            En oración
+                                        </span>
+                                    </div>
+
+                                    <p>
+                                        Oración por la recuperación de un
+                                        familiar que se encuentra enfermo.
+                                    </p>
+
+                                    <small>Hace 5 horas</small>
+
+                                </article>
+
+                                <article className="limited-admin__prayer-card">
+
+                                    <div className="limited-admin__prayer-header">
+                                        <strong>Solicitud privada</strong>
+
+                                        <span className="limited-admin__badge limited-admin__badge--pending">
+                                            Pendiente
+                                        </span>
+                                    </div>
+
+                                    <p>
+                                        Esta petición contiene información
+                                        privada para el equipo de liderazgo.
+                                    </p>
+
+                                    <small>Ayer</small>
+
+                                </article>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                    {/* ================================================== */}
+                    {/* RESUMEN FINANCIERO                                 */}
+                    {/* ================================================== */}
+
+                    <section className="limited-admin__section limited-admin__finance">
+
+                        <div className="limited-admin__section-heading">
+
+                            <div>
+                                <h3 className="limited-admin__section-title">
+                                    Resumen financiero
+                                </h3>
+
+                                <p className="limited-admin__section-description">
+                                    Vista general de los gastos registrados.
+                                </p>
+                            </div>
+
+                            <Link
+                                to="/admin/gastos"
+                                className="limited-admin__section-link"
+                            >
+                                Ver gastos →
+                            </Link>
+
+                        </div>
+
+                        <div className="limited-admin__finance-grid">
+
+                            <article className="limited-admin__finance-card">
+                                <span className="limited-admin__finance-icon">
+                                    $
+                                </span>
+
+                                <div>
+                                    <small>Gastos pagados</small>
+                                    <strong>$462.600</strong>
+                                </div>
+                            </article>
+
+                            <article className="limited-admin__finance-card">
+                                <span className="limited-admin__finance-icon">
+                                    ▤
+                                </span>
+
+                                <div>
+                                    <small>Total comprometido</small>
+                                    <strong>$70.990</strong>
+                                </div>
+                            </article>
+
+                            <article className="limited-admin__finance-card">
+                                <span className="limited-admin__finance-icon">
+                                    ▥
+                                </span>
+
+                                <div>
+                                    <small>Movimientos registrados</small>
+                                    <strong>6</strong>
+                                </div>
+                            </article>
+
+                        </div>
+
+                    </section>
+
+                </main>
+
+            </div>
+
         </div>
-      </main>
-
-      <footer className="member-footer"><div className="member-container"><span>© {new Date().getFullYear()} Iglesia El Ancla</span><Link to="/">Volver al inicio</Link></div></footer>
-    </div>
-  );
+    );
 }
 
-export default MemberDashboard;
+// Exportamos el componente para poder utilizarlo desde App.js.
+export default AdminHome;
 
 
 
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\administration\AdminDashboard.jsx
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\super-admin\AdminDashboard.jsx
+//frontend/src/pages/super-admin/AdminDashboard.jsx
 
 // Importamos Link para navegar hacia
 // las páginas administrativas disponibles.
@@ -15158,7 +17861,9 @@ export default AdminDashboard;
 
 
 
-File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\super-admin\ExpenseManagement.jsx
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\administration\ExpenseManagement.jsx
+
+//frontend/src/pages/ExpenseManagement.jsx
 
 // Importamos useState para controlar
 // la sección seleccionada y el modal.
@@ -15166,31 +17871,31 @@ import { useState } from "react";
 
 // Importamos el componente que contiene el encabezado
 // de la página de gestión de gastos.
-import ExpenseHeader from "../../components/super-admin/expenses/ExpenseHeader";
+import ExpenseHeader from "../../components/administration/expenses/ExpenseHeader";
 
 // Importamos el menú interno del módulo.
-import ExpenseNavigation from "../../components/super-admin/expenses/ExpenseNavigation";
+import ExpenseNavigation from "../../components/administration/expenses/ExpenseNavigation";
 
 // Importamos las tarjetas con los indicadores
 // principales de los gastos.
-import ExpenseSummary from "../../components/super-admin/expenses/ExpenseSummary";
+import ExpenseSummary from "../../components/administration/expenses/ExpenseSummary";
 
 // Importamos los gráficos correspondientes
 // al análisis de los gastos.
-import ExpenseCharts from "../../components/super-admin/expenses/ExpenseCharts";
+import ExpenseCharts from "../../components/administration/expenses/ExpenseCharts";
 
 // Importamos la sección de gastos próximos.
-import UpcomingExpenses from "../../components/super-admin/expenses/UpcomingExpenses";
+import UpcomingExpenses from "../../components/administration/expenses/UpcomingExpenses";
 
 // Importamos el historial completo de gastos.
-import ExpenseTable from "../../components/super-admin/expenses/ExpenseTable";
+import ExpenseTable from "../../components/administration/expenses/ExpenseTable";
 
 // Importamos el modal visual
 // para registrar un nuevo gasto.
-import ExpenseFormModal from "../../components/super-admin/expenses/ExpenseFormModal";
+import ExpenseFormModal from "../../components/administration/expenses/ExpenseFormModal";
 
 // Importamos los estilos generales de la página.
-import "../../styles/pages/super-admin/ExpenseManagement.css";
+import "../../styles/pages/administration/ExpenseManagement.css";
 
 
 // Creamos el componente principal de la página.
@@ -15297,6 +18002,271 @@ export default ExpenseManagement;
 
 
 
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\member\MemberDashboard.jsx
+
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  ChevronRight,
+  Clock3,
+  Compass,
+  HeartHandshake,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  UserRound,
+  Video,
+} from "lucide-react";
+
+import logoElAncla from "../../assets/images/logo-el-ancla.png";
+import "../../styles/pages/member/MemberDashboard.css";
+
+// Estas actividades son contenido informativo; no representan inscripciones del miembro.
+const weeklyActivities = [
+  { id: "sunday", day: "Domingo", title: "Culto general", time: "11:00", mode: "Presencial", icon: MapPin },
+  { id: "tuesday", day: "Martes", title: "Descubriendo la Biblia", time: "20:00", mode: "Online", icon: Video },
+  { id: "wednesday", day: "Miércoles", title: "Reunión de oración", time: "21:00", mode: "Online", icon: Video },
+  { id: "thursday", day: "Jueves", title: "Estudio bíblico", time: "20:00", mode: "Online", icon: Video },
+];
+
+// Solo enlazamos secciones públicas que ya aparecen en App.js.
+const resourceLinks = [
+  { title: "Guías de oración", description: "Un espacio para acompañar tus momentos de oración.", to: "/recursos/guias-oracion", icon: HeartHandshake },
+  { title: "Estudios bíblicos", description: "Material para aprender y compartir en comunidad.", to: "/recursos/estudios", icon: BookOpen },
+  { title: "Guía devocional", description: "Ideas sencillas para dedicar tiempo a la reflexión.", to: "/recursos/devocional", icon: Compass },
+];
+
+// El usuario debe provenir de una sesión verificada por el backend.
+function MemberDashboard({ user }) {
+  // Evitamos usar información del navegador como prueba de identidad.
+  const firstName = typeof user?.firstName === "string" ? user.firstName.trim() : "";
+  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+  const primaryBranch = user?.sucursalPrincipal?.name;
+
+  return (
+    <div className="member-page">
+      <a className="member-page__skip" href="#contenido-miembro">Ir al contenido</a>
+
+      <header className="member-topbar">
+        <div className="member-container member-topbar__inner">
+          <Link className="member-topbar__brand" to="/" aria-label="El Ancla: ir al inicio">
+            <img src={logoElAncla} alt="" />
+            <span><strong>El Ancla</strong><small>Mi espacio</small></span>
+          </Link>
+
+          <nav className="member-topbar__links" aria-label="Navegación de miembros">
+            <a href="#actividades">Actividades</a>
+            <a href="#recursos-miembro">Recursos</a>
+            <a href="#mi-perfil">Mi perfil</a>
+          </nav>
+
+          <Link className="member-topbar__public-link" to="/">
+            Ver sitio público <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+      </header>
+
+      <main className="member-container member-main" id="contenido-miembro">
+        <div className="member-breadcrumb" aria-label="Ubicación actual">
+          <Link to="/">Inicio</Link><ChevronRight size={15} aria-hidden="true" />
+          <span aria-current="page">Mi espacio</span>
+        </div>
+
+        <section className="member-hero" aria-labelledby="member-welcome-title">
+          <div className="member-hero__content">
+            <span className="member-eyebrow"><Sparkles size={16} aria-hidden="true" /> Tu espacio en comunidad</span>
+            <h1 id="member-welcome-title">{firstName ? `¡Qué bueno verte, ${firstName}!` : "Bienvenido a tu espacio"}</h1>
+            <p>Encuentra nuestras actividades, explora recursos para crecer en la fe y mantente cerca de la comunidad de El Ancla.</p>
+            <div className="member-hero__actions">
+              <a className="member-button member-button--light" href="#actividades">Explorar actividades <ArrowRight size={17} aria-hidden="true" /></a>
+              <Link className="member-button member-button--outline" to="/contacto">Contáctanos</Link>
+            </div>
+          </div>
+          <div className="member-hero__art" aria-hidden="true">
+            <span className="member-hero__ring member-hero__ring--outer" />
+            <span className="member-hero__ring member-hero__ring--inner" />
+            <span className="member-hero__symbol"><img src={logoElAncla} alt="" /></span>
+            <span className="member-hero__verse">Juntos en comunidad</span>
+          </div>
+        </section>
+
+        <div className="member-grid">
+          <div className="member-grid__main">
+            <section className="member-section" id="actividades" aria-labelledby="member-activities-title">
+              <div className="member-section__heading">
+                <div>
+                  <span className="member-section__kicker">Compartamos juntos</span>
+                  <h2 id="member-activities-title">Actividades de la semana</h2>
+                  <p>Horarios habituales de nuestra comunidad. Consulta los detalles antes de asistir.</p>
+                </div>
+                <Link className="member-text-link" to="/eventos">Ver eventos <ArrowRight size={17} aria-hidden="true" /></Link>
+              </div>
+
+              <div className="member-activities">
+                {weeklyActivities.map((activity) => {
+                  const ActivityIcon = activity.icon;
+                  return (
+                    <article className="member-activity" key={activity.id}>
+                      <div className="member-activity__day"><CalendarDays size={19} aria-hidden="true" /><span>{activity.day}</span></div>
+                      <div className="member-activity__body"><h3>{activity.title}</h3><span><ActivityIcon size={15} aria-hidden="true" /> {activity.mode}</span></div>
+                      <div className="member-activity__time"><Clock3 size={16} aria-hidden="true" /> {activity.time}</div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="member-section" id="recursos-miembro" aria-labelledby="member-resources-title">
+              <div className="member-section__heading">
+                <div>
+                  <span className="member-section__kicker">Para tu día a día</span>
+                  <h2 id="member-resources-title">Recursos para acompañarte</h2>
+                  <p>Un punto de partida para estudiar, reflexionar y orar.</p>
+                </div>
+                <Link className="member-text-link" to="/recursos">Todos los recursos <ArrowRight size={17} aria-hidden="true" /></Link>
+              </div>
+
+              <div className="member-resources">
+                {resourceLinks.map((resource) => {
+                  const ResourceIcon = resource.icon;
+                  return (
+                    <Link className="member-resource" key={resource.to} to={resource.to}>
+                      <span className="member-resource__icon"><ResourceIcon size={23} strokeWidth={1.8} aria-hidden="true" /></span>
+                      <strong>{resource.title}</strong>
+                      <span>{resource.description}</span>
+                      <span className="member-resource__arrow">Explorar <ArrowRight size={16} aria-hidden="true" /></span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          </div>
+
+          <aside className="member-grid__aside" aria-label="Información personal y comunidad">
+            <section className="member-profile" id="mi-perfil" aria-labelledby="member-profile-title">
+              <div className="member-profile__heading"><span className="member-profile__icon"><UserRound size={22} aria-hidden="true" /></span><div><span>Cuenta de miembro</span><h2 id="member-profile-title">Mi perfil</h2></div></div>
+              {user ? (
+                <dl className="member-profile__details">
+                  <div><dt>Nombre</dt><dd>{fullName || "Sin registrar"}</dd></div>
+                  <div><dt>Correo</dt><dd className="member-profile__email">{user.email || "Sin registrar"}</dd></div>
+                  <div><dt>Sucursal principal</dt><dd>{primaryBranch || "Por confirmar"}</dd></div>
+                </dl>
+              ) : (
+                <p className="member-profile__empty">Tus datos aparecerán aquí cuando conectemos esta página con tu sesión verificada.</p>
+              )}
+              <p className="member-profile__note"><ShieldCheck size={17} aria-hidden="true" /> Tu información personal se mostrará solo en tu sesión.</p>
+            </section>
+
+            <section className="member-community" aria-labelledby="member-community-title">
+              <div className="member-community__icon"><HeartHandshake size={26} aria-hidden="true" /></div>
+              <h2 id="member-community-title">¿Necesitas conversar?</h2>
+              <p>Queremos acompañarte. Escríbenos si tienes una consulta o necesitas orientación.</p>
+              <Link to="/contacto">Ir a contacto <ArrowRight size={17} aria-hidden="true" /></Link>
+            </section>
+
+            <div className="member-help"><Mail size={19} aria-hidden="true" /><p>¿Buscas algo más? <Link to="/recursos/preguntas-frecuentes">Revisa las preguntas frecuentes</Link>.</p></div>
+          </aside>
+        </div>
+      </main>
+
+      <footer className="member-footer"><div className="member-container"><span>© {new Date().getFullYear()} Iglesia El Ancla</span><Link to="/">Volver al inicio</Link></div></footer>
+    </div>
+  );
+}
+
+export default MemberDashboard;
+
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\pages\super-admin\SuperAdminHome.jsx
+
+// Importamos los estilos generales
+// de la página principal del super administrador.
+import "../../styles/pages/super-admin/SuperAdminHome.css";
+
+// Importamos el resumen personal
+// correspondiente a la experiencia como miembro.
+import MemberOverview from "../../components/administration/home/MemberOverview";
+
+// Importamos el resumen de las
+// funciones administrativas generales.
+import AdminOverview from "../../components/administration/home/AdminOverview";
+
+// Importamos las herramientas
+// exclusivas del super administrador.
+import SuperAdminOverview from "../../components/administration/home/SuperAdminOverview";
+
+
+// Creamos la página principal
+// de la sesión del super administrador.
+function SuperAdminHome() {
+
+    return (
+        <main className="super-admin-home">
+
+            {/* Contenedor principal de la página. */}
+            <div className="super-admin-home__container">
+
+
+                {/* ================================================= */}
+                {/* ENCABEZADO */}
+                {/* ================================================= */}
+
+                <section className="super-admin-home__welcome">
+
+                    <span className="super-admin-home__eyebrow">
+                        Panel general
+                    </span>
+
+                    <h1>
+                        Bienvenido a tu espacio
+                    </h1>
+
+                    <p>
+                        Revisa tu actividad como miembro de la comunidad
+                        y accede a las herramientas de administración
+                        de Iglesia El Ancla.
+                    </p>
+
+                </section>
+
+
+                {/* ================================================= */}
+                {/* ÁREA PERSONAL / MIEMBRO */}
+                {/* ================================================= */}
+
+                <MemberOverview />
+
+
+                {/* ================================================= */}
+                {/* ÁREA ADMINISTRATIVA */}
+                {/* ================================================= */}
+
+                <AdminOverview />
+
+
+                {/* ================================================= */}
+                {/* CONTROL DEL SUPER ADMINISTRADOR */}
+                {/* ================================================= */}
+
+                <SuperAdminOverview />
+
+            </div>
+
+        </main>
+    );
+}
+
+
+// Exportamos la página para utilizarla en App.js.
+export default SuperAdminHome;
+
+
+
 File: C:\Users\Liss\Desktop\iglesia-el-ancla\frontend\src\services\api.js
 
 // Importamos Axios para realizar
@@ -15378,4 +18348,38 @@ function writeToFile(content) {
 const filesContent = scanDirectory(__dirname);
 writeToFile(filesContent);
 
+
+
+
+File: C:\Users\Liss\Desktop\iglesia-el-ancla\vercel.json
+
+{
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "create-react-app"
+    },
+    "backend": {
+      "root": "backend",
+      "framework": "express",
+      "entrypoint": "server.js"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)?",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)?",
+      "destination": {
+        "type": "service",
+        "service": "frontend"
+      }
+    }
+  ]
+}
 

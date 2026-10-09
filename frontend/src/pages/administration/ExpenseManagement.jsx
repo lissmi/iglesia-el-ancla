@@ -6,31 +6,31 @@ import { useState } from "react";
 
 // Importamos el componente que contiene el encabezado
 // de la página de gestión de gastos.
-import ExpenseHeader from "../../components/super-admin/expenses/ExpenseHeader";
+import ExpenseHeader from "../../components/administration/expenses/ExpenseHeader";
 
 // Importamos el menú interno del módulo.
-import ExpenseNavigation from "../../components/super-admin/expenses/ExpenseNavigation";
+import ExpenseNavigation from "../../components/administration/expenses/ExpenseNavigation";
 
 // Importamos las tarjetas con los indicadores
 // principales de los gastos.
-import ExpenseSummary from "../../components/super-admin/expenses/ExpenseSummary";
+import ExpenseSummary from "../../components/administration/expenses/ExpenseSummary";
 
 // Importamos los gráficos correspondientes
 // al análisis de los gastos.
-import ExpenseCharts from "../../components/super-admin/expenses/ExpenseCharts";
+import ExpenseCharts from "../../components/administration/expenses/ExpenseCharts";
 
 // Importamos la sección de gastos próximos.
-import UpcomingExpenses from "../../components/super-admin/expenses/UpcomingExpenses";
+import UpcomingExpenses from "../../components/administration/expenses/UpcomingExpenses";
 
 // Importamos el historial completo de gastos.
-import ExpenseTable from "../../components/super-admin/expenses/ExpenseTable";
+import ExpenseTable from "../../components/administration/expenses/ExpenseTable";
 
 // Importamos el modal visual
 // para registrar un nuevo gasto.
-import ExpenseFormModal from "../../components/super-admin/expenses/ExpenseFormModal";
+import ExpenseFormModal from "../../components/administration/expenses/ExpenseFormModal";
 
 // Importamos los estilos generales de la página.
-import "../../styles/pages/super-admin/ExpenseManagement.css";
+import "../../styles/pages/administration/ExpenseManagement.css";
 
 
 // Creamos el componente principal de la página.

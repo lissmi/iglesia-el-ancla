@@ -1,0 +1,259 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.users-management {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 8px 0 36px;
+  color: #243746;
+}
+
+
+
+/* ========================================================= */
+/* CONTENIDO GENERAL */
+/* ========================================================= */
+
+.users-management__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.users-management__section {
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5edf0;
+  border-radius: 20px;
+
+  box-shadow: 0 5px 22px rgba(22, 54, 73, 0.035);
+}
+
+.users-management__section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.users-management__section-heading h2 {
+  margin: 0 0 7px;
+
+  color: #193b4e;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.users-management__section-heading p {
+  margin: 0;
+
+  color: #7b8d98;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* ========================================================= */
+/* ESPACIOS RESERVADOS PARA COMPONENTES */
+/* ========================================================= */
+
+.users-management__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 160px;
+  padding: 28px;
+
+  color: #7897a5;
+  text-align: center;
+
+  background-color: #f8fbfc;
+
+  border: 1px dashed #cbdfe5;
+  border-radius: 16px;
+}
+
+.users-management__placeholder svg {
+  color: #65a8b7;
+}
+
+.users-management__placeholder strong {
+  color: #345769;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.users-management__placeholder span {
+  max-width: 390px;
+
+  color: #8195a0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.users-management__placeholder--large {
+  min-height: 270px;
+}
+
+
+/* ========================================================= */
+/* AVISO DE SEGURIDAD */
+/* ========================================================= */
+
+.users-management__security {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  padding: 22px 25px;
+
+  background-color: #f1f8fa;
+
+  border: 1px solid #dcebef;
+  border-radius: 17px;
+}
+
+.users-management__security-icon {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 43px;
+  height: 43px;
+
+  color: #247f94;
+  background-color: #deeff3;
+
+  border-radius: 13px;
+}
+
+.users-management__security-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.users-management__security-content strong {
+  display: block;
+  margin-bottom: 7px;
+
+  color: #28546a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.users-management__security-content p {
+  margin: 0;
+
+  color: #66818e;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+  .users-management__header {
+    padding: 26px;
+  }
+
+  .users-management__section {
+    padding: 24px;
+  }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - CELULARES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .users-management {
+    padding: 0 0 24px;
+  }
+
+  .users-management__header {
+    align-items: flex-start;
+    gap: 15px;
+
+    padding: 24px 20px;
+    margin-bottom: 22px;
+
+    border-radius: 17px;
+  }
+
+  .users-management__header-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+  }
+
+  .users-management__header-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .users-management__title {
+    font-size: 25px;
+  }
+
+  .users-management__description {
+    font-size: 13px;
+  }
+
+  .users-management__content {
+    gap: 20px;
+  }
+
+  .users-management__section {
+    padding: 22px 18px;
+    border-radius: 17px;
+  }
+
+  .users-management__section-heading h2 {
+    font-size: 17px;
+  }
+
+  .users-management__placeholder {
+    min-height: 145px;
+    padding: 22px 16px;
+  }
+
+  .users-management__placeholder--large {
+    min-height: 230px;
+  }
+
+  .users-management__security {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .users-management__security-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+}

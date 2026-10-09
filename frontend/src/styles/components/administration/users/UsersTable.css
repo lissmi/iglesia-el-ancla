@@ -1,0 +1,495 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.users-table {
+  width: 100%;
+  margin-top: 20px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e4edf0;
+  border-radius: 16px;
+
+  overflow: hidden;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR CON DESPLAZAMIENTO HORIZONTAL */
+/* ========================================================= */
+
+.users-table__scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ========================================================= */
+/* TABLA */
+/* ========================================================= */
+
+.users-table table {
+  width: 100%;
+  min-width: 850px;
+
+  border-collapse: collapse;
+  text-align: left;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADOS */
+/* ========================================================= */
+
+.users-table thead {
+  background-color: #f6fafb;
+}
+
+.users-table th {
+  padding: 17px 16px;
+
+  color: #69818e;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #e5edf0;
+}
+
+
+/* ========================================================= */
+/* FILAS */
+/* ========================================================= */
+
+.users-table td {
+  padding: 17px 16px;
+
+  color: #344e5d;
+  font-size: 13px;
+
+  border-bottom: 1px solid #edf2f4;
+
+  vertical-align: middle;
+}
+
+.users-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f9fcfd;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN DEL USUARIO */
+/* ========================================================= */
+
+.users-table__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 170px;
+}
+
+.users-table__avatar {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 39px;
+  height: 39px;
+
+  color: #247c93;
+  background-color: #e4f2f6;
+
+  border-radius: 12px;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.users-table__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.users-table__identity strong {
+  color: #29475a;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* CUENTA PRIVILEGIADA */
+/* ========================================================= */
+
+.users-table__protected {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  color: #8775a8;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+
+/* ========================================================= */
+/* CORREO ELECTRÓNICO */
+/* ========================================================= */
+
+.users-table__email {
+  color: #627b89;
+  font-size: 12px;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* ETIQUETAS DE ROL */
+/* ========================================================= */
+
+.users-table__role {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.users-table__role--member {
+  color: #277c93;
+  background-color: #e5f3f7;
+}
+
+.users-table__role--admin {
+  color: #8d6a35;
+  background-color: #fbf2df;
+}
+
+.users-table__role--super_admin {
+  color: #7866a2;
+  background-color: #f0ebfa;
+}
+
+.users-table__role--unknown {
+  color: #687b85;
+  background-color: #edf1f3;
+}
+
+
+/* ========================================================= */
+/* ESTADOS DE CUENTA */
+/* ========================================================= */
+
+.users-table__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.users-table__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.users-table__status--active {
+  color: #38836b;
+  background-color: #e8f5ee;
+}
+
+.users-table__status--active .users-table__status-dot {
+  background-color: #4aa17c;
+}
+
+.users-table__status--blocked {
+  color: #b2635b;
+  background-color: #faeeec;
+}
+
+.users-table__status--blocked .users-table__status-dot {
+  background-color: #d17c72;
+}
+
+
+/* ========================================================= */
+/* FECHA DE REGISTRO */
+/* ========================================================= */
+
+.users-table__date {
+  color: #718692;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.users-table__actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.users-table__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  color: #40778a;
+  background-color: #f0f7f9;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.users-table__action:hover:not(:disabled) {
+  color: #1c687d;
+  background-color: #e0f1f5;
+  transform: translateY(-1px);
+}
+
+.users-table__action--danger {
+  color: #b56d65;
+  background-color: #f9edeb;
+}
+
+.users-table__action--danger:hover:not(:disabled) {
+  color: #a74d43;
+  background-color: #f5e0dd;
+}
+
+.users-table__action--unlock {
+  color: #36876c;
+  background-color: #e8f5ee;
+}
+
+.users-table__action--unlock:hover:not(:disabled) {
+  color: #28765a;
+  background-color: #d8efe2;
+}
+
+.users-table__action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.users-table__action:focus-visible {
+  outline: 3px solid #75bbca;
+  outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* ESTADOS VACÍOS Y CARGA */
+/* ========================================================= */
+
+.users-table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 265px;
+  padding: 36px 24px;
+
+  text-align: center;
+}
+
+.users-table__empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  color: #5795a7;
+  background-color: #edf7f9;
+
+  border-radius: 18px;
+}
+
+.users-table__empty strong {
+  color: #2c4b5d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.users-table__empty p {
+  max-width: 410px;
+  margin: 0;
+
+  color: #81939e;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.users-table__loading-icon {
+  color: #2d91a5;
+  animation: users-table-spin 1s linear infinite;
+}
+
+@keyframes users-table-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ========================================================= */
+/* PIE DE TABLA */
+/* ========================================================= */
+
+.users-table__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  padding: 17px 20px;
+
+  border-top: 1px solid #e9f0f2;
+}
+
+.users-table__count {
+  color: #82939d;
+  font-size: 12px;
+}
+
+.users-table__count strong {
+  color: #36596c;
+  font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* PAGINACIÓN */
+/* ========================================================= */
+
+.users-table__pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-table__pagination span {
+  color: #6d8390;
+  font-size: 12px;
+}
+
+.users-table__pagination button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 33px;
+  height: 33px;
+
+  color: #397b90;
+  background-color: #f0f7f9;
+
+  border: 1px solid #e0ebef;
+  border-radius: 9px;
+
+  cursor: pointer;
+}
+
+.users-table__pagination button:hover:not(:disabled) {
+  background-color: #e0f0f4;
+}
+
+.users-table__pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.users-table__pagination button:focus-visible {
+  outline: 3px solid #75bbca;
+  outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+  .users-table {
+    border-radius: 13px;
+  }
+
+  .users-table__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .users-table__empty {
+    min-height: 230px;
+    padding: 30px 18px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .users-table tbody tr,
+  .users-table__action {
+    transition: none;
+  }
+
+  .users-table__action:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .users-table__loading-icon {
+    animation: none;
+  }
+
+}

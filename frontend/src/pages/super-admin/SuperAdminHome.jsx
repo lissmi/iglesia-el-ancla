@@ -4,11 +4,11 @@ import "../../styles/pages/super-admin/SuperAdminHome.css";
 
 // Importamos el resumen personal
 // correspondiente a la experiencia como miembro.
-import MemberOverview from "../../components/super-admin/home/MemberOverview";
+import MemberOverview from "../../components/administration/home/MemberOverview";
 
 // Importamos el resumen de las
 // funciones administrativas generales.
-import AdminOverview from "../../components/super-admin/home/AdminOverview";
+import AdminOverview from "../../components/administration/home/AdminOverview";
 
 // Importamos las herramientas
 // exclusivas del super administrador.

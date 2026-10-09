@@ -1,5 +1,5 @@
 // Importamos los estilos exclusivos del menú.
-import "../../../styles/components/super-admin/expenses/ExpenseNavigation.css";
+import "../../../styles/components/administration/expenses/ExpenseNavigation.css";
 
 
 // Creamos el componente encargado de navegar
