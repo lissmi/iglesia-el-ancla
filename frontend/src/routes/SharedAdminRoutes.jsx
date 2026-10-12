@@ -13,6 +13,10 @@ import ActivityHistory from "../pages/administration/ActivityHistory";
 
 import EventsManagement from "../pages/administration/EventsManagement";
 
+import PrayerRequestsManagement from "../pages/administration/PrayerRequestsManagement";
+
+import MembersManagement from "../pages/administration/MembersManagement";
+
 // =========================================================
 // DEFINICIÓN CENTRALIZADA DE RUTAS
 // =========================================================
@@ -49,6 +53,16 @@ function SharedAdminRoutes() {
             <Route
                 path="eventos"
                 element={<EventsManagement />}
+            />
+
+            <Route
+                path="peticiones-oracion"
+                element={<PrayerRequestsManagement />}
+            />
+
+            <Route
+                path="miembros"
+                element={<MembersManagement />}
             />
 
             {/* Próximos módulos compartidos:

@@ -33,6 +33,8 @@ import EventFormModal from "../../components/administration/events/EventFormModa
 
 import EventDetailsModal from "../../components/administration/events/EventDetailsModal";
 
+import EventConfirmationsModal from "../../components/administration/events/EventConfirmationsModal";
+
 // =========================================================
 // DATOS TEMPORALES DE DEMOSTRACIÓN
 // =========================================================
@@ -189,6 +191,26 @@ function EventsManagement() {
     events.find((event) => event.id === detailsEventId) ?? null;
 
   // =========================================================
+  // ESTADO DE CONFIRMACIONES
+  // =========================================================
+
+  const [confirmationsEventId, setConfirmationsEventId] =
+    useState(null);
+
+  const confirmationsEvent =
+    events.find(
+      (event) => event.id === confirmationsEventId
+    ) ?? null;
+
+  function handleViewConfirmations(event) {
+    setConfirmationsEventId(event.id);
+  }
+
+  function handleCloseConfirmations() {
+    setConfirmationsEventId(null);
+  }
+
+  // =========================================================
   // IDENTIFICACIÓN DEL PANEL
   // =========================================================
 
@@ -320,6 +342,24 @@ function EventsManagement() {
     }
 
     handleCloseForm();
+  }
+
+  // =========================================================
+  // GESTIÓN DEL ESTADO DE PUBLICACIÓN
+  // =========================================================
+
+  // Cambia el estado de publicación de un evento.
+  function handleChangePublicationStatus(eventId, newStatus) {
+    setEvents((previousEvents) =>
+      previousEvents.map((event) =>
+        event.id === eventId
+          ? {
+            ...event,
+            publicationStatus: newStatus,
+          }
+          : event
+      )
+    );
   }
 
   // =========================================================
@@ -796,6 +836,16 @@ function EventsManagement() {
                             Ver detalles
                           </button>
 
+                          <button
+                            className="events-management-page__details-button"
+                            type="button"
+                            onClick={() => handleViewConfirmations(event)}
+                            aria-label={`Ver confirmaciones de ${event.title}`}
+                          >
+                            <UsersRound size={16} aria-hidden="true" />
+                            Confirmaciones
+                          </button>
+
                           {/* EDITAR EVENTO */}
 
                           <button
@@ -811,6 +861,29 @@ function EventsManagement() {
                             />
 
                             Editar
+                          </button>
+
+                          {/* PUBLICAR O PASAR A BORRADOR */}
+
+                          <button
+                            className={`events-management-page__publication-button ${isPublished
+                              ? "events-management-page__publication-button--draft"
+                              : "events-management-page__publication-button--publish"
+                              }`}
+                            type="button"
+                            onClick={() =>
+                              handleChangePublicationStatus(
+                                event.id,
+                                isPublished ? "draft" : "published"
+                              )
+                            }
+                            aria-label={
+                              isPublished
+                                ? `Pasar a borrador ${event.title}`
+                                : `Publicar ${event.title}`
+                            }
+                          >
+                            {isPublished ? "Pasar a borrador" : "Publicar"}
                           </button>
 
                         </div>
@@ -885,6 +958,16 @@ function EventsManagement() {
         event={detailsEvent}
         onClose={handleCloseDetails}
         onEdit={handleEditFromDetails}
+      />
+
+      {/* ============================================= */}
+      {/* GESTIÓN DE CONFIRMACIONES */}
+      {/* ============================================= */}
+
+      <EventConfirmationsModal
+        isOpen={Boolean(confirmationsEvent)}
+        event={confirmationsEvent}
+        onClose={handleCloseConfirmations}
       />
 
     </div>

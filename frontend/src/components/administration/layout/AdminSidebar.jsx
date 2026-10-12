@@ -1,4 +1,4 @@
-
+//frontend/src/components/administration/layout/AdminSidebar.jsx
 import { useState } from "react";
 
 // Importamos las herramientas de navegación.
@@ -30,6 +30,9 @@ import {
   LogOut,
   ExternalLink,
   X,
+  UserRound,
+  HeartHandshake,
+  CalendarCheck,
 } from "lucide-react";
 
 // Importamos los estilos exclusivos del sidebar.
@@ -165,6 +168,59 @@ function AdminSidebar({ isOpen, onClose }) {
       ],
     },
 
+
+    // -------------------------------------------------------
+    // MI ESPACIO PERSONAL
+    // -------------------------------------------------------
+
+    // Estas herramientas corresponden a la participación
+    // del usuario dentro de la iglesia.
+    //
+    // Los administradores también son miembros de
+    // la comunidad, por lo que conservan estos accesos.
+    //
+    // Las rutas no utilizan adminBasePath porque
+    // pertenecen al espacio personal compartido.
+
+    {
+      title: "Mi espacio personal",
+
+      items: [
+        {
+          label: "Mi espacio",
+
+          path: "/member",
+
+          icon: UserRound,
+
+          available: true,
+
+          end: true,
+        },
+
+        {
+          label: "Mis actividades",
+
+          path: "/member/eventos",
+
+          icon: CalendarCheck,
+
+          available: true,
+        },
+
+        {
+          label: "Mis peticiones de oración",
+
+          path: "/member/peticiones-oracion",
+
+          icon: HeartHandshake,
+
+          available: true,
+        },
+      ],
+    },
+
+
     // -------------------------------------------------------
     // COMUNIDAD
     // -------------------------------------------------------
@@ -183,7 +239,7 @@ function AdminSidebar({ isOpen, onClose }) {
           label: "Peticiones de oración",
           path: `${adminBasePath}/peticiones-oracion`,
           icon: HandHeart,
-          available: false,
+          available: true,
         },
         {
           label: "Miembros",

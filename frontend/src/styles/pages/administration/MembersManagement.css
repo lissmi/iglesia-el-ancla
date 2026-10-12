@@ -1,0 +1,415 @@
+
+/* ========================================================= */
+/* PÁGINA PRINCIPAL */
+/* ========================================================= */
+
+.members-management {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 48px;
+    color: #183548;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.members-management__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 30px;
+    margin-bottom: 24px;
+
+    background: linear-gradient(120deg, #ffffff, #eef8fa);
+    border: 1px solid #deeaee;
+    border-radius: 20px;
+}
+
+.members-management__heading {
+    max-width: 690px;
+}
+
+.members-management__eyebrow {
+    display: block;
+    margin-bottom: 10px;
+
+    color: #258aa5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.members-management__heading h1 {
+    margin: 0 0 10px;
+    font-size: clamp(24px, 3vw, 31px);
+    font-weight: 800;
+    letter-spacing: -0.7px;
+}
+
+.members-management__heading p {
+    margin: 0 0 20px;
+    color: #698197;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.members-management__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 10px 15px;
+
+    background: #ffffff;
+    border: 1px solid #d6e4e9;
+    border-radius: 10px;
+
+    color: #244b60;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.members-management__back:hover {
+    background: #f0f7f9;
+    border-color: #b9d5dd;
+}
+
+.members-management__header-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 76px;
+    height: 76px;
+
+    color: #2189a3;
+    background: #e1f3f7;
+    border: 1px solid #cfe9ef;
+    border-radius: 20px;
+}
+
+/* ========================================================= */
+/* TARJETAS DE RESUMEN */
+/* ========================================================= */
+
+.members-management__summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.members-management__summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+
+    padding: 22px;
+    min-height: 155px;
+
+    background: #ffffff;
+    border: 1px solid #e1e9ee;
+    border-radius: 16px;
+}
+
+.members-management__summary-icon {
+    display: grid;
+    place-items: center;
+
+    width: 39px;
+    height: 39px;
+
+    color: #258aa5;
+    background: #eaf5f8;
+    border-radius: 11px;
+}
+
+.members-management__summary-card span {
+    color: #607a90;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.members-management__summary-card strong {
+    color: #17384c;
+    font-size: 29px;
+    line-height: 1;
+}
+
+.members-management__summary-card small {
+    color: #91a2b0;
+    font-size: 11px;
+}
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+
+
+.members-management__section-heading h2 {
+    margin: 0 0 7px;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.members-management__section-heading p {
+    margin: 0;
+    color: #70879a;
+    font-size: 13px;
+}
+
+.members-management__count {
+    flex-shrink: 0;
+    color: #68849a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* FILTROS */
+/* ========================================================= */
+
+.members-management__filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    padding: 16px;
+    margin-bottom: 20px;
+
+    background: #f6fafb;
+    border: 1px solid #e0ebef;
+    border-radius: 13px;
+}
+
+.members-management__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 280px;
+
+    padding: 0 12px;
+
+    background: #ffffff;
+    border: 1px solid #dce7eb;
+    border-radius: 9px;
+
+    color: #86a0b0;
+}
+
+.members-management__search input {
+    width: 100%;
+    height: 42px;
+    min-width: 0;
+
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    color: #183548;
+    font-size: 13px;
+}
+
+
+.members-management__clear {
+    padding: 11px 13px;
+    border: 1px solid #d9e5e9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #617e90;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* LISTADO DE MIEMBROS */
+/* ========================================================= */
+
+.members-management__list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+
+.members-management__member:hover {
+    border-color: #bdd8e1;
+    box-shadow: 0 5px 16px rgba(22, 61, 81, 0.05);
+}
+
+.members-management__avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    background: #e6f3f6;
+    color: #237f99;
+
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.members-management__member-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.members-management__member-info strong {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.members-management__member-info span,
+.members-management__member-info small {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #72889b;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+
+.members-management__status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 11px;
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.members-management__status--active {
+    background: #e7f6ee;
+    color: #287c58;
+}
+
+.members-management__status--blocked {
+    background: #fbeae8;
+    color: #b45b4e;
+}
+
+
+.members-management__details-button:hover {
+    background: #e5f2f6;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.members-management__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    padding: 65px 20px;
+
+    color: #8299a8;
+    text-align: center;
+
+    border: 1px dashed #d5e4e9;
+    border-radius: 14px;
+}
+
+.members-management__empty h3 {
+    margin: 0;
+    color: #284a5d;
+    font-size: 16px;
+}
+
+.members-management__empty p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* ========================================================= */
+/* AVISO INFORMATIVO */
+/* ========================================================= */
+
+.members-management__notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    margin-top: 22px;
+    padding: 17px 19px;
+
+    background: #eff8fa;
+    border: 1px solid #d8ebf0;
+    border-radius: 13px;
+
+    color: #297b94;
+}
+
+.members-management__notice p {
+    margin: 0;
+    color: #55778a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+    .members-management__summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .members-management {
+        padding: 18px 12px 35px;
+    }
+
+    .members-management__header {
+        padding: 22px;
+    }
+
+    .members-management__header-icon {
+        display: none;
+    }
+
+    .members-management__summary {
+        gap: 10px;
+    }
+
+    .members-management__summary-card {
+        padding: 16px;
+    }
+
+}
+
+@media (max-width: 380px) {
+    .members-management__summary {
+        grid-template-columns: 1fr;
+    }
+}

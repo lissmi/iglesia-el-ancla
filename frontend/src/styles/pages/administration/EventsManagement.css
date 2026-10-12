@@ -700,3 +700,55 @@
   outline: 2px solid #203c4b;
   outline-offset: 3px;
 }
+
+/* ========================================================= */
+/* GESTIÓN DE PUBLICACIÓN */
+/* ========================================================= */
+
+.events-management-page__publication-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 36px;
+  padding: 9px 13px;
+
+  border-radius: 9px;
+  border: 1px solid transparent;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.events-management-page__publication-button--publish {
+  color: #ffffff;
+  background: #203c4b;
+}
+
+.events-management-page__publication-button--publish:hover {
+  background: #31566a;
+}
+
+.events-management-page__publication-button--draft {
+  color: #a75f4b;
+  background: #fbefeb;
+  border-color: #f1ded8;
+}
+
+.events-management-page__publication-button--draft:hover {
+  background: #f5dfd8;
+}
+
+.events-management-page__publication-button:focus-visible {
+  outline: 2px solid #203c4b;
+  outline-offset: 3px;
+}

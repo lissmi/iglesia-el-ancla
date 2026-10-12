@@ -1,360 +1,364 @@
+// src/components/administration/home/AdminOverview.jsx
 
- // =========================================================
- // IMPORTACIONES
- // =========================================================
 
- // Importamos Link para navegar entre módulos.
- // Importamos useLocation para identificar el panel actual.
- import {
-   Link,
-   useLocation,
- } from "react-router-dom";
+// =========================================================
+// IMPORTACIONES
+// =========================================================
 
+// Importamos Link para navegar entre módulos.
+// Importamos useLocation para identificar el panel actual.
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
 
- // Importamos los iconos utilizados
- // dentro del resumen administrativo.
- import {
-   ArrowRight,
-   BookOpen,
-   CalendarDays,
-   HandHeart,
-   ReceiptText,
-   Users,
- } from "lucide-react";
 
+// Importamos los iconos utilizados
+// dentro del resumen administrativo.
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  HandHeart,
+  ReceiptText,
+  Users,
+} from "lucide-react";
 
- // Importamos los estilos exclusivos del componente.
- import "../../../styles/components/administration/home/AdminOverview.css";
 
+// Importamos los estilos exclusivos del componente.
+import "../../../styles/components/administration/home/AdminOverview.css";
 
- // =========================================================
- // MÓDULOS ADMINISTRATIVOS COMPARTIDOS
- // =========================================================
 
- // Definimos los módulos disponibles para:
- //
- // - admin
- // - super_admin
- //
- // Las rutas son relativas al panel administrativo.
- // De esta manera no necesitamos escribir
- // /admin o /super-admin en cada módulo.
- //
- // available indica si el módulo ya está implementado.
+// =========================================================
+// MÓDULOS ADMINISTRATIVOS COMPARTIDOS
+// =========================================================
 
- const administrativeModules = [
+// Definimos los módulos disponibles para:
+//
+// - admin
+// - super_admin
+//
+// Las rutas son relativas al panel administrativo.
+// De esta manera no necesitamos escribir
+// /admin o /super-admin en cada módulo.
+//
+// available indica si el módulo ya está implementado.
 
-   // -------------------------------------------------------
-   // EVENTOS
-   // -------------------------------------------------------
+const administrativeModules = [
 
-   {
-     id: "events",
+  // -------------------------------------------------------
+  // EVENTOS
+  // -------------------------------------------------------
 
-     title: "Eventos",
+  {
+    id: "events",
 
-     description:
-       "Crea, modifica y organiza las actividades publicadas para la comunidad.",
+    title: "Eventos",
 
-     icon: CalendarDays,
+    description:
+      "Crea, modifica y organiza las actividades publicadas para la comunidad.",
 
-     path: "/eventos",
+    icon: CalendarDays,
 
-     available: true,
-   },
+    path: "/eventos",
 
+    available: true,
+  },
 
-   // -------------------------------------------------------
-   // PETICIONES DE ORACIÓN
-   // -------------------------------------------------------
 
-   {
-     id: "prayer-requests",
+  // -------------------------------------------------------
+  // PETICIONES DE ORACIÓN
+  // -------------------------------------------------------
 
-     title: "Peticiones de oración",
+  {
+    id: "prayer-requests",
 
-     description:
-       "Revisa y administra las solicitudes de oración recibidas.",
+    title: "Peticiones de oración",
 
-     icon: HandHeart,
+    description:
+      "Consulta, organiza y realiza seguimiento de las peticiones de oración recibidas por la comunidad.",
 
-     path: "/peticiones-oracion",
+    icon: HandHeart,
 
-     available: false,
-   },
+    path: "/peticiones-oracion",
 
+    // El módulo ya cuenta con su página de gestión,
+    // filtros y modal de seguimiento.
+    available: true,
+  },
 
-   // -------------------------------------------------------
-   // MIEMBROS
-   // -------------------------------------------------------
 
-   {
-     id: "members",
+  // -------------------------------------------------------
+  // MIEMBROS
+  // -------------------------------------------------------
 
-     title: "Miembros",
+  {
+    id: "members",
 
-     description:
-       "Consulta la información de los miembros registrados de la iglesia.",
+    title: "Miembros",
 
-     icon: Users,
+    description:
+      "Consulta la información de los miembros registrados de la iglesia.",
 
-     path: "/miembros",
+    icon: Users,
 
-     available: false,
-   },
+    path: "/miembros",
 
+    available: true,
+  },
 
-   // -------------------------------------------------------
-   // RECURSOS
-   // -------------------------------------------------------
 
-   {
-     id: "resources",
+  // -------------------------------------------------------
+  // RECURSOS
+  // -------------------------------------------------------
 
-     title: "Recursos",
+  {
+    id: "resources",
 
-     description:
-       "Administra los estudios, guías y materiales disponibles para la comunidad.",
+    title: "Recursos",
 
-     icon: BookOpen,
+    description:
+      "Administra los estudios, guías y materiales disponibles para la comunidad.",
 
-     path: "/recursos",
+    icon: BookOpen,
 
-     available: false,
-   },
+    path: "/recursos",
 
+    available: false,
+  },
 
-   // -------------------------------------------------------
-   // FINANZAS
-   // -------------------------------------------------------
 
-   {
-     id: "expenses",
+  // -------------------------------------------------------
+  // FINANZAS
+  // -------------------------------------------------------
 
-     title: "Finanzas",
+  {
+    id: "expenses",
 
-     description:
-       "Consulta y registra los gastos asociados a la gestión de la iglesia.",
+    title: "Finanzas",
 
-     icon: ReceiptText,
+    description:
+      "Consulta y registra los gastos asociados a la gestión de la iglesia.",
 
-     path: "/finanzas/gastos",
+    icon: ReceiptText,
 
-     // El módulo de gastos ya está implementado.
-     available: true,
-   },
+    path: "/finanzas/gastos",
 
- ];
+    // El módulo de gastos ya está implementado.
+    available: true,
+  },
 
+];
 
- // =========================================================
- // COMPONENTE PRINCIPAL
- // =========================================================
 
- // Este componente será reutilizado por ambos paneles.
- function AdminOverview() {
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
 
-   // -------------------------------------------------------
-   // IDENTIFICACIÓN DEL PANEL
-   // -------------------------------------------------------
+// Este componente será reutilizado por ambos paneles.
+function AdminOverview() {
 
-   // Obtenemos la ubicación actual de React Router.
-   const location = useLocation();
+  // -------------------------------------------------------
+  // IDENTIFICACIÓN DEL PANEL
+  // -------------------------------------------------------
 
+  // Obtenemos la ubicación actual de React Router.
+  const location = useLocation();
 
-   // Comprobamos si estamos dentro del panel
-   // correspondiente al superadministrador.
-   const isSuperAdminPanel =
-     location.pathname === "/super-admin" ||
-     location.pathname.startsWith("/super-admin/");
 
+  // Comprobamos si estamos dentro del panel
+  // correspondiente al superadministrador.
+  const isSuperAdminPanel =
+    location.pathname === "/super-admin" ||
+    location.pathname.startsWith("/super-admin/");
 
-   // Definimos la ruta base correspondiente.
-   const adminBasePath = isSuperAdminPanel
-     ? "/super-admin"
-     : "/admin";
 
+  // Definimos la ruta base correspondiente.
+  const adminBasePath = isSuperAdminPanel
+    ? "/super-admin"
+    : "/admin";
 
-   // =========================================================
-   // INTERFAZ
-   // =========================================================
 
-   return (
-     <section className="super-admin-management">
+  // =========================================================
+  // INTERFAZ
+  // =========================================================
 
+  return (
+    <section className="super-admin-management">
 
-       {/* ================================================= */}
-       {/* ENCABEZADO */}
-       {/* ================================================= */}
 
-       <div className="super-admin-management__header">
+      {/* ================================================= */}
+      {/* ENCABEZADO */}
+      {/* ================================================= */}
 
-         <div>
+      <div className="super-admin-management__header">
 
-           {/* Identificador de la sección. */}
-           <span className="super-admin-management__eyebrow">
-             Administración
-           </span>
+        <div>
 
+          {/* Identificador de la sección. */}
+          <span className="super-admin-management__eyebrow">
+            Administración
+          </span>
 
-           {/* Título principal. */}
-           <h2>
-             Gestión de la iglesia
-           </h2>
 
+          {/* Título principal. */}
+          <h2>
+            Gestión de la iglesia
+          </h2>
 
-           {/* Descripción de las herramientas. */}
-           <p>
-             Accede a las principales herramientas para
-             organizar la información y los servicios
-             de la comunidad.
-           </p>
 
-         </div>
+          {/* Descripción de las herramientas. */}
+          <p>
+            Accede a las principales herramientas para
+            organizar la información y los servicios
+            de la comunidad.
+          </p>
 
-       </div>
+        </div>
 
+      </div>
 
-       {/* ================================================= */}
-       {/* TARJETAS DE MÓDULOS */}
-       {/* ================================================= */}
 
-       <div className="super-admin-management__grid">
+      {/* ================================================= */}
+      {/* TARJETAS DE MÓDULOS */}
+      {/* ================================================= */}
 
-         {/* Recorremos los módulos administrativos. */}
-         {administrativeModules.map((module) => {
+      <div className="super-admin-management__grid">
 
-           // Obtenemos el componente del icono.
-           const ModuleIcon = module.icon;
+        {/* Recorremos los módulos administrativos. */}
+        {administrativeModules.map((module) => {
 
+          // Obtenemos el componente del icono.
+          const ModuleIcon = module.icon;
 
-           // Construimos la ruta completa.
-           // Ejemplo:
-           // /super-admin/finanzas/gastos
-           // /admin/finanzas/gastos
-           const modulePath =
-             `${adminBasePath}${module.path}`;
 
+          // Construimos la ruta completa.
+          // Ejemplo:
+          // /super-admin/finanzas/gastos
+          // /admin/finanzas/gastos
+          const modulePath =
+            `${adminBasePath}${module.path}`;
 
-           // Por ahora, Finanzas está implementado
-           // únicamente en las rutas del super_admin.
-           // Cuando agreguemos la ruta del admin,
-           // podremos habilitarla también allí.
-           const isAvailable =
-             module.available &&
-             (
-               module.id !== "expenses" ||
-               isSuperAdminPanel
-             );
 
+          // Por ahora, Finanzas está implementado
+          // únicamente en las rutas del super_admin.
+          // Cuando agreguemos la ruta del admin,
+          // podremos habilitarla también allí.
+          const isAvailable =
+            module.available &&
+            (
+              module.id !== "expenses" ||
+              isSuperAdminPanel
+            );
 
-           // =================================================
-           // MÓDULO DISPONIBLE
-           // =================================================
 
-           // Si la página existe, mostramos un enlace.
-           if (isAvailable) {
+          // =================================================
+          // MÓDULO DISPONIBLE
+          // =================================================
 
-             return (
-               <Link
-                 className="super-admin-management-card"
-                 to={modulePath}
-                 key={module.id}
-               >
+          // Si la página existe, mostramos un enlace.
+          if (isAvailable) {
 
-                 {/* Icono del módulo. */}
-                 <div className="super-admin-management-card__icon">
+            return (
+              <Link
+                className="super-admin-management-card"
+                to={modulePath}
+                key={module.id}
+              >
 
-                   <ModuleIcon
-                     size={23}
-                     strokeWidth={1.8}
-                     aria-hidden="true"
-                   />
+                {/* Icono del módulo. */}
+                <div className="super-admin-management-card__icon">
 
-                 </div>
+                  <ModuleIcon
+                    size={23}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
 
+                </div>
 
-                 {/* Información del módulo. */}
-                 <div className="super-admin-management-card__content">
 
-                   <strong>
-                     {module.title}
-                   </strong>
+                {/* Información del módulo. */}
+                <div className="super-admin-management-card__content">
 
-                   <span>
-                     {module.description}
-                   </span>
+                  <strong>
+                    {module.title}
+                  </strong>
 
-                 </div>
+                  <span>
+                    {module.description}
+                  </span>
 
+                </div>
 
-                 {/* Flecha indicadora de navegación. */}
-                 <ArrowRight
-                   className="super-admin-management-card__arrow"
-                   size={18}
-                   strokeWidth={2}
-                   aria-hidden="true"
-                 />
 
-               </Link>
-             );
-           }
+                {/* Flecha indicadora de navegación. */}
+                <ArrowRight
+                  className="super-admin-management-card__arrow"
+                  size={18}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
 
+              </Link>
+            );
+          }
 
-           // =================================================
-           // MÓDULO PENDIENTE
-           // =================================================
 
-           // Si todavía no existe la ruta correspondiente,
-           // mostramos una tarjeta deshabilitada.
-           return (
-             <button
-               className="
+          // =================================================
+          // MÓDULO PENDIENTE
+          // =================================================
+
+          // Si todavía no existe la ruta correspondiente,
+          // mostramos una tarjeta deshabilitada.
+          return (
+            <button
+              className="
                  super-admin-management-card
                  super-admin-management-card--disabled
                "
-               type="button"
-               disabled
-               key={module.id}
-             >
+              type="button"
+              disabled
+              key={module.id}
+            >
 
-               {/* Icono del módulo. */}
-               <div className="super-admin-management-card__icon">
+              {/* Icono del módulo. */}
+              <div className="super-admin-management-card__icon">
 
-                 <ModuleIcon
-                   size={23}
-                   strokeWidth={1.8}
-                   aria-hidden="true"
-                 />
+                <ModuleIcon
+                  size={23}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
 
-               </div>
-
-
-               {/* Información del módulo. */}
-               <div className="super-admin-management-card__content">
-
-                 <strong>
-                   {module.title}
-                 </strong>
-
-                 <span>
-                   Disponible próximamente
-                 </span>
-
-               </div>
-
-             </button>
-           );
-
-         })}
-
-       </div>
-
-     </section>
-   );
- }
+              </div>
 
 
- // Exportamos el componente para reutilizarlo
- // en los paneles admin y super_admin.
- export default AdminOverview;
+              {/* Información del módulo. */}
+              <div className="super-admin-management-card__content">
+
+                <strong>
+                  {module.title}
+                </strong>
+
+                <span>
+                  Disponible próximamente
+                </span>
+
+              </div>
+
+            </button>
+          );
+
+        })}
+
+      </div>
+
+    </section>
+  );
+}
+
+
+// Exportamos el componente para reutilizarlo
+// en los paneles admin y super_admin.
+export default AdminOverview;

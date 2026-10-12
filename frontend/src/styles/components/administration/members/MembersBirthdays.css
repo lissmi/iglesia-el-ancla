@@ -1,0 +1,286 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.members-birthdays {
+    margin-bottom: 24px;
+    padding: 25px;
+
+    background: #ffffff;
+    border: 1px solid #e0e9ee;
+    border-radius: 18px;
+
+    color: #183548;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.members-birthdays__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.members-birthdays__heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.members-birthdays__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    color: #b07b39;
+    background: #f8f0e5;
+    border-radius: 12px;
+}
+
+.members-birthdays__heading h2 {
+    margin: 0 0 6px;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.members-birthdays__heading p {
+    margin: 0;
+
+    color: #70879a;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.members-birthdays__count {
+    padding: 7px 12px;
+
+    color: #986b34;
+    background: #fbf3e9;
+    border: 1px solid #f0e2cf;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* ========================================================= */
+/* SELECTOR DE MES */
+/* ========================================================= */
+
+.members-birthdays__month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 18px;
+    padding: 9px 12px;
+
+    background: #f7fafb;
+    border: 1px solid #e2ebef;
+    border-radius: 12px;
+}
+
+.members-birthdays__month-navigation button {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: #42677a;
+    background: #ffffff;
+    border: 1px solid #dce7eb;
+    border-radius: 9px;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.members-birthdays__month-navigation button:hover {
+    color: #2189a3;
+    border-color: #b9d5dd;
+    background: #edf7f9;
+}
+
+.members-birthdays__month-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    color: #284a5d;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+/* ========================================================= */
+/* LISTADO */
+/* ========================================================= */
+
+.members-birthdays__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+
+    padding: 2px;
+}
+
+.members-birthdays__member {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+    padding: 13px;
+
+    background: #ffffff;
+    border: 1px solid #e3ebef;
+    border-radius: 12px;
+}
+
+.members-birthdays__avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    color: #a5783e;
+    background: #f7eee3;
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.members-birthdays__member-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.members-birthdays__member-info strong {
+    color: #284557;
+    font-size: 13px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.members-birthdays__member-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #8395a3;
+    font-size: 11px;
+}
+
+.members-birthdays__status {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.members-birthdays__status--today {
+    color: #a66b20;
+    background: #fff0d3;
+}
+
+.members-birthdays__status--upcoming {
+    color: #237c68;
+    background: #e6f6ee;
+}
+
+.members-birthdays__status--past {
+    color: #8997a4;
+    background: #f0f3f5;
+}
+
+.members-birthdays__view {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    color: #357b91;
+    background: #eef7f9;
+    border: 1px solid #dcebef;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.members-birthdays__view:hover {
+    background: #dff0f4;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.members-birthdays__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    padding: 35px 15px;
+
+    color: #9babb5;
+    text-align: center;
+
+    border: 1px dashed #d9e5e9;
+    border-radius: 12px;
+}
+
+.members-birthdays__empty p {
+    margin: 0;
+    font-size: 12px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 850px) {
+    .members-birthdays__list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .members-birthdays {
+        padding: 17px;
+    }
+
+    .members-birthdays__heading h2 {
+        font-size: 16px;
+    }
+
+    .members-birthdays__member {
+        flex-wrap: wrap;
+    }
+}

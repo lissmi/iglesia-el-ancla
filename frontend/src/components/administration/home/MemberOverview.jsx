@@ -1,4 +1,4 @@
-//frontend/src/components/super-admin/home/
+//frontend/src/components/administration/home/MemberOverview.jsx
 
 // Importamos Link para navegar
 // hacia las distintas secciones de la aplicación.
@@ -69,17 +69,19 @@ const upcomingActivities = [
 const memberActions = [
   {
     id: "prayer",
-    title: "Petición de oración",
+
+    title: "Peticiones de oración",
+
     description:
-      "Comparte una petición para que la comunidad pueda acompañarte en oración.",
+      "Comparte tus peticiones, acompaña a otros miembros en oración y consulta tus solicitudes.",
+
     icon: HeartHandshake,
 
-    // Esta ruta todavía podrá cambiar
-    // cuando creemos el módulo privado
-    // de peticiones de oración.
-    path: "/member/oracion",
+    // Espacio personal, no gestión administrativa.
+    path: "/member/peticiones-oracion",
 
-    available: false,
+    // La página de miembros ya está implementada.
+    available: true,
   },
   {
     id: "resources",
@@ -94,9 +96,9 @@ const memberActions = [
     id: "events",
     title: "Actividades",
     description:
-      "Consulta las reuniones y actividades disponibles para la comunidad.",
+      "Consulta las reuniones y actividades disponibles para la comunidad y confirma tu asistencia.",
     icon: CalendarDays,
-    path: "/eventos",
+    path: "/member/eventos",
     available: true,
   },
 ];
@@ -181,7 +183,7 @@ function MemberOverview() {
 
             <Link
               className="super-admin-member__header-link"
-              to="/eventos"
+              to="/member/eventos"
             >
               Ver todas
 

@@ -1,3 +1,5 @@
+//frontend/src/components/administration/layout/AdminLayout.jsx
+
 // Importamos useState para controlar
 // el menú lateral en dispositivos móviles.
 import { useState } from "react";

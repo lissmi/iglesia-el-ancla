@@ -1,0 +1,570 @@
+
+/* ========================================================= */
+/* PÁGINA PRINCIPAL */
+/* ========================================================= */
+
+.prayer-management-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  color: #203c4b;
+  background: #f6f8fa;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.prayer-management-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.prayer-management-page__heading h1 {
+  margin: 8px 0;
+  font-size: 29px;
+  font-weight: 700;
+  color: #203c4b;
+}
+
+.prayer-management-page__heading p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #71808b;
+}
+
+.prayer-management-page__eyebrow {
+  display: block;
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #b96c56;
+}
+
+.prayer-management-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #587181;
+  text-decoration: none;
+}
+
+.prayer-management-page__back:hover {
+  color: #b96c56;
+}
+
+.prayer-management-page__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #e8eef1;
+  color: #35586a;
+}
+
+/* ========================================================= */
+/* AVISO DE PRIVACIDAD */
+/* ========================================================= */
+
+.prayer-management-page__privacy-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  border: 1px solid #dce7ec;
+  border-radius: 13px;
+  background: #edf3f6;
+  color: #35586a;
+}
+
+.prayer-management-page__privacy-notice svg {
+  flex-shrink: 0;
+}
+
+.prayer-management-page__privacy-notice p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* ========================================================= */
+/* TARJETAS DE RESUMEN */
+/* ========================================================= */
+
+.prayer-management-page__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.prayer-management-page__summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e3e9ed;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(32, 60, 75, 0.035);
+}
+
+.prayer-management-page__summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  background: #edf2f4;
+  color: #35586a;
+}
+
+.prayer-management-page__summary-card > span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #71808b;
+}
+
+.prayer-management-page__summary-card > strong {
+  margin: 7px 0;
+  font-size: 29px;
+  font-weight: 700;
+  color: #203c4b;
+}
+
+.prayer-management-page__summary-card > small {
+  font-size: 12px;
+  color: #93a0a9;
+}
+
+/* ========================================================= */
+/* CONTENEDOR DE SOLICITUDES */
+/* ========================================================= */
+
+.prayer-management-page__content {
+  padding: 25px;
+  border: 1px solid #e3e9ed;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(32, 60, 75, 0.035);
+}
+
+.prayer-management-page__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+
+.prayer-management-page__section-header h2 {
+  margin: 0 0 7px;
+  font-size: 19px;
+  color: #203c4b;
+}
+
+.prayer-management-page__section-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #81909a;
+}
+
+.prayer-management-page__result-count {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #edf2f4;
+  color: #526b79;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ========================================================= */
+/* FILTROS */
+/* ========================================================= */
+
+.prayer-management-page__filters {
+  display: grid;
+  grid-template-columns: minmax(230px, 2fr) repeat(3, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.prayer-management-page__search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 13px;
+  border: 1px solid #dfe6ea;
+  border-radius: 10px;
+  color: #8b9ba5;
+  background: #ffffff;
+}
+
+.prayer-management-page__search input {
+  width: 100%;
+  min-width: 0;
+  height: 43px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  color: #203c4b;
+}
+
+.prayer-management-page__filters select {
+  width: 100%;
+  min-width: 0;
+  height: 45px;
+  padding: 0 12px;
+  border: 1px solid #dfe6ea;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #526b79;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.prayer-management-page__search:focus-within,
+.prayer-management-page__filters select:focus-visible {
+  border-color: #b96c56;
+  outline: 2px solid rgba(185, 108, 86, 0.14);
+}
+
+.prayer-management-page__clear-filters {
+  margin-bottom: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #b96c56;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.prayer-management-page__clear-filters:hover {
+  text-decoration: underline;
+}
+
+/* ========================================================= */
+/* TABLA */
+/* ========================================================= */
+
+.prayer-management-page__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.prayer-management-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.prayer-management-page__table thead {
+  background: #f5f7f8;
+}
+
+.prayer-management-page__table th {
+  padding: 15px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #657783;
+  white-space: nowrap;
+}
+
+.prayer-management-page__table td {
+  padding: 18px 13px;
+  border-bottom: 1px solid #edf0f2;
+  font-size: 13px;
+  color: #526b79;
+  vertical-align: middle;
+}
+
+.prayer-management-page__table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.prayer-management-page__request {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 190px;
+}
+
+.prayer-management-page__request-code {
+  font-size: 11px;
+  font-weight: 600;
+  color: #a1acb4;
+}
+
+.prayer-management-page__request strong {
+  font-size: 13px;
+  color: #203c4b;
+}
+
+.prayer-management-page__request small {
+  font-size: 12px;
+  color: #8a9aa4;
+}
+
+/* ========================================================= */
+/* PRIVACIDAD */
+/* ========================================================= */
+
+.prayer-management-page__privacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.prayer-management-page__privacy-badge--private {
+  background: #f5ece9;
+  color: #a36452;
+}
+
+.prayer-management-page__privacy-badge--community {
+  background: #eaf2f0;
+  color: #487a69;
+}
+
+/* ========================================================= */
+/* ESTADOS */
+/* ========================================================= */
+
+.prayer-management-page__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.prayer-management-page__status--pending {
+  background: #fff4e5;
+  color: #ad772d;
+}
+
+.prayer-management-page__status--praying {
+  background: #e9f1f7;
+  color: #477995;
+}
+
+.prayer-management-page__status--answered {
+  background: #e7f3ed;
+  color: #398163;
+}
+
+.prayer-management-page__status--completed {
+  background: #edf0f2;
+  color: #6c7b84;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.prayer-management-page__pending-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #9ca9b1;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.prayer-management-page__empty {
+  padding: 45px 20px !important;
+  text-align: center;
+  color: #81909a !important;
+}
+
+/* ========================================================= */
+/* PIE DE PÁGINA */
+/* ========================================================= */
+
+.prayer-management-page__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 20px;
+  padding-top: 17px;
+  border-top: 1px solid #edf0f2;
+  color: #93a0a9;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.prayer-management-page__footer svg {
+  flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1200px) {
+  .prayer-management-page__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prayer-management-page__filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .prayer-management-page {
+    padding: 20px 14px;
+  }
+
+  .prayer-management-page__header {
+    align-items: flex-start;
+  }
+
+  .prayer-management-page__heading h1 {
+    font-size: 24px;
+  }
+
+  .prayer-management-page__header-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .prayer-management-page__summary {
+    gap: 12px;
+  }
+
+  .prayer-management-page__summary-card {
+    padding: 16px;
+  }
+
+  .prayer-management-page__summary-card > strong {
+    font-size: 25px;
+  }
+
+  .prayer-management-page__content {
+    padding: 17px 13px;
+  }
+
+  .prayer-management-page__section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .prayer-management-page__filters {
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-management-page__table {
+    min-width: 820px;
+  }
+}
+
+@media (max-width: 380px) {
+  .prayer-management-page__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-management-page__header-icon {
+    display: none;
+  }
+}
+
+/* ========================================================= */
+/* BOTÓN VER DETALLES */
+/* ========================================================= */
+
+.prayer-management-page__details-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 36px;
+  padding: 9px 13px;
+
+  border: 1px solid #dce7ec;
+  border-radius: 9px;
+
+  color: #203c4b;
+  background: #edf3f6;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.prayer-management-page__details-button:hover {
+  color: #ffffff;
+  background: #203c4b;
+  border-color: #203c4b;
+}
+
+.prayer-management-page__details-button:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* IDENTIDAD DEL SOLICITANTE */
+/* ========================================================= */
+
+.prayer-management-page__requester {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.prayer-management-page__requester strong {
+  color: #203c4b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.prayer-management-page__anonymous-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #a36452;
+  font-size: 11px;
+  font-weight: 600;
+}

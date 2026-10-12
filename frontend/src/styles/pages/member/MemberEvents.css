@@ -1,0 +1,153 @@
+
+/* ========================================================= */
+/* PÁGINA DE ACTIVIDADES DEL MIEMBRO */
+/* ========================================================= */
+
+.member-events-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.member-events-page__header {
+  margin-bottom: 25px;
+}
+
+.member-events-page__header > span {
+  color: #b96c56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.member-events-page__header h1 {
+  margin: 9px 0 12px;
+  color: #203c4b;
+  font-size: clamp(26px, 3vw, 36px);
+}
+
+.member-events-page__header p {
+  max-width: 650px;
+  color: #71828c;
+  line-height: 1.7;
+}
+
+.member-events-page__notice {
+  padding: 15px 18px;
+  margin-bottom: 26px;
+
+  color: #5d7180;
+  background: #edf3f6;
+
+  border: 1px solid #dce8ee;
+  border-radius: 12px;
+
+  font-size: 13px;
+}
+
+.member-events-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.member-events-page__event {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  padding: 24px;
+
+  background: #f8fafb;
+  border: 1px solid #e3e9ed;
+  border-radius: 20px;
+}
+
+.member-events-page__category {
+  color: #b96c56;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.member-events-page__event-info h2 {
+  margin: 10px 0 18px;
+  color: #203c4b;
+  font-size: 21px;
+}
+
+.member-events-page__event-info p {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin: 10px 0;
+
+  color: #6d808b;
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .member-events-page__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .member-events-page {
+    padding: 22px 15px 45px;
+  }
+
+  .member-events-page__event {
+    padding: 16px;
+  }
+}
+
+/* ========================================================= */
+/* NAVEGACIÓN DE REGRESO */
+/* ========================================================= */
+
+.member-events-page__navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.member-events-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 10px 15px;
+
+  color: #405c6b;
+  background: #ffffff;
+
+  border: 1px solid #dfe7eb;
+  border-radius: 10px;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.member-events-page__back:hover {
+  color: #b96c56;
+  background: #fbf5f2;
+  border-color: #efd9d1;
+  transform: translateX(-2px);
+}
+
+.member-events-page__back:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 3px;
+}

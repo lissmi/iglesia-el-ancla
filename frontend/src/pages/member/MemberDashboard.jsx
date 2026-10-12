@@ -13,6 +13,7 @@ import {
   Sparkles,
   UserRound,
   Video,
+  HandHeart,
 } from "lucide-react";
 
 import logoElAncla from "../../assets/images/logo-el-ancla.png";
@@ -51,7 +52,11 @@ function MemberDashboard({ user }) {
             <span><strong>El Ancla</strong><small>Mi espacio</small></span>
           </Link>
 
-          <nav className="member-topbar__links" aria-label="Navegación de miembros">
+          <nav
+            className="member-topbar__links"
+            aria-label="Navegación de miembros"
+          >
+            <a href="#participacion">Participación</a>
             <a href="#actividades">Actividades</a>
             <a href="#recursos-miembro">Recursos</a>
             <a href="#mi-perfil">Mi perfil</a>
@@ -89,6 +94,99 @@ function MemberDashboard({ user }) {
 
         <div className="member-grid">
           <div className="member-grid__main">
+
+            {/* ============================================= */}
+            {/* PARTICIPACIÓN EN COMUNIDAD */}
+            {/* ============================================= */}
+
+            <section
+              className="member-section"
+              id="participacion"
+              aria-labelledby="member-participation-title"
+            >
+              <div className="member-section__heading">
+                <div>
+                  <span className="member-section__kicker">
+                    Caminemos juntos
+                  </span>
+
+                  <h2 id="member-participation-title">
+                    Participa en nuestra comunidad
+                  </h2>
+
+                  <p>
+                    Comparte tus peticiones, acompaña a otros
+                    miembros y participa en las actividades
+                    de Iglesia El Ancla.
+                  </p>
+                </div>
+              </div>
+
+              <div className="member-resources">
+
+                {/* PETICIONES DE ORACIÓN */}
+
+                <Link
+                  className="member-resource"
+                  to="/member/peticiones-oracion"
+                >
+                  <span className="member-resource__icon">
+                    <HandHeart
+                      size={23}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </span>
+
+                  <strong>
+                    Peticiones de oración
+                  </strong>
+
+                  <span>
+                    Comparte tus peticiones, acompaña a otros
+                    miembros en oración y consulta el
+                    seguimiento de tus solicitudes.
+                  </span>
+
+                  <span className="member-resource__arrow">
+                    Ir a peticiones
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </span>
+                </Link>
+
+                {/* ACTIVIDADES PERSONALES */}
+
+                <Link
+                  className="member-resource"
+                  to="/member/eventos"
+                >
+                  <span className="member-resource__icon">
+                    <CalendarDays
+                      size={23}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </span>
+
+                  <strong>
+                    Mis actividades
+                  </strong>
+
+                  <span>
+                    Consulta las actividades disponibles
+                    y participa en los encuentros de
+                    nuestra comunidad.
+                  </span>
+
+                  <span className="member-resource__arrow">
+                    Ver actividades
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </span>
+                </Link>
+
+              </div>
+            </section>
+
             <section className="member-section" id="actividades" aria-labelledby="member-activities-title">
               <div className="member-section__heading">
                 <div>

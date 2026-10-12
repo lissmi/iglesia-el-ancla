@@ -1,16 +1,21 @@
-//frontend/src/components/super-admin/layout/AdminHeader.jsx
 
-// Importamos las herramientas necesarias
-// para manejar el estado y cargar
-// la información de la sesión.
 import {
   useEffect,
   useState,
 } from "react";
 
+// =========================================================
+// REACT ROUTER
+// =========================================================
 
-// Importamos los iconos utilizados
-// dentro del encabezado.
+// Permite identificar el panel administrativo
+// según la ruta actual.
+import { useLocation } from "react-router-dom";
+
+// =========================================================
+// ICONOS
+// =========================================================
+
 import {
   Bell,
   LoaderCircle,
@@ -19,65 +24,85 @@ import {
   UserRound,
 } from "lucide-react";
 
+// =========================================================
+// SERVICIOS
+// =========================================================
 
-// Importamos la instancia centralizada de Axios.
+// Instancia centralizada de Axios.
 //
-// Esta instancia ya incluye:
-//
-// - La URL base del backend.
+// Incluye:
+// - URL base del backend.
 // - withCredentials: true.
 // - Configuración JSON.
 // - Timeout.
 import api from "../../../services/api";
 
+// =========================================================
+// ESTILOS
+// =========================================================
 
-// Importamos los estilos
-// exclusivos del encabezado.
 import "../../../styles/components/administration/layout/AdminHeader.css";
 
-
 // =========================================================
-// COMPONENTE
+// COMPONENTE PRINCIPAL
 // =========================================================
 
-// Creamos el encabezado principal
-// del panel del super administrador.
+// Encabezado compartido por los paneles:
+//
+// - admin
+// - super_admin
 //
 // onOpenSidebar:
-// permite abrir el menú lateral
-// cuando la aplicación se utiliza
-// desde dispositivos móviles.
-function AdminHeader({
-  onOpenSidebar,
-}) {
+// abre el menú lateral en dispositivos móviles.
+
+function AdminHeader({ onOpenSidebar }) {
+
+  // =========================================================
+  // IDENTIFICACIÓN DEL PANEL
+  // =========================================================
+
+  // Obtenemos la ubicación actual de React Router.
+  const location = useLocation();
+
+  // Determinamos si estamos dentro del panel
+  // correspondiente al superadministrador.
+  const isSuperAdminPanel =
+    location.pathname === "/super-admin" ||
+    location.pathname.startsWith("/super-admin/");
+
+  // Definimos el título según el panel actual.
+  //
+  // Este valor se utiliza únicamente para
+  // identificar visualmente el espacio.
+  // No determina los permisos del usuario.
+  const panelTitle = isSuperAdminPanel
+    ? "Panel de super administración"
+    : "Panel de administración";
 
   // =========================================================
   // ESTADO DEL USUARIO
   // =========================================================
 
-  // Guardamos la información
-  // del usuario autenticado.
+  // Almacenamos la información obtenida
+  // desde la sesión autenticada.
   const [
     currentUser,
     setCurrentUser,
   ] = useState(null);
 
-
-  // Guardamos si todavía estamos
-  // consultando la sesión.
+  // Controlamos la carga inicial
+  // de los datos del usuario.
   const [
     isLoadingUser,
     setIsLoadingUser,
   ] = useState(true);
 
-
   // =========================================================
   // FECHA ACTUAL
   // =========================================================
 
-  // Creamos un formateador
-  // para mostrar la fecha actual
-  // utilizando formato chileno.
+  // Formateamos la fecha utilizando
+  // la configuración regional de Chile.
   const formattedDate =
     new Intl.DateTimeFormat(
       "es-CL",
@@ -87,10 +112,7 @@ function AdminHeader({
         month: "long",
         year: "numeric",
       }
-    ).format(
-      new Date()
-    );
-
+    ).format(new Date());
 
   // =========================================================
   // OBTENER SESIÓN ACTUAL
@@ -98,47 +120,58 @@ function AdminHeader({
 
   useEffect(() => {
 
-    // Creamos una función asíncrona
-    // para consultar al backend.
+    // Evita actualizar el estado si el
+    // componente se desmonta antes de
+    // finalizar la solicitud.
+    let isMounted = true;
+
+    // Consultamos la sesión actual.
     const loadCurrentUser = async () => {
 
       try {
 
-        // Consultamos el endpoint protegido.
-        //
-        // Como api.js ya tiene
-        // withCredentials: true,
-        // la cookie HttpOnly será enviada
-        // automáticamente.
-        const response =
-          await api.get(
-            "/auth/me"
-          );
+        // El backend valida la cookie HttpOnly.
+        // No enviamos identificadores de usuario
+        // manualmente desde el frontend.
+        const response = await api.get("/auth/me");
 
+        // Evitamos modificar el estado
+        // si el componente ya fue desmontado.
+        if (!isMounted) {
+          return;
+        }
 
-        // Comprobamos que el backend
-        // haya confirmado la sesión.
+        // Verificamos que la sesión
+        // haya sido confirmada.
         if (
           response.data?.success &&
           response.data?.user
         ) {
 
-          // Guardamos los datos
-          // reales del usuario.
-          setCurrentUser(
-            response.data.user
-          );
+          // Guardamos la identidad real
+          // devuelta por el servidor.
+          setCurrentUser(response.data.user);
+
+        } else {
+
+          // No conservamos datos anteriores
+          // si la respuesta no confirma la sesión.
+          setCurrentUser(null);
+
         }
 
       } catch (error) {
 
-        // Si la sesión no es válida,
-        // por ahora solamente registramos
-        // el problema en consola.
-        //
-        // Más adelante ProtectedRoute
-        // se encargará de redirigir
-        // automáticamente al login.
+        if (!isMounted) {
+          return;
+        }
+
+        // Ante un error, no mostramos
+        // información de una sesión anterior.
+        setCurrentUser(null);
+
+        // ProtectedRoute es responsable
+        // de controlar el acceso a las rutas.
         console.error(
           "No fue posible obtener la sesión actual:",
           error
@@ -146,60 +179,70 @@ function AdminHeader({
 
       } finally {
 
-        // Indicamos que la consulta terminó,
-        // independientemente de si fue
-        // exitosa o produjo un error.
-        setIsLoadingUser(false);
+        if (isMounted) {
+          setIsLoadingUser(false);
+        }
+
       }
     };
 
-
-    // Ejecutamos la consulta
-    // una vez al montar el componente.
     loadCurrentUser();
 
-  }, []);
+    // Limpieza del efecto.
+    return () => {
+      isMounted = false;
+    };
 
+  }, []);
 
   // =========================================================
   // NOMBRE DEL USUARIO
   // =========================================================
 
-  // Si todavía estamos cargando,
-  // mostramos un texto temporal.
-  //
-  // Cuando la información llegue,
-  // utilizaremos el nombre real.
-  const displayName =
-    currentUser?.fullName ||
-    "Super administrador";
+  // Utilizamos el nombre completo cuando
+  // el backend lo proporciona.
+  const fullName =
+    typeof currentUser?.fullName === "string"
+      ? currentUser.fullName.trim()
+      : "";
 
+  // Alternativamente, construimos el nombre
+  // con firstName y lastName si existen.
+  const composedName = [
+    currentUser?.firstName,
+    currentUser?.lastName,
+  ]
+    .filter(
+      (value) =>
+        typeof value === "string" &&
+        value.trim().length > 0
+    )
+    .map((value) => value.trim())
+    .join(" ");
+
+  // Evitamos asumir que el usuario
+  // siempre tiene el rol super_admin.
+  const displayName =
+    fullName ||
+    composedName ||
+    "Usuario";
 
   // =========================================================
   // NOMBRE DEL ROL
   // =========================================================
 
-  // Traducimos el valor interno
-  // utilizado por MongoDB
-  // a un texto legible.
+  // Etiquetas legibles de los roles.
   const roleLabels = {
-    member:
-      "Miembro",
-
-    admin:
-      "Administrador",
-
-    super_admin:
-      "Super administrador",
+    member: "Miembro",
+    admin: "Administrador",
+    super_admin: "Super administrador",
   };
 
-
-  // Obtenemos el texto correspondiente
-  // al rol actual.
+  // El rol se obtiene de la sesión verificada,
+  // no de la ruta del navegador.
   const displayRole =
     roleLabels[currentUser?.role] ||
-    "Super administrador";
-
+    "Rol no disponible";
 
   // =========================================================
   // INTERFAZ
@@ -208,55 +251,42 @@ function AdminHeader({
   return (
     <header className="admin-header">
 
-
       {/* ================================================= */}
       {/* PARTE IZQUIERDA */}
       {/* ================================================= */}
 
       <div className="admin-header__left">
 
-
-        {/* Este botón aparece solamente
-            cuando el sidebar debe abrirse
-            desde una pantalla pequeña. */}
+        {/* Botón para abrir el sidebar móvil. */}
         <button
           className="admin-header__menu-button"
           type="button"
           onClick={onOpenSidebar}
           aria-label="Abrir menú administrativo"
         >
-
           <Menu
             size={23}
             strokeWidth={2}
             aria-hidden="true"
           />
-
         </button>
 
-
-        {/* Agrupamos el nombre
-            del panel y la fecha actual. */}
+        {/* Nombre del panel y fecha actual. */}
         <div className="admin-header__information">
 
-
-          {/* Identificamos claramente
-              el área actual del sistema. */}
+          {/* El título se adapta a la ruta actual. */}
           <span className="admin-header__section">
-            Panel de super administración
+            {panelTitle}
           </span>
 
-
-          {/* Mostramos la fecha actual. */}
+          {/* Fecha con formato chileno. */}
           <span className="admin-header__date">
             {formattedDate}
           </span>
 
-
         </div>
 
       </div>
-
 
       {/* ================================================= */}
       {/* PARTE DERECHA */}
@@ -264,40 +294,37 @@ function AdminHeader({
 
       <div className="admin-header__right">
 
-
-        {/* ================================================= */}
+        {/* =============================================== */}
         {/* NOTIFICACIONES */}
-        {/* ================================================= */}
+        {/* =============================================== */}
 
+        {/* Control visual temporal.
+            Más adelante conectaremos el módulo
+            de notificaciones reales. */}
         <button
           className="admin-header__notification"
           type="button"
           aria-label="Ver notificaciones"
           title="Notificaciones"
         >
-
           <Bell
             size={21}
             strokeWidth={1.8}
             aria-hidden="true"
           />
 
-
           {/* Indicador visual temporal. */}
           <span
             className="admin-header__notification-indicator"
             aria-hidden="true"
           />
-
         </button>
 
-
-        {/* ================================================= */}
-        {/* PERFIL */}
-        {/* ================================================= */}
+        {/* =============================================== */}
+        {/* PERFIL DEL USUARIO */}
+        {/* =============================================== */}
 
         <div className="admin-header__profile">
-
 
           {/* Avatar temporal. */}
           <div
@@ -324,23 +351,17 @@ function AdminHeader({
 
           </div>
 
-
-          {/* Agrupamos el nombre
-              y el rol del usuario. */}
+          {/* Nombre y rol del usuario autenticado. */}
           <div className="admin-header__profile-text">
 
-
-            {/* Mostramos el nombre real
-                obtenido desde MongoDB. */}
+            {/* Nombre obtenido desde el backend. */}
             <strong>
               {isLoadingUser
                 ? "Cargando..."
                 : displayName}
             </strong>
 
-
-            {/* Mostramos el rol real
-                de la cuenta autenticada. */}
+            {/* Rol obtenido desde la sesión. */}
             <span>
 
               <ShieldCheck
@@ -349,10 +370,11 @@ function AdminHeader({
                 aria-hidden="true"
               />
 
-              {displayRole}
+              {isLoadingUser
+                ? "Verificando sesión..."
+                : displayRole}
 
             </span>
-
 
           </div>
 
@@ -364,7 +386,8 @@ function AdminHeader({
   );
 }
 
+// =========================================================
+// EXPORTACIÓN
+// =========================================================
 
-// Exportamos el componente
-// para utilizarlo dentro de AdminLayout.
 export default AdminHeader;

@@ -90,6 +90,8 @@ import Login from "./pages/public/Login";
 // =========================================================
 
 import MemberDashboard from "./pages/member/MemberDashboard";
+import MemberEvents from "./pages/member/MemberEvents";
+import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
 
 // =========================================================
 // PÁGINAS DEL ADMINISTRADOR NORMAL
@@ -272,26 +274,62 @@ function App() {
             element={<Login />}
           />
 
+
           {/* ============================================= */}
-          {/* RUTAS PROTEGIDAS - MIEMBROS */}
+          {/* RUTAS PROTEGIDAS - ESPACIO PERSONAL */}
           {/* ============================================= */}
 
-          {/* Acceso exclusivo al rol member. */}
+          {/* Los miembros y administradores pueden acceder
+    a las funciones de participación. */}
 
           <Route
             element={
               <ProtectedRoute
-                allowedRoles={["member"]}
+                allowedRoles={["member", "admin", "super_admin"]}
               />
             }
           >
+            {/* ============================================= */}
+            {/* ESPACIO PERSONAL DE LA COMUNIDAD */}
+            {/* ============================================= */}
+
+            {/* Los miembros, administradores y superadministradores
+    pueden acceder a su espacio personal. */}
 
             <Route
               path="/member"
-              element={<MemberDashboard />}
+              element={
+                <ProtectedRoute
+                  allowedRoles={["member", "admin", "super_admin"]}
+                />
+              }
+            >
+              <Route
+                index
+                element={<MemberDashboard />}
+              />
+            </Route>
+
+            {/* =========================================== */}
+            {/* ACTIVIDADES PERSONALES */}
+            {/* =========================================== */}
+
+            <Route
+              path="/member/eventos"
+              element={<MemberEvents />}
+            />
+
+            {/* =========================================== */}
+            {/* PETICIONES DE ORACIÓN */}
+            {/* =========================================== */}
+
+            <Route
+              path="/member/peticiones-oracion"
+              element={<MemberPrayerRequests />}
             />
 
           </Route>
+
 
           {/* ============================================= */}
           {/* RUTAS PROTEGIDAS - ADMINISTRADOR */}

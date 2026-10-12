@@ -1,0 +1,100 @@
+
+/* ========================================================= */
+/* TARJETA DE CONFIRMACIÓN DE ASISTENCIA */
+/* ========================================================= */
+
+.event-attendance-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e3e9ed;
+  border-radius: 17px;
+
+  box-shadow: 0 8px 28px rgba(25, 48, 62, 0.05);
+}
+
+.event-attendance-card__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  color: #b96c56;
+}
+
+.event-attendance-card__heading h3 {
+  margin: 0 0 7px;
+
+  color: #203c4b;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.event-attendance-card__heading p {
+  margin: 0;
+
+  color: #70828d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.event-attendance-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  width: 100%;
+  min-height: 45px;
+  padding: 12px 17px;
+
+  border-radius: 10px;
+  border: 1px solid transparent;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.event-attendance-card__button:hover {
+  transform: translateY(-1px);
+}
+
+.event-attendance-card__button:focus-visible {
+  outline: 2px solid #b96c56;
+  outline-offset: 3px;
+}
+
+.event-attendance-card__button--confirm {
+  color: #ffffff;
+  background: #203c4b;
+}
+
+.event-attendance-card__button--confirm:hover {
+  background: #31566a;
+}
+
+.event-attendance-card__button--cancel {
+  color: #a75f4b;
+  background: #fbefeb;
+  border-color: #f1ded8;
+}
+
+.event-attendance-card__button--cancel:hover {
+  background: #f5dfd8;
+}
+
+.event-attendance-card small {
+  color: #8b989f;
+  font-size: 11px;
+  line-height: 1.5;
+}
