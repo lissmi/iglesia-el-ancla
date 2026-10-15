@@ -35,6 +35,8 @@
 
   /* Evitamos mostrar una barra visual muy invasiva. */
   scrollbar-width: thin;
+
+  margin-bottom: 20px;
 }
 
 

@@ -1,0 +1,471 @@
+
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.resource-details-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(17, 35, 48, 0.68);
+    backdrop-filter: blur(4px);
+}
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.resource-details-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 720px;
+    max-height: calc(100dvh - 48px);
+
+    overflow: hidden;
+
+    background: #ffffff;
+    border: 1px solid #dce7ec;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.28);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.resource-details-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+    padding: 26px 30px;
+
+    background: #f5fafb;
+    border-bottom: 1px solid #e1e9ee;
+}
+
+.resource-details-modal__eyebrow {
+    display: block;
+    margin-bottom: 9px;
+
+    color: #b28461;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.resource-details-modal__header h2 {
+    margin: 0 0 14px;
+
+    color: #17384c;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.resource-details-modal__close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* ETIQUETAS */
+/* ========================================================= */
+
+.resource-details-modal__badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.resource-details-modal__category,
+.resource-details-modal__status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 11px;
+    border-radius: 30px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.resource-details-modal__category {
+    color: #397e93;
+    background: #eaf5f8;
+}
+
+.resource-details-modal__status--published {
+    color: #247b55;
+    background: #e5f5ed;
+}
+
+.resource-details-modal__status--draft {
+    color: #9b7036;
+    background: #fff2df;
+}
+
+/* ========================================================= */
+/* CUERPO */
+/* ========================================================= */
+
+.resource-details-modal__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    padding: 28px 30px;
+}
+
+.resource-details-modal__cover {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 25px;
+    padding: 20px;
+
+    background: #f5f8fa;
+    border-radius: 14px;
+}
+
+.resource-details-modal__cover img {
+    display: block;
+    max-width: 100%;
+    max-height: 240px;
+
+    object-fit: contain;
+    border-radius: 9px;
+}
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.resource-details-modal__section {
+    margin-bottom: 25px;
+}
+
+.resource-details-modal__section h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 13px;
+
+    color: #244d62;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.resource-details-modal__section p {
+    margin: 0;
+
+    color: #607a90;
+    font-size: 12px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.resource-details-modal__written {
+    padding: 17px;
+
+    color: #486b7f;
+    background: #f6fafb;
+
+    border: 1px solid #e4edf1;
+    border-radius: 12px;
+
+    font-size: 12px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* ========================================================= */
+/* METADATOS */
+/* ========================================================= */
+
+.resource-details-modal__metadata {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+    margin-bottom: 27px;
+}
+
+.resource-details-modal__metadata-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+
+    min-width: 0;
+    padding: 15px;
+
+    color: #43869b;
+    background: #f7fafb;
+
+    border: 1px solid #e8eff2;
+    border-radius: 12px;
+}
+
+.resource-details-modal__metadata-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.resource-details-modal__metadata-item span {
+    color: #8295a3;
+    font-size: 10px;
+}
+
+.resource-details-modal__metadata-item strong {
+    color: #24475b;
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* ========================================================= */
+/* ENLACES Y ARCHIVOS */
+/* ========================================================= */
+
+.resource-details-modal__link,
+.resource-details-modal__download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 11px 15px;
+
+    color: #ffffff;
+    background: #2d8299;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.resource-details-modal__link:hover,
+.resource-details-modal__download:hover {
+    background: #23687c;
+}
+
+.resource-details-modal__file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 15px;
+    padding: 16px;
+
+    background: #f7fafb;
+    border: 1px solid #e4edf1;
+    border-radius: 12px;
+}
+
+.resource-details-modal__file > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-width: 0;
+    color: #397e93;
+}
+
+.resource-details-modal__file span {
+    color: #486b7f;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.resource-details-modal__file small {
+    color: #8295a3;
+    font-size: 11px;
+}
+
+/* ========================================================= */
+/* PIE DEL MODAL */
+/* ========================================================= */
+
+.resource-details-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+    padding: 18px 30px;
+
+    background: #ffffff;
+    border-top: 1px solid #e5edf0;
+}
+
+.resource-details-modal__footer button {
+    min-height: 43px;
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.resource-details-modal__secondary {
+    color: #547083;
+    background: #ffffff;
+    border: 1px solid #dce6eb;
+}
+
+.resource-details-modal__primary {
+    color: #ffffff;
+    background: #244d62;
+    border: 1px solid #244d62;
+}
+
+.resource-details-modal__primary:hover {
+    background: #193b4e;
+}
+
+.resource-details-modal button:focus-visible,
+.resource-details-modal a:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .resource-details-modal__overlay {
+        padding: 10px;
+    }
+
+    .resource-details-modal {
+        max-height: calc(100dvh - 20px);
+        border-radius: 15px;
+    }
+
+    .resource-details-modal__header,
+    .resource-details-modal__body,
+    .resource-details-modal__footer {
+        padding: 18px;
+    }
+
+    .resource-details-modal__header h2 {
+        font-size: 20px;
+    }
+
+    .resource-details-modal__metadata {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-details-modal__footer button {
+        flex: 1;
+    }
+}
+
+
+/* ========================================================= */
+/* VISTA PREVIA MULTIMEDIA */
+/* ========================================================= */
+
+.resource-details-modal__preview {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.resource-details-modal__preview .resource-details-modal__cover {
+    margin-bottom: 0;
+    padding: 18px;
+    min-height: 160px;
+}
+
+.resource-details-modal__preview .resource-details-modal__cover img {
+    width: auto;
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+/* ========================================================= */
+/* REPRODUCTOR SPOTIFY */
+/* ========================================================= */
+
+.resource-details-modal__spotify {
+    width: 100%;
+    overflow: hidden;
+
+    background: #f5f8fa;
+    border-radius: 14px;
+}
+
+.resource-details-modal__spotify iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+}
+
+/* ========================================================= */
+/* VISTA PREVIA NO DISPONIBLE */
+/* ========================================================= */
+
+.resource-details-modal__preview-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    min-height: 150px;
+    padding: 24px;
+
+    color: #6b9aab;
+    background: #f5f8fa;
+
+    border: 1px dashed #d5e4eb;
+    border-radius: 14px;
+}
+
+.resource-details-modal__preview-empty span {
+    color: #8295a3;
+    font-size: 12px;
+    font-weight: 600;
+}
+

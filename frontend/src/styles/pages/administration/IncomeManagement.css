@@ -1,0 +1,233 @@
+/* ========================================================= */
+/* PÁGINA PRINCIPAL */
+/* ========================================================= */
+
+.income-management {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 32px 24px 65px;
+
+    background: #f5f8fa;
+
+    font-family: inherit;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR CENTRAL */
+/* ========================================================= */
+
+.income-management__container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 30px;
+
+    width: 100%;
+    max-width: 1450px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.income-management__section {
+    width: 100%;
+    min-width: 0;
+}
+
+.income-management__section > * {
+    max-width: 100%;
+}
+
+
+/* ========================================================= */
+/* NOTIFICACIONES */
+/* ========================================================= */
+
+.income-management__notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 15px 18px;
+
+    border: 1px solid transparent;
+    border-radius: 12px;
+
+    animation: income-management-appear 0.25s ease;
+}
+
+.income-management__notification-content {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.income-management__notification-content svg {
+    flex-shrink: 0;
+}
+
+
+/* ========================================================= */
+/* NOTIFICACIÓN DE ÉXITO */
+/* ========================================================= */
+
+.income-management__notification--success {
+    color: #278368;
+    background: #e8f6f0;
+
+    border-color: #cce9dc;
+}
+
+
+/* ========================================================= */
+/* NOTIFICACIÓN DE ERROR */
+/* ========================================================= */
+
+.income-management__notification--error {
+    color: #b14d4d;
+    background: #fceeee;
+
+    border-color: #f0d1d1;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR NOTIFICACIÓN */
+/* ========================================================= */
+
+.income-management__notification button {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    color: inherit;
+    background: transparent;
+
+    border: none;
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.income-management__notification button:hover {
+    background: rgba(23, 56, 76, 0.06);
+}
+
+.income-management__notification button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* ANIMACIONES */
+/* ========================================================= */
+
+@keyframes income-management-appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - PANTALLAS MEDIANAS */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .income-management {
+        padding: 28px 20px 55px;
+    }
+
+    .income-management__container {
+        gap: 25px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .income-management {
+        padding: 22px 16px 45px;
+    }
+
+    .income-management__container {
+        gap: 22px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-management {
+        padding: 18px 12px 35px;
+    }
+
+    .income-management__container {
+        gap: 20px;
+    }
+
+    .income-management__notification {
+        align-items: flex-start;
+
+        padding: 13px;
+    }
+
+    .income-management__notification-content {
+        align-items: flex-start;
+
+        font-size: 11px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .income-management__notification {
+        animation: none;
+    }
+
+}

@@ -1,0 +1,206 @@
+
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.resource-delete-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(17, 35, 48, 0.68);
+    backdrop-filter: blur(4px);
+}
+
+/* ========================================================= */
+/* VENTANA */
+/* ========================================================= */
+
+.resource-delete-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100dvh - 48px);
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    background: #ffffff;
+    border: 1px solid #e9d5d2;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.28);
+
+    text-align: center;
+}
+
+/* ========================================================= */
+/* CERRAR */
+/* ========================================================= */
+
+.resource-delete-modal__close {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: #71899a;
+    background: #f3f7f9;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.resource-delete-modal__icon {
+    display: grid;
+    place-items: center;
+
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    color: #b7564e;
+    background: #fbeae8;
+
+    border-radius: 18px;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.resource-delete-modal h2 {
+    margin: 0 0 12px;
+
+    color: #17384c;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.resource-delete-modal p {
+    margin: 0 0 16px;
+
+    color: #71899a;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.resource-delete-modal__resource {
+    padding: 15px;
+    margin-bottom: 17px;
+
+    color: #24475b;
+    background: #f5f8fa;
+
+    border: 1px solid #e4edf1;
+    border-radius: 11px;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.resource-delete-modal .resource-delete-modal__warning {
+    color: #a65d55;
+    font-size: 11px;
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+.resource-delete-modal__actions {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-top: 25px;
+}
+
+.resource-delete-modal__actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    flex: 1;
+    min-height: 44px;
+    padding: 11px 13px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.resource-delete-modal__cancel {
+    color: #547083;
+    background: #ffffff;
+    border: 1px solid #dce6eb;
+}
+
+.resource-delete-modal__confirm {
+    color: #ffffff;
+    background: #b7564e;
+    border: 1px solid #b7564e;
+}
+
+.resource-delete-modal__confirm:hover {
+    background: #973f39;
+}
+
+.resource-delete-modal button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+
+    .resource-delete-modal__overlay {
+        padding: 12px;
+    }
+
+    .resource-delete-modal {
+        padding: 26px 18px;
+    }
+
+    .resource-delete-modal h2 {
+        font-size: 20px;
+    }
+
+    .resource-delete-modal__actions {
+        flex-direction: column;
+    }
+
+    .resource-delete-modal__actions button {
+        width: 100%;
+        flex: none;
+    }
+}

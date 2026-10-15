@@ -1,0 +1,111 @@
+
+/* ========================================================= */
+/* RESUMEN DE RECURSOS */
+/* ========================================================= */
+
+.resources-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.resources-summary__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 10px;
+    min-width: 0;
+    min-height: 155px;
+    padding: 22px;
+
+    background: #ffffff;
+    border: 1px solid #e1e9ee;
+    border-radius: 16px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.resources-summary__card:hover {
+    border-color: #cbdfe7;
+    box-shadow: 0 5px 16px rgba(22, 61, 81, 0.05);
+}
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.resources-summary__icon {
+    display: grid;
+    place-items: center;
+
+    width: 40px;
+    height: 40px;
+
+    color: #258aa5;
+    background: #eaf5f8;
+
+    border-radius: 11px;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.resources-summary__label {
+    color: #607a90;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.resources-summary__value {
+    color: #17384c;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.resources-summary__description {
+    color: #91a2b0;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+    .resources-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resources-summary {
+        gap: 10px;
+    }
+
+    .resources-summary__card {
+        min-height: 140px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .resources-summary {
+        grid-template-columns: 1fr;
+    }
+}

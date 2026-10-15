@@ -1,342 +1,350 @@
-// Importamos useMemo desde React.
-// Nos permitirá memorizar cálculos derivados de los gastos
-// para evitar realizarlos nuevamente en cada render innecesariamente.
+// =========================================================
+// IMPORTACIONES
+// =========================================================
+
 import { useMemo } from "react";
 
-// Importamos los gastos simulados que creamos anteriormente.
-// Más adelante estos datos serán reemplazados por información
-// obtenida desde nuestra API.
-import { expenses } from "../../../data/admin/expensesData";
+import {
+    Wallet,
+    TrendingDown,
+    ReceiptText,
+    ChartNoAxesColumnIncreasing,
+} from "lucide-react";
 
-// Importamos los estilos específicos del componente.
+import {
+    formatExpenseCurrency,
+    getExpenseLocalDate,
+} from "../../../utils/expenseUtils";
+
 import "../../../styles/components/administration/expenses/ExpenseSummary.css";
 
-// Creamos el componente encargado de mostrar
-// los principales indicadores relacionados con los gastos.
-function ExpenseSummary() {
 
-  // ---------------------------------------------------------
-  // FORMATEAR MONEDA
-  // ---------------------------------------------------------
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
 
-  // Creamos una función para transformar números
-  // en valores monetarios con formato chileno.
-  const formatCurrency = (value) => {
+function ExpenseSummary({
+    expenses = [],
+}) {
 
-    // Utilizamos Intl.NumberFormat para evitar
-    // formatear manualmente los números.
-    return new Intl.NumberFormat("es-CL", {
+    // =====================================================
+    // FECHA ACTUAL
+    // =====================================================
 
-      // Indicamos que queremos mostrar una moneda.
-      style: "currency",
+    const today = new Date();
 
-      // Indicamos que utilizaremos pesos chilenos.
-      currency: "CLP",
+    const currentYear = today.getFullYear();
 
-      // Eliminamos los decimales porque normalmente
-      // los pesos chilenos se muestran sin ellos.
-      maximumFractionDigits: 0,
+    const currentMonth = today.getMonth() + 1;
 
-    }).format(value);
-  };
+    const currentDate = getExpenseLocalDate(today);
 
-  // ---------------------------------------------------------
-  // GASTOS PAGADOS DEL MES
-  // ---------------------------------------------------------
 
-  // Calculamos el total de gastos que aparecen
-  // actualmente como pagados.
-  const totalPaidExpenses = useMemo(() => {
+    // =====================================================
+    // CÁLCULO DE INDICADORES
+    // =====================================================
 
-    // Filtramos solamente los movimientos
-    // cuyo estado sea "Pagado".
-    return expenses
+    const summary = useMemo(() => {
 
-      // Dejamos solamente los gastos pagados.
-      .filter((expense) => expense.status === "Pagado")
+        let monthlyExpenses = 0;
 
-      // Sumamos el monto de todos esos movimientos.
-      .reduce(
-        (total, expense) => total + expense.amount,
-        0
-      );
+        let yearlyExpenses = 0;
 
-  }, []);
+        let monthlyMovements = 0;
 
-  // ---------------------------------------------------------
-  // CANTIDAD DE GASTOS PAGADOS
-  // ---------------------------------------------------------
 
-  // Contamos cuántos gastos tienen estado "Pagado".
-  const paidExpensesCount = useMemo(() => {
+        // ================================================
+        // RECORRER GASTOS
+        // ================================================
 
-    // Filtramos los gastos pagados.
-    return expenses.filter(
-      (expense) => expense.status === "Pagado"
-    ).length;
+        expenses.forEach((expense) => {
 
-  }, []);
+            const expenseDate = expense.date;
 
-  // ---------------------------------------------------------
-  // GASTOS PENDIENTES
-  // ---------------------------------------------------------
+            // --------------------------------------------
+            // VALIDAR FECHA
+            // --------------------------------------------
 
-  // Calculamos el total de dinero que corresponde
-  // a gastos registrados pero todavía pendientes de pago.
-  const pendingExpensesTotal = useMemo(() => {
+            if (
+                typeof expenseDate !== "string" ||
+                !/^\d{4}-\d{2}-\d{2}$/.test(expenseDate)
+            ) {
+                return;
+            }
 
-    // Filtramos solamente los gastos pendientes.
-    return expenses
 
-      // Dejamos únicamente los movimientos pendientes.
-      .filter((expense) => expense.status === "Pendiente")
+            // --------------------------------------------
+            // EXCLUIR FECHAS FUTURAS
+            // --------------------------------------------
 
-      // Sumamos sus montos.
-      .reduce(
-        (total, expense) => total + expense.amount,
-        0
-      );
+            if (expenseDate > currentDate) {
+                return;
+            }
 
-  }, []);
 
-  // ---------------------------------------------------------
-  // CANTIDAD DE GASTOS PENDIENTES
-  // ---------------------------------------------------------
+            // --------------------------------------------
+            // SOLO GASTOS PAGADOS
+            // --------------------------------------------
 
-  // Calculamos cuántos movimientos siguen pendientes.
-  const pendingExpensesCount = useMemo(() => {
+            // Los pendientes no deben contabilizarse
+            // como egresos efectivamente realizados.
 
-    // Filtramos los movimientos pendientes
-    // y obtenemos la cantidad resultante.
-    return expenses.filter(
-      (expense) => expense.status === "Pendiente"
-    ).length;
+            if (expense.status !== "Pagado") {
+                return;
+            }
 
-  }, []);
 
-  // ---------------------------------------------------------
-  // GASTO DEL MES ANTERIOR
-  // ---------------------------------------------------------
+            // --------------------------------------------
+            // VALIDAR MONTO
+            // --------------------------------------------
 
-  // Guardamos temporalmente el total correspondiente
-  // al mes anterior.
-  // Más adelante este valor se calculará automáticamente
-  // utilizando los movimientos almacenados en MongoDB.
-  const previousMonthExpenses = 580000;
+            const amount = Number(expense.amount);
 
-  // ---------------------------------------------------------
-  // VARIACIÓN RESPECTO AL MES ANTERIOR
-  // ---------------------------------------------------------
+            if (
+                !Number.isSafeInteger(amount) ||
+                amount <= 0
+            ) {
+                return;
+            }
 
-  // Calculamos la diferencia porcentual entre
-  // el gasto actual y el gasto del mes anterior.
-  const monthlyVariation =
-    ((totalPaidExpenses - previousMonthExpenses) /
-      previousMonthExpenses) *
-    100;
 
-  // ---------------------------------------------------------
-  // GASTOS AGRUPADOS POR CATEGORÍA
-  // ---------------------------------------------------------
+            // --------------------------------------------
+            // EXTRAER AÑO Y MES
+            // --------------------------------------------
 
-  // Agrupamos los gastos pagados según su categoría
-  // para determinar posteriormente cuál concentra
-  // el mayor monto de dinero.
-  const expensesByCategory = useMemo(() => {
+            const expenseYear = Number(
+                expenseDate.slice(0, 4)
+            );
 
-    // Creamos un objeto vacío donde iremos
-    // acumulando los montos.
-    const categories = {};
+            const expenseMonth = Number(
+                expenseDate.slice(5, 7)
+            );
 
-    // Recorremos cada gasto.
-    expenses.forEach((expense) => {
 
-      // Solo utilizamos gastos que ya fueron pagados.
-      if (expense.status === "Pagado") {
+            // ============================================
+            // GASTOS DEL AÑO
+            // ============================================
 
-        // Si todavía no existe esta categoría dentro
-        // del objeto, la creamos inicialmente con valor cero.
-        if (!categories[expense.category]) {
-          categories[expense.category] = 0;
-        }
+            if (expenseYear === currentYear) {
 
-        // Sumamos el monto del gasto al total
-        // correspondiente a su categoría.
-        categories[expense.category] += expense.amount;
-      }
-    });
+                yearlyExpenses += amount;
 
-    // Transformamos el objeto en un arreglo.
-    // Esto también será útil posteriormente
-    // cuando construyamos nuestros gráficos.
-    return Object.entries(categories).map(
-      ([category, amount]) => ({
+            }
 
-        // Guardamos el nombre de la categoría.
-        category,
 
-        // Guardamos el monto acumulado.
-        amount,
-      })
-    );
+            // ============================================
+            // GASTOS DEL MES
+            // ============================================
 
-  }, []);
+            if (
+                expenseYear === currentYear &&
+                expenseMonth === currentMonth
+            ) {
 
-  // ---------------------------------------------------------
-  // CATEGORÍA CON MAYOR GASTO
-  // ---------------------------------------------------------
+                monthlyExpenses += amount;
 
-  // Buscamos cuál categoría concentra el mayor monto.
-  const highestExpenseCategory = useMemo(() => {
+                monthlyMovements += 1;
 
-    // Si no existen gastos registrados,
-    // devolvemos información predeterminada.
-    if (expensesByCategory.length === 0) {
-      return {
-        category: "Sin datos",
-        amount: 0,
-      };
-    }
+            }
 
-    // Comparamos cada categoría hasta encontrar
-    // aquella que tenga el monto más alto.
-    return expensesByCategory.reduce(
-      (highest, current) =>
+        });
 
-        // Si el monto actual es mayor que el anterior,
-        // utilizamos la categoría actual.
-        current.amount > highest.amount
-          ? current
-          : highest
-    );
 
-  }, [expensesByCategory]);
+        // ================================================
+        // PROMEDIO MENSUAL
+        // ================================================
 
-  // ---------------------------------------------------------
-  // TEXTO DE VARIACIÓN
-  // ---------------------------------------------------------
+        const monthlyAverage =
+            yearlyExpenses / currentMonth;
 
-  // Determinamos si este mes se gastó más o menos
-  // que durante el mes anterior.
-  const variationText =
-    monthlyVariation > 0
-      ? "más que el mes anterior"
-      : monthlyVariation < 0
-      ? "menos que el mes anterior"
-      : "igual que el mes anterior";
 
-  // ---------------------------------------------------------
-  // INTERFAZ
-  // ---------------------------------------------------------
+        return {
+            monthlyExpenses,
+            yearlyExpenses,
+            monthlyMovements,
+            monthlyAverage,
+        };
 
-  // Retornamos las tarjetas del resumen financiero.
-  return (
-    <section className="expense-summary">
+    }, [
+        expenses,
+        currentYear,
+        currentMonth,
+        currentDate,
+    ]);
 
-      {/* -------------------------------------------------- */}
-      {/* TARJETA: GASTOS DEL MES */}
-      {/* -------------------------------------------------- */}
 
-      <article className="expense-summary__card">
+    // =====================================================
+    // CONFIGURACIÓN DE TARJETAS
+    // =====================================================
 
-        {/* Mostramos el nombre del indicador. */}
-        <span className="expense-summary__label">
-          Gastos del mes
-        </span>
+    const summaryCards = [
 
-        {/* Mostramos el total pagado. */}
-        <strong className="expense-summary__value">
-          {formatCurrency(totalPaidExpenses)}
-        </strong>
+        // -------------------------------------------------
+        // GASTOS DEL MES
+        // -------------------------------------------------
 
-        {/* Mostramos cuántos movimientos forman el total. */}
-        <span className="expense-summary__detail">
-          {paidExpensesCount} gastos pagados
-        </span>
+        {
+            id: "monthly-expenses",
 
-      </article>
+            title: "Gastos del mes",
 
-      {/* -------------------------------------------------- */}
-      {/* TARJETA: MES ANTERIOR */}
-      {/* -------------------------------------------------- */}
+            value: formatExpenseCurrency(
+                summary.monthlyExpenses
+            ),
 
-      <article className="expense-summary__card">
+            description: "Total pagado durante el mes actual",
 
-        {/* Nombre del indicador. */}
-        <span className="expense-summary__label">
-          Mes anterior
-        </span>
+            icon: Wallet,
 
-        {/* Total temporal del mes anterior. */}
-        <strong className="expense-summary__value">
-          {formatCurrency(previousMonthExpenses)}
-        </strong>
+            variant: "primary",
+        },
 
-        {/* Mostramos la comparación porcentual. */}
-        <span
-          className={`expense-summary__detail ${
-            monthlyVariation > 0
-              ? "expense-summary__detail--increase"
-              : "expense-summary__detail--decrease"
-          }`}
+
+        // -------------------------------------------------
+        // GASTOS DEL AÑO
+        // -------------------------------------------------
+
+        {
+            id: "yearly-expenses",
+
+            title: "Gastos del año",
+
+            value: formatExpenseCurrency(
+                summary.yearlyExpenses
+            ),
+
+            description: "Total acumulado durante el año",
+
+            icon: TrendingDown,
+
+            variant: "success",
+        },
+
+
+        // -------------------------------------------------
+        // MOVIMIENTOS DEL MES
+        // -------------------------------------------------
+
+        {
+            id: "monthly-movements",
+
+            title: "Movimientos del mes",
+
+            value: summary.monthlyMovements.toLocaleString(
+                "es-CL"
+            ),
+
+            description: "Registros de gastos pagados del mes actual",
+
+            icon: ReceiptText,
+
+            variant: "info",
+        },
+
+
+        // -------------------------------------------------
+        // PROMEDIO MENSUAL
+        // -------------------------------------------------
+
+        {
+            id: "monthly-average",
+
+            title: "Promedio mensual",
+
+            value: formatExpenseCurrency(
+                summary.monthlyAverage
+            ),
+
+            description: "Promedio de los meses transcurridos",
+
+            icon: ChartNoAxesColumnIncreasing,
+
+            variant: "purple",
+        },
+
+    ];
+
+
+    // =====================================================
+    // INTERFAZ
+    // =====================================================
+
+    return (
+        <section
+            className="expense-summary"
+            aria-label="Resumen financiero de gastos"
         >
-          {monthlyVariation > 0 ? "↑" : "↓"}{" "}
-          {Math.abs(monthlyVariation).toFixed(1)}%{" "}
-          {variationText}
-        </span>
 
-      </article>
+            {/* =========================================== */}
+            {/* TARJETAS DE INDICADORES */}
+            {/* =========================================== */}
 
-      {/* -------------------------------------------------- */}
-      {/* TARJETA: GASTOS COMPROMETIDOS */}
-      {/* -------------------------------------------------- */}
+            <div className="expense-summary__grid">
 
-      <article className="expense-summary__card">
+                {summaryCards.map((card) => {
 
-        {/* Nombre del indicador. */}
-        <span className="expense-summary__label">
-          Gastos comprometidos
-        </span>
+                    const CardIcon = card.icon;
 
-        {/* Total pendiente de pago. */}
-        <strong className="expense-summary__value">
-          {formatCurrency(pendingExpensesTotal)}
-        </strong>
+                    return (
 
-        {/* Cantidad de movimientos pendientes. */}
-        <span className="expense-summary__detail">
-          {pendingExpensesCount} gastos pendientes
-        </span>
+                        <article
+                            key={card.id}
+                            className={
+                                "expense-summary__card " +
+                                `expense-summary__card--${card.variant}`
+                            }
+                        >
 
-      </article>
+                            {/* ================================= */}
+                            {/* ENCABEZADO */}
+                            {/* ================================= */}
 
-      {/* -------------------------------------------------- */}
-      {/* TARJETA: MAYOR CATEGORÍA */}
-      {/* -------------------------------------------------- */}
+                            <div className="expense-summary__card-header">
 
-      <article className="expense-summary__card">
+                                <span className="expense-summary__card-title">
+                                    {card.title}
+                                </span>
 
-        {/* Nombre del indicador. */}
-        <span className="expense-summary__label">
-          Mayor categoría de gasto
-        </span>
+                                <div className="expense-summary__icon">
 
-        {/* Categoría con mayor monto. */}
-        <strong className="expense-summary__value expense-summary__value--text">
-          {highestExpenseCategory.category}
-        </strong>
+                                    <CardIcon
+                                        size={21}
+                                        strokeWidth={1.8}
+                                        aria-hidden="true"
+                                    />
 
-        {/* Monto acumulado de esa categoría. */}
-        <span className="expense-summary__detail">
-          {formatCurrency(highestExpenseCategory.amount)}
-        </span>
+                                </div>
 
-      </article>
+                            </div>
 
-    </section>
-  );
+
+                            {/* ================================= */}
+                            {/* VALOR */}
+                            {/* ================================= */}
+
+                            <strong className="expense-summary__value">
+                                {card.value}
+                            </strong>
+
+
+                            {/* ================================= */}
+                            {/* DESCRIPCIÓN */}
+                            {/* ================================= */}
+
+                            <p className="expense-summary__description">
+                                {card.description}
+                            </p>
+
+                        </article>
+
+                    );
+
+                })}
+
+            </div>
+
+        </section>
+    );
 }
 
-// Exportamos el componente para poder utilizarlo
-// dentro de nuestra página principal.
 export default ExpenseSummary;

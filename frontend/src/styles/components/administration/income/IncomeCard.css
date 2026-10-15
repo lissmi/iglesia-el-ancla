@@ -1,0 +1,425 @@
+/* ========================================================= */
+/* TARJETA PRINCIPAL */
+/* ========================================================= */
+
+.income-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: 19px;
+
+    min-width: 0;
+    padding: 21px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(23, 56, 76, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.income-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d7e5eb;
+
+    box-shadow: 0 8px 23px rgba(23, 56, 76, 0.07);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+/* ========================================================= */
+/* IDENTIDAD DEL INGRESO */
+/* ========================================================= */
+
+.income-card__identity {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.income-card__category-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 46px;
+    height: 46px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.income-card__identity-text {
+    min-width: 0;
+}
+
+.income-card__identity-text h3 {
+    margin: 0 0 8px;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.income-card__metadata {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    color: #8295a3;
+
+    font-size: 11px;
+}
+
+.income-card__id {
+    font-weight: 700;
+}
+
+.income-card__metadata-separator {
+    color: #b3c1ca;
+}
+
+.income-card__category {
+    color: #2c8199;
+    font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN FINANCIERA */
+/* ========================================================= */
+
+.income-card__financial {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    flex-shrink: 0;
+
+    gap: 8px;
+}
+
+.income-card__amount {
+    color: #278368;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+
+    white-space: nowrap;
+}
+
+.income-card__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.income-card__status--received {
+    color: #278368;
+    background: #e8f6f0;
+}
+
+.income-card__status--pending {
+    color: #a87524;
+    background: #fff5e5;
+}
+
+.income-card__status--cancelled {
+    color: #b14d4d;
+    background: #fceeee;
+}
+
+
+/* ========================================================= */
+/* DETALLES */
+/* ========================================================= */
+
+.income-card__details {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    padding: 16px 0;
+
+    border-top: 1px solid #edf1f3;
+    border-bottom: 1px solid #edf1f3;
+}
+
+.income-card__detail {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+.income-card__detail-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+
+    color: #607a90;
+    background: #f1f5f7;
+
+    border-radius: 9px;
+}
+
+.income-card__detail > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+}
+
+.income-card__detail-label {
+    color: #8295a3;
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.income-card__detail-value {
+    color: #17384c;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* PIE DE TARJETA */
+/* ========================================================= */
+
+.income-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.income-card__footer-label {
+    color: #8295a3;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.income-card__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.income-card__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 35px;
+    padding: 0 11px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2ebef;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.income-card__action--view {
+    color: #607a90;
+}
+
+.income-card__action--view:hover:not(:disabled) {
+    color: #2c8199;
+    background: #eaf5f8;
+    border-color: #b9dce5;
+}
+
+.income-card__action--edit {
+    color: #2c8199;
+}
+
+.income-card__action--edit:hover:not(:disabled) {
+    background: #eaf5f8;
+    border-color: #b9dce5;
+}
+
+.income-card__action--delete {
+    color: #b14d4d;
+}
+
+.income-card__action--delete:hover:not(:disabled) {
+    background: #fceeee;
+    border-color: #f1caca;
+}
+
+.income-card__action:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.income-card__action:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 850px) {
+
+    .income-card {
+        padding: 18px;
+    }
+
+    .income-card__amount {
+        font-size: 20px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-card {
+        gap: 15px;
+        padding: 16px;
+    }
+
+    .income-card__header {
+        flex-direction: column;
+    }
+
+    .income-card__financial {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+    .income-card__amount {
+        font-size: 21px;
+    }
+
+    .income-card__details {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .income-card__footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .income-card__actions {
+        width: 100%;
+    }
+
+    .income-card__action {
+        flex: 1;
+    }
+
+    .income-card__footer-label {
+        display: none;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 380px) {
+
+    .income-card__financial {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .income-card__actions {
+        flex-wrap: wrap;
+    }
+
+    .income-card__action {
+        min-width: 75px;
+    }
+}

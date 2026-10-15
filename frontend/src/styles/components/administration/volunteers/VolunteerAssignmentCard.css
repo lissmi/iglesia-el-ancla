@@ -1,0 +1,315 @@
+/* ========================================================= */
+/* TARJETA PRINCIPAL */
+/* ========================================================= */
+
+.volunteer-assignment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteer-assignment-card:hover {
+    border-color: #c2dce5;
+
+    box-shadow: 0 5px 15px rgba(22, 61, 81, 0.045);
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================================= */
+/* CONTENIDO PRINCIPAL */
+/* ========================================================= */
+
+.volunteer-assignment-card__main {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ========================================================= */
+/* EQUIPO Y ESTADO */
+/* ========================================================= */
+
+.volunteer-assignment-card__top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 11px;
+}
+
+.volunteer-assignment-card__team {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* ESTADO DE CONFIRMACIÓN */
+/* ========================================================= */
+
+.volunteer-assignment-card__status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.volunteer-assignment-card__status--confirmed {
+    color: #27785f;
+    background: #e7f6ef;
+}
+
+.volunteer-assignment-card__status--pending {
+    color: #9a6a24;
+    background: #fff5e4;
+}
+
+.volunteer-assignment-card__status--declined {
+    color: #a94b4b;
+    background: #fff0f0;
+}
+
+.volunteer-assignment-card__status--unassigned {
+    color: #526a7b;
+    background: #eef2f5;
+}
+
+.volunteer-assignment-card__status--cancelled {
+    color: #8295a3;
+    background: #f2f4f5;
+}
+
+
+/* ========================================================= */
+/* TÍTULO */
+/* ========================================================= */
+
+.volunteer-assignment-card__title {
+    margin: 0 0 11px;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* DESCRIPCIÓN */
+/* ========================================================= */
+
+.volunteer-assignment-card__description {
+    max-width: 760px;
+
+    margin: 0 0 13px;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN DEL TURNO */
+/* ========================================================= */
+
+.volunteer-assignment-card__metadata {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 9px 19px;
+}
+
+.volunteer-assignment-card__metadata span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #607a90;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.volunteer-assignment-card__metadata svg {
+    flex-shrink: 0;
+
+    color: #8295a3;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.volunteer-assignment-card__actions {
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
+    gap: 8px;
+}
+
+.volunteer-assignment-card__action {
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteer-assignment-card__action:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ========================================================= */
+/* ACCIÓN: VER */
+/* ========================================================= */
+
+.volunteer-assignment-card__action--view {
+    color: #397e93;
+}
+
+.volunteer-assignment-card__action--view:hover {
+    background: #eaf5f8;
+    border-color: #b7d5df;
+}
+
+
+/* ========================================================= */
+/* ACCIÓN: EDITAR */
+/* ========================================================= */
+
+.volunteer-assignment-card__action--edit {
+    color: #a77a37;
+}
+
+.volunteer-assignment-card__action--edit:hover {
+    background: #fff5e4;
+    border-color: #ead2a8;
+}
+
+
+/* ========================================================= */
+/* ACCIÓN: ELIMINAR */
+/* ========================================================= */
+
+.volunteer-assignment-card__action--delete {
+    color: #b45252;
+}
+
+.volunteer-assignment-card__action--delete:hover {
+    background: #fff0f0;
+    border-color: #e9bcbc;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteer-assignment-card__action:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .volunteer-assignment-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .volunteer-assignment-card__actions {
+        align-self: flex-end;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .volunteer-assignment-card {
+        gap: 17px;
+        padding: 16px;
+    }
+
+    .volunteer-assignment-card__metadata {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 9px;
+    }
+
+    .volunteer-assignment-card__actions {
+        width: 100%;
+        justify-content: flex-end;
+
+        padding-top: 13px;
+
+        border-top: 1px solid #eaf0f3;
+    }
+}

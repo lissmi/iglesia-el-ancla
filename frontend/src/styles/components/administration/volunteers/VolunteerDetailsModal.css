@@ -1,0 +1,558 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.volunteer-details-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.volunteer-details-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 760px;
+    max-height: calc(100dvh - 48px);
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.28);
+
+    overflow: hidden;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.volunteer-details-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 25px 30px;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.volunteer-details-modal__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+    min-width: 0;
+}
+
+.volunteer-details-modal__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 13px;
+}
+
+.volunteer-details-modal__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.volunteer-details-modal__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.volunteer-details-modal__close {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f2f6f8;
+    color: #607a90;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.volunteer-details-modal__close:hover {
+    background: #fff0f0;
+    color: #b45252;
+}
+
+
+/* ========================================================= */
+/* CUERPO DEL MODAL */
+/* ========================================================= */
+
+.volunteer-details-modal__body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 27px 30px;
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* INTRODUCCIÓN */
+/* ========================================================= */
+
+.volunteer-details-modal__intro {
+    margin-bottom: 22px;
+}
+
+.volunteer-details-modal__team {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 12px;
+    padding: 6px 11px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.volunteer-details-modal__intro h3 {
+    margin: 0 0 9px;
+
+    color: #17384c;
+
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.volunteer-details-modal__intro p {
+    margin: 0;
+
+    color: #607a90;
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* ESTADO DE CONFIRMACIÓN */
+/* ========================================================= */
+
+.volunteer-details-modal__status {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 27px;
+    padding: 16px;
+
+    border: 1px solid transparent;
+    border-radius: 12px;
+}
+
+.volunteer-details-modal__status-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.volunteer-details-modal__status strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.volunteer-details-modal__status p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.volunteer-details-modal__status--confirmed {
+    color: #27785f;
+    background: #e7f6ef;
+    border-color: #ccebdd;
+}
+
+.volunteer-details-modal__status--pending {
+    color: #9a6a24;
+    background: #fff5e4;
+    border-color: #f1dfb9;
+}
+
+.volunteer-details-modal__status--declined {
+    color: #a94b4b;
+    background: #fff0f0;
+    border-color: #f0cccc;
+}
+
+.volunteer-details-modal__status--unassigned {
+    color: #526a7b;
+    background: #eef2f5;
+    border-color: #dce5eb;
+}
+
+.volunteer-details-modal__status--cancelled {
+    color: #8295a3;
+    background: #f2f4f5;
+    border-color: #e0e5e8;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.volunteer-details-modal__section {
+    margin-bottom: 26px;
+}
+
+.volunteer-details-modal__section-title {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+
+    color: #2c8199;
+}
+
+.volunteer-details-modal__section-title h4 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE INFORMACIÓN */
+/* ========================================================= */
+
+.volunteer-details-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.volunteer-details-modal__info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+    min-width: 0;
+
+    padding: 15px;
+
+    background: #f8fafb;
+
+    border: 1px solid #eaf0f3;
+    border-radius: 11px;
+}
+
+.volunteer-details-modal__info-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 9px;
+}
+
+.volunteer-details-modal__info > div:last-child {
+    min-width: 0;
+}
+
+.volunteer-details-modal__info span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.volunteer-details-modal__info strong {
+    display: block;
+
+    color: #17384c;
+
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* INDICACIONES */
+/* ========================================================= */
+
+.volunteer-details-modal__notes {
+    padding: 17px;
+
+    color: #48667a;
+    background: #f8fafb;
+
+    border: 1px solid #eaf0f3;
+    border-radius: 11px;
+
+    font-size: 12px;
+    line-height: 1.9;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.volunteer-details-modal__no-notes {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 17px;
+
+    color: #8295a3;
+    background: #f8fafb;
+
+    border: 1px dashed #dce7ec;
+    border-radius: 11px;
+
+    font-size: 12px;
+}
+
+
+/* ========================================================= */
+/* PIE DEL MODAL */
+/* ========================================================= */
+
+.volunteer-details-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding: 19px 30px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.volunteer-details-modal__cancel,
+.volunteer-details-modal__edit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 0 19px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteer-details-modal__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.volunteer-details-modal__cancel:hover {
+    background: #f2f6f8;
+}
+
+.volunteer-details-modal__edit {
+    color: #ffffff;
+    background: #2c8199;
+
+    border: 1px solid #2c8199;
+}
+
+.volunteer-details-modal__edit:hover {
+    background: #236d83;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteer-details-modal button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+    .volunteer-details-modal__header {
+        padding: 21px;
+    }
+
+    .volunteer-details-modal__body {
+        padding: 22px 21px;
+    }
+
+    .volunteer-details-modal__footer {
+        padding: 17px 21px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .volunteer-details-modal__overlay {
+        padding: 10px;
+    }
+
+    .volunteer-details-modal {
+        max-height: calc(100dvh - 20px);
+        border-radius: 15px;
+    }
+
+    .volunteer-details-modal__header {
+        padding: 18px;
+    }
+
+    .volunteer-details-modal__heading h2 {
+        font-size: 16px;
+    }
+
+    .volunteer-details-modal__heading p {
+        font-size: 11px;
+    }
+
+    .volunteer-details-modal__heading-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .volunteer-details-modal__body {
+        padding: 20px 18px;
+    }
+
+    .volunteer-details-modal__intro h3 {
+        font-size: 18px;
+    }
+
+    .volunteer-details-modal__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-details-modal__footer {
+        padding: 15px 18px;
+    }
+
+    .volunteer-details-modal__cancel,
+    .volunteer-details-modal__edit {
+        flex: 1;
+        padding: 0 10px;
+    }
+}

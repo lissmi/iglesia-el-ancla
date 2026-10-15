@@ -1,0 +1,383 @@
+
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.expense-delete__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2200;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(18, 33, 45, 0.65);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.expense-delete {
+    position: relative;
+
+    width: 100%;
+    max-width: 470px;
+    max-height: calc(100dvh - 40px);
+
+    padding: 34px 30px 28px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e9eef1;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.27);
+
+    box-sizing: border-box;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.expense-delete__close {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    color: #778995;
+    background: #f4f7f9;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.expense-delete__close:hover:not(:disabled) {
+    color: #17384c;
+    background: #e7eff3;
+}
+
+
+/* ========================================================= */
+/* ÍCONO DE ADVERTENCIA */
+/* ========================================================= */
+
+.expense-delete__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 66px;
+    height: 66px;
+
+    margin: 0 auto 19px;
+
+    color: #c45353;
+    background: #fff0f0;
+
+    border: 1px solid #f6dcdc;
+    border-radius: 19px;
+}
+
+
+/* ========================================================= */
+/* TEXTOS PRINCIPALES */
+/* ========================================================= */
+
+.expense-delete h2 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.expense-delete__description {
+    max-width: 360px;
+
+    margin: 11px auto 0;
+
+    color: #788b97;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* TARJETA DEL GASTO */
+/* ========================================================= */
+
+.expense-delete__expense {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 23px;
+    padding: 19px;
+
+    background: #f8fafb;
+
+    border: 1px solid #e7edf1;
+    border-radius: 13px;
+}
+
+.expense-delete__expense-label {
+    color: #8b9aa4;
+
+    font-size: 10px;
+    font-weight: 750;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.expense-delete__expense-name {
+    color: #29485b;
+
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.expense-delete__expense-amount {
+    color: #17384c;
+
+    font-size: 25px;
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+.expense-delete__status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.expense-delete__status--paid {
+    color: #23755d;
+    background: #e5f5ee;
+}
+
+.expense-delete__status--pending {
+    color: #a77627;
+    background: #fff3dc;
+}
+
+
+/* ========================================================= */
+/* ADVERTENCIA */
+/* ========================================================= */
+
+.expense-delete__warning {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 17px;
+    padding: 12px 13px;
+
+    color: #a46635;
+    background: #fff7ed;
+
+    border: 1px solid #f1e2cf;
+    border-radius: 10px;
+
+    text-align: left;
+}
+
+.expense-delete__warning svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.expense-delete__warning span {
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* ERRORES */
+/* ========================================================= */
+
+.expense-delete__error {
+    margin: 13px 0 0;
+
+    padding: 11px 12px;
+
+    color: #a43f3f;
+    background: #fff0f0;
+
+    border: 1px solid #f0d1d1;
+    border-radius: 9px;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+.expense-delete__actions {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 11px;
+
+    margin-top: 25px;
+}
+
+.expense-delete__cancel,
+.expense-delete__confirm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 45px;
+    min-width: 0;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.expense-delete__cancel {
+    color: #607480;
+    background: #ffffff;
+
+    border: 1px solid #dce5e9;
+}
+
+.expense-delete__cancel:hover:not(:disabled) {
+    background: #f2f7f9;
+}
+
+.expense-delete__confirm {
+    color: #ffffff;
+    background: #b94e4e;
+
+    border: 1px solid #b94e4e;
+}
+
+.expense-delete__confirm:hover:not(:disabled) {
+    background: #a43c3c;
+    border-color: #a43c3c;
+}
+
+.expense-delete__cancel:disabled,
+.expense-delete__confirm:disabled,
+.expense-delete__close:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.expense-delete__cancel:focus-visible,
+.expense-delete__confirm:focus-visible,
+.expense-delete__close:focus-visible {
+    outline: 3px solid #b9e3ec;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 520px) {
+
+    .expense-delete__overlay {
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .expense-delete {
+        max-height: calc(100dvh - 20px);
+        padding: 30px 18px 22px;
+        border-radius: 16px;
+    }
+
+    .expense-delete h2 {
+        font-size: 19px;
+    }
+
+    .expense-delete__icon {
+        width: 58px;
+        height: 58px;
+    }
+
+    .expense-delete__expense-amount {
+        font-size: 23px;
+    }
+
+}
+
+@media (max-width: 360px) {
+
+    .expense-delete__actions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .expense-delete__cancel,
+    .expense-delete__confirm {
+        transition: none;
+    }
+
+}

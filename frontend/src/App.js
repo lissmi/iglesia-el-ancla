@@ -92,6 +92,7 @@ import Login from "./pages/public/Login";
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberEvents from "./pages/member/MemberEvents";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
+import FinanceOverview from "./pages/administration/FinanceOverview";
 
 // =========================================================
 // PÁGINAS DEL ADMINISTRADOR NORMAL
@@ -114,7 +115,7 @@ import SystemSettings from "./pages/super-admin/system/SystemSettings";
 
 // Conservamos la ruta actual de gastos.
 
-import ExpenseManagement from "./pages/administration/ExpenseManagement";
+
 
 // =========================================================
 // PÁGINA 404
@@ -328,6 +329,18 @@ function App() {
               element={<MemberPrayerRequests />}
             />
 
+            {/* =========================================== */}
+            {/* RESUMEN FINANCIERO DE LA COMUNIDAD */}
+            {/* =========================================== */}
+
+            {/* Disponible para miembros, administradores
+    y superadministradores. */}
+
+            <Route
+              path="/member/finanzas"
+              element={<FinanceOverview />}
+            />
+
           </Route>
 
 
@@ -416,11 +429,6 @@ function App() {
               {/* ===================================== */}
 
               {/* Conservamos su ubicación actual. */}
-
-              <Route
-                path="finanzas/gastos"
-                element={<ExpenseManagement />}
-              />
 
               {/* ===================================== */}
               {/* MÓDULOS EXCLUSIVOS DE SUPER_ADMIN */}

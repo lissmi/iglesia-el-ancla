@@ -1,0 +1,536 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.volunteers-assignments {
+    width: 100%;
+    margin-bottom: 28px;
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(22, 61, 81, 0.035);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.volunteers-assignments__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.volunteers-assignments__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+    min-width: 0;
+}
+
+.volunteers-assignments__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 45px;
+    height: 45px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.volunteers-assignments__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.volunteers-assignments__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.volunteers-assignments__total {
+    flex-shrink: 0;
+
+    padding: 8px 12px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* LISTADO */
+/* ========================================================= */
+
+.volunteers-assignments__list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* ========================================================= */
+/* TARJETA DE ASIGNACIÓN */
+/* ========================================================= */
+
+.volunteers-assignments__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.volunteers-assignments__item:hover {
+    border-color: #c2dce5;
+
+    box-shadow: 0 5px 15px rgba(22, 61, 81, 0.045);
+}
+
+.volunteers-assignments__item-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.volunteers-assignments__item-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+}
+
+.volunteers-assignments__team {
+    padding: 5px 9px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.volunteers-assignments__item h3 {
+    margin: 0 0 13px;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* METADATOS */
+/* ========================================================= */
+
+.volunteers-assignments__metadata {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 9px 19px;
+}
+
+.volunteers-assignments__metadata span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #607a90;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.volunteers-assignments__metadata svg {
+    flex-shrink: 0;
+    color: #8295a3;
+}
+
+
+/* ========================================================= */
+/* ESTADOS */
+/* ========================================================= */
+
+.volunteers-assignments__status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.volunteers-assignments__status--confirmed {
+    color: #27785f;
+    background: #e7f6ef;
+}
+
+.volunteers-assignments__status--pending {
+    color: #9a6a24;
+    background: #fff5e4;
+}
+
+.volunteers-assignments__status--declined {
+    color: #a94b4b;
+    background: #fff0f0;
+}
+
+.volunteers-assignments__status--unassigned {
+    color: #526a7b;
+    background: #eef2f5;
+}
+
+.volunteers-assignments__status--cancelled {
+    color: #8295a3;
+    background: #f2f4f5;
+}
+
+
+/* ========================================================= */
+/* BOTONES DE ACCIÓN */
+/* ========================================================= */
+
+.volunteers-assignments__actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.volunteers-assignments__action {
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteers-assignments__action:hover {
+    transform: translateY(-1px);
+}
+
+.volunteers-assignments__action--view {
+    color: #397e93;
+}
+
+.volunteers-assignments__action--view:hover {
+    background: #eaf5f8;
+    border-color: #b7d5df;
+}
+
+.volunteers-assignments__action--edit {
+    color: #a77a37;
+}
+
+.volunteers-assignments__action--edit:hover {
+    background: #fff5e4;
+    border-color: #ead2a8;
+}
+
+.volunteers-assignments__action--delete {
+    color: #b45252;
+}
+
+.volunteers-assignments__action--delete:hover {
+    background: #fff0f0;
+    border-color: #e9bcbc;
+}
+
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.volunteers-assignments__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+.volunteers-assignments__empty-icon {
+    display: grid;
+    place-items: center;
+
+    width: 68px;
+    height: 68px;
+
+    margin-bottom: 17px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 19px;
+}
+
+.volunteers-assignments__empty h3 {
+    margin: 0 0 9px;
+
+    color: #17384c;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.volunteers-assignments__empty p {
+    max-width: 430px;
+
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.volunteers-assignments__create {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 22px;
+    padding: 12px 18px;
+
+    color: #ffffff;
+    background: #2c8199;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.volunteers-assignments__create:hover {
+    background: #236d83;
+}
+
+
+/* ========================================================= */
+/* PAGINACIÓN */
+/* ========================================================= */
+
+.volunteers-assignments__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-top: 22px;
+    padding-top: 19px;
+
+    border-top: 1px solid #eaf0f3;
+}
+
+.volunteers-assignments__pagination-info {
+    color: #8295a3;
+
+    font-size: 11px;
+}
+
+.volunteers-assignments__pagination-info strong {
+    color: #48667a;
+}
+
+.volunteers-assignments__pagination-controls {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.volunteers-assignments__pagination-controls label {
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.volunteers-assignments__pagination-controls select {
+    height: 35px;
+    padding: 0 9px;
+
+    color: #48667a;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+    border-radius: 8px;
+
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.volunteers-assignments__pagination-controls button {
+    display: grid;
+    place-items: center;
+
+    width: 35px;
+    height: 35px;
+
+    color: #397e93;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.volunteers-assignments__pagination-controls button:hover:not(:disabled) {
+    background: #eaf5f8;
+}
+
+.volunteers-assignments__pagination-controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.volunteers-assignments__page {
+    min-width: 48px;
+
+    color: #48667a;
+
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteers-assignments button:focus-visible,
+.volunteers-assignments select:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .volunteers-assignments__item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .volunteers-assignments__actions {
+        align-self: flex-end;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .volunteers-assignments {
+        padding: 18px;
+    }
+
+    .volunteers-assignments__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .volunteers-assignments__item {
+        padding: 16px;
+    }
+
+    .volunteers-assignments__metadata {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 9px;
+    }
+
+    .volunteers-assignments__pagination {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .volunteers-assignments__pagination-controls {
+        justify-content: space-between;
+    }
+}

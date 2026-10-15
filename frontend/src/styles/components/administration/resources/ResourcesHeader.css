@@ -1,0 +1,184 @@
+
+/* ========================================================= */
+/* ENCABEZADO PRINCIPAL */
+/* ========================================================= */
+
+.resources-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 24px;
+    margin-bottom: 25px;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN DEL ENCABEZADO */
+/* ========================================================= */
+
+.resources-header__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.resources-header__eyebrow {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #b28461;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.resources-header__content h1 {
+    margin: 0 0 9px;
+
+    color: #17384c;
+
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.resources-header__content p {
+    max-width: 650px;
+    margin: 0 0 17px;
+
+    color: #607a90;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* ========================================================= */
+/* BOTÓN VOLVER */
+/* ========================================================= */
+
+.resources-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0;
+
+    color: #397e93;
+    background: transparent;
+
+    border: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.resources-header__back:hover {
+    color: #22586b;
+}
+
+/* ========================================================= */
+/* ACCIONES DEL ENCABEZADO */
+/* ========================================================= */
+
+.resources-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.resources-header__icon {
+    display: grid;
+    place-items: center;
+
+    width: 54px;
+    height: 54px;
+
+    color: #258aa5;
+    background: #eaf5f8;
+
+    border: 1px solid #dcebf0;
+    border-radius: 16px;
+}
+
+/* ========================================================= */
+/* BOTÓN NUEVO RECURSO */
+/* ========================================================= */
+
+.resources-header__create {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 11px 18px;
+
+    color: #ffffff;
+    background: #244d62;
+
+    border: 1px solid #244d62;
+    border-radius: 11px;
+
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.resources-header__create:hover {
+    background: #193b4e;
+    transform: translateY(-1px);
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.resources-header button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+    .resources-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .resources-header__actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resources-header__content h1 {
+        font-size: 24px;
+    }
+
+    .resources-header__content p {
+        font-size: 12px;
+    }
+
+    .resources-header__icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .resources-header__create {
+        padding: 10px 14px;
+    }
+}

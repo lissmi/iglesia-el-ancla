@@ -1,0 +1,463 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.income-delete-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2600;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.68);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.income-delete-modal {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.3);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-delete-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.income-delete-modal__icon {
+    display: grid;
+    place-items: center;
+
+    width: 54px;
+    height: 54px;
+
+    color: #b94545;
+    background: #fceeee;
+
+    border-radius: 15px;
+}
+
+.income-delete-modal__close {
+    display: grid;
+    place-items: center;
+
+    width: 35px;
+    height: 35px;
+
+    color: #607a90;
+    background: #f1f5f7;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.income-delete-modal__close:hover:not(:disabled) {
+    color: #b94545;
+    background: #fceeee;
+}
+
+
+/* ========================================================= */
+/* INTRODUCCIÓN */
+/* ========================================================= */
+
+.income-delete-modal__intro {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.income-delete-modal__intro h2 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.income-delete-modal__intro p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* RESUMEN DEL INGRESO */
+/* ========================================================= */
+
+.income-delete-modal__summary {
+    display: flex;
+    flex-direction: column;
+
+    padding: 6px 17px;
+
+    background: #f8fafb;
+
+    border: 1px solid #e8eff2;
+    border-radius: 13px;
+}
+
+.income-delete-modal__summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    min-height: 49px;
+    padding: 11px 0;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.income-delete-modal__summary-row:last-child {
+    border-bottom: none;
+}
+
+.income-delete-modal__summary-label {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #8295a3;
+
+    font-size: 11px;
+}
+
+.income-delete-modal__summary-row strong {
+    color: #17384c;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.income-delete-modal__summary-row--amount {
+    padding: 15px 0;
+}
+
+.income-delete-modal__summary-row--amount span {
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.income-delete-modal__summary-row--amount strong {
+    color: #278368;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ========================================================= */
+/* ADVERTENCIA */
+/* ========================================================= */
+
+.income-delete-modal__warning {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    color: #b94545;
+    background: #fff5f4;
+
+    border: 1px solid #f2d8d5;
+    border-radius: 11px;
+}
+
+.income-delete-modal__warning > svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.income-delete-modal__warning strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #a83c3c;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.income-delete-modal__warning p {
+    margin: 0;
+
+    color: #956565;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* ERROR */
+/* ========================================================= */
+
+.income-delete-modal__error {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px 14px;
+
+    color: #b94545;
+    background: #fceeee;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* PIE DEL MODAL */
+/* ========================================================= */
+
+.income-delete-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding-top: 19px;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.income-delete-modal__cancel,
+.income-delete-modal__confirm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 0 17px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CANCELAR */
+/* ========================================================= */
+
+.income-delete-modal__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.income-delete-modal__cancel:hover:not(:disabled) {
+    background: #f1f5f7;
+}
+
+
+/* ========================================================= */
+/* BOTÓN ELIMINAR */
+/* ========================================================= */
+
+.income-delete-modal__confirm {
+    color: #ffffff;
+    background: #b94545;
+
+    border: 1px solid #b94545;
+}
+
+.income-delete-modal__confirm:hover:not(:disabled) {
+    background: #a43737;
+    border-color: #a43737;
+}
+
+
+/* ========================================================= */
+/* ESTADOS DESHABILITADOS */
+/* ========================================================= */
+
+.income-delete-modal__cancel:disabled,
+.income-delete-modal__confirm:disabled,
+.income-delete-modal__close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.income-delete-modal__cancel:focus-visible,
+.income-delete-modal__confirm:focus-visible,
+.income-delete-modal__close:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* ANIMACIÓN DE PROCESAMIENTO */
+/* ========================================================= */
+
+.income-delete-modal__spinner {
+    animation: income-delete-spin 0.9s linear infinite;
+}
+
+@keyframes income-delete-spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .income-delete-modal__overlay {
+        padding: 15px;
+    }
+
+    .income-delete-modal {
+        max-height: calc(100vh - 30px);
+        padding: 23px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 540px) {
+
+    .income-delete-modal__overlay {
+        padding: 10px;
+    }
+
+    .income-delete-modal {
+        max-height: calc(100vh - 20px);
+
+        gap: 19px;
+        padding: 19px;
+
+        border-radius: 15px;
+    }
+
+    .income-delete-modal__intro h2 {
+        font-size: 20px;
+    }
+
+    .income-delete-modal__summary-row {
+        align-items: flex-start;
+    }
+
+    .income-delete-modal__summary-row strong {
+        max-width: 55%;
+    }
+
+    .income-delete-modal__summary-row--amount strong {
+        font-size: 18px;
+    }
+
+    .income-delete-modal__footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .income-delete-modal__cancel,
+    .income-delete-modal__confirm {
+        width: 100%;
+    }
+}
+
+
+/* ========================================================= */
+/* REDUCIR MOVIMIENTO */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .income-delete-modal__spinner {
+        animation: none;
+    }
+
+}

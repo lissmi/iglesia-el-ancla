@@ -1,0 +1,189 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.recommendations-summary {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE ESTADÍSTICAS */
+/* ========================================================= */
+
+.recommendations-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.recommendations-summary__card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+    min-width: 0;
+    min-height: 145px;
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(22, 61, 81, 0.035);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recommendations-summary__card:hover {
+    border-color: #c9dfe7;
+
+    box-shadow: 0 9px 22px rgba(22, 61, 81, 0.07);
+
+    transform: translateY(-2px);
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.recommendations-summary__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+}
+
+.recommendations-summary__label {
+    color: #607a90;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.recommendations-summary__value {
+    margin-top: 10px;
+
+    color: #17384c;
+
+    font-size: 31px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.recommendations-summary__description {
+    margin-top: 11px;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.recommendations-summary__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 47px;
+    height: 47px;
+
+    border-radius: 13px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+}
+
+
+/* ========================================================= */
+/* VARIANTES DE TARJETAS */
+/* ========================================================= */
+
+/* Total de recomendaciones. */
+
+.recommendations-summary__card--total
+.recommendations-summary__icon {
+    color: #2c8199;
+    background: #eaf5f8;
+}
+
+
+/* Recomendaciones publicadas. */
+
+.recommendations-summary__card--published
+.recommendations-summary__icon {
+    color: #2f866c;
+    background: #e7f6ef;
+}
+
+
+/* Recomendaciones en borrador. */
+
+.recommendations-summary__card--draft
+.recommendations-summary__icon {
+    color: #b08039;
+    background: #fff5e4;
+}
+
+
+/* Recomendaciones destacadas. */
+
+.recommendations-summary__card--featured
+.recommendations-summary__icon {
+    color: #9272b7;
+    background: #f2ebfa;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1150px) {
+
+    .recommendations-summary__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .recommendations-summary__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendations-summary__card {
+        min-height: 125px;
+        padding: 19px;
+    }
+
+    .recommendations-summary__value {
+        font-size: 28px;
+    }
+
+    .recommendations-summary__icon {
+        width: 43px;
+        height: 43px;
+    }
+}

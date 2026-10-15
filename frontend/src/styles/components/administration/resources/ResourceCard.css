@@ -1,0 +1,209 @@
+
+/* ========================================================= */
+/* TARJETA PRINCIPAL */
+/* ========================================================= */
+
+.resource-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 270px;
+    padding: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e1e9ee;
+    border-radius: 16px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+    border-color: #c5dce5;
+    box-shadow: 0 7px 20px rgba(22, 61, 81, 0.05);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.resource-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.resource-card__icon {
+    display: grid;
+    place-items: center;
+
+    width: 47px;
+    height: 47px;
+
+    color: #27839c;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.resource-card__status {
+    padding: 7px 11px;
+
+    border-radius: 30px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.resource-card__status--published {
+    color: #247b55;
+    background: #e5f5ed;
+}
+
+.resource-card__status--draft {
+    color: #9b7036;
+    background: #fff2df;
+}
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+.resource-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.resource-card__category {
+    color: #3188a0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.resource-card__content h3 {
+    margin: 0;
+
+    color: #17384c;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.resource-card__content p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    margin: 0;
+
+    color: #71899a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.resource-card__author,
+.resource-card__platform {
+    color: #71899a;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* PIE DE TARJETA */
+/* ========================================================= */
+
+.resource-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-top: 22px;
+    padding-top: 15px;
+
+    border-top: 1px solid #edf1f3;
+}
+
+.resource-card__date {
+    color: #92a3af;
+    font-size: 10px;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.resource-card__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.resource-card__action {
+    display: grid;
+    place-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    color: #648497;
+    background: #f3f7f9;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.resource-card__action:hover:not(:disabled) {
+    color: #247c96;
+    background: #e6f3f7;
+}
+
+.resource-card__action--delete:hover:not(:disabled) {
+    color: #ad554b;
+    background: #fbeae8;
+}
+
+.resource-card__action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.resource-card__action:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+
+    .resource-card {
+        padding: 16px;
+    }
+
+    .resource-card__footer {
+        flex-wrap: wrap;
+    }
+
+    .resource-card__actions {
+        margin-left: auto;
+    }
+}

@@ -1,0 +1,509 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.volunteer-delete-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.volunteer-delete-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100dvh - 48px);
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.28);
+
+    overflow: hidden;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.volunteer-delete-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 24px 27px;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.volunteer-delete-modal__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+    min-width: 0;
+}
+
+.volunteer-delete-modal__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 46px;
+    height: 46px;
+
+    color: #b45252;
+    background: #fff0f0;
+
+    border-radius: 12px;
+}
+
+.volunteer-delete-modal__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.volunteer-delete-modal__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.volunteer-delete-modal__close {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f2f6f8;
+    color: #607a90;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.volunteer-delete-modal__close:hover:not(:disabled) {
+    background: #fff0f0;
+    color: #b45252;
+}
+
+
+/* ========================================================= */
+/* CUERPO DEL MODAL */
+/* ========================================================= */
+
+.volunteer-delete-modal__body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 25px 27px;
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* ADVERTENCIA */
+/* ========================================================= */
+
+.volunteer-delete-modal__warning {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-bottom: 23px;
+    padding: 17px;
+
+    background: #fff5f3;
+
+    border: 1px solid #f1d4ce;
+    border-radius: 12px;
+}
+
+.volunteer-delete-modal__warning-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 39px;
+    height: 39px;
+
+    color: #b45252;
+    background: #ffe7e3;
+
+    border-radius: 10px;
+}
+
+.volunteer-delete-modal__warning h3 {
+    margin: 0 0 7px;
+
+    color: #994646;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.volunteer-delete-modal__warning p {
+    margin: 0;
+
+    color: #a36b65;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* RESUMEN DE LA ASIGNACIÓN */
+/* ========================================================= */
+
+.volunteer-delete-modal__summary {
+    padding: 19px;
+
+    background: #f8fafb;
+
+    border: 1px solid #e8eff2;
+    border-radius: 12px;
+}
+
+.volunteer-delete-modal__summary-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 16px;
+
+    color: #2c8199;
+}
+
+.volunteer-delete-modal__summary-heading h3 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.volunteer-delete-modal__team {
+    display: inline-flex;
+
+    padding: 6px 10px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.volunteer-delete-modal__summary h4 {
+    margin: 12px 0 16px;
+
+    color: #17384c;
+
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* DATOS DE LA ASIGNACIÓN */
+/* ========================================================= */
+
+.volunteer-delete-modal__metadata {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.volunteer-delete-modal__metadata > div {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #607a90;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.volunteer-delete-modal__metadata svg {
+    flex-shrink: 0;
+
+    color: #8295a3;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN ADICIONAL */
+/* ========================================================= */
+
+.volunteer-delete-modal__notice {
+    margin: 17px 0 0;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* ERROR */
+/* ========================================================= */
+
+.volunteer-delete-modal__error {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 18px;
+    padding: 13px 14px;
+
+    color: #a94b4b;
+    background: #fff0f0;
+
+    border: 1px solid #f0cccc;
+    border-radius: 10px;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.volunteer-delete-modal__error svg {
+    flex-shrink: 0;
+}
+
+
+/* ========================================================= */
+/* PIE DEL MODAL */
+/* ========================================================= */
+
+.volunteer-delete-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding: 19px 27px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.volunteer-delete-modal__cancel,
+.volunteer-delete-modal__confirm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 0 18px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteer-delete-modal__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.volunteer-delete-modal__cancel:hover:not(:disabled) {
+    background: #f2f6f8;
+}
+
+.volunteer-delete-modal__confirm {
+    color: #ffffff;
+    background: #b45252;
+
+    border: 1px solid #b45252;
+}
+
+.volunteer-delete-modal__confirm:hover:not(:disabled) {
+    background: #994646;
+    transform: translateY(-1px);
+}
+
+.volunteer-delete-modal__cancel:disabled,
+.volunteer-delete-modal__confirm:disabled,
+.volunteer-delete-modal__close:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* INDICADOR DE CARGA */
+/* ========================================================= */
+
+.volunteer-delete-modal__spinner {
+    animation: volunteer-delete-spin 0.8s linear infinite;
+}
+
+@keyframes volunteer-delete-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteer-delete-modal button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 700px) {
+
+    .volunteer-delete-modal__header {
+        padding: 21px;
+    }
+
+    .volunteer-delete-modal__body {
+        padding: 21px;
+    }
+
+    .volunteer-delete-modal__footer {
+        padding: 17px 21px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 500px) {
+
+    .volunteer-delete-modal__overlay {
+        padding: 10px;
+    }
+
+    .volunteer-delete-modal {
+        max-height: calc(100dvh - 20px);
+
+        border-radius: 15px;
+    }
+
+    .volunteer-delete-modal__header {
+        padding: 18px;
+    }
+
+    .volunteer-delete-modal__heading-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .volunteer-delete-modal__heading h2 {
+        font-size: 16px;
+    }
+
+    .volunteer-delete-modal__heading p {
+        font-size: 11px;
+    }
+
+    .volunteer-delete-modal__body {
+        padding: 18px;
+    }
+
+    .volunteer-delete-modal__warning {
+        padding: 13px;
+    }
+
+    .volunteer-delete-modal__summary {
+        padding: 15px;
+    }
+
+    .volunteer-delete-modal__footer {
+        padding: 15px 18px;
+    }
+
+    .volunteer-delete-modal__cancel,
+    .volunteer-delete-modal__confirm {
+        flex: 1;
+        padding: 0 10px;
+    }
+}

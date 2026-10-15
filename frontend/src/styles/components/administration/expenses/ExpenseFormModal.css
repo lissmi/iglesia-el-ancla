@@ -741,3 +741,245 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ========================================================= */
+/* MEJORAS DEL FORMULARIO DE GASTOS */
+/* ========================================================= */
+
+/* Uniformamos los colores con el panel administrativo. */
+
+.expense-modal__eyebrow {
+    color: #2c8199;
+}
+
+.expense-modal__header h2 {
+    color: #17384c;
+}
+
+.expense-form__field input:focus,
+.expense-form__field select:focus,
+.expense-form__field textarea:focus {
+    border-color: #2c8199;
+    background-color: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+
+/* ========================================================= */
+/* SELECTORES PERSONALIZADOS */
+/* ========================================================= */
+
+.expense-form__field select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding-right: 38px;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23748b99' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    background-size: 16px;
+
+    cursor: pointer;
+}
+
+.expense-form__field select option {
+    color: #17384c;
+    background: #ffffff;
+}
+
+
+/* ========================================================= */
+/* CAMPO DE MONTO */
+/* ========================================================= */
+
+.expense-form__amount:focus-within {
+    border-color: #2c8199;
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+.expense-form__amount input:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.expense-form__amount input[aria-invalid="true"] {
+    box-shadow: none;
+}
+
+
+/* ========================================================= */
+/* SECCIÓN DE CONTROL DE PAGOS */
+/* ========================================================= */
+
+.expense-form__section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 5px;
+    padding: 13px 0 11px;
+
+    color: #17384c;
+
+    border-bottom: 1px solid #e8eef2;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.expense-form__section-heading svg {
+    flex-shrink: 0;
+    color: #2c8199;
+}
+
+
+/* ========================================================= */
+/* AVISO PARA GASTOS PENDIENTES */
+/* ========================================================= */
+
+.expense-form__payment-notice {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    min-width: 0;
+    padding: 14px;
+
+    color: #527586;
+    background: #edf7fa;
+
+    border: 1px solid #d5eaf0;
+    border-radius: 11px;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.expense-form__payment-notice svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #2c8199;
+}
+
+
+/* ========================================================= */
+/* ERRORES DE VALIDACIÓN */
+/* ========================================================= */
+
+.expense-form__error {
+    display: block;
+
+    color: #b45151;
+
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.expense-form__field input[aria-invalid="true"],
+.expense-form__field select[aria-invalid="true"],
+.expense-form__field textarea[aria-invalid="true"] {
+    border-color: #cf7777;
+}
+
+.expense-form__amount:has(input[aria-invalid="true"]) {
+    border-color: #cf7777;
+}
+
+.expense-form__submit-error {
+    grid-column: 1 / -1;
+
+    padding: 12px 14px;
+
+    color: #a83f3f;
+    background: #fff0f0;
+
+    border: 1px solid #f0d1d1;
+    border-radius: 10px;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+.expense-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    background: #17384c;
+    border-color: #17384c;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.expense-form__submit:hover:not(:disabled) {
+    background: #2c8199;
+    border-color: #2c8199;
+}
+
+.expense-form__cancel:hover:not(:disabled) {
+    background: #f3f7f9;
+}
+
+.expense-form__submit:disabled,
+.expense-form__cancel:disabled,
+.expense-modal__close:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.expense-form__submit:focus-visible,
+.expense-form__cancel:focus-visible,
+.expense-modal__close:focus-visible {
+    outline: 3px solid #b9e3ec;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .expense-form__section-heading,
+    .expense-form__submit-error {
+        grid-column: 1 / -1;
+    }
+
+    .expense-form__payment-notice {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .expense-form__submit {
+        gap: 6px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .expense-form__submit {
+        transition: none;
+    }
+
+}

@@ -1,0 +1,279 @@
+/* ========================================================= */
+/* MODAL DE CREACIÓN Y EDICIÓN DE RECOMENDADOS */
+/* ========================================================= */
+
+.recommendation-form-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(3px);
+}
+
+.recommendation-form-modal {
+    width: 100%;
+    max-width: 790px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e1e9ee;
+    border-radius: 20px;
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+.recommendation-form-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 27px 30px 22px;
+    border-bottom: 1px solid #e1e9ee;
+}
+
+.recommendation-form-modal__eyebrow {
+    color: #2c8199;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.recommendation-form-modal__header h2 {
+    margin: 9px 0 7px;
+    color: #17384c;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.recommendation-form-modal__header p {
+    margin: 0;
+    color: #607a90;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.recommendation-form-modal__close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #607a90;
+    cursor: pointer;
+}
+
+.recommendation-form-modal__close:hover:not(:disabled) {
+    background: #f0f8fa;
+}
+
+.recommendation-form-modal__body {
+    padding: 25px 30px 30px;
+}
+
+.recommendation-form-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.recommendation-form-modal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.recommendation-form-modal__field--full {
+    grid-column: 1 / -1;
+}
+
+.recommendation-form-modal__field label,
+.recommendation-form-modal__fieldset legend {
+    color: #48667a;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.recommendation-form-modal__field label > span,
+.recommendation-form-modal__fieldset legend > span {
+    color: #b45252;
+}
+
+.recommendation-form-modal__field input:not([type="checkbox"]),
+.recommendation-form-modal__field select,
+.recommendation-form-modal__field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    color: #17384c;
+    font: inherit;
+    font-size: 13px;
+}
+
+.recommendation-form-modal__field textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.recommendation-form-modal__field input:focus-visible,
+.recommendation-form-modal__field select:focus-visible,
+.recommendation-form-modal__field textarea:focus-visible {
+    border-color: #68bad0;
+    box-shadow: 0 0 0 3px rgba(104, 186, 208, 0.13);
+}
+
+.recommendation-form-modal__field [aria-invalid="true"] {
+    border-color: #cb7777 !important;
+}
+
+.recommendation-form-modal__field small,
+.recommendation-form-modal__fieldset small {
+    color: #8295a3;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.recommendation-form-modal__field .recommendation-form-modal__error,
+.recommendation-form-modal__fieldset .recommendation-form-modal__error {
+    color: #b45252;
+}
+
+.recommendation-form-modal__input-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8295a3;
+}
+
+.recommendation-form-modal__input-icon input {
+    flex: 1;
+}
+
+.recommendation-form-modal__fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 15px 16px;
+    border: 1px solid #dce7ec;
+    border-radius: 11px;
+}
+
+.recommendation-form-modal__fieldset legend {
+    padding: 0 5px;
+}
+
+.recommendation-form-modal__checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.recommendation-form-modal__checks label,
+.recommendation-form-modal__featured-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #48667a;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.recommendation-form-modal__checks input,
+.recommendation-form-modal__featured-check input {
+    accent-color: #2c8199;
+}
+
+.recommendation-form-modal__field--featured {
+    justify-content: center;
+    padding: 11px 0;
+}
+
+.recommendation-form-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 30px;
+    border-top: 1px solid #e1e9ee;
+    background: #fbfdfe;
+}
+
+.recommendation-form-modal__footer button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 17px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.recommendation-form-modal__cancel {
+    border: 1px solid #dce7ec;
+    background: #ffffff;
+    color: #48667a;
+}
+
+.recommendation-form-modal__save {
+    border: 1px solid #2c8199;
+    background: #2c8199;
+    color: #ffffff;
+}
+
+.recommendation-form-modal__save:hover:not(:disabled) {
+    background: #236d83;
+}
+
+.recommendation-form-modal__footer button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.recommendation-form-modal__submit-error {
+    width: 100%;
+    margin: 0;
+    color: #b45252;
+    font-size: 12px;
+}
+
+@media (max-width: 650px) {
+    .recommendation-form-modal__overlay { padding: 10px; }
+    .recommendation-form-modal { max-height: calc(100vh - 20px); border-radius: 15px; }
+    .recommendation-form-modal__header { padding: 21px 18px; }
+    .recommendation-form-modal__body { padding: 20px 18px; }
+    .recommendation-form-modal__grid { grid-template-columns: 1fr; }
+    .recommendation-form-modal__field--full { grid-column: auto; }
+    .recommendation-form-modal__footer { padding: 17px 18px; }
+    .recommendation-form-modal__footer button { flex: 1; }
+}
+
+/* Vista previa de la portada detectada o ingresada */
+.recommendation-form-modal__image-preview {
+    width: 140px;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+    background: #eef4f6;
+}
+.recommendation-form-modal__image-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

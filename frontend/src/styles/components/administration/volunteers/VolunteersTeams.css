@@ -1,0 +1,298 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.volunteers-teams {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.volunteers-teams__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.volunteers-teams__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.volunteers-teams__heading p {
+    margin: 0;
+
+    color: #607a90;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.volunteers-teams__total {
+    flex-shrink: 0;
+
+    padding: 8px 12px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE EQUIPOS */
+/* ========================================================= */
+
+.volunteers-teams__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.volunteers-teams__card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 15px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 120px;
+
+    padding: 19px;
+
+    text-align: left;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteers-teams__card:hover {
+    border-color: #b7d5df;
+    background: #f8fcfd;
+
+    box-shadow: 0 6px 18px rgba(22, 61, 81, 0.055);
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================================= */
+/* TARJETA SELECCIONADA */
+/* ========================================================= */
+
+.volunteers-teams__card--active {
+    background: #edf8fb;
+
+    border-color: #68bad0;
+
+    box-shadow: 0 0 0 1px rgba(104, 186, 208, 0.12);
+}
+
+.volunteers-teams__card--active:hover {
+    background: #eaf6fa;
+    border-color: #68bad0;
+}
+
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.volunteers-teams__icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 46px;
+    height: 46px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.volunteers-teams__card--active
+.volunteers-teams__icon {
+    color: #ffffff;
+    background: #2c8199;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN DEL EQUIPO */
+/* ========================================================= */
+
+.volunteers-teams__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.volunteers-teams__info strong {
+    color: #17384c;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.volunteers-teams__description {
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* ESTADÍSTICAS */
+/* ========================================================= */
+
+.volunteers-teams__stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 8px 15px;
+
+    margin-top: 7px;
+}
+
+.volunteers-teams__stats span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #607a90;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* FLECHA */
+/* ========================================================= */
+
+.volunteers-teams__arrow {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 28px;
+    height: 28px;
+
+    margin-top: 8px;
+
+    color: #9aafba;
+
+    border-radius: 8px;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteers-teams__card:hover
+.volunteers-teams__arrow {
+    color: #2c8199;
+    transform: translateX(3px);
+}
+
+.volunteers-teams__card--active
+.volunteers-teams__arrow {
+    color: #2c8199;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteers-teams__card:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .volunteers-teams__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .volunteers-teams__heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .volunteers-teams__card {
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .volunteers-teams__icon {
+        width: 41px;
+        height: 41px;
+    }
+
+    .volunteers-teams__stats {
+        gap: 8px 12px;
+    }
+
+    .volunteers-teams__arrow {
+        width: 20px;
+    }
+}

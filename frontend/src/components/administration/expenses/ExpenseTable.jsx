@@ -1,650 +1,851 @@
-// Importamos useMemo y useState desde React.
-// useState nos permitirá controlar los filtros.
-// useMemo nos permitirá calcular los resultados filtrados.
+// =========================================================
+// IMPORTACIONES
+// =========================================================
+
 import { useMemo, useState } from "react";
 
-// Importamos los gastos simulados
-// y las categorías disponibles.
 import {
-  expenses,
-  expenseCategories,
-} from "../../../data/admin/expensesData";
+    Search,
+    Filter,
+    ArrowUpDown,
+    Eye,
+    Pencil,
+    Trash2,
+    ChevronLeft,
+    ChevronRight,
+    ReceiptText,
+    RotateCcw,
+} from "lucide-react";
 
-// Importamos los estilos exclusivos del componente.
+import {
+    formatExpenseCurrency,
+    formatExpenseDate,
+} from "../../../utils/expenseUtils";
+
 import "../../../styles/components/administration/expenses/ExpenseTable.css";
 
 
-// Creamos el componente encargado de mostrar
-// el historial completo de gastos.
-function ExpenseTable() {
+// =========================================================
+// CONFIGURACIÓN
+// =========================================================
 
-  // ---------------------------------------------------------
-  // ESTADOS DE LOS FILTROS
-  // ---------------------------------------------------------
+const PAGE_SIZE = 8;
 
-  // Guardamos el texto escrito en la barra de búsqueda.
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Guardamos la categoría seleccionada.
-  const [selectedCategory, setSelectedCategory] = useState("Todas");
-
-  // Guardamos el estado seleccionado.
-  const [selectedStatus, setSelectedStatus] = useState("Todos");
+const SORT_OPTIONS = [
+    { value: "date-desc", label: "Más recientes" },
+    { value: "date-asc", label: "Más antiguos" },
+    { value: "amount-desc", label: "Mayor monto" },
+    { value: "amount-asc", label: "Menor monto" },
+];
 
 
-  // ---------------------------------------------------------
-  // FORMATEAR MONEDA
-  // ---------------------------------------------------------
+// =========================================================
+// FUNCIONES AUXILIARES
+// =========================================================
 
-  // Creamos una función reutilizable
-  // para mostrar montos en pesos chilenos.
-  const formatCurrency = (value) => {
+// Normalizamos textos para permitir búsquedas
+// sin diferencias entre mayúsculas y acentos.
 
-    // Utilizamos Intl.NumberFormat
-    // para aplicar correctamente el formato chileno.
-    return new Intl.NumberFormat("es-CL", {
+const normalizeText = (value) => {
 
-      // Indicamos que se trata de una moneda.
-      style: "currency",
+    return String(value ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
 
-      // Definimos pesos chilenos.
-      currency: "CLP",
-
-      // Eliminamos decimales.
-      maximumFractionDigits: 0,
-
-    }).format(value);
-  };
+};
 
 
-  // ---------------------------------------------------------
-  // FORMATEAR FECHA
-  // ---------------------------------------------------------
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
 
-  // Creamos una función para mostrar
-  // las fechas de forma más fácil de leer.
-  const formatDate = (date) => {
+function ExpenseTable({
+    expenses = [],
+    onViewExpense,
+    onEditExpense,
+    onDeleteExpense,
+}) {
 
-    // Convertimos el texto recibido en un objeto Date.
-    const parsedDate = new Date(`${date}T00:00:00`);
+    // =====================================================
+    // ESTADOS DE FILTROS
+    // =====================================================
 
-    // Retornamos la fecha utilizando formato chileno.
-    return new Intl.DateTimeFormat("es-CL", {
+    const [searchTerm, setSearchTerm] = useState("");
 
-      // Mostramos día con dos dígitos.
-      day: "2-digit",
+    const [selectedCategory, setSelectedCategory] =
+        useState("all");
 
-      // Mostramos el mes abreviado.
-      month: "short",
+    const [selectedStatus, setSelectedStatus] =
+        useState("all");
 
-      // Mostramos el año completo.
-      year: "numeric",
+    const [selectedPaymentMethod, setSelectedPaymentMethod] =
+        useState("all");
 
-    }).format(parsedDate);
-  };
+    const [sortBy, setSortBy] =
+        useState("date-desc");
 
-
-  // ---------------------------------------------------------
-  // FILTRAR GASTOS
-  // ---------------------------------------------------------
-
-  // Calculamos qué gastos deben mostrarse
-  // según los filtros seleccionados.
-  const filteredExpenses = useMemo(() => {
-
-    // Normalizamos el texto de búsqueda
-    // para facilitar las comparaciones.
-    const normalizedSearch = searchTerm
-      .trim()
-      .toLowerCase();
-
-    // Filtramos todos los movimientos.
-    return expenses.filter((expense) => {
-
-      // Comprobamos si la descripción contiene
-      // el texto escrito por el usuario.
-      const matchesDescription =
-        expense.description
-          .toLowerCase()
-          .includes(normalizedSearch);
-
-      // Comprobamos también la categoría.
-      const matchesCategorySearch =
-        expense.category
-          .toLowerCase()
-          .includes(normalizedSearch);
-
-      // Comprobamos si cumple con el filtro
-      // específico de categoría.
-      const matchesCategory =
-        selectedCategory === "Todas" ||
-        expense.category === selectedCategory;
-
-      // Comprobamos si cumple con
-      // el filtro correspondiente al estado.
-      const matchesStatus =
-        selectedStatus === "Todos" ||
-        expense.status === selectedStatus;
-
-      // El gasto será mostrado solamente
-      // si cumple todas las condiciones.
-      return (
-        (matchesDescription || matchesCategorySearch) &&
-        matchesCategory &&
-        matchesStatus
-      );
-    });
-
-  }, [
-    searchTerm,
-    selectedCategory,
-    selectedStatus,
-  ]);
+    const [currentPage, setCurrentPage] =
+        useState(1);
 
 
-  // ---------------------------------------------------------
-  // LIMPIAR FILTROS
-  // ---------------------------------------------------------
+    // =====================================================
+    // OPCIONES DE CATEGORÍA
+    // =====================================================
 
-  // Creamos una función para devolver
-  // todos los filtros a su estado inicial.
-  const handleClearFilters = () => {
+    const categories = useMemo(() => {
 
-    // Limpiamos la búsqueda.
-    setSearchTerm("");
+        return [...new Set(
+            expenses.map((expense) =>
+                expense.category?.trim() || "Sin categoría"
+            )
+        )].sort((a, b) =>
+            a.localeCompare(b, "es")
+        );
 
-    // Volvemos a mostrar todas las categorías.
-    setSelectedCategory("Todas");
-
-    // Volvemos a mostrar todos los estados.
-    setSelectedStatus("Todos");
-  };
+    }, [expenses]);
 
 
-  // ---------------------------------------------------------
-  // ACCIONES TEMPORALES
-  // ---------------------------------------------------------
+    // =====================================================
+    // OPCIONES DE MEDIO DE PAGO
+    // =====================================================
 
-  // Creamos una función temporal para visualizar
-  // el detalle completo de un gasto.
-  const handleViewExpense = (expense) => {
+    const paymentMethods = useMemo(() => {
 
-    // Por ahora mostramos la información en consola.
-    console.log("Ver gasto:", expense);
-  };
+        return [...new Set(
+            expenses.map((expense) =>
+                expense.paymentMethod?.trim() ||
+                "No especificado"
+            )
+        )].sort((a, b) =>
+            a.localeCompare(b, "es")
+        );
 
-
-  // Creamos una función temporal para editar un gasto.
-  const handleEditExpense = (expense) => {
-
-    // Por ahora solamente utilizamos la consola.
-    console.log("Editar gasto:", expense);
-  };
+    }, [expenses]);
 
 
-  // ---------------------------------------------------------
-  // INTERFAZ
-  // ---------------------------------------------------------
+    // =====================================================
+    // FILTRAR Y ORDENAR
+    // =====================================================
 
-  // Retornamos la sección completa.
-  return (
-    <section className="expense-table-section">
+    const filteredExpenses = useMemo(() => {
 
-      {/* ================================================== */}
-      {/* ENCABEZADO */}
-      {/* ================================================== */}
+        const search = normalizeText(searchTerm);
 
-      <div className="expense-table-section__header">
+        const result = expenses.filter((expense) => {
 
-        {/* Contenedor textual. */}
-        <div>
+            // --------------------------------------------
+            // BÚSQUEDA
+            // --------------------------------------------
 
-          {/* Título de la sección. */}
-          <h2 className="expense-table-section__title">
-            Historial de gastos
-          </h2>
+            const searchableText = normalizeText([
+                expense.description,
+                expense.category,
+                expense.paymentMethod,
+                expense.notes,
+            ].join(" "));
 
-          {/* Descripción breve. */}
-          <p className="expense-table-section__description">
-            Revisa y filtra todos los movimientos registrados.
-          </p>
-
-        </div>
+            const matchesSearch =
+                !search || searchableText.includes(search);
 
 
-        {/* Mostramos la cantidad de resultados encontrados. */}
-        <span className="expense-table-section__count">
-          {filteredExpenses.length} movimientos
-        </span>
+            // --------------------------------------------
+            // CATEGORÍA
+            // --------------------------------------------
 
-      </div>
+            const category =
+                expense.category?.trim() || "Sin categoría";
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                category === selectedCategory;
 
 
-      {/* ================================================== */}
-      {/* FILTROS */}
-      {/* ================================================== */}
+            // --------------------------------------------
+            // ESTADO
+            // --------------------------------------------
 
-      <div className="expense-table-filters">
+            const matchesStatus =
+                selectedStatus === "all" ||
+                expense.status === selectedStatus;
 
-        {/* Barra de búsqueda. */}
-        <div className="expense-table-filters__search">
 
-          {/* Etiqueta accesible para el campo. */}
-          <label
-            htmlFor="expense-search"
-            className="expense-table-filters__label"
-          >
-            Buscar
-          </label>
+            // --------------------------------------------
+            // MEDIO DE PAGO
+            // --------------------------------------------
 
-          {/* Campo de búsqueda. */}
-          <input
-            id="expense-search"
-            type="search"
-            placeholder="Ej: arriendo, aseo, internet..."
-            value={searchTerm}
-            onChange={(event) =>
-              setSearchTerm(event.target.value)
+            const paymentMethod =
+                expense.paymentMethod?.trim() ||
+                "No especificado";
+
+            const matchesPayment =
+                selectedPaymentMethod === "all" ||
+                paymentMethod === selectedPaymentMethod;
+
+
+            return (
+                matchesSearch &&
+                matchesCategory &&
+                matchesStatus &&
+                matchesPayment
+            );
+
+        });
+
+
+        // --------------------------------------------
+        // ORDENACIÓN
+        // --------------------------------------------
+
+        result.sort((a, b) => {
+
+            if (sortBy === "amount-desc") {
+
+                return (
+                    Number(b.amount || 0) -
+                    Number(a.amount || 0)
+                );
+
             }
-          />
 
-        </div>
+            if (sortBy === "amount-asc") {
 
+                return (
+                    Number(a.amount || 0) -
+                    Number(b.amount || 0)
+                );
 
-        {/* Filtro por categoría. */}
-        <div className="expense-table-filters__field">
-
-          {/* Etiqueta. */}
-          <label
-            htmlFor="expense-category-filter"
-            className="expense-table-filters__label"
-          >
-            Categoría
-          </label>
-
-          {/* Selector de categoría. */}
-          <select
-            id="expense-category-filter"
-            value={selectedCategory}
-            onChange={(event) =>
-              setSelectedCategory(event.target.value)
             }
-          >
 
-            {/* Opción inicial. */}
-            <option value="Todas">
-              Todas
-            </option>
+            const firstDate = String(a.date || "");
+            const secondDate = String(b.date || "");
 
-            {/* Generamos las categorías desde nuestro archivo data. */}
-            {expenseCategories.map((category) => (
-
-              // Creamos una opción por cada categoría.
-              <option
-                key={category}
-                value={category}
-              >
-                {category}
-              </option>
-
-            ))}
-
-          </select>
-
-        </div>
-
-
-        {/* Filtro por estado. */}
-        <div className="expense-table-filters__field">
-
-          {/* Etiqueta. */}
-          <label
-            htmlFor="expense-status-filter"
-            className="expense-table-filters__label"
-          >
-            Estado
-          </label>
-
-          {/* Selector del estado. */}
-          <select
-            id="expense-status-filter"
-            value={selectedStatus}
-            onChange={(event) =>
-              setSelectedStatus(event.target.value)
+            if (sortBy === "date-asc") {
+                return firstDate.localeCompare(secondDate);
             }
-          >
 
-            {/* Mostramos todos los movimientos. */}
-            <option value="Todos">
-              Todos
-            </option>
+            return secondDate.localeCompare(firstDate);
 
-            {/* Mostramos solamente gastos pagados. */}
-            <option value="Pagado">
-              Pagados
-            </option>
+        });
 
-            {/* Mostramos solamente gastos pendientes. */}
-            <option value="Pendiente">
-              Pendientes
-            </option>
+        return result;
 
-          </select>
-
-        </div>
+    }, [
+        expenses,
+        searchTerm,
+        selectedCategory,
+        selectedStatus,
+        selectedPaymentMethod,
+        sortBy,
+    ]);
 
 
-        {/* Botón para limpiar filtros. */}
-        <button
-          className="expense-table-filters__clear"
-          type="button"
-          onClick={handleClearFilters}
-        >
-          Limpiar filtros
-        </button>
+    // =====================================================
+    // PAGINACIÓN
+    // =====================================================
 
-      </div>
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredExpenses.length / PAGE_SIZE)
+    );
 
+    // Evitamos que una página antigua deje la tabla vacía
+    // si el número de resultados disminuye.
 
-      {/* ================================================== */}
-      {/* TABLA PARA ESCRITORIO */}
-      {/* ================================================== */}
+    const safePage = Math.min(
+        currentPage,
+        totalPages
+    );
 
-      <div className="expense-table-wrapper">
+    const startIndex = (safePage - 1) * PAGE_SIZE;
 
-        {/* Creamos la tabla principal. */}
-        <table className="expense-table">
+    const visibleExpenses = filteredExpenses.slice(
+        startIndex,
+        startIndex + PAGE_SIZE
+    );
 
-          {/* Encabezado de la tabla. */}
-          <thead>
+    const firstResult = filteredExpenses.length === 0
+        ? 0
+        : startIndex + 1;
 
-            <tr>
-
-              {/* Fecha. */}
-              <th>Fecha</th>
-
-              {/* Descripción. */}
-              <th>Descripción</th>
-
-              {/* Categoría. */}
-              <th>Categoría</th>
-
-              {/* Medio de pago. */}
-              <th>Medio de pago</th>
-
-              {/* Estado. */}
-              <th>Estado</th>
-
-              {/* Monto. */}
-              <th className="expense-table__amount-heading">
-                Monto
-              </th>
-
-              {/* Acciones. */}
-              <th className="expense-table__actions-heading">
-                Acciones
-              </th>
-
-            </tr>
-
-          </thead>
+    const lastResult = Math.min(
+        startIndex + PAGE_SIZE,
+        filteredExpenses.length
+    );
 
 
-          {/* Cuerpo de la tabla. */}
-          <tbody>
+    // =====================================================
+    // REINICIAR FILTROS
+    // =====================================================
 
-            {/* Verificamos si existen resultados. */}
-            {filteredExpenses.length > 0 ? (
+    const resetFilters = () => {
 
-              // Recorremos los gastos filtrados.
-              filteredExpenses.map((expense) => (
+        setSearchTerm("");
+        setSelectedCategory("all");
+        setSelectedStatus("all");
+        setSelectedPaymentMethod("all");
+        setSortBy("date-desc");
+        setCurrentPage(1);
 
-                // Creamos una fila para cada gasto.
-                <tr key={expense.id}>
-
-                  {/* Mostramos la fecha. */}
-                  <td>
-                    {formatDate(expense.date)}
-                  </td>
+    };
 
 
-                  {/* Mostramos la descripción. */}
-                  <td>
+    // =====================================================
+    // ESTADO VISUAL
+    // =====================================================
 
-                    {/* Agrupamos descripción y notas. */}
-                    <div className="expense-table__description">
+    const getStatusClass = (status) => {
 
-                      {/* Nombre principal. */}
-                      <strong>
-                        {expense.description}
-                      </strong>
+        if (status === "Pagado") {
+            return "expense-table__status--paid";
+        }
 
-                      {/* Observación complementaria. */}
-                      <span>
-                        {expense.notes}
-                      </span>
+        if (status === "Pendiente") {
+            return "expense-table__status--pending";
+        }
 
-                    </div>
+        return "expense-table__status--other";
 
-                  </td>
+    };
 
 
-                  {/* Categoría. */}
-                  <td>
-                    {expense.category}
-                  </td>
+    // =====================================================
+    // ACCIONES REUTILIZABLES
+    // =====================================================
 
+    const renderActions = (expense) => {
 
-                  {/* Medio de pago. */}
-                  <td>
-                    {expense.paymentMethod}
-                  </td>
+        if (
+            !onViewExpense &&
+            !onEditExpense &&
+            !onDeleteExpense
+        ) {
+            return (
+                <span className="expense-table__no-actions">
+                    Sin acciones disponibles
+                </span>
+            );
+        }
 
+        return (
+            <div className="expense-table__actions">
 
-                  {/* Estado. */}
-                  <td>
+                {onViewExpense && (
 
-                    {/* Aplicamos una clase diferente
-                        dependiendo del estado. */}
-                    <span
-                      className={`expense-table__status ${
-                        expense.status === "Pagado"
-                          ? "expense-table__status--paid"
-                          : "expense-table__status--pending"
-                      }`}
+                    <button
+                        type="button"
+                        className="expense-table__action"
+                        onClick={() => onViewExpense(expense)}
+                        title="Ver detalles"
+                        aria-label={`Ver detalles de ${expense.description}`}
                     >
-                      {expense.status}
+                        <Eye size={17} aria-hidden="true" />
+                    </button>
+
+                )}
+
+                {onEditExpense && (
+
+                    <button
+                        type="button"
+                        className="expense-table__action"
+                        onClick={() => onEditExpense(expense)}
+                        title="Editar gasto"
+                        aria-label={`Editar ${expense.description}`}
+                    >
+                        <Pencil size={16} aria-hidden="true" />
+                    </button>
+
+                )}
+
+                {onDeleteExpense && (
+
+                    <button
+                        type="button"
+                        className="expense-table__action expense-table__action--danger"
+                        onClick={() => onDeleteExpense(expense)}
+                        title="Eliminar gasto"
+                        aria-label={`Eliminar ${expense.description}`}
+                    >
+                        <Trash2 size={16} aria-hidden="true" />
+                    </button>
+
+                )}
+
+            </div>
+        );
+
+    };
+
+
+    // =====================================================
+    // INTERFAZ
+    // =====================================================
+
+    return (
+        <section className="expense-table">
+
+            {/* =========================================== */}
+            {/* ENCABEZADO */}
+            {/* =========================================== */}
+
+            <div className="expense-table__header">
+
+                <div>
+
+                    <span className="expense-table__eyebrow">
+                        Control administrativo
                     </span>
 
-                  </td>
+                    <h2 className="expense-table__title">
+                        Historial de gastos
+                    </h2>
+
+                    <p className="expense-table__description">
+                        Consulta y organiza todos los
+                        movimientos financieros registrados.
+                    </p>
+
+                </div>
+
+                <span className="expense-table__total-badge">
+                    {expenses.length.toLocaleString("es-CL")} registros
+                </span>
+
+            </div>
 
 
-                  {/* Monto. */}
-                  <td className="expense-table__amount">
-                    {formatCurrency(expense.amount)}
-                  </td>
+            {/* =========================================== */}
+            {/* BARRA DE FILTROS */}
+            {/* =========================================== */}
+
+            <div className="expense-table__toolbar">
+
+                {/* BÚSQUEDA */}
+
+                <div className="expense-table__search">
+
+                    <Search
+                        size={18}
+                        aria-hidden="true"
+                    />
+
+                    <input
+                        type="search"
+                        value={searchTerm}
+                        placeholder="Buscar gasto..."
+                        aria-label="Buscar gastos"
+                        onChange={(event) => {
+                            setSearchTerm(event.target.value);
+                            setCurrentPage(1);
+                        }}
+                    />
+
+                </div>
 
 
-                  {/* Acciones disponibles. */}
-                  <td>
+                {/* CATEGORÍA */}
 
-                    <div className="expense-table__actions">
+                <div className="expense-table__select-wrapper">
 
-                      {/* Botón para visualizar. */}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleViewExpense(expense)
-                        }
-                      >
-                        Ver
-                      </button>
+                    <Filter size={15} aria-hidden="true" />
 
-                      {/* Botón para editar. */}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleEditExpense(expense)
-                        }
-                      >
-                        Editar
-                      </button>
+                    <select
+                        aria-label="Filtrar por categoría"
+                        value={selectedCategory}
+                        onChange={(event) => {
+                            setSelectedCategory(event.target.value);
+                            setCurrentPage(1);
+                        }}
+                    >
+
+                        <option value="all">
+                            Todas las categorías
+                        </option>
+
+                        {categories.map((category) => (
+
+                            <option
+                                key={category}
+                                value={category}
+                            >
+                                {category}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                </div>
+
+
+                {/* ESTADO */}
+
+                <div className="expense-table__select-wrapper">
+
+                    <select
+                        aria-label="Filtrar por estado"
+                        value={selectedStatus}
+                        onChange={(event) => {
+                            setSelectedStatus(event.target.value);
+                            setCurrentPage(1);
+                        }}
+                    >
+                        <option value="all">
+                            Todos los estados
+                        </option>
+
+                        <option value="Pagado">
+                            Pagado
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+                    </select>
+
+                </div>
+
+
+                {/* MEDIO DE PAGO */}
+
+                <div className="expense-table__select-wrapper">
+
+                    <select
+                        aria-label="Filtrar por medio de pago"
+                        value={selectedPaymentMethod}
+                        onChange={(event) => {
+                            setSelectedPaymentMethod(event.target.value);
+                            setCurrentPage(1);
+                        }}
+                    >
+
+                        <option value="all">
+                            Todos los medios
+                        </option>
+
+                        {paymentMethods.map((method) => (
+
+                            <option
+                                key={method}
+                                value={method}
+                            >
+                                {method}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                </div>
+
+
+                {/* ORDENACIÓN */}
+
+                <div className="expense-table__select-wrapper">
+
+                    <ArrowUpDown
+                        size={15}
+                        aria-hidden="true"
+                    />
+
+                    <select
+                        aria-label="Ordenar gastos"
+                        value={sortBy}
+                        onChange={(event) => {
+                            setSortBy(event.target.value);
+                            setCurrentPage(1);
+                        }}
+                    >
+
+                        {SORT_OPTIONS.map((option) => (
+
+                            <option
+                                key={option.value}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                </div>
+
+
+                {/* LIMPIAR */}
+
+                <button
+                    type="button"
+                    className="expense-table__reset"
+                    onClick={resetFilters}
+                >
+                    <RotateCcw
+                        size={15}
+                        aria-hidden="true"
+                    />
+
+                    Limpiar
+                </button>
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* PANEL DE RESULTADOS */}
+            {/* =========================================== */}
+
+            <div className="expense-table__panel">
+
+                <div className="expense-table__panel-header">
+
+                    <div>
+
+                        <h3>
+                            Movimientos registrados
+                        </h3>
+
+                        <p>
+                            Mostrando {firstResult}–{lastResult} de{" "}
+                            {filteredExpenses.length} resultados
+                        </p>
 
                     </div>
 
-                  </td>
-
-                </tr>
-
-              ))
-
-            ) : (
-
-              // Mostramos una fila vacía
-              // cuando ningún gasto cumple los filtros.
-              <tr>
-
-                <td
-                  colSpan="7"
-                  className="expense-table__empty"
-                >
-                  No se encontraron gastos con los filtros seleccionados.
-                </td>
-
-              </tr>
-
-            )}
-
-          </tbody>
-
-        </table>
-
-      </div>
+                </div>
 
 
-      {/* ================================================== */}
-      {/* TARJETAS PARA MÓVIL */}
-      {/* ================================================== */}
+                {/* ======================================= */}
+                {/* RESULTADOS */}
+                {/* ======================================= */}
 
-      <div className="expense-mobile-list">
+                {visibleExpenses.length > 0 ? (
 
-        {/* Recorremos los mismos resultados filtrados. */}
-        {filteredExpenses.map((expense) => (
+                    <>
 
-          // Creamos una tarjeta móvil.
-          <article
-            className="expense-mobile-card"
-            key={`mobile-${expense.id}`}
-          >
+                        {/* =============================== */}
+                        {/* TABLA PARA ESCRITORIO */}
+                        {/* =============================== */}
 
-            {/* Cabecera de la tarjeta. */}
-            <div className="expense-mobile-card__header">
+                        <div className="expense-table__desktop">
 
-              {/* Información principal. */}
-              <div>
+                            <table>
 
-                {/* Nombre del gasto. */}
-                <h3>
-                  {expense.description}
-                </h3>
+                                <thead>
+                                    <tr>
+                                        <th>Gasto</th>
+                                        <th>Categoría</th>
+                                        <th>Fecha</th>
+                                        <th>Medio de pago</th>
+                                        <th>Estado</th>
+                                        <th>Monto</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
 
-                {/* Fecha. */}
-                <span>
-                  {formatDate(expense.date)}
-                </span>
+                                <tbody>
 
-              </div>
+                                    {visibleExpenses.map((expense) => (
+
+                                        <tr key={expense.id}>
+
+                                            <td>
+                                                <strong className="expense-table__expense-name">
+                                                    {expense.description}
+                                                </strong>
+                                            </td>
+
+                                            <td>
+                                                {expense.category || "Sin categoría"}
+                                            </td>
+
+                                            <td>
+                                                {formatExpenseDate(expense.date)}
+                                            </td>
+
+                                            <td>
+                                                {expense.paymentMethod || "No especificado"}
+                                            </td>
+
+                                            <td>
+                                                <span
+                                                    className={
+                                                        "expense-table__status " +
+                                                        getStatusClass(expense.status)
+                                                    }
+                                                >
+                                                    {expense.status || "Sin estado"}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <strong className="expense-table__amount">
+                                                    {formatExpenseCurrency(expense.amount)}
+                                                </strong>
+                                            </td>
+
+                                            <td>
+                                                {renderActions(expense)}
+                                            </td>
+
+                                        </tr>
+
+                                    ))}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
 
 
-              {/* Monto principal. */}
-              <strong className="expense-mobile-card__amount">
-                {formatCurrency(expense.amount)}
-              </strong>
+                        {/* =============================== */}
+                        {/* TARJETAS PARA MÓVILES */}
+                        {/* =============================== */}
+
+                        <div className="expense-table__mobile">
+
+                            {visibleExpenses.map((expense) => (
+
+                                <article
+                                    key={expense.id}
+                                    className="expense-table__mobile-card"
+                                >
+
+                                    <div className="expense-table__mobile-top">
+
+                                        <strong className="expense-table__expense-name">
+                                            {expense.description}
+                                        </strong>
+
+                                        <span
+                                            className={
+                                                "expense-table__status " +
+                                                getStatusClass(expense.status)
+                                            }
+                                        >
+                                            {expense.status || "Sin estado"}
+                                        </span>
+
+                                    </div>
+
+                                    <dl className="expense-table__mobile-details">
+
+                                        <div>
+                                            <dt>Categoría</dt>
+                                            <dd>{expense.category || "Sin categoría"}</dd>
+                                        </div>
+
+                                        <div>
+                                            <dt>Fecha</dt>
+                                            <dd>{formatExpenseDate(expense.date)}</dd>
+                                        </div>
+
+                                        <div>
+                                            <dt>Medio de pago</dt>
+                                            <dd>{expense.paymentMethod || "No especificado"}</dd>
+                                        </div>
+
+                                        <div>
+                                            <dt>Monto</dt>
+                                            <dd className="expense-table__amount">
+                                                {formatExpenseCurrency(expense.amount)}
+                                            </dd>
+                                        </div>
+
+                                    </dl>
+
+                                    <div className="expense-table__mobile-actions">
+                                        {renderActions(expense)}
+                                    </div>
+
+                                </article>
+
+                            ))}
+
+                        </div>
+
+                    </>
+
+                ) : (
+
+                    <div className="expense-table__empty">
+
+                        <ReceiptText
+                            size={38}
+                            strokeWidth={1.5}
+                            aria-hidden="true"
+                        />
+
+                        <strong>
+                            No se encontraron gastos
+                        </strong>
+
+                        <p>
+                            Prueba modificando los filtros
+                            o registra un nuevo gasto.
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={resetFilters}
+                        >
+                            Restablecer filtros
+                        </button>
+
+                    </div>
+
+                )}
+
+
+                {/* ======================================= */}
+                {/* PAGINACIÓN */}
+                {/* ======================================= */}
+
+                {totalPages > 1 && (
+
+                    <div className="expense-table__pagination">
+
+                        <span>
+                            Página {safePage} de {totalPages}
+                        </span>
+
+                        <div className="expense-table__pagination-buttons">
+
+                            <button
+                                type="button"
+                                disabled={safePage === 1}
+                                onClick={() =>
+                                    setCurrentPage(safePage - 1)
+                                }
+                                aria-label="Página anterior"
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+
+                            <button
+                                type="button"
+                                disabled={safePage === totalPages}
+                                onClick={() =>
+                                    setCurrentPage(safePage + 1)
+                                }
+                                aria-label="Página siguiente"
+                            >
+                                <ChevronRight size={18} />
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                )}
 
             </div>
 
-
-            {/* Información secundaria. */}
-            <div className="expense-mobile-card__details">
-
-              {/* Categoría. */}
-              <div>
-                <span>Categoría</span>
-                <strong>{expense.category}</strong>
-              </div>
-
-
-              {/* Medio de pago. */}
-              <div>
-                <span>Medio de pago</span>
-                <strong>{expense.paymentMethod}</strong>
-              </div>
-
-            </div>
-
-
-            {/* Parte inferior. */}
-            <div className="expense-mobile-card__footer">
-
-              {/* Estado del gasto. */}
-              <span
-                className={`expense-table__status ${
-                  expense.status === "Pagado"
-                    ? "expense-table__status--paid"
-                    : "expense-table__status--pending"
-                }`}
-              >
-                {expense.status}
-              </span>
-
-
-              {/* Acciones móviles. */}
-              <div className="expense-mobile-card__actions">
-
-                {/* Visualizar. */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleViewExpense(expense)
-                  }
-                >
-                  Ver
-                </button>
-
-                {/* Editar. */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleEditExpense(expense)
-                  }
-                >
-                  Editar
-                </button>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        ))}
-
-
-        {/* Estado vacío móvil. */}
-        {filteredExpenses.length === 0 && (
-
-          <div className="expense-mobile-list__empty">
-            No se encontraron gastos con los filtros seleccionados.
-          </div>
-
-        )}
-
-      </div>
-
-    </section>
-  );
+        </section>
+    );
 }
 
-
-// Exportamos el componente.
 export default ExpenseTable;

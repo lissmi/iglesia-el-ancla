@@ -1,0 +1,524 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.volunteer-assignment-form__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.volunteer-assignment-form {
+    width: 100%;
+    max-width: 800px;
+    max-height: calc(100vh - 48px);
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.28);
+
+    overflow: hidden;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.volunteer-assignment-form__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 25px 30px;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.volunteer-assignment-form__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+    min-width: 0;
+}
+
+.volunteer-assignment-form__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 13px;
+}
+
+.volunteer-assignment-form__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.volunteer-assignment-form__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.volunteer-assignment-form__close {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f2f6f8;
+    color: #607a90;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.volunteer-assignment-form__close:hover:not(:disabled) {
+    background: #fff0f0;
+    color: #b45252;
+}
+
+
+/* ========================================================= */
+/* CUERPO DEL FORMULARIO */
+/* ========================================================= */
+
+.volunteer-assignment-form__body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 27px 30px 0;
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.volunteer-assignment-form__section {
+    margin-bottom: 29px;
+    padding-bottom: 26px;
+
+    border-bottom: 1px solid #edf1f4;
+}
+
+.volunteer-assignment-form__section-title {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 19px;
+
+    color: #2c8199;
+}
+
+.volunteer-assignment-form__section-title h3 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE CAMPOS */
+/* ========================================================= */
+
+.volunteer-assignment-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.volunteer-assignment-form__field {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    gap: 9px;
+
+    margin-bottom: 17px;
+}
+
+.volunteer-assignment-form__field label {
+    color: #48667a;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.volunteer-assignment-form__field label span {
+    color: #c65c5c;
+}
+
+.volunteer-assignment-form__field input,
+.volunteer-assignment-form__field select,
+.volunteer-assignment-form__field textarea {
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #17384c;
+
+    font: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.volunteer-assignment-form__field textarea {
+    min-height: 85px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.volunteer-assignment-form__field input::placeholder,
+.volunteer-assignment-form__field textarea::placeholder {
+    color: #a0b0bb;
+}
+
+.volunteer-assignment-form__field input:focus,
+.volunteer-assignment-form__field select:focus,
+.volunteer-assignment-form__field textarea:focus {
+    border-color: #68bad0;
+
+    box-shadow: 0 0 0 3px rgba(104, 186, 208, 0.13);
+}
+
+.volunteer-assignment-form__field input:disabled,
+.volunteer-assignment-form__field select:disabled {
+    background: #f4f7f9;
+    color: #a0b0bb;
+
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* CAMPOS CON ICONO */
+/* ========================================================= */
+
+.volunteer-assignment-form__input-icon {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.volunteer-assignment-form__input-icon > svg {
+    position: absolute;
+    left: 13px;
+
+    color: #8295a3;
+
+    pointer-events: none;
+}
+
+.volunteer-assignment-form__input-icon input {
+    padding-left: 40px;
+}
+
+
+/* ========================================================= */
+/* MENSAJES DE AYUDA */
+/* ========================================================= */
+
+.volunteer-assignment-form__hint {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 12px 14px;
+
+    background: #f0f8fa;
+
+    border: 1px solid #d8edf2;
+    border-radius: 10px;
+
+    color: #397e93;
+}
+
+.volunteer-assignment-form__hint svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.volunteer-assignment-form__hint p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* ERRORES DE VALIDACIÓN */
+/* ========================================================= */
+
+.volunteer-assignment-form__error {
+    color: #b45252;
+
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.volunteer-assignment-form__field
+[aria-invalid="true"] {
+    border-color: #d77b7b;
+}
+
+.volunteer-assignment-form__submit-error {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+    padding: 13px 15px;
+
+    color: #a94b4b;
+    background: #fff0f0;
+
+    border: 1px solid #f0c9c9;
+    border-radius: 10px;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* PIE DEL FORMULARIO */
+/* ========================================================= */
+
+.volunteer-assignment-form__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    margin: 0 -30px;
+    padding: 18px 30px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.volunteer-assignment-form__cancel,
+.volunteer-assignment-form__save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 0 19px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteer-assignment-form__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.volunteer-assignment-form__cancel:hover:not(:disabled) {
+    background: #f2f6f8;
+}
+
+.volunteer-assignment-form__save {
+    color: #ffffff;
+    background: #2c8199;
+
+    border: 1px solid #2c8199;
+}
+
+.volunteer-assignment-form__save:hover:not(:disabled) {
+    background: #236d83;
+    transform: translateY(-1px);
+}
+
+.volunteer-assignment-form__cancel:disabled,
+.volunteer-assignment-form__save:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.volunteer-assignment-form button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+    .volunteer-assignment-form__header {
+        padding: 21px;
+    }
+
+    .volunteer-assignment-form__body {
+        padding: 22px 21px 0;
+    }
+
+    .volunteer-assignment-form__footer {
+        margin: 0 -21px;
+        padding: 17px 21px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .volunteer-assignment-form__overlay {
+        padding: 10px;
+    }
+
+    .volunteer-assignment-form {
+        max-height: calc(100dvh - 20px);
+
+        border-radius: 15px;
+    }
+
+    .volunteer-assignment-form__header {
+        padding: 18px;
+    }
+
+    .volunteer-assignment-form__heading h2 {
+        font-size: 17px;
+    }
+
+    .volunteer-assignment-form__heading p {
+        font-size: 11px;
+    }
+
+    .volunteer-assignment-form__heading-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .volunteer-assignment-form__body {
+        padding: 20px 18px 0;
+    }
+
+    .volunteer-assignment-form__grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .volunteer-assignment-form__footer {
+        margin: 0 -18px;
+        padding: 15px 18px;
+    }
+
+    .volunteer-assignment-form__cancel,
+    .volunteer-assignment-form__save {
+        flex: 1;
+        padding: 0 10px;
+    }
+}

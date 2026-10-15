@@ -1,0 +1,543 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.income-form-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.65);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.income-form-modal {
+    width: 100%;
+    max-width: 760px;
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.3);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-form-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 27px 29px;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.income-form-modal__heading {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 15px;
+}
+
+.income-form-modal__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 13px;
+}
+
+.income-form-modal__eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #2c8199;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.income-form-modal__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.income-form-modal__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.income-form-modal__close {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    color: #607a90;
+    background: #f1f5f7;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.income-form-modal__close:hover:not(:disabled) {
+    color: #b14d4d;
+    background: #fceeee;
+}
+
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.income-form-modal__form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+
+    padding: 26px 29px 29px;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.income-form-modal__section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 19px;
+}
+
+.income-form-modal__section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #2c8199;
+}
+
+.income-form-modal__section-heading h3 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA */
+/* ========================================================= */
+
+.income-form-modal__grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.income-form-modal__field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+
+    min-width: 0;
+}
+
+.income-form-modal__field--full {
+    grid-column: 1 / -1;
+}
+
+.income-form-modal__field label {
+    color: #607a90;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.income-form-modal__field label span {
+    margin-left: 4px;
+    color: #c45757;
+}
+
+
+/* ========================================================= */
+/* CONTROLES CON ICONO */
+/* ========================================================= */
+
+.income-form-modal__control {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 46px;
+    padding: 0 13px;
+
+    color: #8295a3;
+    background: #fbfcfd;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.income-form-modal__control:focus-within {
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.1);
+}
+
+.income-form-modal__control input,
+.income-form-modal__control select {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 44px;
+
+    color: #17384c;
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.income-form-modal__control input::placeholder {
+    color: #a0b0bb;
+}
+
+
+/* ========================================================= */
+/* TEXTAREA */
+/* ========================================================= */
+
+.income-form-modal__field textarea {
+    width: 100%;
+    min-height: 105px;
+
+    padding: 13px;
+
+    color: #17384c;
+    background: #fbfcfd;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.7;
+
+    resize: vertical;
+}
+
+.income-form-modal__field textarea:focus {
+    outline: none;
+
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.1);
+}
+
+.income-form-modal__field textarea::placeholder {
+    color: #a0b0bb;
+}
+
+.income-form-modal__character-count {
+    align-self: flex-end;
+
+    color: #9aabb6;
+
+    font-size: 10px;
+}
+
+
+/* ========================================================= */
+/* ERRORES DE VALIDACIÓN */
+/* ========================================================= */
+
+.income-form-modal__error {
+    color: #b14d4d;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.income-form-modal__control:has([aria-invalid="true"]) {
+    border-color: #d78d8d;
+}
+
+
+/* ========================================================= */
+/* AVISO INFORMATIVO */
+/* ========================================================= */
+
+.income-form-modal__notice {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    padding: 15px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border: 1px solid #d8eaf0;
+    border-radius: 11px;
+}
+
+.income-form-modal__notice svg {
+    flex-shrink: 0;
+}
+
+.income-form-modal__notice p {
+    margin: 0;
+
+    color: #486b7c;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* ERROR AL GUARDAR */
+/* ========================================================= */
+
+.income-form-modal__submit-error {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px 14px;
+
+    color: #b14d4d;
+    background: #fceeee;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+
+/* ========================================================= */
+/* PIE DEL FORMULARIO */
+/* ========================================================= */
+
+.income-form-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.income-form-modal__cancel,
+.income-form-modal__save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 43px;
+    padding: 0 18px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.income-form-modal__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.income-form-modal__cancel:hover:not(:disabled) {
+    background: #f1f5f7;
+}
+
+.income-form-modal__save {
+    color: #ffffff;
+    background: #2c8199;
+
+    border: 1px solid #2c8199;
+}
+
+.income-form-modal__save:hover:not(:disabled) {
+    background: #236d83;
+}
+
+.income-form-modal__cancel:disabled,
+.income-form-modal__save:disabled,
+.income-form-modal__close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.income-form-modal__cancel:focus-visible,
+.income-form-modal__save:focus-visible,
+.income-form-modal__close:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .income-form-modal__overlay {
+        padding: 15px;
+    }
+
+    .income-form-modal {
+        max-height: calc(100vh - 30px);
+    }
+
+    .income-form-modal__header {
+        padding: 22px;
+    }
+
+    .income-form-modal__form {
+        padding: 22px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-form-modal__overlay {
+        padding: 10px;
+    }
+
+    .income-form-modal {
+        max-height: calc(100vh - 20px);
+        border-radius: 15px;
+    }
+
+    .income-form-modal__header {
+        padding: 18px;
+    }
+
+    .income-form-modal__heading {
+        gap: 11px;
+    }
+
+    .income-form-modal__heading-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .income-form-modal__heading h2 {
+        font-size: 19px;
+    }
+
+    .income-form-modal__form {
+        padding: 18px;
+        gap: 22px;
+    }
+
+    .income-form-modal__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .income-form-modal__footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .income-form-modal__cancel,
+    .income-form-modal__save {
+        width: 100%;
+    }
+}

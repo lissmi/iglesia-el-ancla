@@ -1,460 +1,708 @@
-// Importamos useMemo desde React.
-// Lo utilizaremos para calcular la distribución
-// de los gastos por categoría.
-import { useMemo } from "react";
+// =========================================================
+// IMPORTACIONES
+// =========================================================
 
-// Importamos los componentes necesarios desde Recharts.
 import {
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
+    useMemo,
+    useState,
+} from "react";
+
+import {
+    BarChart,
+    Bar,
+    PieChart,
+    Pie,
+    Cell,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    Legend,
 } from "recharts";
 
-// Importamos los gastos actuales
-// y los gastos históricos simulados.
 import {
-  expenses,
-  monthlyExpenses,
-} from "../../../data/admin/expensesData";
+    BarChart3,
+    CalendarDays,
+    CreditCard,
+    PieChart as PieChartIcon,
+} from "lucide-react";
 
-// Importamos los estilos exclusivos del componente.
+import {
+    formatExpenseCurrency,
+    getExpenseLocalDate,
+    isPaidExpense,
+    isValidExpenseAmount,
+} from "../../../utils/expenseUtils";
+
 import "../../../styles/components/administration/expenses/ExpenseCharts.css";
 
 
-// Creamos el componente encargado
-// de mostrar los gráficos financieros.
-function ExpenseCharts() {
+// =========================================================
+// CONFIGURACIÓN
+// =========================================================
 
-  // ---------------------------------------------------------
-  // FORMATEADOR DE MONEDA
-  // ---------------------------------------------------------
+const MONTHS = [
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic",
+];
 
-  // Creamos una función reutilizable para mostrar
-  // montos utilizando formato de peso chileno.
-  const formatCurrency = (value) => {
-
-    // Utilizamos Intl.NumberFormat
-    // para aplicar correctamente el formato nacional.
-    return new Intl.NumberFormat("es-CL", {
-
-      // Indicamos que el valor corresponde a moneda.
-      style: "currency",
-
-      // Utilizamos pesos chilenos.
-      currency: "CLP",
-
-      // No mostramos decimales.
-      maximumFractionDigits: 0,
-
-    }).format(value);
-  };
+const CHART_COLORS = [
+    "#2c8199",
+    "#17384c",
+    "#49a99a",
+    "#e0a65c",
+    "#8b83b7",
+    "#638bb5",
+    "#ba8585",
+];
 
 
-  // ---------------------------------------------------------
-  // DISTRIBUCIÓN DE GASTOS POR CATEGORÍA
-  // ---------------------------------------------------------
+// =========================================================
+// VALIDAR FECHA
+// =========================================================
 
-  // Calculamos cuánto dinero se ha gastado
-  // en cada categoría.
-  const categoryData = useMemo(() => {
+const isValidExpenseDate = (value) => {
 
-    // Creamos un objeto vacío para almacenar
-    // los montos acumulados por categoría.
-    const categories = {};
+    if (
+        typeof value !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(value)
+    ) {
+        return false;
+    }
 
-    // Recorremos todos los gastos.
-    expenses.forEach((expense) => {
+    const date = new Date(`${value}T12:00:00`);
 
-      // Para el gráfico utilizaremos solamente
-      // gastos que ya fueron pagados.
-      if (expense.status === "Pagado") {
-
-        // Si la categoría todavía no existe,
-        // la inicializamos con valor cero.
-        if (!categories[expense.category]) {
-          categories[expense.category] = 0;
-        }
-
-        // Sumamos el monto del gasto
-        // dentro de su categoría correspondiente.
-        categories[expense.category] += expense.amount;
-      }
-    });
-
-    // Transformamos el objeto en un arreglo
-    // compatible con Recharts.
-    return Object.entries(categories).map(
-      ([category, amount]) => ({
-
-        // Guardamos el nombre de la categoría.
-        name: category,
-
-        // Guardamos el monto acumulado.
-        value: amount,
-      })
+    return (
+        !Number.isNaN(date.getTime()) &&
+        getExpenseLocalDate(date) === value
     );
 
-  }, []);
+};
 
 
-  // ---------------------------------------------------------
-  // COLORES DEL GRÁFICO CIRCULAR
-  // ---------------------------------------------------------
+// =========================================================
+// TOOLTIP PERSONALIZADO
+// =========================================================
 
-  // Definimos una paleta basada en tonos
-  // similares a la identidad visual de El Ancla.
-  const chartColors = [
-    "#1e3448",
-    "#b98a54",
-    "#667f93",
-    "#d4b48b",
-    "#8797a4",
-    "#9c7652",
-    "#c6a77d",
-  ];
+function ExpenseChartTooltip({
+    active,
+    payload,
+    label,
+}) {
 
-
-  // ---------------------------------------------------------
-  // TOOLTIP DEL GRÁFICO DE BARRAS
-  // ---------------------------------------------------------
-
-  // Creamos un tooltip personalizado para mostrar
-  // correctamente el valor monetario.
-  const CustomBarTooltip = ({ active, payload, label }) => {
-
-    // Comprobamos que el tooltip esté activo
-    // y que exista información disponible.
-    if (active && payload && payload.length) {
-
-      // Retornamos el contenido del tooltip.
-      return (
-        <div className="expense-chart-tooltip">
-
-          {/* Mostramos el mes seleccionado. */}
-          <span className="expense-chart-tooltip__label">
-            {label}
-          </span>
-
-          {/* Mostramos el monto correspondiente. */}
-          <strong className="expense-chart-tooltip__value">
-            {formatCurrency(payload[0].value)}
-          </strong>
-
-        </div>
-      );
+    if (!active || !payload?.length) {
+        return null;
     }
 
-    // Si no hay información activa,
-    // no mostramos nada.
-    return null;
-  };
+    const item = payload[0];
 
-
-  // ---------------------------------------------------------
-  // TOOLTIP DEL GRÁFICO CIRCULAR
-  // ---------------------------------------------------------
-
-  // Creamos otro tooltip personalizado
-  // para el gráfico por categorías.
-  const CustomPieTooltip = ({ active, payload }) => {
-
-    // Verificamos que exista información.
-    if (active && payload && payload.length) {
-
-      // Obtenemos el elemento seleccionado.
-      const item = payload[0];
-
-      // Retornamos el contenido.
-      return (
+    return (
         <div className="expense-chart-tooltip">
 
-          {/* Nombre de la categoría. */}
-          <span className="expense-chart-tooltip__label">
-            {item.name}
-          </span>
+            <span className="expense-chart-tooltip__label">
+                {label || item.name || item.payload?.name}
+            </span>
 
-          {/* Monto acumulado. */}
-          <strong className="expense-chart-tooltip__value">
-            {formatCurrency(item.value)}
-          </strong>
+            <strong className="expense-chart-tooltip__value">
+                {formatExpenseCurrency(item.value)}
+            </strong>
 
         </div>
-      );
-    }
-
-    // Si no existe información,
-    // no mostramos el tooltip.
-    return null;
-  };
-
-
-  // ---------------------------------------------------------
-  // INTERFAZ
-  // ---------------------------------------------------------
-
-  // Retornamos la sección que contiene ambos gráficos.
-  return (
-    <section className="expense-charts">
-
-      {/* ================================================== */}
-      {/* GRÁFICO DE GASTOS HISTÓRICOS */}
-      {/* ================================================== */}
-
-      <article className="expense-chart-card expense-chart-card--history">
-
-        {/* Encabezado de la tarjeta. */}
-        <div className="expense-chart-card__header">
-
-          {/* Agrupamos el título y la descripción. */}
-          <div>
-
-            {/* Título del gráfico. */}
-            <h2 className="expense-chart-card__title">
-              Evolución de gastos
-            </h2>
-
-            {/* Explicación breve. */}
-            <p className="expense-chart-card__description">
-              Comparación de los gastos registrados durante
-              los últimos 12 meses.
-            </p>
-
-          </div>
-
-          {/* Etiqueta informativa. */}
-          <span className="expense-chart-card__badge">
-            Últimos 12 meses
-          </span>
-
-        </div>
-
-
-        {/* Contenedor del gráfico. */}
-        <div className="expense-chart-card__content">
-
-          {/* ResponsiveContainer permite que el gráfico
-              se adapte automáticamente al ancho disponible. */}
-          <ResponsiveContainer width="100%" height={320}>
-
-            {/* Creamos el gráfico de barras. */}
-            <BarChart
-
-              // Asignamos los datos históricos.
-              data={monthlyExpenses}
-
-              // Definimos espacios internos del gráfico.
-              margin={{
-                top: 20,
-                right: 10,
-                left: 10,
-                bottom: 5,
-              }}
-            >
-
-              {/* Dibujamos líneas horizontales suaves
-                  para facilitar la lectura. */}
-              <CartesianGrid
-                strokeDasharray="4 4"
-                vertical={false}
-                stroke="#e5e8eb"
-              />
-
-              {/* Eje horizontal con los meses. */}
-              <XAxis
-
-                // Indicamos qué propiedad contiene el mes.
-                dataKey="month"
-
-                // Eliminamos la línea exterior.
-                axisLine={false}
-
-                // Eliminamos pequeñas marcas.
-                tickLine={false}
-
-                // Definimos el estilo del texto.
-                tick={{
-                  fill: "#74818b",
-                  fontSize: 12,
-                }}
-              />
-
-              {/* Eje vertical con los montos. */}
-              <YAxis
-
-                // Eliminamos la línea exterior.
-                axisLine={false}
-
-                // Eliminamos las marcas.
-                tickLine={false}
-
-                // Convertimos valores grandes
-                // en números más compactos.
-                tickFormatter={(value) =>
-                  `$${Math.round(value / 1000)}k`
-                }
-
-                // Definimos el estilo.
-                tick={{
-                  fill: "#74818b",
-                  fontSize: 12,
-                }}
-
-                // Dejamos espacio suficiente
-                // para mostrar las etiquetas.
-                width={55}
-              />
-
-              {/* Mostramos información al pasar el mouse. */}
-              <Tooltip content={<CustomBarTooltip />} />
-
-              {/* Dibujamos las barras. */}
-              <Bar
-
-                // Indicamos qué propiedad contiene el monto.
-                dataKey="amount"
-
-                // Utilizamos el azul principal.
-                fill="#1e3448"
-
-                // Suavizamos las esquinas superiores.
-                radius={[6, 6, 0, 0]}
-
-                // Limitamos el ancho máximo de las barras.
-                maxBarSize={48}
-              />
-
-            </BarChart>
-
-          </ResponsiveContainer>
-
-        </div>
-
-      </article>
-
-
-      {/* ================================================== */}
-      {/* GRÁFICO DE DISTRIBUCIÓN POR CATEGORÍA */}
-      {/* ================================================== */}
-
-      <article className="expense-chart-card expense-chart-card--categories">
-
-        {/* Encabezado del gráfico. */}
-        <div className="expense-chart-card__header">
-
-          {/* Agrupamos título y descripción. */}
-          <div>
-
-            {/* Título del gráfico. */}
-            <h2 className="expense-chart-card__title">
-              Gastos por categoría
-            </h2>
-
-            {/* Descripción breve. */}
-            <p className="expense-chart-card__description">
-              Distribución de los gastos pagados según
-              su categoría.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        {/* Contenedor del gráfico circular. */}
-        <div className="expense-chart-card__content">
-
-          {/* ResponsiveContainer permitirá
-              adaptar el gráfico al tamaño disponible. */}
-          <ResponsiveContainer width="100%" height={320}>
-
-            {/* Creamos el gráfico circular. */}
-            <PieChart>
-
-              {/* Creamos el donut. */}
-              <Pie
-
-                // Asignamos los datos agrupados por categoría.
-                data={categoryData}
-
-                // Indicamos qué propiedad corresponde al monto.
-                dataKey="value"
-
-                // Indicamos qué propiedad corresponde al nombre.
-                nameKey="name"
-
-                // Definimos el radio externo.
-                outerRadius={100}
-
-                // Definimos el radio interno.
-                // Esto transforma el gráfico en donut.
-                innerRadius={62}
-
-                // Dejamos espacio entre las categorías.
-                paddingAngle={3}
-              >
-
-                {/* Recorremos cada categoría
-                    para asignarle un color. */}
-                {categoryData.map((entry, index) => (
-
-                  // Creamos una sección del gráfico.
-                  <Cell
-
-                    // Creamos una clave única.
-                    key={`expense-category-${entry.name}`}
-
-                    // Asignamos un color según su posición.
-                    fill={
-                      chartColors[
-                        index % chartColors.length
-                      ]
-                    }
-                  />
-
-                ))}
-
-              </Pie>
-
-              {/* Mostramos información al pasar el mouse. */}
-              <Tooltip content={<CustomPieTooltip />} />
-
-              {/* Mostramos la leyenda de categorías. */}
-              <Legend
-
-                // Colocamos la leyenda debajo del gráfico.
-                verticalAlign="bottom"
-
-                // Centramos horizontalmente.
-                align="center"
-
-                // Definimos iconos circulares.
-                iconType="circle"
-
-                // Reducimos ligeramente el tamaño.
-                iconSize={9}
-              />
-
-            </PieChart>
-
-          </ResponsiveContainer>
-
-        </div>
-
-      </article>
-
-    </section>
-  );
+    );
 }
 
 
-// Exportamos el componente para utilizarlo
-// dentro de ExpenseManagement.
+// =========================================================
+// GRÁFICO CIRCULAR REUTILIZABLE
+// =========================================================
+
+function ExpenseDistributionChart({
+    data,
+    emptyMessage,
+}) {
+
+    if (data.length === 0) {
+
+        return (
+            <div className="expense-chart-card__empty">
+                {emptyMessage}
+            </div>
+        );
+
+    }
+
+    return (
+        <ResponsiveContainer width="100%" height={310}>
+
+            <PieChart>
+
+                <Pie
+                    data={data}
+                    dataKey="value"
+                    nameKey="name"
+                    innerRadius={62}
+                    outerRadius={96}
+                    paddingAngle={3}
+                    stroke="#ffffff"
+                    strokeWidth={2}
+                >
+
+                    {data.map((item, index) => (
+
+                        <Cell
+                            key={item.name}
+                            fill={
+                                CHART_COLORS[
+                                    index % CHART_COLORS.length
+                                ]
+                            }
+                        />
+
+                    ))}
+
+                </Pie>
+
+                <Tooltip
+                    content={<ExpenseChartTooltip />}
+                />
+
+                <Legend
+                    verticalAlign="bottom"
+                    align="center"
+                    iconType="circle"
+                    iconSize={9}
+                />
+
+            </PieChart>
+
+        </ResponsiveContainer>
+    );
+}
+
+
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
+
+function ExpenseCharts({
+    expenses = [],
+}) {
+
+    // =====================================================
+    // AÑO SELECCIONADO
+    // =====================================================
+
+    const currentYear = new Date().getFullYear();
+
+    const [selectedYear, setSelectedYear] =
+        useState(currentYear);
+
+
+    // =====================================================
+    // OBTENER AÑOS DISPONIBLES
+    // =====================================================
+
+    const availableYears = useMemo(() => {
+
+        const years = new Set([currentYear]);
+
+        expenses.forEach((expense) => {
+
+            if (isValidExpenseDate(expense.date)) {
+
+                const year = Number(
+                    expense.date.slice(0, 4)
+                );
+
+                if (year <= currentYear) {
+                    years.add(year);
+                }
+
+            }
+
+        });
+
+        return [...years].sort(
+            (a, b) => b - a
+        );
+
+    }, [expenses, currentYear]);
+
+
+    // =====================================================
+    // FILTRAR GASTOS PAGADOS DEL AÑO
+    // =====================================================
+
+    const yearlyExpenses = useMemo(() => {
+
+        const today = getExpenseLocalDate();
+
+        return expenses.filter((expense) => {
+
+            if (!isPaidExpense(expense)) {
+                return false;
+            }
+
+            if (!isValidExpenseAmount(expense.amount)) {
+                return false;
+            }
+
+            if (!isValidExpenseDate(expense.date)) {
+                return false;
+            }
+
+            if (expense.date > today) {
+                return false;
+            }
+
+            return (
+                Number(expense.date.slice(0, 4)) ===
+                selectedYear
+            );
+
+        });
+
+    }, [expenses, selectedYear]);
+
+
+    // =====================================================
+    // EVOLUCIÓN MENSUAL
+    // =====================================================
+
+    const monthlyData = useMemo(() => {
+
+        const result = MONTHS.map((month) => ({
+            month,
+            amount: 0,
+        }));
+
+        yearlyExpenses.forEach((expense) => {
+
+            const monthIndex =
+                Number(expense.date.slice(5, 7)) - 1;
+
+            result[monthIndex].amount +=
+                Number(expense.amount);
+
+        });
+
+        return result;
+
+    }, [yearlyExpenses]);
+
+
+    // =====================================================
+    // DISTRIBUCIÓN POR CATEGORÍA
+    // =====================================================
+
+    const categoryData = useMemo(() => {
+
+        const categories = {};
+
+        yearlyExpenses.forEach((expense) => {
+
+            const category =
+                expense.category || "Sin categoría";
+
+            categories[category] =
+                (categories[category] || 0) +
+                Number(expense.amount);
+
+        });
+
+        return Object.entries(categories)
+            .map(([name, value]) => ({
+                name,
+                value,
+            }))
+            .sort((a, b) => b.value - a.value);
+
+    }, [yearlyExpenses]);
+
+
+    // =====================================================
+    // DISTRIBUCIÓN POR MEDIO DE PAGO
+    // =====================================================
+
+    const paymentData = useMemo(() => {
+
+        const methods = {};
+
+        yearlyExpenses.forEach((expense) => {
+
+            const method =
+                expense.paymentMethod || "No especificado";
+
+            methods[method] =
+                (methods[method] || 0) +
+                Number(expense.amount);
+
+        });
+
+        return Object.entries(methods)
+            .map(([name, value]) => ({
+                name,
+                value,
+            }))
+            .sort((a, b) => b.value - a.value);
+
+    }, [yearlyExpenses]);
+
+
+    // =====================================================
+    // TOTAL DEL AÑO
+    // =====================================================
+
+    const yearlyTotal = useMemo(() => {
+
+        return yearlyExpenses.reduce(
+            (total, expense) =>
+                total + Number(expense.amount),
+            0
+        );
+
+    }, [yearlyExpenses]);
+
+
+    // =====================================================
+    // INTERFAZ
+    // =====================================================
+
+    return (
+        <section
+            className="expense-charts"
+            aria-label="Análisis financiero de gastos"
+        >
+
+            {/* =========================================== */}
+            {/* ENCABEZADO GENERAL */}
+            {/* =========================================== */}
+
+            <div className="expense-charts__header">
+
+                <div>
+
+                    <span className="expense-charts__eyebrow">
+                        Análisis financiero
+                    </span>
+
+                    <h2 className="expense-charts__title">
+                        Estadísticas de gastos
+                    </h2>
+
+                    <p className="expense-charts__description">
+                        Analiza la evolución y distribución
+                        de los gastos pagados durante el año.
+                    </p>
+
+                </div>
+
+
+                {/* SELECTOR DE AÑO */}
+
+                <div className="expense-charts__year-control">
+
+                    <label htmlFor="expense-chart-year">
+
+                        <CalendarDays
+                            size={16}
+                            aria-hidden="true"
+                        />
+
+                        Año
+
+                    </label>
+
+                    <select
+                        id="expense-chart-year"
+                        value={selectedYear}
+                        onChange={(event) =>
+                            setSelectedYear(
+                                Number(event.target.value)
+                            )
+                        }
+                    >
+
+                        {availableYears.map((year) => (
+
+                            <option
+                                key={year}
+                                value={year}
+                            >
+                                {year}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* RESUMEN DEL AÑO SELECCIONADO */}
+            {/* =========================================== */}
+
+            <div className="expense-charts__period-summary">
+
+                <div>
+
+                    <span>
+                        Total pagado en {selectedYear}
+                    </span>
+
+                    <strong>
+                        {formatExpenseCurrency(yearlyTotal)}
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Movimientos registrados
+                    </span>
+
+                    <strong>
+                        {yearlyExpenses.length.toLocaleString(
+                            "es-CL"
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* CUADRÍCULA DE GRÁFICOS */}
+            {/* =========================================== */}
+
+            <div className="expense-charts__grid">
+
+                {/* ======================================= */}
+                {/* EVOLUCIÓN MENSUAL */}
+                {/* ======================================= */}
+
+                <article className="expense-chart-card expense-chart-card--history">
+
+                    <div className="expense-chart-card__header">
+
+                        <div>
+
+                            <span className="expense-chart-card__eyebrow">
+
+                                <BarChart3
+                                    size={15}
+                                    aria-hidden="true"
+                                />
+
+                                Evolución
+
+                            </span>
+
+                            <h3 className="expense-chart-card__title">
+                                Gastos por mes
+                            </h3>
+
+                            <p className="expense-chart-card__description">
+                                Total de gastos pagados
+                                mensualmente durante {selectedYear}.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div className="expense-chart-card__content">
+
+                        {yearlyExpenses.length > 0 ? (
+
+                            <ResponsiveContainer
+                                width="100%"
+                                height={310}
+                            >
+
+                                <BarChart
+                                    data={monthlyData}
+                                    margin={{
+                                        top: 15,
+                                        right: 10,
+                                        left: 5,
+                                        bottom: 5,
+                                    }}
+                                >
+
+                                    <CartesianGrid
+                                        strokeDasharray="4 4"
+                                        vertical={false}
+                                        stroke="#e8edf1"
+                                    />
+
+                                    <XAxis
+                                        dataKey="month"
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{
+                                            fill: "#748591",
+                                            fontSize: 11,
+                                        }}
+                                    />
+
+                                    <YAxis
+                                        axisLine={false}
+                                        tickLine={false}
+                                        width={58}
+                                        tickFormatter={(value) =>
+                                            `$${Math.round(value / 1000)}k`
+                                        }
+                                        tick={{
+                                            fill: "#748591",
+                                            fontSize: 11,
+                                        }}
+                                    />
+
+                                    <Tooltip
+                                        content={
+                                            <ExpenseChartTooltip />
+                                        }
+                                    />
+
+                                    <Bar
+                                        dataKey="amount"
+                                        name="Gastos pagados"
+                                        fill="#2c8199"
+                                        radius={[6, 6, 0, 0]}
+                                        maxBarSize={45}
+                                    />
+
+                                </BarChart>
+
+                            </ResponsiveContainer>
+
+                        ) : (
+
+                            <div className="expense-chart-card__empty">
+                                No hay gastos pagados para
+                                el año seleccionado.
+                            </div>
+
+                        )}
+
+                    </div>
+
+                </article>
+
+
+                {/* ======================================= */}
+                {/* CATEGORÍAS */}
+                {/* ======================================= */}
+
+                <article className="expense-chart-card expense-chart-card--categories">
+
+                    <div className="expense-chart-card__header">
+
+                        <div>
+
+                            <span className="expense-chart-card__eyebrow">
+
+                                <PieChartIcon
+                                    size={15}
+                                    aria-hidden="true"
+                                />
+
+                                Distribución
+
+                            </span>
+
+                            <h3 className="expense-chart-card__title">
+                                Gastos por categoría
+                            </h3>
+
+                            <p className="expense-chart-card__description">
+                                Distribución de los egresos
+                                según su categoría.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div className="expense-chart-card__content">
+
+                        <ExpenseDistributionChart
+                            data={categoryData}
+                            emptyMessage="No hay categorías con gastos pagados para este año."
+                        />
+
+                    </div>
+
+                </article>
+
+
+                {/* ======================================= */}
+                {/* MEDIOS DE PAGO */}
+                {/* ======================================= */}
+
+                <article className="expense-chart-card expense-chart-card--payments">
+
+                    <div className="expense-chart-card__header">
+
+                        <div>
+
+                            <span className="expense-chart-card__eyebrow">
+
+                                <CreditCard
+                                    size={15}
+                                    aria-hidden="true"
+                                />
+
+                                Medios de pago
+
+                            </span>
+
+                            <h3 className="expense-chart-card__title">
+                                Distribución por pago
+                            </h3>
+
+                            <p className="expense-chart-card__description">
+                                Compara los medios utilizados
+                                para realizar los pagos.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div className="expense-chart-card__content">
+
+                        <ExpenseDistributionChart
+                            data={paymentData}
+                            emptyMessage="No hay medios de pago registrados para este año."
+                        />
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+    );
+}
+
 export default ExpenseCharts;

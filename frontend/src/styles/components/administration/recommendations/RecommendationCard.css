@@ -1,0 +1,330 @@
+/* ========================================================= */
+/* TARJETA PRINCIPAL */
+/* ========================================================= */
+
+.recommendation-admin-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(22, 61, 81, 0.045);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recommendation-admin-card:hover {
+    border-color: #c9dfe7;
+    box-shadow: 0 12px 28px rgba(22, 61, 81, 0.09);
+    transform: translateY(-2px);
+}
+
+
+/* ========================================================= */
+/* PORTADA */
+/* ========================================================= */
+
+.recommendation-admin-card__image-wrapper {
+    position: relative;
+
+    height: 210px;
+
+    overflow: hidden;
+
+    background: #eef4f6;
+}
+
+.recommendation-admin-card__image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.recommendation-admin-card__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 11px;
+
+    width: 100%;
+    height: 100%;
+
+    color: #8295a3;
+
+    background: linear-gradient(
+        135deg,
+        #edf5f8 0%,
+        #e5eef2 100%
+    );
+}
+
+.recommendation-admin-card__placeholder span {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* ESTADO */
+/* ========================================================= */
+
+.recommendation-admin-card__status {
+    position: absolute;
+
+    top: 13px;
+    left: 13px;
+
+    padding: 7px 11px;
+
+    border-radius: 30px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.recommendation-admin-card__status--published {
+    color: #247253;
+    background: #e4f6eb;
+}
+
+.recommendation-admin-card__status--draft {
+    color: #966d2e;
+    background: #fff1d8;
+}
+
+
+/* ========================================================= */
+/* DESTACADA */
+/* ========================================================= */
+
+.recommendation-admin-card__featured {
+    position: absolute;
+
+    top: 13px;
+    right: 13px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+    padding: 7px 10px;
+
+    color: #785a24;
+    background: #fff1cc;
+
+    border-radius: 30px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+.recommendation-admin-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding: 21px;
+}
+
+.recommendation-admin-card__category {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #2c8199;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.recommendation-admin-card__title {
+    margin: 12px 0 0;
+
+    color: #17384c;
+
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.recommendation-admin-card__creator {
+    margin: 9px 0 0;
+
+    color: #607a90;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.recommendation-admin-card__description {
+    display: -webkit-box;
+
+    margin: 14px 0 0;
+
+    overflow: hidden;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    -webkit-box-orient: vertical;
+
+}
+
+
+/* ========================================================= */
+/* ETIQUETAS */
+/* ========================================================= */
+
+.recommendation-admin-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.recommendation-admin-card__audience,
+.recommendation-admin-card__external {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 7px 9px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.recommendation-admin-card__audience {
+    color: #7a639b;
+    background: #f2ecf9;
+}
+
+.recommendation-admin-card__external {
+    color: #397e93;
+    background: #eaf5f8;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.recommendation-admin-card__actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 22px;
+}
+
+.recommendation-admin-card__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-width: 0;
+    padding: 10px 7px;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.recommendation-admin-card__action--view {
+    color: #397e93;
+}
+
+.recommendation-admin-card__action--view:hover {
+    background: #eaf5f8;
+    border-color: #b7d5df;
+}
+
+.recommendation-admin-card__action--edit {
+    color: #926c34;
+}
+
+.recommendation-admin-card__action--edit:hover {
+    background: #fff5e4;
+    border-color: #ead5b0;
+}
+
+.recommendation-admin-card__action--delete {
+    color: #b45252;
+}
+
+.recommendation-admin-card__action--delete:hover {
+    background: #fff0f0;
+    border-color: #efc4c4;
+}
+
+.recommendation-admin-card__action:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .recommendation-admin-card__image-wrapper {
+        height: 230px;
+    }
+
+    .recommendation-admin-card__content {
+        padding: 18px;
+    }
+
+    .recommendation-admin-card__title {
+        font-size: 17px;
+    }
+}

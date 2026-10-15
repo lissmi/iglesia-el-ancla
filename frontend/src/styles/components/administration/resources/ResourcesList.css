@@ -1,0 +1,204 @@
+
+/* ========================================================= */
+/* LISTADO DE RECURSOS */
+/* ========================================================= */
+
+.resources-list {
+    margin-bottom: 28px;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.resources-list__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.resources-list__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.resources-list__heading p {
+    margin: 0;
+
+    color: #607a90;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.resources-list__count {
+    flex-shrink: 0;
+    padding: 8px 12px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* ========================================================= */
+/* CUADRÍCULA */
+/* ========================================================= */
+
+.resources-list__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.resources-list__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 260px;
+    padding: 35px 20px;
+
+    color: #77a5b5;
+    background: #ffffff;
+
+    border: 1px dashed #cbdfe7;
+    border-radius: 16px;
+
+    text-align: center;
+}
+
+.resources-list__empty h3 {
+    margin: 17px 0 9px;
+
+    color: #24475b;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.resources-list__empty p {
+    max-width: 460px;
+    margin: 0;
+
+    color: #8295a3;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* ========================================================= */
+/* PAGINACIÓN */
+/* ========================================================= */
+
+.resources-list__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 16px;
+    margin-top: 20px;
+    padding: 15px 18px;
+
+    background: #ffffff;
+    border: 1px solid #e1e9ee;
+    border-radius: 13px;
+}
+
+.resources-list__page-info,
+.resources-list__page-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: #71899a;
+    font-size: 12px;
+}
+
+.resources-list__page-info select {
+    padding: 8px 10px;
+
+    color: #365a6e;
+    background: #f8fafb;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 8px;
+
+    font-size: 11px;
+}
+
+.resources-list__page-controls button {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: #397e93;
+    background: #edf7fa;
+
+    border: 1px solid #dcebf0;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.resources-list__page-controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.resources-list__page-controls button:hover:not(:disabled) {
+    background: #dceef4;
+}
+
+.resources-list__pagination button:focus-visible,
+.resources-list__pagination select:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .resources-list__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resources-list__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resources-list__heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .resources-list__pagination {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .resources-list__page-info,
+    .resources-list__page-controls {
+        justify-content: space-between;
+    }
+}

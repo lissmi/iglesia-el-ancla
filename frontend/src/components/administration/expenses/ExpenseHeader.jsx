@@ -1,62 +1,135 @@
-// Importamos los estilos específicos del encabezado.
+// =========================================================
+// IMPORTACIONES
+// =========================================================
+
+import {
+    Link,
+    useLocation,
+} from "react-router-dom";
+
+import {
+    ArrowLeft,
+    Plus,
+    ReceiptText,
+} from "lucide-react";
+
 import "../../../styles/components/administration/expenses/ExpenseHeader.css";
 
 
-// Creamos el componente del encabezado.
-//
-// Recibimos la función onRegisterExpense desde
-// la página principal ExpenseManagement.
-//
-// Esta función será ejecutada cuando el usuario
-// presione el botón "Registrar gasto".
-function ExpenseHeader({ onRegisterExpense }) {
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
 
-  // Retornamos la estructura visual del encabezado.
-  return (
-    <section className="expense-header">
+function ExpenseHeader({
+    onRegisterExpense,
+}) {
 
-      {/* Contenedor izquierdo con la información principal. */}
-      <div className="expense-header__content">
+    // =====================================================
+    // IDENTIFICAR PANEL ADMINISTRATIVO
+    // =====================================================
 
-        {/* Texto pequeño que identifica el módulo. */}
-        <span className="expense-header__eyebrow">
-          Administración financiera
-        </span>
+    const location = useLocation();
 
-        {/* Título principal de la página. */}
-        <h1 className="expense-header__title">
-          Gestión de gastos
-        </h1>
+    const isSuperAdmin =
+        location.pathname === "/super-admin" ||
+        location.pathname.startsWith("/super-admin/");
 
-        {/* Descripción breve de la función de esta sección. */}
-        <p className="expense-header__description">
-          Registra, organiza y revisa los gastos de la comunidad
-          para mantener un control claro y ordenado de los recursos.
-        </p>
-
-      </div>
+    const backPath = isSuperAdmin
+        ? "/super-admin"
+        : "/admin";
 
 
-      {/* Creamos el bloque destinado a las acciones. */}
-      <div className="expense-header__actions">
+    // =====================================================
+    // INTERFAZ
+    // =====================================================
 
-        {/* Botón para abrir el formulario
-            de registro de un nuevo gasto. */}
-        <button
-          className="expense-header__add-button"
-          type="button"
-          onClick={onRegisterExpense}
-        >
-          + Registrar gasto
-        </button>
+    return (
+        <header className="expense-header">
 
-      </div>
+            {/* =========================================== */}
+            {/* INFORMACIÓN PRINCIPAL */}
+            {/* =========================================== */}
 
-    </section>
-  );
+            <div className="expense-header__content">
+
+                {/* BOTÓN VOLVER */}
+
+                <Link
+                    to={backPath}
+                    className="expense-header__back"
+                >
+                    <ArrowLeft
+                        size={17}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                    />
+
+                    <span>
+                        Volver al panel
+                    </span>
+                </Link>
+
+
+                {/* IDENTIFICACIÓN DEL MÓDULO */}
+
+                <span className="expense-header__eyebrow">
+
+                    <ReceiptText
+                        size={15}
+                        aria-hidden="true"
+                    />
+
+                    Administración financiera
+
+                </span>
+
+
+                {/* TÍTULO */}
+
+                <h1 className="expense-header__title">
+                    Gestión de gastos
+                </h1>
+
+
+                {/* DESCRIPCIÓN */}
+
+                <p className="expense-header__description">
+                    Registra, organiza y supervisa los gastos
+                    de la comunidad, manteniendo un control
+                    claro y ordenado de los recursos financieros.
+                </p>
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* ACCIONES */}
+            {/* =========================================== */}
+
+            <div className="expense-header__actions">
+
+                <button
+                    className="expense-header__add-button"
+                    type="button"
+                    onClick={onRegisterExpense}
+                >
+
+                    <Plus
+                        size={19}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                    />
+
+                    <span>
+                        Registrar gasto
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+    );
 }
 
-
-// Exportamos el componente para utilizarlo
-// dentro de ExpenseManagement.
 export default ExpenseHeader;

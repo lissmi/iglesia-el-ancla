@@ -9,10 +9,10 @@ import recomendadosIcon from "../../assets/icons/recomendados.png";
 // Importamos imágenes temporales de las recomendaciones.
 import bookImage from "../../assets/images/recommendations/libro-ansiosos-por-nada.jpg";
 import musicImage from "../../assets/images/recommendations/musica-alabanza.jpg";
-import movieImage from "../../assets/images/recommendations/pelicula-cuarto-de-guerra.jpg";
+import movieImage from "../../assets/images/recommendations/principe-egipto.jpg";
 import seriesImage from "../../assets/images/recommendations/serie-elegidos.jpg";
 import documentaryImage from "../../assets/images/recommendations/documental-creacion.jpg";
-import podcastImage from "../../assets/images/recommendations/podcast-biblia.jpg";
+import podcastImage from "../../assets/images/recommendations/proyecto-biblia.jpg";
 import childrenImage from "../../assets/images/recommendations/material-ninos.jpg";
 
 // Importamos los estilos exclusivos de esta página.
@@ -65,15 +65,15 @@ function Recommendations() {
         },
         {
             id: 3,
-            title: "Cuarto de guerra",
+            title: "El príncipe de Egipto",
             category: "Películas",
-            creator: "Alex Kendrick",
+            creator: "Brenda Chapman, Steve Hickner y Simon Wells",
             description:
-                "Una película cristiana sobre la oración, la familia y la importancia de confiar nuestras luchas a Dios.",
+                "Película animada que narra la historia bíblica de Moisés, desde su adopción en la realeza egipcia hasta su llamado para liberar al pueblo hebreo de la esclavitud.",
             reason:
-                "La recomendamos porque muestra de una manera cercana el poder de la oración perseverante.",
+                "La recomendamos por su excelente calidad de animación, su fidelidad al relato bíblico y su destacada banda sonora ganadora del Óscar.",
             image: movieImage,
-            link: "https://www.google.com/search?q=pelicula+Cuarto+de+guerra",
+            link: "https://www.netflix.com/cl/title/18171022",
             featured: true,
         },
         {
@@ -105,15 +105,15 @@ function Recommendations() {
 
         {
             id: 6,
-            title: "Conociendo la Biblia",
+            title: "El Proyecto Biblia Pódcast",
             category: "Pódcast",
-            creator: "Pódcast de estudio bíblico",
+            creator: "Tim Mackie y Jon Collins (BibleProject)",
             description:
-                "Conversaciones sencillas para comprender mejor los libros, personajes y enseñanzas de la Biblia.",
+                "Conversaciones a profundidad sobre teología, diseño literario e historia de las Escrituras, explorando series como el Espíritu de Dios, los 10 Mandamientos y cómo leer la Biblia.",
             reason:
-                "Es una alternativa práctica para aprender mientras viajas, realizas tareas o tienes un momento libre.",
+                "Es un excelente material complementario para profundizar en la teología y la estructura bíblica de forma clara y accesible.",
             image: podcastImage,
-            link: "https://open.spotify.com/search/podcast%20biblia",
+            link: "https://open.spotify.com/search/El%20Proyecto%20Biblia",
             featured: false,
         },
         {

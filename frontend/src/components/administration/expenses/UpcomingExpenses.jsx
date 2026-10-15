@@ -1,318 +1,622 @@
-// Importamos useMemo desde React.
-// Lo utilizaremos para obtener solamente
-// los gastos que todavía están pendientes.
+// =========================================================
+// IMPORTACIONES
+// =========================================================
+
 import { useMemo } from "react";
 
-// Importamos los gastos temporales
-// que actualmente simulan la información de MongoDB.
-import { expenses } from "../../../data/admin/expensesData";
+import {
+    AlertTriangle,
+    CalendarClock,
+    CalendarDays,
+    CheckCircle2,
+    Clock3,
+    Eye,
+    Pencil,
+    Wallet,
+} from "lucide-react";
 
-// Importamos los estilos específicos del componente.
+import {
+    formatExpenseCurrency,
+    formatExpenseDate,
+    getExpenseLocalDate,
+    isPendingExpense,
+    isValidExpenseAmount,
+} from "../../../utils/expenseUtils";
+
 import "../../../styles/components/administration/expenses/UpcomingExpenses.css";
 
 
-// Creamos el componente que mostrará
-// los gastos próximos o comprometidos.
-function UpcomingExpenses() {
+// =========================================================
+// FUNCIONES AUXILIARES
+// =========================================================
 
-  // ---------------------------------------------------------
-  // FORMATEAR MONEDA
-  // ---------------------------------------------------------
+// Validamos fechas reales con formato YYYY-MM-DD.
+const isValidDate = (value) => {
 
-  // Creamos una función reutilizable para mostrar
-  // los montos en formato de peso chileno.
-  const formatCurrency = (value) => {
+    if (
+        typeof value !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(value)
+    ) {
+        return false;
+    }
 
-    // Utilizamos Intl.NumberFormat para aplicar
-    // correctamente el formato monetario.
-    return new Intl.NumberFormat("es-CL", {
+    const parsedDate = new Date(`${value}T12:00:00`);
 
-      // Indicamos que queremos mostrar una moneda.
-      style: "currency",
-
-      // Definimos pesos chilenos.
-      currency: "CLP",
-
-      // Evitamos mostrar decimales.
-      maximumFractionDigits: 0,
-
-    }).format(value);
-  };
-
-
-  // ---------------------------------------------------------
-  // FORMATEAR FECHA
-  // ---------------------------------------------------------
-
-  // Creamos una función para transformar
-  // una fecha como "2026-08-28"
-  // en una fecha más amigable para el usuario.
-  const formatDate = (date) => {
-
-    // Creamos un objeto Date.
-    const parsedDate = new Date(`${date}T00:00:00`);
-
-    // Retornamos la fecha utilizando formato chileno.
-    return new Intl.DateTimeFormat("es-CL", {
-
-      // Mostramos el día con dos dígitos.
-      day: "2-digit",
-
-      // Mostramos el nombre abreviado del mes.
-      month: "short",
-
-      // Mostramos el año completo.
-      year: "numeric",
-
-    }).format(parsedDate);
-  };
-
-
-  // ---------------------------------------------------------
-  // OBTENER GASTOS PENDIENTES
-  // ---------------------------------------------------------
-
-  // Filtramos los gastos para mostrar solamente
-  // aquellos cuyo estado sea "Pendiente".
-  const upcomingExpenses = useMemo(() => {
-
-    // Filtramos y ordenamos los gastos pendientes.
-    return expenses
-
-      // Dejamos solamente los gastos pendientes.
-      .filter(
-        (expense) => expense.status === "Pendiente"
-      )
-
-      // Ordenamos los movimientos por fecha,
-      // mostrando primero los más próximos.
-      .sort(
-        (firstExpense, secondExpense) =>
-          new Date(firstExpense.date) -
-          new Date(secondExpense.date)
-      );
-
-  }, []);
-
-
-  // ---------------------------------------------------------
-  // TOTAL COMPROMETIDO
-  // ---------------------------------------------------------
-
-  // Calculamos cuánto dinero representan
-  // todos los gastos pendientes.
-  const totalUpcomingExpenses = useMemo(() => {
-
-    // Sumamos los montos de cada gasto pendiente.
-    return upcomingExpenses.reduce(
-      (total, expense) => total + expense.amount,
-      0
+    return (
+        !Number.isNaN(parsedDate.getTime()) &&
+        getExpenseLocalDate(parsedDate) === value
     );
 
-  }, [upcomingExpenses]);
+};
 
 
-  // ---------------------------------------------------------
-  // INTERFAZ
-  // ---------------------------------------------------------
+// Calculamos una fecha futura utilizando el calendario local.
+const addDays = (date, days) => {
 
-  // Retornamos la sección completa.
-  return (
-    <section className="upcoming-expenses">
+    const result = new Date(`${date}T12:00:00`);
 
-      {/* ================================================== */}
-      {/* ENCABEZADO */}
-      {/* ================================================== */}
+    result.setDate(result.getDate() + days);
 
-      <div className="upcoming-expenses__header">
+    return getExpenseLocalDate(result);
 
-        {/* Contenedor del título y descripción. */}
-        <div>
-
-          {/* Título principal. */}
-          <h2 className="upcoming-expenses__title">
-            Gastos próximos
-          </h2>
-
-          {/* Descripción breve de la sección. */}
-          <p className="upcoming-expenses__description">
-            Pagos comprometidos que todavía se encuentran pendientes.
-          </p>
-
-        </div>
+};
 
 
-        {/* Mostramos el total comprometido. */}
-        <div className="upcoming-expenses__total">
+// =========================================================
+// COMPONENTE PRINCIPAL
+// =========================================================
 
-          {/* Etiqueta explicativa. */}
-          <span className="upcoming-expenses__total-label">
-            Total comprometido
-          </span>
+function UpcomingExpenses({
+    expenses = [],
+    onViewExpense,
+    onEditExpense,
+    onMarkAsPaid,
+}) {
 
-          {/* Monto total. */}
-          <strong className="upcoming-expenses__total-value">
-            {formatCurrency(totalUpcomingExpenses)}
-          </strong>
+    // =====================================================
+    // FECHAS DE REFERENCIA
+    // =====================================================
 
-        </div>
+    const today = getExpenseLocalDate();
 
-      </div>
+    const nextSevenDays = addDays(today, 7);
 
 
-      {/* ================================================== */}
-      {/* LISTADO DE GASTOS */}
-      {/* ================================================== */}
+    // =====================================================
+    // OBTENER GASTOS PENDIENTES
+    // =====================================================
 
-      <div className="upcoming-expenses__list">
+    const pendingExpenses = useMemo(() => {
 
-        {/* Comprobamos si existen gastos pendientes. */}
-        {upcomingExpenses.length > 0 ? (
+        return expenses
 
-          // Recorremos los gastos pendientes.
-          upcomingExpenses.map((expense) => (
+            .filter((expense) => {
 
-            // Creamos una fila para cada gasto.
-            <article
-              className="upcoming-expenses__item"
-              key={expense.id}
-            >
+                return (
+                    isPendingExpense(expense) &&
+                    isValidExpenseAmount(expense.amount)
+                );
 
-              {/* ------------------------------------------------ */}
-              {/* INFORMACIÓN PRINCIPAL */}
-              {/* ------------------------------------------------ */}
+            })
 
-              <div className="upcoming-expenses__main">
+            .sort((first, second) => {
 
-                {/* Indicador visual. */}
-                <div className="upcoming-expenses__icon">
+                // Priorizamos fechas válidas.
+                const firstDate = isValidDate(first.date)
+                    ? first.date
+                    : "9999-12-31";
 
-                  {/* Utilizamos un símbolo sencillo
-                      mientras todavía no incorporamos
-                      una librería de iconos. */}
-                  $
+                const secondDate = isValidDate(second.date)
+                    ? second.date
+                    : "9999-12-31";
+
+                return firstDate.localeCompare(secondDate);
+
+            });
+
+    }, [expenses]);
+
+
+    // =====================================================
+    // CALCULAR INDICADORES
+    // =====================================================
+
+    const summary = useMemo(() => {
+
+        let totalCommitted = 0;
+
+        let overdueCount = 0;
+
+        let overdueAmount = 0;
+
+        let upcomingCount = 0;
+
+
+        pendingExpenses.forEach((expense) => {
+
+            const amount = Number(expense.amount);
+
+            totalCommitted += amount;
+
+            if (!isValidDate(expense.date)) {
+                return;
+            }
+
+
+            // --------------------------------------------
+            // PAGOS VENCIDOS
+            // --------------------------------------------
+
+            if (expense.date < today) {
+
+                overdueCount += 1;
+
+                overdueAmount += amount;
+
+            }
+
+
+            // --------------------------------------------
+            // PRÓXIMOS 7 DÍAS
+            // --------------------------------------------
+
+            if (
+                expense.date >= today &&
+                expense.date <= nextSevenDays
+            ) {
+
+                upcomingCount += 1;
+
+            }
+
+        });
+
+
+        return {
+            totalCommitted,
+            pendingCount: pendingExpenses.length,
+            overdueCount,
+            overdueAmount,
+            upcomingCount,
+        };
+
+    }, [
+        pendingExpenses,
+        today,
+        nextSevenDays,
+    ]);
+
+
+    // =====================================================
+    // OBTENER ESTADO DE VENCIMIENTO
+    // =====================================================
+
+    const getDueStatus = (expense) => {
+
+        if (!isValidDate(expense.date)) {
+
+            return {
+                label: "Sin fecha válida",
+                variant: "neutral",
+            };
+
+        }
+
+        if (expense.date < today) {
+
+            return {
+                label: "Vencido",
+                variant: "overdue",
+            };
+
+        }
+
+        if (expense.date === today) {
+
+            return {
+                label: "Vence hoy",
+                variant: "today",
+            };
+
+        }
+
+        if (expense.date <= nextSevenDays) {
+
+            return {
+                label: "Próximo a vencer",
+                variant: "upcoming",
+            };
+
+        }
+
+        return {
+            label: "Programado",
+            variant: "scheduled",
+        };
+
+    };
+
+
+    // =====================================================
+    // CONFIGURACIÓN DE INDICADORES
+    // =====================================================
+
+    const summaryCards = [
+
+        {
+            id: "committed",
+            title: "Total comprometido",
+            value: formatExpenseCurrency(
+                summary.totalCommitted
+            ),
+            description: "Monto pendiente de pago",
+            icon: Wallet,
+            variant: "primary",
+        },
+
+        {
+            id: "pending",
+            title: "Pagos pendientes",
+            value: summary.pendingCount.toLocaleString(
+                "es-CL"
+            ),
+            description: "Compromisos registrados",
+            icon: CalendarClock,
+            variant: "info",
+        },
+
+        {
+            id: "overdue",
+            title: "Pagos vencidos",
+            value: summary.overdueCount.toLocaleString(
+                "es-CL"
+            ),
+            description: formatExpenseCurrency(
+                summary.overdueAmount
+            ) + " vencidos",
+            icon: AlertTriangle,
+            variant: "warning",
+        },
+
+        {
+            id: "upcoming",
+            title: "Próximos 7 días",
+            value: summary.upcomingCount.toLocaleString(
+                "es-CL"
+            ),
+            description: "Pagos con fecha cercana",
+            icon: Clock3,
+            variant: "purple",
+        },
+
+    ];
+
+
+    // =====================================================
+    // INTERFAZ
+    // =====================================================
+
+    return (
+        <section className="upcoming-expenses">
+
+            {/* =========================================== */}
+            {/* ENCABEZADO */}
+            {/* =========================================== */}
+
+            <div className="upcoming-expenses__header">
+
+                <div>
+
+                    <span className="upcoming-expenses__eyebrow">
+                        Seguimiento financiero
+                    </span>
+
+                    <h2 className="upcoming-expenses__title">
+                        Gastos pendientes
+                    </h2>
+
+                    <p className="upcoming-expenses__description">
+                        Supervisa los compromisos financieros
+                        y las fechas previstas de pago.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* TARJETAS DE INDICADORES */}
+            {/* =========================================== */}
+
+            <div className="upcoming-expenses__summary">
+
+                {summaryCards.map((card) => {
+
+                    const CardIcon = card.icon;
+
+                    return (
+
+                        <article
+                            key={card.id}
+                            className={
+                                "upcoming-expenses__summary-card " +
+                                `upcoming-expenses__summary-card--${card.variant}`
+                            }
+                        >
+
+                            <div className="upcoming-expenses__summary-top">
+
+                                <span>
+                                    {card.title}
+                                </span>
+
+                                <div className="upcoming-expenses__summary-icon">
+
+                                    <CardIcon
+                                        size={20}
+                                        strokeWidth={1.8}
+                                        aria-hidden="true"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                            <strong className="upcoming-expenses__summary-value">
+                                {card.value}
+                            </strong>
+
+                            <p className="upcoming-expenses__summary-description">
+                                {card.description}
+                            </p>
+
+                        </article>
+
+                    );
+
+                })}
+
+            </div>
+
+
+            {/* =========================================== */}
+            {/* LISTADO DE COMPROMISOS */}
+            {/* =========================================== */}
+
+            <div className="upcoming-expenses__panel">
+
+                <div className="upcoming-expenses__panel-header">
+
+                    <div>
+
+                        <h3>
+                            Compromisos registrados
+                        </h3>
+
+                        <p>
+                            Ordenados por fecha prevista de pago.
+                        </p>
+
+                    </div>
+
+                    <span className="upcoming-expenses__count">
+                        {pendingExpenses.length} pendientes
+                    </span>
+
                 </div>
 
 
-                {/* Agrupamos nombre y categoría. */}
-                <div className="upcoming-expenses__info">
+                {/* ======================================= */}
+                {/* LISTA */}
+                {/* ======================================= */}
 
-                  {/* Nombre del gasto. */}
-                  <h3 className="upcoming-expenses__name">
-                    {expense.description}
-                  </h3>
+                {pendingExpenses.length > 0 ? (
 
-                  {/* Categoría del gasto. */}
-                  <span className="upcoming-expenses__category">
-                    {expense.category}
-                  </span>
+                    <div className="upcoming-expenses__list">
 
-                </div>
+                        {pendingExpenses.map((expense) => {
 
-              </div>
+                            const dueStatus =
+                                getDueStatus(expense);
 
+                            return (
 
-              {/* ------------------------------------------------ */}
-              {/* FECHA */}
-              {/* ------------------------------------------------ */}
+                                <article
+                                    className="upcoming-expenses__item"
+                                    key={expense.id}
+                                >
 
-              <div className="upcoming-expenses__column">
+                                    {/* =================== */}
+                                    {/* INFORMACIÓN */}
+                                    {/* =================== */}
 
-                {/* Etiqueta. */}
-                <span className="upcoming-expenses__column-label">
-                  Fecha
-                </span>
+                                    <div className="upcoming-expenses__main">
 
-                {/* Fecha del gasto. */}
-                <span className="upcoming-expenses__column-value">
-                  {formatDate(expense.date)}
-                </span>
+                                        <div className="upcoming-expenses__icon">
 
-              </div>
+                                            <CalendarDays
+                                                size={20}
+                                                aria-hidden="true"
+                                            />
 
+                                        </div>
 
-              {/* ------------------------------------------------ */}
-              {/* MEDIO DE PAGO */}
-              {/* ------------------------------------------------ */}
+                                        <div className="upcoming-expenses__info">
 
-              <div className="upcoming-expenses__column">
+                                            <h4 className="upcoming-expenses__name">
+                                                {expense.description}
+                                            </h4>
 
-                {/* Etiqueta. */}
-                <span className="upcoming-expenses__column-label">
-                  Medio de pago
-                </span>
+                                            <span className="upcoming-expenses__category">
+                                                {expense.category || "Sin categoría"}
+                                            </span>
 
-                {/* Medio esperado. */}
-                <span className="upcoming-expenses__column-value">
-                  {expense.paymentMethod}
-                </span>
+                                        </div>
 
-              </div>
+                                    </div>
 
 
-              {/* ------------------------------------------------ */}
-              {/* ESTADO */}
-              {/* ------------------------------------------------ */}
+                                    {/* =================== */}
+                                    {/* FECHA */}
+                                    {/* =================== */}
 
-              <div className="upcoming-expenses__status-wrapper">
+                                    <div className="upcoming-expenses__column">
 
-                {/* Mostramos el estado como una etiqueta visual. */}
-                <span className="upcoming-expenses__status">
-                  {expense.status}
-                </span>
+                                        <span className="upcoming-expenses__column-label">
+                                            Fecha prevista
+                                        </span>
 
-              </div>
+                                        <strong className="upcoming-expenses__column-value">
+                                            {formatExpenseDate(expense.date)}
+                                        </strong>
+
+                                    </div>
 
 
-              {/* ------------------------------------------------ */}
-              {/* MONTO */}
-              {/* ------------------------------------------------ */}
+                                    {/* =================== */}
+                                    {/* VENCIMIENTO */}
+                                    {/* =================== */}
 
-              <div className="upcoming-expenses__amount">
+                                    <div className="upcoming-expenses__status-wrapper">
 
-                {/* Etiqueta. */}
-                <span className="upcoming-expenses__column-label">
-                  Monto
-                </span>
+                                        <span
+                                            className={
+                                                "upcoming-expenses__status " +
+                                                `upcoming-expenses__status--${dueStatus.variant}`
+                                            }
+                                        >
+                                            {dueStatus.label}
+                                        </span>
 
-                {/* Monto del gasto. */}
-                <strong>
-                  {formatCurrency(expense.amount)}
-                </strong>
+                                    </div>
 
-              </div>
 
-            </article>
+                                    {/* =================== */}
+                                    {/* MONTO */}
+                                    {/* =================== */}
 
-          ))
+                                    <div className="upcoming-expenses__amount">
 
-        ) : (
+                                        <span className="upcoming-expenses__column-label">
+                                            Monto pendiente
+                                        </span>
 
-          // Si no existen gastos pendientes,
-          // mostramos un mensaje informativo.
-          <div className="upcoming-expenses__empty">
+                                        <strong>
+                                            {formatExpenseCurrency(
+                                                expense.amount
+                                            )}
+                                        </strong>
 
-            {/* Mensaje principal. */}
-            <strong>
-              No existen gastos pendientes.
-            </strong>
+                                    </div>
 
-            {/* Mensaje complementario. */}
-            <span>
-              Todos los gastos registrados se encuentran pagados.
-            </span>
 
-          </div>
+                                    {/* =================== */}
+                                    {/* ACCIONES */}
+                                    {/* =================== */}
 
-        )}
+                                    <div className="upcoming-expenses__actions">
 
-      </div>
+                                        {onViewExpense && (
 
-    </section>
-  );
+                                            <button
+                                                type="button"
+                                                className="upcoming-expenses__action"
+                                                onClick={() =>
+                                                    onViewExpense(expense)
+                                                }
+                                                title="Ver detalles"
+                                                aria-label={
+                                                    `Ver detalles de ${expense.description}`
+                                                }
+                                            >
+                                                <Eye size={17} />
+                                            </button>
+
+                                        )}
+
+
+                                        {onEditExpense && (
+
+                                            <button
+                                                type="button"
+                                                className="upcoming-expenses__action"
+                                                onClick={() =>
+                                                    onEditExpense(expense)
+                                                }
+                                                title="Editar gasto"
+                                                aria-label={
+                                                    `Editar ${expense.description}`
+                                                }
+                                            >
+                                                <Pencil size={16} />
+                                            </button>
+
+                                        )}
+
+
+                                        {onMarkAsPaid && (
+
+                                            <button
+                                                type="button"
+                                                className="upcoming-expenses__pay-button"
+                                                onClick={() =>
+                                                    onMarkAsPaid(expense)
+                                                }
+                                            >
+
+                                                <CheckCircle2
+                                                    size={16}
+                                                    aria-hidden="true"
+                                                />
+
+                                                Marcar pagado
+
+                                            </button>
+
+                                        )}
+
+                                    </div>
+
+                                </article>
+
+                            );
+
+                        })}
+
+                    </div>
+
+                ) : (
+
+                    // =====================================
+                    // ESTADO VACÍO
+                    // =====================================
+
+                    <div className="upcoming-expenses__empty">
+
+                        <CheckCircle2
+                            size={39}
+                            strokeWidth={1.5}
+                            aria-hidden="true"
+                        />
+
+                        <strong>
+                            No hay gastos pendientes
+                        </strong>
+
+                        <p>
+                            Todos los compromisos registrados
+                            se encuentran pagados.
+                        </p>
+
+                    </div>
+
+                )}
+
+            </div>
+
+        </section>
+    );
 }
 
-
-// Exportamos el componente para utilizarlo
-// dentro de ExpenseManagement.
 export default UpcomingExpenses;

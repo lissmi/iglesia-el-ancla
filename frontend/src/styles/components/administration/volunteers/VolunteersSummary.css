@@ -1,0 +1,197 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.volunteers-summary {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE ESTADÍSTICAS */
+/* ========================================================= */
+
+.volunteers-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.volunteers-summary__card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    min-width: 0;
+    min-height: 145px;
+
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(22, 61, 81, 0.035);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.volunteers-summary__card:hover {
+    border-color: #c9dfe7;
+
+    box-shadow: 0 9px 22px rgba(22, 61, 81, 0.07);
+
+    transform: translateY(-2px);
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.volunteers-summary__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+}
+
+.volunteers-summary__label {
+    color: #607a90;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.volunteers-summary__value {
+    margin-top: 10px;
+
+    color: #17384c;
+
+    font-size: 31px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.volunteers-summary__description {
+    margin-top: 11px;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.volunteers-summary__icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 47px;
+    height: 47px;
+
+    border-radius: 13px;
+}
+
+
+/* ========================================================= */
+/* VOLUNTARIOS ACTIVOS */
+/* ========================================================= */
+
+.volunteers-summary__card--active
+.volunteers-summary__icon {
+    color: #2f866c;
+    background: #e7f6ef;
+}
+
+
+/* ========================================================= */
+/* ASIGNACIONES PRÓXIMAS */
+/* ========================================================= */
+
+.volunteers-summary__card--upcoming
+.volunteers-summary__icon {
+    color: #2c8199;
+    background: #eaf5f8;
+}
+
+
+/* ========================================================= */
+/* CONFIRMACIONES PENDIENTES */
+/* ========================================================= */
+
+.volunteers-summary__card--pending
+.volunteers-summary__icon {
+    color: #b08039;
+    background: #fff5e4;
+}
+
+
+/* ========================================================= */
+/* TURNOS SIN CUBRIR */
+/* ========================================================= */
+
+.volunteers-summary__card--uncovered
+.volunteers-summary__icon {
+    color: #b45252;
+    background: #fff0f0;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1150px) {
+
+    .volunteers-summary__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .volunteers-summary__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteers-summary__card {
+        min-height: 125px;
+        padding: 19px;
+    }
+
+    .volunteers-summary__value {
+        font-size: 28px;
+    }
+
+    .volunteers-summary__icon {
+        width: 43px;
+        height: 43px;
+    }
+}

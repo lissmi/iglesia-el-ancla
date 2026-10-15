@@ -245,7 +245,7 @@ function AdminSidebar({ isOpen, onClose }) {
           label: "Miembros",
           path: `${adminBasePath}/miembros`,
           icon: Users,
-          available: false,
+          available: true,
         },
       ],
     },
@@ -262,7 +262,7 @@ function AdminSidebar({ isOpen, onClose }) {
           label: "Recursos",
           path: `${adminBasePath}/recursos`,
           icon: BookOpen,
-          available: false,
+          available: true,
         },
         {
           label: "Gestión de páginas",

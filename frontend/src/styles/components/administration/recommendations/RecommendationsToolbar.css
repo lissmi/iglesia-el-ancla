@@ -1,0 +1,269 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.recommendations-toolbar {
+    margin-bottom: 28px;
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(22, 61, 81, 0.035);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.recommendations-toolbar__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+    margin-bottom: 23px;
+}
+
+.recommendations-toolbar__heading-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.recommendations-toolbar__heading-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.recommendations-toolbar__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.recommendations-toolbar__heading p {
+    margin: 0;
+
+    color: #8295a3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* BOTÓN LIMPIAR FILTROS */
+/* ========================================================= */
+
+.recommendations-toolbar__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    flex-shrink: 0;
+
+    padding: 10px 13px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #397e93;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.recommendations-toolbar__clear:hover:not(:disabled) {
+    background: #f0f8fa;
+    border-color: #b7d5df;
+}
+
+.recommendations-toolbar__clear:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* CONTROLES */
+/* ========================================================= */
+
+.recommendations-toolbar__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.recommendations-toolbar__field {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    gap: 9px;
+}
+
+.recommendations-toolbar__field label {
+    color: #48667a;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CAMPO DE BÚSQUEDA */
+/* ========================================================= */
+
+.recommendations-toolbar__input-wrapper {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+    height: 45px;
+    padding: 0 14px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    color: #8295a3;
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recommendations-toolbar__input-wrapper:focus-within {
+    border-color: #68bad0;
+    box-shadow: 0 0 0 3px rgba(104, 186, 208, 0.13);
+}
+
+.recommendations-toolbar__input-wrapper input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #17384c;
+
+    font: inherit;
+    font-size: 13px;
+}
+
+.recommendations-toolbar__input-wrapper input::placeholder {
+    color: #a0b0bb;
+}
+
+
+/* ========================================================= */
+/* SELECTORES */
+/* ========================================================= */
+
+.recommendations-toolbar__select-wrapper {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+    height: 45px;
+    padding: 0 12px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    color: #8295a3;
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recommendations-toolbar__select-wrapper:focus-within {
+    border-color: #68bad0;
+    box-shadow: 0 0 0 3px rgba(104, 186, 208, 0.13);
+}
+
+.recommendations-toolbar__select-wrapper select {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #48667a;
+
+    font: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .recommendations-toolbar__controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .recommendations-toolbar__field--search {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .recommendations-toolbar {
+        padding: 19px;
+    }
+
+    .recommendations-toolbar__heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .recommendations-toolbar__clear {
+        width: 100%;
+    }
+
+    .recommendations-toolbar__controls {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendations-toolbar__field--search {
+        grid-column: auto;
+    }
+}

@@ -1,0 +1,290 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+.recommendation-details-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(3px);
+    overflow-y: auto;
+}
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+.recommendation-details-modal {
+    width: 100%;
+    max-width: 740px;
+    max-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+.recommendation-details-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 25px 28px 21px;
+    border-bottom: 1px solid #e1e9ee;
+}
+.recommendation-details-modal__eyebrow {
+    color: #2c8199;
+    font-size: 11px;
+    font-weight: 800;
+}
+.recommendation-details-modal__header h2 {
+    margin: 7px 0;
+    color: #17384c;
+    font-size: 22px;
+    font-weight: 800;
+}
+.recommendation-details-modal__header p {
+    margin: 0;
+    color: #8295a3;
+    font-size: 12px;
+}
+.recommendation-details-modal__close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 10px;
+    background: #edf4f7;
+    color: #48667a;
+    cursor: pointer;
+}
+.recommendation-details-modal__close:hover {
+    background: #dcebf1;
+}
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+.recommendation-details-modal__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 25px 28px;
+}
+.recommendation-details-modal__intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 23px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9eff3;
+}
+.recommendation-details-modal__cover {
+    flex-shrink: 0;
+    width: 160px;
+    height: 205px;
+    overflow: hidden;
+    border-radius: 13px;
+    background: #edf5f8;
+}
+.recommendation-details-modal__cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.recommendation-details-modal__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+    color: #8295a3;
+    font-size: 12px;
+}
+.recommendation-details-modal__intro-info {
+    min-width: 0;
+}
+.recommendation-details-modal__category {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #2c8199;
+    font-size: 12px;
+    font-weight: 800;
+}
+.recommendation-details-modal__intro-info h3 {
+    margin: 12px 0 8px;
+    color: #17384c;
+    font-size: 23px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.recommendation-details-modal__creator {
+    margin: 0;
+    color: #607a90;
+    font-size: 13px;
+}
+.recommendation-details-modal__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 20px;
+}
+.recommendation-details-modal__status,
+.recommendation-details-modal__featured {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 800;
+}
+.recommendation-details-modal__status--published {
+    color: #247253;
+    background: #e4f6eb;
+}
+.recommendation-details-modal__status--draft {
+    color: #966d2e;
+    background: #fff1d8;
+}
+.recommendation-details-modal__featured {
+    color: #785a24;
+    background: #fff1cc;
+}
+.recommendation-details-modal__section {
+    margin-top: 23px;
+}
+.recommendation-details-modal__section h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    color: #17384c;
+    font-size: 14px;
+    font-weight: 800;
+}
+.recommendation-details-modal__section p {
+    margin: 0;
+    color: #607a90;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.recommendation-details-modal__audiences {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.recommendation-details-modal__audiences span {
+    padding: 8px 11px;
+    border-radius: 9px;
+    color: #397e93;
+    background: #eaf5f8;
+    font-size: 11px;
+    font-weight: 700;
+}
+.recommendation-details-modal__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    color: #2c8199;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.recommendation-details-modal__link:hover {
+    text-decoration: underline;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+.recommendation-details-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 11px;
+    padding: 19px 28px;
+    border-top: 1px solid #e1e9ee;
+    background: #ffffff;
+}
+.recommendation-details-modal__cancel,
+.recommendation-details-modal__edit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.recommendation-details-modal__cancel {
+    border: 1px solid #dce7ec;
+    background: #ffffff;
+    color: #48667a;
+}
+.recommendation-details-modal__edit {
+    border: 1px solid #2c8199;
+    background: #2c8199;
+    color: #ffffff;
+}
+.recommendation-details-modal__edit:hover:not(:disabled) {
+    background: #236d83;
+}
+.recommendation-details-modal__edit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.recommendation-details-modal__close:focus-visible,
+.recommendation-details-modal__cancel:focus-visible,
+.recommendation-details-modal__edit:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+@media (max-width: 650px) {
+    .recommendation-details-modal__overlay {
+        padding: 12px;
+    }
+    .recommendation-details-modal {
+        max-height: calc(100vh - 24px);
+    }
+    .recommendation-details-modal__header,
+    .recommendation-details-modal__body,
+    .recommendation-details-modal__footer {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+    .recommendation-details-modal__intro {
+        flex-direction: column;
+    }
+    .recommendation-details-modal__cover {
+        width: 145px;
+        height: 185px;
+    }
+    .recommendation-details-modal__intro-info h3 {
+        font-size: 20px;
+    }
+    .recommendation-details-modal__footer > button {
+        flex: 1;
+    }
+}

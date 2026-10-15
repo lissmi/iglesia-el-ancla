@@ -1,0 +1,167 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+.recommendation-delete-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(3px);
+}
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+.recommendation-delete-modal {
+    width: 100%;
+    max-width: 490px;
+    padding: 27px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+.recommendation-delete-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+.recommendation-delete-modal__warning-icon {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    color: #b45252;
+    background: #fff0f0;
+}
+.recommendation-delete-modal__close {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    border: 0;
+    border-radius: 9px;
+    color: #607a90;
+    background: #edf4f7;
+    cursor: pointer;
+}
+.recommendation-delete-modal__close:hover:not(:disabled) {
+    background: #dcebf1;
+}
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+.recommendation-delete-modal__body h2 {
+    margin: 22px 0 10px;
+    color: #17384c;
+    font-size: 22px;
+    font-weight: 800;
+}
+.recommendation-delete-modal__body > p {
+    color: #607a90;
+    font-size: 13px;
+    line-height: 1.75;
+}
+.recommendation-delete-modal__item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 20px 0;
+    padding: 15px 17px;
+    border: 1px solid #e1e9ee;
+    border-radius: 11px;
+    background: #f7fafb;
+    overflow-wrap: anywhere;
+}
+.recommendation-delete-modal__item-label {
+    color: #8295a3;
+    font-size: 11px;
+    font-weight: 700;
+}
+.recommendation-delete-modal__item strong {
+    color: #17384c;
+    font-size: 14px;
+}
+.recommendation-delete-modal__body .recommendation-delete-modal__notice {
+    margin: 0;
+    color: #a64b4b;
+    font-size: 12px;
+    font-weight: 700;
+}
+.recommendation-delete-modal__body .recommendation-delete-modal__error {
+    margin-top: 12px;
+    color: #a64b4b;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+.recommendation-delete-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 11px;
+    margin-top: 27px;
+    padding-top: 20px;
+    border-top: 1px solid #e1e9ee;
+}
+.recommendation-delete-modal__footer button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 43px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.recommendation-delete-modal__cancel {
+    color: #48667a;
+    background: #ffffff;
+    border: 1px solid #dce7ec;
+}
+.recommendation-delete-modal__cancel:hover:not(:disabled) {
+    background: #f0f6f8;
+}
+.recommendation-delete-modal__confirm {
+    color: #ffffff;
+    background: #b45252;
+    border: 1px solid #b45252;
+}
+.recommendation-delete-modal__confirm:hover:not(:disabled) {
+    background: #9f3d3d;
+}
+.recommendation-delete-modal__footer button:disabled,
+.recommendation-delete-modal__close:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+.recommendation-delete-modal__footer button:focus-visible,
+.recommendation-delete-modal__close:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+@media (max-width: 500px) {
+    .recommendation-delete-modal__overlay { padding: 14px; }
+    .recommendation-delete-modal { padding: 21px; }
+    .recommendation-delete-modal__footer { flex-direction: column-reverse; }
+    .recommendation-delete-modal__footer button { width: 100%; }
+}

@@ -1,21 +1,156 @@
 /* ========================================================= */
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR GENERAL */
 /* ========================================================= */
 
-/* Creamos la cuadrícula que contendrá los dos gráficos. */
 .expense-charts {
-  /* Utilizamos Grid para distribuir las tarjetas. */
-  display: grid;
+    display: flex;
+    flex-direction: column;
 
-  /* El gráfico histórico utilizará más espacio
-     que el gráfico de categorías. */
-  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr);
+    gap: 22px;
 
-  /* Dejamos separación entre ambos gráficos. */
-  gap: 20px;
+    width: 100%;
+    min-width: 0;
+}
 
-  /* Separamos esta sección de las tarjetas superiores. */
-  margin-top: 24px;
+
+/* ========================================================= */
+/* ENCABEZADO GENERAL */
+/* ========================================================= */
+
+.expense-charts__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.expense-charts__eyebrow {
+    color: #2c8199;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.expense-charts__title {
+    margin: 7px 0 6px;
+
+    color: #17384c;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.expense-charts__description {
+    margin: 0;
+
+    color: #748591;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* SELECTOR DE AÑO */
+/* ========================================================= */
+
+.expense-charts__year-control {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.expense-charts__year-control label {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #526b79;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.expense-charts__year-control select {
+    min-width: 100px;
+    height: 39px;
+
+    padding: 0 12px;
+
+    color: #17384c;
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.expense-charts__year-control select:focus-visible {
+    outline: 3px solid #b9e3ec;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESUMEN DEL PERÍODO */
+/* ========================================================= */
+
+.expense-charts__period-summary {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    padding: 19px 22px;
+
+    background: #edf6f8;
+
+    border: 1px solid #dcecf0;
+    border-radius: 13px;
+}
+
+.expense-charts__period-summary > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.expense-charts__period-summary span {
+    color: #6f8590;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.expense-charts__period-summary strong {
+    color: #17384c;
+
+    font-size: 19px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE GRÁFICOS */
+/* ========================================================= */
+
+.expense-charts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
 }
 
 
@@ -23,256 +158,210 @@
 /* TARJETAS DE GRÁFICOS */
 /* ========================================================= */
 
-/* Diseñamos cada tarjeta que contiene un gráfico. */
 .expense-chart-card {
-  /* Evitamos problemas de desbordamiento dentro de Grid. */
-  min-width: 0;
+    min-width: 0;
 
-  /* Añadimos espacio interno. */
-  padding: 26px;
+    padding: 24px;
 
-  /* Utilizamos fondo blanco. */
-  background-color: #ffffff;
+    background: #ffffff;
 
-  /* Creamos esquinas redondeadas. */
-  border-radius: 20px;
+    border: 1px solid #e8eef2;
+    border-radius: 17px;
 
-  /* Añadimos un borde muy suave. */
-  border: 1px solid rgba(30, 52, 72, 0.08);
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.035);
+}
 
-  /* Agregamos una sombra discreta. */
-  box-shadow: 0 8px 25px rgba(30, 52, 72, 0.055);
+.expense-chart-card--history {
+    grid-column: 1 / -1;
 }
 
 
 /* ========================================================= */
-/* ENCABEZADO */
+/* ENCABEZADO DE TARJETA */
 /* ========================================================= */
 
-/* Organizamos el encabezado de cada tarjeta. */
 .expense-chart-card__header {
-  /* Utilizamos Flexbox. */
-  display: flex;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 
-  /* Separamos ambos extremos. */
-  justify-content: space-between;
-
-  /* Alineamos los elementos al comienzo. */
-  align-items: flex-start;
-
-  /* Dejamos espacio entre elementos. */
-  gap: 20px;
-
-  /* Separamos el encabezado del gráfico. */
-  margin-bottom: 18px;
+    gap: 12px;
 }
 
+.expense-chart-card__eyebrow {
+    display: inline-flex;
+    align-items: center;
 
-/* Diseñamos el título. */
+    gap: 7px;
+
+    color: #2c8199;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
 .expense-chart-card__title {
-  /* Eliminamos márgenes predeterminados. */
-  margin: 0;
+    margin: 10px 0 7px;
 
-  /* Definimos un tamaño adecuado. */
-  font-size: 1.15rem;
+    color: #17384c;
 
-  /* Aumentamos el peso. */
-  font-weight: 700;
-
-  /* Utilizamos azul oscuro. */
-  color: #1e3448;
+    font-size: 16px;
+    font-weight: 800;
 }
 
-
-/* Diseñamos la descripción. */
 .expense-chart-card__description {
-  /* Dejamos separación con el título. */
-  margin: 7px 0 0;
+    margin: 0;
 
-  /* Limitamos el ancho. */
-  max-width: 520px;
+    color: #85939d;
 
-  /* Utilizamos un tamaño secundario. */
-  font-size: 0.88rem;
-
-  /* Mejoramos la lectura. */
-  line-height: 1.5;
-
-  /* Utilizamos un tono secundario. */
-  color: #7a8791;
-}
-
-
-/* Diseñamos la pequeña etiqueta informativa. */
-.expense-chart-card__badge {
-  /* Evitamos saltos de línea. */
-  white-space: nowrap;
-
-  /* Añadimos espacio interior. */
-  padding: 7px 11px;
-
-  /* Creamos bordes redondeados. */
-  border-radius: 20px;
-
-  /* Utilizamos un fondo dorado muy suave. */
-  background-color: #f4eee6;
-
-  /* Utilizamos un tono dorado oscuro. */
-  color: #967044;
-
-  /* Definimos un tamaño pequeño. */
-  font-size: 0.76rem;
-
-  /* Aumentamos el peso. */
-  font-weight: 600;
+    font-size: 11px;
+    line-height: 1.7;
 }
 
 
 /* ========================================================= */
-/* CONTENIDO DEL GRÁFICO */
+/* CONTENIDO DE GRÁFICOS */
 /* ========================================================= */
 
-/* Definimos el área donde se renderiza Recharts. */
 .expense-chart-card__content {
-  /* Ocupamos todo el ancho. */
-  width: 100%;
+    width: 100%;
+    min-width: 0;
 
-  /* Evitamos problemas dentro de Grid. */
-  min-width: 0;
+    margin-top: 20px;
 }
 
 
 /* ========================================================= */
-/* TOOLTIP */
+/* ESTADO SIN DATOS */
 /* ========================================================= */
 
-/* Diseñamos la pequeña tarjeta flotante
-   que aparece al posicionarse sobre los gráficos. */
+.expense-chart-card__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 260px;
+
+    padding: 24px;
+
+    color: #82939d;
+    background: #f8fafb;
+
+    border: 1px dashed #dce5eb;
+    border-radius: 12px;
+
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* TOOLTIPS */
+/* ========================================================= */
+
 .expense-chart-tooltip {
-  /* Organizamos la información verticalmente. */
-  display: flex;
+    display: flex;
+    flex-direction: column;
 
-  /* Colocamos los elementos uno debajo del otro. */
-  flex-direction: column;
+    gap: 5px;
 
-  /* Dejamos separación. */
-  gap: 4px;
+    padding: 11px 14px;
 
-  /* Añadimos espacio interior. */
-  padding: 10px 13px;
+    background: #ffffff;
 
-  /* Utilizamos fondo blanco. */
-  background-color: #ffffff;
+    border: 1px solid #e4ebef;
+    border-radius: 10px;
 
-  /* Creamos esquinas redondeadas. */
-  border-radius: 10px;
-
-  /* Añadimos un borde suave. */
-  border: 1px solid rgba(30, 52, 72, 0.1);
-
-  /* Añadimos sombra. */
-  box-shadow: 0 8px 22px rgba(30, 52, 72, 0.12);
+    box-shadow: 0 8px 25px rgba(23, 56, 76, 0.12);
 }
 
-
-/* Diseñamos la etiqueta del tooltip. */
 .expense-chart-tooltip__label {
-  /* Utilizamos tamaño pequeño. */
-  font-size: 0.76rem;
+    color: #738491;
 
-  /* Utilizamos un tono secundario. */
-  color: #7d8992;
+    font-size: 11px;
+    font-weight: 600;
 }
 
-
-/* Diseñamos el valor principal del tooltip. */
 .expense-chart-tooltip__value {
-  /* Definimos tamaño. */
-  font-size: 0.95rem;
+    color: #17384c;
 
-  /* Utilizamos azul principal. */
-  color: #1e3448;
+    font-size: 14px;
+    font-weight: 800;
 }
 
 
 /* ========================================================= */
-/* TABLETS */
+/* RESPONSIVE - TABLETS */
 /* ========================================================= */
 
-@media (max-width: 1050px) {
+@media (max-width: 900px) {
 
-  /* Colocamos los gráficos uno debajo del otro. */
-  .expense-charts {
-    grid-template-columns: 1fr;
-  }
+    .expense-charts__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .expense-chart-card--history {
+        grid-column: auto;
+    }
+
 }
 
 
 /* ========================================================= */
-/* TELÉFONOS */
+/* RESPONSIVE - MÓVILES */
 /* ========================================================= */
 
 @media (max-width: 600px) {
 
-  /* Reducimos el espacio superior. */
-  .expense-charts {
-    margin-top: 18px;
+    .expense-charts {
+        gap: 17px;
+    }
 
-    /* Reducimos la separación entre tarjetas. */
-    gap: 14px;
-  }
+    .expense-charts__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
+    .expense-charts__year-control {
+        width: 100%;
+        justify-content: space-between;
+    }
 
-  /* Reducimos el padding interior. */
-  .expense-chart-card {
-    padding: 20px 14px;
+    .expense-charts__period-summary {
+        gap: 18px;
 
-    /* Reducimos ligeramente el radio. */
-    border-radius: 18px;
-  }
+        padding: 16px;
+    }
 
+    .expense-charts__period-summary strong {
+        font-size: 17px;
+    }
 
-  /* Organizamos el encabezado verticalmente. */
-  .expense-chart-card__header {
-    flex-direction: column;
+    .expense-chart-card {
+        padding: 16px;
+    }
 
-    /* Reducimos la separación. */
-    gap: 10px;
+    .expense-charts__title {
+        font-size: 20px;
+    }
 
-    /* Dejamos un poco menos de margen inferior. */
-    margin-bottom: 12px;
-  }
-
-
-  /* Permitimos que la etiqueta se ajuste
-     al contenido en teléfonos. */
-  .expense-chart-card__badge {
-    align-self: flex-start;
-  }
-
-
-  /* Reducimos ligeramente el título. */
-  .expense-chart-card__title {
-    font-size: 1.05rem;
-  }
-
-
-  /* Reducimos ligeramente la descripción. */
-  .expense-chart-card__description {
-    font-size: 0.83rem;
-  }
 }
 
 
 /* ========================================================= */
-/* TELÉFONOS MUY PEQUEÑOS */
+/* ACCESIBILIDAD */
 /* ========================================================= */
 
-@media (max-width: 380px) {
+@media (prefers-reduced-motion: reduce) {
 
-  /* Reducimos todavía más el padding. */
-  .expense-chart-card {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+    .expense-charts *,
+    .expense-charts *::before,
+    .expense-charts *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+
 }

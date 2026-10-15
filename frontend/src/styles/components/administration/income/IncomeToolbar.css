@@ -1,0 +1,429 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.income-toolbar {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-toolbar__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+}
+
+.income-toolbar__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.income-toolbar__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.income-toolbar__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.income-toolbar__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* CONTADOR TOTAL */
+/* ========================================================= */
+
+.income-toolbar__total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 4px;
+
+    padding: 9px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 10px;
+}
+
+.income-toolbar__total span {
+    color: #8295a3;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.income-toolbar__total strong {
+    color: #17384c;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* PANEL DE FILTROS */
+/* ========================================================= */
+
+.income-toolbar__panel {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 15px rgba(23, 56, 76, 0.035);
+}
+
+
+/* ========================================================= */
+/* BUSCADOR */
+/* ========================================================= */
+
+.income-toolbar__search {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.income-toolbar__label {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.income-toolbar__input-wrapper {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 46px;
+    padding: 0 14px;
+
+    color: #8295a3;
+    background: #fbfcfd;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.income-toolbar__input-wrapper:focus-within {
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.1);
+}
+
+.income-toolbar__input-wrapper input {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 44px;
+
+    color: #17384c;
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    font-size: 12px;
+}
+
+.income-toolbar__input-wrapper input::placeholder {
+    color: #a0b0bb;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE FILTROS */
+/* ========================================================= */
+
+.income-toolbar__filters-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.income-toolbar__field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+
+    min-width: 0;
+}
+
+.income-toolbar__field select,
+.income-toolbar__field input[type="date"] {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    color: #17384c;
+    background: #fbfcfd;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.income-toolbar__field select:focus,
+.income-toolbar__field input[type="date"]:focus {
+    outline: none;
+
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.1);
+}
+
+
+/* ========================================================= */
+/* RANGO DE FECHAS */
+/* ========================================================= */
+
+.income-toolbar__date-range {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+
+    padding: 17px;
+
+    background: #f7fafb;
+
+    border: 1px solid #e8eff2;
+    border-radius: 12px;
+}
+
+
+/* ========================================================= */
+/* PIE DEL PANEL */
+/* ========================================================= */
+
+.income-toolbar__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #edf1f3;
+}
+
+
+/* ========================================================= */
+/* RESULTADOS */
+/* ========================================================= */
+
+.income-toolbar__results {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #8295a3;
+
+    font-size: 12px;
+}
+
+.income-toolbar__results strong {
+    color: #2c8199;
+
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* BOTÓN LIMPIAR */
+/* ========================================================= */
+
+.income-toolbar__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 37px;
+    padding: 0 13px;
+
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.income-toolbar__clear:hover:not(:disabled) {
+    color: #2c8199;
+    background: #eaf5f8;
+    border-color: #b9dce5;
+}
+
+.income-toolbar__clear:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.income-toolbar__clear:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - PANTALLAS MEDIANAS */
+/* ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .income-toolbar__filters-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .income-toolbar__panel {
+        padding: 19px;
+    }
+
+    .income-toolbar__heading h2 {
+        font-size: 17px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 540px) {
+
+    .income-toolbar {
+        gap: 15px;
+    }
+
+    .income-toolbar__filters-grid,
+    .income-toolbar__date-range {
+        grid-template-columns: 1fr;
+    }
+
+    .income-toolbar__panel {
+        padding: 16px;
+        gap: 17px;
+    }
+
+    .income-toolbar__heading {
+        align-items: flex-start;
+    }
+
+    .income-toolbar__total {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .income-toolbar__footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .income-toolbar__clear {
+        width: 100%;
+    }
+}

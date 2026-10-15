@@ -1,0 +1,478 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.income-dashboard {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-dashboard__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 16px;
+}
+
+.income-dashboard__heading {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.income-dashboard__heading-icon {
+    display: grid;
+    place-items: center;
+
+    width: 44px;
+    height: 44px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.income-dashboard__heading h2 {
+    margin: 0 0 5px;
+
+    color: #17384c;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.income-dashboard__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+}
+
+
+/* ========================================================= */
+/* FILTRO DE AÑO */
+/* ========================================================= */
+
+.income-dashboard__year-filter {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 12px;
+
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+}
+
+.income-dashboard__year-filter label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.income-dashboard__year-filter select {
+    min-width: 75px;
+
+    color: #17384c;
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
+
+.income-dashboard__monthly-card,
+.income-dashboard__distribution-card {
+    min-width: 0;
+
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 15px rgba(23, 56, 76, 0.035);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADOS DE TARJETAS */
+/* ========================================================= */
+
+.income-dashboard__card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.income-dashboard__card-header h3 {
+    margin: 0 0 6px;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.income-dashboard__card-header p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.income-dashboard__card-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 11px;
+}
+
+
+/* ========================================================= */
+/* TOTAL ANUAL */
+/* ========================================================= */
+
+.income-dashboard__monthly-total {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-top: 22px;
+}
+
+.income-dashboard__monthly-total span {
+    color: #8295a3;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.income-dashboard__monthly-total strong {
+    color: #17384c;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ========================================================= */
+/* GRÁFICO DE BARRAS */
+/* ========================================================= */
+
+.income-dashboard__bar-chart {
+    width: 100%;
+    height: 310px;
+
+    margin-top: 23px;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE DISTRIBUCIÓN */
+/* ========================================================= */
+
+.income-dashboard__distribution-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ========================================================= */
+/* GRÁFICOS CIRCULARES */
+/* ========================================================= */
+
+.income-dashboard__pie-chart {
+    position: relative;
+
+    width: 100%;
+    height: 255px;
+
+    margin: 10px 0;
+}
+
+.income-dashboard__pie-center {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 5px;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+.income-dashboard__pie-center span {
+    color: #8295a3;
+
+    font-size: 11px;
+}
+
+.income-dashboard__pie-center strong {
+    color: #17384c;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* ========================================================= */
+/* LEYENDAS */
+/* ========================================================= */
+
+.income-dashboard__legend {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #edf1f3;
+}
+
+.income-dashboard__legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.income-dashboard__legend-name {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 0;
+
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.income-dashboard__legend-dot {
+    flex-shrink: 0;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+}
+
+.income-dashboard__legend-values {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    white-space: nowrap;
+}
+
+.income-dashboard__legend-values strong {
+    color: #17384c;
+
+    font-size: 11px;
+}
+
+.income-dashboard__legend-values span {
+    color: #8295a3;
+
+    font-size: 10px;
+}
+
+
+/* ========================================================= */
+/* TOOLTIP */
+/* ========================================================= */
+
+.income-dashboard__tooltip {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 11px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2ebef;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 24px rgba(23, 56, 76, 0.12);
+}
+
+.income-dashboard__tooltip strong {
+    color: #17384c;
+
+    font-size: 12px;
+}
+
+.income-dashboard__tooltip span {
+    color: #2c8199;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.income-dashboard__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    min-height: 240px;
+
+    color: #9aabb6;
+
+    text-align: center;
+}
+
+.income-dashboard__empty p {
+    max-width: 280px;
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.income-dashboard__year-filter:focus-within {
+    outline: 3px solid #b9dce5;
+    outline-offset: 2px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .income-dashboard__distribution-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .income-dashboard__monthly-card,
+    .income-dashboard__distribution-card {
+        padding: 20px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-dashboard {
+        gap: 15px;
+    }
+
+    .income-dashboard__header {
+        align-items: flex-start;
+    }
+
+    .income-dashboard__heading h2 {
+        font-size: 17px;
+    }
+
+    .income-dashboard__year-filter {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .income-dashboard__monthly-card,
+    .income-dashboard__distribution-card {
+        padding: 16px;
+    }
+
+    .income-dashboard__bar-chart {
+        height: 260px;
+    }
+
+    .income-dashboard__monthly-total strong {
+        font-size: 22px;
+    }
+
+    .income-dashboard__legend-item {
+        align-items: flex-start;
+    }
+
+    .income-dashboard__legend-values {
+        flex-direction: column;
+        align-items: flex-end;
+
+        gap: 4px;
+    }
+}

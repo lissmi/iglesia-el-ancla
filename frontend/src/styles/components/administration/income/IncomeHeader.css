@@ -1,0 +1,227 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.income-header {
+    display: flex;
+    flex-direction: column;
+
+    gap: 23px;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* BOTÓN VOLVER */
+/* ========================================================= */
+
+.income-header__back {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 9px 14px;
+
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.income-header__back:hover {
+    color: #2c8199;
+    background: #eaf5f8;
+    border-color: #b9dce5;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO PRINCIPAL */
+/* ========================================================= */
+
+.income-header__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.income-header__information {
+    flex: 1;
+    min-width: 0;
+}
+
+.income-header__eyebrow {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 11px;
+
+    color: #2c8199;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.income-header__information h1 {
+    margin: 0 0 10px;
+
+    color: #17384c;
+
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.income-header__information p {
+    max-width: 650px;
+    margin: 0;
+
+    color: #607a90;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.income-header__actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+
+/* ========================================================= */
+/* BOTÓN REGISTRAR INGRESO */
+/* ========================================================= */
+
+.income-header__create {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 46px;
+    padding: 0 19px;
+
+    color: #ffffff;
+    background: #2c8199;
+
+    border: 1px solid #2c8199;
+    border-radius: 11px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(44, 129, 153, 0.14);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.income-header__create:hover:not(:disabled) {
+    background: #236d83;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 7px 18px rgba(44, 129, 153, 0.2);
+}
+
+.income-header__create:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.income-header button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .income-header__main {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .income-header__information h1 {
+        font-size: 26px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-header {
+        gap: 19px;
+    }
+
+    .income-header__information h1 {
+        font-size: 23px;
+    }
+
+    .income-header__information p {
+        font-size: 12px;
+    }
+
+    .income-header__actions {
+        width: 100%;
+    }
+
+    .income-header__create {
+        width: 100%;
+    }
+}

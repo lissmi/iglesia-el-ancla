@@ -29,6 +29,10 @@ function ExpenseNavigation({
       label: "Análisis",
     },
     {
+      id: "categories",
+      label: "Categorías",
+    },
+    {
       // Identificador interno.
       id: "upcoming",
 
@@ -59,11 +63,10 @@ function ExpenseNavigation({
         <button
           key={item.id}
           type="button"
-          className={`expense-navigation__button ${
-            activeSection === item.id
+          className={`expense-navigation__button ${activeSection === item.id
               ? "expense-navigation__button--active"
               : ""
-          }`}
+            }`}
           onClick={() =>
             onSectionChange(item.id)
           }

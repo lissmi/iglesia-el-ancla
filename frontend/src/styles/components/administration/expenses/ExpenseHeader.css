@@ -1,111 +1,117 @@
 /* ========================================================= */
-/* ENCABEZADO */
+/* ENCABEZADO PRINCIPAL */
 /* ========================================================= */
 
-/* Creamos el bloque principal del encabezado. */
 .expense-header {
-  /* Organizamos el contenido y el botón horizontalmente. */
-  display: flex;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 
-  /* Dejamos el contenido principal a la izquierda
-     y las acciones a la derecha. */
-  justify-content: space-between;
+    gap: 24px;
 
-  /* Centramos verticalmente ambos bloques. */
-  align-items: center;
-
-  /* Permitimos separación cuando el espacio se reduzca. */
-  gap: 32px;
-
-  /* Añadimos espacio interno. */
-  padding: 32px 36px;
-
-  /* Fondo blanco para diferenciar el encabezado. */
-  background-color: #ffffff;
-
-  /* Creamos esquinas suaves. */
-  border-radius: 22px;
-
-  /* Añadimos un borde discreto. */
-  border: 1px solid rgba(30, 52, 72, 0.08);
-
-  /* Agregamos una sombra muy suave. */
-  box-shadow: 0 10px 30px rgba(30, 52, 72, 0.07);
+    width: 100%;
 }
 
 
 /* ========================================================= */
-/* CONTENIDO DEL ENCABEZADO */
+/* CONTENIDO */
 /* ========================================================= */
 
-/* Limitamos el ancho del texto. */
 .expense-header__content {
-  max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    min-width: 0;
 }
 
 
-/* Diseñamos la pequeña etiqueta superior. */
+/* ========================================================= */
+/* BOTÓN VOLVER */
+/* ========================================================= */
+
+.expense-header__back {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 14px;
+    padding: 8px 12px;
+
+    color: #526b79;
+    background: #ffffff;
+
+    border: 1px solid #e2eaf0;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.expense-header__back:hover {
+    color: #2c8199;
+    background: #f0f8fa;
+    border-color: #bddce5;
+}
+
+
+/* ========================================================= */
+/* ETIQUETA SUPERIOR */
+/* ========================================================= */
+
 .expense-header__eyebrow {
-  /* Convertimos el elemento en bloque
-     para poder manejar correctamente los espacios. */
-  display: inline-block;
+    display: inline-flex;
+    align-items: center;
 
-  /* Dejamos espacio debajo de la etiqueta. */
-  margin-bottom: 8px;
+    gap: 7px;
 
-  /* Utilizamos un tamaño pequeño. */
-  font-size: 0.82rem;
+    color: #2c8199;
 
-  /* Aumentamos el peso visual. */
-  font-weight: 700;
-
-  /* Separamos ligeramente las letras. */
-  letter-spacing: 0.07em;
-
-  /* Convertimos el texto visualmente a mayúsculas. */
-  text-transform: uppercase;
-
-  /* Utilizamos el tono dorado de la identidad visual. */
-  color: #a77b48;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
 }
 
 
-/* Diseñamos el título principal. */
+/* ========================================================= */
+/* TÍTULO */
+/* ========================================================= */
+
 .expense-header__title {
-  /* Eliminamos márgenes predeterminados. */
-  margin: 0;
+    margin: 0;
 
-  /* Utilizamos un tamaño destacado pero no exagerado. */
-  font-size: clamp(2rem, 4vw, 3rem);
+    color: #17384c;
 
-  /* Aumentamos el peso del título. */
-  font-weight: 700;
-
-  /* Reducimos ligeramente el espacio vertical
-     entre las líneas. */
-  line-height: 1.1;
-
-  /* Utilizamos azul oscuro. */
-  color: #1e3448;
+    font-size: clamp(26px, 3vw, 35px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.7px;
 }
 
 
-/* Diseñamos la descripción del módulo. */
+/* ========================================================= */
+/* DESCRIPCIÓN */
+/* ========================================================= */
+
 .expense-header__description {
-  /* Dejamos separación con respecto al título. */
-  margin: 14px 0 0;
+    max-width: 690px;
 
-  /* Limitamos el ancho para facilitar la lectura. */
-  max-width: 680px;
+    margin: 0;
 
-  /* Utilizamos un tamaño cómodo. */
-  font-size: 1rem;
+    color: #748591;
 
-  /* Definimos una altura de línea agradable. */
-  line-height: 1.65;
-
-  /* Utilizamos un tono secundario. */
-  color: #667581;
+    font-size: 13px;
+    line-height: 1.8;
 }
 
 
@@ -113,131 +119,100 @@
 /* ACCIONES */
 /* ========================================================= */
 
-/* Evitamos que el botón se comprima demasiado. */
 .expense-header__actions {
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
 }
 
 
-/* Diseñamos el botón para registrar nuevos gastos. */
+/* ========================================================= */
+/* BOTÓN REGISTRAR GASTO */
+/* ========================================================= */
+
 .expense-header__add-button {
-  /* Eliminamos el borde predeterminado. */
-  border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  /* Creamos espacio interno. */
-  padding: 14px 22px;
+    gap: 9px;
 
-  /* Suavizamos las esquinas. */
-  border-radius: 12px;
+    min-height: 46px;
 
-  /* Utilizamos el azul principal. */
-  background-color: #1e3448;
+    padding: 12px 20px;
 
-  /* Texto blanco. */
-  color: #ffffff;
+    color: #ffffff;
+    background: #2c8199;
 
-  /* Tamaño legible. */
-  font-size: 0.95rem;
+    border: none;
+    border-radius: 11px;
 
-  /* Destacamos el texto. */
-  font-weight: 600;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
 
-  /* Mostramos cursor interactivo. */
-  cursor: pointer;
+    cursor: pointer;
 
-  /* Evitamos saltos de línea dentro del botón. */
-  white-space: nowrap;
+    box-shadow: 0 5px 15px rgba(44, 129, 153, 0.16);
 
-  /* Añadimos una transición suave. */
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-
-/* Añadimos interacción al pasar el mouse. */
 .expense-header__add-button:hover {
-  /* Oscurecemos ligeramente el botón. */
-  background-color: #152b3e;
+    background: #216b80;
 
-  /* Elevamos visualmente el elemento. */
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 
-  /* Añadimos sombra. */
-  box-shadow: 0 8px 18px rgba(30, 52, 72, 0.18);
+    box-shadow: 0 8px 20px rgba(44, 129, 153, 0.22);
 }
 
-
-/* Evitamos el desplazamiento cuando se presiona. */
 .expense-header__add-button:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
-
-/* Mostramos claramente el foco al navegar con teclado. */
-.expense-header__add-button:focus-visible {
-  outline: 3px solid rgba(197, 154, 103, 0.4);
-  outline-offset: 3px;
-}
-
-
-/* ========================================================= */
-/* TABLETS */
-/* ========================================================= */
-
-@media (max-width: 900px) {
-
-  /* Cambiamos el encabezado a formato vertical. */
-  .expense-header {
-    flex-direction: column;
-
-    /* Alineamos todo hacia la izquierda. */
-    align-items: flex-start;
-
-    /* Reducimos el espacio interno. */
-    padding: 28px;
-  }
-
-
-  /* El área de acciones ocupará todo el ancho. */
-  .expense-header__actions {
-    width: 100%;
-  }
-
-
-  /* Permitimos que el botón sea más cómodo
-     en pantallas táctiles. */
-  .expense-header__add-button {
-    width: 100%;
-  }
+.expense-header__add-button:focus-visible,
+.expense-header__back:focus-visible {
+    outline: 3px solid #80c9dd;
+    outline-offset: 3px;
 }
 
 
 /* ========================================================= */
-/* TELÉFONOS */
+/* RESPONSIVE */
 /* ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
 
-  /* Reducimos el tamaño de la tarjeta principal. */
-  .expense-header {
-    gap: 22px;
-    padding: 24px 20px;
-    border-radius: 18px;
-  }
+    .expense-header {
+        flex-direction: column;
+        align-items: stretch;
 
+        gap: 20px;
+    }
 
-  /* Reducimos ligeramente la descripción. */
-  .expense-header__description {
-    font-size: 0.94rem;
-    line-height: 1.55;
-  }
+    .expense-header__actions {
+        width: 100%;
+    }
 
+    .expense-header__add-button {
+        width: 100%;
+    }
 
-  /* Ajustamos el botón para interacción táctil. */
-  .expense-header__add-button {
-    min-height: 48px;
-    padding: 13px 18px;
-  }
+    .expense-header__description {
+        font-size: 12px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .expense-header__back,
+    .expense-header__add-button {
+        transition: none;
+    }
+
 }

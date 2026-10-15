@@ -1,0 +1,421 @@
+
+/* ========================================================= */
+/* FONDO Y VENTANA */
+/* ========================================================= */
+
+.resource-form-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 35, 48, 0.68);
+    backdrop-filter: blur(4px);
+}
+
+.resource-form-modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 760px;
+    max-height: calc(100dvh - 48px);
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #dce7ec;
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.28);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.resource-form-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 25px 30px;
+    background: #f5fafb;
+    border-bottom: 1px solid #e1e9ee;
+}
+
+.resource-form-modal__heading span {
+    display: block;
+    margin-bottom: 8px;
+    color: #b28461;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.resource-form-modal__heading h2 {
+    margin: 0 0 8px;
+    color: #17384c;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.resource-form-modal__heading p {
+    margin: 0;
+    color: #71899a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.resource-form-modal__close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    color: #607a90;
+    background: #ffffff;
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.resource-form-modal__form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+}
+
+.resource-form-modal__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 26px 30px;
+}
+
+.resource-form-modal__section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 4px 0 18px;
+    padding-bottom: 11px;
+    color: #254d61;
+    border-bottom: 1px solid #e7edf0;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.resource-form-modal__section-title:not(:first-child) {
+    margin-top: 27px;
+}
+
+.resource-form-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.resource-form-modal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    margin-bottom: 17px;
+}
+
+.resource-form-modal__field label {
+    color: #35566a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.resource-form-modal__field input,
+.resource-form-modal__field select,
+.resource-form-modal__field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    color: #17384c;
+    background: #ffffff;
+    border: 1px solid #dce6eb;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 12px;
+}
+
+.resource-form-modal__field input,
+.resource-form-modal__field select {
+    min-height: 43px;
+}
+
+.resource-form-modal__field textarea {
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.resource-form-modal__field input:focus,
+.resource-form-modal__field select:focus,
+.resource-form-modal__field textarea:focus {
+    outline: none;
+    border-color: #69a9bc;
+    box-shadow: 0 0 0 3px rgba(74, 153, 177, 0.12);
+}
+
+.resource-form-modal__field [aria-invalid="true"] {
+    border-color: #c66c65;
+}
+
+.resource-form-modal__error {
+    color: #b34e46;
+    font-size: 11px;
+}
+
+.resource-form-modal__hint {
+    color: #91a2b0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.resource-form-modal__file-name {
+    color: #397e93;
+    font-size: 11px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* ========================================================= */
+/* PIE Y BOTONES */
+/* ========================================================= */
+
+.resource-form-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 11px;
+    padding: 18px 30px;
+    background: #ffffff;
+    border-top: 1px solid #e5edf0;
+}
+
+.resource-form-modal__footer button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 43px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.resource-form-modal__cancel {
+    color: #547083;
+    background: #ffffff;
+    border: 1px solid #dce6eb;
+}
+
+.resource-form-modal__save {
+    color: #ffffff;
+    background: #244d62;
+    border: 1px solid #244d62;
+}
+
+.resource-form-modal__save:hover {
+    background: #193b4e;
+}
+
+.resource-form-modal button:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+    .resource-form-modal__overlay {
+        padding: 10px;
+    }
+
+    .resource-form-modal {
+        max-height: calc(100dvh - 20px);
+        border-radius: 15px;
+    }
+
+    .resource-form-modal__header,
+    .resource-form-modal__body,
+    .resource-form-modal__footer {
+        padding: 18px;
+    }
+
+    .resource-form-modal__heading h2 {
+        font-size: 20px;
+    }
+
+    .resource-form-modal__grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .resource-form-modal__footer {
+        justify-content: stretch;
+    }
+
+    .resource-form-modal__footer button {
+        flex: 1;
+    }
+}
+
+
+/* ========================================================= */
+/* CARGA PERSONALIZADA DE ARCHIVOS */
+/* ========================================================= */
+
+.resource-form-modal__upload {
+    position: relative;
+    width: 100%;
+}
+
+/* Ocultar visualmente el input nativo,
+   manteniéndolo accesible. */
+
+.resource-form-modal__file-input {
+    position: absolute;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    padding: 0 !important;
+    margin: 0;
+
+    opacity: 0;
+    overflow: hidden;
+}
+
+/* ========================================================= */
+/* ÁREA DE SELECCIÓN */
+/* ========================================================= */
+
+.resource-form-modal__upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    width: 100%;
+    min-height: 205px;
+    padding: 23px;
+
+    background: #f6fafb;
+
+    border: 2px dashed #c8dce5;
+    border-radius: 14px;
+
+    text-align: center;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.resource-form-modal__upload-area:hover {
+    background: #edf7fa;
+    border-color: #6faabc;
+}
+
+.resource-form-modal__file-input:focus-visible
++ .resource-form-modal__upload-area {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.resource-form-modal__upload-icon {
+    display: grid;
+    place-items: center;
+
+    width: 53px;
+    height: 53px;
+
+    color: #397e93;
+    background: #e4f1f5;
+
+    border-radius: 14px;
+}
+
+/* ========================================================= */
+/* TEXTOS */
+/* ========================================================= */
+
+.resource-form-modal__upload-area strong {
+    color: #24475b;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.resource-form-modal__upload-area > span:not(
+    .resource-form-modal__upload-button
+) {
+    max-width: 100%;
+
+    color: #71899a;
+    font-size: 12px;
+    font-weight: 400;
+
+    overflow-wrap: anywhere;
+}
+
+.resource-form-modal__upload-area small {
+    color: #91a2b0;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* ========================================================= */
+/* BOTÓN VISUAL */
+/* ========================================================= */
+
+.resource-form-modal__upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 11px 17px;
+
+    color: #ffffff !important;
+    background: #244d62;
+
+    border-radius: 10px;
+
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.resource-form-modal__upload-area:hover
+.resource-form-modal__upload-button {
+    background: #193b4e;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .resource-form-modal__upload-area {
+        min-height: 185px;
+        padding: 18px;
+    }
+}

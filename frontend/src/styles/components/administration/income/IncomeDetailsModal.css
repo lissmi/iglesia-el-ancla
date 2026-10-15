@@ -1,0 +1,609 @@
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.income-details-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.65);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.income-details-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 720px;
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eff2;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.3);
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.income-details-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 26px 28px;
+
+    border-bottom: 1px solid #e8eff2;
+}
+
+.income-details-modal__heading {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+}
+
+.income-details-modal__heading-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 47px;
+    height: 47px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 13px;
+}
+
+.income-details-modal__eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #2c8199;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.income-details-modal__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.income-details-modal__heading p {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* BOTÓN CERRAR */
+/* ========================================================= */
+
+.income-details-modal__close {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    color: #607a90;
+    background: #f1f5f7;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.income-details-modal__close:hover {
+    color: #b14d4d;
+    background: #fceeee;
+}
+
+
+/* ========================================================= */
+/* CUERPO DEL MODAL */
+/* ========================================================= */
+
+.income-details-modal__body {
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+
+    padding: 25px 28px;
+}
+
+
+/* ========================================================= */
+/* RESUMEN FINANCIERO */
+/* ========================================================= */
+
+.income-details-modal__summary {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    background: #f5fafb;
+
+    border: 1px solid #dcecf0;
+    border-radius: 15px;
+}
+
+.income-details-modal__summary-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+}
+
+.income-details-modal__summary-identity {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.income-details-modal__summary-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 43px;
+    height: 43px;
+
+    color: #2c8199;
+    background: #e1f1f5;
+
+    border-radius: 12px;
+}
+
+.income-details-modal__summary-identity span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8295a3;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.income-details-modal__summary-identity h3 {
+    margin: 0 0 6px;
+
+    color: #17384c;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+.income-details-modal__summary-identity small {
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ========================================================= */
+/* ESTADOS */
+/* ========================================================= */
+
+.income-details-modal__status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.income-details-modal__status--received {
+    color: #278368;
+    background: #e2f5eb;
+}
+
+.income-details-modal__status--pending {
+    color: #a87524;
+    background: #fff1d9;
+}
+
+.income-details-modal__status--cancelled {
+    color: #b14d4d;
+    background: #fce7e7;
+}
+
+
+/* ========================================================= */
+/* MONTO */
+/* ========================================================= */
+
+.income-details-modal__summary-amount {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #dcecf0;
+}
+
+.income-details-modal__summary-amount span {
+    color: #607a90;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.income-details-modal__summary-amount strong {
+    color: #278368;
+
+    font-size: 33px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+
+    overflow-wrap: anywhere;
+}
+
+.income-details-modal__status-description {
+    margin: 0;
+
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.income-details-modal__section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+.income-details-modal__section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #2c8199;
+}
+
+.income-details-modal__section-heading h3 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+/* ========================================================= */
+/* CUADRÍCULA DE DETALLES */
+/* ========================================================= */
+
+.income-details-modal__details-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+.income-details-modal__detail {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    min-width: 0;
+    padding: 14px;
+
+    background: #fbfcfd;
+
+    border: 1px solid #edf1f3;
+    border-radius: 11px;
+}
+
+.income-details-modal__detail-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    color: #607a90;
+    background: #edf3f6;
+
+    border-radius: 9px;
+}
+
+.income-details-modal__detail-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.income-details-modal__detail-content span {
+    color: #8295a3;
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.income-details-modal__detail-content strong {
+    color: #17384c;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* OBSERVACIONES */
+/* ========================================================= */
+
+.income-details-modal__notes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 16px;
+
+    background: #fbfcfd;
+
+    border: 1px solid #edf1f3;
+    border-radius: 11px;
+}
+
+.income-details-modal__notes-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: #607a90;
+}
+
+.income-details-modal__notes-heading span {
+    color: #17384c;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.income-details-modal__notes p {
+    margin: 0;
+
+    color: #607a90;
+
+    font-size: 12px;
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================================= */
+/* PIE DEL MODAL */
+/* ========================================================= */
+
+.income-details-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding: 20px 28px;
+
+    border-top: 1px solid #e8eff2;
+}
+
+.income-details-modal__cancel,
+.income-details-modal__edit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 42px;
+    padding: 0 17px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.income-details-modal__cancel {
+    color: #607a90;
+    background: #ffffff;
+
+    border: 1px solid #dce7ec;
+}
+
+.income-details-modal__cancel:hover {
+    background: #f1f5f7;
+}
+
+.income-details-modal__edit {
+    color: #ffffff;
+    background: #2c8199;
+
+    border: 1px solid #2c8199;
+}
+
+.income-details-modal__edit:hover {
+    background: #236d83;
+}
+
+.income-details-modal__close:focus-visible,
+.income-details-modal__cancel:focus-visible,
+.income-details-modal__edit:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .income-details-modal__overlay {
+        padding: 15px;
+    }
+
+    .income-details-modal {
+        max-height: calc(100vh - 30px);
+    }
+
+    .income-details-modal__header,
+    .income-details-modal__body,
+    .income-details-modal__footer {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .income-details-modal__overlay {
+        padding: 10px;
+    }
+
+    .income-details-modal {
+        max-height: calc(100vh - 20px);
+
+        border-radius: 15px;
+    }
+
+    .income-details-modal__header,
+    .income-details-modal__body,
+    .income-details-modal__footer {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .income-details-modal__heading-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .income-details-modal__heading h2 {
+        font-size: 19px;
+    }
+
+    .income-details-modal__summary {
+        padding: 17px;
+    }
+
+    .income-details-modal__summary-amount strong {
+        font-size: 27px;
+    }
+
+    .income-details-modal__details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .income-details-modal__footer {
+        flex-direction: column-reverse;
+    }
+
+    .income-details-modal__cancel,
+    .income-details-modal__edit {
+        width: 100%;
+    }
+}

@@ -2,25 +2,14 @@
 /* CONTENEDOR PRINCIPAL */
 /* ========================================================= */
 
-/* Creamos la tarjeta principal de gastos próximos. */
 .upcoming-expenses {
-  /* Separamos la sección de los gráficos anteriores. */
-  margin-top: 24px;
+    display: flex;
+    flex-direction: column;
 
-  /* Añadimos espacio interior. */
-  padding: 28px;
+    gap: 22px;
 
-  /* Utilizamos fondo blanco. */
-  background-color: #ffffff;
-
-  /* Creamos esquinas redondeadas. */
-  border-radius: 20px;
-
-  /* Añadimos un borde suave. */
-  border: 1px solid rgba(30, 52, 72, 0.08);
-
-  /* Utilizamos una sombra discreta. */
-  box-shadow: 0 8px 25px rgba(30, 52, 72, 0.055);
+    width: 100%;
+    min-width: 0;
 }
 
 
@@ -28,97 +17,210 @@
 /* ENCABEZADO */
 /* ========================================================= */
 
-/* Organizamos el encabezado de la sección. */
 .upcoming-expenses__header {
-  /* Utilizamos Flexbox. */
-  display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  /* Distribuimos los elementos en extremos opuestos. */
-  justify-content: space-between;
-
-  /* Centramos verticalmente. */
-  align-items: center;
-
-  /* Dejamos separación. */
-  gap: 24px;
-
-  /* Separamos el encabezado del listado. */
-  margin-bottom: 22px;
+    gap: 20px;
 }
 
+.upcoming-expenses__eyebrow {
+    color: #2c8199;
 
-/* Diseñamos el título principal. */
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
 .upcoming-expenses__title {
-  /* Eliminamos márgenes predeterminados. */
-  margin: 0;
+    margin: 8px 0 7px;
 
-  /* Definimos tamaño. */
-  font-size: 1.2rem;
+    color: #17384c;
 
-  /* Aumentamos el peso. */
-  font-weight: 700;
-
-  /* Utilizamos azul oscuro. */
-  color: #1e3448;
+    font-size: 22px;
+    font-weight: 800;
 }
 
-
-/* Diseñamos la descripción. */
 .upcoming-expenses__description {
-  /* Dejamos espacio con respecto al título. */
-  margin: 7px 0 0;
+    margin: 0;
 
-  /* Tamaño secundario. */
-  font-size: 0.88rem;
+    color: #748591;
 
-  /* Mejoramos la lectura. */
-  line-height: 1.5;
-
-  /* Utilizamos color secundario. */
-  color: #7a8791;
+    font-size: 12px;
+    line-height: 1.7;
 }
 
 
 /* ========================================================= */
-/* TOTAL COMPROMETIDO */
+/* CUADRÍCULA DE INDICADORES */
 /* ========================================================= */
 
-/* Organizamos el total verticalmente. */
-.upcoming-expenses__total {
-  /* Utilizamos Flexbox. */
-  display: flex;
+.upcoming-expenses__summary {
+    display: grid;
 
-  /* Colocamos sus elementos verticalmente. */
-  flex-direction: column;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
-  /* Alineamos hacia la derecha en escritorio. */
-  align-items: flex-end;
-
-  /* Evitamos que se comprima. */
-  flex-shrink: 0;
+    gap: 16px;
 }
 
 
-/* Diseñamos la etiqueta. */
-.upcoming-expenses__total-label {
-  /* Tamaño pequeño. */
-  font-size: 0.76rem;
+/* ========================================================= */
+/* TARJETAS */
+/* ========================================================= */
 
-  /* Color secundario. */
-  color: #7b8790;
+.upcoming-expenses__summary-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    min-width: 0;
+    min-height: 158px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef2;
+    border-radius: 15px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.035);
+}
+
+.upcoming-expenses__summary-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.upcoming-expenses__summary-top > span {
+    color: #738491;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.upcoming-expenses__summary-icon {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 11px;
+}
+
+.upcoming-expenses__summary-card--primary
+.upcoming-expenses__summary-icon {
+    color: #2c8199;
+    background: #e9f5f8;
+}
+
+.upcoming-expenses__summary-card--info
+.upcoming-expenses__summary-icon {
+    color: #4e8cb7;
+    background: #edf5fb;
+}
+
+.upcoming-expenses__summary-card--warning
+.upcoming-expenses__summary-icon {
+    color: #b87940;
+    background: #fff3e5;
+}
+
+.upcoming-expenses__summary-card--purple
+.upcoming-expenses__summary-icon {
+    color: #8b83b7;
+    background: #f2f0fa;
+}
+
+.upcoming-expenses__summary-value {
+    color: #17384c;
+
+    font-size: clamp(19px, 2vw, 26px);
+    font-weight: 800;
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.upcoming-expenses__summary-description {
+    margin: auto 0 0;
+
+    color: #8b99a3;
+
+    font-size: 11px;
+    line-height: 1.6;
 }
 
 
-/* Diseñamos el monto total. */
-.upcoming-expenses__total-value {
-  /* Dejamos un pequeño espacio superior. */
-  margin-top: 3px;
+/* ========================================================= */
+/* PANEL PRINCIPAL */
+/* ========================================================= */
 
-  /* Tamaño destacado. */
-  font-size: 1.3rem;
+.upcoming-expenses__panel {
+    min-width: 0;
 
-  /* Utilizamos azul oscuro. */
-  color: #1e3448;
+    padding: 23px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef2;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.035);
+}
+
+.upcoming-expenses__panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #edf1f4;
+}
+
+.upcoming-expenses__panel-header h3 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.upcoming-expenses__panel-header p {
+    margin: 0;
+
+    color: #85939d;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.upcoming-expenses__count {
+    flex-shrink: 0;
+
+    padding: 7px 11px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 800;
 }
 
 
@@ -126,64 +228,33 @@
 /* LISTADO */
 /* ========================================================= */
 
-/* Organizamos las filas verticalmente. */
 .upcoming-expenses__list {
-  /* Utilizamos Flexbox. */
-  display: flex;
-
-  /* Colocamos los elementos uno debajo del otro. */
-  flex-direction: column;
-
-  /* Dejamos separación entre filas. */
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
-
-/* Diseñamos cada gasto pendiente. */
 .upcoming-expenses__item {
-  /* Utilizamos Grid para organizar las columnas. */
-  display: grid;
+    display: grid;
 
-  /* Definimos las columnas principales. */
-  grid-template-columns:
-    minmax(240px, 1.7fr)
-    minmax(120px, 0.8fr)
-    minmax(140px, 0.9fr)
-    100px
-    minmax(110px, 0.7fr);
+    grid-template-columns:
+        minmax(170px, 1.6fr)
+        minmax(100px, 0.8fr)
+        minmax(125px, 1fr)
+        minmax(110px, 0.9fr)
+        auto;
 
-  /* Centramos verticalmente. */
-  align-items: center;
+    align-items: center;
 
-  /* Dejamos separación entre columnas. */
-  gap: 18px;
+    gap: 17px;
 
-  /* Añadimos espacio interior. */
-  padding: 17px 18px;
+    padding: 20px 0;
 
-  /* Utilizamos un fondo ligeramente diferente. */
-  background-color: #faf9f7;
-
-  /* Creamos esquinas suaves. */
-  border-radius: 14px;
-
-  /* Añadimos un borde muy ligero. */
-  border: 1px solid rgba(30, 52, 72, 0.06);
-
-  /* Añadimos una transición sencilla. */
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+    border-bottom: 1px solid #edf1f4;
 }
 
-
-/* Añadimos una pequeña respuesta visual. */
-.upcoming-expenses__item:hover {
-  /* Cambiamos ligeramente el fondo. */
-  background-color: #f7f4ef;
-
-  /* Destacamos un poco más el borde. */
-  border-color: rgba(167, 123, 72, 0.18);
+.upcoming-expenses__item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
 
@@ -191,162 +262,124 @@
 /* INFORMACIÓN PRINCIPAL */
 /* ========================================================= */
 
-/* Organizamos el icono y la información principal. */
 .upcoming-expenses__main {
-  /* Utilizamos Flexbox. */
-  display: flex;
+    display: flex;
+    align-items: center;
 
-  /* Centramos verticalmente. */
-  align-items: center;
+    gap: 12px;
 
-  /* Dejamos separación. */
-  gap: 13px;
-
-  /* Evitamos problemas de desbordamiento. */
-  min-width: 0;
+    min-width: 0;
 }
 
-
-/* Diseñamos el pequeño icono. */
 .upcoming-expenses__icon {
-  /* Centramos su contenido. */
-  display: flex;
+    display: grid;
+    place-items: center;
 
-  /* Centramos horizontalmente. */
-  justify-content: center;
+    flex-shrink: 0;
 
-  /* Centramos verticalmente. */
-  align-items: center;
+    width: 43px;
+    height: 43px;
 
-  /* Definimos tamaño fijo. */
-  width: 42px;
-  height: 42px;
+    color: #2c8199;
+    background: #eaf5f8;
 
-  /* Evitamos que se comprima. */
-  flex-shrink: 0;
-
-  /* Fondo dorado muy suave. */
-  background-color: #f1e8dc;
-
-  /* Color dorado oscuro. */
-  color: #987044;
-
-  /* Forma circular. */
-  border-radius: 50%;
-
-  /* Destacamos el símbolo. */
-  font-weight: 700;
+    border-radius: 12px;
 }
 
-
-/* Permitimos que el contenido textual
-   utilice correctamente el espacio disponible. */
 .upcoming-expenses__info {
-  min-width: 0;
+    min-width: 0;
 }
 
-
-/* Diseñamos el nombre del gasto. */
 .upcoming-expenses__name {
-  /* Eliminamos márgenes. */
-  margin: 0;
+    margin: 0 0 5px;
 
-  /* Tamaño legible. */
-  font-size: 0.94rem;
+    color: #17384c;
 
-  /* Peso medio-alto. */
-  font-weight: 650;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.5;
 
-  /* Azul oscuro. */
-  color: #273d50;
-
-  /* Permitimos dividir textos largos. */
-  overflow-wrap: anywhere;
+    overflow-wrap: anywhere;
 }
 
-
-/* Diseñamos la categoría. */
 .upcoming-expenses__category {
-  /* Mostramos como bloque. */
-  display: block;
+    color: #8999a3;
 
-  /* Dejamos espacio superior. */
-  margin-top: 4px;
-
-  /* Tamaño secundario. */
-  font-size: 0.78rem;
-
-  /* Color secundario. */
-  color: #8a949c;
+    font-size: 11px;
 }
 
 
 /* ========================================================= */
-/* COLUMNAS SECUNDARIAS */
+/* COLUMNAS */
 /* ========================================================= */
 
-/* Organizamos la información secundaria. */
 .upcoming-expenses__column {
-  /* Utilizamos Flexbox. */
-  display: flex;
+    display: flex;
+    flex-direction: column;
 
-  /* Colocamos los elementos verticalmente. */
-  flex-direction: column;
-
-  /* Dejamos una pequeña separación. */
-  gap: 4px;
+    gap: 6px;
 }
 
-
-/* Diseñamos las etiquetas pequeñas. */
 .upcoming-expenses__column-label {
-  /* Tamaño reducido. */
-  font-size: 0.7rem;
+    color: #96a2aa;
 
-  /* Utilizamos color secundario. */
-  color: #9aa3aa;
+    font-size: 10px;
+    font-weight: 600;
 }
 
-
-/* Diseñamos los valores secundarios. */
 .upcoming-expenses__column-value {
-  /* Tamaño legible. */
-  font-size: 0.83rem;
+    color: #465e6d;
 
-  /* Color principal secundario. */
-  color: #52626e;
+    font-size: 11px;
+    font-weight: 700;
 }
 
 
 /* ========================================================= */
-/* ESTADO */
+/* ESTADOS DE VENCIMIENTO */
 /* ========================================================= */
 
-/* Centramos la etiqueta de estado. */
 .upcoming-expenses__status-wrapper {
-  display: flex;
+    display: flex;
+    align-items: center;
 }
 
-
-/* Diseñamos el estado pendiente. */
 .upcoming-expenses__status {
-  /* Creamos espacio interior. */
-  padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
 
-  /* Redondeamos completamente. */
-  border-radius: 999px;
+    padding: 7px 10px;
 
-  /* Fondo de advertencia suave. */
-  background-color: #fff3dc;
+    border-radius: 8px;
 
-  /* Color de advertencia. */
-  color: #9b702a;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
 
-  /* Tamaño pequeño. */
-  font-size: 0.73rem;
+.upcoming-expenses__status--overdue {
+    color: #b45151;
+    background: #fceeee;
+}
 
-  /* Aumentamos el peso. */
-  font-weight: 650;
+.upcoming-expenses__status--today {
+    color: #aa7330;
+    background: #fff3df;
+}
+
+.upcoming-expenses__status--upcoming {
+    color: #a17835;
+    background: #fff7e8;
+}
+
+.upcoming-expenses__status--scheduled {
+    color: #2c8199;
+    background: #eaf5f8;
+}
+
+.upcoming-expenses__status--neutral {
+    color: #71818b;
+    background: #edf1f3;
 }
 
 
@@ -354,211 +387,232 @@
 /* MONTO */
 /* ========================================================= */
 
-/* Organizamos el monto. */
 .upcoming-expenses__amount {
-  /* Utilizamos Flexbox. */
-  display: flex;
-
-  /* Colocamos sus elementos verticalmente. */
-  flex-direction: column;
-
-  /* Alineamos a la derecha. */
-  align-items: flex-end;
-
-  /* Dejamos separación. */
-  gap: 4px;
-}
-
-
-/* Destacamos el monto individual. */
-.upcoming-expenses__amount strong {
-  /* Tamaño ligeramente mayor. */
-  font-size: 0.95rem;
-
-  /* Azul oscuro. */
-  color: #1e3448;
-}
-
-
-/* ========================================================= */
-/* SIN RESULTADOS */
-/* ========================================================= */
-
-/* Diseñamos el estado vacío. */
-.upcoming-expenses__empty {
-  /* Organizamos verticalmente. */
-  display: flex;
-
-  /* Colocamos elementos uno debajo del otro. */
-  flex-direction: column;
-
-  /* Centramos horizontalmente. */
-  align-items: center;
-
-  /* Centramos el texto. */
-  text-align: center;
-
-  /* Dejamos separación. */
-  gap: 6px;
-
-  /* Añadimos bastante espacio. */
-  padding: 36px 20px;
-
-  /* Fondo suave. */
-  background-color: #faf9f7;
-
-  /* Bordes suaves. */
-  border-radius: 14px;
-
-  /* Color secundario. */
-  color: #7d8991;
-}
-
-
-/* Destacamos el mensaje principal. */
-.upcoming-expenses__empty strong {
-  color: #1e3448;
-}
-
-
-/* ========================================================= */
-/* TABLETS */
-/* ========================================================= */
-
-@media (max-width: 1000px) {
-
-  /* Reducimos la cantidad de columnas. */
-  .upcoming-expenses__item {
-    grid-template-columns:
-      minmax(220px, 1.6fr)
-      minmax(120px, 0.8fr)
-      100px
-      minmax(110px, 0.7fr);
-  }
-
-
-  /* Ocultamos la columna del medio de pago
-     en tablets para evitar saturar la fila. */
-  .upcoming-expenses__column:nth-of-type(3) {
-    display: none;
-  }
-}
-
-
-/* ========================================================= */
-/* TELÉFONOS */
-/* ========================================================= */
-
-@media (max-width: 650px) {
-
-  /* Reducimos el espacio exterior. */
-  .upcoming-expenses {
-    margin-top: 18px;
-
-    /* Reducimos el padding. */
-    padding: 20px;
-
-    /* Ajustamos las esquinas. */
-    border-radius: 18px;
-  }
-
-
-  /* Cambiamos el encabezado a disposición vertical. */
-  .upcoming-expenses__header {
+    display: flex;
     flex-direction: column;
 
-    /* Alineamos todo a la izquierda. */
-    align-items: flex-start;
+    gap: 6px;
+}
 
-    /* Reducimos la separación. */
-    gap: 16px;
-  }
+.upcoming-expenses__amount strong {
+    color: #17384c;
 
-
-  /* Alineamos el total a la izquierda. */
-  .upcoming-expenses__total {
-    align-items: flex-start;
-  }
-
-
-  /* Transformamos cada fila en una tarjeta móvil. */
-  .upcoming-expenses__item {
-    /* Utilizamos una sola columna. */
-    grid-template-columns: 1fr;
-
-    /* Reducimos la separación. */
-    gap: 14px;
-
-    /* Aumentamos ligeramente el padding vertical. */
-    padding: 18px;
-  }
-
-
-  /* Mostramos nuevamente todas las columnas
-     porque ahora hay suficiente espacio vertical. */
-  .upcoming-expenses__column:nth-of-type(3) {
-    display: flex;
-  }
-
-
-  /* Organizamos fecha y medio de pago
-     utilizando filas compactas. */
-  .upcoming-expenses__column {
-    flex-direction: row;
-
-    /* Separamos etiqueta y valor. */
-    justify-content: space-between;
-
-    /* Dejamos espacio. */
-    gap: 12px;
-
-    /* Añadimos una línea divisoria superior. */
-    padding-top: 11px;
-
-    /* Borde suave. */
-    border-top: 1px solid rgba(30, 52, 72, 0.06);
-  }
-
-
-  /* Centramos verticalmente el estado. */
-  .upcoming-expenses__status-wrapper {
-    justify-content: flex-start;
-  }
-
-
-  /* Colocamos el monto horizontalmente. */
-  .upcoming-expenses__amount {
-    flex-direction: row;
-
-    /* Distribuimos etiqueta y monto. */
-    justify-content: space-between;
-
-    /* Centramos verticalmente. */
-    align-items: center;
-
-    /* Añadimos línea superior. */
-    padding-top: 12px;
-
-    /* Añadimos borde. */
-    border-top: 1px solid rgba(30, 52, 72, 0.06);
-  }
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
 
 /* ========================================================= */
-/* TELÉFONOS PEQUEÑOS */
+/* ACCIONES */
 /* ========================================================= */
 
-@media (max-width: 380px) {
+.upcoming-expenses__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-  /* Reducimos el espacio interior general. */
-  .upcoming-expenses {
-    padding: 16px;
-  }
+    gap: 7px;
+}
+
+.upcoming-expenses__action {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    color: #627987;
+    background: #f3f7f9;
+
+    border: 1px solid #e5edf1;
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.upcoming-expenses__action:hover {
+    color: #2c8199;
+    background: #e8f4f7;
+}
+
+.upcoming-expenses__pay-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 35px;
+
+    padding: 8px 11px;
+
+    color: #ffffff;
+    background: #2c8199;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.upcoming-expenses__pay-button:hover {
+    background: #216b80;
+}
+
+.upcoming-expenses__action:focus-visible,
+.upcoming-expenses__pay-button:focus-visible {
+    outline: 3px solid #b9e3ec;
+    outline-offset: 2px;
+}
 
 
-  /* Reducimos el padding de cada gasto. */
-  .upcoming-expenses__item {
-    padding: 16px 14px;
-  }
+/* ========================================================= */
+/* ESTADO VACÍO */
+/* ========================================================= */
+
+.upcoming-expenses__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    min-height: 240px;
+
+    padding: 30px 15px;
+
+    color: #49a99a;
+
+    text-align: center;
+}
+
+.upcoming-expenses__empty strong {
+    color: #17384c;
+
+    font-size: 14px;
+}
+
+.upcoming-expenses__empty p {
+    max-width: 350px;
+
+    margin: 0;
+
+    color: #8b99a3;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1250px) {
+
+    .upcoming-expenses__summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .upcoming-expenses__item {
+        grid-template-columns:
+            minmax(170px, 1.5fr)
+            minmax(100px, 0.8fr)
+            minmax(120px, 1fr);
+
+        gap: 15px;
+    }
+
+    .upcoming-expenses__amount,
+    .upcoming-expenses__actions {
+        grid-column: auto;
+    }
+
+}
+
+@media (max-width: 850px) {
+
+    .upcoming-expenses__item {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .upcoming-expenses__main {
+        grid-column: 1 / -1;
+    }
+
+    .upcoming-expenses__actions {
+        justify-content: flex-start;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .upcoming-expenses {
+        gap: 17px;
+    }
+
+    .upcoming-expenses__summary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .upcoming-expenses__summary-card {
+        min-height: 135px;
+    }
+
+    .upcoming-expenses__panel {
+        padding: 17px;
+    }
+
+    .upcoming-expenses__panel-header {
+        flex-direction: column;
+    }
+
+    .upcoming-expenses__item {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .upcoming-expenses__main {
+        grid-column: auto;
+    }
+
+    .upcoming-expenses__actions {
+        flex-wrap: wrap;
+    }
+
+    .upcoming-expenses__pay-button {
+        min-height: 38px;
+    }
+
+    .upcoming-expenses__title {
+        font-size: 20px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .upcoming-expenses__action,
+    .upcoming-expenses__pay-button {
+        transition: none;
+    }
+
 }

@@ -1,0 +1,233 @@
+
+/* ========================================================= */
+/* CONTENEDOR DE CATEGORÍAS */
+/* ========================================================= */
+
+.resources-categories {
+    margin-bottom: 28px;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.resources-categories__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+    margin-bottom: 17px;
+}
+
+.resources-categories__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.resources-categories__heading p {
+    margin: 0;
+
+    color: #607a90;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.resources-categories__total {
+    flex-shrink: 0;
+
+    padding: 8px 12px;
+
+    color: #397e93;
+    background: #eaf5f8;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* ========================================================= */
+/* CUADRÍCULA */
+/* ========================================================= */
+
+.resources-categories__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+/* ========================================================= */
+/* TARJETA DE CATEGORÍA */
+/* ========================================================= */
+
+.resources-categories__card {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+    min-width: 0;
+    min-height: 94px;
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9ee;
+    border-radius: 15px;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.resources-categories__card:hover {
+    border-color: #b7d5df;
+    box-shadow: 0 5px 15px rgba(22, 61, 81, 0.05);
+    transform: translateY(-1px);
+}
+
+.resources-categories__card--active {
+    background: #f0f8fa;
+    border-color: #7db6c7;
+}
+
+.resources-categories__card:focus-visible {
+    outline: 3px solid #68bad0;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.resources-categories__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 45px;
+    height: 45px;
+
+    color: #2c8199;
+    background: #eaf5f8;
+
+    border-radius: 12px;
+}
+
+.resources-categories__card--active
+.resources-categories__icon {
+    color: #ffffff;
+    background: #2c8199;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN */
+/* ========================================================= */
+
+.resources-categories__info {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    min-width: 0;
+    gap: 7px;
+}
+
+.resources-categories__info strong {
+    color: #24475b;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.resources-categories__info span {
+    color: #8295a3;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* CONTADOR Y FLECHA */
+/* ========================================================= */
+
+.resources-categories__meta {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    color: #9aafba;
+}
+
+.resources-categories__count {
+    display: grid;
+    place-items: center;
+
+    min-width: 28px;
+    height: 28px;
+    padding: 0 7px;
+
+    color: #427f94;
+    background: #edf5f8;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.resources-categories__card--active
+.resources-categories__count {
+    color: #ffffff;
+    background: #2c8199;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 800px) {
+
+    .resources-categories__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resources-categories__heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .resources-categories__card {
+        min-height: 85px;
+        padding: 14px;
+        gap: 11px;
+    }
+
+    .resources-categories__icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .resources-categories__info strong {
+        font-size: 12px;
+    }
+
+    .resources-categories__meta {
+        gap: 5px;
+    }
+}
