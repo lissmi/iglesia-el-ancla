@@ -1,0 +1,194 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.finance-evolution {
+    width: 100%;
+    min-width: 0;
+
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5edf1;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.045);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-evolution__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.finance-evolution__heading {
+    min-width: 0;
+}
+
+.finance-evolution__title-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 9px;
+}
+
+.finance-evolution__title-row h2 {
+    margin: 0;
+
+    color: #17384c;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.finance-evolution__heading p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.finance-evolution__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 39px;
+    height: 39px;
+
+    background: #e7f3f6;
+    color: #2c8199;
+
+    border-radius: 11px;
+}
+
+/* ========================================================= */
+/* ETIQUETA DE AÑO */
+/* ========================================================= */
+
+.finance-evolution__year {
+    padding: 8px 13px;
+
+    background: #edf5f7;
+    color: #2c8199;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* ÁREA DEL GRÁFICO */
+/* ========================================================= */
+
+.finance-evolution__chart {
+    width: 100%;
+    height: 350px;
+    min-width: 0;
+}
+
+/* ========================================================= */
+/* ESTADO SIN DATOS */
+/* ========================================================= */
+
+.finance-evolution__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 300px;
+    padding: 25px;
+
+    background: #f7fafb;
+    border: 1px dashed #d8e6ec;
+    border-radius: 14px;
+
+    color: #718491;
+    text-align: center;
+}
+
+.finance-evolution__empty strong {
+    color: #17384c;
+    font-size: 15px;
+}
+
+.finance-evolution__empty p {
+    max-width: 390px;
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* NOTA INFERIOR */
+/* ========================================================= */
+
+.finance-evolution__footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 18px;
+    padding-top: 15px;
+
+    border-top: 1px solid #edf1f4;
+
+    color: #8a9aa5;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .finance-evolution {
+        padding: 19px;
+        border-radius: 15px;
+    }
+
+    .finance-evolution__chart {
+        height: 300px;
+    }
+
+    .finance-evolution__title-row h2 {
+        font-size: 17px;
+    }
+
+    .finance-evolution__footer {
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .finance-evolution__header {
+        flex-wrap: wrap;
+    }
+
+    .finance-evolution__chart {
+        height: 270px;
+    }
+
+}

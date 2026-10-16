@@ -1,0 +1,179 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.finance-transparency {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    padding: 28px;
+
+    background: linear-gradient(
+        145deg,
+        #17384c 0%,
+        #204b60 100%
+    );
+
+    border-radius: 18px;
+
+    color: #ffffff;
+
+    box-shadow: 0 10px 30px rgba(23, 56, 76, 0.12);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-transparency__header {
+    margin-bottom: 28px;
+}
+
+.finance-transparency__main-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 55px;
+    height: 55px;
+
+    margin-bottom: 18px;
+
+    background: rgba(255, 255, 255, 0.11);
+    color: #a7e0e9;
+
+    border-radius: 15px;
+}
+
+.finance-transparency__eyebrow {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #a7e0e9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.finance-transparency__header h2 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.finance-transparency__header p {
+    margin: 0;
+
+    color: #d3e1e8;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* ========================================================= */
+/* PRINCIPIOS */
+/* ========================================================= */
+
+.finance-transparency__items {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.finance-transparency__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.finance-transparency__item-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    background: rgba(167, 224, 233, 0.11);
+    color: #a7e0e9;
+
+    border-radius: 11px;
+}
+
+.finance-transparency__item h3 {
+    margin: 0 0 6px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.finance-transparency__item p {
+    margin: 0;
+
+    color: #c7d9e2;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* AVISO DE PRIVACIDAD */
+/* ========================================================= */
+
+.finance-transparency__notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+
+    margin-top: 28px;
+    padding: 17px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.finance-transparency__notice svg {
+    flex-shrink: 0;
+    color: #a7e0e9;
+}
+
+.finance-transparency__notice p {
+    margin: 0;
+
+    color: #d3e1e8;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .finance-transparency {
+        padding: 23px;
+    }
+
+    .finance-transparency__header h2 {
+        font-size: 21px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .finance-transparency {
+        padding: 19px;
+    }
+
+    .finance-transparency__notice {
+        padding: 13px;
+    }
+}

@@ -1,0 +1,303 @@
+
+/* ========================================================= */
+/* SECCIÓN DE RESUMEN FINANCIERO */
+/* ========================================================= */
+
+.finance-summary {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-summary__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.finance-summary__heading-text h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.finance-summary__heading-text p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* ETIQUETA DE VISTA GENERAL */
+/* ========================================================= */
+
+.finance-summary__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 13px;
+
+    background: #eaf5f7;
+    color: #2c8199;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ========================================================= */
+/* DISTRIBUCIÓN DE TARJETAS */
+/* ========================================================= */
+
+.finance-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* ========================================================= */
+/* TARJETA FINANCIERA */
+/* ========================================================= */
+
+.finance-summary__card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 175px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5edf1;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.045);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.finance-summary__card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 30px rgba(23, 56, 76, 0.09);
+}
+
+/* ========================================================= */
+/* ENCABEZADO DE TARJETA */
+/* ========================================================= */
+
+.finance-summary__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+
+    margin-bottom: 21px;
+}
+
+.finance-summary__label {
+    color: #657b89;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.finance-summary__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+
+    border-radius: 12px;
+}
+
+/* ========================================================= */
+/* MONTO */
+/* ========================================================= */
+
+.finance-summary__amount {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #17384c;
+    font-size: clamp(20px, 2vw, 27px);
+    font-weight: 750;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+}
+
+/* ========================================================= */
+/* DESCRIPCIÓN */
+/* ========================================================= */
+
+.finance-summary__description {
+    margin: 0 0 15px;
+
+    color: #8494a0;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* LÍNEA INFERIOR */
+/* ========================================================= */
+
+.finance-summary__accent {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 4px;
+}
+
+/* ========================================================= */
+/* VARIANTE: INGRESOS */
+/* ========================================================= */
+
+.finance-summary__card--income .finance-summary__icon {
+    background: #e7f3f6;
+    color: #2c8199;
+}
+
+.finance-summary__card--income .finance-summary__accent {
+    background: #2c8199;
+}
+
+/* ========================================================= */
+/* VARIANTE: GASTOS */
+/* ========================================================= */
+
+.finance-summary__card--expense .finance-summary__icon {
+    background: #f9eeea;
+    color: #b36c55;
+}
+
+.finance-summary__card--expense .finance-summary__accent {
+    background: #b36c55;
+}
+
+/* ========================================================= */
+/* VARIANTE: BALANCE */
+/* ========================================================= */
+
+.finance-summary__card--balance .finance-summary__icon {
+    background: #e8f5ef;
+    color: #287c69;
+}
+
+.finance-summary__card--balance .finance-summary__accent {
+    background: #287c69;
+}
+
+/* ========================================================= */
+/* VARIANTE: PENDIENTES */
+/* ========================================================= */
+
+.finance-summary__card--pending .finance-summary__icon {
+    background: #fbf3e5;
+    color: #aa812b;
+}
+
+.finance-summary__card--pending .finance-summary__accent {
+    background: #aa812b;
+}
+
+/* ========================================================= */
+/* AVISO DE DATOS ESTÁTICOS */
+/* ========================================================= */
+
+.finance-summary__disclaimer {
+    margin: 13px 0 0;
+
+    color: #8798a3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* RESPONSIVE: TABLET */
+/* ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .finance-summary__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ========================================================= */
+/* RESPONSIVE: MÓVIL */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .finance-summary__heading {
+        align-items: flex-start;
+    }
+
+    .finance-summary__heading-text h2 {
+        font-size: 19px;
+    }
+
+    .finance-summary__grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .finance-summary__card {
+        min-height: 155px;
+        padding: 19px;
+    }
+
+    .finance-summary__card-header {
+        margin-bottom: 14px;
+    }
+
+    .finance-summary__amount {
+        font-size: 25px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .finance-summary__card {
+        transition: none;
+    }
+
+    .finance-summary__card:hover {
+        transform: none;
+    }
+}

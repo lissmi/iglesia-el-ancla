@@ -1,0 +1,305 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.finance-balance {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    padding: 26px;
+
+    background: #ffffff;
+    border: 1px solid #e5edf1;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.045);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-balance__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.finance-balance__header h2 {
+    margin: 0 0 8px;
+
+    color: #17384c;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.finance-balance__header p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.finance-balance__header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    background: #e7f3f6;
+    color: #2c8199;
+
+    border-radius: 12px;
+}
+
+/* ========================================================= */
+/* BALANCE DESTACADO */
+/* ========================================================= */
+
+.finance-balance__highlight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 23px;
+
+    background: #eaf6f2;
+    border: 1px solid #d2eae1;
+    border-radius: 15px;
+}
+
+.finance-balance__highlight-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #287c69;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.finance-balance__highlight > strong {
+    color: #17384c;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.finance-balance__status {
+    padding: 7px 11px;
+
+    background: #d5eee4;
+    color: #287c69;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ========================================================= */
+/* DETALLE FINANCIERO */
+/* ========================================================= */
+
+.finance-balance__details {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px;
+}
+
+.finance-balance__detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #edf1f4;
+}
+
+.finance-balance__detail-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #718491;
+    font-size: 13px;
+}
+
+.finance-balance__detail strong {
+    color: #17384c;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* ========================================================= */
+/* BALANCE PROYECTADO */
+/* ========================================================= */
+
+.finance-balance__projection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+
+    margin-top: 20px;
+    padding: 17px;
+
+    background: #f3f8fa;
+    border-radius: 12px;
+}
+
+.finance-balance__projection span {
+    color: #607889;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.finance-balance__projection strong {
+    color: #17384c;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+/* ========================================================= */
+/* ESTADO SIN DATOS */
+/* ========================================================= */
+
+.finance-balance__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 260px;
+    padding: 20px;
+
+    background: #f7fafb;
+    border: 1px dashed #d8e6ec;
+    border-radius: 14px;
+
+    color: #718491;
+    text-align: center;
+}
+
+.finance-balance__empty strong {
+    color: #17384c;
+}
+
+.finance-balance__empty p {
+    max-width: 300px;
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* NOTA INFERIOR */
+/* ========================================================= */
+
+.finance-balance__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    margin: 18px 0 0;
+
+    color: #8a9aa5;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.finance-balance__note svg {
+    flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .finance-balance {
+        padding: 19px;
+    }
+
+    .finance-balance__projection {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .finance-balance__highlight > strong {
+        font-size: 28px;
+    }
+}
+
+
+/* ========================================================= */
+/* ESTADOS DEL BALANCE FINANCIERO */
+/* ========================================================= */
+
+/* --------------------------------------------------------- */
+/* BALANCE POSITIVO */
+/* --------------------------------------------------------- */
+
+.finance-balance__highlight--positive {
+    background: #eaf6f2;
+    border-color: #d2eae1;
+}
+
+.finance-balance__status--positive {
+    background: #d5eee4;
+    color: #287c69;
+}
+
+/* --------------------------------------------------------- */
+/* BALANCE NEGATIVO */
+/* --------------------------------------------------------- */
+
+.finance-balance__highlight--negative {
+    background: #fdf0ed;
+    border-color: #f0d2cb;
+}
+
+.finance-balance__highlight--negative
+.finance-balance__highlight-label {
+    color: #a95345;
+}
+
+.finance-balance__status--negative {
+    background: #f5dcd6;
+    color: #a95345;
+}
+
+/* --------------------------------------------------------- */
+/* BALANCE EQUILIBRADO */
+/* --------------------------------------------------------- */
+
+.finance-balance__highlight--neutral {
+    background: #f2f6f8;
+    border-color: #dce7ec;
+}
+
+.finance-balance__highlight--neutral
+.finance-balance__highlight-label {
+    color: #607889;
+}
+
+.finance-balance__status--neutral {
+    background: #e3ebef;
+    color: #607889;
+}

@@ -1,0 +1,179 @@
+
+/* ========================================================= */
+/* ENCABEZADO DEL MÓDULO FINANCIERO */
+/* ========================================================= */
+
+.finance-header {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* ========================================================= */
+/* ENLACE PARA REGRESAR */
+/* ========================================================= */
+
+.finance-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 24px;
+
+    color: #607889;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.finance-header__back:hover {
+    color: #2c8199;
+}
+
+/* ========================================================= */
+/* CONTENIDO PRINCIPAL */
+/* ========================================================= */
+
+.finance-header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* ========================================================= */
+/* IDENTIDAD DEL MÓDULO */
+/* ========================================================= */
+
+.finance-header__identity {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+}
+
+.finance-header__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+
+    background: #e7f3f6;
+    color: #2c8199;
+
+    border-radius: 18px;
+}
+
+/* ========================================================= */
+/* TEXTOS */
+/* ========================================================= */
+
+.finance-header__information {
+    min-width: 0;
+}
+
+.finance-header__eyebrow {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #2c8199;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+.finance-header__title {
+    margin: 0 0 10px;
+
+    color: #17384c;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.finance-header__description {
+    max-width: 650px;
+    margin: 0;
+
+    color: #6b7f8d;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* ETIQUETA DE DATOS DEMOSTRATIVOS */
+/* ========================================================= */
+
+.finance-header__demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    background: #edf7f9;
+    border: 1px solid #cce8ed;
+    border-radius: 10px;
+
+    color: #28768a;
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .finance-header {
+        margin-bottom: 24px;
+    }
+
+    .finance-header__identity {
+        gap: 12px;
+    }
+
+    .finance-header__icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+    }
+
+    .finance-header__icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .finance-header__description {
+        font-size: 14px;
+    }
+
+    .finance-header__demo {
+        margin-left: 62px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .finance-header__content {
+        flex-direction: column;
+    }
+
+    .finance-header__demo {
+        margin-left: 0;
+    }
+
+    .finance-header__eyebrow {
+        font-size: 10px;
+    }
+}

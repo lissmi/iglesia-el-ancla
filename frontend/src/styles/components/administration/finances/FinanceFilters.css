@@ -1,0 +1,169 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.finance-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 22px 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5edf1;
+    border-radius: 16px;
+
+    box-shadow: 0 5px 20px rgba(23, 56, 76, 0.04);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-filters__heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: 0;
+}
+
+.finance-filters__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
+    background: #e7f3f6;
+    color: #2c8199;
+
+    border-radius: 12px;
+}
+
+.finance-filters__heading-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.finance-filters__heading-text strong {
+    color: #17384c;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.finance-filters__heading-text span {
+    color: #718491;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* CONTROLES */
+/* ========================================================= */
+
+.finance-filters__controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* ========================================================= */
+/* CAMPOS */
+/* ========================================================= */
+
+.finance-filters__field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 155px;
+}
+
+.finance-filters__field > span {
+    color: #607889;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.finance-filters__field select {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 10px 35px 10px 13px;
+
+    background-color: #f7fafb;
+    color: #17384c;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.finance-filters__field select:hover {
+    border-color: #9ccbd6;
+}
+
+.finance-filters__field select:focus-visible {
+    outline: none;
+
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.14);
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 850px) {
+
+    .finance-filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .finance-filters__controls {
+        width: 100%;
+    }
+
+    .finance-filters__field {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .finance-filters {
+        padding: 18px;
+    }
+
+    .finance-filters__controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .finance-filters__field {
+        width: 100%;
+    }
+}

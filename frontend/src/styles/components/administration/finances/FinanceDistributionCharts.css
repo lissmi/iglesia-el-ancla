@@ -1,0 +1,300 @@
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.finance-distribution {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 30px;
+}
+
+/* ========================================================= */
+/* DISTRIBUCIÓN DE TARJETAS */
+/* ========================================================= */
+
+.finance-distribution__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* ========================================================= */
+/* TARJETA */
+/* ========================================================= */
+
+.finance-distribution__card {
+    min-width: 0;
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5edf1;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.045);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.finance-distribution__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+
+    margin-bottom: 12px;
+}
+
+.finance-distribution__header h2 {
+    margin: 0 0 8px;
+
+    color: #17384c;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.finance-distribution__header p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.finance-distribution__header-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    border-radius: 11px;
+}
+
+/* ========================================================= */
+/* COLORES SEGÚN TIPO */
+/* ========================================================= */
+
+.finance-distribution__card--income
+.finance-distribution__header-icon {
+    background: #e7f3f6;
+    color: #2c8199;
+}
+
+.finance-distribution__card--expense
+.finance-distribution__header-icon {
+    background: #f9eeea;
+    color: #b36c55;
+}
+
+/* ========================================================= */
+/* GRÁFICO */
+/* ========================================================= */
+
+.finance-distribution__chart {
+    position: relative;
+
+    width: 100%;
+    height: 270px;
+    min-width: 0;
+}
+
+/* ========================================================= */
+/* TOTAL CENTRAL */
+/* ========================================================= */
+
+.finance-distribution__center {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    width: 135px;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+    text-align: center;
+}
+
+.finance-distribution__center span {
+    color: #8798a3;
+    font-size: 12px;
+}
+
+.finance-distribution__center strong {
+    color: #17384c;
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.3;
+}
+
+/* ========================================================= */
+/* LEYENDA */
+/* ========================================================= */
+
+.finance-distribution__legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    margin-top: 5px;
+}
+
+.finance-distribution__legend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #edf1f4;
+}
+
+.finance-distribution__legend-item:last-child {
+    border-bottom: none;
+}
+
+.finance-distribution__legend-name {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-width: 0;
+
+    color: #607889;
+    font-size: 13px;
+}
+
+.finance-distribution__legend-dot {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+.finance-distribution__legend-values {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+
+    flex-shrink: 0;
+}
+
+.finance-distribution__legend-values strong {
+    color: #17384c;
+    font-size: 13px;
+}
+
+.finance-distribution__legend-values span {
+    color: #8a9aa5;
+    font-size: 11px;
+}
+
+/* ========================================================= */
+/* ESTADO SIN DATOS */
+/* ========================================================= */
+
+.finance-distribution__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 280px;
+    padding: 25px;
+
+    background: #f7fafb;
+
+    border: 1px dashed #d8e6ec;
+    border-radius: 15px;
+
+    color: #718491;
+    text-align: center;
+}
+
+.finance-distribution__empty strong {
+    color: #17384c;
+    font-size: 15px;
+}
+
+.finance-distribution__empty p {
+    max-width: 360px;
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* NOTA INFORMATIVA */
+/* ========================================================= */
+
+.finance-distribution__note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 14px 0 0;
+
+    color: #8a9aa5;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .finance-distribution__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .finance-distribution__card {
+        padding: 19px;
+    }
+
+    .finance-distribution__header h2 {
+        font-size: 17px;
+    }
+
+    .finance-distribution__chart {
+        height: 250px;
+    }
+
+    .finance-distribution__legend-item {
+        gap: 8px;
+    }
+
+    .finance-distribution__legend-name {
+        font-size: 12px;
+    }
+
+    .finance-distribution__center strong {
+        font-size: 15px;
+    }
+
+    .finance-distribution__note {
+        align-items: flex-start;
+    }
+}
