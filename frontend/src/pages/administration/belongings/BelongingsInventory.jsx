@@ -715,6 +715,7 @@ function BelongingsInventory() {
                                 <Trash2 size={17} />
                                 Eliminar bien
                             </button>
+                            
 
 
                         </div>
