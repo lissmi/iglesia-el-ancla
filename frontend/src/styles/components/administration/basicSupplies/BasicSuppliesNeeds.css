@@ -1,0 +1,122 @@
+
+/* ========================================================= */
+/* NECESIDADES DE REPOSICIÓN */
+/* ========================================================= */
+
+.basic-supplies__needs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.basic-supplies__need-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #e5edf1;
+    border-radius: 14px;
+    background: #fcfdfd;
+    transition: border-color 0.2s ease;
+}
+
+.basic-supplies__need-card:hover {
+    border-color: #bcd9e2;
+}
+
+.basic-supplies__need-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 17px;
+}
+
+.basic-supplies__need-category {
+    color: #8a9aa5;
+    font-size: 11px;
+    text-align: right;
+}
+
+.basic-supplies__need-card h3 {
+    margin: 0 0 9px;
+    color: #17384c;
+    font-size: 16px;
+}
+
+.basic-supplies__need-card > p {
+    flex: 1;
+    margin: 0 0 20px;
+    color: #718491;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.basic-supplies__need-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 0;
+    margin-bottom: 14px;
+    border-top: 1px solid #e8eef2;
+}
+
+.basic-supplies__need-quantity span {
+    color: #718491;
+    font-size: 12px;
+}
+
+.basic-supplies__need-quantity strong {
+    color: #17384c;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN SOBRE COLABORACIÓN */
+/* ========================================================= */
+
+.basic-supplies__info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #d8e9ed;
+    border-radius: 13px;
+    background: #edf7f9;
+    color: #2c8199;
+}
+
+.basic-supplies__info-box svg {
+    flex-shrink: 0;
+}
+
+.basic-supplies__info-box strong {
+    color: #17384c;
+    font-size: 14px;
+}
+
+.basic-supplies__info-box p {
+    margin: 7px 0 0;
+    color: #607889;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+    .basic-supplies__needs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    .basic-supplies__needs-grid {
+        grid-template-columns: 1fr;
+    }
+}

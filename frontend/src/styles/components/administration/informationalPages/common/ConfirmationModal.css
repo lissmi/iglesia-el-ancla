@@ -1,0 +1,182 @@
+
+/* ========================================================= */
+/* MODAL DE CONFIRMACIÓN - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.confirmation-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background-color: rgba(18, 33, 45, 0.58);
+    backdrop-filter: blur(4px);
+}
+
+.confirmation-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 460px;
+
+    padding: 36px;
+
+    border: 1px solid rgba(36, 54, 75, 0.08);
+    border-radius: 22px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 25px 70px rgba(15, 30, 42, 0.24);
+
+    text-align: center;
+
+    animation: confirmation-modal-enter 0.2s ease-out;
+}
+
+.confirmation-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: transparent;
+    color: #718092;
+
+    cursor: pointer;
+}
+
+.confirmation-modal__close:hover {
+    background-color: #f2f3f4;
+    color: #24364b;
+}
+
+.confirmation-modal__icon {
+    display: grid;
+    place-items: center;
+
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 18px;
+
+    background-color: #f8eee6;
+    color: #aa7553;
+}
+
+.confirmation-modal__title {
+    margin: 0 0 12px;
+
+    color: #182838;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.confirmation-modal__description {
+    margin: 0;
+
+    color: #657282;
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.confirmation-modal__actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.confirmation-modal__button {
+    flex: 1;
+
+    min-height: 45px;
+    padding: 11px 16px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.confirmation-modal__button:active {
+    transform: scale(0.98);
+}
+
+.confirmation-modal__button--cancel {
+    border-color: #dce3e8;
+    background-color: #ffffff;
+    color: #24364b;
+}
+
+.confirmation-modal__button--cancel:hover {
+    background-color: #f4f6f7;
+}
+
+.confirmation-modal__button--confirm {
+    background-color: #24364b;
+    color: #ffffff;
+}
+
+.confirmation-modal__button--confirm:hover {
+    background-color: #344e68;
+}
+
+@keyframes confirmation-modal-enter {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-modal {
+        padding: 30px 22px;
+    }
+
+    .confirmation-modal__title {
+        font-size: 24px;
+    }
+
+    .confirmation-modal__actions {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confirmation-modal {
+        animation: none;
+    }
+}

@@ -1,0 +1,261 @@
+
+/* ========================================================= */
+/* ABOUT CONVICTION EDITOR - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Estilos exclusivos de la sección Nuestra convicción. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* SECCIÓN PRINCIPAL */
+/* ========================================================= */
+
+.about-editor-conviction {
+    width: 100%;
+
+    padding: 85px 30px;
+
+    background-color: #ffffff;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR */
+/* ========================================================= */
+
+.about-editor-conviction__container {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* ICONO */
+/* ========================================================= */
+
+.about-editor-conviction__icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 95px;
+    height: 95px;
+
+    margin-bottom: 26px;
+
+    border-radius: 24px;
+
+    background-color: #eaf5f7;
+}
+
+.about-editor-conviction__editable-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.about-editor-conviction__icon {
+    display: block;
+
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+}
+
+/* Posición del botón para cambiar el icono. */
+.about-editor-conviction__editable-icon
+.editable-image__edit-button {
+    top: -10px;
+    right: -10px;
+
+    width: 32px;
+    height: 32px;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO TEXTUAL */
+/* ========================================================= */
+
+.about-editor-conviction__content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* SUBTÍTULO */
+/* ========================================================= */
+
+.about-editor-conviction__eyebrow {
+    display: inline-block;
+
+    margin-bottom: 13px;
+
+    color: #2c8199;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* TÍTULO */
+/* ========================================================= */
+
+.about-editor-conviction__title {
+    margin: 0 0 25px;
+
+    color: #17384c;
+
+    font-size: clamp(29px, 3vw, 42px);
+    font-weight: 750;
+    line-height: 1.25;
+}
+
+
+/* ========================================================= */
+/* PÁRRAFOS */
+/* ========================================================= */
+
+.about-editor-conviction__paragraphs {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 20px;
+
+    width: 100%;
+}
+
+.about-editor-conviction__paragraph {
+    margin: 0;
+
+    color: #536978;
+
+    font-size: 16px;
+    line-height: 1.85;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* COMPONENTES EDITABLES */
+/* ========================================================= */
+
+/* Limitamos el ancho de los textos editables. */
+.about-editor-conviction__content > .editable-text,
+.about-editor-conviction__paragraphs > .editable-text {
+    width: 100%;
+    max-width: 820px;
+}
+
+/* Conservamos la alineación del contenido. */
+.about-editor-conviction .editable-text {
+    text-align: center;
+}
+
+/* Campos de edición. */
+.about-editor-conviction .editable-text--editing {
+    width: 100%;
+}
+
+/* Botones de edición. */
+.about-editor-conviction .editable-text__edit-button {
+    z-index: 10;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 992px) {
+
+    .about-editor-conviction {
+        padding: 65px 25px;
+    }
+
+    .about-editor-conviction__container {
+        max-width: 760px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .about-editor-conviction {
+        padding: 55px 20px;
+    }
+
+    .about-editor-conviction__icon-container {
+        width: 82px;
+        height: 82px;
+
+        margin-bottom: 22px;
+    }
+
+    .about-editor-conviction__icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .about-editor-conviction__title {
+        font-size: 31px;
+    }
+
+    .about-editor-conviction__paragraph {
+        font-size: 15px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+
+    .about-editor-conviction {
+        padding: 45px 16px;
+    }
+
+    .about-editor-conviction__title {
+        font-size: 27px;
+    }
+
+    .about-editor-conviction__paragraphs {
+        gap: 17px;
+    }
+
+    .about-editor-conviction__paragraph {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+}

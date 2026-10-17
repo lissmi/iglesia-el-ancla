@@ -12,6 +12,7 @@ import {
 
 import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
+import GlobalBackButton from "./components/public/GlobalBackButton";
 
 // =========================================================
 // PROTECCIÓN DE RUTAS
@@ -46,8 +47,11 @@ import Home from "./pages/public/Home";
 import About from "./pages/public/About";
 import Contact from "./pages/public/Contact";
 import Events from "./pages/public/Events";
+import TermsAndConditions from "./pages/public/TermsAndConditions";
+import PrivacyPolicy from "./pages/public/PrivacyPolicy";
 import Recommendations from "./pages/public/Recommendations";
 import Resources from "./pages/public/Resources";
+
 
 // =========================================================
 // PÁGINAS DE RECURSOS
@@ -78,6 +82,7 @@ import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQu
 import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
 
 import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
+
 
 // =========================================================
 // LOGIN PÚBLICO
@@ -138,6 +143,9 @@ function PublicLayout() {
     <>
       <Header />
 
+      {/* Navegación global entre páginas públicas. */}
+      <GlobalBackButton />
+
       <main>
         <Outlet />
       </main>
@@ -181,6 +189,16 @@ function App() {
             <Route
               path="/eventos"
               element={<Events />}
+            />
+
+            <Route
+              path="/terminos-y-condiciones"
+              element={<TermsAndConditions />}
+            />
+
+            <Route
+              path="/politica-de-privacidad"
+              element={<PrivacyPolicy />}
             />
 
             <Route

@@ -1,0 +1,115 @@
+
+/* ========================================================= */
+/* CONTACT EDITABLE - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Contenedor general del editor de la página Contacto. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.contact-editable {
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    background-color: #f9f8f5;
+
+    color: #24364b;
+}
+
+
+/* ========================================================= */
+/* SECCIÓN PRINCIPAL */
+/* ========================================================= */
+
+.contact-editable__main {
+    width: 100%;
+
+    padding: 105px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #f4f2ee 0%,
+        #ffffff 55%,
+        #edf1f3 100%
+    );
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR DE DOS COLUMNAS */
+/* ========================================================= */
+
+.contact-editable__main-container {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    align-items: start;
+
+    gap: 75px;
+
+    width: 100%;
+    max-width: 1240px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================================= */
+/* AJUSTES DEL MODO EDICIÓN */
+/* ========================================================= */
+
+.contact-editable--editing
+.contact-editable__main-container {
+    align-items: start;
+}
+
+
+/* ========================================================= */
+/* AJUSTES DE VISTA PREVIA */
+/* ========================================================= */
+
+.contact-editable--preview {
+    background-color: #f9f8f5;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .contact-editable__main-container {
+        grid-template-columns: 1fr;
+
+        gap: 55px;
+    }
+
+    .contact-editable__main {
+        padding: 85px 24px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .contact-editable__main {
+        padding: 78px 18px;
+    }
+
+    .contact-editable__main-container {
+        gap: 40px;
+    }
+}

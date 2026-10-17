@@ -1,0 +1,106 @@
+
+/* ========================================================= */
+/* ENCABEZADO - TÉRMINOS Y CONDICIONES */
+/* ========================================================= */
+
+.terms-editor-hero {
+    position: relative;
+    overflow: hidden;
+
+    padding: 100px 24px 105px;
+
+    background: linear-gradient(
+        135deg,
+        #182838 0%,
+        #24364b 65%,
+        #344e68 100%
+    );
+
+    color: #ffffff;
+}
+
+.terms-editor-hero__container {
+    position: relative;
+    z-index: 1;
+
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.terms-editor-hero__eyebrow {
+    margin: 0 0 18px;
+
+    color: #d8c1a4;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.terms-editor-hero__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    gap: 0 12px;
+
+    max-width: 900px;
+}
+
+.terms-editor-hero__title,
+.terms-editor-hero__highlight {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.terms-editor-hero__title {
+    color: #ffffff;
+}
+
+.terms-editor-hero__highlight {
+    color: #d8c1a4;
+}
+
+.terms-editor-hero__description {
+    max-width: 700px;
+    margin: 26px 0 0;
+
+    color: #e0e5e9;
+
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.terms-editor-hero__decoration {
+    width: 76px;
+    height: 4px;
+
+    margin-top: 36px;
+
+    border-radius: 4px;
+    background-color: #d8c1a4;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+    .terms-editor-hero {
+        padding: 75px 20px 80px;
+    }
+
+    .terms-editor-hero__title,
+    .terms-editor-hero__highlight {
+        font-size: clamp(38px, 9vw, 52px);
+    }
+
+    .terms-editor-hero__description {
+        font-size: 15px;
+    }
+}

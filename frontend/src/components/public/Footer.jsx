@@ -1,3 +1,4 @@
+
 // Importamos el logo oficial de la iglesia.
 import logoElAncla from "../../assets/images/logo-el-ancla.png";
 
@@ -96,10 +97,23 @@ function Footer() {
                 Recursos
               </a>
 
-              {/* Enlace de galería. */}
-              <a className="footer__link" href="/galeria">
-                Galería
+              {/* Enlace de términos y condiciones. */}
+              <a
+                className="footer__link"
+                href="/terminos-y-condiciones"
+              >
+                Términos y Condiciones
               </a>
+
+              {/* Enlace de política de privacidad. */}
+              <a
+                className="footer__link"
+                href="/politica-de-privacidad"
+              >
+                Política de privacidad
+              </a>
+
+
             </nav>
           </div>
 

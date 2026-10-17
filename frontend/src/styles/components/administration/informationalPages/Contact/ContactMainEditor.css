@@ -1,0 +1,368 @@
+
+/* ========================================================= */
+/* CONTACT MAIN EDITOR - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Columna informativa de la página Contacto. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.contact-editor-main {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.contact-editor-main__eyebrow {
+    margin: 0 0 12px;
+
+    color: #9a8066;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.contact-editor-main__title {
+    margin: 0;
+
+    color: #182838;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(40px, 5vw, 60px);
+    font-weight: 500;
+    line-height: 1.14;
+}
+
+.contact-editor-main__description {
+    margin: 22px 0 0;
+
+    color: #5d6977;
+
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+
+/* ========================================================= */
+/* TARJETA DE RECOMENDACIONES */
+/* ========================================================= */
+
+.contact-editor-main__notice {
+    margin-top: 32px;
+
+    padding: 26px;
+
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 16px;
+
+    background-color: rgba(255, 255, 255, 0.74);
+}
+
+.contact-editor-main__notice-title {
+    margin: 0;
+
+    color: #24364b;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.contact-editor-main__notice-list {
+    margin: 17px 0 0;
+
+    padding-left: 20px;
+
+    color: #667281;
+
+    line-height: 1.9;
+}
+
+.contact-editor-main__notice-list li {
+    padding-left: 2px;
+}
+
+.contact-editor-main__notice-item {
+    color: #667281;
+
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+
+/* ========================================================= */
+/* REDES SOCIALES */
+/* ========================================================= */
+
+.contact-editor-main__social {
+    margin-top: 32px;
+}
+
+.contact-editor-main__social-title {
+    margin: 0;
+
+    color: #24364b;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.contact-editor-main__social-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-top: 16px;
+}
+
+
+/* ========================================================= */
+/* TARJETA DE RED SOCIAL */
+/* ========================================================= */
+
+.contact-editor-main__social-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    min-width: 0;
+    max-width: 100%;
+}
+
+.contact-editor-main__social-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    width: fit-content;
+    max-width: 100%;
+
+    min-height: 51px;
+
+    padding: 10px 15px;
+
+    border: 1px solid rgba(36, 54, 75, 0.12);
+    border-radius: 10px;
+
+    background-color: #ffffff;
+
+    color: #24364b;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+a.contact-editor-main__social-link:hover {
+    border-color: #b7a087;
+    background-color: #fbfaf7;
+}
+
+.contact-editor-main__social-link img {
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+}
+
+.contact-editor-main__social-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #24364b;
+}
+
+.contact-editor-main__social-link--invalid {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* ========================================================= */
+/* EDICIÓN DE URL */
+/* ========================================================= */
+
+.contact-editor-main__social-settings {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    width: 260px;
+    max-width: 100%;
+}
+
+.contact-editor-main__social-settings label {
+    color: #526371;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.contact-editor-main__social-settings input {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d4dfe5;
+    border-radius: 9px;
+
+    outline: none;
+
+    background-color: #ffffff;
+
+    color: #24364b;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.contact-editor-main__social-settings input:focus {
+    border-color: #b7a087;
+
+    box-shadow: 0 0 0 3px rgba(183, 160, 135, 0.15);
+}
+
+.contact-editor-main__social-settings input[aria-invalid="true"] {
+    border-color: #c76d6d;
+}
+
+.contact-editor-main__url-error {
+    color: #a64545;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ========================================================= */
+/* CONTROLES EDITABLES */
+/* ========================================================= */
+
+.contact-editor-main .editable-text {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.contact-editor-main .editable-text--editing {
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .contact-editor-main__title {
+        font-size: clamp(38px, 5vw, 54px);
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .contact-editor-main__title {
+        font-size: 40px;
+    }
+
+    .contact-editor-main__description {
+        font-size: 16px;
+    }
+
+    .contact-editor-main__notice {
+        padding: 22px;
+    }
+
+    .contact-editor-main__notice-title {
+        font-size: 21px;
+    }
+
+    .contact-editor-main__social-links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .contact-editor-main__social-item {
+        width: 100%;
+    }
+
+    .contact-editor-main__social-settings {
+        width: 100%;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 390px) {
+
+    .contact-editor-main__title {
+        font-size: 35px;
+    }
+
+    .contact-editor-main__notice {
+        padding: 18px;
+    }
+}
+
+/* ========================================================= */
+/* EDICIÓN VISUAL DE ENLACES SOCIALES */
+/* ========================================================= */
+
+.contact-editor-main__social-settings .editable-text {
+    width: 100%;
+    min-width: 0;
+}
+
+.contact-editor-main__social-url {
+    display: block;
+
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    color: #24364b;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.contact-editor-main__social-settings
+.editable-text__input {
+    min-width: 0;
+    width: 100%;
+}

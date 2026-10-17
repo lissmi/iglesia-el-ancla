@@ -1,0 +1,426 @@
+
+/* ========================================================= */
+/* FILTROS DEL INVENTARIO */
+/* ========================================================= */
+
+.basic-supplies__filters {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+/* ========================================================= */
+/* CONTENEDORES DE BÚSQUEDA Y FILTROS */
+/* ========================================================= */
+
+.basic-supplies__search,
+.basic-supplies__filter-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 48px;
+    padding: 0 15px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #78909c;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* ========================================================= */
+/* BUSCADOR */
+/* ========================================================= */
+
+.basic-supplies__search {
+    flex: 1;
+    min-width: 180px;
+}
+
+.basic-supplies__search > svg {
+    flex-shrink: 0;
+    color: #78909c;
+}
+
+.basic-supplies__search input {
+    width: 100%;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.basic-supplies__search input::placeholder {
+    color: #9aabb5;
+}
+
+.basic-supplies__search input::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* SELECT PERSONALIZADO */
+/* ========================================================= */
+
+.basic-supplies__filter-field {
+    position: relative;
+
+    flex: 0 0 205px;
+    min-width: 0;
+
+    cursor: pointer;
+}
+
+.basic-supplies__filter-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding: 0 23px 0 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* ICONO DEL FILTRO */
+/* ========================================================= */
+
+.basic-supplies__filter-icon {
+    flex-shrink: 0;
+    color: #78909c;
+
+    transition: color 0.2s ease;
+}
+
+/* ========================================================= */
+/* FLECHA PERSONALIZADA */
+/* ========================================================= */
+
+.basic-supplies__filter-chevron {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    flex-shrink: 0;
+    color: #78909c;
+
+    pointer-events: none;
+
+    transition: color 0.2s ease;
+}
+
+/* ========================================================= */
+/* OPCIONES DEL SELECT */
+/* ========================================================= */
+
+.basic-supplies__filter-field option {
+    background: #ffffff;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* ========================================================= */
+/* ESTADOS INTERACTIVOS */
+/* ========================================================= */
+
+.basic-supplies__search:hover,
+.basic-supplies__filter-field:hover {
+    border-color: #b3d4de;
+    background: #fbfdfd;
+}
+
+.basic-supplies__search:focus-within,
+.basic-supplies__filter-field:focus-within {
+    border-color: #2c8199;
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(44, 129, 153, 0.10);
+}
+
+.basic-supplies__filter-field:hover
+.basic-supplies__filter-chevron,
+.basic-supplies__filter-field:hover
+.basic-supplies__filter-icon {
+    color: #2c8199;
+}
+
+.basic-supplies__filter-field:focus-within
+.basic-supplies__filter-chevron,
+.basic-supplies__filter-field:focus-within
+.basic-supplies__filter-icon {
+    color: #2c8199;
+}
+
+/* ========================================================= */
+/* TABLA */
+/* ========================================================= */
+
+.basic-supplies__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.basic-supplies__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.basic-supplies__table th {
+    padding: 15px 14px;
+
+    border-bottom: 1px solid #e5edf1;
+
+    background: #f7fafb;
+    color: #718491;
+
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.basic-supplies__table td {
+    padding: 18px 14px;
+
+    border-bottom: 1px solid #edf1f4;
+
+    color: #526b7a;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.basic-supplies__table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.basic-supplies__table tbody tr:hover {
+    background: #f8fbfc;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN DEL INSUMO */
+/* ========================================================= */
+
+.basic-supplies__supply-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.basic-supplies__supply-name strong {
+    color: #17384c;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.basic-supplies__supply-name span {
+    color: #98a8b2;
+    font-size: 11px;
+}
+
+/* ========================================================= */
+/* ESTADOS DEL INVENTARIO */
+/* ========================================================= */
+
+.basic-supplies__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 10px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------- */
+/* DISPONIBLE */
+/* --------------------------------------------------------- */
+
+.basic-supplies__status--available {
+    background: #e3f4ed;
+    color: #2b846b;
+}
+
+/* --------------------------------------------------------- */
+/* STOCK BAJO */
+/* --------------------------------------------------------- */
+
+.basic-supplies__status--low {
+    background: #fff2df;
+    color: #ad7426;
+}
+
+/* --------------------------------------------------------- */
+/* AGOTADO */
+/* --------------------------------------------------------- */
+
+.basic-supplies__status--out {
+    background: #fbe9e6;
+    color: #b3574b;
+}
+
+/* ========================================================= */
+/* ACCIONES DEL INVENTARIO */
+/* ========================================================= */
+
+.basic-supplies__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.basic-supplies__actions button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 35px;
+    height: 35px;
+
+    border: 1px solid #e1eaee;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #607889;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.basic-supplies__actions button:hover {
+    border-color: #9ccbd6;
+    background: #eef7f9;
+    color: #2c8199;
+
+    transform: translateY(-1px);
+}
+
+.basic-supplies__actions button:focus-visible {
+    outline: 2px solid #2c8199;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE - TABLET */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+
+    .basic-supplies__filters {
+        flex-wrap: wrap;
+    }
+
+    .basic-supplies__search {
+        flex-basis: 100%;
+    }
+
+    .basic-supplies__filter-field {
+        flex: 1 1 180px;
+    }
+
+}
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVIL */
+/* ========================================================= */
+
+@media (max-width: 550px) {
+
+    .basic-supplies__filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 11px;
+    }
+
+    .basic-supplies__search,
+    .basic-supplies__filter-field {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .basic-supplies__search input,
+    .basic-supplies__filter-field select {
+        font-size: 14px;
+    }
+
+    .basic-supplies__table th {
+        padding: 13px 12px;
+    }
+
+    .basic-supplies__table td {
+        padding: 15px 12px;
+    }
+
+    .basic-supplies__actions button {
+        width: 34px;
+        height: 34px;
+    }
+
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD - MOVIMIENTO REDUCIDO */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .basic-supplies__search,
+    .basic-supplies__filter-field,
+    .basic-supplies__filter-icon,
+    .basic-supplies__filter-chevron,
+    .basic-supplies__table tbody tr,
+    .basic-supplies__actions button {
+        transition: none;
+    }
+
+    .basic-supplies__actions button:hover {
+        transform: none;
+    }
+
+}

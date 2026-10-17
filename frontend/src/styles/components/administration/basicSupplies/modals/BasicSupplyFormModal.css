@@ -1,0 +1,280 @@
+
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.basic-supply-form__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.basic-supply-form {
+    width: 100%;
+    max-width: 720px;
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 25px 65px rgba(15, 30, 42, 0.25);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.basic-supply-form__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.basic-supply-form__heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.basic-supply-form__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background: #e5f2f5;
+    color: #2c8199;
+}
+
+.basic-supply-form__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.basic-supply-form__heading p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.basic-supply-form__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+
+    border: 1px solid #e1eaee;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #607889;
+
+    cursor: pointer;
+}
+
+.basic-supply-form__close:hover {
+    background: #f1f7f9;
+    color: #17384c;
+}
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.basic-supply-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.basic-supply-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    color: #526b7a;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.basic-supply-form__field--full {
+    grid-column: 1 / -1;
+}
+
+.basic-supply-form__field input,
+.basic-supply-form__field select,
+.basic-supply-form__field textarea {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #f8fafb;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.basic-supply-form__field textarea {
+    resize: vertical;
+}
+
+.basic-supply-form__field input:focus,
+.basic-supply-form__field select:focus,
+.basic-supply-form__field textarea:focus {
+    border-color: #2c8199;
+
+    box-shadow:
+        0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+/* ========================================================= */
+/* CHECKBOX */
+/* ========================================================= */
+
+.basic-supply-form__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 22px;
+
+    color: #526b7a;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.basic-supply-form__checkbox input {
+    width: 16px;
+    height: 16px;
+    accent-color: #2c8199;
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+.basic-supply-form__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.basic-supply-form__cancel,
+.basic-supply-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 44px;
+    padding: 11px 20px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+.basic-supply-form__cancel {
+    border: 1px solid #dce7ec;
+
+    background: #ffffff;
+    color: #526b7a;
+}
+
+.basic-supply-form__cancel:hover {
+    background: #f5f8fa;
+}
+
+.basic-supply-form__submit {
+    border: 1px solid #2c8199;
+
+    background: #2c8199;
+    color: #ffffff;
+}
+
+.basic-supply-form__submit:hover {
+    background: #216c83;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 550px) {
+
+    .basic-supply-form__overlay {
+        padding: 12px;
+    }
+
+    .basic-supply-form {
+        padding: 20px;
+        max-height: calc(100vh - 24px);
+    }
+
+    .basic-supply-form__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .basic-supply-form__heading {
+        align-items: flex-start;
+    }
+
+    .basic-supply-form__footer {
+        flex-direction: column-reverse;
+    }
+
+    .basic-supply-form__footer button {
+        width: 100%;
+    }
+
+}

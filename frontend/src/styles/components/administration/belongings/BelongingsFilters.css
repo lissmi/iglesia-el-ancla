@@ -1,0 +1,186 @@
+
+/* ========================================================= */
+/* FILTROS DEL INVENTARIO DE BIENES */
+/* IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.belongings-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: 100%;
+    padding: 22px;
+
+    border: 1px solid #e9e7e3;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow: 0 4px 18px rgba(24, 42, 58, 0.035);
+}
+
+/* ========================================================= */
+/* BÚSQUEDA */
+/* ========================================================= */
+
+.belongings-filters__search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 46px;
+    padding: 0 15px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 10px;
+
+    background: #fafbfc;
+    color: #84909a;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.belongings-filters__search:focus-within {
+    border-color: #b7a087;
+    box-shadow: 0 0 0 3px rgba(183, 160, 135, 0.12);
+}
+
+.belongings-filters__search input {
+    flex: 1;
+    min-width: 0;
+
+    padding: 12px 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #24364b;
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.belongings-filters__search input::placeholder {
+    color: #9aa4ad;
+}
+
+/* ========================================================= */
+/* CONTROLES */
+/* ========================================================= */
+
+.belongings-filters__controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    align-items: end;
+    gap: 14px;
+}
+
+.belongings-filters__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 0;
+}
+
+.belongings-filters__field > span {
+    color: #526371;
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.belongings-filters__field select {
+    width: 100%;
+    min-height: 43px;
+    padding: 0 12px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #344e65;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.belongings-filters__field select:focus-visible {
+    outline: 3px solid rgba(183, 160, 135, 0.3);
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* LIMPIAR FILTROS */
+/* ========================================================= */
+
+.belongings-filters__reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 43px;
+    padding: 0 15px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #526371;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.belongings-filters__reset:hover {
+    background: #f4f0ea;
+    border-color: #cdb89f;
+}
+
+.belongings-filters__reset:focus-visible {
+    outline: 3px solid rgba(183, 160, 135, 0.35);
+    outline-offset: 2px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .belongings-filters__controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .belongings-filters {
+        padding: 16px;
+    }
+
+    .belongings-filters__controls {
+        grid-template-columns: 1fr;
+    }
+
+    .belongings-filters__reset {
+        width: 100%;
+    }
+
+}

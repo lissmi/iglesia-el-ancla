@@ -1,0 +1,114 @@
+
+/* ========================================================= */
+/* ABOUT HERO EDITOR - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Estilos exclusivos de la sección Hero administrativa. */
+/* No modifica la página pública About.jsx. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.about-editor-hero {
+    position: relative;
+
+    width: 100%;
+
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* TÍTULO PRINCIPAL */
+/* ========================================================= */
+
+.about-editor-hero__heading {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+
+    gap: 4px;
+
+    margin-bottom: 20px;
+}
+
+/* Contenedores de los títulos editables. */
+.about-editor-hero__heading .editable-text {
+    width: auto;
+    max-width: 100%;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* VERSÍCULO BÍBLICO */
+/* ========================================================= */
+
+.about-editor-hero__verse {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 25px;
+}
+
+/* Texto y referencia bíblica. */
+.about-editor-hero__verse .editable-text {
+    max-width: 760px;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* CAMPOS DE EDICIÓN */
+/* ========================================================= */
+
+/* Controlamos el ancho máximo al editar. */
+.about-editor-hero .editable-text--editing {
+    width: min(100%, 760px);
+}
+
+/* Mantenemos visibles los botones de edición. */
+.about-editor-hero .editable-text__edit-button {
+    z-index: 10;
+}
+
+/* Altura mínima de campos extensos. */
+.about-editor-hero .editable-text__input--multiline {
+    min-height: 120px;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .about-editor-hero__heading {
+        gap: 7px;
+
+        margin-bottom: 16px;
+    }
+
+    .about-editor-hero__verse {
+        gap: 10px;
+
+        margin-top: 20px;
+    }
+
+    .about-editor-hero__heading .editable-text,
+    .about-editor-hero__verse .editable-text {
+        width: 100%;
+    }
+}

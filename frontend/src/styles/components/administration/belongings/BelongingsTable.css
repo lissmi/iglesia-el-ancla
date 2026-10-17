@@ -1,0 +1,289 @@
+
+/* ========================================================= */
+/* TABLA DEL INVENTARIO DE BIENES */
+/* IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.belongings-table {
+    width: 100%;
+    overflow: hidden;
+
+    border: 1px solid #e9e7e3;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow: 0 4px 18px rgba(24, 42, 58, 0.035);
+}
+
+.belongings-table__scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.belongings-table table {
+    width: 100%;
+    min-width: 900px;
+
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* ========================================================= */
+/* ENCABEZADOS */
+/* ========================================================= */
+
+.belongings-table thead {
+    background: #f7f8f9;
+}
+
+.belongings-table th {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid #e9e7e3;
+
+    color: #526371;
+
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.belongings-table__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: inherit;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+
+    cursor: pointer;
+}
+
+.belongings-table__sort:hover,
+.belongings-table__sort--active {
+    color: #9a8066;
+}
+
+.belongings-table__sort-direction {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* FILAS */
+/* ========================================================= */
+
+.belongings-table td {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid #f0efec;
+
+    vertical-align: middle;
+
+    color: #344e65;
+    font-size: 13px;
+}
+
+.belongings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.belongings-table tbody tr:hover {
+    background: #faf9f7;
+}
+
+/* ========================================================= */
+/* INFORMACIÓN DEL BIEN */
+/* ========================================================= */
+
+.belongings-table__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.belongings-table__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    background: #f4f0ea;
+    color: #9a8066;
+}
+
+.belongings-table__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    min-width: 0;
+}
+
+.belongings-table__item-info strong {
+    color: #24364b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.belongings-table__item-info span {
+    color: #919ba4;
+
+    font-size: 11px;
+}
+
+.belongings-table__secondary {
+    color: #667685;
+}
+
+.belongings-table__quantity {
+    color: #24364b;
+
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* ESTADOS */
+/* ========================================================= */
+
+.belongings-table__condition {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 11px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.belongings-table__condition--excellent {
+    background: #e8f4ec;
+    color: #28734c;
+}
+
+.belongings-table__condition--good {
+    background: #edf5ef;
+    color: #428158;
+}
+
+.belongings-table__condition--fair {
+    background: #fff5e4;
+    color: #a57422;
+}
+
+.belongings-table__condition--damaged {
+    background: #fceae7;
+    color: #b44e3c;
+}
+
+.belongings-table__condition--out-of-service {
+    background: #edf0f2;
+    color: #64727e;
+}
+
+.belongings-table__condition--unknown {
+    background: #edf0f2;
+    color: #64727e;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.belongings-table__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.belongings-table__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+
+    border: 1px solid #e4e7e9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #526371;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.belongings-table__action:hover:not(:disabled) {
+    background: #f4f0ea;
+    border-color: #cdb89f;
+    color: #9a8066;
+}
+
+.belongings-table__action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.belongings-table__action:focus-visible,
+.belongings-table__sort:focus-visible {
+    outline: 3px solid rgba(183, 160, 135, 0.35);
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 700px) {
+
+    .belongings-table th,
+    .belongings-table td {
+        padding: 14px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* ACCIÓN ELIMINAR BIEN */
+/* ========================================================= */
+
+.belongings-table__action--delete {
+    color: #b42318;
+}
+
+.belongings-table__action--delete:hover:not(:disabled) {
+    color: #a52f23;
+    background-color: #fff0ee;
+    border-color: #f2c7c2;
+}
+
+.belongings-table__action--delete:focus-visible {
+    outline: 2px solid #c0392b;
+    outline-offset: 2px;
+}

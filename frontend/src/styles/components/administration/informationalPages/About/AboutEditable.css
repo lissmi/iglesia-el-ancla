@@ -1,0 +1,132 @@
+
+/* ========================================================= */
+/* ABOUT EDITABLE - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Contenedor general de la página Nosotros administrativa. */
+/* Cada sección mantiene su propio archivo CSS. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.about-editable {
+    width: 100%;
+    min-width: 0;
+
+    background-color: #ffffff;
+
+    overflow-x: clip;
+}
+
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.about-editable > section {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* MODO EDICIÓN */
+/* ========================================================= */
+
+.about-editable--editing {
+    position: relative;
+}
+
+/* Identificación visual de cada sección al pasar el mouse. */
+.about-editable--editing > section {
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+
+    transition: outline-color 0.2s ease;
+}
+
+.about-editable--editing > section:hover {
+    outline-color: rgba(44, 129, 153, 0.22);
+}
+
+
+/* ========================================================= */
+/* MODO VISTA PREVIA */
+/* ========================================================= */
+
+.about-editable--preview {
+    position: relative;
+}
+
+/* Sin contornos administrativos en la vista previa. */
+.about-editable--preview > section {
+    outline: none;
+}
+
+
+/* ========================================================= */
+/* ESTADO SIN CONTENIDO */
+/* ========================================================= */
+
+.about-editable__empty {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 350px;
+
+    padding: 40px 24px;
+
+    background-color: #f4f8fa;
+
+    text-align: center;
+}
+
+.about-editable__empty h2 {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.about-editable__empty p {
+    max-width: 480px;
+
+    margin: 0;
+
+    color: #647987;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .about-editable {
+        width: 100%;
+    }
+
+    .about-editable__empty {
+        min-height: 280px;
+
+        padding: 30px 18px;
+    }
+
+    .about-editable__empty h2 {
+        font-size: 20px;
+    }
+}

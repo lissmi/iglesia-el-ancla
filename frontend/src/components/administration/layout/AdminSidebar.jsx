@@ -33,10 +33,18 @@ import {
   UserRound,
   HeartHandshake,
   CalendarCheck,
+  Boxes,
+  PackageSearch,
+  ArrowLeftRight,
+  PackagePlus,
+  Wallet,
+  Sparkles,
 } from "lucide-react";
 
 // Importamos los estilos exclusivos del sidebar.
 import "../../../styles/components/administration/layout/AdminSidebar.css";
+
+import logoElAncla from "../../../assets/images/logo-el-ancla2.jpg";
 
 
 // =========================================================
@@ -149,14 +157,8 @@ function AdminSidebar({ isOpen, onClose }) {
   // ProtectedRoute y el backend deben validar el acceso.
 
   const navigationGroups = [
-
-    // -------------------------------------------------------
-    // PRINCIPAL
-    // -------------------------------------------------------
-
     {
       title: "Principal",
-
       items: [
         {
           label: "Inicio",
@@ -167,67 +169,32 @@ function AdminSidebar({ isOpen, onClose }) {
         },
       ],
     },
-
-
-    // -------------------------------------------------------
-    // MI ESPACIO PERSONAL
-    // -------------------------------------------------------
-
-    // Estas herramientas corresponden a la participación
-    // del usuario dentro de la iglesia.
-    //
-    // Los administradores también son miembros de
-    // la comunidad, por lo que conservan estos accesos.
-    //
-    // Las rutas no utilizan adminBasePath porque
-    // pertenecen al espacio personal compartido.
-
     {
       title: "Mi espacio personal",
-
       items: [
         {
           label: "Mi espacio",
-
           path: "/member",
-
           icon: UserRound,
-
           available: true,
-
           end: true,
         },
-
         {
           label: "Mis actividades",
-
           path: "/member/eventos",
-
           icon: CalendarCheck,
-
           available: true,
         },
-
         {
           label: "Mis peticiones de oración",
-
           path: "/member/peticiones-oracion",
-
           icon: HeartHandshake,
-
           available: true,
         },
       ],
     },
-
-
-    // -------------------------------------------------------
-    // COMUNIDAD
-    // -------------------------------------------------------
-
     {
       title: "Comunidad",
-
       items: [
         {
           label: "Eventos",
@@ -247,16 +214,16 @@ function AdminSidebar({ isOpen, onClose }) {
           icon: Users,
           available: true,
         },
+        {
+          label: "Voluntarios",
+          path: `${adminBasePath}/voluntarios`,
+          icon: UsersRound,
+          available: true,
+        },
       ],
     },
-
-    // -------------------------------------------------------
-    // CONTENIDOS
-    // -------------------------------------------------------
-
     {
       title: "Contenidos",
-
       items: [
         {
           label: "Recursos",
@@ -265,121 +232,121 @@ function AdminSidebar({ isOpen, onClose }) {
           available: true,
         },
         {
-          label: "Gestión de páginas",
-          path: `${adminBasePath}/contenidos/paginas`,
+          label: "Recomendados",
+          path: `${adminBasePath}/recomendados`,
+          icon: Sparkles,
+          available: true,
+        },
+        {
+          label: "Páginas informativas",
+          path: `${adminBasePath}/paginas-informativas`,
           icon: FilePenLine,
-          available: false,
+          available: true,
         },
       ],
     },
-
-    // -------------------------------------------------------
-    // FINANZAS
-    // -------------------------------------------------------
-
     {
       title: "Finanzas",
-
       items: [
+        {
+          label: "Resumen financiero",
+          path: `${adminBasePath}/finanzas`,
+          icon: Wallet,
+          available: true,
+          end: true,
+        },
         {
           label: "Ingresos",
           path: `${adminBasePath}/finanzas/ingresos`,
           icon: BadgeDollarSign,
-          available: false,
+          available: true,
         },
         {
           label: "Gastos",
           path: `${adminBasePath}/finanzas/gastos`,
           icon: ReceiptText,
-
-          // Actualmente la ruta está implementada
-          // solamente en el panel super_admin.
-          available: isSuperAdminPanel,
+          available: true,
         },
       ],
     },
-
-    // -------------------------------------------------------
-    // ADMINISTRACIÓN - MÓDULOS COMPARTIDOS
-    // -------------------------------------------------------
-
+    {
+      title: "Inventario y suministros",
+      items: [
+        {
+          label: "Insumos básicos",
+          path: `${adminBasePath}/insumos-basicos`,
+          icon: PackagePlus,
+          available: true,
+        },
+        {
+          label: "Inventario de Bienes",
+          path: `${adminBasePath}/inventario-bienes`,
+          icon: Boxes,
+          available: true,
+          end: true,
+        },
+        {
+          label: "Ver inventario",
+          path: `${adminBasePath}/inventario-bienes/inventario`,
+          icon: PackageSearch,
+          available: true,
+        },
+        {
+          label: "Movimientos de bienes",
+          path: `${adminBasePath}/inventario-bienes/movimientos`,
+          icon: ArrowLeftRight,
+          available: true,
+        },
+      ],
+    },
     {
       title: "Administración",
-
       items: [
         {
           label: "Gestión de usuarios",
-
           path: `${adminBasePath}/sistema/usuarios`,
-
           icon: UsersRound,
-
           available: true,
         },
         {
           label: "Registrar usuario",
-
           path: `${adminBasePath}/sistema/registrar-usuario`,
-
           icon: UserPlus,
-
           available: true,
         },
         {
           label: "Historial de actividad",
-
           path: `${adminBasePath}/historial`,
-
           icon: History,
-
           available: true,
         },
       ],
     },
-
-    // -------------------------------------------------------
-    // SISTEMA - EXCLUSIVO SUPERADMINISTRADOR
-    // -------------------------------------------------------
-
     {
       title: "Sistema",
-
-      // Este grupo no se muestra en /admin.
       superAdminOnly: true,
-
       items: [
         {
           label: "Administradores",
-
           path: `${adminBasePath}/sistema/administradores`,
-
           icon: ShieldCheck,
-
           available: true,
         },
         {
           label: "Roles y permisos",
-
           path: `${adminBasePath}/sistema/roles-permisos`,
-
           icon: UserRoundCog,
-
           available: true,
         },
         {
           label: "Configuración",
-
           path: `${adminBasePath}/sistema/configuracion`,
-
           icon: Settings,
-
           available: true,
         },
       ],
     },
-
   ];
-
 
 
   // =========================================================
@@ -419,12 +386,13 @@ function AdminSidebar({ isOpen, onClose }) {
 
       <div className="admin-sidebar__brand">
 
-        {/* Icono institucional. */}
-        <div
-          className="admin-sidebar__brand-icon"
-          aria-hidden="true"
-        >
-          ⚓
+        {/* Logo oficial de Iglesia El Ancla. */}
+        <div className="admin-sidebar__brand-icon">
+          <img
+            src={logoElAncla}
+            alt="Logo Iglesia El Ancla"
+            className="admin-sidebar__brand-logo"
+          />
         </div>
 
         {/* Nombre de la iglesia. */}

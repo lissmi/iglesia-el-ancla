@@ -1,0 +1,393 @@
+
+/* ========================================================= */
+/* ABOUT INVITATION EDITOR - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Estilos exclusivos de la invitación final. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* SECCIÓN PRINCIPAL */
+/* ========================================================= */
+
+.about-editor-invitation {
+    position: relative;
+
+    width: 100%;
+
+    padding: 90px 30px;
+
+    overflow: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #17384c 0%,
+        #204e65 65%,
+        #2c8199 100%
+    );
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR */
+/* ========================================================= */
+
+.about-editor-invitation__container {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO */
+/* ========================================================= */
+
+.about-editor-invitation__content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+}
+
+
+/* Subtítulo. */
+.about-editor-invitation__eyebrow {
+    display: inline-block;
+
+    margin-bottom: 15px;
+
+    color: #a6dce9;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+/* Título. */
+.about-editor-invitation__title {
+    margin: 0 0 22px;
+
+    color: #ffffff;
+
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+
+/* Descripción. */
+.about-editor-invitation__description {
+    max-width: 760px;
+
+    margin: 0;
+
+    color: #e0edf3;
+
+    font-size: 16px;
+    line-height: 1.85;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR DE BOTONES */
+/* ========================================================= */
+
+.about-editor-invitation__actions {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+
+    gap: 22px;
+
+    width: 100%;
+
+    margin-top: 38px;
+}
+
+
+/* ========================================================= */
+/* EDITOR DE CADA BOTÓN */
+/* ========================================================= */
+
+.about-editor-invitation__button-editor {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 210px;
+}
+
+
+/* Área visual del texto editable. */
+.about-editor-invitation__button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 50px;
+
+    padding: 12px 23px;
+
+    border-radius: 12px;
+}
+
+
+/* Botón principal. */
+.about-editor-invitation__button-editor--primary
+.about-editor-invitation__button-content {
+    background-color: #ffffff;
+}
+
+
+/* Botón secundario. */
+.about-editor-invitation__button-editor--secondary
+.about-editor-invitation__button-content {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* Texto del botón. */
+.about-editor-invitation__button-text {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* Texto principal. */
+.about-editor-invitation__button-editor--primary
+.about-editor-invitation__button-text {
+    color: #17384c;
+}
+
+
+/* Texto secundario. */
+.about-editor-invitation__button-editor--secondary
+.about-editor-invitation__button-text {
+    color: #ffffff;
+}
+
+
+/* ========================================================= */
+/* CONFIGURACIÓN DE DESTINOS */
+/* ========================================================= */
+
+.about-editor-invitation__route-control {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 7px;
+
+    width: 100%;
+    max-width: 250px;
+}
+
+
+/* Etiqueta. */
+.about-editor-invitation__route-label {
+    color: #e0edf3;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* Selector de destino. */
+.about-editor-invitation__route-select {
+    width: 100%;
+    min-height: 40px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #c9dce4;
+    border-radius: 9px;
+
+    outline: none;
+
+    background-color: #ffffff;
+
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+/* Estado de foco. */
+.about-editor-invitation__route-select:focus {
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.18);
+}
+
+
+/* ========================================================= */
+/* ENLACES EN VISTA PREVIA */
+/* ========================================================= */
+
+.about-editor-invitation__preview-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 50px;
+
+    padding: 12px 25px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-align: center;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Enlace principal. */
+.about-editor-invitation__preview-link--primary {
+    background-color: #ffffff;
+
+    color: #17384c;
+}
+
+
+/* Enlace secundario. */
+.about-editor-invitation__preview-link--secondary {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    background-color: rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+}
+
+
+/* Interacción. */
+.about-editor-invitation__preview-link:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ========================================================= */
+/* COMPONENTES EDITABLES */
+/* ========================================================= */
+
+.about-editor-invitation__content > .editable-text {
+    width: 100%;
+    max-width: 800px;
+
+    text-align: center;
+}
+
+.about-editor-invitation .editable-text--editing {
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 992px) {
+
+    .about-editor-invitation {
+        padding: 75px 25px;
+    }
+
+    .about-editor-invitation__description {
+        font-size: 15px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+    .about-editor-invitation {
+        padding: 60px 20px;
+    }
+
+    .about-editor-invitation__title {
+        font-size: 35px;
+    }
+
+    .about-editor-invitation__actions {
+        gap: 20px;
+
+        margin-top: 30px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+
+    .about-editor-invitation {
+        padding: 50px 16px;
+    }
+
+    .about-editor-invitation__title {
+        font-size: 29px;
+    }
+
+    .about-editor-invitation__description {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .about-editor-invitation__actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .about-editor-invitation__button-editor {
+        width: 100%;
+    }
+
+    .about-editor-invitation__button-content,
+    .about-editor-invitation__preview-link {
+        width: 100%;
+    }
+
+    .about-editor-invitation__route-control {
+        max-width: 100%;
+    }
+}

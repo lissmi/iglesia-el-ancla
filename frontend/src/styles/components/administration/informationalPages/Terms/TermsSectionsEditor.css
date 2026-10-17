@@ -1,0 +1,232 @@
+
+/* ========================================================= */
+/* DOCUMENTO - TÉRMINOS Y CONDICIONES */
+/* ========================================================= */
+
+.terms-editor-document {
+    padding: 85px 24px 110px;
+
+    background: linear-gradient(
+        135deg,
+        #f4f2ee 0%,
+        #ffffff 60%,
+        #edf1f3 100%
+    );
+}
+
+.terms-editor-document__container {
+    display: grid;
+    grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+
+    align-items: start;
+    gap: 65px;
+
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================================= */
+/* ÍNDICE LATERAL */
+/* ========================================================= */
+
+.terms-editor-document__sidebar {
+    min-width: 0;
+}
+
+.terms-editor-document__sidebar-card {
+    position: sticky;
+    top: 24px;
+
+    padding: 25px 22px;
+
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 16px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 10px 30px rgba(36, 54, 75, 0.04);
+}
+
+.terms-editor-document__sidebar-card h2 {
+    margin: 0 0 22px;
+
+    color: #24364b;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.terms-editor-document__sidebar-card nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.terms-editor-document__sidebar-card a {
+    display: flex;
+    align-items: baseline;
+
+    gap: 12px;
+
+    padding: 10px 8px;
+
+    border-radius: 8px;
+
+    color: #5d6977;
+
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.terms-editor-document__sidebar-card a:hover {
+    background-color: #f4f2ee;
+    color: #24364b;
+}
+
+.terms-editor-document__sidebar-card a span {
+    flex-shrink: 0;
+
+    color: #9a8066;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* CONTENIDO PRINCIPAL */
+/* ========================================================= */
+
+.terms-editor-document__content {
+    min-width: 0;
+}
+
+.terms-editor-document__intro {
+    padding: 30px;
+
+    border: 1px solid rgba(36, 54, 75, 0.09);
+    border-radius: 16px;
+
+    background-color: #ffffff;
+}
+
+
+.terms-editor-document__intro-text {
+    margin: 0;
+
+    color: #5d6977;
+
+    font-size: 15px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.terms-editor-document__section {
+    padding: 34px 0;
+
+    border-bottom: 1px solid rgba(36, 54, 75, 0.12);
+
+    scroll-margin-top: 30px;
+}
+
+.terms-editor-document__section-heading {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-bottom: 16px;
+}
+
+.terms-editor-document__number {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 11px;
+
+    background-color: #eae3da;
+    color: #8a7057;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.terms-editor-document__section-title {
+    margin: 4px 0 0;
+
+    color: #182838;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.terms-editor-document__section-content {
+    margin: 0;
+
+    color: #5d6977;
+
+    font-size: 15px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+/* ========================================================= */
+/* CONTROLES EDITABLES */
+/* ========================================================= */
+
+.terms-editor-document .editable-text {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.terms-editor-document .editable-text--editing {
+    width: 100%;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 950px) {
+    .terms-editor-document__container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .terms-editor-document__sidebar-card {
+        position: static;
+    }
+}
+
+@media (max-width: 650px) {
+    .terms-editor-document {
+        padding: 65px 18px 85px;
+    }
+
+    .terms-editor-document__intro {
+        padding: 22px;
+    }
+
+    .terms-editor-document__section-title {
+        font-size: 21px;
+    }
+
+    .terms-editor-document__section-heading {
+        gap: 12px;
+    }
+}

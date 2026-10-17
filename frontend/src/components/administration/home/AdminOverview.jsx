@@ -26,6 +26,9 @@ import {
     UserRoundCheck,
     TrendingUp,
     ChartNoAxesCombined,
+    Boxes,
+    Files,
+    Armchair,
 } from "lucide-react";
 
 
@@ -174,6 +177,27 @@ const administrativeModules = [
 
 
     // =====================================================
+    // PÁGINAS INFORMATIVAS
+    // =====================================================
+
+    {
+        id: "informational-pages",
+
+        title: "Páginas informativas",
+
+        description:
+            "Administra las páginas institucionales, información para visitantes, términos y condiciones y políticas del sitio web.",
+
+        icon: Files,
+
+        path: "/paginas-informativas",
+
+        available: true,
+    },
+
+
+
+    // =====================================================
     // MÓDULOS FINANCIEROS
     // =====================================================
 
@@ -236,6 +260,56 @@ const administrativeModules = [
 
         // Se habilitará cuando construyamos
         // el módulo de resumen financiero.
+
+        available: true,
+    },
+
+    // =========================================================
+    // INSUMOS BÁSICOS
+    // =========================================================
+
+    // Módulo destinado a la gestión de los recursos físicos
+    // utilizados habitualmente por la iglesia.
+    //
+    // Se mantiene separado de "Recursos", que corresponde
+    // a los materiales digitales y de estudio.
+
+    {
+        id: "basic-supplies",
+
+        title: "Insumos básicos",
+
+        description:
+            "Gestiona alimentos, artículos de aseo, materiales educativos, existencias y necesidades de reposición de la iglesia.",
+
+        icon: Boxes,
+
+        path: "/insumos-basicos",
+
+        available: true,
+    },
+
+    // =========================================================
+    // INVENTARIO DE BIENES
+    // =========================================================
+
+    // Módulo destinado al registro y control de bienes
+    // reutilizables pertenecientes a la iglesia.
+    //
+    // Se mantiene independiente de Insumos básicos,
+    // que administra productos de consumo y reposición.
+
+    {
+        id: "belongings",
+
+        title: "Inventario de Bienes",
+
+        description:
+            "Administra mobiliario, equipos, instrumentos musicales, Biblias y otros bienes de la iglesia, incluyendo su ubicación, estado y movimientos.",
+
+        icon: Armchair,
+
+        path: "/inventario-bienes",
 
         available: true,
     },

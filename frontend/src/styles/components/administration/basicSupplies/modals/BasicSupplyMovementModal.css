@@ -1,0 +1,332 @@
+
+/* ========================================================= */
+/* FONDO DEL MODAL */
+/* ========================================================= */
+
+.basic-supply-movement__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(4px);
+
+    overflow-y: auto;
+}
+
+/* ========================================================= */
+/* VENTANA PRINCIPAL */
+/* ========================================================= */
+
+.basic-supply-movement {
+    width: 100%;
+    max-width: 470px;
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 25px 65px rgba(15, 30, 42, 0.25);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.basic-supply-movement__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+.basic-supply-movement__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    border-radius: 13px;
+}
+
+.basic-supply-movement__icon--income {
+    background: #e4f4ed;
+    color: #2b846b;
+}
+
+.basic-supply-movement__icon--expense {
+    background: #fff1df;
+    color: #b77a25;
+}
+
+.basic-supply-movement__heading {
+    flex: 1;
+    min-width: 0;
+}
+
+.basic-supply-movement__heading h2 {
+    margin: 0 0 7px;
+
+    color: #17384c;
+    font-size: 20px;
+}
+
+.basic-supply-movement__heading p {
+    margin: 0;
+
+    color: #718491;
+    font-size: 13px;
+}
+
+.basic-supply-movement__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+
+    border: 1px solid #e1eaee;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #607889;
+
+    cursor: pointer;
+}
+
+.basic-supply-movement__close:hover {
+    background: #f1f7f9;
+}
+
+/* ========================================================= */
+/* STOCK ACTUAL */
+/* ========================================================= */
+
+.basic-supply-movement__stock {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 23px;
+    padding: 16px;
+
+    border: 1px solid #dcebf0;
+    border-radius: 12px;
+
+    background: #f3f9fa;
+}
+
+.basic-supply-movement__stock-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    background: #e0eff3;
+    color: #2c8199;
+}
+
+.basic-supply-movement__stock > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.basic-supply-movement__stock span {
+    color: #718491;
+    font-size: 12px;
+}
+
+.basic-supply-movement__stock strong {
+    color: #17384c;
+    font-size: 18px;
+}
+
+/* ========================================================= */
+/* CAMPO DE CANTIDAD */
+/* ========================================================= */
+
+.basic-supply-movement__field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    color: #526b7a;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.basic-supply-movement__field input {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #dce7ec;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #f8fafb;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.basic-supply-movement__field input:focus {
+    border-color: #2c8199;
+
+    box-shadow:
+        0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+/* ========================================================= */
+/* ADVERTENCIA */
+/* ========================================================= */
+
+.basic-supply-movement__warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin-top: 14px;
+    padding: 13px;
+
+    border-radius: 10px;
+
+    background: #fff2df;
+    color: #a46b23;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.basic-supply-movement__warning svg {
+    flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* RESULTADO DEL MOVIMIENTO */
+/* ========================================================= */
+
+.basic-supply-movement__result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 17px;
+    padding: 15px 0;
+
+    border-top: 1px solid #e8eef2;
+}
+
+.basic-supply-movement__result span {
+    color: #718491;
+    font-size: 12px;
+}
+
+.basic-supply-movement__result strong {
+    color: #17384c;
+    font-size: 16px;
+}
+
+/* ========================================================= */
+/* BOTONES */
+/* ========================================================= */
+
+.basic-supply-movement__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 11px;
+
+    margin-top: 25px;
+}
+
+.basic-supply-movement__cancel,
+.basic-supply-movement__submit {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 11px 19px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+.basic-supply-movement__cancel {
+    border: 1px solid #dce7ec;
+    background: #ffffff;
+    color: #526b7a;
+}
+
+.basic-supply-movement__submit {
+    border: 1px solid #2c8199;
+    background: #2c8199;
+    color: #ffffff;
+}
+
+.basic-supply-movement__submit:hover:not(:disabled) {
+    background: #216c83;
+}
+
+.basic-supply-movement__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 550px) {
+
+    .basic-supply-movement__overlay {
+        padding: 12px;
+    }
+
+    .basic-supply-movement {
+        padding: 20px;
+        max-height: calc(100vh - 24px);
+    }
+
+    .basic-supply-movement__footer {
+        flex-direction: column-reverse;
+    }
+
+    .basic-supply-movement__footer button {
+        width: 100%;
+    }
+
+}

@@ -1,0 +1,33 @@
+
+/* ========================================================= */
+/* PÁGINA PÚBLICA - TÉRMINOS Y CONDICIONES */
+/* ========================================================= */
+
+.terms-public-page {
+    width: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: clip;
+
+    background-color: #f9f8f5;
+}
+
+/* ========================================================= */
+/* INTEGRACIÓN CON EL DISEÑO PÚBLICO */
+/* ========================================================= */
+
+.terms-public-page .terms-editable {
+    width: 100%;
+    min-height: 100%;
+}
+
+.terms-public-page .terms-editor-hero {
+    width: 100%;
+}
+
+.terms-public-page .terms-editor-document {
+    width: 100%;
+}

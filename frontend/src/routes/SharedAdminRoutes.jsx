@@ -2,8 +2,8 @@
 // IMPORTACIONES
 // =========================================================
 
-import { Route } from "react-router-dom";
-
+import { Outlet, Route } from "react-router-dom";
+import { BelongingsProvider } from "../context/belongings/BelongingsContext";
 
 // =========================================================
 // PÁGINAS ADMINISTRATIVAS COMPARTIDAS
@@ -32,6 +32,18 @@ import IncomeManagement from "../pages/administration/IncomeManagement";
 import ExpenseManagement from "../pages/administration/ExpenseManagement";
 
 import FinanceOverview from "../pages/administration/FinanceOverview";
+
+import BasicSupplies from "../pages/administration/BasicSupplies";
+
+import InformationalPages from "../pages/administration/InformationalPages";
+
+import InformationalPageEditor from "../pages/administration/InformationalPageEditor";
+
+import BelongingsDashboard from "../pages/administration/belongings/BelongingsDashboard";
+
+import BelongingsInventory from "../pages/administration/belongings/BelongingsInventory";
+
+import BelongingsMovements from "../pages/administration/belongings/BelongingsMovements";
 
 
 // =========================================================
@@ -166,13 +178,54 @@ function SharedAdminRoutes() {
 
 
             {/* =========================================== */}
-            {/* PRÓXIMOS MÓDULOS COMPARTIDOS */}
+            {/* INSUMOS BASICOS */}
             {/* =========================================== */}
 
-            {/*
-                - Gestión de páginas.
-                - Resumen general de finanzas.
-            */}
+            <Route
+                path="insumos-basicos"
+                element={<BasicSupplies />}
+            />
+
+            {/* ===================================================== */}
+            {/* INVENTARIO DE BIENES */}
+            {/* ===================================================== */}
+
+            <Route
+                path="inventario-bienes"
+                element={
+                    <BelongingsProvider>
+                        <Outlet />
+                    </BelongingsProvider>
+                }
+            >
+                <Route
+                    index
+                    element={<BelongingsDashboard />}
+                />
+
+                <Route
+                    path="inventario"
+                    element={<BelongingsInventory />}
+                />
+
+                <Route
+                    path="movimientos"
+                    element={<BelongingsMovements />}
+                />
+            </Route>
+
+            {/* =========================================== */}
+            {/* PAGINAS INFORMATIVAS */}
+            {/* =========================================== */}
+            <Route
+                path="paginas-informativas"
+                element={<InformationalPages />}
+            />
+
+            <Route
+                path="paginas-informativas/editar/:slug"
+                element={<InformationalPageEditor />}
+            />
 
         </>
     );

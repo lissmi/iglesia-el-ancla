@@ -1,0 +1,262 @@
+
+/* ========================================================= */
+/* CONTACT INFORMATION EDITOR - IGLESIA EL ANCLA */
+/* ========================================================= */
+/* Estilos exclusivos de las tarjetas editables de contacto. */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* SECCIÓN PRINCIPAL */
+/* ========================================================= */
+
+.contact-editor-information {
+    width: 100%;
+
+    padding: 90px 24px;
+
+    background-color: #ffffff;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR DE TARJETAS */
+/* ========================================================= */
+
+.contact-editor-information__container {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+
+    width: 100%;
+    max-width: 1240px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================================= */
+/* TARJETA INDIVIDUAL */
+/* ========================================================= */
+
+.contact-editor-information__card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    min-width: 0;
+
+    padding: 30px 26px;
+
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 18px;
+
+    background-color: #fbfaf7;
+
+    box-shadow: 0 12px 30px rgba(24, 40, 56, 0.07);
+}
+
+
+/* ========================================================= */
+/* ICONOS */
+/* ========================================================= */
+
+.contact-editor-information__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    width: 76px;
+    height: 76px;
+
+    border-radius: 50%;
+
+    background-color: rgba(183, 160, 135, 0.13);
+}
+
+.contact-editor-information__icon {
+    width: 56px;
+    height: 56px;
+
+    object-fit: contain;
+}
+
+.contact-editor-information__icon--reunion {
+    width: 100px;
+    height: 100px;
+}
+
+
+/* ========================================================= */
+/* CONTENIDO DE LA TARJETA */
+/* ========================================================= */
+
+.contact-editor-information__content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* Etiqueta superior. */
+.contact-editor-information__label {
+    margin: 0 0 7px;
+
+    color: #9a8066;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+
+/* Título principal. */
+.contact-editor-information__title {
+    margin: 0;
+
+    color: #182838;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+
+/* ========================================================= */
+/* DIRECCIÓN Y HORARIOS */
+/* ========================================================= */
+
+.contact-editor-information__details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0;
+
+    margin-top: 11px;
+}
+
+.contact-editor-information__description {
+    margin: 0;
+
+    color: #667281;
+
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+
+/* ========================================================= */
+/* CORREO INSTITUCIONAL */
+/* ========================================================= */
+
+.contact-editor-information__email {
+    display: inline-block;
+
+    max-width: 100%;
+
+    margin-top: 11px;
+
+    color: #24364b;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+a.contact-editor-information__email {
+    text-decoration: underline;
+}
+
+a.contact-editor-information__email:hover {
+    color: #9a8066;
+}
+
+
+/* ========================================================= */
+/* CONTROLES DE EDICIÓN */
+/* ========================================================= */
+
+.contact-editor-information .editable-text {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.contact-editor-information .editable-text--editing {
+    width: 100%;
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - TABLETS */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .contact-editor-information__container {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-editor-information__card {
+        width: 100%;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .contact-editor-information {
+        padding: 72px 18px;
+    }
+
+    .contact-editor-information__card {
+        padding: 26px 21px;
+    }
+
+    .contact-editor-information__icon-wrapper {
+        width: 66px;
+        height: 66px;
+    }
+
+    .contact-editor-information__icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .contact-editor-information__icon--reunion {
+        width: 86px;
+        height: 86px;
+    }
+
+    .contact-editor-information__title {
+        font-size: 21px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 390px) {
+
+    .contact-editor-information__card {
+        flex-direction: column;
+    }
+
+    .contact-editor-information__content {
+        width: 100%;
+    }
+}

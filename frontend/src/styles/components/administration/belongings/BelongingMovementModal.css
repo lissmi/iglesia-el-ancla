@@ -1,0 +1,359 @@
+
+/* ========================================================= */
+/* MODAL DE MOVIMIENTOS - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.belonging-movement-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(3px);
+
+    overflow-y: auto;
+}
+
+.belonging-movement-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 680px;
+    max-height: calc(100vh - 48px);
+
+    overflow: hidden;
+
+    border-radius: 20px;
+    background: #ffffff;
+
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.belonging-movement-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 25px 28px;
+
+    border-bottom: 1px solid #edf0f2;
+}
+
+.belonging-movement-modal__heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.belonging-movement-modal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+    background: #f4f0ea;
+    color: #9a8066;
+}
+
+.belonging-movement-modal__heading h2 {
+    margin: 0 0 7px;
+    color: #24364b;
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.belonging-movement-modal__heading p {
+    margin: 0;
+    color: #82909b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.belonging-movement-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f4f5f6;
+    color: #64727e;
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.belonging-movement-modal__form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.belonging-movement-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    padding: 26px 28px;
+    overflow-y: auto;
+}
+
+.belonging-movement-modal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.belonging-movement-modal__field label {
+    color: #344e65;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.belonging-movement-modal__field label span {
+    color: #b44e3c;
+}
+
+.belonging-movement-modal__field input,
+.belonging-movement-modal__field select,
+.belonging-movement-modal__field textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #344e65;
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.belonging-movement-modal__field textarea {
+    min-height: 105px;
+    resize: vertical;
+}
+
+.belonging-movement-modal__field input:focus,
+.belonging-movement-modal__field select:focus,
+.belonging-movement-modal__field textarea:focus {
+    outline: none;
+    border-color: #b7a087;
+    box-shadow: 0 0 0 3px rgba(183, 160, 135, 0.12);
+}
+
+/* ========================================================= */
+/* INFORMACIÓN ACTUAL DEL BIEN */
+/* ========================================================= */
+
+.belonging-movement-modal__current {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    padding: 17px;
+
+    border-radius: 12px;
+    background: #f7f8f9;
+}
+
+.belonging-movement-modal__current div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.belonging-movement-modal__current span {
+    color: #87919b;
+    font-size: 11px;
+}
+
+.belonging-movement-modal__current strong {
+    color: #344e65;
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* ========================================================= */
+/* TIPOS DE MOVIMIENTO */
+/* ========================================================= */
+
+.belonging-movement-modal__types {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.belonging-movement-modal__type {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    padding: 17px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #87919b;
+
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.belonging-movement-modal__type strong {
+    color: #344e65;
+    font-size: 13px;
+}
+
+.belonging-movement-modal__type span {
+    font-size: 11px;
+}
+
+.belonging-movement-modal__type--active {
+    border-color: #b7a087;
+    background: #faf7f2;
+    color: #9a8066;
+}
+
+.belonging-movement-modal__type--active strong {
+    color: #8e765f;
+}
+
+/* ========================================================= */
+/* ERROR */
+/* ========================================================= */
+
+.belonging-movement-modal__error {
+    padding: 13px 15px;
+
+    border: 1px solid #f0c8c1;
+    border-radius: 9px;
+
+    background: #fff1ee;
+    color: #a94235;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.belonging-movement-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    padding: 20px 28px;
+
+    border-top: 1px solid #edf0f2;
+}
+
+.belonging-movement-modal__cancel,
+.belonging-movement-modal__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 43px;
+    padding: 10px 18px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.belonging-movement-modal__cancel {
+    border: 1px solid #e2e6e9;
+    background: #ffffff;
+    color: #526371;
+}
+
+.belonging-movement-modal__submit {
+    border: 1px solid #24364b;
+    background: #24364b;
+    color: #ffffff;
+}
+
+.belonging-movement-modal__submit:hover {
+    background: #344e65;
+}
+
+.belonging-movement-modal__submit:disabled,
+.belonging-movement-modal__cancel:disabled,
+.belonging-movement-modal__close:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .belonging-movement-modal__overlay {
+        padding: 12px;
+    }
+
+    .belonging-movement-modal {
+        max-height: calc(100vh - 24px);
+    }
+
+    .belonging-movement-modal__header,
+    .belonging-movement-modal__body,
+    .belonging-movement-modal__footer {
+        padding: 18px;
+    }
+
+    .belonging-movement-modal__current {
+        grid-template-columns: 1fr;
+    }
+
+    .belonging-movement-modal__types {
+        grid-template-columns: 1fr;
+    }
+
+    .belonging-movement-modal__footer {
+        flex-direction: column-reverse;
+    }
+
+    .belonging-movement-modal__footer button {
+        width: 100%;
+    }
+}

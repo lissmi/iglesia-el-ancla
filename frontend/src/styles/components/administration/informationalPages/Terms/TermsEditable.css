@@ -1,0 +1,18 @@
+
+/* ========================================================= */
+/* TÉRMINOS Y CONDICIONES - CONTENEDOR PRINCIPAL */
+/* ========================================================= */
+
+.terms-editable {
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    background-color: #f9f8f5;
+    color: #24364b;
+}
+
+.terms-editable--preview {
+    background-color: #f9f8f5;
+}

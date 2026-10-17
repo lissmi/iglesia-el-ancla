@@ -1,0 +1,355 @@
+
+/* ========================================================= */
+/* EDITABLE IMAGE - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.editable-image {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Resaltado administrativo. */
+.editable-image:hover {
+    outline: 1px dashed rgba(44, 129, 153, 0.55);
+    outline-offset: 5px;
+    border-radius: 8px;
+}
+
+/* ========================================================= */
+/* BOTÓN EDITAR IMAGEN */
+/* ========================================================= */
+
+.editable-image__edit-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: 1px solid rgba(44, 129, 153, 0.2);
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #2c8199;
+
+    box-shadow: 0 5px 15px rgba(23, 56, 76, 0.15);
+
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateY(-4px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.editable-image:hover .editable-image__edit-button,
+.editable-image:focus-within .editable-image__edit-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.editable-image__edit-button:hover {
+    background: #eaf5f7;
+}
+
+/* ========================================================= */
+/* PANEL DE EDICIÓN */
+/* ========================================================= */
+
+.editable-image__panel {
+    position: relative;
+    z-index: 6;
+
+    width: 100%;
+    margin-top: 15px;
+    padding: 20px;
+
+    border: 1px solid #dce5ea;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow: 0 12px 32px rgba(23, 56, 76, 0.12);
+}
+
+.editable-image__panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.editable-image__panel-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #17384c;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.editable-image__close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #f0f3f5;
+    color: #526575;
+
+    cursor: pointer;
+}
+
+.editable-image__close:hover {
+    background: #e2e8ed;
+}
+
+/* ========================================================= */
+/* CARGA DE ARCHIVOS */
+/* ========================================================= */
+
+.editable-image__file-input {
+    display: none;
+}
+
+.editable-image__upload-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+
+    width: 100%;
+    min-height: 46px;
+
+    padding: 12px 16px;
+
+    border: 1px dashed #2c8199;
+    border-radius: 10px;
+
+    background: #eef7f9;
+    color: #246e82;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.editable-image__upload-button:hover {
+    background: #dff0f4;
+}
+
+.editable-image__help {
+    margin: 9px 0 18px;
+
+    color: #778794;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* ========================================================= */
+/* TEXTO ALTERNATIVO */
+/* ========================================================= */
+
+.editable-image__label {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    color: #344e61;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.editable-image__alt-input {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 10px 13px;
+
+    border: 1px solid #cbd5df;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.editable-image__alt-input:focus {
+    border-color: #2c8199;
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+/* ========================================================= */
+/* MENSAJE DE ERROR */
+/* ========================================================= */
+
+.editable-image__error {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 14px;
+    padding: 12px;
+
+    border: 1px solid #f0caca;
+    border-radius: 9px;
+
+    background: #fff1f1;
+    color: #a63232;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.editable-image__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 9px;
+
+    margin-top: 20px;
+}
+
+.editable-image__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    min-height: 38px;
+
+    padding: 9px 13px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.editable-image__button--restore {
+    margin-right: auto;
+
+    background: #f1f4f6;
+    color: #526575;
+}
+
+.editable-image__button--restore:hover {
+    background: #e4eaee;
+}
+
+.editable-image__button--cancel {
+    border-color: #d8e1e7;
+
+    background: #ffffff;
+    color: #526575;
+}
+
+.editable-image__button--cancel:hover {
+    background: #f4f6f8;
+}
+
+.editable-image__button--save {
+    background: #2c8199;
+    color: #ffffff;
+}
+
+.editable-image__button--save:hover:not(:disabled) {
+    background: #226d83;
+}
+
+.editable-image__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.editable-image button:focus-visible {
+    outline: 3px solid rgba(44, 129, 153, 0.45);
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .editable-image__edit-button {
+        opacity: 1;
+        transform: none;
+    }
+
+    .editable-image__panel {
+        padding: 15px;
+    }
+
+    .editable-image__actions {
+        justify-content: stretch;
+    }
+
+    .editable-image__button {
+        flex: 1;
+    }
+
+    .editable-image__button--restore {
+        flex-basis: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (hover: none) {
+
+    .editable-image__edit-button {
+        opacity: 1;
+        transform: none;
+    }
+}

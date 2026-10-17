@@ -1,0 +1,529 @@
+
+/* ========================================================= */
+/* INVENTARIO DE BIENES - DASHBOARD */
+/* IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.belongings-dashboard {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 30px;
+    color: #24364b;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.belongings-dashboard__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    margin-bottom: 34px;
+    padding: 30px 34px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        115deg,
+        #24364b 0%,
+        #344e65 100%
+    );
+
+    color: #ffffff;
+}
+
+.belongings-dashboard__heading {
+    min-width: 0;
+}
+
+.belongings-dashboard__eyebrow {
+    display: block;
+    margin-bottom: 10px;
+
+    color: #d8c1a4;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.belongings-dashboard__heading h1 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: clamp(26px, 3vw, 35px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.belongings-dashboard__heading h1 span {
+    color: #d8c1a4;
+}
+
+.belongings-dashboard__heading p {
+    max-width: 650px;
+    margin: 0;
+
+    color: #e2e8ed;
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.belongings-dashboard__header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 70px;
+    height: 70px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.1);
+    color: #e8d2b7;
+}
+
+/* ========================================================= */
+/* SECCIONES */
+/* ========================================================= */
+
+.belongings-dashboard__section {
+    margin-bottom: 34px;
+}
+
+.belongings-dashboard__section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.belongings-dashboard__section-heading h2 {
+    margin: 0 0 6px;
+
+    color: #24364b;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.belongings-dashboard__section-heading p {
+    margin: 0;
+
+    color: #73808c;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* TARJETAS ESTADÍSTICAS */
+/* ========================================================= */
+
+.belongings-dashboard__stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.belongings-dashboard__stat {
+    min-width: 0;
+    padding: 24px;
+
+    border: 1px solid #e9e7e3;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow: 0 4px 18px rgba(24, 42, 58, 0.035);
+}
+
+.belongings-dashboard__stat-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.belongings-dashboard__stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 12px;
+
+    background: #f4f0ea;
+    color: #9a8066;
+}
+
+.belongings-dashboard__stat-value {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #24364b;
+
+    font-size: 32px;
+    font-weight: 750;
+    line-height: 1.1;
+}
+
+.belongings-dashboard__stat h3 {
+    margin: 0 0 6px;
+
+    color: #24364b;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.belongings-dashboard__stat p {
+    margin: 0;
+
+    color: #87919b;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* ACCESOS RÁPIDOS */
+/* ========================================================= */
+
+.belongings-dashboard__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.belongings-dashboard__action {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    width: 100%;
+    min-width: 0;
+    padding: 22px;
+
+    border: 1px solid #e9e7e3;
+    border-radius: 16px;
+
+    background: #ffffff;
+    color: inherit;
+
+    text-align: left;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.belongings-dashboard__action:hover {
+    border-color: #cdb89f;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 9px 24px rgba(24, 42, 58, 0.08);
+}
+
+.belongings-dashboard__action:focus-visible {
+    outline: 3px solid rgba(183, 160, 135, 0.5);
+    outline-offset: 3px;
+}
+
+.belongings-dashboard__action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 54px;
+    height: 54px;
+
+    border-radius: 14px;
+
+    background: #f3f5f6;
+    color: #344e65;
+}
+
+.belongings-dashboard__action-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.belongings-dashboard__action-body strong {
+    color: #24364b;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.belongings-dashboard__action-body > span {
+    color: #7c8791;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.belongings-dashboard__action-arrow {
+    flex-shrink: 0;
+    color: #b7a087;
+}
+
+/* ========================================================= */
+/* MOVIMIENTOS RECIENTES */
+/* ========================================================= */
+
+.belongings-dashboard__activity {
+    overflow: hidden;
+
+    border: 1px solid #e9e7e3;
+    border-radius: 16px;
+
+    background: #ffffff;
+}
+
+.belongings-dashboard__movement {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 19px 22px;
+
+    border-bottom: 1px solid #f0efec;
+}
+
+.belongings-dashboard__movement:last-child {
+    border-bottom: none;
+}
+
+.belongings-dashboard__movement-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #f4f0ea;
+    color: #9a8066;
+}
+
+.belongings-dashboard__movement-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.belongings-dashboard__movement-info strong {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #24364b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.belongings-dashboard__movement-info p {
+    margin: 0;
+
+    color: #7c8791;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.belongings-dashboard__movement-date {
+    flex-shrink: 0;
+
+    color: #87919b;
+
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.belongings-dashboard__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    padding: 38px 20px;
+
+    color: #87919b;
+    text-align: center;
+}
+
+.belongings-dashboard__empty p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* ========================================================= */
+/* AVISO DE DESARROLLO */
+/* ========================================================= */
+
+.belongings-dashboard__notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 16px 18px;
+
+    border: 1px solid #e9e1d7;
+    border-radius: 12px;
+
+    background: #faf7f2;
+    color: #8b755f;
+}
+
+.belongings-dashboard__notice svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.belongings-dashboard__notice p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .belongings-dashboard__stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .belongings-dashboard {
+        padding: 18px;
+    }
+
+    .belongings-dashboard__header {
+        padding: 24px;
+    }
+
+    .belongings-dashboard__header-icon {
+        display: none;
+    }
+
+    .belongings-dashboard__actions {
+        grid-template-columns: 1fr;
+    }
+
+    .belongings-dashboard__movement {
+        flex-wrap: wrap;
+    }
+
+    .belongings-dashboard__movement-date {
+        width: 100%;
+        padding-left: 58px;
+    }
+
+}
+
+@media (max-width: 430px) {
+
+    .belongings-dashboard {
+        padding: 12px;
+    }
+
+    .belongings-dashboard__stats {
+        grid-template-columns: 1fr;
+    }
+
+    .belongings-dashboard__header {
+        padding: 22px 18px;
+    }
+
+    .belongings-dashboard__action {
+        padding: 17px;
+        gap: 12px;
+    }
+
+    .belongings-dashboard__action-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* BOTÓN VOLVER AL PANEL ADMINISTRATIVO */
+/* ========================================================= */
+
+.belongings-dashboard__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    color: #526e7e;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.belongings-dashboard__back:hover {
+    background-color: #edf4f7;
+    border-color: #d6e5ec;
+    color: #245c75;
+}
+
+.belongings-dashboard__back:focus-visible {
+    outline: 2px solid #36718a;
+    outline-offset: 2px;
+}
+
+.belongings-dashboard__back svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.belongings-dashboard__back:hover svg {
+    transform: translateX(-3px);
+}

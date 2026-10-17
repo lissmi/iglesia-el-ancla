@@ -1,0 +1,150 @@
+
+/* ========================================================= */
+/* PREDICCIONES DE ABASTECIMIENTO */
+/* ========================================================= */
+
+.basic-supplies__forecast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 45px 25px;
+    border: 1px dashed #cfe3e9;
+    border-radius: 16px;
+    background: #f7fbfc;
+    text-align: center;
+}
+
+.basic-supplies__forecast-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 78px;
+    height: 78px;
+    margin-bottom: 20px;
+    border-radius: 22px;
+    background: #e4f2f5;
+    color: #2c8199;
+}
+
+.basic-supplies__forecast h3 {
+    margin: 0 0 12px;
+    color: #17384c;
+    font-size: 20px;
+}
+
+.basic-supplies__forecast > p {
+    max-width: 620px;
+    margin: 0;
+    color: #718491;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* ========================================================= */
+/* CAPACIDADES FUTURAS */
+/* ========================================================= */
+
+.basic-supplies__forecast-features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 850px;
+    margin-top: 30px;
+}
+
+.basic-supplies__forecast-features > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    padding: 20px;
+    border: 1px solid #e1edf1;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #2c8199;
+}
+
+.basic-supplies__forecast-features span {
+    color: #607889;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* AVISO INFORMATIVO */
+/* ========================================================= */
+
+.basic-supplies__forecast-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 850px;
+    margin-top: 25px;
+    padding: 16px;
+    border-radius: 11px;
+    background: #e9f3f6;
+    color: #607889;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: left;
+}
+
+.basic-supplies__forecast-notice svg {
+    flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* HISTORIAL DE MOVIMIENTOS */
+/* ========================================================= */
+
+.basic-supplies__history {
+    margin-top: 30px;
+}
+
+.basic-supplies__history h3 {
+    margin-bottom: 15px;
+    color: #17384c;
+    font-size: 16px;
+}
+
+.basic-supplies__history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf1f4;
+}
+
+.basic-supplies__history-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.basic-supplies__history-item strong {
+    color: #17384c;
+    font-size: 13px;
+}
+
+.basic-supplies__history-item span {
+    color: #718491;
+    font-size: 12px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+    .basic-supplies__forecast-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .basic-supplies__forecast {
+        padding: 30px 16px;
+    }
+}

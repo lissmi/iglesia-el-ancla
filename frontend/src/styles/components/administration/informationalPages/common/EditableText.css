@@ -1,0 +1,268 @@
+
+/* ========================================================= */
+/* COMPONENTE EDITABLE TEXT - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+/* Contenedor general del texto editable. */
+.editable-text {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+
+    border-radius: 8px;
+
+    transition:
+        background-color 0.2s ease,
+        outline-color 0.2s ease;
+}
+
+/* Resaltamos suavemente el elemento al pasar el cursor. */
+.editable-text:not(.editable-text--disabled):hover {
+    outline: 1px dashed rgba(44, 129, 153, 0.55);
+    outline-offset: 5px;
+}
+
+/* ========================================================= */
+/* BOTÓN PARA EDITAR */
+/* ========================================================= */
+
+.editable-text__edit-button {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: 1px solid rgba(44, 129, 153, 0.18);
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    color: #2c8199;
+
+    box-shadow: 0 4px 12px rgba(23, 56, 76, 0.12);
+
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateY(-3px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        background-color 0.2s ease;
+
+    z-index: 5;
+}
+
+/* Mostramos el botón al pasar el cursor. */
+.editable-text:hover .editable-text__edit-button,
+.editable-text:focus-within .editable-text__edit-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Estado hover del botón. */
+.editable-text__edit-button:hover {
+    background-color: #eaf5f7;
+}
+
+/* ========================================================= */
+/* MODO EDICIÓN */
+/* ========================================================= */
+
+.editable-text--editing {
+    padding: 12px;
+
+    background-color: #ffffff;
+
+    border: 1px solid rgba(44, 129, 153, 0.35);
+    border-radius: 12px;
+
+    box-shadow: 0 8px 24px rgba(23, 56, 76, 0.1);
+}
+
+/* Contenedor del campo y sus botones. */
+.editable-text__editor {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    width: 100%;
+}
+
+/* Campos de edición. */
+.editable-text__input {
+    flex: 1;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #cbd5df;
+    border-radius: 8px;
+
+    outline: none;
+
+    background-color: #ffffff;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Campo de texto de varias líneas. */
+.editable-text__input--multiline {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+/* Resaltamos el campo seleccionado. */
+.editable-text__input:focus {
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+/* ========================================================= */
+/* ACCIONES DE EDICIÓN */
+/* ========================================================= */
+
+.editable-text__actions {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+/* Estilo compartido de botones. */
+.editable-text__action {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Botón confirmar. */
+.editable-text__action--save {
+    background-color: #e3f3ee;
+    color: #167453;
+}
+
+.editable-text__action--save:hover:not(:disabled) {
+    background-color: #c9e9de;
+}
+
+/* Botón cancelar. */
+.editable-text__action--cancel {
+    background-color: #f8e9e9;
+    color: #b33c3c;
+}
+
+.editable-text__action--cancel:hover {
+    background-color: #f2d5d5;
+}
+
+/* Botón deshabilitado. */
+.editable-text__action:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Texto de ayuda. */
+.editable-text__hint {
+    display: block;
+
+    margin-top: 9px;
+
+    color: #718096;
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.editable-text__edit-button:focus-visible,
+.editable-text__action:focus-visible {
+    outline: 3px solid rgba(44, 129, 153, 0.45);
+    outline-offset: 3px;
+
+    opacity: 1;
+    transform: none;
+}
+
+/* ========================================================= */
+/* ADAPTACIÓN RESPONSIVA */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .editable-text__edit-button {
+        opacity: 1;
+        transform: none;
+
+        top: -12px;
+        right: -8px;
+    }
+
+    .editable-text--editing {
+        padding: 10px;
+    }
+
+    .editable-text__editor {
+        flex-wrap: wrap;
+    }
+
+    .editable-text__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .editable-text__input {
+        flex-basis: 100%;
+    }
+}
+
+/* Dispositivos táctiles sin hover. */
+@media (hover: none) {
+
+    .editable-text__edit-button {
+        opacity: 1;
+        transform: none;
+    }
+}

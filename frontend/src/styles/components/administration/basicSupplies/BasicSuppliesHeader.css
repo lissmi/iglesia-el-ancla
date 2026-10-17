@@ -1,0 +1,81 @@
+
+/* ========================================================= */
+/* ENCABEZADO DE INSUMOS BÁSICOS */
+/* ========================================================= */
+
+.basic-supplies__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 25px;
+}
+
+.basic-supplies__header-content {
+    min-width: 0;
+}
+
+.basic-supplies__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    color: #607889;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.basic-supplies__back:hover {
+    color: #2c8199;
+}
+
+.basic-supplies__title-row {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.basic-supplies__title-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    flex-shrink: 0;
+    border-radius: 17px;
+    background: #e0f0f4;
+    color: #2c8199;
+}
+
+.basic-supplies__title-row h1 {
+    margin: 0 0 8px;
+    color: #17384c;
+    font-size: clamp(25px, 3vw, 33px);
+    font-weight: 750;
+}
+
+.basic-supplies__title-row p {
+    margin: 0;
+    color: #718491;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .basic-supplies__header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 550px) {
+    .basic-supplies__title-row {
+        align-items: flex-start;
+    }
+
+    .basic-supplies__title-icon {
+        width: 52px;
+        height: 52px;
+    }
+}

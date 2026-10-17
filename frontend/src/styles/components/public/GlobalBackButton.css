@@ -1,0 +1,107 @@
+
+/* ========================================================= */
+/* BOTÓN GLOBAL VOLVER - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.global-back {
+    position: fixed;
+
+    top: 90px;
+    left: 24px;
+
+    z-index: 9999;
+
+    width: auto;
+    padding: 0;
+
+    background: transparent;
+}
+
+.global-back__container {
+    width: auto;
+    max-width: none;
+    margin: 0;
+}
+
+.global-back__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 44px;
+    padding: 11px 17px;
+
+    border: 1px solid rgba(36, 54, 75, 0.15);
+    border-radius: 12px;
+
+    background-color: #ffffff;
+    color: #24364b;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 22px rgba(18, 33, 45, 0.15);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.global-back__button:hover {
+    background-color: #f4f2ee;
+    border-color: #b7a087;
+
+    transform: translateX(-3px);
+
+    box-shadow: 0 8px 26px rgba(18, 33, 45, 0.2);
+}
+
+.global-back__button:focus-visible {
+    outline: 3px solid rgba(183, 160, 135, 0.45);
+    outline-offset: 3px;
+}
+
+.global-back__button svg {
+    flex-shrink: 0;
+    color: #9a8066;
+}
+
+/* ========================================================= */
+/* TABLETS */
+/* ========================================================= */
+
+@media (max-width: 950px) {
+
+    .global-back {
+        top: 85px;
+        left: 16px;
+    }
+
+}
+
+/* ========================================================= */
+/* MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .global-back {
+        top: 75px;
+        left: 12px;
+    }
+
+    .global-back__button {
+        min-height: 40px;
+        padding: 9px 13px;
+
+        font-size: 12px;
+    }
+
+}

@@ -1,0 +1,88 @@
+
+/* ========================================================= */
+/* RESUMEN DE INSUMOS BÁSICOS */
+/* ========================================================= */
+
+.basic-supplies__summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.basic-supplies__metric {
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid #e5edf1;
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 5px 22px rgba(23, 56, 76, 0.04);
+}
+
+.basic-supplies__metric-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 17px;
+}
+
+.basic-supplies__metric-top > span {
+    color: #607889;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.basic-supplies__metric-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #e7f3f6;
+    color: #2c8199;
+}
+
+.basic-supplies__metric--warning
+.basic-supplies__metric-icon {
+    background: #fff1dc;
+    color: #b77a25;
+}
+
+.basic-supplies__metric--out
+.basic-supplies__metric-icon {
+    background: #fbeae6;
+    color: #b35e50;
+}
+
+.basic-supplies__metric > strong {
+    display: block;
+    color: #17384c;
+    font-size: 31px;
+    font-weight: 750;
+}
+
+.basic-supplies__metric > p {
+    margin: 7px 0 0;
+    color: #8a9aa5;
+    font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+    .basic-supplies__summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    .basic-supplies__summary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .basic-supplies__metric {
+        padding: 18px;
+    }
+}

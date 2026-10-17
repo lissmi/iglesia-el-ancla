@@ -1,0 +1,79 @@
+
+/* ========================================================= */
+/* LISTA DE COMPRAS */
+/* ========================================================= */
+
+.basic-supplies__shopping-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.basic-supplies__shopping-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 18px;
+    border: 1px solid #e5edf1;
+    border-radius: 11px;
+    background: #fbfdfd;
+}
+
+.basic-supplies__shopping-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.basic-supplies__shopping-item strong {
+    color: #17384c;
+    font-size: 14px;
+}
+
+.basic-supplies__shopping-item span {
+    color: #718491;
+    font-size: 12px;
+}
+
+.basic-supplies__shopping-item button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #e1eaee;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #607889;
+    cursor: pointer;
+}
+
+.basic-supplies__shopping-item button:hover {
+    color: #b3574b;
+    border-color: #edc6c0;
+}
+
+/* ========================================================= */
+/* PIE DE LISTA */
+/* ========================================================= */
+
+.basic-supplies__shopping-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.basic-supplies__shopping-footer > span {
+    color: #718491;
+    font-size: 13px;
+}
+
+@media (max-width: 550px) {
+    .basic-supplies__shopping-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

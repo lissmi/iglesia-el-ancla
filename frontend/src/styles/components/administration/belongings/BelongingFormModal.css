@@ -1,0 +1,323 @@
+
+/* ========================================================= */
+/* MODAL DE REGISTRO Y EDICIÓN DE BIENES */
+/* IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.belonging-form-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 33, 45, 0.62);
+    backdrop-filter: blur(3px);
+
+    overflow-y: auto;
+}
+
+.belonging-form-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 760px;
+    max-height: calc(100vh - 48px);
+
+    overflow: hidden;
+
+    border-radius: 20px;
+    background: #ffffff;
+
+    box-shadow: 0 25px 65px rgba(15, 30, 42, 0.26);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.belonging-form-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 25px 28px;
+
+    border-bottom: 1px solid #edf0f2;
+}
+
+.belonging-form-modal__heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.belonging-form-modal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 47px;
+    height: 47px;
+
+    border-radius: 12px;
+
+    background: #f4f0ea;
+    color: #9a8066;
+}
+
+.belonging-form-modal__heading h2 {
+    margin: 0 0 6px;
+
+    color: #24364b;
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.belonging-form-modal__heading p {
+    margin: 0;
+
+    color: #82909b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.belonging-form-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f4f5f6;
+    color: #64727e;
+
+    cursor: pointer;
+}
+
+.belonging-form-modal__close:hover {
+    background: #eceef0;
+    color: #24364b;
+}
+
+/* ========================================================= */
+/* FORMULARIO */
+/* ========================================================= */
+
+.belonging-form-modal__form {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 0;
+    overflow: hidden;
+}
+
+.belonging-form-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 26px 28px;
+
+    overflow-y: auto;
+}
+
+.belonging-form-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.belonging-form-modal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.belonging-form-modal__field label {
+    color: #526371;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.belonging-form-modal__field input,
+.belonging-form-modal__field select,
+.belonging-form-modal__field textarea {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #e2e6e9;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #344e65;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.belonging-form-modal__field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.belonging-form-modal__field input:focus,
+.belonging-form-modal__field select:focus,
+.belonging-form-modal__field textarea:focus {
+    border-color: #b7a087;
+    box-shadow: 0 0 0 3px rgba(183, 160, 135, 0.12);
+}
+
+.belonging-form-modal__field input:disabled {
+    background: #f5f6f7;
+    color: #89939d;
+    cursor: not-allowed;
+}
+
+.belonging-form-modal__field [aria-invalid="true"] {
+    border-color: #c75b4c;
+}
+
+.belonging-form-modal__error {
+    color: #b44e3c;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* ========================================================= */
+/* ACCIONES */
+/* ========================================================= */
+
+.belonging-form-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    padding: 20px 28px;
+
+    border-top: 1px solid #edf0f2;
+    background: #ffffff;
+}
+
+.belonging-form-modal__cancel,
+.belonging-form-modal__save {
+    min-height: 42px;
+    padding: 10px 19px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.belonging-form-modal__cancel {
+    border: 1px solid #e2e6e9;
+    background: #ffffff;
+    color: #526371;
+}
+
+.belonging-form-modal__cancel:hover {
+    background: #f5f6f7;
+}
+
+.belonging-form-modal__save {
+    border: 1px solid #24364b;
+    background: #24364b;
+    color: #ffffff;
+}
+
+.belonging-form-modal__save:hover {
+    background: #344e65;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+    .belonging-form-modal__overlay {
+        padding: 12px;
+    }
+
+    .belonging-form-modal {
+        max-height: calc(100vh - 24px);
+    }
+
+    .belonging-form-modal__header,
+    .belonging-form-modal__body,
+    .belonging-form-modal__footer {
+        padding: 18px;
+    }
+
+    .belonging-form-modal__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .belonging-form-modal__heading h2 {
+        font-size: 17px;
+    }
+
+}
+
+
+/* ========================================================= */
+/* AVISO DE CONTROL DE INVENTARIO */
+/* ========================================================= */
+
+.belonging-form-modal__inventory-notice {
+    padding: 15px 18px;
+    margin-bottom: 20px;
+
+    border: 1px solid #e9e1d7;
+    border-radius: 11px;
+
+    background: #faf7f2;
+}
+
+.belonging-form-modal__inventory-notice strong {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #8e765f;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.belonging-form-modal__inventory-notice p {
+    margin: 0;
+
+    color: #7b766f;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.belonging-form-modal__field input:disabled,
+.belonging-form-modal__field select:disabled {
+    background: #f3f4f5;
+    color: #82909b;
+    cursor: not-allowed;
+}
