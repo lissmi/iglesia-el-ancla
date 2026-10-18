@@ -45,6 +45,10 @@ import BelongingsInventory from "../pages/administration/belongings/BelongingsIn
 
 import BelongingsMovements from "../pages/administration/belongings/BelongingsMovements";
 
+import MartinManagement from "../pages/administration/martin/MartinManagement";
+
+import { MartinProvider } from "../context/martin/MartinContext";
+
 
 // =========================================================
 // DEFINICIÓN CENTRALIZADA DE RUTAS
@@ -225,6 +229,19 @@ function SharedAdminRoutes() {
             <Route
                 path="paginas-informativas/editar/:slug"
                 element={<InformationalPageEditor />}
+            />
+
+            {/* =========================================== */}
+            {/* ADMINISTRACIÓN DEL ASISTENTE MARTÍN */}
+            {/* =========================================== */}
+
+            <Route
+                path="asistente-martin"
+                element={
+                    <MartinProvider>
+                        <MartinManagement />
+                    </MartinProvider>
+                }
             />
 
         </>

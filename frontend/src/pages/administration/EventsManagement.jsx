@@ -13,7 +13,9 @@ import {
   CheckCircle2,
   Clock3,
   Eye,
+  Trash2,
   FilePenLine,
+  Image as ImageIcon,
   Info,
   MapPin,
   MonitorPlay,
@@ -34,6 +36,8 @@ import EventFormModal from "../../components/administration/events/EventFormModa
 import EventDetailsModal from "../../components/administration/events/EventDetailsModal";
 
 import EventConfirmationsModal from "../../components/administration/events/EventConfirmationsModal";
+
+import EventDeleteModal from "../../components/administration/events/EventDeleteModal";
 
 // =========================================================
 // DATOS TEMPORALES DE DEMOSTRACIÓN
@@ -179,6 +183,10 @@ function EventsManagement() {
   // null significa que estamos creando uno nuevo.
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  // Evento cuyo borrado se está confirmando.
+  // Mantenerlo separado evita eliminar accidentalmente el evento en edición.
+  const [eventToDelete, setEventToDelete] = useState(null);
+
   // =========================================================
   // ESTADO DE LA VISTA DE DETALLES
   // =========================================================
@@ -301,47 +309,85 @@ function EventsManagement() {
   // =========================================================
 
   function handleSaveEvent(eventData) {
+    // Los datos transitorios de carga no se guardan como campos del evento.
+    const { imageFile, imagePreview, removeImage, ...cleanEventData } = eventData;
+
+    // Mantiene la imagen original si el usuario no la modificó.
+    let eventImage = selectedEvent?.image ?? null;
+
+    // Quitar imagen tiene prioridad sobre conservarla.
+    if (removeImage) {
+      eventImage = null;
+    } else if (imageFile && imagePreview) {
+      // En esta vista DEMO solo guardamos una data URL temporal.
+      // En producción el backend subirá imageFile a Cloudinary y guardará URL/publicId.
+      eventImage = {
+        url: imagePreview,
+        fileName: imageFile.name,
+        mimeType: imageFile.type,
+        size: imageFile.size,
+        publicId: null,
+        alt: `Imagen de ${cleanEventData.title}`,
+      };
+    }
+
     if (selectedEvent) {
-
-      // EDICIÓN:
-      // Conservamos el identificador del evento
-      // y actualizamos únicamente el registro
-      // correspondiente.
-
+      // Edición: reemplazar los datos del registro sin modificar su ID.
       setEvents((previousEvents) =>
         previousEvents.map((event) =>
           event.id === selectedEvent.id
-            ? {
-              ...event,
-              ...eventData,
-              id: event.id,
-            }
+            ? { ...event, ...cleanEventData, id: event.id, image: eventImage }
             : event
         )
       );
-
     } else {
-
-      // CREACIÓN:
-      // Generamos un identificador temporal.
-      // El backend asignará el ID definitivo
-      // cuando integremos MongoDB.
-
+      // Creación: construir un evento temporal con cero confirmaciones.
       const newEvent = {
-        ...eventData,
-
+        ...cleanEventData,
         id: `EVT-${crypto.randomUUID()}`,
-
+        image: eventImage,
         confirmations: 0,
       };
 
-      setEvents((previousEvents) => [
-        ...previousEvents,
-        newEvent,
-      ]);
+      setEvents((previousEvents) => [...previousEvents, newEvent]);
     }
 
+    // Liberar la selección y cerrar la ventana de edición.
     handleCloseForm();
+  }
+
+  // =========================================================
+  // ELIMINACIÓN DE EVENTOS
+  // =========================================================
+
+  // Solicita la confirmación: todavía no elimina nada.
+  function handleRequestDelete(event) {
+    setEventToDelete(event);
+  }
+
+  // Cierra la confirmación sin modificar los eventos.
+  function handleCancelDelete() {
+    setEventToDelete(null);
+  }
+
+  // Elimina únicamente el evento identificado en la confirmación.
+  function handleConfirmDelete() {
+    if (!eventToDelete) return;
+
+    const eventId = eventToDelete.id;
+
+    // Actualizamos React; el listado, filtros y resumen se recalculan solos.
+    setEvents((previousEvents) =>
+      previousEvents.filter((event) => event.id !== eventId)
+    );
+
+    // Evitamos dejar modales secundarios asociados al registro eliminado.
+    if (detailsEventId === eventId) setDetailsEventId(null);
+    if (confirmationsEventId === eventId) setConfirmationsEventId(null);
+    if (selectedEvent?.id === eventId) handleCloseForm();
+
+    // Quitamos la selección que activó el modal de confirmación.
+    setEventToDelete(null);
   }
 
   // =========================================================
@@ -524,8 +570,8 @@ function EventsManagement() {
             Los eventos y las estadísticas de esta
             página son ilustrativos. Todavía no
             están conectados con MongoDB.
-            La creación y edición se incorporarán
-            en los siguientes pasos.
+            La creación, edición y vista previa de imágenes
+            funcionan temporalmente en memoria.
           </p>
         </div>
       </div>
@@ -709,8 +755,22 @@ function EventsManagement() {
 
                       <td>
                         <div className="events-management-page__event">
-                          <strong>{event.title}</strong>
-                          <span>{event.category}</span>
+                          {/* Miniatura de portada o marcador si no se cargó imagen. */}
+                          <div className="events-management-page__thumbnail">
+                            {event.image?.url ? (
+                              <img src={event.image.url} alt="" loading="lazy" />
+                            ) : (
+                              <div className="events-management-page__thumbnail-placeholder">
+                                <ImageIcon size={19} aria-hidden="true" />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Nombre y categoría visibles para cualquier evento. */}
+                          <div className="events-management-page__event-copy">
+                            <strong>{event.title}</strong>
+                            <span>{event.category}</span>
+                          </div>
                         </div>
                       </td>
 
@@ -886,6 +946,18 @@ function EventsManagement() {
                             {isPublished ? "Pasar a borrador" : "Publicar"}
                           </button>
 
+                          {/* ELIMINAR EVENTO CON CONFIRMACIÓN */}
+                          <button
+                            className="events-management-page__delete-button"
+                            type="button"
+                            onClick={() => handleRequestDelete(event)}
+                            aria-label={`Eliminar evento ${event.title}`}
+                            title="Eliminar evento"
+                          >
+                            <Trash2 size={16} aria-hidden="true" />
+                            Eliminar
+                          </button>
+
                         </div>
                       </td>
 
@@ -968,6 +1040,13 @@ function EventsManagement() {
         isOpen={Boolean(confirmationsEvent)}
         event={confirmationsEvent}
         onClose={handleCloseConfirmations}
+      />
+
+      {/* Confirmación destructiva; no borra sin autorización explícita. */}
+      <EventDeleteModal
+        event={eventToDelete}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
       />
 
     </div>

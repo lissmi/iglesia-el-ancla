@@ -29,6 +29,7 @@ import {
     Boxes,
     Files,
     Armchair,
+    Bot,
 } from "lucide-react";
 
 
@@ -310,6 +311,34 @@ const administrativeModules = [
         icon: Armchair,
 
         path: "/inventario-bienes",
+
+        available: true,
+    },
+
+    // =========================================================
+    // ASISTENTE INTELIGENTE MARTÍN
+    // =========================================================
+
+    // Módulo destinado a la administración del asistente
+    // virtual de Iglesia El Ancla.
+    //
+    // Permite configurar sus funcionalidades, administrar
+    // las fuentes de conocimiento autorizadas, establecer
+    // restricciones y supervisar su actividad.
+    //
+    // La integración con GPT se realizará posteriormente.
+
+    {
+        id: "martin",
+
+        title: "Gestión de Martín",
+
+        description:
+            "Configura y supervisa al asistente virtual Martín, sus funciones, contenidos autorizados y medidas de seguridad.",
+
+        icon: Bot,
+
+        path: "/asistente-martin",
 
         available: true,
     },

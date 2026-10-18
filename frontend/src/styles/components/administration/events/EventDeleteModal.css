@@ -1,0 +1,91 @@
+/* ========================================================= */
+/* CONFIRMACIÓN PARA ELIMINAR EVENTOS - IGLESIA EL ANCLA      */
+/* ========================================================= */
+.event-delete-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(18, 33, 45, 0.68);
+  backdrop-filter: blur(4px);
+}
+.event-delete-modal {
+  width: 100%;
+  max-width: 470px;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 28px 75px rgba(15, 30, 42, 0.3);
+}
+.event-delete-modal__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.event-delete-modal__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: #a3424b;
+  background: #fff1f2;
+  border-radius: 14px;
+}
+.event-delete-modal__close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: #758995;
+  background: #f4f7f8;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.event-delete-modal h2 {
+  margin: 0 0 12px;
+  color: #203c4b;
+  font-size: 22px;
+}
+.event-delete-modal p {
+  margin: 0;
+  color: #627986;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.event-delete-modal p strong { color: #294656; }
+.event-delete-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: 28px;
+}
+.event-delete-modal__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 17px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.event-delete-modal__cancel { color: #627986; background: #eaf0f3; }
+.event-delete-modal__cancel:hover { background: #dfe8ed; }
+.event-delete-modal__confirm { color: #ffffff; background: #a3424b; }
+.event-delete-modal__confirm:hover { background: #8f343e; }
+.event-delete-modal button:focus-visible { outline: 2px solid #a3424b; outline-offset: 3px; }
+@media (max-width: 500px) {
+  .event-delete-modal { padding: 23px 19px; }
+  .event-delete-modal__actions { flex-direction: column-reverse; }
+  .event-delete-modal__actions button { width: 100%; }
+}

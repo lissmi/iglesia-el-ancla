@@ -1,11 +1,14 @@
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import {
     X,
     Save,
     CalendarDays,
     Info,
+    ImagePlus,
+    Trash2,
+    ReceiptText,
 } from "lucide-react";
 
 import {
@@ -31,6 +34,11 @@ const PAYMENT_METHODS = [
     "Crédito",
     "Otro",
 ];
+
+// Se aceptan únicamente imágenes comunes, con un máximo de 5 MB.
+// Esta validación se debe repetir en el servidor cuando exista la API.
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 const createEmptyForm = () => ({
     description: "",
@@ -89,6 +97,16 @@ function ExpenseFormModal({
 
     const [isSaving, setIsSaving] = useState(false);
 
+    // Archivo original: se usará al integrar la carga en Cloudinary.
+    const [receiptFile, setReceiptFile] = useState(null);
+
+    // Durante la demostración, image.url contiene una vista previa Base64.
+    // En producción será una URL protegida o entregada por el backend.
+    const [receiptImage, setReceiptImage] = useState(null);
+    const [isReadingImage, setIsReadingImage] = useState(false);
+    const imageInputRef = useRef(null);
+    const imageReaderRef = useRef(null);
+
     const isEditing = expense !== null;
 
 
@@ -127,6 +145,13 @@ function ExpenseFormModal({
             setFormData(createEmptyForm());
 
         }
+
+        // Recuperamos la fotografía anterior al editar.
+        setReceiptImage(expense?.receiptImage ?? null);
+        setReceiptFile(null);
+        setIsReadingImage(false);
+        if (imageReaderRef.current) imageReaderRef.current.abort();
+        if (imageInputRef.current) imageInputRef.current.value = "";
 
         setErrors({});
         setIsSaving(false);
@@ -181,6 +206,73 @@ function ExpenseFormModal({
 
     };
 
+
+    // =====================================================
+    // SELECCIONAR FOTO DE BOLETA O COMPROBANTE
+    // =====================================================
+
+    const handleReceiptImageChange = (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        // Nunca borrar una fotografía válida si la nueva no es aceptada.
+        if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+            setErrors((previous) => ({
+                ...previous,
+                receiptImage: "Selecciona una imagen JPG, PNG o WEBP.",
+            }));
+            event.target.value = "";
+            return;
+        }
+
+        if (file.size > MAX_IMAGE_SIZE) {
+            setErrors((previous) => ({
+                ...previous,
+                receiptImage: "El comprobante no puede superar los 5 MB.",
+            }));
+            event.target.value = "";
+            return;
+        }
+
+        // Esperamos a que termine la lectura antes de permitir guardar.
+        imageReaderRef.current?.abort();
+        const reader = new FileReader();
+        imageReaderRef.current = reader;
+        setIsReadingImage(true);
+
+        reader.onload = () => {
+            setReceiptFile(file);
+            setReceiptImage({
+                url: reader.result,
+                fileName: file.name,
+                mimeType: file.type,
+                size: file.size,
+                publicId: null,
+            });
+            setIsReadingImage(false);
+            setErrors((previous) => ({ ...previous, receiptImage: "" }));
+        };
+
+        reader.onerror = () => {
+            setIsReadingImage(false);
+            setErrors((previous) => ({
+                ...previous,
+                receiptImage: "No se pudo leer el comprobante.",
+            }));
+        };
+
+        reader.onabort = () => setIsReadingImage(false);
+        reader.readAsDataURL(file);
+    };
+
+    const handleRemoveReceiptImage = () => {
+        imageReaderRef.current?.abort();
+        setReceiptImage(null);
+        setReceiptFile(null);
+        setIsReadingImage(false);
+        if (imageInputRef.current) imageInputRef.current.value = "";
+        setErrors((previous) => ({ ...previous, receiptImage: "" }));
+    };
 
     // =====================================================
     // VALIDAR FORMULARIO
@@ -299,7 +391,7 @@ function ExpenseFormModal({
 
         event.preventDefault();
 
-        if (isSaving) {
+        if (isSaving || isReadingImage) {
             return;
         }
 
@@ -335,6 +427,10 @@ function ExpenseFormModal({
                     ? formData.paidAt
                     : null,
             notes: formData.notes.trim(),
+
+            // La imagen es opcional. Conservar, reemplazar o quitar
+            // funciona de la misma manera en creación y edición.
+            receiptImage,
         };
 
         setIsSaving(true);
@@ -344,7 +440,9 @@ function ExpenseFormModal({
             // El componente padre se encarga de guardar
             // o actualizar el registro.
 
-            await onSave(payload, expense);
+            // El archivo no va dentro del gasto persistido.
+            // En la integración definitiva se enviará como FormData.
+            await onSave(payload, expense, receiptFile);
 
             onClose?.();
 
@@ -776,6 +874,85 @@ function ExpenseFormModal({
                     </div>
 
 
+                    {/* =================================== */}
+                    {/* BOLETA O COMPROBANTE (OPCIONAL) */}
+                    {/* =================================== */}
+
+                    <div className="expense-form__field expense-form__field--full">
+                        <label htmlFor={`${formId}-receipt-image`}>
+                            Boleta o comprobante (opcional)
+                        </label>
+
+                        <input
+                            ref={imageInputRef}
+                            id={`${formId}-receipt-image`}
+                            className="expense-form__receipt-input"
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            onChange={handleReceiptImageChange}
+                            disabled={isSaving || isReadingImage}
+                            aria-invalid={Boolean(errors.receiptImage)}
+                            aria-describedby={`${formId}-receipt-help`}
+                        />
+
+                        {receiptImage?.url ? (
+                            <div className="expense-form__receipt-preview">
+                                <img
+                                    src={receiptImage.url}
+                                    alt="Vista previa de la boleta o comprobante"
+                                />
+                                <div className="expense-form__receipt-info">
+                                    <strong>Comprobante adjunto</strong>
+                                    <span>{receiptImage.fileName || "Imagen del comprobante"}</span>
+                                    <div className="expense-form__receipt-actions">
+                                        <button
+                                            type="button"
+                                            onClick={() => imageInputRef.current?.click()}
+                                            disabled={isSaving || isReadingImage}
+                                        >
+                                            <ImagePlus size={16} aria-hidden="true" />
+                                            Cambiar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="expense-form__receipt-remove"
+                                            onClick={handleRemoveReceiptImage}
+                                            disabled={isSaving || isReadingImage}
+                                        >
+                                            <Trash2 size={16} aria-hidden="true" />
+                                            Quitar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                className="expense-form__receipt-select"
+                                onClick={() => imageInputRef.current?.click()}
+                                disabled={isSaving || isReadingImage}
+                            >
+                                <ReceiptText size={24} aria-hidden="true" />
+                                <span>
+                                    <strong>Adjuntar boleta o tomar fotografía</strong>
+                                    <small>JPG, PNG o WEBP · Máximo 5 MB</small>
+                                </span>
+                            </button>
+                        )}
+
+                        <small id={`${formId}-receipt-help`} className="expense-form__receipt-help">
+                            La imagen será visible solamente en el módulo financiero.
+                            Evita incluir datos personales que no sean necesarios.
+                        </small>
+
+                        {isReadingImage && <small role="status">Preparando imagen...</small>}
+                        {errors.receiptImage && (
+                            <span className="expense-form__error" role="alert">
+                                {errors.receiptImage}
+                            </span>
+                        )}
+                    </div>
+
                     {/* ERROR GENERAL */}
 
                     {errors.submit && (
@@ -808,7 +985,7 @@ function ExpenseFormModal({
                         <button
                             type="submit"
                             className="expense-form__submit"
-                            disabled={isSaving}
+                            disabled={isSaving || isReadingImage}
                         >
 
                             <Save

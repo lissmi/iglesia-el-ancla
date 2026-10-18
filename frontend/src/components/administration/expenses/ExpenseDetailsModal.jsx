@@ -13,6 +13,7 @@ import {
     Tag,
     FileText,
     Info,
+    Image as ImageIcon,
 } from "lucide-react";
 
 import {
@@ -416,6 +417,37 @@ function ExpenseDetailsModal({
 
                 </div>
 
+
+                {/* ======================================= */}
+                {/* BOLETA O COMPROBANTE */}
+                {/* ======================================= */}
+
+                <div className="expense-details__section">
+                    <h3 className="expense-details__section-title">
+                        <ImageIcon size={17} aria-hidden="true" />
+                        Boleta o comprobante
+                    </h3>
+                    {expense.receiptImage?.url ? (
+                        <div className="expense-details__receipt">
+                            <a
+                                href={expense.receiptImage.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Ver comprobante en tamaño completo"
+                            >
+                                <img
+                                    src={expense.receiptImage.url}
+                                    alt={`Comprobante del gasto ${expense.description || "registrado"}`}
+                                />
+                            </a>
+                            <span>Selecciona la imagen para verla en tamaño completo.</span>
+                        </div>
+                    ) : (
+                        <div className="expense-details__receipt-empty">
+                            No se adjuntó un comprobante a este gasto.
+                        </div>
+                    )}
+                </div>
 
                 {/* ======================================= */}
                 {/* PIE DEL MODAL */}

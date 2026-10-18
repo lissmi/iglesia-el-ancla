@@ -335,16 +335,52 @@
 
 .events-management-page__event {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
 }
 
-.events-management-page__event strong {
+/* Miniatura cuadrada, tamaño uniforme en cada fila. */
+.events-management-page__thumbnail {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  background: #f1f5f7;
+  border: 1px solid #e2e9ed;
+  border-radius: 11px;
+}
+
+.events-management-page__thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Se muestra cuando no se adjuntó una fotografía. */
+.events-management-page__thumbnail-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: #9aabb4;
+  background: #f4f7f8;
+}
+
+.events-management-page__event-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.events-management-page__event-copy strong {
   color: #2a4757;
   font-size: 13px;
 }
 
-.events-management-page__event span {
+.events-management-page__event-copy span {
   color: #8a9aa4;
   font-size: 11px;
 }
@@ -750,5 +786,34 @@
 
 .events-management-page__publication-button:focus-visible {
   outline: 2px solid #203c4b;
+  outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* BOTÓN ELIMINAR EVENTO                                    */
+/* ========================================================= */
+.events-management-page__delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 13px;
+  color: #a3424b;
+  background: #fff1f2;
+  border: 1px solid #f0d8db;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.events-management-page__delete-button:hover {
+  color: #ffffff;
+  background: #a3424b;
+}
+.events-management-page__delete-button:focus-visible {
+  outline: 2px solid #a3424b;
   outline-offset: 3px;
 }

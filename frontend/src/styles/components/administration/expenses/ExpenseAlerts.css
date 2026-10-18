@@ -1,0 +1,21 @@
+/* Alertas de seguimiento administrativo. */
+.expense-alerts{min-width:0;background:#fff;border:1px solid #e8eef2;border-radius:17px;padding:22px;box-shadow:0 5px 22px rgba(23,56,76,.035)}
+.expense-alerts__header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:15px;border-bottom:1px solid #edf1f4}
+.expense-alerts__eyebrow{font-size:10px;font-weight:800;letter-spacing:1px;color:#2c8199}
+.expense-alerts__header h2{margin:7px 0;color:#17384c;font-size:17px}
+.expense-alerts__header p{margin:0;color:#85939d;font-size:11px;line-height:1.6}
+.expense-alerts__count{white-space:nowrap;padding:7px 10px;border-radius:8px;color:#2c8199;background:#eaf5f8;font-size:10px;font-weight:800}
+.expense-alerts__list{display:flex;flex-direction:column}
+.expense-alerts__item{display:flex;gap:11px;align-items:center;width:100%;padding:15px 0;background:transparent;border:0;border-bottom:1px solid #f0f3f5;text-align:left;font:inherit;cursor:pointer;color:#70828f}
+.expense-alerts__item:hover:not(:disabled){background:#fafcfd}
+.expense-alerts__item:disabled{cursor:default}
+.expense-alerts__icon{display:grid;place-items:center;flex-shrink:0;width:35px;height:35px;border-radius:9px}
+.expense-alerts__icon--overdue{background:#fff0ed;color:#b45d4c}
+.expense-alerts__icon--receipt{background:#edf5f8;color:#2c8199}
+.expense-alerts__copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.expense-alerts__copy strong{font-size:12px;color:#17384c}
+.expense-alerts__copy small{font-size:11px;color:#82939d;line-height:1.55;overflow-wrap:anywhere}
+.expense-alerts__empty{display:flex;align-items:center;gap:12px;padding:22px 0;color:#278368;font-size:12px;line-height:1.6}
+.expense-alerts__more,.expense-alerts__note{margin:13px 0 0;font-size:11px;line-height:1.6;color:#8797a1}
+.expense-alerts__item:focus-visible{outline:3px solid #b9e3ec;outline-offset:2px}
+@media(max-width:600px){.expense-alerts{padding:18px}.expense-alerts__header{flex-wrap:wrap}}

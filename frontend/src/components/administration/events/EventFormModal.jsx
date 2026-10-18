@@ -1,13 +1,20 @@
 
-import { useEffect, useId, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
 import {
   CalendarDays,
   Check,
   Clock3,
+  ImagePlus,
   Info,
   Repeat2,
   Save,
+  Trash2,
   X,
 } from "lucide-react";
 
@@ -41,6 +48,12 @@ const WEEK_DAYS = [
 // =========================================================
 // ESTADO INICIAL
 // =========================================================
+
+// Tipos MIME permitidos.
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+// Límite de tamaño de imagen: 5 MiB.
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 function createInitialForm() {
   return {
@@ -84,6 +97,26 @@ function EventFormModal({
   const [form, setForm] = useState(createInitialForm);
   const [errors, setErrors] = useState({});
 
+  // =========================================================
+  // ESTADO DE LA IMAGEN DEL EVENTO
+  // =========================================================
+
+  // Guarda el archivo real seleccionado.
+  // Más adelante este archivo será enviado al backend
+  // mediante FormData para subirlo a Cloudinary.
+  const [imageFile, setImageFile] = useState(null);
+
+  // Guarda la imagen que mostramos como vista previa.
+  // En edición también puede contener la URL de Cloudinary.
+  const [imagePreview, setImagePreview] = useState("");
+
+  // Indica si el administrador decidió eliminar
+  // una imagen que ya tenía el evento.
+  const [removeImage, setRemoveImage] = useState(false);
+
+  // Nos permite limpiar manualmente el input file.
+  const imageInputRef = useRef(null);
+
   const isEditing = Boolean(eventToEdit);
 
   // =========================================================
@@ -91,9 +124,23 @@ function EventFormModal({
   // =========================================================
 
   useEffect(() => {
+    // Si el modal está cerrado, no hacemos nada.
     if (!isOpen) return;
 
+    // Limpiamos cualquier archivo seleccionado anteriormente.
+    setImageFile(null);
+
+    // Reiniciamos la intención de eliminar imagen.
+    setRemoveImage(false);
+
+    // Limpiamos el input file.
+    if (imageInputRef.current) {
+      imageInputRef.current.value = "";
+    }
+
+    // Si estamos editando un evento existente.
     if (eventToEdit) {
+      // Cargamos todos sus datos.
       setForm({
         ...createInitialForm(),
         ...eventToEdit,
@@ -106,7 +153,7 @@ function EventFormModal({
             eventToEdit.recurrence?.daysOfWeek ??
             (
               eventToEdit.recurrence?.type === "weekly" &&
-              eventToEdit.recurrence?.dayOfWeek !== undefined
+                eventToEdit.recurrence?.dayOfWeek !== undefined
                 ? [eventToEdit.recurrence.dayOfWeek]
                 : []
             ),
@@ -114,10 +161,22 @@ function EventFormModal({
 
         capacity: eventToEdit.capacity ?? "",
       });
+
+      // Si el evento ya posee imagen,
+      // utilizamos su URL como vista previa.
+      setImagePreview(
+        eventToEdit.image?.url ?? ""
+      );
     } else {
+      // Si estamos creando un evento,
+      // comenzamos con el formulario vacío.
       setForm(createInitialForm());
+
+      // Tampoco existe imagen previa.
+      setImagePreview("");
     }
 
+    // Limpiamos errores anteriores.
     setErrors({});
   }, [isOpen, eventToEdit]);
 
@@ -150,6 +209,115 @@ function EventFormModal({
     setErrors((previous) => ({
       ...previous,
       recurrence: undefined,
+    }));
+  }
+
+
+  // =========================================================
+  // SELECCIONAR IMAGEN
+  // =========================================================
+
+  function handleImageChange(event) {
+    // Obtenemos el primer archivo seleccionado.
+    const file = event.target.files?.[0];
+
+    // Si el usuario canceló el selector,
+    // simplemente terminamos.
+    if (!file) return;
+
+    // Comprobamos que realmente sea
+    // uno de los formatos permitidos.
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      setErrors((previous) => ({
+        ...previous,
+        image:
+          "La imagen debe estar en formato JPG, PNG o WEBP.",
+      }));
+
+      // Limpiamos el input.
+      event.target.value = "";
+
+      return;
+    }
+
+    // Comprobamos el tamaño del archivo.
+    if (file.size > MAX_IMAGE_SIZE) {
+      setErrors((previous) => ({
+        ...previous,
+        image:
+          "La imagen no puede superar los 5 MB.",
+      }));
+
+      // Limpiamos el input.
+      event.target.value = "";
+
+      return;
+    }
+
+    // Creamos un lector de archivos.
+    const reader = new FileReader();
+
+    // Cuando termina de leer la imagen...
+    reader.onload = () => {
+      // Guardamos el archivo original.
+      setImageFile(file);
+
+      // Guardamos temporalmente la imagen
+      // codificada para mostrar la vista previa.
+      setImagePreview(reader.result);
+
+      // Si anteriormente se había marcado
+      // para eliminar la imagen, cancelamos esa acción.
+      setRemoveImage(false);
+
+      // Limpiamos cualquier error de imagen.
+      setErrors((previous) => ({
+        ...previous,
+        image: undefined,
+      }));
+    };
+
+    // Si existiera algún problema leyendo el archivo.
+    reader.onerror = () => {
+      setImageFile(null);
+      if (imageInputRef.current) imageInputRef.current.value = "";
+      setErrors((previous) => ({
+        ...previous,
+        image:
+          "No se pudo leer la imagen seleccionada.",
+      }));
+    };
+
+    // Leemos temporalmente el archivo.
+    // Esto es solamente para la vista previa.
+    reader.readAsDataURL(file);
+  }
+
+
+  // =========================================================
+  // ELIMINAR IMAGEN
+  // =========================================================
+
+  function handleRemoveImage() {
+    // Eliminamos el archivo nuevo seleccionado.
+    setImageFile(null);
+
+    // Quitamos la vista previa.
+    setImagePreview("");
+
+    // Indicamos que debe eliminarse la imagen
+    // existente cuando se guarde el evento.
+    setRemoveImage(true);
+
+    // Limpiamos el input.
+    if (imageInputRef.current) {
+      imageInputRef.current.value = "";
+    }
+
+    // Limpiamos errores relacionados con imagen.
+    setErrors((previous) => ({
+      ...previous,
+      image: undefined,
     }));
   }
 
@@ -312,24 +480,39 @@ function EventFormModal({
 
       recurrence: isRecurring
         ? {
-            type: "weekly",
-            daysOfWeek: [
-              ...form.recurrence.daysOfWeek,
-            ].sort((a, b) => a - b),
-            endDate:
-              form.recurrence.endDate || null,
-          }
+          type: "weekly",
+          daysOfWeek: [
+            ...form.recurrence.daysOfWeek,
+          ].sort((a, b) => a - b),
+          endDate:
+            form.recurrence.endDate || null,
+        }
         : {
-            type: "none",
-            daysOfWeek: [],
-            endDate: null,
-          },
+          type: "none",
+          daysOfWeek: [],
+          endDate: null,
+        },
     };
 
     // La página principal decidirá cómo
     // guardar el evento en su estado local.
 
-    onSave(normalizedEvent);
+    onSave({
+      // Enviamos todos los datos normales del evento.
+      ...normalizedEvent,
+
+      // Enviamos temporalmente el archivo.
+      // Cuando conectemos el backend,
+      // este archivo irá dentro de FormData.
+      imageFile,
+
+      // La vista previa permitirá mostrar
+      // inmediatamente la imagen en esta versión demo.
+      imagePreview,
+
+      // Indica si hay que quitar una imagen existente.
+      removeImage,
+    });
   }
 
   // =========================================================
@@ -516,6 +699,82 @@ function EventFormModal({
                     {errors.description}
                   </small>
                 )}
+              </div>
+
+              {/* Imagen opcional del evento: misma interfaz para crear o editar. */}
+              <div className="event-form-modal__field event-form-modal__field--full">
+                <label htmlFor={`${formId}-image`}>Imagen del evento (opcional)</label>
+
+                {/* Este input conserva el archivo real, listo para la futura API. */}
+                <input
+                  ref={imageInputRef}
+                  id={`${formId}-image`}
+                  className="event-form-modal__image-input"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleImageChange}
+                  aria-invalid={Boolean(errors.image)}
+                  aria-describedby={`${formId}-image-hint`}
+                />
+
+                {imagePreview ? (
+                  <div className="event-form-modal__image-preview">
+                    <div className="event-form-modal__image-preview-frame">
+                      <img
+                        src={imagePreview}
+                        alt={`Vista previa de ${form.title || "la actividad"}`}
+                      />
+                    </div>
+
+                    <div className="event-form-modal__image-preview-info">
+                      <strong>Imagen del evento</strong>
+                      <span>Puedes cambiarla o quitarla antes de guardar.</span>
+
+                      <div className="event-form-modal__image-actions">
+                        <button
+                          type="button"
+                          className="event-form-modal__image-change"
+                          onClick={() => imageInputRef.current?.click()}
+                        >
+                          <ImagePlus size={17} aria-hidden="true" />
+                          Cambiar imagen
+                        </button>
+
+                        <button
+                          type="button"
+                          className="event-form-modal__image-remove"
+                          onClick={handleRemoveImage}
+                        >
+                          <Trash2 size={17} aria-hidden="true" />
+                          Quitar imagen
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="event-form-modal__image-upload"
+                    onClick={() => imageInputRef.current?.click()}
+                  >
+                    <span className="event-form-modal__image-upload-icon">
+                      <ImagePlus size={26} aria-hidden="true" />
+                    </span>
+                    <span className="event-form-modal__image-upload-content">
+                      <strong>Agregar imagen</strong>
+                      <small>JPG, PNG o WEBP · Máximo 5 MB</small>
+                    </span>
+                  </button>
+                )}
+
+                {errors.image && (
+                  <small className="event-form-modal__error" role="alert">
+                    {errors.image}
+                  </small>
+                )}
+                <small id={`${formId}-image-hint`} className="event-form-modal__hint">
+                  La imagen es opcional y podrá utilizarse como portada del evento.
+                </small>
               </div>
 
             </div>

@@ -1,0 +1,481 @@
+
+/* ========================================================= */
+/* MARTÍN - PÁGINA DE ADMINISTRACIÓN */
+/* IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.martin-management {
+    width: 100%;
+    min-width: 0;
+    padding: 0 0 40px;
+    color: #233b4a;
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.martin-management__header {
+    margin-bottom: 28px;
+}
+
+.martin-management__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+
+    color: #526e7e;
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.martin-management__back:hover {
+    color: #245c75;
+    background: #edf4f7;
+    border-color: #d6e5ec;
+}
+
+.martin-management__back svg {
+    flex-shrink: 0;
+}
+
+.martin-management__header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.martin-management__heading {
+    min-width: 0;
+}
+
+.martin-management__eyebrow {
+    display: block;
+    margin-bottom: 9px;
+
+    color: #ad7656;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.martin-management__heading h1 {
+    margin: 0;
+
+    color: #203746;
+    font-size: clamp(27px, 3vw, 36px);
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.martin-management__heading h1 span {
+    color: #b47b55;
+}
+
+.martin-management__heading p {
+    max-width: 690px;
+    margin: 12px 0 0;
+
+    color: #71818d;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.martin-management__identity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 66px;
+    height: 66px;
+    flex-shrink: 0;
+
+    color: #9d6849;
+    background: #f6ede6;
+
+    border: 1px solid #ecddd1;
+    border-radius: 19px;
+}
+
+/* ========================================================= */
+/* PRESENTACIÓN DEL ASISTENTE */
+/* ========================================================= */
+
+.martin-management__intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+
+    padding: 24px;
+    margin-bottom: 32px;
+
+    background: #ffffff;
+    border: 1px solid #e5e9ec;
+    border-radius: 18px;
+
+    box-shadow: 0 4px 18px rgba(28, 47, 59, 0.025);
+}
+
+.martin-management__intro-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 49px;
+    height: 49px;
+    flex-shrink: 0;
+
+    color: #2d657e;
+    background: #edf4f7;
+
+    border-radius: 13px;
+}
+
+.martin-management__intro-content {
+    min-width: 0;
+}
+
+.martin-management__intro-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-bottom: 8px;
+}
+
+.martin-management__intro-title h2 {
+    margin: 0;
+
+    color: #263c49;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.martin-management__status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    color: #91632f;
+    background: #fff4e4;
+
+    border: 1px solid #f3e0bd;
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.martin-management__intro-content p {
+    max-width: 800px;
+    margin: 0;
+
+    color: #71818d;
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+/* ========================================================= */
+/* ÁREA DE ADMINISTRACIÓN */
+/* ========================================================= */
+
+.martin-management__workspace-heading {
+    margin-bottom: 18px;
+}
+
+.martin-management__workspace-heading h2 {
+    margin: 0 0 6px;
+
+    color: #243c4a;
+    font-size: 19px;
+    font-weight: 750;
+}
+
+.martin-management__workspace-heading p {
+    margin: 0;
+
+    color: #7b8994;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.martin-management__layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+}
+
+/* ========================================================= */
+/* NAVEGACIÓN INTERNA */
+/* ========================================================= */
+
+.martin-management__navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 12px;
+
+    background: #ffffff;
+    border: 1px solid #e5e9ec;
+    border-radius: 16px;
+}
+
+.martin-management__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 13px 12px;
+
+    color: #617481;
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.martin-management__nav-item > svg:first-child {
+    flex-shrink: 0;
+}
+
+.martin-management__nav-item > span {
+    flex: 1;
+}
+
+.martin-management__nav-item:hover {
+    color: #285c73;
+    background: #f3f8fa;
+}
+
+.martin-management__nav-item--active {
+    color: #245d77;
+    background: #eaf3f7;
+    border-color: #d5e7ef;
+}
+
+.martin-management__nav-arrow {
+    color: #9aaab4;
+    flex-shrink: 0;
+}
+
+.martin-management__nav-item--active
+.martin-management__nav-arrow {
+    color: #39768f;
+}
+
+/* ========================================================= */
+/* CONTENIDO PRINCIPAL */
+/* ========================================================= */
+
+.martin-management__content {
+    min-width: 0;
+    min-height: 350px;
+
+    padding: 25px;
+
+    background: #ffffff;
+    border: 1px solid #e5e9ec;
+    border-radius: 18px;
+
+    box-shadow: 0 4px 18px rgba(28, 47, 59, 0.025);
+}
+
+.martin-management__content-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #edf0f2;
+}
+
+.martin-management__content-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    color: #2b6882;
+    background: #eef5f8;
+
+    border-radius: 12px;
+}
+
+.martin-management__content-heading h3 {
+    margin: 0 0 6px;
+
+    color: #273e4c;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.martin-management__content-heading p {
+    margin: 0;
+
+    color: #7b8994;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* CONTENIDO TEMPORAL */
+/* ========================================================= */
+
+.martin-management__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 215px;
+    padding: 25px;
+
+    text-align: center;
+    background: #f8fafb;
+
+    border: 1px dashed #d9e4e9;
+    border-radius: 14px;
+}
+
+.martin-management__placeholder > svg {
+    margin-bottom: 13px;
+    color: #83a0af;
+}
+
+.martin-management__placeholder h4 {
+    margin: 0 0 8px;
+
+    color: #354e5d;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.martin-management__placeholder p {
+    max-width: 400px;
+    margin: 0;
+
+    color: #84929d;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* AVISO INFERIOR */
+/* ========================================================= */
+
+.martin-management__notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    margin-top: 25px;
+    padding: 16px 18px;
+
+    color: #697d8b;
+    background: #f0f5f7;
+
+    border: 1px solid #e0e9ed;
+    border-radius: 12px;
+}
+
+.martin-management__notice > svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.martin-management__notice p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+    .martin-management__layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    .martin-management__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .martin-management__navigation {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .martin-management__nav-arrow {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .martin-management__header-content {
+        align-items: flex-start;
+    }
+
+    .martin-management__identity {
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+    }
+
+    .martin-management__identity svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .martin-management__intro {
+        padding: 18px;
+    }
+
+    .martin-management__navigation {
+        grid-template-columns: 1fr;
+    }
+
+    .martin-management__content {
+        padding: 18px;
+    }
+
+    .martin-management__content-heading {
+        align-items: flex-start;
+    }
+}

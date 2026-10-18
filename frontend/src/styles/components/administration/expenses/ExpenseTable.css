@@ -806,3 +806,5 @@
     }
 
 }
+/* Comprobante adjunto: indicador discreto en historial. */
+.expense-table__receipt-tag { display: inline-flex; align-items: center; gap: 5px; width: fit-content; margin-top: 6px; padding: 4px 7px; color: #2c8199; background: #eaf5f8; border-radius: 6px; font-size: 10px; font-weight: 700; }

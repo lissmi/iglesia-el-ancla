@@ -39,6 +39,7 @@ import {
   PackagePlus,
   Wallet,
   Sparkles,
+  Bot,
 } from "lucide-react";
 
 // Importamos los estilos exclusivos del sidebar.
@@ -319,6 +320,14 @@ function AdminSidebar({ isOpen, onClose }) {
           path: `${adminBasePath}/historial`,
           icon: History,
           available: true,
+        },
+        // Administración del asistente virtual Martín.
+        {
+          label: "Gestión de Martín",
+          path: `${adminBasePath}/asistente-martin`,
+          icon: Bot,
+          available: true,
+          end: true,
         },
       ],
     },

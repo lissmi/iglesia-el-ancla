@@ -1,0 +1,389 @@
+/* ========================================================= */
+/* MARTÍN - SEGURIDAD Y LÍMITES                             */
+/* ========================================================= */
+
+.martin-security {
+    color: #293f4d;
+    font-size: 13px;
+}
+
+.martin-security *,
+.martin-security *::before,
+.martin-security *::after {
+    box-sizing: border-box;
+}
+
+.martin-security__banner {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px;
+    background: #edf5f8;
+    border: 1px solid #d8e8ef;
+    border-radius: 13px;
+    margin-bottom: 20px;
+}
+
+.martin-security__banner > svg {
+    flex-shrink: 0;
+    color: #2c6a84;
+}
+
+.martin-security__banner strong {
+    display: block;
+    font-size: 14px;
+    color: #28546a;
+    margin-bottom: 5px;
+}
+
+.martin-security__banner p,
+.martin-security__panel-heading p,
+.martin-security__setting p,
+.martin-security__limit p {
+    margin: 0;
+    color: #728591;
+    line-height: 1.65;
+}
+
+.martin-security__summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.martin-security__summary-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    background: #fafcfd;
+    border: 1px solid #e5ecef;
+    border-radius: 12px;
+    min-width: 0;
+}
+
+.martin-security__summary-icon,
+.martin-security__panel-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 37px;
+    height: 37px;
+    color: #316c83;
+    background: #eaf3f7;
+    border-radius: 10px;
+}
+
+.martin-security__summary-item strong,
+.martin-security__summary-item small {
+    display: block;
+}
+
+.martin-security__summary-item strong {
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.martin-security__summary-item small {
+    font-size: 11px;
+    color: #81909a;
+    line-height: 1.4;
+}
+
+.martin-security__panel {
+    padding: 21px;
+    background: #fff;
+    border: 1px solid #e3e9ed;
+    border-radius: 15px;
+    margin-bottom: 17px;
+}
+
+.martin-security__panel-heading {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #edf1f3;
+    margin-bottom: 6px;
+}
+
+.martin-security__panel-heading h4 {
+    font-size: 15px;
+    color: #284353;
+    margin: 0 0 5px;
+}
+
+.martin-security__setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f3f5;
+}
+
+.martin-security__setting:last-child {
+    border-bottom: 0;
+    padding-bottom: 5px;
+}
+
+.martin-security__setting-copy label,
+.martin-security__limit label,
+.martin-security__field-label {
+    display: block;
+    font-weight: 700;
+    color: #344c5b;
+    margin-bottom: 5px;
+}
+
+.martin-security__required {
+    display: inline-block;
+    margin-top: 6px;
+    color: #42758a;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.martin-security__switch {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 43px;
+    height: 24px;
+    border: 1px solid #cbd6dc;
+    border-radius: 20px;
+    background: #cbd6dc;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.martin-security__switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s;
+}
+
+.martin-security__switch:checked {
+    background: #2e708b;
+    border-color: #2e708b;
+}
+
+.martin-security__switch:checked::after {
+    transform: translateX(19px);
+}
+
+.martin-security__switch:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.martin-security__switch:focus-visible,
+.martin-security__button:focus-visible,
+.martin-security input:focus-visible,
+.martin-security textarea:focus-visible {
+    outline: 3px solid #a9d6e8;
+    outline-offset: 2px;
+}
+
+.martin-security__limits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding-top: 16px;
+}
+
+.martin-security__limit {
+    min-width: 0;
+}
+
+.martin-security__limit p {
+    min-height: 42px;
+    margin-bottom: 9px;
+}
+
+.martin-security__number-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.martin-security__number-wrap input,
+.martin-security textarea {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #d8e2e7;
+    border-radius: 9px;
+    background: #fff;
+    color: #304b5a;
+    font: inherit;
+    padding: 11px 12px;
+}
+
+.martin-security__number-wrap span {
+    white-space: nowrap;
+    color: #8b99a2;
+    font-size: 11px;
+}
+
+.martin-security__hint {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 18px 0 0;
+    color: #7a8b95;
+    line-height: 1.6;
+    font-size: 12px;
+}
+
+.martin-security__hint svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.martin-security textarea {
+    resize: vertical;
+    line-height: 1.6;
+    margin-top: 7px;
+}
+
+.martin-security__char-count {
+    display: block;
+    text-align: right;
+    color: #8b99a2;
+    margin-top: 6px;
+}
+
+.martin-security__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.martin-security__footer-copy {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 320px;
+    color: #81909a;
+    line-height: 1.6;
+    font-size: 12px;
+}
+
+.martin-security__footer-copy svg {
+    flex-shrink: 0;
+}
+
+.martin-security__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.martin-security__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 14px;
+    border-radius: 9px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.martin-security__button--text {
+    color: #627b8a;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.martin-security__button--text:hover {
+    background: #f0f5f7;
+}
+
+.martin-security__button--secondary {
+    color: #526f80;
+    background: #fff;
+    border: 1px solid #d9e4e9;
+}
+
+.martin-security__button--secondary:hover {
+    background: #f3f7f9;
+}
+
+.martin-security__button--primary {
+    color: #fff;
+    background: #2b6983;
+    border: 1px solid #2b6983;
+}
+
+.martin-security__button--primary:hover {
+    background: #245971;
+}
+
+.martin-security__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.martin-security__notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 13px 15px;
+    border-radius: 10px;
+    background: #eef6f5;
+    color: #326b66;
+    border: 1px solid #d6e9e5;
+    margin: 14px 0 0;
+    line-height: 1.6;
+}
+
+.martin-security__notice svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+@media (max-width: 900px) {
+    .martin-security__summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 620px) {
+    .martin-security__limits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .martin-security__limit p {
+        min-height: auto;
+    }
+
+    .martin-security__panel {
+        padding: 16px;
+    }
+
+    .martin-security__footer,
+    .martin-security__actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .martin-security__button {
+        width: 100%;
+    }
+}

@@ -15,6 +15,7 @@ import {
     ChevronRight,
     ReceiptText,
     RotateCcw,
+    Paperclip,
 } from "lucide-react";
 
 import {
@@ -655,6 +656,12 @@ function ExpenseTable({
                                                 <strong className="expense-table__expense-name">
                                                     {expense.description}
                                                 </strong>
+                                                {expense.receiptImage?.url && (
+                                                    <span className="expense-table__receipt-tag" title="Comprobante adjunto">
+                                                        <Paperclip size={12} aria-hidden="true" />
+                                                        Con boleta
+                                                    </span>
+                                                )}
                                             </td>
 
                                             <td>
@@ -719,6 +726,12 @@ function ExpenseTable({
                                         <strong className="expense-table__expense-name">
                                             {expense.description}
                                         </strong>
+                                        {expense.receiptImage?.url && (
+                                            <span className="expense-table__receipt-tag" title="Comprobante adjunto">
+                                                <Paperclip size={12} aria-hidden="true" />
+                                                Con boleta
+                                            </span>
+                                        )}
 
                                         <span
                                             className={

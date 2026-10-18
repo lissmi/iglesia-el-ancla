@@ -19,6 +19,12 @@ import ExpenseNavigation from "../../components/administration/expenses/ExpenseN
 // Tarjetas de resumen financiero.
 import ExpenseSummary from "../../components/administration/expenses/ExpenseSummary";
 
+// Indicadores administrativos, alertas y movimientos recientes.
+import ExpenseOverview from "../../components/administration/expenses/ExpenseOverview";
+import ExpenseAlerts from "../../components/administration/expenses/ExpenseAlerts";
+import ExpenseRecentActivity from "../../components/administration/expenses/ExpenseRecentActivity";
+
+
 // Gráficos y análisis de gastos.
 import ExpenseCharts from "../../components/administration/expenses/ExpenseCharts";
 
@@ -60,6 +66,7 @@ import {
 // =========================================================
 
 import "../../styles/pages/administration/ExpenseManagement.css";
+
 
 
 // =========================================================
@@ -406,11 +413,19 @@ function ExpenseManagement() {
           {/* =================================== */}
 
           {activeSection === "summary" && (
+            <>
+              {/* Indicadores originales del resumen. */}
+              <ExpenseSummary expenses={expenses} />
 
-            <ExpenseSummary
-              expenses={expenses}
-            />
+              {/* Control general de pagos y comprobantes. */}
+              <ExpenseOverview expenses={expenses} />
 
+              {/* Alertas y movimientos recientes sin duplicar otras pestañas. */}
+              <div className="expense-management__summary-details">
+                <ExpenseAlerts expenses={expenses} onViewExpense={handleViewExpense} />
+                <ExpenseRecentActivity expenses={expenses} onViewExpense={handleViewExpense} />
+              </div>
+            </>
           )}
 
 

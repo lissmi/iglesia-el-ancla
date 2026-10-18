@@ -1,0 +1,42 @@
+/* ========================================================= */
+/* MARTÍN - CONFIGURACIÓN GENERAL                            */
+/* ========================================================= */
+.martin-settings { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.martin-settings__banner { display: flex; gap: 11px; align-items: flex-start; padding: 14px 16px; border: 1px solid #dce8ef; background: #f1f7fa; color: #486a7d; border-radius: 12px; }
+.martin-settings__banner svg { flex-shrink: 0; margin-top: 2px; }
+.martin-settings__banner p { margin: 0; font-size: 12px; line-height: 1.7; }
+.martin-settings__section { padding: 20px; background: #fff; border: 1px solid #e6ebee; border-radius: 15px; }
+.martin-settings__section-heading { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+.martin-settings__section-icon { display: grid; place-items: center; width: 41px; height: 41px; flex-shrink: 0; border-radius: 11px; color: #286780; background: #edf5f8; }
+.martin-settings__section-heading h4 { margin: 0 0 5px; font-size: 15px; font-weight: 750; color: #253d4b; }
+.martin-settings__section-heading p { margin: 0; font-size: 12px; line-height: 1.6; color: #778995; }
+.martin-settings__switch-list { display: flex; flex-direction: column; gap: 9px; }
+.martin-settings__switch-row { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid #e7ecef; border-radius: 12px; background: #fcfdfd; cursor: pointer; }
+.martin-settings__switch-row--disabled { opacity: .55; cursor: not-allowed; }
+.martin-settings__switch-icon { display: grid; place-items: center; flex-shrink: 0; width: 37px; height: 37px; border-radius: 10px; color: #4c788c; background: #eef5f8; }
+.martin-settings__switch-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.martin-settings__switch-copy strong { font-size: 13px; font-weight: 700; color: #304957; }
+.martin-settings__switch-copy small { font-size: 11px; line-height: 1.55; color: #81909a; }
+.martin-settings__switch-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.martin-settings__switch-track { position: relative; width: 42px; height: 24px; flex-shrink: 0; background: #cbd5dc; border-radius: 20px; transition: background .2s ease; }
+.martin-settings__switch-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px #233b4a22; transition: transform .2s ease; }
+.martin-settings__switch-input:checked + .martin-settings__switch-track { background: #2c708c; }
+.martin-settings__switch-input:checked + .martin-settings__switch-track::after { transform: translateX(18px); }
+.martin-settings__switch-input:focus-visible + .martin-settings__switch-track { outline: 3px solid #95c8dc; outline-offset: 3px; }
+.martin-settings__status { display: flex; align-items: center; gap: 8px; margin-top: 13px; color: #697e8b; font-size: 12px; }
+.martin-settings__status-dot { width: 9px; height: 9px; border-radius: 50%; background: #a5b2ba; }
+.martin-settings__status-dot--enabled { background: #3e9a70; }
+.martin-settings__fields { display: flex; flex-direction: column; gap: 9px; }
+.martin-settings__fields label { font-size: 12px; font-weight: 700; color: #405c6a; }
+.martin-settings__fields textarea { display: block; width: 100%; resize: vertical; padding: 12px 13px; border: 1px solid #dbe4e9; border-radius: 10px; background: #fff; color: #304958; font: inherit; font-size: 13px; line-height: 1.6; outline: none; box-sizing: border-box; }
+.martin-settings__fields textarea:focus { border-color: #5c9bb7; box-shadow: 0 0 0 3px #e1f1f7; }
+.martin-settings__counter { align-self: flex-end; margin-bottom: 12px; color: #91a0aa; font-size: 11px; }
+.martin-settings__notice { margin: 0; padding: 12px 14px; border: 1px solid #dce8ef; border-radius: 10px; background: #f5f9fb; color: #436a7e; font-size: 12px; line-height: 1.6; }
+.martin-settings__actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; }
+.martin-settings__button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 16px; border-radius: 10px; border: 1px solid transparent; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: background .2s ease; }
+.martin-settings__button--secondary { color: #496979; background: #fff; border-color: #d9e4e9; }
+.martin-settings__button--secondary:hover:not(:disabled) { background: #f3f8fa; }
+.martin-settings__button--primary { color: #fff; background: #286780; }
+.martin-settings__button--primary:hover:not(:disabled) { background: #1c536c; }
+.martin-settings__button:disabled { opacity: .48; cursor: not-allowed; }
+@media (max-width: 540px) { .martin-settings__section { padding: 15px; } .martin-settings__switch-row { gap: 9px; padding: 10px; } .martin-settings__switch-icon { width: 32px; height: 32px; } .martin-settings__actions { flex-direction: column; } .martin-settings__button { width: 100%; } }

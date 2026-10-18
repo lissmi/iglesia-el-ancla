@@ -1,0 +1,20 @@
+/* Actividad financiera reciente. */
+.expense-recent{min-width:0;background:#fff;border:1px solid #e8eef2;border-radius:17px;padding:22px;box-shadow:0 5px 22px rgba(23,56,76,.035)}
+.expense-recent__header{padding-bottom:15px;border-bottom:1px solid #edf1f4}
+.expense-recent__eyebrow{display:inline-flex;align-items:center;gap:6px;color:#2c8199;letter-spacing:1px;font-size:10px;font-weight:800}
+.expense-recent__header h2{margin:7px 0;color:#17384c;font-size:17px}
+.expense-recent__header p{margin:0;font-size:11px;color:#85939d;line-height:1.6}
+.expense-recent__list{display:flex;flex-direction:column}
+.expense-recent__item{display:flex;align-items:center;gap:10px;width:100%;padding:14px 0;border:0;border-bottom:1px solid #f0f3f5;background:transparent;text-align:left;font:inherit;cursor:pointer}
+.expense-recent__item:last-child{border-bottom:0}
+.expense-recent__item:hover:not(:disabled){background:#fafcfd}
+.expense-recent__item:disabled{cursor:default}
+.expense-recent__icon{display:grid;place-items:center;flex-shrink:0;width:35px;height:35px;background:#eaf5f8;color:#2c8199;border-radius:9px}
+.expense-recent__copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}
+.expense-recent__copy strong{font-size:12px;color:#17384c;overflow-wrap:anywhere}
+.expense-recent__copy small{color:#82939d;font-size:10px;line-height:1.6}
+.expense-recent__amount{color:#17384c;white-space:nowrap;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums}
+.expense-recent__arrow{flex-shrink:0;color:#8ca1ad}
+.expense-recent__empty{padding:24px 0;color:#82939d;font-size:12px}
+.expense-recent__item:focus-visible{outline:3px solid #b9e3ec;outline-offset:2px}
+@media(max-width:600px){.expense-recent{padding:18px}.expense-recent__arrow{display:none}}
