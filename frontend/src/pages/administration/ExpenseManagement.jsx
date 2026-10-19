@@ -3,7 +3,8 @@
 /* IMPORTACIONES */
 /* ========================================================= */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 // =========================================================
@@ -48,17 +49,13 @@ import ExpenseDeleteModal from "../../components/administration/expenses/Expense
 
 
 // =========================================================
-// DATOS TEMPORALES
+// CONTEXTO COMPARTIDO DE GASTOS
 // =========================================================
 
-// Importamos los registros iniciales.
-//
-// Más adelante serán reemplazados por información
-// obtenida desde el backend y MongoDB.
-
-import {
-  expenses as initialExpenses,
-} from "../../data/admin/expensesData";
+// Utilizamos una única fuente de datos para los gastos.
+// Así, el encabezado y otras páginas administrativas
+// pueden consultar los registros actualizados.
+import { useExpenses } from "../../context/expenses/ExpensesContext";
 
 
 // =========================================================
@@ -76,6 +73,14 @@ import "../../styles/pages/administration/ExpenseManagement.css";
 function ExpenseManagement() {
 
   // =====================================================
+  // NAVEGACIÓN DESDE NOTIFICACIONES
+  // =====================================================
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+
+  // =====================================================
   // SECCIÓN ACTIVA
   // =====================================================
 
@@ -90,19 +95,17 @@ function ExpenseManagement() {
 
 
   // =====================================================
-  // ESTADO PRINCIPAL DE GASTOS
+  // DATOS COMPARTIDOS DE GASTOS
   // =====================================================
 
-  // Guardamos los gastos dentro del estado de React.
-  //
-  // Esto permite registrar y editar movimientos
-  // y actualizar automáticamente los componentes.
-
-  const [expenses, setExpenses] = useState(
-    () => initialExpenses.map((expense) => ({
-      ...expense,
-    }))
-  );
+  // Leemos los registros y las operaciones del contexto.
+  // No creamos otro useState para expenses, porque eso
+  // produciría dos fuentes de datos independientes.
+  const {
+    expenses,
+    saveExpense,
+    deleteExpense,
+  } = useExpenses();
 
 
   // =====================================================
@@ -145,6 +148,34 @@ function ExpenseManagement() {
   const selectedExpense = expenses.find(
     (expense) => expense.id === selectedExpenseId
   ) ?? null;
+
+
+  // =====================================================
+  // ABRIR UN GASTO DESDE LA URL DE LA NOTIFICACIÓN
+  // =====================================================
+
+  useEffect(() => {
+    // Ejemplo: /admin/finanzas/gastos?gasto=123
+    const requestedId = new URLSearchParams(location.search).get("gasto");
+    if (!requestedId) return;
+
+    const expense = expenses.find(
+      (item) => String(item.id) === requestedId
+    );
+
+    if (!expense) {
+      // Evitamos abrir registros inexistentes o eliminados.
+      console.warn("No se encontró el gasto solicitado:", requestedId);
+      return;
+    }
+
+    setActiveSection("upcoming");
+    setSelectedExpenseId(expense.id);
+
+    // IMPORTANTE: no quitamos el parámetro aquí.
+    // Se elimina al cerrar el modal para no interferir
+    // con la transición y evitar reaperturas.
+  }, [expenses, location.search]);
 
 
   // =====================================================
@@ -222,6 +253,16 @@ function ExpenseManagement() {
 
     setSelectedExpenseId(null);
 
+    // Limpiamos el enlace de la notificación al cerrar la ficha.
+    const params = new URLSearchParams(location.search);
+    if (params.has("gasto")) {
+      params.delete("gasto");
+      navigate({
+        pathname: location.pathname,
+        search: params.toString() ? `?${params.toString()}` : "",
+      }, { replace: true });
+    }
+
   };
 
 
@@ -272,21 +313,16 @@ function ExpenseManagement() {
 
   const handleConfirmDeleteExpense = (expense) => {
 
-    // Eliminamos únicamente el registro
-    // cuyo identificador coincide.
+    // Eliminamos el registro desde el contexto compartido.
+    deleteExpense(expense.id);
 
-    setExpenses((previousExpenses) =>
-      previousExpenses.filter(
-        (item) => item.id !== expense.id
-      )
-    );
-
-    // Si sus detalles estaban seleccionados,
-    // también limpiamos esa selección.
-
+    // Cerramos los detalles si correspondían al gasto eliminado.
     setSelectedExpenseId((previousId) =>
       previousId === expense.id ? null : previousId
     );
+
+    // Cerramos el modal de confirmación.
+    setExpenseToDeleteId(null);
 
   };
 
@@ -309,60 +345,9 @@ function ExpenseManagement() {
     expenseToEdit
   ) => {
 
-    // ================================================
-    // EDITAR GASTO EXISTENTE
-    // ================================================
-
-    if (expenseToEdit) {
-
-      setExpenses((previousExpenses) =>
-
-        previousExpenses.map((item) =>
-
-          item.id === expenseToEdit.id
-
-            ? {
-              ...item,
-              ...expenseData,
-            }
-
-            : item
-
-        )
-
-      );
-
-      return;
-
-    }
-
-
-    // ================================================
-    // REGISTRAR NUEVO GASTO
-    // ================================================
-
-    // Generamos un identificador único
-    // para el nuevo registro.
-
-    const newExpense = {
-
-      ...expenseData,
-
-      id: crypto.randomUUID(),
-
-    };
-
-
-    // Agregamos el gasto al inicio
-    // de la lista.
-
-    setExpenses((previousExpenses) => [
-
-      newExpense,
-
-      ...previousExpenses,
-
-    ]);
+    // El contexto se encarga de actualizar o crear el gasto.
+    // Conserva todos los campos, incluido receiptImage.
+    saveExpense(expenseData, expenseToEdit);
 
   };
 

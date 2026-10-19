@@ -1,0 +1,20 @@
+/* Capa exterior para cerrar al pulsar fuera del panel. */
+.notification-panel__backdrop { position:fixed; inset:0; z-index:2900; background:rgba(18,33,45,.25); display:flex; justify-content:flex-end; align-items:flex-start; padding:74px 26px 20px; box-sizing:border-box; }
+.notification-panel { width:min(430px,100%); max-height:calc(100dvh - 94px); display:flex; flex-direction:column; overflow:hidden; background:#fff; border:1px solid #e5edf1; border-radius:18px; box-shadow:0 22px 65px rgba(15,30,42,.26); }
+.notification-panel__header { display:flex; justify-content:space-between; gap:16px; padding:23px; border-bottom:1px solid #e9eef1; }
+.notification-panel__header span { color:#2c8199; font-size:10px; font-weight:800; letter-spacing:1px; }
+.notification-panel__header h2 { margin:7px 0; color:#17384c; font-size:21px; }
+.notification-panel__header p { margin:0; color:#82919b; font-size:12px; }
+.notification-panel__close { width:34px; height:34px; display:grid; place-items:center; flex-shrink:0; background:#f2f6f8; color:#526b79; border:0; border-radius:9px; cursor:pointer; }
+.notification-panel__tools { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:14px 20px; border-bottom:1px solid #edf2f4; }
+.notification-panel__filters { display:flex; gap:5px; padding:4px; background:#f2f6f8; border-radius:10px; }
+.notification-panel__filters button { border:0; background:transparent; color:#617987; border-radius:7px; padding:8px 11px; font-size:11px; font-weight:700; cursor:pointer; }
+.notification-panel__filters button.is-active { background:#17384c; color:#fff; }
+.notification-panel__read-all { display:inline-flex; align-items:center; gap:5px; color:#2c8199; background:transparent; border:0; font-size:11px; font-weight:700; cursor:pointer; }
+.notification-panel__read-all:disabled { opacity:.45; cursor:default; }
+.notification-panel__list { overflow-y:auto; min-height:180px; }
+.notification-panel__empty { padding:48px 25px; display:flex; flex-direction:column; gap:11px; align-items:center; text-align:center; color:#92a3ac; }
+.notification-panel__empty strong { color:#29485b; font-size:14px; }
+.notification-panel__empty p { max-width:310px; color:#80909c; line-height:1.7; font-size:12px; margin:0; }
+.notification-panel button:focus-visible { outline:3px solid #92cfdf; outline-offset:2px; }
+@media (max-width:600px) { .notification-panel__backdrop { padding:64px 10px 10px; } .notification-panel { max-height:calc(100dvh - 74px); } .notification-panel__header { padding:19px; } .notification-panel__tools { padding:12px; } }

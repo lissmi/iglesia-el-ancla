@@ -17,7 +17,6 @@ import { useLocation } from "react-router-dom";
 // =========================================================
 
 import {
-  Bell,
   LoaderCircle,
   Menu,
   ShieldCheck,
@@ -36,6 +35,9 @@ import {
 // - Configuración JSON.
 // - Timeout.
 import api from "../../../services/api";
+
+// Centro de notificaciones aislado del encabezado.
+import NotificationCenter from "../notifications/NotificationCenter";
 
 // =========================================================
 // ESTILOS
@@ -298,27 +300,8 @@ function AdminHeader({ onOpenSidebar }) {
         {/* NOTIFICACIONES */}
         {/* =============================================== */}
 
-        {/* Control visual temporal.
-            Más adelante conectaremos el módulo
-            de notificaciones reales. */}
-        <button
-          className="admin-header__notification"
-          type="button"
-          aria-label="Ver notificaciones"
-          title="Notificaciones"
-        >
-          <Bell
-            size={21}
-            strokeWidth={1.8}
-            aria-hidden="true"
-          />
-
-          {/* Indicador visual temporal. */}
-          <span
-            className="admin-header__notification-indicator"
-            aria-hidden="true"
-          />
-        </button>
+        {/* La campana abre el centro de notificaciones. */}
+        <NotificationCenter />
 
         {/* =============================================== */}
         {/* PERFIL DEL USUARIO */}

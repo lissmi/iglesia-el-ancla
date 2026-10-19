@@ -1,90 +1,51 @@
-//frontend/src/components/administration/layout/AdminLayout.jsx
-
-// Importamos useState para controlar
-// el menú lateral en dispositivos móviles.
+// =========================================================
+// LAYOUT ADMINISTRATIVO COMPARTIDO
+// =========================================================
 import { useState } from "react";
-
-// Importamos Outlet para mostrar
-// la página administrativa seleccionada.
-import { Outlet } from "react-router-dom";
-
-// Importamos el menú lateral.
+import { Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
-
-// Importamos el encabezado.
 import AdminHeader from "./AdminHeader";
-
-// Importamos los estilos exclusivos del layout.
+import { ExpensesProvider } from "../../../context/expenses/ExpensesContext";
+import { NotificationsProvider } from "../../../context/notifications/NotificationsContext";
 import "../../../styles/components/administration/layout/AdminLayout.css";
 
-
-// Creamos la estructura general del área administrativa.
 function AdminLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+  const adminBasePath = location.pathname === "/super-admin" ||
+    location.pathname.startsWith("/super-admin/")
+    ? "/super-admin"
+    : "/admin";
 
-  // Guardamos si el sidebar móvil está abierto.
-  const [isSidebarOpen, setIsSidebarOpen] =
-    useState(false);
+  const handleOpenSidebar = () => setIsSidebarOpen(true);
+  const handleCloseSidebar = () => setIsSidebarOpen(false);
 
-
-  // Creamos una función para abrir el menú.
-  const handleOpenSidebar = () => {
-
-    // Cambiamos el estado a verdadero.
-    setIsSidebarOpen(true);
-  };
-
-
-  // Creamos una función para cerrar el menú.
-  const handleCloseSidebar = () => {
-
-    // Cambiamos el estado a falso.
-    setIsSidebarOpen(false);
-  };
-
-
-  // Retornamos la estructura completa.
   return (
-    <div className="admin-layout">
+    // Ambos proveedores abarcan el encabezado y las rutas hijas.
+    <ExpensesProvider>
+      <NotificationsProvider basePath={adminBasePath}>
+        <div className="admin-layout">
+          <AdminSidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} />
 
-      {/* Mostramos el menú lateral. */}
-      <AdminSidebar
-        isOpen={isSidebarOpen}
-        onClose={handleCloseSidebar}
-      />
+          {isSidebarOpen && (
+            <button
+              className="admin-layout__overlay"
+              type="button"
+              onClick={handleCloseSidebar}
+              aria-label="Cerrar menú administrativo"
+            />
+          )}
 
-
-      {/* Mostramos un fondo oscuro detrás del menú
-          solamente cuando está abierto en móviles. */}
-      {isSidebarOpen && (
-        <button
-          className="admin-layout__overlay"
-          type="button"
-          onClick={handleCloseSidebar}
-          aria-label="Cerrar menú administrativo"
-        />
-      )}
-
-
-      {/* Creamos el área principal. */}
-      <div className="admin-layout__main">
-
-        {/* Mostramos el encabezado administrativo. */}
-        <AdminHeader
-          onOpenSidebar={handleOpenSidebar}
-        />
-
-
-        {/* Mostramos la página asociada a la ruta actual. */}
-        <div className="admin-layout__content">
-          <Outlet />
+          <div className="admin-layout__main">
+            <AdminHeader onOpenSidebar={handleOpenSidebar} />
+            <div className="admin-layout__content">
+              <Outlet />
+            </div>
+          </div>
         </div>
-
-      </div>
-
-    </div>
+      </NotificationsProvider>
+    </ExpensesProvider>
   );
 }
 
-
-// Exportamos el componente.
 export default AdminLayout;
