@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -100,14 +101,12 @@ function SystemSettings() {
         />
 
         <div>
-          <strong>Vista de configuración</strong>
+          <strong>Administración de la iglesia</strong>
 
           <p>
-            Esta versión permite explorar las
-            secciones del sistema. Las opciones
-            de edición y guardado se habilitarán
-            cuando se implementen los servicios
-            correspondientes en el backend.
+            Consulta y administra la información de la iglesia
+            desde cada sección. Algunas funciones avanzadas
+            se incorporarán por etapas.
           </p>
         </div>
       </div>
@@ -129,6 +128,7 @@ function SystemSettings() {
 
         <SettingsSection
           activeSection={activeSection}
+          onSectionChange={setActiveSection}
         />
 
       </div>
@@ -144,10 +144,8 @@ function SystemSettings() {
         />
 
         <span>
-          Las configuraciones sensibles deberán
-          contar con validación de permisos,
-          registro de cambios y protección
-          desde el servidor.
+          La configuración institucional se administra con
+          permisos especiales para el superadministrador.
         </span>
       </footer>
 
