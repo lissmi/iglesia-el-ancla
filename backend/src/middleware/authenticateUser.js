@@ -123,12 +123,27 @@ const authenticateUser = async (
         decoded.sub
       )
 
-        // Seleccionamos tokenVersion
-        // porque normalmente se encuentra
-        // oculto en las consultas.
+
+        // Recuperamos los campos internos necesarios
+        // para comprobar y mantener la integridad
+        // de la cuenta autenticada.
+        //
+        // tokenVersion:
+        // Permite validar la vigencia de la sesión.
+        //
+        // superAdminSlot:
+        // Permite conservar la posición asignada
+        // al superadministrador cuando Mongoose
+        // valida nuevamente el documento.
+        //
+        // Ambos campos mantienen select: false
+        // en el esquema y no deben enviarse
+        // al frontend.
+
         .select(
-          "+tokenVersion"
+          "+tokenVersion +superAdminSlot"
         )
+
 
 
         // Obtenemos las sucursales

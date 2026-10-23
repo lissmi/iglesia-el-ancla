@@ -1,0 +1,41 @@
+/* =========================================================
+   MI CUENTA · ESTILOS COMPARTIDOS POR LOS TRES ROLES
+   ========================================================= */
+.my-account { min-height: 100%; padding: 30px 22px 60px; color: #20374a; }
+.my-account__container { width: 100%; max-width: 1180px; margin: 0 auto; }
+.my-account__back { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 25px; font-size: 13px; font-weight: 600; color: #516c7e; text-decoration: none; }
+.my-account__back:hover { color: #a87943; }
+.my-account__heading { margin-bottom: 26px; }
+.my-account__eyebrow { display: block; margin-bottom: 7px; color: #b18654; font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
+.my-account__heading h1 { margin: 0 0 8px; color: #20374a; font-size: clamp(25px,3vw,34px); line-height: 1.2; }
+.my-account__heading p { margin: 0; color: #758697; font-size: 14px; line-height: 1.65; }
+.my-account__columns { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .85fr); gap: 20px; align-items: start; }
+.my-account__aside { display: grid; gap: 20px; }
+.my-account__card { min-width: 0; padding: 26px; border: 1px solid #e0e7eb; border-radius: 17px; background: #fff; box-shadow: 0 7px 20px rgba(22,44,60,.035); }
+.my-account__card-heading { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 24px; }
+.my-account__icon { display: grid; width: 42px; min-width: 42px; height: 42px; place-items: center; border-radius: 11px; background: #ecf2f4; color: #426579; }
+.my-account__icon--gold { background: #f8f0e5; color: #ac7c45; }
+.my-account__card-heading h2 { margin: 0 0 5px; font-size: 17px; color: #20374a; }
+.my-account__card-heading p { margin: 0; font-size: 12px; line-height: 1.6; color: #788899; }
+.my-account__form { display: grid; gap: 17px; }
+.my-account__field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.my-account__field { display: grid; gap: 7px; font-weight: 650; font-size: 13px; color: #304b5f; }
+.my-account__field span { display: inline-flex; align-items: center; gap: 7px; }
+.my-account__field input { width: 100%; min-width: 0; min-height: 43px; padding: 10px 12px; background: #f9fbfc; border: 1px solid #d9e3e8; border-radius: 9px; color: #20374a; font: inherit; font-weight: 400; font-size: 14px; }
+.my-account__field input:focus-visible { outline: 2px solid #b58b59; outline-offset: 2px; }
+.my-account__save,.my-account__security-link { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; border-radius: 9px; min-height: 44px; padding: 11px 18px; font: inherit; font-size: 13px; font-weight: 700; text-decoration: none; cursor: pointer; }
+.my-account__save { justify-self: start; background: #284657; color: #fff; }
+.my-account__save:hover:not(:disabled) { background: #1e3745; }
+.my-account__save:disabled { opacity: .55; cursor: not-allowed; }
+.my-account__details { display: grid; gap: 16px; margin: 0; }
+.my-account__details > div { border-bottom: 1px solid #edf1f3; padding-bottom: 12px; }
+.my-account__details dt { display: flex; gap: 7px; align-items: center; margin-bottom: 5px; color: #7b8e9b; font-size: 12px; }
+.my-account__details dd { overflow-wrap: anywhere; margin: 0; font-size: 14px; font-weight: 650; }
+.my-account__helper { margin: 15px 0 0; color: #7a8998; font-size: 12px; line-height: 1.65; }
+.my-account__security-link { margin-top: 19px; background: #f5eee5; color: #926a3c; }
+.my-account__security-link:hover { background: #eee0cd; }
+.my-account__notice { padding: 12px 14px; margin: 0; border-radius: 9px; font-size: 13px; line-height: 1.5; }
+.my-account__notice--error { background: #fff1ef; color: #93443d; }
+.my-account__notice--success { background: #edf7f0; color: #316b49; }
+@media (max-width: 900px) { .my-account__columns { grid-template-columns: 1fr; } }
+@media (max-width: 540px) { .my-account { padding: 20px 14px 40px; } .my-account__card { padding: 19px; } .my-account__field-row { grid-template-columns: 1fr; } .my-account__save { width: 100%; } }

@@ -180,6 +180,13 @@ function AdminSidebar({ isOpen, onClose }) {
           available: true,
           end: true,
         },
+        // Cuenta privada del usuario autenticado, no de terceros.
+        {
+          label: "Mi cuenta",
+          path: `${adminBasePath}/mi-cuenta`,
+          icon: UserRoundCog,
+          available: true,
+        },
         {
           label: "Mis actividades",
           path: "/member/eventos",
@@ -391,7 +398,7 @@ function AdminSidebar({ isOpen, onClose }) {
 
       {/* ================================================= */}
       {/* IDENTIDAD DEL PANEL */}
-      {/* ================================================= */}
+
 
       <div className="admin-sidebar__brand">
 
@@ -435,7 +442,7 @@ function AdminSidebar({ isOpen, onClose }) {
 
 
       {/* ================================================= */}
-      {/* NAVEGACIÓN ADMINISTRATIVA */}
+      {/* NAVEGACIÓN ADMINISTRATIVA Y ACCIONES */}
       {/* ================================================= */}
 
       <nav
@@ -550,59 +557,59 @@ function AdminSidebar({ isOpen, onClose }) {
           </section>
         ))}
 
+
+        {/* ================================================= */}
+        {/* ACCIONES DE SESIÓN Y SITIO PÚBLICO (JUNTO A LOS BOTONES) */}
+        {/* ================================================= */}
+
+        <section className="admin-sidebar__group">
+          <ul className="admin-sidebar__list">
+
+            {/* Enlace al sitio público. */}
+            <li>
+              <a
+                className="admin-sidebar__link admin-sidebar__public-link"
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+              >
+                <ExternalLink
+                  size={19}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+                <span>
+                  Ver sitio público
+                </span>
+              </a>
+            </li>
+
+            {/* Botón de cierre de sesión. */}
+            <li>
+              <button
+                className="admin-sidebar__link admin-sidebar__logout"
+                type="button"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+              >
+                <LogOut
+                  size={19}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+                <span>
+                  {isLoggingOut
+                    ? "Cerrando sesión..."
+                    : "Cerrar sesión"}
+                </span>
+              </button>
+            </li>
+
+          </ul>
+        </section>
+
       </nav>
-
-
-      {/* ================================================= */}
-      {/* ACCIONES INFERIORES */}
-      {/* ================================================= */}
-
-      <div className="admin-sidebar__footer">
-
-        {/* Enlace al sitio público. */}
-        <a
-          className="admin-sidebar__public-link"
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-
-          <ExternalLink
-            size={18}
-            strokeWidth={1.8}
-            aria-hidden="true"
-          />
-
-          <span>
-            Ver sitio público
-          </span>
-
-        </a>
-
-
-        {/* Botón de cierre de sesión. */}
-        <button
-          className="admin-sidebar__logout"
-          type="button"
-          onClick={handleLogout}
-          disabled={isLoggingOut}
-        >
-
-          <LogOut
-            size={18}
-            strokeWidth={1.8}
-            aria-hidden="true"
-          />
-
-          <span>
-            {isLoggingOut
-              ? "Cerrando sesión..."
-              : "Cerrar sesión"}
-          </span>
-
-        </button>
-
-      </div>
 
     </aside>
   );

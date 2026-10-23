@@ -11,6 +11,9 @@ import { BelongingsProvider } from "../context/belongings/BelongingsContext";
 
 import UsersManagement from "../pages/administration/UsersManagement";
 
+// Página de perfil compartida por todos los roles.
+import MyAccount from "../pages/account/MyAccount";
+
 import RegisterUser from "../pages/administration/RegisterUser";
 
 import ActivityHistory from "../pages/administration/ActivityHistory";
@@ -70,6 +73,9 @@ function SharedAdminRoutes() {
 
     return (
         <>
+
+            {/* PERFIL PROPIO: /admin/mi-cuenta o /super-admin/mi-cuenta. */}
+            <Route path="mi-cuenta" element={<MyAccount />} />
 
             {/* =========================================== */}
             {/* GESTIÓN DE USUARIOS */}

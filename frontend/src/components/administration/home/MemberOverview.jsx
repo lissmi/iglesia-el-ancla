@@ -4,11 +4,15 @@
 // hacia las distintas secciones de la aplicación.
 import {
   Link,
+  useLocation,
 } from "react-router-dom";
 
 // Importamos los estilos
 // exclusivos del componente.
 import "../../../styles/components/administration/home/MemberOverview.css";
+
+// Estilos adicionales de la tarjeta personal reutilizable.
+import "../../../styles/components/administration/home/MemberAccountShortcut.css";
 
 
 // Importamos los iconos
@@ -18,6 +22,7 @@ import {
   BookOpen,
   CalendarDays,
   HeartHandshake,
+  UserRoundCog,
   MapPin,
   Video,
 } from "lucide-react";
@@ -114,6 +119,11 @@ const memberActions = [
 // Aunque tenga permisos administrativos,
 // sigue siendo también miembro de la iglesia.
 function MemberOverview() {
+  // Identificamos el panel para conservar su propia navegación.
+  const { pathname } = useLocation();
+  const accountPath = pathname.startsWith("/super-admin")
+    ? "/super-admin/mi-cuenta"
+    : "/admin/mi-cuenta";
 
   return (
     <section className="super-admin-member">
@@ -398,6 +408,21 @@ function MemberOverview() {
         </article>
 
       </div>
+
+      {/* Acceso personal en una fila independiente, sin desbalancear
+          las dos tarjetas que están sobre él. */}
+      <Link className="member-account-shortcut" to={accountPath}>
+        <span className="member-account-shortcut__icon" aria-hidden="true">
+          <UserRoundCog size={23} strokeWidth={1.8} />
+        </span>
+        <span className="member-account-shortcut__content">
+          <strong>Mi cuenta</strong>
+          <span>Edita tus datos personales y administra la seguridad de tu cuenta.</span>
+        </span>
+        <span className="member-account-shortcut__action">
+          Administrar cuenta <ArrowRight size={17} aria-hidden="true" />
+        </span>
+      </Link>
 
     </section>
   );

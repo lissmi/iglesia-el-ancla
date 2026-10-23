@@ -10,7 +10,6 @@ import {
   Settings,
   ShieldCheck,
   UserCog,
-  UserPlus,
   UsersRound,
 } from "lucide-react";
 
@@ -59,33 +58,6 @@ const superAdminModules = [
     path: "/super-admin/sistema/usuarios",
 
     available: true,
-  },
-
-  // -------------------------------------------------------
-  // REGISTRAR USUARIO
-  // -------------------------------------------------------
-
-  {
-    id: "register-user",
-
-    title: "Registrar usuario",
-
-    description:
-      "Accede al formulario de registro de nuevas cuentas para miembros y administradores de la iglesia.",
-
-    icon: UserPlus,
-
-    path: "/super-admin/sistema/registrar-usuario",
-
-    available: true,
-
-    // Este módulo utiliza componentes compartidos.
-    //
-    // super_admin: podrá registrar miembros y admins.
-    // admin: podrá registrar únicamente miembros.
-    //
-    // Estas restricciones deberán validarse
-    // también desde el backend.
   },
 
   // -------------------------------------------------------

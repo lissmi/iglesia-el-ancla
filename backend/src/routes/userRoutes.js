@@ -56,6 +56,101 @@ const requireTrustedOrigin = (req, res, next) => {
 };
 
 // =========================================================
+// PERFIL PERSONAL: MI CUENTA (TODOS LOS ROLES)
+// =========================================================
+// Estas rutas deben ir antes de la restricción global super_admin.
+// La identidad se obtiene de authenticateUser, nunca de un ID del cliente.
+
+function serializeMyProfile(user) {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phone: user.phone,
+    birthDate: user.birthDate
+      ? user.birthDate.toISOString().slice(0, 10)
+      : "",
+    email: user.email,
+    emailVerifiedAt: user.emailVerifiedAt ?? null,
+    role: user.role,
+    sucursalPrincipal: user.sucursalPrincipal?.name ?? null,
+  };
+}
+
+// Devuelve únicamente el perfil del usuario que inició sesión.
+router.get("/me/profile", async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  return res.status(200).json({
+    success: true,
+    profile: serializeMyProfile(req.user),
+  });
+});
+
+// Solo permite modificar nombre, apellido, teléfono y fecha de nacimiento.
+// No acepta email, rol, estado, sucursales ni credenciales.
+router.patch("/me/profile", requireTrustedOrigin, async (req, res, next) => {
+  try {
+    res.set("Cache-Control", "no-store");
+
+    if (!req.is("application/json") || !req.body ||
+        typeof req.body !== "object" || Array.isArray(req.body)) {
+      return res.status(400).json({ success: false, message: "Datos inválidos" });
+    }
+
+    const allowed = ["firstName", "lastName", "phone", "birthDate"];
+    const keys = Object.keys(req.body);
+    if (keys.length !== allowed.length || allowed.some((key) => !Object.hasOwn(req.body, key))) {
+      return res.status(400).json({
+        success: false,
+        message: "Solo puedes modificar nombre, apellido, teléfono y fecha de nacimiento",
+      });
+    }
+
+    const { firstName, lastName, phone, birthDate } = req.body;
+    if ([firstName, lastName, phone, birthDate].some((item) => typeof item !== "string")) {
+      return res.status(400).json({ success: false, message: "Formato de datos no válido" });
+    }
+
+    const first = firstName.trim();
+    const last = lastName.trim();
+    const telephone = phone.trim();
+
+    if (first.length < 2 || first.length > 60 || last.length < 2 || last.length > 60) {
+      return res.status(400).json({
+        success: false, message: "El nombre y apellido deben contener entre 2 y 60 caracteres",
+      });
+    }
+    if (!/^\+?[0-9\s()-]{8,30}$/.test(telephone)) {
+      return res.status(400).json({ success: false, message: "El teléfono no es válido" });
+    }
+
+    // Verificamos que sea una fecha calendario real en formato YYYY-MM-DD.
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+      return res.status(400).json({ success: false, message: "Fecha de nacimiento inválida" });
+    }
+    const date = new Date(`${birthDate}T00:00:00.000Z`);
+    if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== birthDate || date > new Date()) {
+      return res.status(400).json({ success: false, message: "Fecha de nacimiento inválida" });
+    }
+
+    // req.user ya fue verificado por authenticateUser contra MongoDB.
+    const user = req.user;
+    user.firstName = first;
+    user.lastName = last;
+    user.phone = telephone;
+    user.birthDate = date;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Tus datos personales fueron actualizados",
+      profile: serializeMyProfile(user),
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// =========================================================
 // CONSULTAS LIMITADAS A LA SUCURSAL (ADMIN / SUPER_ADMIN)
 // =========================================================
 // Estas rutas son independientes del listado institucional.

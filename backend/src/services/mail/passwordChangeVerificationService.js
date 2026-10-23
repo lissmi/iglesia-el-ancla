@@ -15,7 +15,7 @@ const PURPOSE = "password_change";
 const CODE_TTL_MS = 10 * 60 * 1000;
 const RESEND_COOLDOWN_MS = 60 * 1000;
 const MAX_ATTEMPTS = 5;
-const ALLOWED_ROLES = ["super_admin", "admin"];
+const ALLOWED_ROLES = ["super_admin", "admin", "member"];
 
 function securityError(code, message) {
   return Object.assign(new Error(message), { code });

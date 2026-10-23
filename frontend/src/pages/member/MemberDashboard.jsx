@@ -250,6 +250,10 @@ function MemberDashboard({ user }) {
                 <p className="member-profile__empty">Tus datos aparecerán aquí cuando conectemos esta página con tu sesión verificada.</p>
               )}
               <p className="member-profile__note"><ShieldCheck size={17} aria-hidden="true" /> Tu información personal se mostrará solo en tu sesión.</p>
+              {/* Acceso a la página de cuenta reutilizada en los tres roles. */}
+              <Link className="member-text-link" to="/member/mi-cuenta">
+                Administrar mi cuenta <ArrowRight size={17} aria-hidden="true" />
+              </Link>
             </section>
 
             <section className="member-community" aria-labelledby="member-community-title">

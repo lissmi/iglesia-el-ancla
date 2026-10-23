@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Outlet,
@@ -92,6 +91,9 @@ import Login from "./pages/public/Login";
 
 // Página compartida para cambiar la contraseña de la propia cuenta.
 import ChangePassword from "./pages/auth/ChangePassword";
+
+// Página reutilizable de edición de datos personales.
+import MyAccount from "./pages/account/MyAccount";
 
 
 
@@ -345,6 +347,9 @@ function App() {
                 element={<MemberDashboard />}
               />
             </Route>
+
+            {/* La misma página de Mi cuenta para miembros registrados. */}
+            <Route path="/member/mi-cuenta" element={<MyAccount />} />
 
             {/* =========================================== */}
             {/* ACTIVIDADES PERSONALES */}

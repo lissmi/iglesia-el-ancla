@@ -23,6 +23,7 @@ import {
     HandHeart,
     ReceiptText,
     Users,
+    UserPlus,
     UserRoundCheck,
     TrendingUp,
     ChartNoAxesCombined,
@@ -115,6 +116,35 @@ const administrativeModules = [
 
         available: true,
     },
+
+
+    // -----------------------------------------------------
+    // REGISTRAR USUARIO
+    // -----------------------------------------------------
+
+    {
+        // Identificador único del módulo.
+        id: "register-user",
+
+        // Nombre que aparecerá en la tarjeta.
+        title: "Registrar usuario",
+
+        // Descripción de la funcionalidad.
+        description:
+            "Registra nuevos miembros de la iglesia y crea sus cuentas de acceso a la plataforma.",
+
+        // Icono del formulario de registro.
+        icon: UserPlus,
+
+        // Ruta relativa al panel correspondiente.
+        // El componente agregará automáticamente
+        // /admin o /super-admin según la sesión.
+        path: "/sistema/registrar-usuario",
+
+        // El formulario ya tiene una ruta definida.
+        available: true,
+    },
+
 
 
     // -----------------------------------------------------

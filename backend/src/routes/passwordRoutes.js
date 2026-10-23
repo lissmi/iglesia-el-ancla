@@ -84,7 +84,7 @@ function respondWithError(res, error, next) {
 // authenticateUser identifica la cuenta desde la cookie HttpOnly.
 router.use(
   authenticateUser,
-  authorizeRoles("super_admin", "admin"),
+  authorizeRoles("super_admin", "admin", "member"),
   requireTrustedOrigin
 );
 
@@ -163,7 +163,7 @@ router.post("/change-password", passwordChangeLimiter, async (req, res, next) =>
     const user = await User.findById(req.user._id).select(
       "+passwordHash +tokenVersion +passwordChangedAt"
     );
-    if (!user || !user.isActive || !["super_admin", "admin"].includes(user.role)) {
+    if (!user || !user.isActive || !["super_admin", "admin", "member"].includes(user.role)) {
       return res.status(401).json({ success: false, message: "La sesión ya no es válida" });
     }
     if (!user.emailVerifiedAt) {
@@ -236,7 +236,7 @@ router.post("/change-password", passwordChangeLimiter, async (req, res, next) =>
             _id: user._id,
             tokenVersion: priorVersion,
             isActive: true,
-            role: { $in: ["admin", "super_admin"] },
+            role: { $in: ["admin", "super_admin", "member"] },
             email: user.email,
           },
           {
