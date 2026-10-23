@@ -90,6 +90,11 @@ import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMa
 
 import Login from "./pages/public/Login";
 
+// Página compartida para cambiar la contraseña de la propia cuenta.
+import ChangePassword from "./pages/auth/ChangePassword";
+
+
+
 // =========================================================
 // PÁGINAS DE MIEMBROS REGISTRADOS
 // =========================================================
@@ -308,6 +313,18 @@ function App() {
               />
             }
           >
+            {/* ============================================= */}
+            {/* CAMBIO DE CONTRASEÑA PERSONAL */}
+            {/* ============================================= */}
+
+            {/* La misma página sirve para miembros,
+                administradores y superadministradores.
+                ProtectedRoute exige una sesión válida. */}
+            <Route
+              path="/cambiar-contrasena"
+              element={<ChangePassword />}
+            />
+
             {/* ============================================= */}
             {/* ESPACIO PERSONAL DE LA COMUNIDAD */}
             {/* ============================================= */}

@@ -50,20 +50,20 @@ import {
 // si existe una sesión válida.
 import authenticateUser from "../middleware/authenticateUser.js";
 
+// Importamos las políticas de bloqueo centralizadas.
+// El login y la futura vista de Seguridad usarán estos mismos valores.
+import {
+    MAX_LOGIN_ATTEMPTS,
+    ACCOUNT_LOCK_TIME_MS,
+    LOGIN_RATE_LIMIT_WINDOW_MS,
+    LOGIN_RATE_LIMIT_MAX_REQUESTS,
+} from "../config/loginSecurityPolicy.js";
+
+
+
 
 // Creamos el router de inicio de sesión.
 const router = Router();
-
-
-// Definimos la cantidad máxima
-// de intentos permitidos por cuenta.
-const MAX_LOGIN_ATTEMPTS = 5;
-
-
-// Definimos un bloqueo temporal
-// de quince minutos.
-const ACCOUNT_LOCK_TIME_MS =
-    15 * 60 * 1000;
 
 
 // Creamos un mensaje genérico.
@@ -101,11 +101,11 @@ const loginLimiter = rateLimit({
     // Utilizamos una ventana
     // de quince minutos.
     windowMs:
-        15 * 60 * 1000,
+        LOGIN_RATE_LIMIT_WINDOW_MS,
 
     // Permitimos diez solicitudes
     // por dirección IP.
-    limit: 10,
+    limit: LOGIN_RATE_LIMIT_MAX_REQUESTS,
 
     // Enviamos encabezados modernos
     // informando el límite.
@@ -613,6 +613,11 @@ router.post(
                     email:
                         user.email,
 
+                    // Fecha de verificación del correo electrónico.
+                    // null significa que todavía no está verificado.
+                    emailVerifiedAt:
+                        user.emailVerifiedAt ?? null,
+
                     // Rol actual.
                     role:
                         user.role,
@@ -708,6 +713,11 @@ router.get(
                     // Correo electrónico.
                     email:
                         user.email,
+
+                    // Fecha en que se verificó el correo.
+                    // null indica que la verificación está pendiente.
+                    emailVerifiedAt:
+                        user.emailVerifiedAt ?? null,
 
                     // Rol actual.
                     role:

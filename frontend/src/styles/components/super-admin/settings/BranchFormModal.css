@@ -1,0 +1,17 @@
+/* Modal de registro y edición de sucursales. */
+.branch-form__overlay{position:fixed;inset:0;z-index:2500;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(16,29,40,.64);backdrop-filter:blur(3px)}
+.branch-form{width:min(100%,760px);max-height:calc(100dvh - 40px);overflow:auto;border-radius:19px;background:#fff;box-shadow:0 28px 75px rgba(11,27,37,.28)}
+.branch-form__header{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:24px 27px;border-bottom:1px solid #e6eef1}
+.branch-form__identity{display:flex;align-items:center;gap:13px;color:#2c8199}.branch-form__identity h2{margin:0;color:#17384c;font-size:21px}.branch-form__identity p{margin:5px 0 0;color:#687e89;font-size:12px}
+.branch-form__close{border:0;background:#f1f5f6;border-radius:8px;display:grid;place-items:center;cursor:pointer;color:#516b78;width:34px;height:34px}
+.branch-form__body{padding:24px 27px}.branch-form__body h3{font-size:14px;color:#17384c;margin:23px 0 12px;border-bottom:1px solid #edf2f4;padding-bottom:10px}
+.branch-form__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.branch-form__field{display:flex;flex-direction:column;gap:7px;min-width:0}.branch-form__field--wide{grid-column:1/-1}.branch-form__field span{font-size:12px;font-weight:650;color:#344f5e}
+.branch-form__field input{width:100%;box-sizing:border-box;background:#fff;border:1px solid #d4e0e5;border-radius:10px;padding:11px 12px;font:inherit;font-size:13px;color:#193b4b;outline:none}.branch-form__field input:focus{border-color:#2c8199;box-shadow:0 0 0 3px rgba(44,129,153,.12)}.branch-form__field input:disabled{background:#f3f6f7;color:#71848d}
+.branch-form__notice{margin-top:22px;padding:12px 14px;background:#eef5f7;border-radius:10px;color:#496b7b;font-size:12px;line-height:1.5}
+.branch-form__error{display:flex;gap:9px;align-items:flex-start;margin-top:15px;background:#fff0ef;border:1px solid #eed0cc;border-radius:10px;padding:12px;color:#a04137;font-size:12px}
+.branch-form__actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.branch-form__actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 17px;border-radius:10px;font-size:13px;font-weight:750;cursor:pointer}.branch-form__cancel{background:white;color:#375b6b;border:1px solid #cedde3}.branch-form__save{background:#17384c;color:white;border:1px solid #17384c}.branch-form__actions button:disabled{opacity:.55;cursor:not-allowed}
+.branch-form button:focus-visible{outline:3px solid #94cbdc;outline-offset:2px}
+@keyframes branch-form-spin{to{transform:rotate(360deg)}}.branch-form__spin{animation:branch-form-spin 1s linear infinite}
+@media(max-width:600px){.branch-form__overlay{padding:9px}.branch-form{max-height:calc(100dvh - 18px)}.branch-form__header,.branch-form__body{padding:18px}.branch-form__grid{grid-template-columns:1fr}.branch-form__actions{flex-wrap:wrap}.branch-form__actions button{flex:1}}
+@media(prefers-reduced-motion:reduce){.branch-form__spin{animation:none}}

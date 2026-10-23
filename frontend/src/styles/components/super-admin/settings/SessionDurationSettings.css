@@ -1,0 +1,138 @@
+/* =========================================================
+   DURACIÓN DE SESIONES — ESTILOS EXCLUSIVOS
+   ========================================================= */
+.session-duration {
+  border: 1px solid #e2e9ee;
+  border-radius: 16px;
+  padding: 24px;
+  background: #fff;
+  color: #17384d;
+}
+
+.session-duration__header,
+.session-duration__heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.session-duration__header {
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.session-duration__heading-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  height: 43px;
+  color: #bb654b;
+  background: #fbf0eb;
+  border-radius: 12px;
+}
+
+.session-duration__heading h3 {
+  margin: 0 0 5px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.session-duration__heading p {
+  margin: 0;
+  color: #697f91;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.session-duration__refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid #d9e3e9;
+  background: #f7fafb;
+  border-radius: 9px;
+  color: #23485d;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.session-duration__refresh:hover:not(:disabled) { background: #edf3f6; }
+.session-duration__refresh:focus-visible { outline: 3px solid #8dc0d8; outline-offset: 2px; }
+.session-duration__refresh:disabled { cursor: not-allowed; opacity: .55; }
+
+.session-duration__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 18px;
+}
+.session-duration__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #e5ecf0;
+  border-radius: 12px;
+  background: #f9fbfc;
+}
+.session-duration__item > svg { flex: 0 0 auto; color: #bd6b50; }
+.session-duration__item > div { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.session-duration__label { font-size: 12px; color: #60778a; }
+.session-duration__item strong { font-size: 19px; overflow-wrap: anywhere; }
+.session-duration__item small { color: #788b9a; line-height: 1.5; }
+
+.session-duration__properties { border: 1px solid #e5ecf0; border-radius: 12px; overflow: hidden; }
+.session-duration__properties > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  font-size: 13px;
+}
+.session-duration__properties > div + div { border-top: 1px solid #e9eff2; }
+.session-duration__properties strong { font-size: 13px; }
+.session-duration__status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.session-duration__status--on { background: #e9f5ef; color: #26734d; }
+.session-duration__status--off { background: #fbefec; color: #a64f3b; }
+
+.session-duration__notice,
+.session-duration__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 15px;
+  border-radius: 11px;
+  margin-top: 17px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.session-duration__notice { background: #eef5f8; color: #315c72; }
+.session-duration__error { background: #fff1ee; color: #a34431; }
+.session-duration__notice > svg,
+.session-duration__error > svg { flex: 0 0 auto; margin-top: 1px; }
+.session-duration__notice p { margin: 0; }
+.session-duration__message { padding: 22px 0; color: #698094; font-size: 13px; }
+.session-duration__footnote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  color: #7a8c99;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .session-duration { padding: 17px; }
+  .session-duration__header { align-items: flex-start; flex-direction: column; }
+  .session-duration__grid { grid-template-columns: 1fr; }
+  .session-duration__properties > div { align-items: flex-start; }
+}

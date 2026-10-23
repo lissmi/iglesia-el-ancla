@@ -1,0 +1,79 @@
+/* =========================================================
+   PROTECCIÓN DE ADMINISTRADORES — ESTILOS EXCLUSIVOS
+   ========================================================= */
+.administrator-protection {
+  padding: 24px;
+  border: 1px solid #e2e9ee;
+  border-radius: 16px;
+  background: #fff;
+  color: #17384d;
+}
+
+.administrator-protection__header,
+.administrator-protection__heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.administrator-protection__header { justify-content: space-between; margin-bottom: 22px; }
+.administrator-protection__heading { min-width: 0; }
+.administrator-protection__heading-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  height: 43px;
+  border-radius: 12px;
+  background: #fbf0eb;
+  color: #bb654b;
+}
+.administrator-protection__heading h3 { margin: 0 0 5px; font-size: 17px; font-weight: 700; }
+.administrator-protection__heading p { margin: 0; color: #697f91; font-size: 13px; line-height: 1.5; }
+.administrator-protection__refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid #d9e3e9;
+  border-radius: 9px;
+  background: #f7fafb;
+  color: #23485d;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.administrator-protection__refresh:hover:not(:disabled) { background: #edf3f6; }
+.administrator-protection__refresh:focus-visible { outline: 3px solid #8dc0d8; outline-offset: 2px; }
+.administrator-protection__refresh:disabled { cursor: not-allowed; opacity: .55; }
+.administrator-protection__summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-bottom: 21px; }
+.administrator-protection__summary > div { display: flex; flex-direction: column; gap: 7px; padding: 17px; border: 1px solid #e5ecf0; border-radius: 12px; background: #f9fbfc; min-width: 0; }
+.administrator-protection__summary svg { color: #bd6b50; }
+.administrator-protection__summary span { color: #60778a; font-size: 12px; }
+.administrator-protection__summary strong { font-size: 14px; overflow-wrap: anywhere; }
+.administrator-protection__group { margin-top: 22px; }
+.administrator-protection__group h4 { font-size: 14px; margin: 0 0 11px; }
+.administrator-protection__rows { list-style: none; padding: 0; margin: 0; border: 1px solid #e5ecf0; border-radius: 12px; overflow: hidden; }
+.administrator-protection__row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 15px; }
+.administrator-protection__row + .administrator-protection__row { border-top: 1px solid #e5ecf0; }
+.administrator-protection__row-copy { min-width: 0; }
+.administrator-protection__row-copy strong { display: block; font-size: 13px; font-weight: 600; }
+.administrator-protection__row-copy p { margin: 5px 0 0; font-size: 12px; color: #738797; line-height: 1.5; }
+.administrator-protection__status { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 20px; white-space: nowrap; }
+.administrator-protection__status--active { color: #26734d; background: #e9f5ef; }
+.administrator-protection__status--pending { color: #a76443; background: #faf1eb; }
+.administrator-protection__notice,
+.administrator-protection__error { display: flex; align-items: flex-start; gap: 10px; padding: 13px 15px; border-radius: 11px; margin-top: 18px; font-size: 12px; line-height: 1.6; }
+.administrator-protection__notice { color: #285875; background: #edf4f8; }
+.administrator-protection__error { color: #ac4b39; background: #fff2ef; }
+.administrator-protection__notice svg,
+.administrator-protection__error svg { flex: 0 0 auto; margin-top: 1px; }
+.administrator-protection__notice p,
+.administrator-protection__error p { margin: 0; }
+.administrator-protection__feedback { font-size: 13px; color: #647e8d; }
+@media (max-width: 650px) {
+  .administrator-protection { padding: 17px; }
+  .administrator-protection__header { align-items: flex-start; flex-direction: column; }
+  .administrator-protection__summary { grid-template-columns: minmax(0, 1fr); }
+  .administrator-protection__row { align-items: flex-start; flex-direction: column; gap: 9px; }
+}

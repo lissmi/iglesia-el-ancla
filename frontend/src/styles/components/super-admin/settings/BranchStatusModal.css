@@ -1,0 +1,20 @@
+/* Ventana de confirmación independiente para cambio de estado. */
+.branch-status__overlay{position:fixed;inset:0;z-index:2600;display:grid;place-items:center;padding:18px;background:rgba(16,29,40,.65);backdrop-filter:blur(3px)}
+.branch-status{width:min(100%,520px);max-height:calc(100dvh - 36px);overflow:auto;border-radius:18px;background:#fff;box-shadow:0 22px 70px rgba(12,29,43,.3)}
+.branch-status__header{display:flex;align-items:flex-start;gap:13px;padding:24px;border-bottom:1px solid #e8edef}
+.branch-status__icon{display:grid;place-items:center;width:42px;height:42px;flex:none;background:#eef5f7;color:#2c8199;border-radius:12px}
+.branch-status__header>div{flex:1}.branch-status__header h2{font-size:20px;color:#17384c;margin:0}.branch-status__header p{font-size:12px;color:#6d7d88;margin:6px 0 0}
+.branch-status__close{border:0;background:#f2f5f6;border-radius:9px;padding:8px;color:#526979;cursor:pointer}
+.branch-status__body{padding:22px 24px;color:#516b78;font-size:13px;line-height:1.55}
+.branch-status__branch{display:flex;align-items:center;gap:11px;background:#f2f7f9;padding:14px;border-radius:12px;color:#2c8199}
+.branch-status__branch>div{display:flex;flex-direction:column;gap:3px}.branch-status__branch strong{color:#17384c}.branch-status__branch span{font-size:12px}
+.branch-status__warning{display:flex;gap:9px;align-items:flex-start;margin-top:13px;padding:12px;border-radius:10px;background:#fff3ef;color:#994f3c;border:1px solid #efdbd2}
+.branch-status__actions{display:flex;justify-content:flex-end;gap:10px;padding:0 24px 24px}
+.branch-status__actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border-radius:9px;font-weight:700;font-size:12px;cursor:pointer}
+.branch-status__cancel{background:#fff;color:#315365;border:1px solid #ccdae1}
+.branch-status__confirm{border:1px solid transparent;color:#fff}.branch-status__confirm--enable{background:#237151}.branch-status__confirm--disable{background:#a44f41}
+.branch-status__actions button:disabled,.branch-status__close:disabled{opacity:.5;cursor:not-allowed}
+.branch-status button:focus-visible{outline:3px solid #94cbdc;outline-offset:2px}
+@keyframes branch-status-rotate{to{transform:rotate(360deg)}}.branch-status__spin{animation:branch-status-rotate .9s linear infinite}
+@media(max-width:520px){.branch-status__header,.branch-status__body{padding:18px}.branch-status__actions{padding:0 18px 18px;flex-direction:column-reverse}.branch-status__actions button{width:100%}}
+@media(prefers-reduced-motion:reduce){.branch-status__spin{animation:none}}

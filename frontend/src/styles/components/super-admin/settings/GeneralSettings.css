@@ -1,0 +1,40 @@
+/* ========================================================= */
+/* INFORMACIÓN INSTITUCIONAL — IGLESIA EL ANCLA */
+/* ========================================================= */
+
+.general-settings { color: #17384c; }
+.general-settings__header { display:flex; gap:15px; align-items:flex-start; margin-bottom:24px; }
+.general-settings__heading-icon { width:46px; height:46px; display:grid; place-items:center; flex:none; color:#286e84; background:#ecf5f7; border-radius:14px; }
+.general-settings__header h2 { margin:0 0 6px; font-size:21px; font-weight:750; color:#162e40; }
+.general-settings__header p { margin:0; font-size:14px; line-height:1.6; color:#728190; }
+.general-settings__meta { display:flex; flex-wrap:wrap; align-items:center; gap:10px 20px; margin-bottom:24px; padding:13px 16px; border:1px solid #e4ebef; border-radius:12px; background:#f8fbfc; color:#667784; font-size:12px; }
+.general-settings__meta-label { display:inline-flex; align-items:center; gap:7px; font-weight:650; color:#27677c; }
+.general-settings__form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 20px; }
+.general-settings__field { min-width:0; display:flex; flex-direction:column; gap:8px; }
+.general-settings__field--wide { grid-column:1/-1; }
+.general-settings__field label { display:flex; align-items:center; gap:7px; color:#274152; font-size:13px; font-weight:700; }
+.general-settings__field label span { color:#b15f53; }
+.general-settings__field input, .general-settings__field textarea { box-sizing:border-box; width:100%; padding:12px 14px; background:#fff; color:#182f40; border:1px solid #d9e3e8; border-radius:11px; outline:none; font:inherit; font-size:14px; transition:border-color .15s ease,box-shadow .15s ease; }
+.general-settings__field textarea { resize:vertical; line-height:1.55; min-height:105px; }
+.general-settings__field input::placeholder, .general-settings__field textarea::placeholder { color:#9aabb6; }
+.general-settings__field input:focus, .general-settings__field textarea:focus { border-color:#2c8199; box-shadow:0 0 0 3px rgba(44,129,153,.12); }
+.general-settings__field input[aria-invalid="true"], .general-settings__field textarea[aria-invalid="true"] { border-color:#bd655c; }
+.general-settings__field small { color:#81909b; font-size:12px; line-height:1.5; }
+.general-settings__field .general-settings__field-error { color:#ae4e45; font-weight:600; }
+.general-settings__note { display:flex; gap:12px; align-items:flex-start; margin-top:24px; padding:15px 17px; color:#47697b; background:#eef6f8; border:1px solid #d9eaf0; border-radius:12px; }
+.general-settings__note svg { flex:none; margin-top:2px; }
+.general-settings__note p { margin:0; font-size:12px; line-height:1.7; }
+.general-settings__message { display:flex; align-items:center; gap:10px; margin:14px 0; padding:13px 15px; background:#f1f6f8; border:1px solid #d9e5e9; border-radius:11px; font-size:13px; color:#3f6475; }
+.general-settings__message--success { color:#276d50; background:#eff8f2; border-color:#d4e9db; }
+.general-settings__message--error { color:#a94a45; background:#fff3f1; border-color:#f0d6d2; }
+.general-settings__message button { margin-left:auto; color:inherit; border:1px solid currentColor; background:transparent; padding:7px 12px; border-radius:8px; cursor:pointer; }
+.general-settings__footer { display:flex; justify-content:space-between; gap:16px; align-items:center; flex-wrap:wrap; padding-top:24px; margin-top:25px; border-top:1px solid #e5eaef; }
+.general-settings__footer > span { color:#81909b; font-size:12px; }
+.general-settings__actions { display:flex; gap:10px; flex-wrap:wrap; }
+.general-settings__actions button { display:inline-flex; justify-content:center; align-items:center; gap:9px; border-radius:10px; padding:11px 16px; font:inherit; font-size:13px; font-weight:700; cursor:pointer; transition:opacity .15s; }
+.general-settings__reset { color:#465f6c; background:#fff; border:1px solid #d6e1e7; }
+.general-settings__save { color:#fff; background:#1d5468; border:1px solid #1d5468; }
+.general-settings__actions button:disabled { opacity:.45; cursor:not-allowed; }
+.general-settings__spin { animation:general-settings-spin 1s linear infinite; }
+@keyframes general-settings-spin { to { transform:rotate(360deg); } }
+@media (max-width:650px) { .general-settings__form-grid { grid-template-columns:1fr; } .general-settings__footer { align-items:stretch; } .general-settings__actions { width:100%; } .general-settings__actions button { flex:1; } }

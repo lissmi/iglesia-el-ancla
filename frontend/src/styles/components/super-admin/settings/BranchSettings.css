@@ -1,0 +1,24 @@
+/* Gestión de sucursales — listado conectado a la API. */
+.branch-settings{display:flex;flex-direction:column;gap:20px;min-width:0}
+.branch-settings__heading,.branch-settings__title{display:flex;align-items:center;gap:13px}
+.branch-settings__heading{justify-content:space-between;flex-wrap:wrap}
+.branch-settings__title>svg{flex:none;color:#257a92}
+.branch-settings__title h2{margin:0;color:#17384c;font-size:21px}
+.branch-settings__title p{margin:6px 0 0;color:#677b86;font-size:13px}
+.branch-settings__refresh{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;border:1px solid #cad8de;border-radius:10px;background:white;color:#24566b;font-size:12px;font-weight:700;cursor:pointer}
+.branch-settings__refresh:focus-visible,.branch-settings__feedback button:focus-visible{outline:3px solid #94cbdc;outline-offset:2px}
+.branch-settings__refresh:disabled{opacity:.55;cursor:not-allowed}
+.branch-settings__notice{display:flex;align-items:flex-start;gap:10px;padding:14px;border-radius:12px;background:#eff6f8;color:#446d7d;font-size:12px;line-height:1.6}
+.branch-settings__notice svg{flex:none}
+.branch-settings__summary{display:flex;gap:10px;flex-wrap:wrap}
+.branch-settings__summary span{padding:11px 14px;background:#f7fafb;border:1px solid #e4edf0;border-radius:11px;color:#60737d;font-size:12px}
+.branch-settings__summary strong{color:#17384c;font-size:17px;margin-right:5px}
+.branch-settings__list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr));gap:16px}
+.branch-settings__feedback{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;flex-wrap:wrap;min-height:130px;border:1px dashed #ccdae0;border-radius:14px;padding:20px;color:#617b87;font-size:13px}
+.branch-settings__feedback--error{background:#fff8f7;color:#a04439;border-color:#ecd2cd}
+.branch-settings__feedback button{border:1px solid #e4b5ac;background:white;color:#963f35;border-radius:8px;padding:8px 12px;cursor:pointer}
+@keyframes branch-settings-spin{to{transform:rotate(360deg)}}
+.branch-settings__spinning{animation:branch-settings-spin 1s linear infinite}
+@media(prefers-reduced-motion:reduce){.branch-settings__spinning{animation:none}}
+
+.branch-settings__actions{display:flex;gap:9px;flex-wrap:wrap}.branch-settings__create{display:inline-flex;align-items:center;gap:8px;border:1px solid #17384c;background:#17384c;color:white;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700;cursor:pointer}.branch-settings__create:disabled{opacity:.5;cursor:not-allowed}.branch-settings__success{display:flex;align-items:center;gap:9px;padding:12px 14px;background:#eaf7f0;border-radius:10px;color:#26734d;font-size:13px}.branch-settings__create:focus-visible{outline:3px solid #94cbdc;outline-offset:2px}

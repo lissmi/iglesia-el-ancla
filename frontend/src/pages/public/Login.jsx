@@ -202,24 +202,48 @@ function Login() {
                         : "/";
 
 
-                // Navegamos al área correspondiente.
-                //
-                // member:
-                // /member
-                //
-                // admin:
-                // /admin
-                //
-                // super_admin:
-                // /super-admin
+
+                // =========================================================
+                // COMPROBAR VERIFICACIÓN DEL CORREO
+                // =========================================================
+
+                // Obtenemos la información del usuario que acaba
+                // de iniciar sesión correctamente.
+                const authenticatedUser = response.data?.user;
+
+                // Comprobamos si el backend registra una fecha
+                // de verificación del correo electrónico.
+                const emailIsVerified = Boolean(
+                    authenticatedUser?.emailVerifiedAt
+                );
+
+                // Si el correo todavía no ha sido verificado,
+                // enviamos al usuario a la página de verificación.
+                if (!emailIsVerified) {
+
+                    navigate(
+                        "/verificar-correo",
+                        {
+                            replace: true,
+                        }
+                    );
+
+                    return;
+                }
+
+                // =========================================================
+                // ACCESO AL PANEL CORRESPONDIENTE
+                // =========================================================
+
+                // Si el correo está verificado,
+                // conservamos la navegación habitual según el rol.
                 navigate(
                     destination,
                     {
-                        // Reemplazamos la página
-                        // de login en el historial.
                         replace: true,
                     }
                 );
+
 
 
                 // Finalizamos la función

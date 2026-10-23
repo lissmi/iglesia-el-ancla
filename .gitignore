@@ -35,3 +35,10 @@ coverage/
 
 # Archivos temporales
 estructura-proyecto.txt
+
+#cliente de OAuth Google Auth Platform.
+client_secret_937622344652-8s8nkps642per9eo3ht87ahi97vl4pep.apps.googleusercontent.com.json
+
+#archivo de scan (node scan_project.js)
+scan_project.js
+files_list.txt

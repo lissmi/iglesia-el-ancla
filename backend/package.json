@@ -2,17 +2,13 @@
   "name": "iglesia-el-ancla-backend",
   "version": "1.0.0",
   "description": "API backend para la PWA de Iglesia El Ancla",
-
   "main": "server.js",
-
   "type": "module",
-
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "setup:initial-admin": "node src/scripts/createInitialAdmin.js"
+    "start": "node --env-file=./src/middleware/.env server.js",
+    "dev": "nodemon --exec \"node --env-file=./src/middleware/.env\" server.js",
+    "setup:initial-admin": "node --env-file=./src/middleware/.env src/scripts/createInitialAdmin.js"
   },
-
   "keywords": [
     "node",
     "express",
@@ -20,11 +16,8 @@
     "mongoose",
     "iglesia-el-ancla"
   ],
-
   "author": "",
-
   "license": "ISC",
-
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -32,12 +25,13 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.1",
+    "googleapis": "^178.0.0",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.24.2",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "nodemailer": "^10.2.1"
   },
-
   "devDependencies": {
     "nodemon": "^3.1.14"
   }

@@ -1,0 +1,40 @@
+/* =========================================================
+   SEGURIDAD Y ACCESO — DISEÑO PARA PERSONAL ADMINISTRATIVO
+   Estilos exclusivos del componente SecuritySettings.
+   ========================================================= */
+.security-settings { width: 100%; }
+.security-settings__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-bottom: 22px; margin-bottom: 20px; border-bottom: 1px solid #e5ebee; }
+.security-settings__heading { display: flex; align-items: flex-start; gap: 13px; min-width: 0; }
+.security-settings__heading-icon { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 12px; background: #faeee9; color: #bf6347; }
+.security-settings__heading h2 { margin: 0 0 5px; font-size: 20px; font-weight: 700; color: #18394d; }
+.security-settings__heading p { margin: 0; font-size: 13px; line-height: 1.55; color: #72869a; }
+.security-settings__refresh { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; border: 1px solid #dce6eb; border-radius: 9px; background: #f6fafc; padding: 9px 13px; color: #204b62; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.security-settings__refresh:hover:not(:disabled) { background: #ecf4f8; }
+.security-settings__refresh:focus-visible { outline: 3px solid #a6d6e8; outline-offset: 2px; }
+.security-settings__refresh:disabled { opacity: .6; cursor: wait; }
+.security-settings__error { display: flex; gap: 10px; align-items: flex-start; padding: 13px 15px; margin-bottom: 16px; border-radius: 10px; border: 1px solid #f0d6cc; background: #fff7f3; color: #9e4f36; }
+.security-settings__error svg { flex-shrink: 0; }
+.security-settings__error p { margin: 0; font-size: 12px; line-height: 1.55; }
+.security-settings__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+.security-settings__card { display: flex; flex-direction: column; min-width: 0; border: 1px solid #e3eaee; border-radius: 14px; background: #fff; padding: 20px; }
+.security-settings__card-heading { display: flex; align-items: flex-start; gap: 12px; }
+.security-settings__icon { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 11px; color: #bd644a; background: #fbefeb; }
+.security-settings__card-heading h3 { margin: 0 0 5px; font-size: 14px; line-height: 1.4; font-weight: 700; color: #193b51; }
+.security-settings__card-heading p { margin: 0; color: #75899a; font-size: 12px; line-height: 1.55; }
+.security-settings__value { margin-top: 22px; color: #173c52; font-size: clamp(21px, 2vw, 27px); font-weight: 750; line-height: 1.2; }
+.security-settings__explanation { margin: 13px 0 0; font-size: 12px; line-height: 1.7; color: #60788a; }
+.security-settings__permission { display: inline-flex; align-items: flex-start; gap: 8px; margin-top: 20px; color: #32775b; font-size: 12px; line-height: 1.5; font-weight: 650; }
+.security-settings__permission svg { flex-shrink: 0; }
+.security-settings__pending { align-self: flex-start; margin-top: 20px; padding: 7px 11px; border-radius: 50px; background: #f6f0ea; color: #956d50; font-size: 11px; font-weight: 650; }
+.security-settings__footer { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 14px 16px; border-radius: 11px; background: #edf4f8; color: #365d73; font-size: 12px; line-height: 1.65; }
+.security-settings__footer svg { flex-shrink: 0; margin-top: 1px; }
+@media (max-width: 780px) { .security-settings__grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .security-settings__header { flex-direction: column; } .security-settings__refresh { align-self: flex-start; } .security-settings__card { padding: 16px; } }
+
+/* Enlace y estado de contraseña dentro de la tarjeta de seguridad. */
+.security-settings__password-status { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: #32775b; font-size: 12px; line-height: 1.5; font-weight: 650; }
+.security-settings__password-status svg { flex-shrink: 0; }
+.security-settings__password-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; align-self: flex-start; margin-top: 16px; padding: 10px 14px; border-radius: 9px; background: #204b62; color: #fff; font-size: 12px; font-weight: 650; text-decoration: none; transition: background-color .15s ease; }
+.security-settings__password-link:hover { background: #15364a; color: #fff; }
+.security-settings__password-link:focus-visible { outline: 3px solid #a6d6e8; outline-offset: 3px; }
+.security-settings__password-note { margin: 12px 0 0; color: #75899a; font-size: 11px; line-height: 1.6; }
