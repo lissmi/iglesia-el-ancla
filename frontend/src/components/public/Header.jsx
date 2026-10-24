@@ -1,35 +1,38 @@
+
 import { useState } from "react";
+
+// Importamos los componentes de navegación de React Router.
 import {
     Link,
     NavLink,
 } from "react-router-dom";
 
+// Importamos el logo oficial de la iglesia.
 import logoElAncla from "../../assets/images/logo-el-ancla.png";
 
+// Importamos los estilos del encabezado público.
 import "../../styles/components/public/Header.css";
 
+// Componente principal del encabezado.
 function Header() {
-    const [menuOpen, setMenuOpen] =
-        useState(false);
 
+    // Controla si el menú móvil está abierto.
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    // Alterna la visibilidad del menú móvil.
     const toggleMenu = () => {
         setMenuOpen(
             (previousState) => !previousState
         );
     };
 
+    // Cierra el menú al seleccionar una opción.
     const closeMenu = () => {
         setMenuOpen(false);
     };
 
-    /*
-     * Agrega la clase activa únicamente cuando
-     * NavLink detecta que la ruta corresponde
-     * a la página actual.
-     */
-    const getNavigationClass = ({
-        isActive,
-    }) =>
+    // Asigna una clase CSS cuando el enlace está activo.
+    const getNavigationClass = ({ isActive }) =>
         isActive
             ? "header__link header__link--active"
             : "header__link";
@@ -37,6 +40,7 @@ function Header() {
     return (
         <header className="header">
             <div className="header__container">
+
                 {/* Logo e inicio. */}
                 <Link
                     className="header__brand"
@@ -51,15 +55,18 @@ function Header() {
                     />
                 </Link>
 
-                {/* Navegación principal. */}
+                {/* Navegación exclusivamente pública. */}
                 <nav
                     id="main-navigation"
-                    className={`header__navigation ${menuOpen
+                    className={`header__navigation ${
+                        menuOpen
                             ? "header__navigation--open"
                             : ""
-                        }`}
+                    }`}
                     aria-label="Navegación principal"
                 >
+
+                    {/* Página de inicio. */}
                     <NavLink
                         className={getNavigationClass}
                         to="/"
@@ -69,6 +76,7 @@ function Header() {
                         Inicio
                     </NavLink>
 
+                    {/* Información institucional. */}
                     <NavLink
                         className={getNavigationClass}
                         to="/nosotros"
@@ -77,14 +85,7 @@ function Header() {
                         Nosotros
                     </NavLink>
 
-                    <NavLink
-                        className={getNavigationClass}
-                        to="/recomendados"
-                        onClick={closeMenu}
-                    >
-                        Recomendados
-                    </NavLink>
-
+                    {/* Eventos públicos de la iglesia. */}
                     <NavLink
                         className={getNavigationClass}
                         to="/eventos"
@@ -93,14 +94,7 @@ function Header() {
                         Eventos
                     </NavLink>
 
-                    <NavLink
-                        className={getNavigationClass}
-                        to="/recursos"
-                        onClick={closeMenu}
-                    >
-                        Recursos
-                    </NavLink>
-
+                    {/* Información de contacto. */}
                     <NavLink
                         className={getNavigationClass}
                         to="/contacto"
@@ -109,13 +103,18 @@ function Header() {
                         Contacto
                     </NavLink>
 
+                    {/*
+                     * Recursos y Recomendados fueron retirados.
+                     * Ahora pertenecen exclusivamente al
+                     * espacio privado de los miembros.
+                     */}
 
                 </nav>
 
-                {/* Acciones laterales. */}
+                {/* Acciones laterales del encabezado. */}
                 <div className="header__actions">
 
-                    {/* Enlace público para iniciar sesión. */}
+                    {/* Acceso público al inicio de sesión. */}
                     <NavLink
                         className={({ isActive }) =>
                             isActive
@@ -128,12 +127,13 @@ function Header() {
                         Iniciar sesión
                     </NavLink>
 
-                    {/* Botón para abrir o cerrar el menú en dispositivos móviles. */}
+                    {/* Control del menú para dispositivos móviles. */}
                     <button
-                        className={`header__menu-button ${menuOpen
+                        className={`header__menu-button ${
+                            menuOpen
                                 ? "header__menu-button--open"
                                 : ""
-                            }`}
+                        }`}
                         type="button"
                         onClick={toggleMenu}
                         aria-label={
@@ -155,4 +155,5 @@ function Header() {
     );
 }
 
+// Exportamos el componente público.
 export default Header;

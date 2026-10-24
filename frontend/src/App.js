@@ -1,17 +1,16 @@
+
 import {
   BrowserRouter,
-  Outlet,
   Route,
   Routes,
 } from "react-router-dom";
 
 // =========================================================
-// COMPONENTES DEL SITIO PÚBLICO
+// LAYOUT COMPARTIDO DEL SITIO PÚBLICO
 // =========================================================
 
-import Header from "./components/public/Header";
-import Footer from "./components/public/Footer";
-import GlobalBackButton from "./components/public/GlobalBackButton";
+// Agrupa el Header dinámico, la navegación pública, las páginas y el Footer.
+import PublicLayout from "./components/public/layout/PublicLayout";
 
 // =========================================================
 // PROTECCIÓN DE RUTAS
@@ -48,41 +47,6 @@ import Contact from "./pages/public/Contact";
 import Events from "./pages/public/Events";
 import TermsAndConditions from "./pages/public/TermsAndConditions";
 import PrivacyPolicy from "./pages/public/PrivacyPolicy";
-import Recommendations from "./pages/public/Recommendations";
-import Resources from "./pages/public/Resources";
-
-
-// =========================================================
-// PÁGINAS DE RECURSOS
-// =========================================================
-
-import BibleStudies from "./pages/public/resources/BibleStudies";
-
-import PersonalDevotionalGuide from "./pages/public/resources/PersonalDevotionalGuide";
-
-import BibleStudyTools from "./pages/public/resources/BibleStudyTools";
-
-import OldTestamentBooks from "./pages/public/resources/OldTestamentBooks";
-
-import NewTestamentBooks from "./pages/public/resources/NewTestamentBooks";
-
-import BibleBookDetails from "./pages/public/resources/BibleBookDetails";
-
-import PrayerGuides from "./pages/public/resources/PrayerGuides";
-
-import PrayerGuideDetails from "./pages/public/resources/PrayerGuideDetails";
-
-import DiscipleshipMaterials from "./pages/public/resources/DiscipleshipMaterials";
-
-import DiscipleshipMaterialDetails from "./pages/public/resources/DiscipleshipMaterialDetails";
-
-import FrequentlyAskedQuestions from "./pages/public/resources/FrequentlyAskedQuestions";
-
-import DownloadableMaterials from "./pages/public/resources/DownloadableMaterials";
-
-import DownloadableMaterialDetails from "./pages/public/resources/DownloadableMaterialDetails";
-
-
 // =========================================================
 // LOGIN PÚBLICO
 // =========================================================
@@ -101,9 +65,33 @@ import MyAccount from "./pages/account/MyAccount";
 // PÁGINAS DE MIEMBROS REGISTRADOS
 // =========================================================
 
+// Encabezado único para cualquier usuario en el área de miembros.
+import MemberLayout from "./components/member/layout/MemberLayout";
+
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberEvents from "./pages/member/MemberEvents";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
+
+// =========================================================
+// CONTENIDOS EXCLUSIVOS DE MIEMBROS REGISTRADOS
+// =========================================================
+
+import Recommendations from "./pages/member/Recommendations";
+import Resources from "./pages/member/Resources";
+import BibleStudies from "./pages/member/resources/BibleStudies";
+import PersonalDevotionalGuide from "./pages/member/resources/PersonalDevotionalGuide";
+import BibleStudyTools from "./pages/member/resources/BibleStudyTools";
+import OldTestamentBooks from "./pages/member/resources/OldTestamentBooks";
+import NewTestamentBooks from "./pages/member/resources/NewTestamentBooks";
+import BibleBookDetails from "./pages/member/resources/BibleBookDetails";
+import PrayerGuides from "./pages/member/resources/PrayerGuides";
+import PrayerGuideDetails from "./pages/member/resources/PrayerGuideDetails";
+import DiscipleshipMaterials from "./pages/member/resources/DiscipleshipMaterials";
+import DiscipleshipMaterialDetails from "./pages/member/resources/DiscipleshipMaterialDetails";
+import FrequentlyAskedQuestions from "./pages/member/resources/FrequentlyAskedQuestions";
+import DownloadableMaterials from "./pages/member/resources/DownloadableMaterials";
+import DownloadableMaterialDetails from "./pages/member/resources/DownloadableMaterialDetails";
+
 import FinanceOverview from "./pages/administration/FinanceOverview";
 
 // =========================================================
@@ -134,33 +122,6 @@ import SystemSettings from "./pages/super-admin/system/SystemSettings";
 // =========================================================
 
 import NotFound from "./pages/public/NotFound";
-
-// =========================================================
-// LAYOUT PÚBLICO
-// =========================================================
-
-// Estructura utilizada por las páginas públicas.
-//
-// Header: encabezado.
-// Outlet: página seleccionada.
-// Footer: pie de página.
-
-function PublicLayout() {
-  return (
-    <>
-      <Header />
-
-      {/* Navegación global entre páginas públicas. */}
-      <GlobalBackButton />
-
-      <main>
-        <Outlet />
-      </main>
-
-      <Footer />
-    </>
-  );
-}
 
 // =========================================================
 // COMPONENTE PRINCIPAL
@@ -208,98 +169,16 @@ function App() {
               element={<PrivacyPolicy />}
             />
 
+            {/* Login también utiliza Header, navegación y Footer públicos. */}
             <Route
-              path="/recomendados"
-              element={<Recommendations />}
+              path="/login"
+              element={<Login />}
             />
 
-            <Route
-              path="/recursos"
-              element={<Resources />}
-            />
-
-            {/* ========================================= */}
-            {/* RECURSOS BÍBLICOS */}
-            {/* ========================================= */}
-
-            <Route
-              path="/recursos/estudios"
-              element={<BibleStudies />}
-            />
-
-            <Route
-              path="/recursos/devocional"
-              element={<PersonalDevotionalGuide />}
-            />
-
-            <Route
-              path="/recursos/biblia"
-              element={<BibleStudyTools />}
-            />
-
-            <Route
-              path="/recursos/biblia/libros/antiguo-testamento"
-              element={<OldTestamentBooks />}
-            />
-
-            <Route
-              path="/recursos/biblia/libros/nuevo-testamento"
-              element={<NewTestamentBooks />}
-            />
-
-            <Route
-              path="/recursos/biblia/libro/:slug"
-              element={<BibleBookDetails />}
-            />
-
-            <Route
-              path="/recursos/guias-oracion"
-              element={<PrayerGuides />}
-            />
-
-            <Route
-              path="/recursos/guias-oracion/:slug"
-              element={<PrayerGuideDetails />}
-            />
-
-            <Route
-              path="/recursos/discipulado"
-              element={<DiscipleshipMaterials />}
-            />
-
-            <Route
-              path="/recursos/discipulado/:slug"
-              element={<DiscipleshipMaterialDetails />}
-            />
-
-            <Route
-              path="/recursos/preguntas-frecuentes"
-              element={<FrequentlyAskedQuestions />}
-            />
-
-            <Route
-              path="/recursos/material-descargable"
-              element={<DownloadableMaterials />}
-            />
-
-            <Route
-              path="/recursos/material-descargable/:slug"
-              element={<DownloadableMaterialDetails />}
-            />
+            {/* Recursos y Recomendados ya no son públicos.
+                Están definidos bajo /member y protegidos por sesión. */}
 
           </Route>
-
-          {/* ============================================= */}
-          {/* LOGIN PÚBLICO */}
-          {/* ============================================= */}
-
-          {/* No utiliza PublicLayout. */}
-
-          <Route
-            path="/login"
-            element={<Login />}
-          />
-
 
           {/* ============================================= */}
           {/* RUTAS PROTEGIDAS - ESPACIO PERSONAL */}
@@ -334,52 +213,39 @@ function App() {
             {/* Los miembros, administradores y superadministradores
     pueden acceder a su espacio personal. */}
 
-            <Route
-              path="/member"
-              element={
-                <ProtectedRoute
-                  allowedRoles={["member", "admin", "super_admin"]}
-                />
-              }
-            >
-              <Route
-                index
-                element={<MemberDashboard />}
-              />
+            {/* Todas estas rutas heredan la validación de sesión
+                y roles del ProtectedRoute padre. */}
+            <Route path="/member" element={<MemberLayout />}>
+
+              {/* Inicio del espacio personal. */}
+              <Route index element={<MemberDashboard />} />
+
+              {/* Recomendaciones exclusivas de miembros registrados. */}
+              <Route path="recomendados" element={<Recommendations />} />
+
+              {/* Recursos exclusivos de miembros registrados. */}
+              <Route path="recursos" element={<Resources />} />
+              <Route path="recursos/estudios" element={<BibleStudies />} />
+              <Route path="recursos/devocional" element={<PersonalDevotionalGuide />} />
+              <Route path="recursos/biblia" element={<BibleStudyTools />} />
+              <Route path="recursos/biblia/libros/antiguo-testamento" element={<OldTestamentBooks />} />
+              <Route path="recursos/biblia/libros/nuevo-testamento" element={<NewTestamentBooks />} />
+              <Route path="recursos/biblia/libro/:slug" element={<BibleBookDetails />} />
+              <Route path="recursos/guias-oracion" element={<PrayerGuides />} />
+              <Route path="recursos/guias-oracion/:slug" element={<PrayerGuideDetails />} />
+              <Route path="recursos/discipulado" element={<DiscipleshipMaterials />} />
+              <Route path="recursos/discipulado/:slug" element={<DiscipleshipMaterialDetails />} />
+              <Route path="recursos/preguntas-frecuentes" element={<FrequentlyAskedQuestions />} />
+              <Route path="recursos/material-descargable" element={<DownloadableMaterials />} />
+              <Route path="recursos/material-descargable/:slug" element={<DownloadableMaterialDetails />} />
+
+              {/* Todas estas páginas comparten el encabezado de miembros. */}
+              <Route path="mi-cuenta" element={<MyAccount />} />
+              <Route path="eventos" element={<MemberEvents />} />
+              <Route path="peticiones-oracion" element={<MemberPrayerRequests />} />
+              <Route path="finanzas" element={<FinanceOverview />} />
+
             </Route>
-
-            {/* La misma página de Mi cuenta para miembros registrados. */}
-            <Route path="/member/mi-cuenta" element={<MyAccount />} />
-
-            {/* =========================================== */}
-            {/* ACTIVIDADES PERSONALES */}
-            {/* =========================================== */}
-
-            <Route
-              path="/member/eventos"
-              element={<MemberEvents />}
-            />
-
-            {/* =========================================== */}
-            {/* PETICIONES DE ORACIÓN */}
-            {/* =========================================== */}
-
-            <Route
-              path="/member/peticiones-oracion"
-              element={<MemberPrayerRequests />}
-            />
-
-            {/* =========================================== */}
-            {/* RESUMEN FINANCIERO DE LA COMUNIDAD */}
-            {/* =========================================== */}
-
-            {/* Disponible para miembros, administradores
-    y superadministradores. */}
-
-            <Route
-              path="/member/finanzas"
-              element={<FinanceOverview />}
-            />
 
           </Route>
 
@@ -514,3 +380,7 @@ function App() {
 // =========================================================
 
 export default App;
+
+
+
+

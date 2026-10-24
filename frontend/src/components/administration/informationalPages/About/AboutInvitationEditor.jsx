@@ -1,4 +1,5 @@
 
+
 import { Link } from "react-router-dom";
 
 import EditableText from "../common/EditableText";
@@ -14,8 +15,6 @@ const AVAILABLE_ROUTES = [
     { value: "/nosotros", label: "Nosotros" },
     { value: "/eventos", label: "Eventos" },
     { value: "/contacto", label: "Contacto" },
-    { value: "/recursos", label: "Recursos" },
-    { value: "/recomendados", label: "Recomendados" },
 ];
 
 function AboutInvitationEditor({
@@ -228,3 +227,7 @@ function AboutInvitationEditor({
 }
 
 export default AboutInvitationEditor;
+
+
+
+

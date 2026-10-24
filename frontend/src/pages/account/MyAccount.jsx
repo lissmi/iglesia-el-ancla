@@ -5,9 +5,8 @@
 // Nunca se recibe un id de usuario desde la URL ni desde el formulario.
 
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
   BadgeCheck,
   CalendarDays,
   KeyRound,
@@ -35,13 +34,6 @@ const roleLabels = {
 };
 
 function MyAccount() {
-  // Conservamos la navegación del panel desde el cual se abrió la cuenta.
-  const { pathname } = useLocation();
-  const backPath = pathname.startsWith("/super-admin/")
-    ? "/super-admin"
-    : pathname.startsWith("/admin/")
-      ? "/admin"
-      : "/member";
 
   // Separamos los datos institucionales de los campos editables.
   const [profile, setProfile] = useState(null);
@@ -130,9 +122,6 @@ function MyAccount() {
   return (
     <main className="my-account">
       <div className="my-account__container">
-        <Link className="my-account__back" to={backPath}>
-          <ArrowLeft size={17} aria-hidden="true" /> Volver a mi espacio
-        </Link>
 
         <header className="my-account__heading">
           <span className="my-account__eyebrow">Mi espacio personal</span>

@@ -18,7 +18,7 @@ import preguntasImage from "../../assets/images/resources/preguntas-frecuentes.p
 import bibliaImage from "../../assets/images/resources/biblia-estudio.png";
 
 // Importamos los estilos exclusivos de la página.
-import "../../styles/pages/public/Resources.css";
+import "../../styles/pages/member/Resources.css";
 
 // Creamos la página pública de Recursos.
 function Resources() {

@@ -1,0 +1,89 @@
+/* ========================================================= */
+/* NAVEGACIÓN COMPARTIDA DEL SITIO Y DEL ESPACIO COMUNITARIO */
+/* ========================================================= */
+
+/* Este bloque nunca altera los estilos propios de cada página. */
+.site-navigation {
+  --site-nav-ink: #223248;
+  --site-nav-muted: #6b737d;
+  --site-nav-border: #e7e0d8;
+  width: 100%;
+  padding: 17px 0 2px;
+  background: transparent;
+  color: var(--site-nav-ink);
+}
+
+/* Limita la navegación al mismo ancho de los contenidos. */
+.site-navigation__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 9px 20px;
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* Enlace de regreso consistente; no depende del historial. */
+.site-navigation__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 39px;
+  padding: 8px 13px;
+  border: 1px solid var(--site-nav-border);
+  border-radius: 11px;
+  background: #fffdfb;
+  color: var(--site-nav-ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.site-navigation__back:hover {
+  background: #f5efe7;
+  border-color: #c9b49b;
+}
+
+/* Miga de pan compacta, alineada a la derecha en escritorio. */
+.site-navigation__trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-navigation__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--site-nav-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.site-navigation__item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-navigation__item a:hover { color: var(--site-nav-ink); text-decoration: underline; }
+.site-navigation__item [aria-current="page"] { color: var(--site-nav-ink); font-weight: 700; }
+.site-navigation :focus-visible { outline: 3px solid #ad9072; outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .site-navigation { padding-top: 13px; }
+  .site-navigation__container { width: calc(100% - 30px); align-items: flex-start; }
+  .site-navigation__back { min-height: 37px; }
+  .site-navigation__trail { width: 100%; gap: 4px; }
+  .site-navigation__item { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-navigation__back { transition: none; }
+}

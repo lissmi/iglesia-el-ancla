@@ -1,9 +1,6 @@
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import {
-    ArrowLeft,
     CalendarDays,
     MapPin,
 } from "lucide-react";
@@ -44,18 +41,6 @@ const DEMO_MEMBER_EVENTS = [
 function MemberEvents() {
 
     // =========================================================
-    // NAVEGACIÓN
-    // =========================================================
-
-    const navigate = useNavigate();
-
-    // Regresa a la página anterior del historial.
-    // No depende del rol del usuario.
-    function handleGoBack() {
-        navigate(-1);
-    }
-
-    // =========================================================
     // CONFIRMACIONES TEMPORALES
     // =========================================================
 
@@ -90,26 +75,6 @@ function MemberEvents() {
 
     return (
         <main className="member-events-page">
-
-            {/* ============================================= */}
-            {/* NAVEGACIÓN DE REGRESO */}
-            {/* ============================================= */}
-
-            <div className="member-events-page__navigation">
-                <button
-                    type="button"
-                    className="member-events-page__back"
-                    onClick={handleGoBack}
-                >
-                    <ArrowLeft
-                        size={17}
-                        strokeWidth={2}
-                        aria-hidden="true"
-                    />
-
-                    <span>Volver</span>
-                </button>
-            </div>
 
             {/* ============================================= */}
             {/* ENCABEZADO */}

@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 import {
@@ -17,7 +16,7 @@ import "../../../styles/components/administration/finances/FinanceHeader.css";
 // COMPONENTE: FINANCE HEADER
 // =========================================================
 
-function FinanceHeader({ backTo = "/member" }) {
+function FinanceHeader({ backTo = "/member", showBackLink = true }) {
 
     return (
         <section className="finance-header">
@@ -25,15 +24,12 @@ function FinanceHeader({ backTo = "/member" }) {
             {/* =========================================== */}
             {/* NAVEGACIÓN */}
             {/* =========================================== */}
-
-            <Link
-                to={backTo}
-                className="finance-header__back"
-            >
-                <ArrowLeft size={17} />
-
-                <span>Volver al panel</span>
-            </Link>
+            {showBackLink && (
+                <Link to={backTo} className="finance-header__back">
+                    <ArrowLeft size={17} aria-hidden="true" />
+                    <span>Volver al panel</span>
+                </Link>
+            )}
 
             {/* =========================================== */}
             {/* CONTENIDO PRINCIPAL */}

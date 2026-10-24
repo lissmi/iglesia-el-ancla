@@ -1,0 +1,36 @@
+/* ========================================================= */
+/* ESTADO TRANSITORIO DEL ENCABEZADO SEGÚN LA SESIÓN          */
+/* ========================================================= */
+
+/* Ocupamos un espacio estable mientras el backend responde. */
+.session-aware-header__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 88px;
+  padding: 14px 24px;
+  background: #fbfaf8;
+  color: #243447;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Botón accesible para reintentar ante un error de red. */
+.session-aware-header__retry {
+  padding: 9px 14px;
+  border: 1px solid #c9b8a1;
+  border-radius: 9px;
+  background: #fff;
+  color: #243447;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Indicamos que el botón está seleccionado con el teclado. */
+.session-aware-header__retry:focus-visible {
+  outline: 3px solid #b49b79;
+  outline-offset: 2px;
+}

@@ -10,7 +10,6 @@ import {
 // Importamos las herramientas
 // necesarias de React Router.
 import {
-    Link,
     useNavigate,
 } from "react-router-dom";
 
@@ -298,7 +297,7 @@ function Login() {
 
     // Retornamos la página completa.
     return (
-        <main className="login">
+        <div className="login">
 
             {/* ================================================= */}
             {/* PANEL INSTITUCIONAL */}
@@ -558,19 +557,11 @@ function Login() {
                     </div>
 
 
-                    {/* Permitimos regresar al sitio público. */}
-                    <Link
-                        className="login__back"
-                        to="/"
-                    >
-                        Volver al sitio público
-                    </Link>
-
                 </div>
 
             </section>
 
-        </main>
+        </div>
     );
 }
 

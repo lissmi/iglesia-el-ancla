@@ -1,4 +1,3 @@
-
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -122,7 +121,10 @@ function FinanceOverview() {
                     FinanceHeader administra su propio
                     diseño, estilos y navegación. */}
 
-                <FinanceHeader backTo={backTo} />
+                <FinanceHeader
+                    backTo={backTo}
+                    showBackLink={!location.pathname.startsWith("/member/")}
+                />
 
                 {/* ======================================= */}
                 {/* FILTROS FINANCIEROS */}

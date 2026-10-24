@@ -1,3 +1,4 @@
+
 // =====================================================
 // PREGUNTAS FRECUENTES
 // =====================================================
@@ -415,7 +416,7 @@ const frequentlyAskedQuestions = [
             },
             {
                 label: "Ver guías de oración",
-                path: "/recursos/guias-oracion",
+                path: "/member/recursos/guias-oracion",
             },
         ],
     },
@@ -516,7 +517,7 @@ const frequentlyAskedQuestions = [
         links: [
             {
                 label: "Ver material sobre servicio",
-                path: "/recursos/discipulado/descubriendo-tus-dones",
+                path: "/member/recursos/discipulado/descubriendo-tus-dones",
             },
             {
                 label: "Contactar a la iglesia",
@@ -568,11 +569,11 @@ const frequentlyAskedQuestions = [
         links: [
             {
                 label: "Explorar Recursos",
-                path: "/recursos",
+                path: "/member/recursos",
             },
             {
                 label: "Ver material de discipulado",
-                path: "/recursos/discipulado",
+                path: "/member/recursos/discipulado",
             },
         ],
     },
@@ -600,7 +601,7 @@ const frequentlyAskedQuestions = [
             },
             {
                 label: "Explorar Recursos",
-                path: "/recursos",
+                path: "/member/recursos",
             },
         ],
     },
@@ -611,3 +612,6 @@ const frequentlyAskedQuestions = [
 // =====================================================
 
 export default frequentlyAskedQuestions;
+
+
+

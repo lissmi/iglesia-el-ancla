@@ -1,3 +1,4 @@
+
 //frontend/src/components/auth/ProtectedRoute.jsx
 
 // Importamos las herramientas necesarias
@@ -285,7 +286,9 @@ function ProtectedRoute({
   // y el rol está permitido,
   // mostramos las rutas hijas.
   return (
-    <Outlet />
+    // Compartimos la identidad VERIFICADA con las rutas hijas.
+    // El frontend utiliza este dato para la interfaz, no como control de acceso.
+    <Outlet context={{ user: currentUser }} />
   );
 }
 

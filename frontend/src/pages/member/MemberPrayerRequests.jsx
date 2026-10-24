@@ -1,7 +1,5 @@
-
 import { useMemo, useState } from "react";
 // Importamos Link para navegar sin recargar la aplicación.
-import { useNavigate } from "react-router-dom";
 
 import {
     CalendarDays,
@@ -18,7 +16,6 @@ import {
     ShieldCheck,
     Users,
     X,
-    ArrowLeft,
 } from "lucide-react";
 
 import "../../styles/pages/member/MemberPrayerRequests.css";
@@ -266,14 +263,6 @@ function PrayerCard({ request, currentMemberId, onView }) {
 // =========================================================
 
 function MemberPrayerRequests() {
-
-    // Permite navegar entre páginas.
-    const navigate = useNavigate();
-
-    // Regresa a la página anterior.
-    const handleGoBack = () => {
-        navigate(-1);
-    };
     const [requests, setRequests] = useState(DEMO_REQUESTS);
 
     const [activeTab, setActiveTab] = useState("community");
@@ -452,29 +441,6 @@ function MemberPrayerRequests() {
         <main className="member-prayer">
 
             <div className="member-prayer__container">
-
-                {/* ============================================= */}
-                {/* NAVEGACIÓN DE REGRESO */}
-                {/* ============================================= */}
-
-                <nav
-                    className="member-prayer__navigation"
-                    aria-label="Navegación de regreso"
-                >
-                    <button
-                        type="button"
-                        className="member-prayer__back-button"
-                        onClick={handleGoBack}
-                    >
-                        <ArrowLeft
-                            size={18}
-                            strokeWidth={2}
-                            aria-hidden="true"
-                        />
-
-                        <span>Volver</span>
-                    </button>
-                </nav>
 
                 {/* ============================================= */}
                 {/* ENCABEZADO */}

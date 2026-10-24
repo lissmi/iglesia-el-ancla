@@ -1,0 +1,375 @@
+/* ========================================================= */
+/* ENCABEZADO EXCLUSIVO DEL ESPACIO DE MIEMBROS              */
+/* Mantiene la paleta azul marino, crema y beige de El Ancla. */
+/* ========================================================= */
+
+.member-header {
+  position: relative;
+  z-index: 1100;
+  width: 100%;
+  color: #243447;
+  background: #fbfaf8;
+  box-shadow: 0 4px 24px rgba(35, 52, 71, 0.08);
+}
+
+/* Enlaces y botones usan la tipografía del proyecto. */
+.member-header a,
+.member-header button {
+  font: inherit;
+}
+
+.member-header button {
+  cursor: pointer;
+}
+
+/* Contenedor con ancho coherente en todas las pantallas. */
+.member-header__container {
+  width: min(100% - 48px, 1320px);
+  margin: 0 auto;
+}
+
+/* Franja superior de identidad y acciones. */
+.member-header__top {
+  background: #fbfaf8;
+}
+
+.member-header__top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 88px;
+}
+
+.member-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: #243447;
+  text-decoration: none;
+}
+
+.member-header__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.member-header__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.member-header__brand-text strong {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.015em;
+}
+
+.member-header__brand-text small {
+  color: #82776b;
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.025em;
+}
+
+/* Campana, acceso al panel, perfil y cierre de sesión. */
+.member-header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.member-header__notifications {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.member-header__icon-button,
+.member-header__logout,
+.member-header__menu-toggle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 43px;
+  height: 43px;
+  border: 1px solid #e7e0d6;
+  border-radius: 12px;
+  background: #fff;
+  color: #243447;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.member-header__icon-button:hover,
+.member-header__logout:hover,
+.member-header__menu-toggle:hover {
+  background: #f1ede7;
+  border-color: #c9b8a1;
+}
+
+.member-header__logout:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.member-header__admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: #243447;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.member-header__admin-button:hover {
+  background: #344e64;
+}
+
+.member-header__account {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 43px;
+  max-width: 230px;
+  padding: 8px 12px;
+  border: 1px solid #e7e0d6;
+  border-radius: 12px;
+  background: #fff;
+  color: #243447;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.member-header__account:hover {
+  background: #f1ede7;
+}
+
+.member-header__account-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* El menú hamburguesa solo es necesario en pantallas reducidas. */
+.member-header__menu-toggle {
+  display: none;
+}
+
+/* Panel informativo de notificaciones aún sin conexión backend. */
+.member-header__notifications-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: min(340px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid #e8e0d6;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 16px 50px rgba(35, 52, 71, 0.18);
+  color: #243447;
+}
+
+.member-header__notifications-panel strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.member-header__notifications-panel p {
+  margin: 0 0 12px;
+  color: #536274;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.member-header__notifications-panel small {
+  color: #8c8073;
+  font-size: 11px;
+}
+
+/* Segunda franja de navegación. */
+.member-header__navigation-wrap {
+  border-top: 1px solid #ebe4d9;
+  background: #f5f1eb;
+}
+
+.member-header__navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px 8px;
+  width: min(100% - 48px, 1320px);
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+.member-header__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 39px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: #455365;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1.35;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.member-header__link:hover {
+  background: #e9e0d3;
+  color: #243447;
+}
+
+.member-header__link--active {
+  background: #243447;
+  color: #fff;
+}
+
+.member-header__link--active:hover {
+  background: #344e64;
+  color: #fff;
+}
+
+.member-header__error {
+  margin: 0;
+  padding: 10px 24px;
+  background: #fff2f1;
+  color: #982c2c;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Indicador visible para teclado y tecnologías de asistencia. */
+.member-header a:focus-visible,
+.member-header button:focus-visible {
+  outline: 3px solid #bba186;
+  outline-offset: 3px;
+}
+
+/* Acciones duplicadas solo para el desplegable móvil. */
+.member-header__mobile-actions {
+  display: none;
+}
+
+.member-header__mobile-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid #d7c9b8;
+  border-radius: 10px;
+  background: white;
+  color: #243447;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.member-header__mobile-logout:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ========================================================= */
+/* PANTALLAS PEQUEÑAS                                       */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+  .member-header__menu-toggle {
+    display: inline-flex;
+  }
+
+  .member-header__navigation-wrap {
+    display: none;
+  }
+
+  .member-header__navigation-wrap--open {
+    display: block;
+  }
+
+  .member-header__navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px 0 18px;
+  }
+
+  .member-header__link {
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 700px) {
+  .member-header__container,
+  .member-header__navigation {
+    width: min(100% - 28px, 1320px);
+  }
+
+  .member-header__top-inner {
+    min-height: 76px;
+    gap: 10px;
+  }
+
+  .member-header__logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .member-header__brand-text strong {
+    font-size: 17px;
+  }
+
+  .member-header__brand-text small {
+    font-size: 10px;
+  }
+
+  .member-header__actions {
+    gap: 6px;
+  }
+
+  .member-header__admin-button,
+  .member-header__account,
+  .member-header__logout {
+    display: none;
+  }
+
+  .member-header__icon-button,
+  .member-header__menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .member-header__mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #e6dfd5;
+  }
+
+  .member-header__mobile-actions .member-header__admin-button {
+    display: inline-flex;
+  }
+}

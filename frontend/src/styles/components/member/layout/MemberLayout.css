@@ -1,0 +1,31 @@
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL DEL ÁREA DE MIEMBROS                  */
+/* ========================================================= */
+
+/* Distribuye Header, contenido y Footer en una sola columna. */
+.member-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* Hace que el contenido ocupe el espacio libre disponible. */
+.member-layout__content {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Algunas páginas fijaban por sí mismas una altura mínima de 100vh. */
+/* La quitamos solo dentro de este layout para no crear espacio extra */
+/* debajo del contenido antes de llegar al Footer compartido. */
+.member-layout__content > .member-page,
+.member-layout__content > .member-prayer {
+  min-height: 0;
+}
+
+/* El breadcrumb se dibuja fuera de las páginas, en MemberLayout. */
+/* Evitamos espacios superiores excesivos en las dos páginas principales. */
+.member-layout__content > .member-page .member-main { padding-top: 14px; }
+.member-layout__content > .member-prayer { padding-top: 16px; }

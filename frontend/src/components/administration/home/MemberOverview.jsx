@@ -1,3 +1,4 @@
+
 //frontend/src/components/administration/home/MemberOverview.jsx
 
 // Importamos Link para navegar
@@ -94,7 +95,7 @@ const memberActions = [
     description:
       "Accede a estudios, guías y materiales para tu crecimiento personal.",
     icon: BookOpen,
-    path: "/recursos",
+    path: "/member/recursos",
     available: true,
   },
   {
@@ -432,3 +433,7 @@ function MemberOverview() {
 // Exportamos el componente
 // para utilizarlo dentro de SuperAdminHome.
 export default MemberOverview;
+
+
+
+

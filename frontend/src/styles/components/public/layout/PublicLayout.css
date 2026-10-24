@@ -1,0 +1,66 @@
+/* ========================================================= */
+/* LAYOUT PÚBLICO - IGLESIA EL ANCLA                           */
+/* ========================================================= */
+
+/* Mantiene encabezado, contenido y Footer en orden vertical. */
+.public-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* ========================================================= */
+/* EVITAR QUE EL HEADER PÚBLICO TAPE LA NAVEGACIÓN            */
+/* ========================================================= */
+
+/*
+ * En el sitio público, Header utiliza un posicionamiento que puede
+ * sacarlo del flujo normal de la página. Esto deja SiteNavigation
+ * debajo del logo y evita que se pueda pulsar el botón de regreso.
+ *
+ * Cuando existe la barra de navegación, devolvemos el Header público
+ * al flujo para que reserve su altura real antes del breadcrumb.
+ *
+ * El Inicio no tiene esa barra: por tanto, su diseño no cambia.
+ * El MemberHeader tampoco se modifica porque tiene otra clase.
+ */
+.public-layout > .header:has(+ .public-layout__navigation) {
+  position: relative;
+  inset: auto;
+}
+
+/* Da a la navegación una franja independiente del hero público.
+   position y z-index evitan que la portada tape sus controles. */
+.public-layout__navigation {
+  position: relative;
+  z-index: 20;
+  isolation: isolate;
+  flex: 0 0 auto;
+  width: 100%;
+  background-color: #fbfaf8;
+  border-bottom: 1px solid #ebe5dc;
+}
+
+/* Conserva el diseño de SiteNavigation y lo hace visible aquí. */
+.public-layout__navigation .site-navigation {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 13px 0;
+  background: transparent;
+}
+
+/* Permite que el contenido crezca sin desplazar el Footer. */
+.public-layout__content {
+  flex: 1 0 auto;
+  min-width: 0;
+}
+
+/* Reduce el espacio ocupado por la navegación en móviles. */
+@media (max-width: 640px) {
+  .public-layout__navigation .site-navigation {
+    padding: 10px 0;
+  }
+}

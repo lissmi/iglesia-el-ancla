@@ -16,7 +16,7 @@ import podcastImage from "../../assets/images/recommendations/proyecto-biblia.jp
 import childrenImage from "../../assets/images/recommendations/material-ninos.jpg";
 
 // Importamos los estilos exclusivos de esta página.
-import "../../styles/pages/public/Recommendations.css";
+import "../../styles/pages/member/Recommendations.css";
 
 // Creamos la página pública de recomendaciones.
 function Recommendations() {
