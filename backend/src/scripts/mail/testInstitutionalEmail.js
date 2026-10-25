@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 import {
   sendInstitutionalEmail,
-} from "../services/mail/gmailService.js";
+} from "../../services/mail/gmailService.js";
 
 // =========================================================
 // PRUEBA CONTROLADA DE ENVÍO POR GMAIL API

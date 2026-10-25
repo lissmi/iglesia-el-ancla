@@ -47,6 +47,9 @@ import Contact from "./pages/public/Contact";
 import Events from "./pages/public/Events";
 import TermsAndConditions from "./pages/public/TermsAndConditions";
 import PrivacyPolicy from "./pages/public/PrivacyPolicy";
+import Donaciones from "./pages/public/Donaciones";
+import DonacionResultado from "./pages/public/DonacionResultado";
+
 // =========================================================
 // LOGIN PÚBLICO
 // =========================================================
@@ -157,6 +160,16 @@ function App() {
             <Route
               path="/eventos"
               element={<Events />}
+            />
+
+            <Route
+              path="/donaciones"
+              element={<Donaciones />}
+            />
+
+            <Route
+              path="/donaciones/resultado"
+              element={<DonacionResultado />}
             />
 
             <Route

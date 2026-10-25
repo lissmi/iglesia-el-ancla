@@ -1,0 +1,816 @@
+
+/* =========================================================
+   PÁGINA DE RESULTADO DE DONACIONES
+========================================================= */
+
+/* Contenedor principal y paleta institucional. */
+.donacion-resultado {
+  --dr-navy: #203448;
+  --dr-gold: #a88660;
+  --dr-muted: #657386;
+
+  min-height: 100vh;
+  padding: 65px 20px;
+
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(214, 183, 144, 0.23),
+      transparent 40%
+    ),
+    linear-gradient(140deg, #fcfaf7, #f4eee6);
+
+  color: var(--dr-navy);
+}
+
+/* Aplicamos box-sizing solamente al módulo. */
+.donacion-resultado *,
+.donacion-resultado *::before,
+.donacion-resultado *::after {
+  box-sizing: border-box;
+}
+
+/* Limitamos el ancho de la página. */
+.donacion-resultado__container {
+  width: min(100%, 650px);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   LOGO INSTITUCIONAL
+========================================================= */
+
+/* Centramos el enlace del logo. */
+.donacion-resultado__brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 88px;
+  height: 88px;
+
+  margin: 0 auto 28px;
+  padding: 14px;
+
+  background: #ffffff;
+  border: 1px solid #e9dfd3;
+  border-radius: 50%;
+
+  box-shadow: 0 8px 25px rgba(29, 46, 62, 0.07);
+}
+
+/* Adaptamos la imagen al círculo. */
+.donacion-resultado__brand img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* =========================================================
+   TARJETA CENTRAL
+========================================================= */
+
+/* Contenedor blanco del resultado. */
+.donacion-resultado__card {
+  overflow: hidden;
+
+  background: #ffffff;
+  border: 1px solid #eee8df;
+  border-radius: 20px;
+
+  box-shadow: 0 18px 55px rgba(28, 45, 61, 0.08);
+}
+
+/* Contenido principal centrado. */
+.donacion-resultado__content {
+  padding: 48px 45px 35px;
+  text-align: center;
+}
+
+/* Etiqueta institucional pequeña. */
+.donacion-resultado__eyebrow {
+  display: block;
+  margin-bottom: 16px;
+
+  color: #987958;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Título principal del resultado. */
+.donacion-resultado__content h1 {
+  margin: 0 0 18px;
+
+  color: var(--dr-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Descripción del estado de pago. */
+.donacion-resultado__content > p {
+  max-width: 480px;
+  margin: 0 auto;
+
+  color: var(--dr-muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   INDICADORES DE ESTADO
+========================================================= */
+
+/* Estilo compartido para cada indicador. */
+.donacion-resultado__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 84px;
+  height: 84px;
+
+  margin: 0 auto 26px;
+
+  border: 1px solid;
+  border-radius: 50%;
+
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+/* Indicador de pago aprobado. */
+.donacion-resultado__icon--aprobada {
+  color: #477c60;
+  background: #f0f7f2;
+  border-color: #cee5d4;
+}
+
+/* Indicador de pago rechazado. */
+.donacion-resultado__icon--rechazada {
+  color: #a85454;
+  background: #fdf3f2;
+  border-color: #f0d9d7;
+}
+
+/* Indicador de operación anulada. */
+.donacion-resultado__icon--anulada {
+  color: #667586;
+  background: #f1f4f6;
+  border-color: #dce3e8;
+}
+
+/* Indicador de pago pendiente. */
+.donacion-resultado__icon--pendiente {
+  color: #967748;
+  background: #faf5eb;
+  border-color: #e9ddc6;
+}
+
+/* Indicador de revisión o error. */
+.donacion-resultado__icon--revision {
+  color: #967748;
+  background: #faf5eb;
+  border-color: #e9ddc6;
+}
+
+/* =========================================================
+   RESUMEN DE TRANSACCIÓN
+========================================================= */
+
+/* Recuadro con los datos consultados. */
+.donacion-resultado__summary {
+  margin-top: 32px;
+  padding: 9px 24px;
+
+  background: #f9f8f6;
+  border: 1px solid #eee9e2;
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+/* Cada fila presenta una propiedad de la transacción. */
+.donacion-resultado__summary > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #eae6e0;
+}
+
+/* Eliminamos el borde de la última fila. */
+.donacion-resultado__summary > div:last-child {
+  border-bottom: none;
+}
+
+/* Nombre de cada propiedad. */
+.donacion-resultado__summary span {
+  color: #79838d;
+  font-size: 12px;
+}
+
+/* Valor de cada propiedad. */
+.donacion-resultado__summary strong {
+  color: var(--dr-navy);
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+/* =========================================================
+   BOTONES DE NAVEGACIÓN
+========================================================= */
+
+/* Separamos las acciones de la información. */
+.donacion-resultado__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 13px;
+
+  padding: 28px 45px 36px;
+
+  border-top: 1px solid #eee9e4;
+}
+
+/* Estilo general de los botones. */
+.donacion-resultado__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 49px;
+  padding: 12px 20px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+/* Botón principal azul marino. */
+.donacion-resultado__button--primary {
+  color: #ffffff;
+  background: var(--dr-navy);
+}
+
+/* Efecto al pasar el cursor sobre el botón principal. */
+.donacion-resultado__button--primary:hover {
+  color: #ffffff;
+  background: #304d68;
+}
+
+/* Botón secundario para actualizar el estado. */
+.donacion-resultado__button--secondary {
+  color: var(--dr-navy);
+  background: #ffffff;
+  border-color: #cfd8df;
+}
+
+/* Efecto al pasar el cursor sobre el botón secundario. */
+.donacion-resultado__button--secondary:hover {
+  background: #f3f6f8;
+}
+
+/* Enlace discreto hacia la página principal. */
+.donacion-resultado__home-link {
+  margin-top: 7px;
+  color: #806c53;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Subrayamos al pasar el cursor. */
+.donacion-resultado__home-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   INDICADOR DE CARGA
+========================================================= */
+
+/* Animación mientras consultamos MongoDB. */
+.donacion-resultado__loading {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 28px;
+
+  border: 4px solid #eee7dc;
+  border-top-color: var(--dr-navy);
+  border-radius: 50%;
+
+  animation: donacion-resultado-girar 0.9s linear infinite;
+}
+
+/* Definimos el movimiento circular. */
+@keyframes donacion-resultado-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   PIE INSTITUCIONAL
+========================================================= */
+
+/* Texto situado debajo de la tarjeta. */
+.donacion-resultado__footer {
+  margin: 25px 0 0;
+
+  color: #8d8377;
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+
+/* Resaltamos elementos cuando reciben foco de teclado. */
+.donacion-resultado a:focus-visible,
+.donacion-resultado button:focus-visible {
+  outline: 3px solid #c3a277;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   RESPONSIVE MÓVIL
+========================================================= */
+
+@media (max-width: 640px) {
+
+  /* Reducimos el espacio general en celulares. */
+  .donacion-resultado {
+    padding: 40px 16px;
+  }
+
+  /* Ajustamos el contenido interno. */
+  .donacion-resultado__content {
+    padding: 38px 22px 29px;
+  }
+
+  /* Reducimos el tamaño de los títulos. */
+  .donacion-resultado__content h1 {
+    font-size: 31px;
+  }
+
+  /* Permitimos que las filas se adapten. */
+  .donacion-resultado__summary {
+    padding: 8px 15px;
+  }
+
+  /* Evitamos superposición con referencias largas. */
+  .donacion-resultado__summary > div {
+    align-items: flex-start;
+  }
+
+  /* Reducimos el espacio de los botones. */
+  .donacion-resultado__actions {
+    padding: 25px 22px 30px;
+  }
+}
+
+/* =========================================================
+   MOVIMIENTO REDUCIDO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  /* Desactivamos la animación cuando se solicita. */
+  .donacion-resultado__loading {
+    animation: none;
+  }
+
+  /* Desactivamos las transiciones. */
+  .donacion-resultado__button {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   PÁGINA DE RESULTADO DE DONACIONES
+========================================================= */
+
+/* Contenedor principal y paleta institucional. */
+.donacion-resultado {
+  --dr-navy: #203448;
+  --dr-gold: #a88660;
+  --dr-muted: #657386;
+
+  min-height: 100vh;
+  padding: 65px 20px;
+
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(214, 183, 144, 0.23),
+      transparent 40%
+    ),
+    linear-gradient(140deg, #fcfaf7, #f4eee6);
+
+  color: var(--dr-navy);
+}
+
+/* Aplicamos box-sizing solamente al módulo. */
+.donacion-resultado *,
+.donacion-resultado *::before,
+.donacion-resultado *::after {
+  box-sizing: border-box;
+}
+
+/* Limitamos el ancho de la página. */
+.donacion-resultado__container {
+  width: min(100%, 650px);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   LOGO INSTITUCIONAL
+========================================================= */
+
+/* Centramos el enlace del logo. */
+.donacion-resultado__brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 88px;
+  height: 88px;
+
+  margin: 0 auto 28px;
+  padding: 14px;
+
+  background: #ffffff;
+  border: 1px solid #e9dfd3;
+  border-radius: 50%;
+
+  box-shadow: 0 8px 25px rgba(29, 46, 62, 0.07);
+}
+
+/* Adaptamos la imagen al círculo. */
+.donacion-resultado__brand img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* =========================================================
+   TARJETA CENTRAL
+========================================================= */
+
+/* Contenedor blanco del resultado. */
+.donacion-resultado__card {
+  overflow: hidden;
+
+  background: #ffffff;
+  border: 1px solid #eee8df;
+  border-radius: 20px;
+
+  box-shadow: 0 18px 55px rgba(28, 45, 61, 0.08);
+}
+
+/* Contenido principal centrado. */
+.donacion-resultado__content {
+  padding: 48px 45px 35px;
+  text-align: center;
+}
+
+/* Etiqueta institucional pequeña. */
+.donacion-resultado__eyebrow {
+  display: block;
+  margin-bottom: 16px;
+
+  color: #987958;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Título principal del resultado. */
+.donacion-resultado__content h1 {
+  margin: 0 0 18px;
+
+  color: var(--dr-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Descripción del estado de pago. */
+.donacion-resultado__content > p {
+  max-width: 480px;
+  margin: 0 auto;
+
+  color: var(--dr-muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   INDICADORES DE ESTADO
+========================================================= */
+
+/* Estilo compartido para cada indicador. */
+.donacion-resultado__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 84px;
+  height: 84px;
+
+  margin: 0 auto 26px;
+
+  border: 1px solid;
+  border-radius: 50%;
+
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+/* Indicador de pago aprobado. */
+.donacion-resultado__icon--aprobada {
+  color: #477c60;
+  background: #f0f7f2;
+  border-color: #cee5d4;
+}
+
+/* Indicador de pago rechazado. */
+.donacion-resultado__icon--rechazada {
+  color: #a85454;
+  background: #fdf3f2;
+  border-color: #f0d9d7;
+}
+
+/* Indicador de operación anulada. */
+.donacion-resultado__icon--anulada {
+  color: #667586;
+  background: #f1f4f6;
+  border-color: #dce3e8;
+}
+
+/* Indicador de pago pendiente. */
+.donacion-resultado__icon--pendiente {
+  color: #967748;
+  background: #faf5eb;
+  border-color: #e9ddc6;
+}
+
+/* Indicador de revisión o error. */
+.donacion-resultado__icon--revision {
+  color: #967748;
+  background: #faf5eb;
+  border-color: #e9ddc6;
+}
+
+/* =========================================================
+   RESUMEN DE TRANSACCIÓN
+========================================================= */
+
+/* Recuadro con los datos consultados. */
+.donacion-resultado__summary {
+  margin-top: 32px;
+  padding: 9px 24px;
+
+  background: #f9f8f6;
+  border: 1px solid #eee9e2;
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+/* Cada fila presenta una propiedad de la transacción. */
+.donacion-resultado__summary > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #eae6e0;
+}
+
+/* Eliminamos el borde de la última fila. */
+.donacion-resultado__summary > div:last-child {
+  border-bottom: none;
+}
+
+/* Nombre de cada propiedad. */
+.donacion-resultado__summary span {
+  color: #79838d;
+  font-size: 12px;
+}
+
+/* Valor de cada propiedad. */
+.donacion-resultado__summary strong {
+  color: var(--dr-navy);
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+/* =========================================================
+   BOTONES DE NAVEGACIÓN
+========================================================= */
+
+/* Separamos las acciones de la información. */
+.donacion-resultado__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 13px;
+
+  padding: 28px 45px 36px;
+
+  border-top: 1px solid #eee9e4;
+}
+
+/* Estilo general de los botones. */
+.donacion-resultado__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 49px;
+  padding: 12px 20px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+/* Botón principal azul marino. */
+.donacion-resultado__button--primary {
+  color: #ffffff;
+  background: var(--dr-navy);
+}
+
+/* Efecto al pasar el cursor sobre el botón principal. */
+.donacion-resultado__button--primary:hover {
+  color: #ffffff;
+  background: #304d68;
+}
+
+/* Botón secundario para actualizar el estado. */
+.donacion-resultado__button--secondary {
+  color: var(--dr-navy);
+  background: #ffffff;
+  border-color: #cfd8df;
+}
+
+/* Efecto al pasar el cursor sobre el botón secundario. */
+.donacion-resultado__button--secondary:hover {
+  background: #f3f6f8;
+}
+
+/* Enlace discreto hacia la página principal. */
+.donacion-resultado__home-link {
+  margin-top: 7px;
+  color: #806c53;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Subrayamos al pasar el cursor. */
+.donacion-resultado__home-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   INDICADOR DE CARGA
+========================================================= */
+
+/* Animación mientras consultamos MongoDB. */
+.donacion-resultado__loading {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 28px;
+
+  border: 4px solid #eee7dc;
+  border-top-color: var(--dr-navy);
+  border-radius: 50%;
+
+  animation: donacion-resultado-girar 0.9s linear infinite;
+}
+
+/* Definimos el movimiento circular. */
+@keyframes donacion-resultado-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   PIE INSTITUCIONAL
+========================================================= */
+
+/* Texto situado debajo de la tarjeta. */
+.donacion-resultado__footer {
+  margin: 25px 0 0;
+
+  color: #8d8377;
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+
+/* Resaltamos elementos cuando reciben foco de teclado. */
+.donacion-resultado a:focus-visible,
+.donacion-resultado button:focus-visible {
+  outline: 3px solid #c3a277;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   RESPONSIVE MÓVIL
+========================================================= */
+
+@media (max-width: 640px) {
+
+  /* Reducimos el espacio general en celulares. */
+  .donacion-resultado {
+    padding: 40px 16px;
+  }
+
+  /* Ajustamos el contenido interno. */
+  .donacion-resultado__content {
+    padding: 38px 22px 29px;
+  }
+
+  /* Reducimos el tamaño de los títulos. */
+  .donacion-resultado__content h1 {
+    font-size: 31px;
+  }
+
+  /* Permitimos que las filas se adapten. */
+  .donacion-resultado__summary {
+    padding: 8px 15px;
+  }
+
+  /* Evitamos superposición con referencias largas. */
+  .donacion-resultado__summary > div {
+    align-items: flex-start;
+  }
+
+  /* Reducimos el espacio de los botones. */
+  .donacion-resultado__actions {
+    padding: 25px 22px 30px;
+  }
+}
+
+/* =========================================================
+   MOVIMIENTO REDUCIDO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  /* Desactivamos la animación cuando se solicita. */
+  .donacion-resultado__loading {
+    animation: none;
+  }
+
+  /* Desactivamos las transiciones. */
+  .donacion-resultado__button {
+    transition: none;
+  }
+}

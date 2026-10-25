@@ -89,6 +89,15 @@ import passwordRoutes from "./routes/passwordRoutes.js";
 import googleOAuthRoutes from "./routes/googleOAuthRoutes.js";
 
 
+/* =========================================================
+   RUTAS DE DONACIONES Y WEBPAY PLUS
+========================================================= */
+
+// Importamos las rutas públicas de aportes voluntarios.
+import donacionRoutes from "./routes/donacionRoutes.js";
+
+
+
 
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
@@ -188,17 +197,35 @@ app.use(
 );
 
 
-// =========================================================
-// REGISTRO DE SOLICITUDES
-// =========================================================
 
-// Mostramos las solicitudes HTTP
-// solamente durante el desarrollo.
+/* =========================================================
+   REGISTRO SEGURO DE SOLICITUDES HTTP
+========================================================= */
+
+// Registramos las solicitudes únicamente en desarrollo.
 if (process.env.NODE_ENV === "development") {
+
+  // Creamos un token personalizado para mostrar
+  // solamente la ruta, sin los parámetros de la URL.
+  morgan.token("ruta-segura", (req) => {
+
+    // Obtenemos la dirección solicitada.
+    const ruta = req.originalUrl || req.url || "/";
+
+    // Eliminamos la cadena de consulta.
+    // Así no imprimimos token_ws, TBK_TOKEN ni otros datos.
+    return ruta.split("?")[0];
+
+  });
+
+  // Registramos método, ruta, estado y tiempo de respuesta.
   app.use(
-    morgan("dev")
+    morgan(
+      ":method :ruta-segura :status :response-time ms - :res[content-length]"
+    )
   );
 }
+
 
 
 // =========================================================
@@ -436,6 +463,23 @@ app.use(
 app.use(
   "/api/system/administrator-protection",
   administratorProtectionRoutes
+);
+
+
+/* =========================================================
+   DONACIONES VOLUNTARIAS - WEBPAY PLUS
+========================================================= */
+
+// Registramos las rutas de aportes voluntarios.
+//
+// Endpoint disponible:
+// POST /api/donaciones/iniciar
+//
+// Las rutas públicas no requieren autenticación.
+// El módulo aplica validación y limitación de solicitudes.
+app.use(
+  "/api/donaciones",
+  donacionRoutes
 );
 
 

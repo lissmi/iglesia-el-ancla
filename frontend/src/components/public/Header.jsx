@@ -58,11 +58,10 @@ function Header() {
                 {/* Navegación exclusivamente pública. */}
                 <nav
                     id="main-navigation"
-                    className={`header__navigation ${
-                        menuOpen
+                    className={`header__navigation ${menuOpen
                             ? "header__navigation--open"
                             : ""
-                    }`}
+                        }`}
                     aria-label="Navegación principal"
                 >
 
@@ -93,6 +92,17 @@ function Header() {
                     >
                         Eventos
                     </NavLink>
+
+
+                    {/* Enlace público hacia las donaciones. */}
+                    <NavLink
+                        to="/donaciones"
+                        className={getNavigationClass}
+                        onClick={closeMenu}
+                    >
+                        Donaciones
+                    </NavLink>
+
 
                     {/* Información de contacto. */}
                     <NavLink
@@ -129,11 +139,10 @@ function Header() {
 
                     {/* Control del menú para dispositivos móviles. */}
                     <button
-                        className={`header__menu-button ${
-                            menuOpen
+                        className={`header__menu-button ${menuOpen
                                 ? "header__menu-button--open"
                                 : ""
-                        }`}
+                            }`}
                         type="button"
                         onClick={toggleMenu}
                         aria-label={

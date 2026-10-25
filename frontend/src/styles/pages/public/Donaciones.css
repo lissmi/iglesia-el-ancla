@@ -1,0 +1,1442 @@
+
+/* =========================================================
+   VARIABLES Y ESTRUCTURA GENERAL
+========================================================= */
+
+.donaciones {
+  --don-navy: #203448;
+  --don-navy-dark: #172b3d;
+  --don-gold: #a88660;
+  --don-gold-soft: #e4d3bb;
+  --don-cream: #faf7f2;
+  --don-background: #f7f7f6;
+  --don-text: #25384c;
+  --don-muted: #657386;
+  --don-border: #e9e6e1;
+
+  width: 100%;
+  overflow: hidden;
+  color: var(--don-text);
+  background: #ffffff;
+}
+
+.donaciones *,
+.donaciones *::before,
+.donaciones *::after {
+  box-sizing: border-box;
+}
+
+.donaciones__container {
+  width: min(1120px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* Etiquetas pequeñas utilizadas en los títulos. */
+
+.donaciones__eyebrow,
+.donaciones__section-label {
+  display: inline-block;
+  color: #8d6b49;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   SECCIÓN 1: HERO PRINCIPAL
+========================================================= */
+
+.donaciones__hero {
+  position: relative;
+  overflow: hidden;
+  padding: 102px 0 112px;
+
+  background:
+    radial-gradient(
+      circle at 83% 42%,
+      rgba(221, 181, 137, 0.38),
+      transparent 33%
+    ),
+    linear-gradient(
+      115deg,
+      #fcfaf6 0%,
+      #f8f1e8 53%,
+      #ead7bf 100%
+    );
+
+  border-bottom: 1px solid #e9e0d4;
+}
+
+.donaciones__hero::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  right: -245px;
+  top: -275px;
+  border: 1px solid rgba(168, 134, 96, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.donaciones__hero::after {
+  content: "";
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  left: -460px;
+  bottom: -500px;
+  border: 1px solid rgba(168, 134, 96, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.donaciones__hero-content {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  align-items: center;
+  gap: 72px;
+}
+
+.donaciones__hero-text {
+  max-width: 590px;
+}
+
+.donaciones__hero-title {
+  margin: 20px 0 22px;
+  color: var(--don-navy-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(43px, 5vw, 67px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -1.9px;
+}
+
+.donaciones__hero-title span {
+  display: block;
+  color: #a18566;
+  font-style: italic;
+}
+
+.donaciones__hero-description {
+  max-width: 500px;
+  margin: 0 0 15px;
+
+  color: #46576a;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.donaciones__hero-subdescription {
+  max-width: 470px;
+  margin: 0 0 30px;
+
+  color: #6f7781;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.donaciones__primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  min-height: 49px;
+  padding: 13px 23px;
+
+  color: #ffffff;
+  background: var(--don-navy);
+  border: 1px solid var(--don-navy);
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.donaciones__primary-link:hover {
+  color: #ffffff;
+  background: #2d4c67;
+  transform: translateY(-2px);
+}
+
+.donaciones__primary-link span {
+  font-size: 18px;
+}
+
+/* Composición decorativa con el logo institucional. */
+
+.donaciones__hero-visual {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px 0 55px;
+}
+
+.donaciones__hero-circle {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 345px);
+  aspect-ratio: 1;
+
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+
+  box-shadow: 0 25px 65px rgba(68, 55, 42, 0.09);
+}
+
+.donaciones__hero-circle::before {
+  content: "";
+  position: absolute;
+  inset: 15px;
+  border: 1px solid #eadcca;
+  border-radius: 50%;
+}
+
+.donaciones__hero-logo {
+  position: relative;
+  z-index: 1;
+
+  width: 58%;
+  max-height: 235px;
+  object-fit: contain;
+}
+
+.donaciones__verse {
+  position: absolute;
+  bottom: 0;
+  right: 2%;
+
+  width: 252px;
+  padding: 20px 22px;
+
+  background: #ffffff;
+  border: 1px solid #f0ebe5;
+  border-radius: 14px;
+
+  box-shadow: 0 14px 32px rgba(27, 44, 61, 0.1);
+  text-align: center;
+}
+
+.donaciones__verse-symbol {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--don-gold);
+  font-size: 21px;
+}
+
+.donaciones__verse p {
+  margin: 0 0 10px;
+
+  color: var(--don-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.donaciones__verse > span:last-child {
+  color: #9b805f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* =========================================================
+   SECCIÓN 2: INTRODUCCIÓN
+========================================================= */
+
+.donaciones__intro {
+  padding: 88px 0 78px;
+  background: #ffffff;
+}
+
+.donaciones__intro-content {
+  max-width: 730px;
+  text-align: center;
+}
+
+.donaciones__intro h2,
+.donaciones__section-heading h2 {
+  margin: 15px 0 17px;
+
+  color: var(--don-navy-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 3.3vw, 42px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.donaciones__intro-content > p {
+  margin: 0 auto;
+
+  color: var(--don-muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.donaciones__intro-divider {
+  width: 48px;
+  height: 2px;
+  margin: 25px auto;
+  background: var(--don-gold);
+}
+
+.donaciones__intro-content .donaciones__intro-highlight {
+  color: #997b59;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-style: italic;
+}
+
+/* =========================================================
+   SECCIÓN 3: ÁREA PRINCIPAL DE APORTES
+========================================================= */
+
+.donaciones__contribution-section {
+  padding: 92px 0 105px;
+  background: var(--don-background);
+  scroll-margin-top: 90px;
+}
+
+.donaciones__section-heading {
+  max-width: 670px;
+  margin: 0 auto 43px;
+  text-align: center;
+}
+
+.donaciones__section-heading > p {
+  margin: 0 auto;
+
+  color: var(--don-muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.donaciones__contribution-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: start;
+  gap: 24px;
+}
+
+/* =========================================================
+   TARJETA DEL FORMULARIO
+========================================================= */
+
+.donaciones__form-card {
+  min-width: 0;
+  padding: 36px;
+
+  background: #ffffff;
+  border: 1px solid var(--don-border);
+  border-radius: 18px;
+
+  box-shadow: 0 15px 45px rgba(28, 45, 61, 0.045);
+}
+
+.donaciones__form-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding-bottom: 25px;
+  border-bottom: 1px solid var(--don-border);
+}
+
+.donaciones__form-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+
+  color: var(--don-gold);
+  background: #f8f3ed;
+  border-radius: 14px;
+
+  font-size: 34px;
+}
+
+.donaciones__form-header h3 {
+  margin: 0 0 5px;
+
+  color: var(--don-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.donaciones__form-header p {
+  margin: 0;
+  color: var(--don-muted);
+  font-size: 13px;
+}
+
+.donaciones__field-group {
+  margin-top: 30px;
+}
+
+.donaciones__field-group h4 {
+  margin: 0 0 14px;
+  color: var(--don-navy);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.donaciones__field-description {
+  margin: -5px 0 15px;
+
+  color: var(--don-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Opciones de aporte único o mensual. */
+
+.donaciones__type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.donaciones__type-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+
+  min-width: 0;
+  padding: 18px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7e9;
+  border-radius: 11px;
+}
+
+.donaciones__type-option--active {
+  background: #f5f8fa;
+  border: 1.5px solid #28475e;
+}
+
+.donaciones__type-option--disabled {
+  color: #9098a1;
+  background: #fafafa;
+  border-style: dashed;
+}
+
+.donaciones__type-symbol {
+  color: var(--don-gold);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.donaciones__type-option strong {
+  color: var(--don-navy);
+  font-size: 13px;
+}
+
+.donaciones__type-option--disabled strong {
+  color: #969da5;
+}
+
+.donaciones__type-option small {
+  color: var(--don-muted);
+  font-size: 11px;
+}
+
+/* Botones de cantidades sugeridas. */
+
+.donaciones__amount-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.donaciones__amount-button {
+  min-height: 60px;
+  padding: 14px 12px;
+
+  color: var(--don-navy);
+  background: #ffffff;
+
+  border: 1px solid #e1e5e8;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.donaciones__amount-button:hover {
+  background: #f5f8fa;
+  border-color: #9aaab8;
+  transform: translateY(-2px);
+}
+
+.donaciones__amount-button--active,
+.donaciones__amount-button--active:hover {
+  color: #ffffff;
+  background: var(--don-navy);
+  border-color: var(--don-navy);
+}
+
+/* Campo personalizado. */
+
+.donaciones__input-label {
+  display: block;
+  margin-bottom: 12px;
+
+  color: var(--don-navy);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.donaciones__custom-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 56px;
+  padding: 0 16px;
+
+  background: #ffffff;
+  border: 1px solid #e1e5e8;
+  border-radius: 10px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.donaciones__custom-input--active,
+.donaciones__custom-input:focus-within {
+  border-color: #294760;
+  box-shadow: 0 0 0 3px rgba(41, 71, 96, 0.08);
+}
+
+.donaciones__custom-input > span:first-child {
+  color: var(--don-gold);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.donaciones__custom-input input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 13px 0;
+
+  color: var(--don-navy);
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.donaciones__custom-input input::placeholder {
+  color: #a0a7af;
+}
+
+.donaciones__currency {
+  color: #8c949d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.donaciones__input-help,
+.donaciones__input-error {
+  margin: 9px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.donaciones__input-help {
+  color: #87909b;
+}
+
+.donaciones__input-error {
+  color: #b24343;
+}
+
+/* Resumen de la cantidad seleccionada. */
+
+.donaciones__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 32px;
+  padding: 23px 0;
+
+  border-top: 1px solid var(--don-border);
+}
+
+.donaciones__total div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.donaciones__total div > span {
+  color: var(--don-navy);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.donaciones__total small {
+  color: var(--don-muted);
+  font-size: 11px;
+}
+
+.donaciones__total strong {
+  color: var(--don-navy);
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Botón reservado para integrar Webpay. */
+
+.donaciones__payment-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 54px;
+  padding: 14px;
+
+  color: #ffffff;
+  background: var(--don-navy);
+
+  border: none;
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.donaciones__payment-button span {
+  font-size: 19px;
+}
+
+.donaciones__payment-button:disabled {
+  background: #788996;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.donaciones__payment-note {
+  margin: 16px 0 0;
+  color: #79848f;
+
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.donaciones__payment-note span {
+  margin-right: 5px;
+  color: var(--don-gold);
+}
+
+/* =========================================================
+   PANEL LATERAL DE INFORMACIÓN
+========================================================= */
+
+.donaciones__information {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.donaciones__information-card {
+  padding: 35px 29px;
+
+  color: #ffffff;
+  background:
+    linear-gradient(
+      145deg,
+      #1b2d40 0%,
+      #2e465e 100%
+    );
+
+  border-radius: 18px;
+
+  box-shadow: 0 15px 35px rgba(25, 43, 61, 0.1);
+}
+
+.donaciones__information-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+  margin-bottom: 25px;
+
+  color: #d9b78b;
+  border: 1px solid rgba(224, 198, 166, 0.5);
+  border-radius: 50%;
+
+  font-size: 39px;
+}
+
+.donaciones__information-card .donaciones__section-label {
+  color: #dcc4a5;
+  font-size: 9px;
+}
+
+.donaciones__information-card h3 {
+  margin: 14px 0 16px;
+
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.22;
+}
+
+.donaciones__information-card p {
+  margin: 0;
+  color: #dce3e9;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.donaciones__information-separator {
+  height: 1px;
+  margin: 25px 0;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.donaciones__information-card ul {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.donaciones__information-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  color: #e5ebf0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.donaciones__information-card li span {
+  color: #e3bd8a;
+  font-weight: 700;
+}
+
+/* Tarjeta de seguridad. */
+
+.donaciones__safety-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  padding: 24px;
+
+  background: #ffffff;
+  border: 1px solid var(--don-border);
+  border-radius: 14px;
+}
+
+.donaciones__safety-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+
+  color: #90724f;
+  background: #f5eee5;
+  border-radius: 12px;
+
+  font-size: 27px;
+}
+
+.donaciones__safety-card h4 {
+  margin: 0 0 8px;
+  color: var(--don-navy);
+  font-size: 13px;
+}
+
+.donaciones__safety-card p {
+  margin: 0;
+  color: var(--don-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* Mensaje sobre la voluntariedad de los aportes. */
+
+.donaciones__voluntary-card {
+  padding: 23px 25px;
+
+  background: #f5eee5;
+  border: 1px solid #eaddcb;
+  border-radius: 14px;
+}
+
+.donaciones__voluntary-card strong {
+  display: block;
+  margin-bottom: 9px;
+  color: #7e603e;
+  font-size: 13px;
+}
+
+.donaciones__voluntary-card p {
+  margin: 0;
+  color: #786f63;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   SECCIÓN 4: OTRAS FORMAS DE CONTRIBUIR
+========================================================= */
+
+.donaciones__other-ways {
+  padding: 102px 0 110px;
+  background: #ffffff;
+}
+
+.donaciones__ways-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.donaciones__way-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 32px 28px;
+
+  background: #ffffff;
+  border: 1px solid #eceae7;
+  border-radius: 15px;
+
+  box-shadow: 0 10px 35px rgba(27, 45, 61, 0.045);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.donaciones__way-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(27, 45, 61, 0.09);
+}
+
+.donaciones__way-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+  margin-bottom: 22px;
+
+  color: #98764f;
+  background: #f7f2ec;
+  border-radius: 50%;
+
+  font-size: 29px;
+}
+
+.donaciones__way-card h3 {
+  margin: 0 0 12px;
+
+  color: var(--don-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.donaciones__way-card p {
+  flex: 1;
+  margin: 0 0 24px;
+
+  color: var(--don-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.donaciones__way-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--don-navy);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.donaciones__way-card a:hover {
+  color: #a47d51;
+}
+
+.donaciones__way-card a span {
+  font-size: 17px;
+}
+
+/* =========================================================
+   SECCIÓN 5: MENSAJE FINAL
+========================================================= */
+
+.donaciones__closing {
+  padding: 83px 0;
+
+  background: linear-gradient(
+    125deg,
+    #203448 0%,
+    #2c455d 100%
+  );
+
+  text-align: center;
+}
+
+.donaciones__closing-content {
+  max-width: 710px;
+}
+
+.donaciones__closing-content > span:first-child {
+  display: block;
+  margin-bottom: 18px;
+
+  color: #d8b88c;
+  font-size: 25px;
+}
+
+.donaciones__closing h2 {
+  margin: 0 0 18px;
+
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(29px, 3.5vw, 42px);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.donaciones__closing p {
+  max-width: 580px;
+  margin: 0 auto 29px;
+
+  color: #dfe6ed;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.donaciones__closing-signature {
+  color: #d6b891;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+
+.donaciones a:focus-visible,
+.donaciones button:focus-visible,
+.donaciones input:focus-visible {
+  outline: 3px solid #c9a36f;
+  outline-offset: 4px;
+}
+
+/* =========================================================
+   RESPONSIVE: TABLETS
+========================================================= */
+
+@media (max-width: 960px) {
+  .donaciones__hero {
+    padding: 76px 0 95px;
+  }
+
+  .donaciones__hero-content {
+    grid-template-columns: 1fr 0.75fr;
+    gap: 28px;
+  }
+
+  .donaciones__hero-title {
+    font-size: clamp(38px, 5vw, 52px);
+  }
+
+  .donaciones__hero-circle {
+    width: min(100%, 280px);
+  }
+
+  .donaciones__verse {
+    width: 220px;
+    right: 0;
+  }
+
+  .donaciones__contribution-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .donaciones__information {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .donaciones__information-card {
+    grid-row: span 2;
+  }
+
+  .donaciones__ways-grid {
+    gap: 15px;
+  }
+
+  .donaciones__way-card {
+    padding: 27px 21px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE: DISPOSITIVOS MÓVILES
+========================================================= */
+
+@media (max-width: 640px) {
+  .donaciones__container {
+    width: min(100% - 32px, 520px);
+  }
+
+  .donaciones__hero {
+    padding: 60px 0 72px;
+  }
+
+  .donaciones__hero-content {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+
+  .donaciones__hero-text {
+    text-align: center;
+  }
+
+  .donaciones__eyebrow,
+  .donaciones__section-label {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+  }
+
+  .donaciones__hero-title {
+    margin: 19px 0;
+    font-size: clamp(37px, 9vw, 47px);
+    letter-spacing: -1px;
+  }
+
+  .donaciones__hero-description {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .donaciones__hero-subdescription {
+    font-size: 13px;
+  }
+
+  .donaciones__primary-link {
+    width: 100%;
+  }
+
+  .donaciones__hero-visual {
+    padding-bottom: 50px;
+  }
+
+  .donaciones__hero-circle {
+    width: 255px;
+  }
+
+  .donaciones__verse {
+    width: 218px;
+    right: calc(50% - 145px);
+    padding: 14px;
+  }
+
+  .donaciones__verse p {
+    font-size: 15px;
+  }
+
+  .donaciones__intro {
+    padding: 70px 0;
+  }
+
+  .donaciones__intro h2,
+  .donaciones__section-heading h2 {
+    font-size: 32px;
+  }
+
+  .donaciones__intro-content > p {
+    font-size: 13px;
+  }
+
+  .donaciones__contribution-section {
+    padding: 75px 0;
+  }
+
+  .donaciones__section-heading {
+    margin-bottom: 32px;
+  }
+
+  .donaciones__form-card {
+    padding: 25px 19px;
+    border-radius: 14px;
+  }
+
+  .donaciones__form-header {
+    gap: 12px;
+  }
+
+  .donaciones__form-header h3 {
+    font-size: 23px;
+  }
+
+  .donaciones__type-option {
+    padding: 14px 11px;
+  }
+
+  .donaciones__type-option strong {
+    font-size: 12px;
+  }
+
+  .donaciones__amount-button {
+    min-height: 55px;
+    font-size: 15px;
+  }
+
+  .donaciones__total strong {
+    font-size: 23px;
+  }
+
+  .donaciones__information {
+    display: flex;
+  }
+
+  .donaciones__information-card {
+    padding: 30px 24px;
+  }
+
+  .donaciones__other-ways {
+    padding: 78px 0 85px;
+  }
+
+  .donaciones__ways-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .donaciones__way-card {
+    padding: 27px;
+  }
+
+  .donaciones__closing {
+    padding: 70px 0;
+  }
+
+  .donaciones__closing h2 {
+    font-size: 31px;
+  }
+}
+
+/* =========================================================
+   PREFERENCIAS DE MOVIMIENTO REDUCIDO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .donaciones__primary-link,
+  .donaciones__amount-button,
+  .donaciones__way-card {
+    transition: none;
+  }
+
+  .donaciones__primary-link:hover,
+  .donaciones__amount-button:hover,
+  .donaciones__way-card:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================================
+   SECCIÓN: DESTINO DE LOS APORTES
+========================================================= */
+
+/* Fondo cálido para diferenciar la sección informativa. */
+.donaciones__destinos {
+  padding: 100px 0 105px;
+  background: #f8f6f2;
+}
+
+/* Distribución de seis tarjetas en tres columnas. */
+.donaciones__destinos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* Diseño general de cada tarjeta. */
+.donaciones__destino-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 0;
+  min-height: 235px;
+  padding: 30px 27px;
+
+  background: #ffffff;
+  border: 1px solid #eae5de;
+  border-radius: 15px;
+
+  box-shadow: 0 8px 25px rgba(28, 45, 61, 0.035);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto suave al pasar el cursor. */
+.donaciones__destino-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 15px 35px rgba(28, 45, 61, 0.08);
+}
+
+/* Círculo decorativo con numeración. */
+.donaciones__destino-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 49px;
+  height: 49px;
+  margin-bottom: 22px;
+
+  background: #f6efe6;
+  border: 1px solid #eaddca;
+  border-radius: 50%;
+}
+
+/* Número de cada categoría. */
+.donaciones__destino-icon span {
+  color: #9c7953;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Título de la categoría. */
+.donaciones__destino-card h3 {
+  margin: 0 0 12px;
+
+  color: #203448;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Descripción de cada destino. */
+.donaciones__destino-card p {
+  flex: 1;
+  margin: 0;
+
+  color: #657386;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Detalle dorado al pie de la tarjeta. */
+.donaciones__destino-line {
+  width: 37px;
+  height: 2px;
+  margin-top: 23px;
+
+  background: #c3a27a;
+  border-radius: 4px;
+}
+
+/* Mensaje aclaratorio al final de la sección. */
+.donaciones__destinos-nota {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 11px;
+
+  max-width: 770px;
+  margin: 35px auto 0;
+  padding: 20px 25px;
+
+  background: #f1e9dd;
+  border: 1px solid #e8dbca;
+  border-radius: 12px;
+}
+
+/* Símbolo decorativo del mensaje. */
+.donaciones__destinos-nota span {
+  color: #a88660;
+  font-size: 16px;
+}
+
+/* Texto de la aclaración. */
+.donaciones__destinos-nota p {
+  margin: 0;
+
+  color: #776a59;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   RESPONSIVE: TABLETS
+========================================================= */
+
+@media (max-width: 960px) {
+
+  /* Dos tarjetas por fila en tablets. */
+  .donaciones__destinos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+  }
+
+  /* Ajustamos el espacio de las tarjetas. */
+  .donaciones__destino-card {
+    min-height: 220px;
+    padding: 26px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE: CELULARES
+========================================================= */
+
+@media (max-width: 640px) {
+
+  /* Reducimos el espacio vertical. */
+  .donaciones__destinos {
+    padding: 75px 0 80px;
+  }
+
+  /* Una tarjeta por fila en celulares. */
+  .donaciones__destinos-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  /* Tarjetas más compactas en móvil. */
+  .donaciones__destino-card {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  /* Ajuste de los títulos. */
+  .donaciones__destino-card h3 {
+    font-size: 20px;
+  }
+
+  /* Ajuste de la nota informativa. */
+  .donaciones__destinos-nota {
+    padding: 18px;
+  }
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  /* Desactivamos la animación si el usuario lo prefiere. */
+  .donaciones__destino-card {
+    transition: none;
+  }
+
+  .donaciones__destino-card:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================================
+   MENSAJES Y ESTADOS DEL PAGO WEBPAY
+========================================================= */
+
+/* Mensaje cuando falla la creación del aporte. */
+.donaciones__payment-error {
+  margin: 14px 0 0;
+  padding: 13px 16px;
+
+  color: #954545;
+  background: #fff4f2;
+
+  border: 1px solid #efd4d0;
+  border-radius: 9px;
+
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* Botón mientras se prepara el pago. */
+.donaciones__payment-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Mantiene visible el foco para navegación con teclado. */
+.donaciones__payment-button:focus-visible {
+  outline: 3px solid #c3a277;
+  outline-offset: 3px;
+}

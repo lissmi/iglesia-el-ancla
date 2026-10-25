@@ -30,7 +30,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.24.2",
     "morgan": "^1.11.0",
-    "nodemailer": "^10.2.1"
+    "nodemailer": "^10.2.1",
+    "transbank-sdk": "^6.1.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
