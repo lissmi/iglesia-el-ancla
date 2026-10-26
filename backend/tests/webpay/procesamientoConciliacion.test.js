@@ -227,3 +227,200 @@ test("Impide conciliar una respuesta con monto incorrecto", async () => {
         "Los datos de la transacción no coinciden."
     );
 });
+
+
+/* =========================================================
+   PRUEBA 8: ACTUALIZACIÓN CORRECTA EN MONGODB
+========================================================= */
+
+test("Guarda correctamente una donación aprobada", async () => {
+
+    // Contamos las actualizaciones realizadas.
+    let actualizaciones = 0;
+
+    const resultado = await procesarConciliacionDonacion(
+        donacionConToken,
+        {
+            aplicarCambios: true,
+        },
+        {
+            // Simulamos una autorización de Transbank.
+            consultarEstado: async () =>
+                crearRespuestaSimulada(),
+
+            // Simulamos la actualización de MongoDB.
+            actualizarDonacion: async (filtro, campos) => {
+
+                actualizaciones++;
+
+                // Comprobamos el filtro de seguridad.
+                assert.equal(
+                    filtro._id,
+                    donacionConToken._id
+                );
+
+                assert.equal(
+                    filtro.estado,
+                    "iniciada"
+                );
+
+                assert.equal(
+                    filtro.ambiente,
+                    "integration"
+                );
+
+                // Verificamos los datos a guardar.
+                assert.equal(campos.estado, "aprobada");
+                assert.equal(campos.codigoRespuesta, 0);
+
+                assert.ok(
+                    campos.fechaConfirmacion instanceof Date
+                );
+
+                // Simulamos una actualización exitosa.
+                return {
+                    estado: "aprobada",
+                };
+            },
+        }
+    );
+
+    assert.equal(actualizaciones, 1);
+    assert.equal(resultado.actualizado, true);
+    assert.equal(resultado.estadoPropuesto, "aprobada");
+});
+
+
+/* =========================================================
+   PRUEBA 9: SIMULACIÓN SIN ESCRITURAS
+========================================================= */
+
+test("No modifica MongoDB en modo simulación", async () => {
+
+    let actualizaciones = 0;
+
+    const resultado = await procesarConciliacionDonacion(
+        donacionConToken,
+        {
+            aplicarCambios: false,
+        },
+        {
+            consultarEstado: async () =>
+                crearRespuestaSimulada(),
+
+            // Esta función nunca debería ejecutarse.
+            actualizarDonacion: async () => {
+
+                actualizaciones++;
+
+                return {
+                    estado: "aprobada",
+                };
+            },
+        }
+    );
+
+    assert.equal(actualizaciones, 0);
+    assert.equal(resultado.actualizado, false);
+    assert.equal(resultado.estadoPropuesto, "aprobada");
+});
+
+
+/* =========================================================
+   PRUEBA 10: CONCILIACIONES SIMULTÁNEAS
+========================================================= */
+
+test("Evita dos actualizaciones simultáneas", async () => {
+
+    // Simulamos el estado del documento en MongoDB.
+    let estadoGuardado = "iniciada";
+
+    // Contamos las modificaciones exitosas.
+    let escrituras = 0;
+
+    // Dependencias compartidas entre dos procesos.
+    const dependencias = {
+
+        consultarEstado: async () =>
+            crearRespuestaSimulada(),
+
+        // Simulamos una actualización condicional atómica.
+        actualizarDonacion: async (filtro, campos) => {
+
+            // Si el estado ya cambió, no actualizamos.
+            if (estadoGuardado !== filtro.estado) {
+                return null;
+            }
+
+            // Simulamos el cambio de estado.
+            estadoGuardado = campos.estado;
+
+            escrituras++;
+
+            return {
+                estado: estadoGuardado,
+            };
+        },
+    };
+
+    // Simulamos dos conciliaciones de la misma operación.
+    const resultados = await Promise.all([
+
+        procesarConciliacionDonacion(
+            donacionConToken,
+            { aplicarCambios: true },
+            dependencias
+        ),
+
+        procesarConciliacionDonacion(
+            donacionConToken,
+            { aplicarCambios: true },
+            dependencias
+        ),
+
+    ]);
+
+    // Solo una operación debe haber modificado el estado.
+    assert.equal(escrituras, 1);
+
+    // El estado final debe ser aprobado.
+    assert.equal(estadoGuardado, "aprobada");
+
+    // Exactamente un proceso debe informar éxito.
+    assert.equal(
+        resultados.filter(
+            (resultado) => resultado.actualizado
+        ).length,
+        1
+    );
+});
+
+
+/* =========================================================
+   PRUEBA 11: ACTUALIZACIÓN NO REALIZADA
+========================================================= */
+
+test("No informa éxito si MongoDB no actualiza", async () => {
+
+    const resultado = await procesarConciliacionDonacion(
+        donacionConToken,
+        {
+            aplicarCambios: true,
+        },
+        {
+            consultarEstado: async () =>
+                crearRespuestaSimulada(),
+
+            // Simulamos que MongoDB no encontró
+            // un documento que coincida con el filtro.
+            actualizarDonacion: async () => null,
+        }
+    );
+
+    assert.equal(resultado.actualizado, false);
+
+    assert.equal(
+        resultado.mensaje,
+        "La operación cambió durante la conciliación."
+    );
+});

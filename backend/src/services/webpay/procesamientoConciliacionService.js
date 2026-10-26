@@ -33,29 +33,44 @@ import {
 // La conexión con MongoDB debe estar inicializada
 // por el script o proceso que invoque este servicio.
 
+
 /* =========================================================
-   DEPENDENCIAS DEL PROCESAMIENTO
+   PROCESAR UNA DONACIÓN PENDIENTE
 ========================================================= */
 
-// Procesamos la operación utilizando las dependencias
-// reales de manera predeterminada.
-//
-// El tercer argumento permite utilizar una consulta
-// simulada durante nuestras pruebas automatizadas.
+// Recibimos la donación, las opciones de ejecución
+// y las dependencias necesarias para el procesamiento.
 export const procesarConciliacionDonacion = async (
     donacion,
     { aplicarCambios = false } = {},
     {
+        // Por defecto consultamos Transbank realmente.
+        // En las pruebas podemos sustituir esta función.
         consultarEstado = async (token) => {
 
-            // Creamos el cliente real de Transbank.
             const transaccion = crearTransaccionWebpay();
 
-            // Consultamos el estado de la operación.
             return transaccion.status(token);
         },
+
+        // Por defecto actualizamos MongoDB Atlas.
+        // En las pruebas utilizaremos una función simulada.
+        actualizarDonacion = async (filtro, campos) => {
+
+            return Donacion.findOneAndUpdate(
+                filtro,
+                {
+                    $set: campos,
+                },
+                {
+                    new: true,
+                }
+            );
+        },
+
     } = {}
 ) => {
+
 
 
     // Restringimos este procesamiento al ambiente
@@ -200,36 +215,38 @@ export const procesarConciliacionDonacion = async (
                 : null;
     }
 
-    /* =====================================================
-       ACTUALIZACIÓN ATÓMICA EN MONGODB
-    ===================================================== */
 
-    // Actualizamos únicamente si la operación
-    // conserva el estado consultado originalmente.
+    // Actualizamos la donación utilizando la dependencia
+    // configurada para el procesamiento.
     //
-    // Esto evita sobrescribir cambios realizados
-    // por otra solicitud durante el procesamiento.
-    const actualizada = await Donacion.findOneAndUpdate(
+    // Durante el funcionamiento normal se utiliza MongoDB.
+    // Durante las pruebas podremos simular la actualización.
+    const actualizada = await actualizarDonacion(
         {
+            // Identificador único del documento.
             _id: donacion._id,
+
+            // Ambiente de integración.
             ambiente: "integration",
+
+            // El estado debe coincidir con el consultado.
+            // Esto permite utilizar una actualización condicional.
             estado: donacion.estado,
         },
-        {
-            $set: campos,
-        },
-        {
-            new: true,
-        }
+
+        // Campos que queremos actualizar.
+        campos
     );
 
-    // Informamos si se aplicó el cambio.
+    // Confirmamos si la operación fue actualizada.
     resultado.actualizado = Boolean(actualizada);
 
+    // Informamos el resultado sin exponer datos sensibles.
     resultado.mensaje = actualizada
         ? "Actualización realizada."
         : "La operación cambió durante la conciliación.";
 
-    // Devolvemos el resultado sin información sensible.
+    // Devolvemos el resultado del procesamiento.
     return resultado;
+
 };

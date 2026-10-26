@@ -25,18 +25,39 @@ import logoElAncla from "../../../assets/images/logo-el-ancla.png";
 // CSS exclusivo, sin interferir con Header.css del sitio público.
 import "../../../styles/components/member/layout/MemberHeader.css";
 
-// Definimos los enlaces en un solo lugar para reutilizarlos en móvil.
+
+/* =========================================================
+   NAVEGACIÓN PRINCIPAL DE MIEMBROS
+========================================================= */
+
+// Definimos los enlaces que estarán disponibles
+// para los miembros registrados de El Ancla.
+// Estos enlaces funcionan tanto en escritorio como en móvil.
 const memberNavigation = [
   { label: "Inicio", to: "/", end: true },
+
   { label: "Nosotros", to: "/nosotros" },
+
   { label: "Eventos", to: "/eventos" },
+
   { label: "Recursos", to: "/member/recursos" },
+
   { label: "Recomendados", to: "/member/recomendados" },
+
   { label: "Peticiones de oración", to: "/member/peticiones-oracion" },
+
   { label: "Resumen financiero", to: "/member/finanzas" },
+
+  // Acceso al módulo público de aportes voluntarios.
+  // Los miembros podrán donar utilizando Webpay Plus.
+  // No es necesario crear otra página exclusiva para miembros.
+  { label: "Donaciones", to: "/donaciones" },
+
   { label: "Contacto", to: "/contacto" },
+
   { label: "Mi cuenta", to: "/member/mi-cuenta" },
 ];
+
 
 function MemberHeader({ user }) {
   // Estado del menú de navegación en pantallas pequeñas.

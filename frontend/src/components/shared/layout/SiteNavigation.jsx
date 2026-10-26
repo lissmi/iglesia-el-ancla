@@ -9,15 +9,29 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import "../../../styles/components/shared/layout/SiteNavigation.css";
 
-// Etiquetas principales de las páginas públicas.
+
+/* =========================================================
+   ETIQUETAS DE NAVEGACIÓN DE PÁGINAS PÚBLICAS
+========================================================= */
+
+// Definimos los títulos de las páginas públicas.
+// SiteNavigation utiliza estos datos para generar
+// automáticamente el botón de regreso y las migas de pan.
 const PUBLIC_TITLES = {
   "/login": "Iniciar sesión",
   "/nosotros": "Nosotros",
   "/eventos": "Eventos",
+
+  // Incluimos el módulo público de aportes voluntarios.
+  // Permite utilizar la navegación compartida
+  // tanto desde el sitio público como desde miembros.
+  "/donaciones": "Donaciones",
+
   "/contacto": "Contacto",
   "/terminos-y-condiciones": "Términos y condiciones",
   "/politica-de-privacidad": "Política de privacidad",
 };
+
 
 // Etiquetas de las secciones privadas de primer nivel.
 const MEMBER_TITLES = {
