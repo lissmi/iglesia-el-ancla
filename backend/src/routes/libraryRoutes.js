@@ -39,7 +39,7 @@ import authorizeRoles from "../middleware/authorizeRoles.js";
 
 // Reutilizamos las conexiones ya preparadas para el proyecto.
 import cloudinary from "../services/cloudinary/cloudinary.js";
-import { getGoogleDriveClient } from "../services/Drive/googleDrive.js";
+import { getGoogleDriveClient } from "../services/drive/googleDrive.js";
 
 // Creamos un router independiente para la biblioteca.
 const router = Router();
