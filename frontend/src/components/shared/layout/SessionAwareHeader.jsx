@@ -1,120 +1,124 @@
-// =========================================================
-// ENCABEZADO DINÁMICO SEGÚN LA SESIÓN DEL USUARIO
-// =========================================================
-// Este componente se usa en el layout de las páginas públicas.
-// Muestra Header cuando no hay sesión y MemberHeader cuando
-// el backend confirma que el usuario está autenticado.
-// No guarda ni interpreta tokens en localStorage.
 
-// Hooks para verificar la sesión al montar el componente.
+/* =========================================================
+   HEADER DINÁMICO - IGLESIA EL ANCLA
+========================================================= */
+
+// Importamos los hooks para consultar la sesión.
 import { useEffect, useState } from "react";
 
-// Encabezado que corresponde a los visitantes.
+// Importamos el encabezado público para visitantes.
 import Header from "../../public/Header";
 
-// Encabezado compartido por miembros y administradores.
+// Importamos el encabezado de miembros autenticados.
 import MemberHeader from "../../member/layout/MemberHeader";
 
-// Cliente de la API, configurado para enviar cookies HttpOnly.
+// Importamos el cliente HTTP configurado con cookies.
 import api from "../../../services/api";
 
-// Estilos exclusivos del componente de selección de encabezado.
+// Conservamos los estilos existentes del componente.
 import "../../../styles/components/shared/layout/SessionAwareHeader.css";
 
+/* =========================================================
+   COMPONENTE PRINCIPAL
+========================================================= */
+
 function SessionAwareHeader() {
-  // Guardamos el estado de la comprobación y el usuario verificado.
-  const [session, setSession] = useState({
-    status: "checking",
-    user: null,
-  });
 
-  // Permite repetir la consulta cuando hay un problema de red.
-  const [retryCount, setRetryCount] = useState(0);
+  // Inicialmente no tenemos un usuario verificado.
+  // Esto permite mostrar el Header público de inmediato.
+  const [verifiedUser, setVerifiedUser] = useState(null);
 
-  // Comprobamos la cookie de sesión a través del backend.
+  /* =======================================================
+     VERIFICACIÓN DE SESIÓN EN SEGUNDO PLANO
+  ======================================================= */
+
   useEffect(() => {
-    // Evita actualizaciones si cambiamos de layout antes de recibir la respuesta.
+
+    // Evitamos actualizar un componente desmontado.
     let isCurrent = true;
 
-    // Función encargada de consultar la sesión real.
+    // Consultamos la sesión sin bloquear la navegación pública.
     const verifySession = async () => {
-      // No mostramos el Header público mientras todavía no sabemos el estado.
-      setSession({ status: "checking", user: null });
 
       try {
-        // /auth/me valida la cookie y devuelve el usuario si sigue activo.
+
+        // Solicitamos al backend la identidad autenticada.
         const response = await api.get("/auth/me");
 
-        // Ignoramos respuestas recibidas después de desmontar el componente.
+        // Ignoramos respuestas posteriores al desmontaje.
         if (!isCurrent) return;
 
-        // Solo consideramos autenticado a un usuario confirmado por el servidor.
-        if (response.data?.success === true && response.data?.user) {
-          setSession({
-            status: "authenticated",
-            user: response.data.user,
-          });
+        // Comprobamos que la respuesta sea correcta.
+        const isAuthenticated =
+          response.data?.success === true &&
+          response.data?.user &&
+          ["member", "admin", "super_admin"].includes(
+            response.data.user.role
+          );
+
+        // Solo guardamos usuarios confirmados por el backend.
+        if (isAuthenticated) {
+
+          setVerifiedUser(response.data.user);
+
         } else {
-          // Si no existe usuario válido, mostramos la navegación pública.
-          setSession({ status: "visitor", user: null });
+
+          // Sin usuario confirmado, conservamos el Header público.
+          setVerifiedUser(null);
+
         }
+
       } catch (error) {
-        // Evitamos modificar el estado de un componente desmontado.
+
+        // Evitamos actualizar un componente desmontado.
         if (!isCurrent) return;
 
-        // Una respuesta 401 confirma ausencia o expiración de la sesión.
-        if (error.response?.status === 401) {
-          setSession({ status: "visitor", user: null });
-        } else {
-          // Un error de red o servidor NO confirma que la sesión haya terminado.
-          // Por eso no mostramos equivocadamente el botón de iniciar sesión.
-          setSession({ status: "error", user: null });
+        // Cualquier error deja la navegación pública disponible.
+        // Esto NO elimina cookies ni cierra la sesión real.
+        setVerifiedUser(null);
+
+        // Un 401 es normal cuando no hay sesión iniciada.
+        // Los demás errores se registran para diagnóstico.
+        if (error.response?.status !== 401) {
+
+          console.warn(
+            "No fue posible verificar la sesión:",
+            error.response?.status ?? "Error de conexión"
+          );
+
         }
+
       }
+
     };
 
-    // Ejecutamos la comprobación al abrir el layout público o reintentar.
+    // Ejecutamos la consulta en segundo plano.
     verifySession();
 
-    // Cancelamos actualizaciones pendientes al cambiar de layout.
+    // Cancelamos actualizaciones cuando cambia el componente.
     return () => {
       isCurrent = false;
     };
-  }, [retryCount]);
 
-  // Mientras verificamos, evitamos un parpadeo del encabezado público.
-  if (session.status === "checking") {
-    return (
-      <div className="session-aware-header__status" role="status">
-        Verificando sesión...
-      </div>
-    );
+  }, []);
+
+  /* =======================================================
+     SELECCIÓN DEL ENCABEZADO
+  ======================================================= */
+
+  // Solo mostramos navegación de miembros cuando
+  // el servidor confirmó una sesión válida.
+  if (verifiedUser) {
+
+    return <MemberHeader user={verifiedUser} />;
+
   }
 
-  // Ante un fallo del servidor, permitimos repetir la consulta.
-  if (session.status === "error") {
-    return (
-      <div className="session-aware-header__status" role="alert">
-        <span>No fue posible verificar tu sesión.</span>
-        <button
-          className="session-aware-header__retry"
-          type="button"
-          onClick={() => setRetryCount((count) => count + 1)}
-        >
-          Reintentar
-        </button>
-      </div>
-    );
-  }
-
-  // Con sesión validada, reutilizamos el mismo Header de /member.
-  if (session.status === "authenticated") {
-    return <MemberHeader user={session.user} />;
-  }
-
-  // Sin sesión, seguimos usando el Header original de visitantes.
+  // Sin sesión confirmada, mostramos siempre
+  // el Header público, incluso si falla la API.
   return <Header />;
+
 }
 
-// Permite incorporarlo al layout público en App.js.
+// Exportamos el componente para el layout público.
 export default SessionAwareHeader;
