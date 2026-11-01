@@ -8,9 +8,7 @@ import {
     useState,
 } from "react";
 
-import { useNavigate, useLocation } from "react-router-dom";
 
-import { ArrowLeft } from "lucide-react";
 
 import VolunteersHeader from "../../components/administration/volunteers/VolunteersHeader";
 import VolunteersSummary from "../../components/administration/volunteers/VolunteersSummary";
@@ -323,25 +321,6 @@ function getEffectiveStatus(assignment) {
 // =========================================================
 
 function VolunteersManagement() {
-
-    // =========================================================
-    // NAVEGACIÓN
-    // =========================================================
-
-    const navigate = useNavigate();
-
-    const location = useLocation();
-
-    // Identificamos el panel administrativo actual.
-    const adminBasePath =
-        location.pathname.startsWith("/super-admin")
-            ? "/super-admin"
-            : "/admin";
-
-    // Volvemos al inicio del panel correspondiente.
-    const handleGoBack = () => {
-        navigate(adminBasePath);
-    };
 
     // =====================================================
     // DATOS PRINCIPALES
@@ -823,23 +802,7 @@ function VolunteersManagement() {
 
             <div className="volunteers-management__container">
 
-                {/* ======================================= */}
-                {/* VOLVER AL PANEL ADMINISTRATIVO */}
-                {/* ======================================= */}
-
-                <button
-                    type="button"
-                    className="volunteers-management__back"
-                    onClick={handleGoBack}
-                >
-                    <ArrowLeft
-                        size={17}
-                        strokeWidth={2}
-                        aria-hidden="true"
-                    />
-
-                    Volver atrás
-                </button>
+                
 
                 {/* ======================================= */}
                 {/* ENCABEZADO */}
@@ -972,3 +935,6 @@ function VolunteersManagement() {
 }
 
 export default VolunteersManagement;
+
+
+

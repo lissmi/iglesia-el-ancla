@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Clapperboard, Plus } from "lucide-react";
-
+import { Clapperboard, Plus } from "lucide-react";
 import "../../../styles/components/administration/recommendations/RecommendationsHeader.css";
 
 // =========================================================
@@ -8,11 +6,6 @@ import "../../../styles/components/administration/recommendations/Recommendation
 // =========================================================
 
 function RecommendationsHeader({ onCreateRecommendation }) {
-    const navigate = useNavigate();
-
-    function handleGoBack() {
-        navigate(-1);
-    }
 
     return (
         <header className="recommendations-header">
@@ -28,14 +21,7 @@ function RecommendationsHeader({ onCreateRecommendation }) {
                     otros contenidos recomendados para la comunidad.
                 </p>
 
-                <button
-                    type="button"
-                    className="recommendations-header__back"
-                    onClick={handleGoBack}
-                >
-                    <ArrowLeft size={17} aria-hidden="true" />
-                    Volver
-                </button>
+                
             </div>
 
             <div className="recommendations-header__actions">
@@ -58,3 +44,7 @@ function RecommendationsHeader({ onCreateRecommendation }) {
 }
 
 export default RecommendationsHeader;
+
+
+
+

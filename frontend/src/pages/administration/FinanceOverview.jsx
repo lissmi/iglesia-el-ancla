@@ -4,9 +4,6 @@
 
 import { useState } from "react";
 
-import { useLocation } from "react-router-dom";
-
-
 // =========================================================
 // COMPONENTES FINANCIEROS
 // =========================================================
@@ -45,24 +42,6 @@ import "../../styles/pages/administration/FinanceOverview.css";
 // =========================================================
 
 function FinanceOverview() {
-
-    // =====================================================
-    // NAVEGACIÓN SEGÚN EL ESPACIO DEL USUARIO
-    // =====================================================
-
-    // Identificamos la ruta desde la cual
-    // se está mostrando el resumen financiero.
-
-    const location = useLocation();
-
-    // Determinamos a qué panel debe regresar
-    // el usuario cuando presione el botón Volver.
-
-    const backTo = location.pathname.startsWith("/super-admin")
-        ? "/super-admin"
-        : location.pathname.startsWith("/admin")
-            ? "/admin"
-            : "/member";
 
 
     // =====================================================
@@ -121,10 +100,7 @@ function FinanceOverview() {
                     FinanceHeader administra su propio
                     diseño, estilos y navegación. */}
 
-                <FinanceHeader
-                    backTo={backTo}
-                    showBackLink={!location.pathname.startsWith("/member/")}
-                />
+                <FinanceHeader />
 
                 {/* ======================================= */}
                 {/* FILTROS FINANCIEROS */}
@@ -191,3 +167,7 @@ function FinanceOverview() {
 }
 
 export default FinanceOverview;
+
+
+
+

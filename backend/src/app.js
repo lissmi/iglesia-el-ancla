@@ -1,4 +1,3 @@
-
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -96,7 +95,11 @@ import googleOAuthRoutes from "./routes/googleOAuthRoutes.js";
 // Importamos las rutas públicas de aportes voluntarios.
 import donacionRoutes from "./routes/donacionRoutes.js";
 
+// Importamos la API de Biblioteca Solidaria.
+import libraryRoutes from "./routes/libraryRoutes.js";
 
+// API de canciones: genera PDF y los almacena en Drive.
+import songRoutes from "./routes/songRoutes.js";
 
 
 /* ========================================================= */
@@ -482,6 +485,11 @@ app.use(
   donacionRoutes
 );
 
+// Registramos la API de Biblioteca Solidaria.
+app.use("/api/library/books", libraryRoutes);
+
+// Catálogo protegido y administración del Cancionero de Alabanzas.
+app.use("/api/songbook/songs", songRoutes);
 
 // =========================================================
 // RUTAS INEXISTENTES (404)

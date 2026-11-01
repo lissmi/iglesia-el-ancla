@@ -1,4 +1,11 @@
+// =========================================================
+// IMPORTACIONES
+// =========================================================
 
+// Importamos los hooks de navegación de React Router.
+import { useLocation, useNavigate } from "react-router-dom";
+
+// Importamos los iconos de las categorías.
 import {
     BookOpen,
     NotebookTabs,
@@ -7,11 +14,15 @@ import {
     HandHeart,
     FileDown,
     CircleHelp,
+    LibraryBig,
+    Music2,
     LayoutGrid,
     ArrowRight,
 } from "lucide-react";
 
+// Importamos los estilos del componente.
 import "../../../styles/components/administration/resources/ResourcesCategories.css";
+
 
 // =========================================================
 // CONFIGURACIÓN DE CATEGORÍAS
@@ -54,6 +65,25 @@ export const RESOURCE_CATEGORIES = [
         description: "Documentos y materiales PDF",
         icon: FileDown,
     },
+
+    // Nueva categoría administrativa de Biblioteca Solidaria.
+    {
+        id: "solidarity_library",
+        name: "Biblioteca Solidaria",
+        description: "Publicar y administrar libros cristianos",
+        icon: LibraryBig,
+
+        // Indica que esta categoría abre una página propia.
+        isManagementModule: true,
+    },
+    // Módulo administrativo para publicar letras en PDF.
+    {
+        id: "songbook",
+        name: "Cancionero de alabanzas",
+        description: "Publicar y administrar letras de canciones",
+        icon: Music2,
+        isManagementModule: true,
+    },
     {
         id: "faq",
         name: "Preguntas frecuentes",
@@ -61,6 +91,7 @@ export const RESOURCE_CATEGORIES = [
         icon: CircleHelp,
     },
 ];
+
 
 // =========================================================
 // COMPONENTE PRINCIPAL
@@ -73,19 +104,42 @@ function ResourcesCategories({
 }) {
 
     // =====================================================
+    // NAVEGACIÓN
+    // =====================================================
+
+    // Permite cambiar de página desde una tarjeta.
+    const navigate = useNavigate();
+
+    // Obtiene la dirección actual del navegador.
+    const location = useLocation();
+
+    // Detectamos si el usuario está en el panel superadmin.
+    const isSuperAdmin =
+        location.pathname.startsWith("/super-admin");
+
+    // Definimos la ruta principal según el panel actual.
+    const administrationBasePath = isSuperAdmin
+        ? "/super-admin"
+        : "/admin";
+
+
+    // =====================================================
     // CANTIDAD DE RECURSOS POR CATEGORÍA
     // =====================================================
 
     function getCategoryCount(categoryId) {
 
+        // Para el filtro general contamos todos los recursos.
         if (categoryId === "all") {
             return resources.length;
         }
 
+        // Contamos los recursos de la categoría seleccionada.
         return resources.filter(
             (resource) => resource.category === categoryId
         ).length;
     }
+
 
     // =====================================================
     // CATEGORÍAS DISPONIBLES
@@ -98,8 +152,40 @@ function ResourcesCategories({
             description: "Explorar el catálogo completo",
             icon: LayoutGrid,
         },
+
+        // Incorporamos las categorías configuradas.
         ...RESOURCE_CATEGORIES,
     ];
+
+
+    // =====================================================
+    // CONTROL DE NAVEGACIÓN
+    // =====================================================
+
+    function handleCategoryClick(category) {
+
+        // Comprobamos si es un módulo administrativo.
+        if (category.isManagementModule) {
+
+            // La biblioteca y el cancionero tienen rutas de gestión independientes.
+            if (category.id === "solidarity_library" || category.id === "songbook") {
+
+                // Navegamos respetando el rol administrativo.
+                navigate(
+                    category.id === "songbook"
+                        ? `${administrationBasePath}/recursos/cancionero`
+                        : `${administrationBasePath}/recursos/biblioteca-solidaria`
+                );
+
+                // Evitamos ejecutar el filtro tradicional.
+                return;
+            }
+        }
+
+        // Las categorías normales conservan su funcionamiento.
+        onSelectCategory?.(category.id);
+    }
+
 
     // =====================================================
     // INTERFAZ
@@ -125,11 +211,13 @@ function ResourcesCategories({
                     </p>
                 </div>
 
+                {/* Contador de categorías configuradas. */}
                 <span className="resources-categories__total">
                     {RESOURCE_CATEGORIES.length} categorías
                 </span>
 
             </div>
+
 
             {/* =========================================== */}
             {/* CUADRÍCULA DE CATEGORÍAS */}
@@ -139,29 +227,47 @@ function ResourcesCategories({
 
                 {categories.map((category) => {
 
+                    // Obtenemos el componente de icono.
                     const Icon = category.icon;
 
+                    // Verificamos si la categoría está seleccionada.
                     const isSelected =
                         selectedCategory === category.id;
 
+                    // Calculamos los recursos relacionados.
                     const count = getCategoryCount(category.id);
+
+                    // Identificamos las categorías con módulo propio.
+                    const isManagementModule =
+                        category.isManagementModule === true;
 
                     return (
                         <button
                             key={category.id}
+
                             type="button"
+
                             className={
                                 "resources-categories__card" +
-                                (isSelected
+                                (isSelected && !isManagementModule
                                     ? " resources-categories__card--active"
                                     : "")
                             }
+
+                            // Ejecutamos navegación o filtro.
                             onClick={() => {
-                                onSelectCategory?.(category.id);
+                                handleCategoryClick(category);
                             }}
-                            aria-pressed={isSelected}
+
+                            // Solo los filtros utilizan aria-pressed.
+                            aria-pressed={
+                                isManagementModule
+                                    ? undefined
+                                    : isSelected
+                            }
                         >
 
+                            {/* Icono de la categoría. */}
                             <div className="resources-categories__icon">
 
                                 <Icon
@@ -172,6 +278,8 @@ function ResourcesCategories({
 
                             </div>
 
+
+                            {/* Información de la categoría. */}
                             <div className="resources-categories__info">
 
                                 <strong>
@@ -184,12 +292,20 @@ function ResourcesCategories({
 
                             </div>
 
+
+                            {/* Contador y navegación. */}
                             <div className="resources-categories__meta">
 
-                                <span className="resources-categories__count">
-                                    {count}
-                                </span>
+                                {/* Los módulos independientes no usan
+                                    el contador de recursos generales. */}
 
+                                {!isManagementModule && (
+                                    <span className="resources-categories__count">
+                                        {count}
+                                    </span>
+                                )}
+
+                                {/* Icono para indicar acceso. */}
                                 <ArrowRight
                                     size={16}
                                     aria-hidden="true"
@@ -207,4 +323,10 @@ function ResourcesCategories({
     );
 }
 
+
+// =========================================================
+// EXPORTACIÓN
+// =========================================================
+
+// Exportamos el componente administrativo.
 export default ResourcesCategories;

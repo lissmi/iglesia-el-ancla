@@ -1,21 +1,5 @@
-
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    ArrowLeftRight,
-    ClipboardCheck,
-    ClipboardList,
-    FilePlus2,
-    Search,
-    Eye,
-    Pencil,
-    Trash2,
-    X,
-    AlertTriangle,
-} from "lucide-react";
-
+import { ArrowLeftRight, ClipboardCheck, ClipboardList, FilePlus2, Search, Eye, Pencil, Trash2, X, AlertTriangle } from "lucide-react";
 import BelongingMovementModal from "../../../components/administration/belongings/BelongingMovementModal";
 
 import { useBelongings } from "../../../context/belongings/BelongingsContext";
@@ -33,13 +17,6 @@ import "../../../styles/pages/administration/belongings/BelongingsMovements.css"
 // =========================================================
 
 function BelongingsMovements() {
-    const location = useLocation();
-
-    const adminBasePath = location.pathname.startsWith("/super-admin")
-        ? "/super-admin"
-        : "/admin";
-
-    const dashboardPath = `${adminBasePath}/inventario-bienes`;
 
     // =====================================================
     // CONTEXTO COMPARTIDO
@@ -317,13 +294,7 @@ function BelongingsMovements() {
 
             <header className="belongings-movements__header">
                 <div>
-                    <Link
-                        to={dashboardPath}
-                        className="belongings-movements__back"
-                    >
-                        <ArrowLeft size={16} />
-                        Volver al inventario de bienes
-                    </Link>
+                    
 
                     <span className="belongings-movements__eyebrow">
                         Administración de bienes
@@ -927,3 +898,7 @@ function BelongingsMovements() {
 }
 
 export default BelongingsMovements;
+
+
+
+

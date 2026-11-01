@@ -1,6 +1,6 @@
 // Importamos los datos de los 27 libros
 // del Nuevo Testamento.
-import newTestamentBooks from "../../../../data/bible/newTestamentBooks";
+import newTestamentBooks from "../../../data/bible/newTestamentBooks";
 
 // Importamos la tarjeta reutilizable.
 import BibleBookCard from "./BibleBookCard";

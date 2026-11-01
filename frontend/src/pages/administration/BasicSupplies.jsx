@@ -1,7 +1,4 @@
-
 import { useMemo, useState } from "react";
-
-import { useLocation } from "react-router-dom";
 
 import {
     Package,
@@ -46,16 +43,6 @@ import BasicSupplyMovementModal from "../../components/administration/basicSuppl
 // =========================================================
 
 function BasicSupplies() {
-
-    // =====================================================
-    // NAVEGACIÓN
-    // =====================================================
-
-    const location = useLocation();
-
-    const backTo = location.pathname.startsWith("/super-admin")
-        ? "/super-admin"
-        : "/admin";
 
     // =====================================================
     // ESTADOS DEL INVENTARIO
@@ -457,7 +444,6 @@ function BasicSupplies() {
                 {/* ======================================= */}
 
                 <BasicSuppliesHeader
-                    backTo={backTo}
                     onAddSupply={() => setShowSupplyModal(true)}
                 />
 
@@ -651,3 +637,7 @@ function BasicSupplies() {
 }
 
 export default BasicSupplies;
+
+
+
+

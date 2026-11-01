@@ -1,13 +1,4 @@
-
-import { Link } from "react-router-dom";
-
-import {
-  UserPlus,
-  ArrowLeft,
-  ShieldCheck,
-  Info,
-} from "lucide-react";
-
+import { UserPlus, ShieldCheck, Info } from "lucide-react";
 import RegisterUserForm from "../../components/administration/users/RegisterUserForm";
 
 
@@ -27,13 +18,7 @@ function RegisterUser() {
 
       <div className="register-user-page__navigation">
 
-        <Link
-          to="/super-admin"
-          className="register-user-page__back"
-        >
-          <ArrowLeft size={17} />
-          Volver al panel
-        </Link>
+        
 
         <span className="register-user-page__breadcrumb">
           Sistema / Registrar usuario
@@ -111,3 +96,7 @@ function RegisterUser() {
 }
 
 export default RegisterUser;
+
+
+
+

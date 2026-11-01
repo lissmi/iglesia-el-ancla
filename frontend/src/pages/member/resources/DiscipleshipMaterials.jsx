@@ -5,7 +5,7 @@ import Header from "../../../components/public/Header";
 
 import discipleshipMaterials from "../../../data/resources/discipleshipMaterials";
 
-import "../../../styles/pages/public/resources/DiscipleshipMaterials.css";
+import "../../../styles/pages/member/resources/DiscipleshipMaterials.css";
 
 function DiscipleshipMaterials() {
     // Texto ingresado en el buscador.

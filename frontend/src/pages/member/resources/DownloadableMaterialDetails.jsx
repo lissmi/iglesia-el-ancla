@@ -7,7 +7,7 @@ import downloadableMaterials, {
     getRelatedDownloadableMaterials,
 } from "../../../data/resources/downloadableMaterials";
 
-import "../../../styles/pages/public/resources/DownloadableMaterialDetails.css";
+import "../../../styles/pages/member/resources/DownloadableMaterialDetails.css";
 
 function DownloadableMaterialDetails() {
     // Obtenemos el slug desde la URL.

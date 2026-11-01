@@ -1,11 +1,4 @@
-import { Link } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    Wallet,
-    Info,
-} from "lucide-react";
-
+import { Wallet, Info } from "lucide-react";
 // =========================================================
 // ESTILOS DEL COMPONENTE
 // =========================================================
@@ -16,7 +9,7 @@ import "../../../styles/components/administration/finances/FinanceHeader.css";
 // COMPONENTE: FINANCE HEADER
 // =========================================================
 
-function FinanceHeader({ backTo = "/member", showBackLink = true }) {
+function FinanceHeader() {
 
     return (
         <section className="finance-header">
@@ -24,12 +17,6 @@ function FinanceHeader({ backTo = "/member", showBackLink = true }) {
             {/* =========================================== */}
             {/* NAVEGACIÓN */}
             {/* =========================================== */}
-            {showBackLink && (
-                <Link to={backTo} className="finance-header__back">
-                    <ArrowLeft size={17} aria-hidden="true" />
-                    <span>Volver al panel</span>
-                </Link>
-            )}
 
             {/* =========================================== */}
             {/* CONTENIDO PRINCIPAL */}
@@ -84,3 +71,7 @@ function FinanceHeader({ backTo = "/member", showBackLink = true }) {
 }
 
 export default FinanceHeader;
+
+
+
+

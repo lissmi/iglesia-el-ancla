@@ -1,24 +1,14 @@
-
-import { Link } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    Boxes,
-    Plus,
-} from "lucide-react";
-
+import { Boxes, Plus } from "lucide-react";
 import "../../../styles/components/administration/basicSupplies/BasicSuppliesHeader.css";
 
 // =========================================================
 // ENCABEZADO DEL MÓDULO DE INSUMOS BÁSICOS
 // =========================================================
 
-// backTo: ruta del panel administrativo correspondiente.
 // onAddSupply: función que abre el formulario
 // para registrar un nuevo insumo.
 
 function BasicSuppliesHeader({
-    backTo,
     onAddSupply,
 }) {
 
@@ -28,17 +18,7 @@ function BasicSuppliesHeader({
 
             <div className="basic-supplies__header-content">
 
-                <Link
-                    to={backTo}
-                    className="basic-supplies__back"
-                >
-                    <ArrowLeft
-                        size={16}
-                        aria-hidden="true"
-                    />
-
-                    Volver al panel
-                </Link>
+                
 
                 <div className="basic-supplies__title-row">
 
@@ -83,3 +63,7 @@ function BasicSuppliesHeader({
 }
 
 export default BasicSuppliesHeader;
+
+
+
+

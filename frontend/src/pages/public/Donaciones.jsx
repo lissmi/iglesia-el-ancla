@@ -652,10 +652,9 @@ function Donaciones() {
                                     <h4>Un proceso claro y seguro</h4>
 
                                     <p>
-                                        Próximamente los aportes serán gestionados
-                                        mediante Webpay. No necesitarás iniciar
-                                        sesión ni compartir datos bancarios
-                                        directamente con nuestra página.
+                                        Transacciona con seguridad. Tus aportes son procesados
+                                        por Webpay, por lo que tus datos bancarios se mantienen
+                                        protegidos y nunca quedan guardados en nuestra plataforma.
                                     </p>
                                 </div>
                             </div>

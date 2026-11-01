@@ -2,17 +2,7 @@
 // IMPORTACIONES
 // =========================================================
 
-import {
-    Link,
-    useLocation,
-} from "react-router-dom";
-
-import {
-    ArrowLeft,
-    Plus,
-    ReceiptText,
-} from "lucide-react";
-
+import { Plus, ReceiptText } from "lucide-react";
 import "../../../styles/components/administration/expenses/ExpenseHeader.css";
 
 
@@ -23,20 +13,6 @@ import "../../../styles/components/administration/expenses/ExpenseHeader.css";
 function ExpenseHeader({
     onRegisterExpense,
 }) {
-
-    // =====================================================
-    // IDENTIFICAR PANEL ADMINISTRATIVO
-    // =====================================================
-
-    const location = useLocation();
-
-    const isSuperAdmin =
-        location.pathname === "/super-admin" ||
-        location.pathname.startsWith("/super-admin/");
-
-    const backPath = isSuperAdmin
-        ? "/super-admin"
-        : "/admin";
 
 
     // =====================================================
@@ -52,22 +28,7 @@ function ExpenseHeader({
 
             <div className="expense-header__content">
 
-                {/* BOTÓN VOLVER */}
-
-                <Link
-                    to={backPath}
-                    className="expense-header__back"
-                >
-                    <ArrowLeft
-                        size={17}
-                        strokeWidth={2}
-                        aria-hidden="true"
-                    />
-
-                    <span>
-                        Volver al panel
-                    </span>
-                </Link>
+                
 
 
                 {/* IDENTIFICACIÓN DEL MÓDULO */}
@@ -133,3 +94,6 @@ function ExpenseHeader({
 }
 
 export default ExpenseHeader;
+
+
+

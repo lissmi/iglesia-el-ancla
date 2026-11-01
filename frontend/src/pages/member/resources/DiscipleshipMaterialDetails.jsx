@@ -4,7 +4,7 @@ import Header from "../../../components/public/Header";
 
 import discipleshipMaterials from "../../../data/resources/discipleshipMaterials";
 
-import "../../../styles/pages/public/resources/DiscipleshipMaterialDetails.css";
+import "../../../styles/pages/member/resources/DiscipleshipMaterialDetails.css";
 
 function DiscipleshipMaterialDetails() {
     // Obtenemos el slug desde la URL.

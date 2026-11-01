@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import {
     useLocation,
@@ -6,22 +5,7 @@ import {
     Link,
 } from "react-router-dom";
 
-import {
-    FileText,
-    Users,
-    Mail,
-    ShieldCheck,
-    Search,
-    Pencil,
-    ExternalLink,
-    Files,
-    FilePenLine,
-    Info,
-    ChevronRight,
-    ArrowLeft,
-} from "lucide-react";
-
-
+import { FileText, Users, Mail, ShieldCheck, Search, Pencil, ExternalLink, Files, FilePenLine, Info, ChevronRight } from "lucide-react";
 import {
     initialInformationalPages,
 } from "../../data/informationalPages/informationalPagesDemoData";
@@ -137,15 +121,7 @@ function InformationalPages() {
             <header className="informational-pages__header">
 
                 <div className="informational-pages__header-content">
-                    {/* BOTÓN VOLVER AL PANEL ADMINISTRATIVO */}
-                    <button
-                        type="button"
-                        className="informational-pages__back-button"
-                        onClick={() => navigate(adminBasePath)}
-                    >
-                        <ArrowLeft size={17} />
-                        <span>Volver al panel</span>
-                    </button>
+                    
 
                     <span className="informational-pages__eyebrow">
                         Administración / Contenido
@@ -490,3 +466,7 @@ function InformationalPages() {
 }
 
 export default InformationalPages;
+
+
+
+

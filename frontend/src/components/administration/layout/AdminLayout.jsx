@@ -8,6 +8,7 @@ import AdminHeader from "./AdminHeader";
 import { ExpensesProvider } from "../../../context/expenses/ExpensesContext";
 import { NotificationsProvider } from "../../../context/notifications/NotificationsContext";
 import "../../../styles/components/administration/layout/AdminLayout.css";
+import AdminBackButton from "./AdminBackButton";
 
 function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,6 +40,7 @@ function AdminLayout() {
           <div className="admin-layout__main">
             <AdminHeader onOpenSidebar={handleOpenSidebar} />
             <div className="admin-layout__content">
+              <AdminBackButton />
               <Outlet />
             </div>
           </div>

@@ -1,30 +1,6 @@
-
 import { useMemo, useState } from "react";
 
-import {
-  Link,
-  useLocation,
-} from "react-router-dom";
-
-import {
-  ArrowLeft,
-  CalendarDays,
-  CalendarPlus,
-  CheckCircle2,
-  Clock3,
-  Eye,
-  Trash2,
-  FilePenLine,
-  Image as ImageIcon,
-  Info,
-  MapPin,
-  MonitorPlay,
-  Pencil,
-  Repeat2,
-  Search,
-  UsersRound,
-} from "lucide-react";
-
+import { CalendarDays, CalendarPlus, CheckCircle2, Clock3, Eye, Trash2, FilePenLine, Image as ImageIcon, Info, MapPin, MonitorPlay, Pencil, Repeat2, Search, UsersRound } from "lucide-react";
 // =========================================================
 // ESTILOS
 // =========================================================
@@ -161,7 +137,6 @@ function formatEventDate(dateString) {
 // =========================================================
 
 function EventsManagement() {
-  const location = useLocation();
   // =========================================================
   // ESTADO DE EVENTOS
   // =========================================================
@@ -217,18 +192,6 @@ function EventsManagement() {
   function handleCloseConfirmations() {
     setConfirmationsEventId(null);
   }
-
-  // =========================================================
-  // IDENTIFICACIÓN DEL PANEL
-  // =========================================================
-
-  const isSuperAdminPanel =
-    location.pathname === "/super-admin" ||
-    location.pathname.startsWith("/super-admin/");
-
-  const adminBasePath = isSuperAdminPanel
-    ? "/super-admin"
-    : "/admin";
 
   // =========================================================
   // ESTADO DEL BUSCADOR
@@ -496,24 +459,7 @@ function EventsManagement() {
   return (
     <div className="events-management-page">
 
-      {/* ============================================= */}
-      {/* VOLVER AL PANEL */}
-      {/* ============================================= */}
-
-      <div className="events-management-page__navigation">
-        <Link
-          to={adminBasePath}
-          className="events-management-page__back"
-        >
-          <ArrowLeft
-            size={17}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
-
-          <span>Volver al panel</span>
-        </Link>
-      </div>
+      
 
       {/* ============================================= */}
       {/* ENCABEZADO */}
@@ -1054,3 +1000,7 @@ function EventsManagement() {
 }
 
 export default EventsManagement;
+
+
+
+

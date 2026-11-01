@@ -15,7 +15,7 @@ import recursosIcon from "../../../assets/icons/recursos.png";
 import devotionalImage from "../../../assets/images/resources/guia-devocional.png";
 
 // Importamos los estilos exclusivos de esta página.
-import "../../../styles/pages/public/resources/PersonalDevotionalGuide.css";
+import "../../../styles/pages/member/resources/PersonalDevotionalGuide.css";
 
 // Creamos la página pública de la Guía Devocional.
 function PersonalDevotionalGuide() {

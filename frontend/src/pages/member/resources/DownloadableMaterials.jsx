@@ -7,7 +7,7 @@ import downloadableMaterials, {
     downloadableMaterialCategories,
 } from "../../../data/resources/downloadableMaterials";
 
-import "../../../styles/pages/public/resources/DownloadableMaterials.css";
+import "../../../styles/pages/member/resources/DownloadableMaterials.css";
 
 function DownloadableMaterials() {
     // Texto escrito por el usuario en el buscador.

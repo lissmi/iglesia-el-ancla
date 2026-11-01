@@ -1,4 +1,3 @@
-
 import {
     useState,
     useCallback,
@@ -140,9 +139,7 @@ function UsersManagement() {
             {/* ENCABEZADO */}
             {/* ================================================= */}
 
-            <UsersHeader
-                backPath="/super-admin"
-            />
+            <UsersHeader />
 
 
             {/* ================================================= */}
@@ -295,3 +292,7 @@ function UsersManagement() {
 // =========================================================
 
 export default UsersManagement;
+
+
+
+

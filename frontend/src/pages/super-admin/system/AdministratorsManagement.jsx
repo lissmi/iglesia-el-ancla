@@ -1,16 +1,6 @@
-
 import { useCallback, useMemo, useState } from "react";
 
-import { Link } from "react-router-dom";
-
-import {
-  ArrowLeft,
-  ShieldCheck,
-  LockKeyhole,
-  Info,
-  UsersRound,
-} from "lucide-react";
-
+import { ShieldCheck, LockKeyhole, Info, UsersRound } from "lucide-react";
 import AdministratorsSummary from "../../../components/super-admin/administrators/AdministratorsSummary";
 
 import AdministratorsFilters from "../../../components/super-admin/administrators/AdministratorsFilters";
@@ -224,13 +214,7 @@ function AdministratorsManagement() {
 
       <div className="administrators-management__navigation">
 
-        <Link
-          to="/super-admin"
-          className="administrators-management__back"
-        >
-          <ArrowLeft size={17} />
-          Volver al panel
-        </Link>
+        
 
         <span className="administrators-management__breadcrumb">
           Sistema / Administradores
@@ -386,3 +370,7 @@ function AdministratorsManagement() {
 }
 
 export default AdministratorsManagement;
+
+
+
+

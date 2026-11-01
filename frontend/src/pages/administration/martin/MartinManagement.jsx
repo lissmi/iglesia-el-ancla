@@ -1,19 +1,5 @@
-
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    Bot,
-    LayoutDashboard,
-    Settings2,
-    BookOpen,
-    ShieldCheck,
-    Activity,
-    ChevronRight,
-    Info,
-} from "lucide-react";
-
+import { Bot, LayoutDashboard, Settings2, BookOpen, ShieldCheck, Activity, ChevronRight, Info } from "lucide-react";
 import "../../../styles/pages/administration/martin/MartinManagement.css";
 
 import MartinOverview from "../../../components/administration/martin/MartinOverview";
@@ -72,17 +58,6 @@ const managementSections = [
 function MartinManagement() {
 
     // =====================================================
-    // NAVEGACIÓN
-    // =====================================================
-
-    const location = useLocation();
-
-    const adminBasePath =
-        location.pathname.startsWith("/super-admin")
-            ? "/super-admin"
-            : "/admin";
-
-    // =====================================================
     // ESTADO DE LA SECCIÓN SELECCIONADA
     // =====================================================
 
@@ -110,13 +85,7 @@ function MartinManagement() {
 
             <header className="martin-management__header">
 
-                <Link
-                    to={adminBasePath}
-                    className="martin-management__back"
-                >
-                    <ArrowLeft size={16} />
-                    Volver al panel administrativo
-                </Link>
+                
 
                 <div className="martin-management__header-content">
 
@@ -314,3 +283,7 @@ function MartinManagement() {
 }
 
 export default MartinManagement;
+
+
+
+

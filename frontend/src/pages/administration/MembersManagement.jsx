@@ -1,13 +1,5 @@
-
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    ShieldCheck,
-    UsersRound,
-} from "lucide-react";
-
+import { ShieldCheck, UsersRound } from "lucide-react";
 // =========================================================
 // ESTILOS
 // =========================================================
@@ -93,16 +85,6 @@ const DEMO_MEMBERS = [
 // =========================================================
 
 function MembersManagement() {
-
-    // =====================================================
-    // NAVEGACIÓN
-    // =====================================================
-
-    const navigate = useNavigate();
-
-    function handleGoBack() {
-        navigate(-1);
-    }
 
     // =====================================================
     // ESTADOS GENERALES
@@ -215,17 +197,7 @@ function MembersManagement() {
                         de nuestra comunidad.
                     </p>
 
-                    <button
-                        type="button"
-                        className="members-management__back"
-                        onClick={handleGoBack}
-                    >
-                        <ArrowLeft
-                            size={17}
-                            aria-hidden="true"
-                        />
-                        Volver
-                    </button>
+                    
 
                 </div>
 
@@ -303,3 +275,7 @@ function MembersManagement() {
 }
 
 export default MembersManagement;
+
+
+
+

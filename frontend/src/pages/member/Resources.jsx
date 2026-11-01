@@ -16,17 +16,21 @@ import oracionImage from "../../assets/images/resources/guia-oracion.png";
 import discipuladoImage from "../../assets/images/resources/discipulado.png";
 import preguntasImage from "../../assets/images/resources/preguntas-frecuentes.png";
 import bibliaImage from "../../assets/images/resources/biblia-estudio.png";
+// Reutilizamos la fotografía existente de estudios para el cancionero.
+import cancioneroImage from "../../assets/images/resources/estudios-biblicos.png";
 
 // Importamos los estilos exclusivos de la página.
 import "../../styles/pages/member/Resources.css";
 
-// Creamos la página pública de Recursos.
+// Creamos la página de Recursos para usuarios autenticados: member, admin y super_admin.
 function Resources() {
     // Creamos las categorías disponibles para filtrar.
     const categories = [
         "Todos",
         "Estudios bíblicos",
         "Descargables",
+        "Biblioteca Solidaria",
+        "Cancionero",
         "Devocional",
         "Oración",
         "Discipulado",
@@ -66,8 +70,8 @@ function Resources() {
             // Texto del botón.
             buttonText: "Ver estudios",
 
-            // Ruta temporal.
-            link: "/recursos/estudios",
+            // Ruta protegida compartida por member, admin y super_admin.
+            link: "/member/recursos/estudios",
 
             // Indicamos que corresponde a una ruta interna.
             linkType: "internal",
@@ -86,7 +90,7 @@ function Resources() {
             type: "Documentos y guías",
             image: descargablesImage,
             buttonText: "Ver materiales",
-            link: "/recursos/material-descargable",
+            link: "/member/recursos/material-descargable",
             linkType: "internal",
             featured: false,
         },
@@ -117,8 +121,8 @@ function Resources() {
             // Texto del botón.
             buttonText: "Ver guía",
 
-            // Ruta temporal.
-            link: "/recursos/devocional",
+            // Ruta protegida compartida por member, admin y super_admin.
+            link: "/member/recursos/devocional",
 
             // Indicamos que corresponde a una ruta interna.
             linkType: "internal",
@@ -137,7 +141,7 @@ function Resources() {
             type: "Guía espiritual",
             image: oracionImage,
             buttonText: "Ver guías",
-            link: "/recursos/guias-oracion",
+            link: "/member/recursos/guias-oracion",
             linkType: "internal",
             featured: false,
         },
@@ -152,7 +156,7 @@ function Resources() {
             type: "Formación cristiana",
             image: discipuladoImage,
             buttonText: "Conocer material",
-            link: "/recursos/discipulado",
+            link: "/member/recursos/discipulado",
             linkType: "internal",
             featured: false,
         },
@@ -167,7 +171,7 @@ function Resources() {
             type: "Información general",
             image: preguntasImage,
             buttonText: "Ver preguntas",
-            link: "/recursos/preguntas-frecuentes",
+            link: "/member/recursos/preguntas-frecuentes",
             linkType: "internal",
             featured: false,
         },
@@ -182,9 +186,59 @@ function Resources() {
             type: "Herramienta bíblica",
             image: bibliaImage,
             buttonText: "Explorar herramientas",
-            link: "/recursos/biblia",
+            link: "/member/recursos/biblia",
             linkType: "internal",
             featured: true,
+        },
+        {
+            // Identificador de la Biblioteca Solidaria.
+            id: 8,
+
+            // Categoría utilizada en los filtros.
+            category: "Biblioteca Solidaria",
+
+            // Nombre de la sección.
+            title: "Biblioteca Solidaria",
+
+            // Descripción visible en la tarjeta.
+            description:
+                "Explora nuestra colección de libros cristianos disponibles para acompañarte en tu crecimiento espiritual.",
+
+            // Información adicional del recurso.
+            detail:
+                "Encuentra libros organizados por autor y temática, con acceso gratuito a su descarga en formato PDF.",
+
+            // Tipo de contenido.
+            type: "Biblioteca digital",
+
+            // Imagen provisional reutilizada.
+            image: descargablesImage,
+
+            // Texto del botón de acceso.
+            buttonText: "Explorar biblioteca",
+
+            // Ruta privada compartida por los tres roles autorizados.
+            link: "/member/recursos/biblioteca-solidaria",
+
+            // Navegación interna mediante React Router.
+            linkType: "internal",
+
+            // Se mostrará en el catálogo general.
+            featured: false,
+        },
+        {
+            // Acceso al repertorio de alabanzas de la iglesia.
+            id: 9,
+            category: "Cancionero",
+            title: "Cancionero de alabanzas",
+            description: "Encuentra las letras de las canciones que compartimos como comunidad.",
+            detail: "Busca por título o autor y consulta o descarga su letra en PDF.",
+            type: "Repertorio musical",
+            image: cancioneroImage,
+            buttonText: "Explorar canciones",
+            link: "/member/recursos/cancionero",
+            linkType: "internal",
+            featured: false,
         },
     ];
 
@@ -419,8 +473,8 @@ function Resources() {
                             {categories.map((category) => (
                                 <button
                                     className={`resources-filters__button ${selectedCategory === category
-                                            ? "resources-filters__button--active"
-                                            : ""
+                                        ? "resources-filters__button--active"
+                                        : ""
                                         }`}
                                     key={category}
                                     type="button"

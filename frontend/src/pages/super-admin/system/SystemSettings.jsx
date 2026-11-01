@@ -1,16 +1,6 @@
-
-
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
-
-import {
-  ArrowLeft,
-  Info,
-  Settings,
-  ShieldCheck,
-} from "lucide-react";
-
+import { Info, Settings, ShieldCheck } from "lucide-react";
 // =========================================================
 // COMPONENTES
 // =========================================================
@@ -39,24 +29,7 @@ function SystemSettings() {
   return (
     <div className="system-settings-page">
 
-      {/* ============================================= */}
-      {/* VOLVER AL PANEL */}
-      {/* ============================================= */}
-
-      <div className="system-settings-page__navigation">
-        <Link
-          to="/super-admin"
-          className="system-settings-page__back"
-        >
-          <ArrowLeft
-            size={17}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
-
-          <span>Volver al panel</span>
-        </Link>
-      </div>
+      
 
       {/* ============================================= */}
       {/* ENCABEZADO */}
@@ -154,3 +127,7 @@ function SystemSettings() {
 }
 
 export default SystemSettings;
+
+
+
+

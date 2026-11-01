@@ -1,15 +1,6 @@
-
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    Info,
-    LockKeyhole,
-    ShieldCheck,
-} from "lucide-react";
-
+import { Info, LockKeyhole, ShieldCheck } from "lucide-react";
 // =========================================================
 // COMPONENTES DEL MÓDULO
 // =========================================================
@@ -40,25 +31,7 @@ function RolesPermissions() {
     return (
         <div className="roles-permissions-page">
 
-
-            {/* ============================================= */}
-            {/* NAVEGACIÓN - VOLVER AL PANEL */}
-            {/* ============================================= */}
-
-            <div className="roles-permissions-page__navigation">
-                <Link
-                    to="/super-admin"
-                    className="roles-permissions-page__back"
-                >
-                    <ArrowLeft
-                        size={17}
-                        strokeWidth={2}
-                        aria-hidden="true"
-                    />
-
-                    <span>Volver al panel</span>
-                </Link>
-            </div>
+            
 
 
             {/* ============================================= */}
@@ -190,3 +163,7 @@ function RolesPermissions() {
 }
 
 export default RolesPermissions;
+
+
+
+

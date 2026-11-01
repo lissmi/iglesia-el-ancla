@@ -1,0 +1,467 @@
+/* =========================================================
+   CANCIONERO DE ALABANZAS - MIEMBROS
+   Paleta institucional El Ancla / Responsive PWA
+   ========================================================= */
+
+/* Variables locales para no modificar estilos globales. */
+.songbook-page {
+    --songbook-navy: #24364b;
+    --songbook-navy-deep: #17283b;
+    --songbook-gold: #c6a15b;
+    --songbook-cream: #f7f4ef;
+    --songbook-text: #586679;
+    width: 100%;
+    color: var(--songbook-navy);
+    background: #fff;
+}
+
+/* Contenedor central común de todas las secciones. */
+.songbook-container,
+.songbook-hero__container {
+    width: min(1160px, calc(100% - 48px));
+    margin-inline: auto;
+}
+
+/* Fotografía existente suavizada para mantener legible el título. */
+.songbook-hero {
+    position: relative;
+    min-height: 335px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-image: linear-gradient(105deg, rgba(18, 36, 55, .97), rgba(28, 49, 68, .88) 62%, rgba(37, 56, 75, .75)), var(--songbook-hero-image);
+    background-position: center, right center;
+    background-size: cover, auto 105%;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+/* Dejamos aire inferior para la curva blanca. */
+.songbook-hero__container {
+    position: relative;
+    z-index: 1;
+    padding: 70px 0 85px;
+}
+
+/* Etiqueta superior en dorado suave. */
+.songbook-hero__eyebrow,
+.songbook-eyebrow {
+    display: inline-block;
+    margin: 0 0 13px;
+    color: var(--songbook-gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+/* Título editorial de la página. */
+.songbook-hero h1 {
+    margin: 0 0 16px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+/* Texto introductorio con ancho moderado. */
+.songbook-hero p {
+    max-width: 600px;
+    margin: 0;
+    color: #e6edf2;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Curva característica de los recursos de miembros. */
+.songbook-hero__curve {
+    position: absolute;
+    right: -5%;
+    bottom: -43px;
+    left: -5%;
+    height: 83px;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    background: #fff;
+}
+
+/* Introducción y cifra de canciones encontradas. */
+.songbook-intro { padding: 52px 0 58px; }
+.songbook-intro__layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+}
+
+.songbook-intro h2,
+.songbook-search-heading h2,
+.songbook-closing h2 {
+    margin: 0 0 12px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(27px, 3vw, 37px);
+    font-weight: 500;
+    line-height: 1.24;
+}
+.songbook-intro p { max-width: 650px; margin: 0; color: var(--songbook-text); line-height: 1.8; }
+.songbook-intro__stat {
+    flex: 0 0 190px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 15px;
+    border: 1px solid #eee6d9;
+    border-radius: 20px;
+    background: #faf7f2;
+    text-align: center;
+}
+.songbook-intro__stat svg { color: #ab8a53; }
+.songbook-intro__stat strong { font-family: Georgia, serif; font-size: 31px; }
+.songbook-intro__stat span { color: var(--songbook-text); font-size: 12px; }
+
+/* Zona con buscador y filtros. */
+.songbook-search-section { padding: 42px 0 28px; background: var(--songbook-cream); }
+.songbook-search-heading { margin-bottom: 24px; }
+.songbook-search-heading h2 { font-size: clamp(26px, 3vw, 35px); }
+.songbook-search-field {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 58px;
+    padding: 0 18px;
+    border: 1px solid #e5dfd6;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 6px 25px rgba(36, 54, 75, .04);
+}
+.songbook-search-field > svg { flex: none; color: #8792a0; }
+.songbook-search-field input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--songbook-navy);
+    font: inherit;
+    font-size: 15px;
+}
+.songbook-search-field input::placeholder { color: #8e98a3; }
+.songbook-search-field:focus-within { border-color: var(--songbook-gold); box-shadow: 0 0 0 3px rgba(198,161,91,.13); }
+.songbook-search-field button,
+.songbook-reader__header button {
+    display: grid;
+    place-items: center;
+    flex: 0 0 37px;
+    height: 37px;
+    border: 0;
+    border-radius: 50%;
+    background: #f2f0ec;
+    color: var(--songbook-navy);
+    cursor: pointer;
+}
+
+/* Filtros horizontales con desplazamiento en teléfonos. */
+.songbook-filters { display: flex; gap: 9px; padding: 18px 1px 9px; overflow-x: auto; scrollbar-width: thin; }
+.songbook-filter {
+    flex: 0 0 auto;
+    min-height: 39px;
+    padding: 9px 17px;
+    border: 1px solid #e0d9cd;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--songbook-navy);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+.songbook-filter:hover { border-color: var(--songbook-gold); }
+.songbook-filter--active { background: var(--songbook-navy); border-color: var(--songbook-navy); color: #fff; }
+
+/* Catálogo a la izquierda y lector a la derecha. */
+.songbook-results-section { padding: 52px 0 80px; }
+.songbook-results-layout { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 32px; align-items: start; }
+.songbook-results__heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+.songbook-results__heading h2 { margin: 0; font-family: Georgia, serif; font-size: 25px; font-weight: 500; }
+.songbook-results__heading span { flex: none; color: #7e8a96; font-size: 12px; }
+.songbook-list { display: grid; gap: 11px; }
+
+/* Cada canción se abre mediante un botón accesible. */
+.songbook-song {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    border: 1px solid #e6e7e7;
+    border-radius: 17px;
+    background: #fff;
+    color: var(--songbook-navy);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.songbook-song:hover,
+.songbook-song--selected { border-color: #c9ad7d; background: #fcf9f4; box-shadow: 0 8px 19px rgba(36,54,75,.05); }
+.songbook-song__icon { display: grid; flex: 0 0 47px; height: 50px; place-items: center; border-radius: 12px; background: #f4eee3; color: #a48757; }
+.songbook-song__info { display: flex; flex: 1; flex-direction: column; gap: 5px; min-width: 0; }
+.songbook-song__info strong { font-size: 15px; overflow-wrap: anywhere; }
+.songbook-song__info small { font-size: 12px; color: var(--songbook-text); }
+.songbook-song__info em { width: fit-content; font-size: 11px; font-style: normal; color: #997843; }
+.songbook-song > svg { flex: none; color: #9ca4af; }
+
+/* Lector de letra: contenido legible y sin interpretar HTML. */
+.songbook-reader {
+    min-height: 420px;
+    padding: 32px;
+    border: 1px solid #e9e3da;
+    border-radius: 23px;
+    background: #fcfaf7;
+    box-shadow: 0 12px 33px rgba(36,54,75,.04);
+    outline: none;
+}
+.songbook-reader:focus-visible { outline: 3px solid rgba(198,161,91,.5); outline-offset: 3px; }
+.songbook-reader__header { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.songbook-reader__category { display: inline-flex; margin: 11px 0 16px; padding: 7px 12px; border-radius: 999px; background: #eee6d9; font-size: 12px; color: #856c45; }
+.songbook-reader h2 { margin: 0 0 8px; font-family: Georgia, serif; font-weight: 500; font-size: clamp(27px, 2.8vw, 35px); overflow-wrap: anywhere; }
+.songbook-reader__author { margin: 0 0 26px; color: var(--songbook-text); font-size: 14px; }
+.songbook-reader__lyrics {
+    padding-top: 23px;
+    border-top: 1px solid #e9e0d3;
+    font-size: 16px;
+    line-height: 2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.songbook-reader__empty { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; min-height: 345px; color: #8a929a; text-align: center; }
+.songbook-reader__empty h3 { margin: 4px 0 0; color: var(--songbook-navy); font-family: Georgia, serif; font-size: 24px; font-weight: 500; }
+.songbook-reader__empty p { max-width: 280px; margin: 0; line-height: 1.6; }
+
+/* Cargas, errores y ausencia de canciones. */
+.songbook-state { display: flex; align-items: center; flex-direction: column; gap: 13px; min-height: 265px; justify-content: center; padding: 27px; border: 1px dashed #ded9cf; border-radius: 18px; background: #faf9f7; color: var(--songbook-text); text-align: center; }
+.songbook-state h3 { margin: 0; color: var(--songbook-navy); font-family: Georgia, serif; font-size: 22px; }
+.songbook-state p { max-width: 320px; margin: 0; line-height: 1.65; }
+.songbook-state button,
+.songbook-pagination button { min-height: 40px; padding: 9px 16px; border: 1px solid #e0d9cd; border-radius: 99px; background: #fff; color: var(--songbook-navy); font-weight: 600; cursor: pointer; }
+.songbook-pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 13px; margin-top: 24px; font-size: 12px; color: var(--songbook-text); }
+.songbook-pagination button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Cierre sobrio y consistente con los módulos de recursos. */
+.songbook-closing { padding: 40px 0; background: var(--songbook-navy-deep); color: #fff; }
+.songbook-closing .songbook-container { display: flex; align-items: center; gap: 22px; }
+.songbook-closing svg { flex: 0 0 auto; color: var(--songbook-gold); }
+.songbook-closing h2 { font-size: 26px; margin: 0 0 7px; }
+.songbook-closing p { margin: 0; color: #dae2e9; line-height: 1.65; }
+
+/* Adaptamos el lector para tablets. */
+@media (max-width: 950px) {
+    .songbook-results-layout { grid-template-columns: 1fr; }
+    .songbook-reader { min-height: 300px; }
+}
+
+/* El formulario y los filtros siguen siendo táctiles en móviles. */
+@media (max-width: 640px) {
+    .songbook-container, .songbook-hero__container { width: min(100% - 32px, 1160px); }
+    .songbook-hero { min-height: 300px; background-size: cover, auto 80%; }
+    .songbook-hero__container { padding: 54px 0 73px; }
+    .songbook-hero p { font-size: 14px; }
+    .songbook-intro { padding: 34px 0; }
+    .songbook-intro__layout { flex-direction: column; align-items: stretch; gap: 23px; }
+    .songbook-intro__stat { flex-basis: auto; flex-direction: row; justify-content: center; padding: 17px; }
+    .songbook-intro__stat strong { font-size: 25px; }
+    .songbook-search-section { padding: 32px 0 22px; }
+    .songbook-search-field input { font-size: 16px; }
+    .songbook-results-section { padding: 33px 0 55px; }
+    .songbook-reader { padding: 22px 18px; }
+    .songbook-reader__lyrics { font-size: 15px; line-height: 1.85; }
+    .songbook-song { padding: 13px; }
+    .songbook-closing .songbook-container { align-items: flex-start; }
+    .songbook-closing h2 { font-size: 22px; }
+}
+
+/* Respetamos los ajustes de accesibilidad del dispositivo. */
+@media (prefers-reduced-motion: reduce) {
+    .songbook-song, .songbook-filter { transition: none; }
+}
+
+/* =========================================================
+   LECTOR DE LETRAS AJUSTABLE - CANCIONERO
+   ========================================================= */
+
+/* Evitamos que títulos o letras largas desborden la columna. */
+.songbook-reader {
+    min-width: 0;
+    scroll-margin-top: 24px;
+}
+
+/* Barra de herramientas de lectura, dentro del panel existente. */
+.songbook-reader__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 22px;
+    padding: 15px;
+    border: 1px solid #e8e2d9;
+    border-radius: 14px;
+    background: #fff;
+}
+
+/* Texto explicativo que acompaña a los controles. */
+.songbook-reader__controls-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #586679;
+}
+
+/* Contenedor de los botones de escala. */
+.songbook-reader__controls-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+/* Botones táctiles para aumentar y reducir letra. */
+.songbook-reader__size-button,
+.songbook-reader__reset-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 46px;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 1px solid #d9d4cb;
+    border-radius: 11px;
+    background: #f9f7f3;
+    color: #24364b;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+
+/* Indicamos respuesta cuando hay interacción táctil o con cursor. */
+.songbook-reader__size-button:hover:not(:disabled),
+.songbook-reader__reset-button:hover:not(:disabled) {
+    background: #eee6d9;
+    border-color: #c6a15b;
+}
+
+/* Mantenemos visibles los focos de teclado. */
+.songbook-reader__size-button:focus-visible,
+.songbook-reader__reset-button:focus-visible {
+    outline: 3px solid rgba(198, 161, 91, .45);
+    outline-offset: 2px;
+}
+
+/* Los controles se inhabilitan en los límites de escala. */
+.songbook-reader__size-button:disabled,
+.songbook-reader__reset-button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* Presentamos el tamaño efectivo en píxeles. */
+.songbook-reader__size-value {
+    min-width: 50px;
+    color: #24364b;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Mostramos la letra como texto real, seleccionable y ampliable. */
+.songbook-reader__lyrics {
+    max-width: 66ch;
+    padding-top: 25px;
+    border-top: 1px solid #e9e0d3;
+    color: #24364b;
+    line-height: 1.85;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: .005em;
+}
+
+/* Estado accesible mientras se recupera el TXT. */
+.songbook-reader__reading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 24px 0;
+    border-top: 1px solid #e9e0d3;
+    color: #586679;
+    line-height: 1.7;
+}
+
+/* Reutilizamos el estilo editorial en el reintento. */
+.songbook-reader__reading-state button {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid #c6a15b;
+    border-radius: 999px;
+    background: white;
+    color: #24364b;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Área de acciones opcionales al pie del lector. */
+.songbook-reader__actions {
+    margin-top: 26px;
+    border-top: 1px solid #e9e0d3;
+    padding-top: 20px;
+}
+
+/* Botón para guardar PDF sin abandonar la PWA. */
+.songbook-reader__download {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 999px;
+    background: #24364b;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Feedback accesible para el botón principal. */
+.songbook-reader__download:hover:not(:disabled) { background: #344c67; }
+.songbook-reader__download:focus-visible { outline: 3px solid #c6a15b; outline-offset: 3px; }
+.songbook-reader__download:disabled { opacity: .6; cursor: wait; }
+
+/* Error de descarga independiente del contenido leído. */
+.songbook-reader__download-error {
+    margin: 12px 0 0;
+    color: #a13d32;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* En teléfonos, la barra aprovecha el ancho disponible. */
+@media (max-width: 640px) {
+    .songbook-reader__controls { padding: 12px; gap: 10px; }
+    .songbook-reader__controls-label { flex: 1 1 100%; }
+    .songbook-reader__controls-actions { width: 100%; justify-content: space-between; }
+    .songbook-reader__reset-button { padding-inline: 10px; }
+    .songbook-reader__lyrics { line-height: 1.9; }
+    .songbook-reader__download { width: 100%; }
+}
+
+/* Preferencia del sistema: reducir animaciones innecesarias. */
+@media (prefers-reduced-motion: reduce) {
+    .songbook-reader__size-button,
+    .songbook-reader__reset-button { transition: none; }
+}

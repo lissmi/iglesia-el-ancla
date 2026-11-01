@@ -4,7 +4,7 @@ import Header from "../../../components/public/Header";
 
 import prayerGuides from "../../../data/resources/prayerGuides";
 
-import "../../../styles/pages/public/resources/PrayerGuideDetails.css";
+import "../../../styles/pages/member/resources/PrayerGuideDetails.css";
 
 function PrayerGuideDetails() {
     // Obtenemos el slug desde una URL como:

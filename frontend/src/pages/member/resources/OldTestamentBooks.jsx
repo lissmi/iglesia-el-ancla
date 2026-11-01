@@ -14,7 +14,7 @@ import Header from "../../../components/public/Header";
 import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
 
 // Importamos el CSS exclusivo de esta página.
-import "../../../styles/pages/public/resources/OldTestamentBooks.css";
+import "../../../styles/pages/member/resources/OldTestamentBooks.css";
 
 // Creamos una función que normaliza los textos.
 // Esto permite que una búsqueda como "genesis"

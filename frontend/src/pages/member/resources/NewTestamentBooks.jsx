@@ -13,7 +13,7 @@ import Header from "../../../components/public/Header";
 import newTestamentBooks from "../../../data/bible/newTestamentBooks";
 
 // Importamos el CSS exclusivo de esta página.
-import "../../../styles/pages/public/resources/NewTestamentBooks.css";
+import "../../../styles/pages/member/resources/NewTestamentBooks.css";
 
 // Creamos una función que normaliza los textos.
 // Esto permite que una búsqueda como "mateo"

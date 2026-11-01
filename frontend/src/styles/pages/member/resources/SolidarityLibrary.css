@@ -1,0 +1,811 @@
+/* ========================================================= */
+/* PÁGINA: BIBLIOTECA SOLIDARIA - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+/* Base cromática compartida con los módulos de Recursos. */
+.solidarity-library-page {
+    background-color: #f7f4ef;
+    color: #25364a;
+}
+
+/* ========================================================= */
+/* HERO FOTOGRÁFICO */
+/* ========================================================= */
+
+/* El fondo utiliza temporalmente la fotografía ya incluida en Recursos. */
+.solidarity-library-hero {
+    position: relative;
+    min-height: 580px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+        linear-gradient(90deg, rgba(24, 29, 37, 0.91) 0%, rgba(30, 34, 43, 0.72) 50%, rgba(33, 38, 47, 0.43) 100%),
+        url("../../../../assets/images/resources/material-descargable.png") center / cover no-repeat;
+}
+
+/* Añade una iluminación dorada en la parte derecha del encabezado. */
+.solidarity-library-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(circle at 77% 29%, rgba(198, 161, 91, 0.23), transparent 35%);
+    pointer-events: none;
+}
+
+/* Mantiene el texto alineado con el resto de páginas del proyecto. */
+.solidarity-library-hero__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 140px 24px 130px;
+}
+
+/* Etiqueta pequeña sobre el título principal. */
+.solidarity-library-hero__eyebrow {
+    margin: 0 0 14px;
+    color: #e0c792;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+}
+
+/* Tipografía editorial idéntica a Material de discipulado. */
+.solidarity-library-hero h1 {
+    max-width: 880px;
+    margin: 0;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(50px, 7vw, 80px);
+    font-weight: 500;
+    line-height: 1.05;
+}
+
+/* Texto introductorio del hero. */
+.solidarity-library-hero__description {
+    max-width: 710px;
+    margin: 25px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(17px, 2vw, 21px);
+    line-height: 1.75;
+}
+
+/* Repite la terminación curva de las demás páginas de Recursos. */
+.solidarity-library-hero__curve {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 44px;
+    background-color: #ffffff;
+    clip-path: ellipse(72% 65% at 50% 100%);
+}
+
+/* ========================================================= */
+/* ETIQUETAS Y TÍTULOS COMPARTIDOS */
+/* ========================================================= */
+
+/* Eyebrow reutilizado entre secciones claras. */
+.solidarity-library-section__eyebrow {
+    margin: 0 0 11px;
+    color: #98784b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Títulos editoriales de cada bloque. */
+.solidarity-library-intro h2,
+.solidarity-library-tools__heading h2,
+.solidarity-library-list__heading h2,
+.solidarity-library-info h2,
+.solidarity-library-closing h2 {
+    margin: 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(35px, 4.5vw, 51px);
+    font-weight: 500;
+    line-height: 1.18;
+}
+
+/* ========================================================= */
+/* INTRODUCCIÓN Y ESTADÍSTICAS */
+/* ========================================================= */
+
+/* Fondo blanco y espacio amplio entre secciones. */
+.solidarity-library-intro {
+    padding: 95px 24px;
+    background-color: #ffffff;
+}
+
+/* Texto a la izquierda y estadísticas a la derecha. */
+.solidarity-library-intro__container {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 70px;
+}
+
+/* Separación del párrafo introductorio. */
+.solidarity-library-intro__content > p:not(.solidarity-library-section__eyebrow) {
+    max-width: 710px;
+    margin: 22px 0 0;
+    color: #65717f;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Dos tarjetas con indicadores del catálogo. */
+.solidarity-library-intro__summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Tarjeta de estadística. */
+.solidarity-library-intro__stat {
+    min-height: 160px;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(37, 54, 74, 0.1);
+    border-radius: 18px;
+    background-color: #f7f3ed;
+}
+
+/* Número destacado de cada tarjeta. */
+.solidarity-library-intro__stat strong {
+    color: #8b6d45;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* Texto inferior del indicador. */
+.solidarity-library-intro__stat span {
+    margin-top: 13px;
+    color: #566372;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* ========================================================= */
+/* BUSCADOR Y FILTROS */
+/* ========================================================= */
+
+/* Tonalidad crema que contrasta con la sección introductoria. */
+.solidarity-library-tools {
+    padding: 85px 24px 75px;
+    background-color: #f7f4ef;
+}
+
+/* Contenedor centrado del formulario. */
+.solidarity-library-tools__container {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+/* Título y ayuda al usuario en dos columnas flexibles. */
+.solidarity-library-tools__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    margin-bottom: 35px;
+}
+
+/* Explicación lateral de los filtros. */
+.solidarity-library-tools__heading > p {
+    max-width: 430px;
+    margin: 0;
+    color: #65717f;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Buscador ancho a toda la fila. */
+.solidarity-library-search {
+    position: relative;
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+/* Icono superpuesto dentro del input. */
+.solidarity-library-search__icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: #8d98a4;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Campo de entrada con enfoque visual accesible. */
+.solidarity-library-search input {
+    width: 100%;
+    min-height: 58px;
+    padding: 15px 57px;
+    border: 1px solid rgba(36, 54, 75, 0.14);
+    border-radius: 15px;
+    outline: none;
+    background-color: #ffffff;
+    color: #24364b;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Texto orientativo del buscador. */
+.solidarity-library-search input::placeholder { color: #929ba5; }
+
+/* Destaca el buscador cuando está seleccionado. */
+.solidarity-library-search input:focus {
+    border-color: rgba(154, 128, 102, 0.65);
+    box-shadow: 0 0 0 4px rgba(183, 160, 135, 0.13);
+}
+
+/* Botón para borrar el contenido de búsqueda. */
+.solidarity-library-search button {
+    position: absolute;
+    top: 50%;
+    right: 17px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #ece8e1;
+    color: #596675;
+    font-size: 21px;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+/* Color del botón al pasar el cursor. */
+.solidarity-library-search button:hover { background-color: #24364b; color: #ffffff; }
+
+/* Grupo con etiqueta y filtros tipo píldora. */
+.solidarity-library-filter-group {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(36, 54, 75, 0.08);
+    border-bottom: 1px solid rgba(36, 54, 75, 0.08);
+}
+
+/* Nombre del grupo de filtros. */
+.solidarity-library-filter-group > p {
+    margin: 11px 0 0;
+    color: #35485b;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+/* Distribución horizontal de las categorías. */
+.solidarity-library-filters { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Filtro inactivo. */
+.solidarity-library-filter {
+    min-height: 40px;
+    padding: 9px 17px;
+    border: 1px solid rgba(36, 54, 75, 0.13);
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #596675;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Respuesta al pasar el cursor. */
+.solidarity-library-filter:hover { border-color: rgba(154, 128, 102, 0.48); color: #725d48; transform: translateY(-1px); }
+
+/* Color de la categoría seleccionada. */
+.solidarity-library-filter--active { border-color: #24364b; background-color: #24364b; color: #ffffff; }
+
+/* Mantiene el contraste de un filtro activo al pasar el cursor. */
+.solidarity-library-filter--active:hover { color: #ffffff; }
+
+/* ========================================================= */
+/* CATÁLOGO, CUADRÍCULA Y TARJETAS */
+/* ========================================================= */
+
+/* Catálogo de libros sobre fondo blanco. */
+.solidarity-library-list { padding: 90px 24px 110px; background-color: #ffffff; }
+
+/* Contenedor del listado. */
+.solidarity-library-list__container { width: 100%; max-width: 1160px; margin: 0 auto; }
+
+/* Título del listado y contador de resultados. */
+.solidarity-library-list__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 35px;
+    margin-bottom: 40px;
+}
+
+/* Cantidad de libros visibles. */
+.solidarity-library-list__count { margin: 0; color: #7a8591; font-size: 13px; font-weight: 700; }
+
+/* Las portadas se distribuyen en tres columnas. */
+.solidarity-library-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+
+/* Tarjeta individual de libro. */
+.solidarity-library-card {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 20px;
+    background-color: #fbfaf8;
+    box-shadow: 0 12px 30px rgba(24, 40, 56, 0.06);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Elevación sutil similar a Material descargable. */
+.solidarity-library-card:hover {
+    border-color: rgba(183, 160, 135, 0.48);
+    box-shadow: 0 18px 40px rgba(24, 40, 56, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Espacio reservado para portada de cada libro. */
+.solidarity-library-card__top {
+    min-height: 245px;
+    padding: 23px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e9dfd2 0%, #f4ede4 52%, #ddd0bf 100%);
+}
+
+/* Etiqueta pequeña del género. */
+.solidarity-library-card__category {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background-color: #24364b;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+/* Base visual de la portada, con sombra de libro físico. */
+.solidarity-library-card__cover {
+    width: 132px;
+    height: 180px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 4px 10px 10px 4px;
+    background-color: #fbfaf7;
+    color: #98784b;
+    box-shadow: -7px 8px 18px rgba(36, 54, 75, 0.2);
+}
+
+/* Ajusta cualquier portada al formato de libro. */
+.solidarity-library-card__cover img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+/* Contenido textual de cada tarjeta. */
+.solidarity-library-card__content { flex: 1; padding: 27px 24px 24px; }
+
+/* Etiqueta de lectura. */
+.solidarity-library-card__eyebrow {
+    margin: 0 0 10px;
+    color: #99794f;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Título del libro. */
+.solidarity-library-card h3 {
+    margin: 0;
+    color: #1d2d3d;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Nombre del autor. */
+.solidarity-library-card__author { margin: 11px 0 0; color: #98784b; font-size: 12px; font-weight: 700; }
+
+/* Resumen breve del libro. */
+.solidarity-library-card__description { margin: 16px 0 0; color: #65717f; font-size: 14px; line-height: 1.75; }
+
+/* Pie con formato y acción de descarga. */
+.solidarity-library-card__footer {
+    padding: 19px 24px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid rgba(36, 54, 75, 0.08);
+    background-color: #ffffff;
+}
+
+/* Formato y mensaje de disponibilidad. */
+.solidarity-library-card__footer > span { color: #929ca6; font-size: 10px; font-weight: 700; }
+.solidarity-library-card__footer .solidarity-library-card__unavailable { color: #8a6b43; }
+
+/* Enlace de descarga cuando un libro tenga un archivo válido. */
+.solidarity-library-card__footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #24364b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* ========================================================= */
+/* ESTADO VACÍO O SIN RESULTADOS */
+/* ========================================================= */
+
+/* Diseño compatible con estados vacíos de otras páginas. */
+.solidarity-library-empty {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 65px 36px;
+    border: 1px solid rgba(36, 54, 75, 0.1);
+    border-radius: 22px;
+    background-color: #fbfaf8;
+    text-align: center;
+    box-shadow: 0 15px 38px rgba(24, 40, 56, 0.07);
+}
+
+/* Icono de biblioteca sobre fondo crema. */
+.solidarity-library-empty__icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: #ede4d7;
+    color: #96764b;
+}
+
+/* Etiqueta del estado vacío. */
+.solidarity-library-empty__eyebrow {
+    margin: 0;
+    color: #9a8066;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+/* Título de aviso. */
+.solidarity-library-empty h3 {
+    margin: 14px 0 0;
+    color: #182838;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(27px, 4vw, 37px);
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+/* Explicación para visitantes y miembros. */
+.solidarity-library-empty > p:not(.solidarity-library-empty__eyebrow) {
+    max-width: 540px;
+    margin: 17px auto 0;
+    color: #667281;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+/* Acciones del estado vacío: enlace o limpieza de filtros. */
+.solidarity-library-empty a,
+.solidarity-library-empty button {
+    margin-top: 27px;
+    padding: 13px 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 999px;
+    background-color: #24364b;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover de las acciones. */
+.solidarity-library-empty a:hover,
+.solidarity-library-empty button:hover { background-color: #34516f; transform: translateY(-2px); }
+
+/* ========================================================= */
+/* INFORMACIÓN DE USO */
+/* ========================================================= */
+
+/* Fondo arena y disposición asimétrica de dos columnas. */
+.solidarity-library-info { padding: 100px 24px; background-color: #f1ece5; }
+
+/* Separación editorial entre texto y pasos. */
+.solidarity-library-info__container {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    align-items: start;
+    gap: 75px;
+}
+
+/* Etiqueta del bloque informativo. */
+.solidarity-library-info__eyebrow {
+    margin: 0 0 11px;
+    color: #98784b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Texto secundario. */
+.solidarity-library-info__content > p:not(.solidarity-library-info__eyebrow) {
+    margin: 20px 0 0;
+    color: #65717f;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Lista vertical de los tres pasos. */
+.solidarity-library-info__steps { display: grid; gap: 15px; }
+
+/* Tarjeta de cada paso. */
+.solidarity-library-info__steps article {
+    padding: 22px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    border: 1px solid rgba(36, 54, 75, 0.09);
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+/* Número redondo del paso. */
+.solidarity-library-info__steps article > span {
+    width: 43px;
+    height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #24364b;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+}
+
+/* Título y explicación del paso. */
+.solidarity-library-info__steps h3 { margin: 0; color: #25364a; font-size: 16px; }
+.solidarity-library-info__steps p { margin: 7px 0 0; color: #667281; font-size: 13px; line-height: 1.65; }
+
+/* ========================================================= */
+/* CIERRE INSTITUCIONAL */
+/* ========================================================= */
+
+/* Fondo azul marino idéntico al de Material descargable. */
+.solidarity-library-closing {
+    padding: 100px 24px;
+    background: linear-gradient(135deg, #182838 0%, #24364b 60%, #30495f 100%);
+}
+
+/* Distribuye el mensaje final y el enlace de regreso. */
+.solidarity-library-closing__container {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 65px;
+}
+
+/* Etiqueta dorada del cierre. */
+.solidarity-library-closing__eyebrow {
+    margin: 0 0 11px;
+    color: #d9bf8e;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Cambia el título compartido a blanco sobre fondo oscuro. */
+.solidarity-library-closing h2 { max-width: 700px; color: #ffffff; }
+
+/* Párrafo final en blanco suave. */
+.solidarity-library-closing p:not(.solidarity-library-closing__eyebrow) {
+    max-width: 710px;
+    margin: 19px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Botón con borde translúcido. */
+.solidarity-library-closing a {
+    flex-shrink: 0;
+    min-width: 190px;
+    padding: 14px 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Elevación suave del botón de regreso. */
+.solidarity-library-closing a:hover {
+    border-color: rgba(255, 255, 255, 0.45);
+    background-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-2px);
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+/* Resalta los elementos interactivos cuando se usa el teclado. */
+.solidarity-library-page a:focus-visible,
+.solidarity-library-page button:focus-visible,
+.solidarity-library-search input:focus-visible {
+    outline: 3px solid rgba(198, 161, 91, 0.65);
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE: PANTALLAS MEDIANAS */
+/* ========================================================= */
+
+@media (max-width: 1050px) {
+    /* Estadísticas y pasos se colocan debajo de su introducción. */
+    .solidarity-library-intro__container,
+    .solidarity-library-info__container { grid-template-columns: 1fr; }
+
+    /* Evita tres tarjetas estrechas. */
+    .solidarity-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    /* El resumen usa un ancho más controlado. */
+    .solidarity-library-intro__summary { max-width: 600px; }
+}
+
+/* ========================================================= */
+/* RESPONSIVE: TABLETS */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+    /* Apila los encabezados y el cierre. */
+    .solidarity-library-tools__heading,
+    .solidarity-library-list__heading,
+    .solidarity-library-closing__container { align-items: flex-start; flex-direction: column; }
+
+    /* Evita que el texto lateral quede demasiado ajustado. */
+    .solidarity-library-tools__heading { gap: 20px; }
+    .solidarity-library-tools__heading > p { max-width: 650px; }
+
+    /* Mueve las categorías debajo de su etiqueta. */
+    .solidarity-library-filter-group { grid-template-columns: 1fr; gap: 12px; }
+    .solidarity-library-filter-group > p { margin-top: 0; }
+
+    /* Separa los elementos del cierre. */
+    .solidarity-library-closing__container { gap: 35px; }
+}
+
+/* ========================================================= */
+/* RESPONSIVE: CELULARES */
+/* ========================================================= */
+
+@media (max-width: 680px) {
+    /* Mantiene la fotografía visible sin perder contraste. */
+    .solidarity-library-hero { min-height: 550px; background-position: 55% center; }
+
+    /* Reduce los espacios del hero para móviles. */
+    .solidarity-library-hero__container { padding: 125px 18px 105px; }
+    .solidarity-library-hero h1 { font-size: 48px; }
+    .solidarity-library-hero__description { font-size: 17px; line-height: 1.65; }
+
+    /* Ajusta las secciones con menor ancho de pantalla. */
+    .solidarity-library-intro { padding: 75px 18px; }
+    .solidarity-library-tools { padding: 70px 18px 60px; }
+    .solidarity-library-list { padding: 70px 18px 80px; }
+    .solidarity-library-info { padding: 80px 18px; }
+    .solidarity-library-closing { padding: 80px 18px; }
+
+    /* Los contadores pasan a una sola columna. */
+    .solidarity-library-intro__summary { grid-template-columns: 1fr; }
+    .solidarity-library-intro__stat { min-height: 125px; }
+
+    /* Ajusta el tamaño del buscador y sus iconos. */
+    .solidarity-library-search input { min-height: 55px; padding-left: 49px; font-size: 14px; }
+    .solidarity-library-search__icon { left: 17px; }
+
+    /* Permite desplazar las categorías sin romper el diseño. */
+    .solidarity-library-filters { flex-wrap: nowrap; padding-bottom: 8px; overflow-x: auto; scrollbar-width: thin; }
+    .solidarity-library-filter { flex-shrink: 0; }
+
+    /* Cada libro ocupa el ancho de la pantalla. */
+    .solidarity-library-grid { grid-template-columns: 1fr; }
+
+    /* Reduce los márgenes del estado inicial. */
+    .solidarity-library-empty { padding: 48px 24px; }
+
+    /* El enlace final debe ser fácil de pulsar. */
+    .solidarity-library-closing a { width: 100%; }
+}
+
+/* ========================================================= */
+/* RESPONSIVE: CELULARES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 390px) {
+    /* Evita que el título principal se desborde. */
+    .solidarity-library-hero h1 { font-size: 42px; }
+
+    /* Permite que los metadatos de cada tarjeta hagan salto de línea. */
+    .solidarity-library-card__footer { flex-wrap: wrap; }
+}
+
+/* ========================================================= */
+/* USUARIOS CON MOVIMIENTO REDUCIDO */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    /* Elimina animaciones no esenciales para mejorar accesibilidad. */
+    .solidarity-library-filter,
+    .solidarity-library-card,
+    .solidarity-library-empty a,
+    .solidarity-library-empty button,
+    .solidarity-library-closing a { transition: none; }
+
+    /* Evita desplazamientos al pasar el cursor. */
+    .solidarity-library-filter:hover,
+    .solidarity-library-card:hover,
+    .solidarity-library-empty a:hover,
+    .solidarity-library-empty button:hover,
+    .solidarity-library-closing a:hover { transform: none; }
+}

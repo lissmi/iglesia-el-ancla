@@ -1,17 +1,8 @@
-
-import { Link } from "react-router-dom";
-
 // =========================================================
 // IMPORTACIÓN DE ICONOS
 // =========================================================
 
-import {
-  ArrowLeft,
-  ShieldCheck,
-  UsersRound,
-} from "lucide-react";
-
-
+import { ShieldCheck, UsersRound } from "lucide-react";
 // =========================================================
 // ESTILOS DEL COMPONENTE
 // =========================================================
@@ -26,17 +17,8 @@ import "../../../styles/components/administration/users/UsersHeader.css";
 // Este componente representa el encabezado
 // de la página de gestión de usuarios.
 //
-// Recibe una propiedad:
-//
-// backPath: ruta a la que debe regresar
-// el usuario al presionar "Volver al panel".
-//
-// De esta manera podemos reutilizar
-// el componente sin establecer una ruta fija.
 
-function UsersHeader({
-  backPath = "/super-admin",
-}) {
+function UsersHeader() {
 
   return (
 
@@ -84,26 +66,7 @@ function UsersHeader({
         {/* NAVEGACIÓN */}
         {/* ============================================= */}
 
-        <div className="users-header__actions">
-
-          <Link
-            className="users-header__back"
-            to={backPath}
-          >
-
-            <ArrowLeft
-              size={17}
-              strokeWidth={2}
-              aria-hidden="true"
-            />
-
-            <span>
-              Volver al panel
-            </span>
-
-          </Link>
-
-        </div>
+        
 
       </div>
 
@@ -132,3 +95,7 @@ function UsersHeader({
 // Exportamos el componente para utilizarlo
 // dentro de UsersManagement.jsx.
 export default UsersHeader;
+
+
+
+

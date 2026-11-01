@@ -15,7 +15,7 @@ import recursosIcon from "../../../assets/icons/recursos.png";
 import estudiosImage from "../../../assets/images/resources/estudios-biblicos.png";
 
 // Importamos los estilos exclusivos de esta página.
-import "../../../styles/pages/public/resources/BibleStudies.css";
+import "../../../styles/pages/member/resources/BibleStudies.css";
 
 // Creamos la página pública de Estudios Bíblicos.
 function BibleStudies() {

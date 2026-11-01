@@ -52,6 +52,10 @@ import MartinManagement from "../pages/administration/martin/MartinManagement";
 
 import { MartinProvider } from "../context/martin/MartinContext";
 
+import LibraryManagement from "../pages/administration/LibraryManagement";
+// Administración del cancionero compartida por Admin y Superadmin.
+import SongbookManagement from "../pages/administration/SongbookManagement";
+
 
 // =========================================================
 // DEFINICIÓN CENTRALIZADA DE RUTAS
@@ -248,6 +252,18 @@ function SharedAdminRoutes() {
                         <MartinManagement />
                     </MartinProvider>
                 }
+            />
+
+            {/* Cancionero de alabanzas para administradores. */}
+            <Route
+                path="recursos/cancionero"
+                element={<SongbookManagement />}
+            />
+
+            {/* Biblioteca Solidaria para administradores. */}
+            <Route
+                path="recursos/biblioteca-solidaria"
+                element={<LibraryManagement />}
             />
 
         </>

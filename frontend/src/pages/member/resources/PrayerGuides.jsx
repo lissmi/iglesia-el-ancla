@@ -5,7 +5,7 @@ import Header from "../../../components/public/Header";
 
 import prayerGuides from "../../../data/resources/prayerGuides";
 
-import "../../../styles/pages/public/resources/PrayerGuides.css";
+import "../../../styles/pages/member/resources/PrayerGuides.css";
 
 function PrayerGuides() {
     // Guarda el texto escrito en el buscador.

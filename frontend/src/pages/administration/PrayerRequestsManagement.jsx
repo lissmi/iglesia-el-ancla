@@ -1,19 +1,5 @@
-
 import { useMemo, useState } from "react";
-import {
-    ArrowLeft,
-    CheckCircle2,
-    Clock3,
-    Eye,
-    HandHeart,
-    HeartHandshake,
-    LockKeyhole,
-    Search,
-    ShieldCheck,
-    UsersRound,
-} from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-
+import { CheckCircle2, Clock3, Eye, HandHeart, HeartHandshake, LockKeyhole, Search, ShieldCheck, UsersRound } from "lucide-react";
 import "../../styles/pages/administration/PrayerRequestsManagement.css";
 
 import PrayerRequestDetailsModal from "../../components/administration/prayers/PrayerRequestDetailsModal";
@@ -137,14 +123,6 @@ function formatDate(dateString) {
 // =========================================================
 
 function PrayerRequestsManagement() {
-    const location = useLocation();
-
-    const isSuperAdminPanel =
-        location.pathname.startsWith("/super-admin");
-
-    const adminBasePath = isSuperAdminPanel
-        ? "/super-admin"
-        : "/admin";
 
     // -------------------------------------------------------
     // ESTADOS
@@ -317,13 +295,7 @@ function PrayerRequestsManagement() {
 
                 <div className="prayer-management-page__heading">
 
-                    <Link
-                        to={adminBasePath}
-                        className="prayer-management-page__back"
-                    >
-                        <ArrowLeft size={17} aria-hidden="true" />
-                        Volver al panel
-                    </Link>
+                    
 
                     <span className="prayer-management-page__eyebrow">
                         ADMINISTRACIÓN
@@ -672,3 +644,7 @@ function PrayerRequestsManagement() {
 }
 
 export default PrayerRequestsManagement;
+
+
+
+

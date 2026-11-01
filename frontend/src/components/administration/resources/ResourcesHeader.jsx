@@ -1,12 +1,4 @@
-
-import { useNavigate } from "react-router-dom";
-
-import {
-    ArrowLeft,
-    LibraryBig,
-    Plus,
-} from "lucide-react";
-
+import { LibraryBig, Plus } from "lucide-react";
 // =========================================================
 // ESTILOS
 // =========================================================
@@ -18,16 +10,6 @@ import "../../../styles/components/administration/resources/ResourcesHeader.css"
 // =========================================================
 
 function ResourcesHeader({ onCreateResource }) {
-
-    // =====================================================
-    // NAVEGACIÓN
-    // =====================================================
-
-    const navigate = useNavigate();
-
-    function handleGoBack() {
-        navigate(-1);
-    }
 
     // =====================================================
     // INTERFAZ
@@ -58,18 +40,7 @@ function ResourcesHeader({ onCreateResource }) {
 
                 {/* NAVEGACIÓN */}
 
-                <button
-                    type="button"
-                    className="resources-header__back"
-                    onClick={handleGoBack}
-                >
-                    <ArrowLeft
-                        size={17}
-                        aria-hidden="true"
-                    />
-
-                    Volver
-                </button>
+                
 
             </div>
 
@@ -108,3 +79,7 @@ function ResourcesHeader({ onCreateResource }) {
 }
 
 export default ResourcesHeader;
+
+
+
+

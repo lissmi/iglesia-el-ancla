@@ -1,19 +1,8 @@
-
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useBelongings } from "../../../context/belongings/BelongingsContext";
 
-import {
-    ArrowLeft,
-    ArrowLeftRight,
-    ArrowRight,
-    Boxes,
-    ClipboardList,
-    FolderOpen,
-    MapPin,
-    Package,
-} from "lucide-react";
-
+import { ArrowLeftRight, ArrowRight, Boxes, ClipboardList, FolderOpen, MapPin, Package } from "lucide-react";
 import {
     belongingsMovementTypes,
 } from "../../../data/belongings/belongingsDemoData";
@@ -180,15 +169,7 @@ function BelongingsDashboard() {
     return (
         <div className="belongings-dashboard">
 
-            <button
-                type="button"
-                className="belongings-dashboard__back"
-                onClick={() => navigate(basePath)}
-                aria-label="Volver al panel administrativo"
-            >
-                <ArrowLeft size={17} />
-                Volver al panel administrativo
-            </button>
+            
 
             {/* ========================================= */}
             {/* ENCABEZADO */}
@@ -484,3 +465,7 @@ function BelongingsDashboard() {
 }
 
 export default BelongingsDashboard;
+
+
+
+

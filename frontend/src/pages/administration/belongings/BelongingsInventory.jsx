@@ -1,20 +1,7 @@
-
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { useBelongings } from "../../../context/belongings/BelongingsContext";
 
-import {
-    ArrowLeft,
-    ChevronLeft,
-    ChevronRight,
-    ClipboardList,
-    PackagePlus,
-    SearchX,
-    Trash2,
-    X,
-    AlertTriangle,
-} from "lucide-react";
-
+import { ChevronLeft, ChevronRight, ClipboardList, PackagePlus, SearchX, Trash2, X, AlertTriangle } from "lucide-react";
 import BelongingsFilters from "../../../components/administration/belongings/BelongingsFilters";
 import BelongingsTable from "../../../components/administration/belongings/BelongingsTable";
 import BelongingFormModal from "../../../components/administration/belongings/BelongingFormModal";
@@ -36,21 +23,6 @@ import "../../../styles/pages/administration/belongings/BelongingsInventory.css"
 const ITEMS_PER_PAGE = 5;
 
 function BelongingsInventory() {
-
-    const location = useLocation();
-
-    // =====================================================
-    // RUTA BASE SEGÚN EL PANEL ADMINISTRATIVO
-    // =====================================================
-
-    const adminBasePath = location.pathname.startsWith(
-        "/super-admin"
-    )
-        ? "/super-admin"
-        : "/admin";
-
-    const dashboardPath =
-        `${adminBasePath}/inventario-bienes`;
 
     // =====================================================
     // ESTADOS DE FILTROS
@@ -393,13 +365,7 @@ function BelongingsInventory() {
 
                 <div className="belongings-inventory__heading">
 
-                    <Link
-                        to={dashboardPath}
-                        className="belongings-inventory__back"
-                    >
-                        <ArrowLeft size={16} />
-                        <span>Volver al inventario de bienes</span>
-                    </Link>
+                    
 
                     <span className="belongings-inventory__eyebrow">
                         Administración de bienes
@@ -731,3 +697,7 @@ function BelongingsInventory() {
 }
 
 export default BelongingsInventory;
+
+
+
+

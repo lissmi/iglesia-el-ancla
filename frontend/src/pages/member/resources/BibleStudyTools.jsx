@@ -20,7 +20,7 @@ import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
 import newTestamentBooks from "../../../data/bible/newTestamentBooks";
 
 // Importamos los estilos exclusivos de esta página.
-import "../../../styles/pages/public/resources/BibleStudyTools.css";
+import "../../../styles/pages/member/resources/BibleStudyTools.css";
 
 // Guardamos fuera del componente las herramientas de estudio.
 //

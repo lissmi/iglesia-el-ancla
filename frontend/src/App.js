@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Route,
@@ -94,6 +93,9 @@ import DiscipleshipMaterialDetails from "./pages/member/resources/DiscipleshipMa
 import FrequentlyAskedQuestions from "./pages/member/resources/FrequentlyAskedQuestions";
 import DownloadableMaterials from "./pages/member/resources/DownloadableMaterials";
 import DownloadableMaterialDetails from "./pages/member/resources/DownloadableMaterialDetails";
+import SolidarityLibrary from "./pages/member/resources/SolidarityLibrary";
+// Cancionero privado de alabanzas para los tres roles autenticados.
+import Songbook from "./pages/member/resources/Songbook";
 
 import FinanceOverview from "./pages/administration/FinanceOverview";
 
@@ -251,6 +253,9 @@ function App() {
               <Route path="recursos/preguntas-frecuentes" element={<FrequentlyAskedQuestions />} />
               <Route path="recursos/material-descargable" element={<DownloadableMaterials />} />
               <Route path="recursos/material-descargable/:slug" element={<DownloadableMaterialDetails />} />
+              <Route path="recursos/biblioteca-solidaria" element={<SolidarityLibrary />}/>
+              {/* Letras de canciones almacenadas como PDF en Google Drive. */}
+              <Route path="recursos/cancionero" element={<Songbook />} />
 
               {/* Todas estas páginas comparten el encabezado de miembros. */}
               <Route path="mi-cuenta" element={<MyAccount />} />
@@ -393,7 +398,3 @@ function App() {
 // =========================================================
 
 export default App;
-
-
-
-

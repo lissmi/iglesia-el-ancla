@@ -1,19 +1,6 @@
-
 import { useMemo, useState } from "react";
 
-import {
-  Link,
-  useLocation,
-} from "react-router-dom";
-
-import {
-  ArrowLeft,
-  History,
-  Info,
-  LockKeyhole,
-  ShieldCheck,
-} from "lucide-react";
-
+import { History, Info, LockKeyhole, ShieldCheck } from "lucide-react";
 // =========================================================
 // COMPONENTES
 // =========================================================
@@ -112,18 +99,6 @@ function getChileDate(isoDate) {
 // =========================================================
 
 function ActivityHistory() {
-  const location = useLocation();
-
-  // Identificamos el panel desde el cual
-  // se está visualizando el historial.
-
-  const isSuperAdminPanel =
-    location.pathname === "/super-admin" ||
-    location.pathname.startsWith("/super-admin/");
-
-  const panelPath = isSuperAdminPanel
-    ? "/super-admin"
-    : "/admin";
 
   // =========================================================
   // ESTADOS DE LOS FILTROS
@@ -184,24 +159,7 @@ function ActivityHistory() {
   return (
     <div className="activity-history-page">
 
-      {/* ============================================= */}
-      {/* VOLVER AL PANEL */}
-      {/* ============================================= */}
-
-      <div className="activity-history-page__navigation">
-        <Link
-          to={panelPath}
-          className="activity-history-page__back"
-        >
-          <ArrowLeft
-            size={17}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
-
-          <span>Volver al panel</span>
-        </Link>
-      </div>
+      
 
       {/* ============================================= */}
       {/* ENCABEZADO */}
@@ -311,3 +269,7 @@ function ActivityHistory() {
 }
 
 export default ActivityHistory;
+
+
+
+

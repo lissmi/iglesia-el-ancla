@@ -10,7 +10,7 @@ import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
 import newTestamentBooks from "../../../data/bible/newTestamentBooks";
 
 // Importamos el CSS exclusivo de esta página.
-import "../../../styles/pages/public/resources/BibleBookDetails.css";
+import "../../../styles/pages/member/resources/BibleBookDetails.css";
 
 // Unimos los libros de ambos testamentos en un solo arreglo.
 // De esta forma, una sola página puede buscar cualquiera de los 66 libros.

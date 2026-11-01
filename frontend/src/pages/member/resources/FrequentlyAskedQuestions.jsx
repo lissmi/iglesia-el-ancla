@@ -5,7 +5,7 @@ import Header from "../../../components/public/Header";
 
 import frequentlyAskedQuestions from "../../../data/resources/frequentlyAskedQuestions";
 
-import "../../../styles/pages/public/resources/FrequentlyAskedQuestions.css";
+import "../../../styles/pages/member/resources/FrequentlyAskedQuestions.css";
 
 function FrequentlyAskedQuestions() {
     // Texto ingresado en el buscador.
