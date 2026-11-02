@@ -5,7 +5,7 @@
 // como endpoint público ni registrar tokens en consola.
 
 import { google } from "googleapis";
-import MailComposer from "nodemailer/lib/mail-composer/index.js";
+
 
 import { getGoogleOAuthClient } from "./googleOAuthClient.js";
 import { getGoogleMailRefreshToken } from "./googleMailConnectionService.js";
@@ -42,7 +42,28 @@ function validateRecipient(value) {
   return recipient;
 }
 
-function buildRawMessage({ from, to, subject, text, html }) {
+
+/**
+ * Construye el mensaje MIME que enviaremos
+ * posteriormente mediante Gmail API.
+ */
+async function buildRawMessage({
+  from,
+  to,
+  subject,
+  text,
+  html,
+}) {
+
+  // Importamos Nodemailer solamente cuando
+  // realmente necesitamos construir un correo.
+  // Así no bloqueamos el arranque de Express.
+  const { default: MailComposer } = await import(
+    "nodemailer/lib/mail-composer/index.js"
+  );
+
+  // Construimos el mensaje utilizando el
+  // mismo MailComposer que ya usábamos.
   const composer = new MailComposer({
     from,
     to,
@@ -51,12 +72,26 @@ function buildRawMessage({ from, to, subject, text, html }) {
     ...(html ? { html } : {}),
   });
 
+  // Convertimos el contenido del correo
+  // al formato requerido por Gmail API.
   return new Promise((resolve, reject) => {
+
+    // Generamos el mensaje MIME.
     composer.compile().build((error, buffer) => {
-      if (error) return reject(error);
+
+      // Propagamos los errores de composición.
+      if (error) {
+        return reject(error);
+      }
+
+      // Gmail API necesita el mensaje codificado
+      // como Base64URL.
       resolve(buffer.toString("base64url"));
+
     });
+
   });
+
 }
 
 /**
