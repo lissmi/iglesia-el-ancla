@@ -1,228 +1,156 @@
+// =========================================================
+// CONFIRMACIONES ADMINISTRATIVAS - IGLESIA EL ANCLA
+// Consulta participantes reales desde MongoDB.
+// =========================================================
 
-import { useMemo, useState } from "react";
+// Importamos hooks para sincronizar los datos con el modal.
+import { useEffect, useMemo, useState } from "react";
+
+// Reutilizamos la iconografía y el CSS ya existente.
 import { X, UsersRound, Search } from "lucide-react";
-
 import "../../../styles/components/administration/events/EventConfirmationsModal.css";
 
+// Importamos la instancia centralizada de Axios.
+import api from "../../../services/api";
+
+// Mostramos fechas en Chile sin alterar el día civil registrado.
+function formatDate(date) {
+  return new Intl.DateTimeFormat("es-CL", {
+    day: "2-digit", month: "short", year: "numeric", timeZone: "UTC",
+  }).format(new Date(`${date}T12:00:00Z`));
+}
+
 // =========================================================
-// DATOS FICTICIOS DE DEMOSTRACIÓN
+// COMPONENTE PRINCIPAL
 // =========================================================
-
-// Cada registro pertenece a un evento y representa
-// la respuesta de un miembro a su invitación.
-
-const DEMO_CONFIRMATIONS = [
-  {
-    id: "CONF-001",
-    eventId: "EVT-004",
-    memberName: "María González",
-    status: "confirmed",
-  },
-  {
-    id: "CONF-002",
-    eventId: "EVT-004",
-    memberName: "Daniel Pérez",
-    status: "pending",
-  },
-  {
-    id: "CONF-003",
-    eventId: "EVT-004",
-    memberName: "Camila Torres",
-    status: "cancelled",
-  },
-];
-
-function EventConfirmationsModal({
-  isOpen,
-  event,
-  onClose,
-}) {
+function EventConfirmationsModal({ isOpen, event, onClose }) {
+  // Buscador local de participantes obtenidos del servidor.
   const [search, setSearch] = useState("");
 
-  // Las confirmaciones se filtran por el ID del evento.
-  const confirmations = useMemo(() => {
-    if (!event) return [];
+  // Registros reales, total y estados de carga.
+  const [confirmations, setConfirmations] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    return DEMO_CONFIRMATIONS.filter(
-      (confirmation) => confirmation.eventId === event.id
-    );
-  }, [event]);
+  // Consultamos únicamente al abrir el modal y cambiar de evento.
+  useEffect(() => {
+    if (!isOpen || !event?.id) return undefined;
+    const controller = new AbortController();
+    setSearch("");
+    setConfirmations([]);
+    setTotal(0);
+    setLoading(true);
+    setError("");
 
-  const summary = useMemo(() => {
-    return {
-      confirmed: confirmations.filter(
-        (item) => item.status === "confirmed"
-      ).length,
+    // El backend exige roles administrativos para devolver nombres y correos.
+    api.get(`/events/${event.id}/attendance/confirmations`, {
+      signal: controller.signal,
+    }).then((response) => {
+      if (controller.signal.aborted) return;
+      if (!response.data?.success || !Array.isArray(response.data.confirmations)) {
+        throw new Error("Formato de confirmaciones inválido");
+      }
+      setConfirmations(response.data.confirmations);
+      setTotal(response.data.total || 0);
+    }).catch((requestError) => {
+      if (!controller.signal.aborted) {
+        setError(requestError.response?.data?.message || requestError.message || "No se pudieron consultar los participantes");
+      }
+    }).finally(() => {
+      if (!controller.signal.aborted) setLoading(false);
+    });
 
-      pending: confirmations.filter(
-        (item) => item.status === "pending"
-      ).length,
+    // Evitamos actualizar la interfaz si el administrador cierra el modal.
+    return () => controller.abort();
+  }, [isOpen, event?.id]);
 
-      cancelled: confirmations.filter(
-        (item) => item.status === "cancelled"
-      ).length,
-    };
-  }, [confirmations]);
-
-  const filteredConfirmations = useMemo(() => {
+  // Filtramos por nombre, correo o fecha del evento.
+  const filtered = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("es-CL");
-
     return confirmations.filter((item) =>
-      item.memberName.toLocaleLowerCase("es-CL").includes(query)
+      `${item.memberName} ${item.memberEmail} ${item.occurrenceDate}`
+        .toLocaleLowerCase("es-CL").includes(query)
     );
   }, [confirmations, search]);
 
+  // Los cupos de eventos recurrentes se calculan por cada fecha concreta.
+  const isRecurring = event?.recurrence?.type === "weekly";
+  const capacity = Number(event?.capacity) > 0 ? Number(event.capacity) : null;
+
+  // Evitamos renderizar un modal invisible.
   if (!isOpen || !event) return null;
 
-  // El formulario puede definir la capacidad con
-  // distintos nombres. En esta integración usamos
-  // "capacity"; si no existe, no inventamos cupos.
-  const capacity =
-    Number.isInteger(Number(event.capacity)) &&
-    Number(event.capacity) > 0
-      ? Number(event.capacity)
-      : null;
-
-  const available =
-    capacity === null
-      ? null
-      : Math.max(capacity - summary.confirmed, 0);
-
-  const percentage =
-    capacity === null
-      ? 0
-      : Math.min((summary.confirmed / capacity) * 100, 100);
-
-  function getStatusLabel(status) {
-    if (status === "confirmed") return "Confirmada";
-    if (status === "pending") return "Pendiente";
-    return "Cancelada";
-  }
-
   return (
-    <div
-      className="event-confirmations__overlay"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <section
-        className="event-confirmations"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="event-confirmations-title"
-      >
+    <div className="event-confirmations__overlay" onMouseDown={(e) => {
+      if (e.target === e.currentTarget) onClose();
+    }}>
+      <section className="event-confirmations" role="dialog" aria-modal="true" aria-labelledby="event-confirmations-title">
+        {/* Encabezado y cierre mantienen el diseño original. */}
         <header className="event-confirmations__header">
           <div>
-            <span className="event-confirmations__eyebrow">
-              GESTIÓN DE ASISTENCIA
-            </span>
-
-            <h2 id="event-confirmations-title">
-              Confirmaciones
-            </h2>
-
+            <span className="event-confirmations__eyebrow">GESTIÓN DE ASISTENCIA</span>
+            <h2 id="event-confirmations-title">Confirmaciones</h2>
             <p>{event.title}</p>
           </div>
-
-          <button
-            type="button"
-            className="event-confirmations__close"
-            onClick={onClose}
-            aria-label="Cerrar confirmaciones"
-          >
+          <button type="button" className="event-confirmations__close" onClick={onClose} aria-label="Cerrar confirmaciones">
             <X size={20} />
           </button>
         </header>
 
         <div className="event-confirmations__content">
+          {/* No inventamos inscripciones pendientes de personas no invitadas. */}
           <div className="event-confirmations__summary">
-            <article>
-              <span>Confirmados</span>
-              <strong>{summary.confirmed}</strong>
-            </article>
-
-            <article>
-              <span>Pendientes</span>
-              <strong>{summary.pending}</strong>
-            </article>
-
-            <article>
-              <span>Cancelados</span>
-              <strong>{summary.cancelled}</strong>
-            </article>
+            <article><span>Confirmaciones registradas</span><strong>{total}</strong></article>
+            <article><span>Participantes mostrados</span><strong>{confirmations.length}</strong></article>
           </div>
 
           <div className="event-confirmations__capacity">
             <div className="event-confirmations__capacity-header">
-              <strong>Capacidad del evento</strong>
-
-              <span>
-                {capacity === null
-                  ? "Sin límite definido"
-                  : `${summary.confirmed} / ${capacity}`}
-              </span>
+              <strong>Capacidad de la actividad</strong>
+              <span>{capacity === null ? "Sin límite definido" : `${capacity} por fecha`}</span>
             </div>
-
-            {capacity !== null && (
-              <>
-                <progress
-                  value={summary.confirmed}
-                  max={capacity}
-                  aria-label="Ocupación del evento"
-                />
-
-                <small>
-                  {available} cupos disponibles ·{" "}
-                  {Math.round(percentage)}% ocupado
-                </small>
-              </>
-            )}
+            <small>
+              {isRecurring
+                ? "Las actividades semanales comparten la configuración, pero los cupos se controlan por cada fecha."
+                : "Las confirmaciones corresponden a la fecha de la actividad."}
+            </small>
           </div>
 
           <div className="event-confirmations__list-header">
-            <h3>
-              <UsersRound size={19} />
-              Participantes
-            </h3>
-
-            <span>{confirmations.length} registros</span>
+            <h3><UsersRound size={19} aria-hidden="true" />Participantes</h3>
+            <span>{total} registros</span>
           </div>
 
           <div className="event-confirmations__search">
             <Search size={18} aria-hidden="true" />
-
             <input
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar participante..."
+              placeholder="Buscar participante o fecha..."
               aria-label="Buscar participante"
             />
           </div>
 
-          {filteredConfirmations.length > 0 ? (
+          {/* Mostramos estado real de carga, error o confirmaciones. */}
+          {loading ? (
+            <div className="event-confirmations__empty" role="status">Consultando confirmaciones...</div>
+          ) : error ? (
+            <div className="event-confirmations__empty" role="alert">{error}</div>
+          ) : filtered.length > 0 ? (
             <div className="event-confirmations__table-wrap">
               <table>
-                <thead>
-                  <tr>
-                    <th>Participante</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-
+                <thead><tr><th>Participante</th><th>Fecha</th><th>Estado</th></tr></thead>
                 <tbody>
-                  {filteredConfirmations.map((item) => (
+                  {filtered.map((item) => (
                     <tr key={item.id}>
-                      <td>{item.memberName}</td>
-
                       <td>
-                        <span
-                          className={`event-confirmations__status event-confirmations__status--${item.status}`}
-                        >
-                          {getStatusLabel(item.status)}
-                        </span>
+                        <strong>{item.memberName}</strong>
+                        {item.memberEmail && <small style={{ display: "block" }}>{item.memberEmail}</small>}
                       </td>
+                      <td>{formatDate(item.occurrenceDate)}</td>
+                      <td><span className="event-confirmations__status event-confirmations__status--confirmed">Confirmada</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -230,20 +158,21 @@ function EventConfirmationsModal({
             </div>
           ) : (
             <div className="event-confirmations__empty">
-              {confirmations.length === 0
-                ? "Este evento no tiene confirmaciones de demostración."
-                : "No se encontraron participantes."}
+              {total === 0 ? "Aún no hay miembros confirmados." : "No se encontraron participantes con ese filtro."}
             </div>
           )}
 
-          <p className="event-confirmations__notice">
-            Datos de demostración. Las confirmaciones
-            todavía no están conectadas a MongoDB.
-          </p>
+          {/* Advertimos expresamente el límite de registros de la vista. */}
+          {total > confirmations.length && (
+            <p className="event-confirmations__notice">
+              Se muestran las primeras {confirmations.length} confirmaciones de {total} registros.
+            </p>
+          )}
         </div>
       </section>
     </div>
   );
 }
 
+// Exportamos el modal para su uso en Gestión de eventos.
 export default EventConfirmationsModal;

@@ -1,6 +1,6 @@
 // Importamos los datos de los 39 libros
 // del Antiguo Testamento.
-import oldTestamentBooks from "../../../../data/bible/oldTestamentBooks";
+import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
 
 // Importamos la tarjeta reutilizable.
 import BibleBookCard from "./BibleBookCard";

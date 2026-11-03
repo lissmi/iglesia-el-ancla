@@ -1,4 +1,3 @@
-
 //frontend/src/components/administration/home/MemberOverview.jsx
 
 // Importamos Link para navegar
@@ -30,14 +29,14 @@ import {
 
 
 // =========================================================
-// ACTIVIDADES TEMPORALES
+// EVENTOS RECURRENTES (INFORMATIVOS)
 // =========================================================
 
-// Estas actividades son temporales.
+// Estos horarios habituales son informativos, no confirmaciones de actividades.
 //
 // Más adelante serán obtenidas
 // desde MongoDB mediante la API.
-const upcomingActivities = [
+const recurringPublicEvents = [
   {
     id: "sunday",
     day: "Domingo",
@@ -100,11 +99,11 @@ const memberActions = [
   },
   {
     id: "events",
-    title: "Actividades",
+    title: "Mis actividades",
     description:
       "Consulta las reuniones y actividades disponibles para la comunidad y confirma tu asistencia.",
     icon: CalendarDays,
-    path: "/member/eventos",
+    path: "/member/actividades",
     available: true,
   },
 ];
@@ -164,7 +163,7 @@ function MemberOverview() {
 
 
         {/* ================================================= */}
-        {/* PRÓXIMAS ACTIVIDADES */}
+        {/* EVENTOS RECURRENTES */}
         {/* ================================================= */}
 
         <article className="super-admin-member__card">
@@ -181,11 +180,11 @@ function MemberOverview() {
 
               <div>
                 <h3>
-                  Próximas actividades
+                  Eventos habituales
                 </h3>
 
                 <span>
-                  Reuniones de la comunidad
+                  Reuniones recurrentes de la comunidad
                 </span>
               </div>
 
@@ -194,7 +193,7 @@ function MemberOverview() {
 
             <Link
               className="super-admin-member__header-link"
-              to="/member/eventos"
+              to="/eventos"
             >
               Ver todas
 
@@ -210,23 +209,23 @@ function MemberOverview() {
 
           <div className="super-admin-member__activities">
 
-            {upcomingActivities.map(
-              (activity) => {
+            {recurringPublicEvents.map(
+              (event) => {
 
                 // Guardamos el icono
                 // correspondiente a la actividad.
-                const ActivityIcon =
-                  activity.icon;
+                const EventIcon =
+                  event.icon;
 
                 return (
                   <div
                     className="super-admin-member__activity"
-                    key={activity.id}
+                    key={event.id}
                   >
 
                     <div className="super-admin-member__activity-icon">
 
-                      <ActivityIcon
+                      <EventIcon
                         size={19}
                         strokeWidth={1.8}
                         aria-hidden="true"
@@ -240,11 +239,11 @@ function MemberOverview() {
                       <div className="super-admin-member__activity-top">
 
                         <strong>
-                          {activity.title}
+                          {event.title}
                         </strong>
 
                         <span>
-                          {activity.day}
+                          {event.day}
                         </span>
 
                       </div>
@@ -253,11 +252,11 @@ function MemberOverview() {
                       <div className="super-admin-member__activity-details">
 
                         <span>
-                          {activity.time}
+                          {event.time}
                         </span>
 
                         <span>
-                          {activity.mode}
+                          {event.mode}
                         </span>
 
                       </div>
@@ -433,7 +432,3 @@ function MemberOverview() {
 // Exportamos el componente
 // para utilizarlo dentro de SuperAdminHome.
 export default MemberOverview;
-
-
-
-

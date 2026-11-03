@@ -59,21 +59,30 @@ import "../../../styles/components/administration/home/AdminOverview.css";
 const administrativeModules = [
 
     // -----------------------------------------------------
-    // EVENTOS
+    // GESTIÓN DE ACTIVIDADES PARA MIEMBROS
     // -----------------------------------------------------
 
     {
-        id: "events",
-
-        title: "Eventos",
-
+        id: "activities",
+        title: "Gestión de actividades",
         description:
-            "Crea, modifica y organiza las actividades publicadas para la comunidad.",
-
+            "Programa actividades para los miembros y administra sus confirmaciones de participación.",
         icon: CalendarDays,
+        path: "/actividades",
+        available: true,
+    },
 
+    // -----------------------------------------------------
+    // GESTIÓN DE EVENTOS DEL SITIO PÚBLICO
+    // -----------------------------------------------------
+
+    {
+        id: "public-events",
+        title: "Gestión de eventos",
+        description:
+            "Gestiona el contenido de la página pública «Nuestros eventos» para visitantes y miembros.",
+        icon: CalendarDays,
         path: "/eventos",
-
         available: true,
     },
 

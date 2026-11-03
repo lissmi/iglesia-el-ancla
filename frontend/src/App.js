@@ -71,7 +71,7 @@ import MyAccount from "./pages/account/MyAccount";
 import MemberLayout from "./components/member/layout/MemberLayout";
 
 import MemberDashboard from "./pages/member/MemberDashboard";
-import MemberEvents from "./pages/member/MemberEvents";
+import MemberActivities from "./pages/member/MemberActivities";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
 
 // =========================================================
@@ -259,7 +259,7 @@ function App() {
 
               {/* Todas estas páginas comparten el encabezado de miembros. */}
               <Route path="mi-cuenta" element={<MyAccount />} />
-              <Route path="eventos" element={<MemberEvents />} />
+              <Route path="actividades" element={<MemberActivities />} />
               <Route path="peticiones-oracion" element={<MemberPrayerRequests />} />
               <Route path="finanzas" element={<FinanceOverview />} />
 

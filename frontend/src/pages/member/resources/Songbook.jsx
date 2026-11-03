@@ -17,6 +17,8 @@ import {
     Plus,
     RotateCcw,
     Download,
+    Headphones,
+    ExternalLink,
 } from "lucide-react";
 
 // Imagen existente del proyecto para el encabezado institucional.
@@ -604,6 +606,41 @@ function Songbook() {
                                         <Download size={18} aria-hidden="true" />
                                         {downloading ? "Preparando descarga..." : "Descargar letra en PDF"}
                                     </button>
+
+                                    {/* ===================================================== */}
+                                    {/* ENLACE OPCIONAL PARA ESCUCHAR EN SPOTIFY */}
+                                    {/* ===================================================== */}
+
+                                    {selectedSong.spotifyUrl && (
+
+                                        <a
+                                            // Utilizamos el enlace validado desde el backend.
+                                            href={selectedSong.spotifyUrl}
+
+                                            // Abrimos Spotify sin cerrar el cancionero.
+                                            target="_blank"
+
+                                            // Impedimos acceso de la página externa a nuestra ventana.
+                                            rel="noopener noreferrer"
+
+                                            // Aplicamos los estilos exclusivos del botón.
+                                            className="songbook-reader__spotify"
+
+                                            // Explicamos el destino a los lectores de pantalla.
+                                            aria-label={`Escuchar ${selectedSong.title} en Spotify, abre una nueva pestaña`}
+                                        >
+
+                                            {/* Icono de reproducción musical. */}
+                                            <Headphones size={19} aria-hidden="true" />
+
+                                            {/* Texto del botón. */}
+                                            <span>Escuchar en Spotify</span>
+
+                                            {/* Indicamos que se abre un sitio externo. */}
+                                            <ExternalLink size={15} aria-hidden="true" />
+
+                                        </a>
+                                    )}
                                 </div>
 
                                 {/* Informamos errores de descarga sin cerrar la letra. */}

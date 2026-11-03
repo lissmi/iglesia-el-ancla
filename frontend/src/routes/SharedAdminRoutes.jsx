@@ -18,7 +18,11 @@ import RegisterUser from "../pages/administration/RegisterUser";
 
 import ActivityHistory from "../pages/administration/ActivityHistory";
 
-import EventsManagement from "../pages/administration/EventsManagement";
+// El módulo histórico ahora corresponde a las actividades para miembros.
+import ActivitiesManagement from "../pages/administration/ActivitiesManagement";
+
+// Nueva página administrativa independiente para la sección pública de eventos.
+import PublicEventsManagement from "../pages/administration/PublicEventsManagement";
 
 import PrayerRequestsManagement from "../pages/administration/PrayerRequestsManagement";
 
@@ -112,12 +116,23 @@ function SharedAdminRoutes() {
 
 
             {/* =========================================== */}
-            {/* GESTIÓN DE EVENTOS */}
+            {/* GESTIÓN DE ACTIVIDADES - MIEMBROS */}
             {/* =========================================== */}
 
+            {/* Consulta /api/activities sobre la colección activities. */}
+            <Route
+                path="actividades"
+                element={<ActivitiesManagement />}
+            />
+
+            {/* =========================================== */}
+            {/* GESTIÓN DE EVENTOS - PÁGINA PÚBLICA */}
+            {/* =========================================== */}
+
+            {/* Nuevo editor independiente de las confirmaciones de asistencia. */}
             <Route
                 path="eventos"
-                element={<EventsManagement />}
+                element={<PublicEventsManagement />}
             />
 
 

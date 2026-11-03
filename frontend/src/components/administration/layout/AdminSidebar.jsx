@@ -189,7 +189,7 @@ function AdminSidebar({ isOpen, onClose }) {
         },
         {
           label: "Mis actividades",
-          path: "/member/eventos",
+          path: "/member/actividades",
           icon: CalendarCheck,
           available: true,
         },
@@ -204,10 +204,11 @@ function AdminSidebar({ isOpen, onClose }) {
     {
       title: "Comunidad",
       items: [
+        // Actividades internas disponibles para los miembros registrados.
         {
-          label: "Eventos",
-          path: `${adminBasePath}/eventos`,
-          icon: CalendarDays,
+          label: "Gestión de actividades",
+          path: `${adminBasePath}/actividades`,
+          icon: CalendarCheck,
           available: true,
         },
         {
@@ -233,6 +234,13 @@ function AdminSidebar({ isOpen, onClose }) {
     {
       title: "Contenidos",
       items: [
+        // Editor de los contenidos de la página pública «Nuestros eventos».
+        {
+          label: "Gestión de eventos",
+          path: `${adminBasePath}/eventos`,
+          icon: CalendarDays,
+          available: true,
+        },
         {
           label: "Recursos",
           path: `${adminBasePath}/recursos`,

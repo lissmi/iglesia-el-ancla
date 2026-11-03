@@ -103,3 +103,197 @@
 @media (prefers-reduced-motion: reduce) {
     .songbook-admin button { transition:none; }
 }
+
+
+/* =========================================================
+   CANCIONERO - NUEVO FILTRO DE CATEGORÍAS
+========================================================= */
+
+/* Distribuimos buscador y filtro en dos columnas. */
+.songbook-admin .songbook-admin__toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+    align-items: stretch;
+    gap: 14px;
+}
+
+/* Conservamos una altura consistente para el buscador. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__search {
+    min-width: 0;
+    min-height: 50px;
+}
+
+/* Unificamos filtro e iconos en un solo contenedor. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 11px;
+
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+
+    margin: 0;
+    padding: 0 15px;
+
+    border: 1px solid #d8dfe3;
+    border-radius: 14px;
+
+    background-color: #fcfbf9;
+    box-shadow: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Resaltamos el control suavemente. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter:hover {
+    border-color: #c4a071;
+    background-color: #ffffff;
+}
+
+/* Foco accesible para teclado y navegación. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter:focus-within {
+    border-color: #b78b56;
+    box-shadow: 0 0 0 3px rgba(183, 139, 86, 0.15);
+}
+
+/* Icono decorativo del filtro. */
+.songbook-admin .songbook-admin__filter-icon {
+    flex-shrink: 0;
+    color: #7b8792;
+    pointer-events: none;
+}
+
+/* Eliminamos el estilo cuadrado del select nativo. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    flex: 1;
+
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+
+    margin: 0;
+    padding: 0 28px 0 0;
+
+    border: 0;
+    border-radius: 0;
+
+    outline: none;
+    box-shadow: none;
+
+    background: transparent;
+    color: #233c53;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+/* Evitamos que el select dibuje una segunda caja al enfocarse. */
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter select:focus,
+.songbook-admin .songbook-admin__toolbar .songbook-admin__filter select:focus-visible {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Posicionamos la flecha a la derecha. */
+.songbook-admin .songbook-admin__filter-chevron {
+    position: absolute;
+    right: 15px;
+
+    flex-shrink: 0;
+
+    color: #718194;
+    pointer-events: none;
+}
+
+/* =========================================================
+   CANCIONERO - CAMPO OPCIONAL DE SPOTIFY
+========================================================= */
+
+/* Conservamos el estilo de los demás campos del formulario. */
+.songbook-admin .songbook-admin-form__spotify-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+/* Ajustamos el texto informativo de Spotify. */
+.songbook-admin .songbook-admin-form__spotify-field small {
+    color: #728192;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Mejoramos el foco del nuevo input. */
+.songbook-admin .songbook-admin-form__spotify-field input:focus-visible {
+    outline: none;
+    border-color: #b78b56;
+    box-shadow: 0 0 0 3px rgba(183, 139, 86, 0.15);
+}
+
+/* =========================================================
+   ENLACE DE SPOTIFY EN EL CATÁLOGO ADMINISTRATIVO
+========================================================= */
+
+/* El administrador puede comprobar el enlace guardado. */
+.songbook-admin .songbook-admin__spotify-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    width: fit-content;
+
+    margin-top: 7px;
+
+    color: #287a50;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Indicamos visualmente que es un enlace. */
+.songbook-admin .songbook-admin__spotify-preview:hover {
+    color: #17643c;
+    text-decoration: underline;
+}
+
+/* Foco visible para navegación con teclado. */
+.songbook-admin .songbook-admin__spotify-preview:focus-visible {
+    outline: 2px solid #287a50;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* =========================================================
+   ADAPTACIÓN A PANTALLAS PEQUEÑAS
+========================================================= */
+
+@media (max-width: 760px) {
+
+    /* El buscador y el filtro ocupan filas independientes. */
+    .songbook-admin .songbook-admin__toolbar {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    /* El filtro utiliza todo el ancho disponible. */
+    .songbook-admin .songbook-admin__toolbar .songbook-admin__filter {
+        width: 100%;
+        min-height: 48px;
+    }
+}

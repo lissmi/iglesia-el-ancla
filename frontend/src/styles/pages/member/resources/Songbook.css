@@ -465,3 +465,87 @@
     .songbook-reader__size-button,
     .songbook-reader__reset-button { transition: none; }
 }
+
+/* ========================================================= */
+/* ACCIONES DEL LECTOR DE CANCIONES */
+/* ========================================================= */
+
+/* Permitimos que las acciones se adapten a distintos anchos. */
+.songbook-reader__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ========================================================= */
+/* BOTÓN OPCIONAL PARA ESCUCHAR EN SPOTIFY */
+/* ========================================================= */
+
+/* Mantiene un aspecto coherente con la paleta del cancionero. */
+.songbook-reader__spotify {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 48px;
+
+    padding: 12px 18px;
+
+    border: 1px solid #b9ddc6;
+    border-radius: 13px;
+
+    background: #eaf6ee;
+    color: #176a3b;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Resaltamos el enlace al pasar el cursor. */
+.songbook-reader__spotify:hover {
+    background: #dcf0e3;
+    border-color: #8bcaa2;
+    color: #12552e;
+
+    transform: translateY(-1px);
+}
+
+/* Conservamos un foco visible para navegación con teclado. */
+.songbook-reader__spotify:focus-visible {
+    outline: 3px solid rgba(30, 135, 77, 0.35);
+    outline-offset: 3px;
+}
+
+/* Evitamos animaciones si el usuario prefiere reducir movimiento. */
+@media (prefers-reduced-motion: reduce) {
+    .songbook-reader__spotify {
+        transition: none;
+    }
+
+    .songbook-reader__spotify:hover {
+        transform: none;
+    }
+}
+
+/* Ajustamos las acciones en teléfonos. */
+@media (max-width: 480px) {
+
+    .songbook-reader__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .songbook-reader__spotify {
+        width: 100%;
+    }
+}

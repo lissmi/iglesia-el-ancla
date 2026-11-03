@@ -1,3 +1,4 @@
+
 // =========================================================
 // MODELO - CANCIONERO DE ALABANZAS / IGLESIA EL ANCLA
 // =========================================================
@@ -24,6 +25,15 @@ const songSchema = new mongoose.Schema(
         // Clasificación elegida desde un selector.
         category: { type: String, required: true, enum: SONG_CATEGORIES, default: "General" },
 
+        // Enlace opcional a la pista de Spotify.
+        // No almacenamos audio: solamente una dirección HTTPS.
+        spotifyUrl: {
+            type: String,
+            trim: true,
+            maxlength: 300,
+            default: undefined,
+        },
+
         // ID del PDF privado generado automáticamente en Google Drive.
         pdfFileId: { type: String, required: true, select: false },
 
@@ -32,6 +42,10 @@ const songSchema = new mongoose.Schema(
 
         // Administrador responsable de la publicación.
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+
+        // Administrador que realizó la modificación más reciente.
+        // No se guarda hasta que la canción sea editada.
+        updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: undefined },
     },
     {
         // Registramos creación y última edición.

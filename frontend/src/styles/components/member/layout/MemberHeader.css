@@ -373,3 +373,161 @@
     display: inline-flex;
   }
 }
+
+
+
+/* Evita que los enlaces vuelvan a una segunda línea en escritorio. */
+.member-header__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(12px, 2.1vw, 30px);
+}
+
+/* El botón personal actúa como punto de anclaje del desplegable. */
+.member-header__personal {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+/* Reutiliza la tipografía y el color original de los enlaces. */
+.member-header__personal-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+}
+
+/* Indica que estamos visitando una página del área personal. */
+.member-header__personal-trigger--active {
+  color: #213b51;
+  font-weight: 700;
+}
+
+/* Resalta el botón cuando la lista está desplegada. */
+.member-header__personal-trigger[aria-expanded="true"] {
+  color: #213b51;
+}
+
+/* Anima suavemente la dirección de la flecha. */
+.member-header__personal-chevron {
+  transition: transform 180ms ease;
+}
+
+/* Flecha hacia arriba cuando la lista se encuentra abierta. */
+.member-header__personal-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Menú flotante, limpio y acorde a la paleta de El Ancla. */
+.member-header__personal-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  width: min(305px, calc(100vw - 32px));
+  max-height: min(70vh, 490px);
+  padding: 10px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e5e8ec;
+  border-radius: 15px;
+  box-shadow: 0 18px 45px rgba(25, 45, 62, 0.16);
+}
+
+/* Encabezado discreto que identifica la lista personal. */
+.member-header__personal-heading {
+  padding: 8px 11px 11px;
+  color: #b66d51;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+/* Acceso individual dentro del desplegable. */
+.member-header__personal-option {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 41px;
+  padding: 10px 12px;
+  color: #284359;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 9px;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+/* Evita deformaciones cuando un icono comparte espacio con texto largo. */
+.member-header__personal-option svg {
+  flex-shrink: 0;
+  color: #72889a;
+}
+
+/* Retroalimentación para mouse y navegación por teclado. */
+.member-header__personal-option:hover,
+.member-header__personal-option:focus-visible {
+  background: #f1f4f6;
+  color: #20394e;
+}
+
+/* Destacamos la sección personal que se encuentra abierta. */
+.member-header__personal-option--active {
+  background: #eef2f4;
+  color: #1f3c51;
+  font-weight: 700;
+}
+
+/* Respetamos el foco visible para accesibilidad. */
+.member-header__personal-trigger:focus-visible,
+.member-header__personal-option:focus-visible {
+  outline: 2px solid #ba8a64;
+  outline-offset: 3px;
+}
+
+/* En pantallas medianas reducimos la distancia de separación. */
+@media (max-width: 1100px) {
+  .member-header__navigation {
+    gap: 12px;
+  }
+}
+
+/* En teléfonos la lista se incorpora dentro del menú móvil existente. */
+@media (max-width: 768px) {
+  .member-header__navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+  }
+
+  .member-header__personal {
+    width: 100%;
+  }
+
+  .member-header__personal-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px;
+  }
+
+  .member-header__personal-panel {
+    position: static;
+    width: 100%;
+    max-height: none;
+    margin-top: 3px;
+    margin-bottom: 8px;
+    background: #f8f7f4;
+    border: 1px solid #ece7df;
+    box-shadow: none;
+  }
+}

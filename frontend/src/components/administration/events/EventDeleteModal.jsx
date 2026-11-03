@@ -1,3 +1,4 @@
+
 import { useEffect, useId, useRef } from "react";
 import { AlertTriangle, Trash2, X } from "lucide-react";
 import "../../../styles/components/administration/events/EventDeleteModal.css";
@@ -6,7 +7,7 @@ import "../../../styles/components/administration/events/EventDeleteModal.css";
 // CONFIRMACIÓN DE ELIMINACIÓN DE UN EVENTO
 // =========================================================
 
-function EventDeleteModal({ event, onCancel, onConfirm }) {
+function EventDeleteModal({ event, onCancel, onConfirm, isDeleting = false }) {
   // Identificador accesible único para el título del diálogo.
   const titleId = useId();
 
@@ -27,7 +28,7 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
       // Escape cierra sin borrar.
       if (keyboardEvent.key === "Escape") {
         keyboardEvent.preventDefault();
-        onCancel();
+        if (!isDeleting) onCancel();
       }
 
       // Tab permanece dentro de los controles del diálogo.
@@ -55,7 +56,7 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
       document.removeEventListener("keydown", handleKeyDown);
       if (previousFocus?.isConnected) previousFocus.focus();
     };
-  }, [event, onCancel]);
+  }, [event, onCancel, isDeleting]);
 
   // No montamos ningún diálogo si nadie solicitó eliminar un evento.
   if (!event) return null;
@@ -65,7 +66,7 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
       className="event-delete-modal__overlay"
       onMouseDown={(mouseEvent) => {
         // Al pulsar fuera se interpreta como cancelar, nunca como confirmar.
-        if (mouseEvent.target === mouseEvent.currentTarget) onCancel();
+        if (!isDeleting && mouseEvent.target === mouseEvent.currentTarget) onCancel();
       }}
     >
       <section
@@ -83,16 +84,17 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
             type="button"
             className="event-delete-modal__close"
             onClick={onCancel}
+            disabled={isDeleting}
             aria-label="Cancelar eliminación"
           >
             <X size={20} aria-hidden="true" />
           </button>
         </div>
 
-        <h2 id={titleId}>¿Eliminar este evento?</h2>
+        <h2 id={titleId}>¿Eliminar esta actividad?</h2>
         <p id={`${titleId}-description`}>
           Vas a eliminar <strong>{event.title}</strong> del listado de actividades.
-          Esta acción no se puede deshacer en la vista actual.
+          Esta acción es permanente y no se puede deshacer.
         </p>
 
         <div className="event-delete-modal__actions">
@@ -101,6 +103,7 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
             type="button"
             className="event-delete-modal__cancel"
             onClick={onCancel}
+            disabled={isDeleting}
           >
             Cancelar
           </button>
@@ -108,9 +111,10 @@ function EventDeleteModal({ event, onCancel, onConfirm }) {
             type="button"
             className="event-delete-modal__confirm"
             onClick={onConfirm}
+            disabled={isDeleting}
           >
             <Trash2 size={17} aria-hidden="true" />
-            Sí, eliminar evento
+            {isDeleting ? "Eliminando..." : "Sí, eliminar actividad"}
           </button>
         </div>
       </section>

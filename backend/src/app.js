@@ -25,6 +25,13 @@ import rateLimit from "express-rate-limit";
 // las cookies enviadas por el navegador.
 import cookieParser from "cookie-parser";
 
+// Importamos la gestión de actividades puntuales para miembros.
+import activitiesRoutes from "./routes/activitiesRoutes.js";
+
+// Importamos las rutas del historial global de actividad.
+// Incluye creaciones, últimas modificaciones y eliminaciones.
+import activityHistoryRoutes from "./routes/activityHistoryRoutes.js";
+
 
 /* ========================================================= */
 /* IMPORTACIÓN DE RUTAS */
@@ -101,6 +108,8 @@ import libraryRoutes from "./routes/libraryRoutes.js";
 // API de canciones: genera PDF y los almacena en Drive.
 import songRoutes from "./routes/songRoutes.js";
 
+// Importamos los eventos recurrentes visibles en la página pública.
+import eventRoutes from "./routes/eventRoutes.js";
 
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
@@ -490,6 +499,29 @@ app.use("/api/library/books", libraryRoutes);
 
 // Catálogo protegido y administración del Cancionero de Alabanzas.
 app.use("/api/songbook/songs", songRoutes);
+
+// =========================================================
+// GESTIÓN DE ACTIVIDADES PUNTUALES
+// =========================================================
+
+// Conectamos exclusivamente las actividades internas (no eventos públicos).
+app.use("/api/activities", activitiesRoutes);
+
+// =========================================================
+// GESTIÓN DE EVENTOS PÚBLICOS RECURRENTES
+// =========================================================
+
+// Los visitantes consultan eventos publicados.
+// Los administradores pueden crearlos, editarlos y eliminarlos.
+app.use("/api/events", eventRoutes);
+
+// =========================================================
+// HISTORIAL GLOBAL DE ACTIVIDAD
+// =========================================================
+
+// Consultamos creaciones, últimas modificaciones y eliminaciones.
+// La autenticación y los permisos se validan dentro del router.
+app.use("/api/activity-history", activityHistoryRoutes);
 
 // =========================================================
 // RUTAS INEXISTENTES (404)

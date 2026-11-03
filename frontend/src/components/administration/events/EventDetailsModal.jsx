@@ -78,9 +78,9 @@ function EventDetailsModal({ isOpen, event, onClose, onEdit }) {
           <section className="event-details__section">
             <h3><CalendarDays size={18} /> Programación</h3>
             <dl className="event-details__grid">
-              <div><dt>Fecha {isRecurring ? "de inicio" : "del evento"}</dt><dd>{formatDate(event.date)}</dd></div>
+              <div><dt>Fecha {isRecurring ? "de inicio" : "de la actividad"}</dt><dd>{formatDate(event.date)}</dd></div>
               <div><dt><Clock3 size={15} /> Horario</dt><dd>{event.time || "Sin hora"}{event.endTime ? ` – ${event.endTime}` : ""} hrs</dd></div>
-              <div><dt><Repeat2 size={15} /> Frecuencia</dt><dd>{isRecurring ? "Semanal" : "Evento único"}</dd></div>
+              <div><dt><Repeat2 size={15} /> Frecuencia</dt><dd>{isRecurring ? "Semanal" : "Actividad única"}</dd></div>
               {isRecurring && <div><dt>Días de repetición</dt><dd>{recurringDays || "Sin días configurados"}</dd></div>}
               {isRecurring && <div><dt>Repetir hasta</dt><dd>{event.recurrence?.endDate ? formatDate(event.recurrence.endDate) : "Sin fecha de término"}</dd></div>}
             </dl>
@@ -102,14 +102,14 @@ function EventDetailsModal({ isOpen, event, onClose, onEdit }) {
               <div><dt>Cupos</dt><dd>{event.capacity != null && event.capacity !== "" ? event.capacity : "Sin límite configurado"}</dd></div>
               <div><dt>Confirmaciones registradas</dt><dd>{event.confirmations ?? 0}</dd></div>
             </dl>
-            <p className="event-details__hint">Las confirmaciones mostradas son datos temporales; aún no se conectan con los miembros.</p>
+            <p className="event-details__hint">El total corresponde a las confirmaciones vigentes. En actividades recurrentes se suman todas las fechas.</p>
           </section>
         </div>
 
         <footer className="event-details__actions">
           <button type="button" className="event-details__secondary" onClick={onClose}>Cerrar</button>
           <button type="button" className="event-details__primary" onClick={() => onEdit(event)}>
-            <Pencil size={17} /> Editar evento
+            <Pencil size={17} /> Editar actividad
           </button>
         </footer>
       </section>

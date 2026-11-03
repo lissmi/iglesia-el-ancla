@@ -1,119 +1,33 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { CalendarDays, CalendarPlus, CheckCircle2, Clock3, Eye, Trash2, FilePenLine, Image as ImageIcon, Info, MapPin, MonitorPlay, Pencil, Repeat2, Search, UsersRound } from "lucide-react";
 // =========================================================
 // ESTILOS
 // =========================================================
 
-import "../../styles/pages/administration/EventsManagement.css";
+import "../../styles/pages/administration/ActivitiesManagement.css";
 
-import EventFormModal from "../../components/administration/events/EventFormModal";
+import ActivityFormModal from "../../components/administration/activities/ActivityFormModal";
 
-import EventDetailsModal from "../../components/administration/events/EventDetailsModal";
+import ActivityDetailsModal from "../../components/administration/activities/ActivityDetailsModal";
 
-import EventConfirmationsModal from "../../components/administration/events/EventConfirmationsModal";
+import ActivityConfirmationsModal from "../../components/administration/activities/ActivityConfirmationsModal";
 
-import EventDeleteModal from "../../components/administration/events/EventDeleteModal";
+import ActivityDeleteModal from "../../components/administration/activities/ActivityDeleteModal";
+
+// Reutilizamos la única instancia Axios del proyecto.
+// api.js ya configura la URL del backend y las cookies HttpOnly.
+import api from "../../services/api";
 
 // =========================================================
-// DATOS TEMPORALES DE DEMOSTRACIÓN
+// LAS ACTIVIDADES SE CONSULTAN DIRECTAMENTE EN MONGODB ATLAS
 // =========================================================
-
-// Estos eventos son ficticios y se utilizan
-// exclusivamente para visualizar el módulo.
-//
-// Más adelante se reemplazarán por datos
-// obtenidos desde MongoDB.
-//
-// recurrence.type:
-// - none: evento individual.
-// - weekly: evento recurrente semanal.
-//
-// publicationStatus:
-// - published: publicado.
-// - draft: borrador.
-
-const DEMO_EVENTS = [
-  {
-    id: "EVT-001",
-    title: "Culto general",
-    category: "Culto",
-    date: "2026-10-11",
-    time: "11:00",
-    modality: "Presencial",
-    location: "Iglesia El Ancla",
-    recurrence: {
-      type: "weekly",
-      dayOfWeek: 0,
-    },
-    publicationStatus: "published",
-    confirmations: 0,
-  },
-  {
-    id: "EVT-002",
-    title: "Descubriendo la Biblia",
-    category: "Estudio bíblico",
-    date: "2026-10-13",
-    time: "20:00",
-    modality: "Online",
-    location: "Reunión online",
-    recurrence: {
-      type: "weekly",
-      dayOfWeek: 2,
-    },
-    publicationStatus: "published",
-    confirmations: 0,
-  },
-  {
-    id: "EVT-003",
-    title: "Reunión de oración",
-    category: "Oración",
-    date: "2026-10-14",
-    time: "21:00",
-    modality: "Online",
-    location: "Reunión online",
-    recurrence: {
-      type: "weekly",
-      dayOfWeek: 3,
-    },
-    publicationStatus: "published",
-    confirmations: 0,
-  },
-  {
-    id: "EVT-004",
-    title: "Encuentro de jóvenes",
-    category: "Jóvenes",
-    date: "2026-10-17",
-    time: "18:00",
-    modality: "Presencial",
-    location: "Iglesia El Ancla",
-    recurrence: {
-      type: "none",
-    },
-    publicationStatus: "draft",
-    confirmations: 0,
-  },
-  {
-    id: "EVT-005",
-    title: "Taller para niños",
-    category: "Taller",
-    date: "2026-10-24",
-    time: "16:00",
-    modality: "Presencial",
-    location: "Iglesia El Ancla",
-    recurrence: {
-      type: "none",
-    },
-    publicationStatus: "published",
-    confirmations: 0,
-  },
-];
 
 // =========================================================
 // UTILIDADES DE FORMATO
 // =========================================================
 
-function formatEventDate(dateString) {
+function formatActivityDate(dateString) {
   if (!dateString) {
     return "Sin fecha";
   }
@@ -133,19 +47,112 @@ function formatEventDate(dateString) {
 }
 
 // =========================================================
+// PREPARAR ENVÍO DE ACTIVIDADES CON IMAGEN OPCIONAL
+// =========================================================
+
+// Este constructor se usa tanto al crear como al editar.
+// La ruta de Express espera el JSON en «data» y el archivo en «image».
+function buildActivityFormData(activityData, isEditing) {
+  // Retiramos propiedades temporales que solo utiliza React.
+  const { imageFile, imagePreview, removeImage, ...fields } = activityData;
+
+  // FormData permite enviar información y un archivo en una misma solicitud.
+  const formData = new FormData();
+
+  // Solo solicitamos retirar la imagen cuando editamos una actividad existente.
+  const payload = {
+    ...fields,
+    ...(isEditing && removeImage ? { removeImage: true } : {}),
+  };
+
+  // Serializamos los datos de la actividad, sin vista previa en Base64.
+  formData.append("data", JSON.stringify(payload));
+
+  // La imagen es opcional: si no hay archivo, solo enviamos «data».
+  if (imageFile) formData.append("image", imageFile);
+
+  // Devolvemos los datos preparados para Axios.
+  return formData;
+}
+
+// Devolvemos mensajes manejables cuando una petición falla.
+function getActivitiesErrorMessage(error) {
+  // Priorizamos el mensaje de error que envió nuestro backend.
+  if (error?.response?.data?.message) return error.response.data.message;
+
+  // Diferenciamos los tiempos de espera de errores genéricos.
+  if (error?.code === "ECONNABORTED") {
+    return "La solicitud tardó demasiado. Comprueba si la actividad se guardó antes de reintentar.";
+  }
+
+  // Mensaje seguro si no hay respuesta disponible del servidor.
+  return error?.message || "No se pudo completar la operación. Revisa tu conexión.";
+}
+
+// =========================================================
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function EventsManagement() {
+function ActivitiesManagement() {
   // =========================================================
-  // ESTADO DE EVENTOS
+  // ESTADO DE ACTIVIDADES REALES Y CONEXIÓN API
   // =========================================================
 
-  // Iniciamos con los eventos de demostración.
-  // Los cambios permanecerán en memoria mientras
-  // la aplicación siga abierta.
+  // Iniciamos vacíos: no mostramos datos ficticios en producción.
+  const [activities, setActivities] = useState([]);
 
-  const [events, setEvents] = useState(DEMO_EVENTS);
+  // Indicamos cuándo estamos consultando MongoDB Atlas.
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Evitamos operaciones duplicadas durante peticiones al backend.
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [changingActivityId, setChangingActivityId] = useState(null);
+
+  // Mensajes visibles de confirmación, advertencia o error.
+  const [feedback, setFeedback] = useState(null);
+
+  // Consultamos las actividades al cargar o al solicitar reintento.
+  const loadActivities = useCallback(async (signal) => {
+    setIsLoading(true);
+    setFeedback(null);
+
+    try {
+      // El backend comprueba el rol desde la cookie HttpOnly.
+      // Consultamos actividades con el mismo api.js utilizado por Biblioteca.
+      // Combinamos registros administrativos con confirmaciones reales.
+      // No almacenamos contadores redundantes en la colección activities.
+      const [response, attendanceResponse] = await Promise.all([
+        api.get("/activities/admin", { signal }),
+        api.get("/activities/attendance/admin-summary", { signal }),
+      ]);
+      const counts = new Map(
+        (attendanceResponse.data?.counts || []).map((item) => [item.activityId, item.confirmed])
+      );
+      const remoteActivities = (response.data?.activities || []).map((event) => ({
+        ...event,
+        confirmations: counts.get(event.id) || 0,
+      }));
+
+      // Verificamos el formato de la respuesta antes de mostrarlo.
+      if (!Array.isArray(remoteActivities)) throw new Error("Formato de actividades inválido");
+
+      // Evitamos actualizar el estado si se canceló la petición.
+      if (!signal?.aborted) setActivities(remoteActivities);
+    } catch (error) {
+      if (signal?.aborted || error?.code === "ERR_CANCELED") return;
+      setFeedback({ type: "error", message: getActivitiesErrorMessage(error) });
+    } finally {
+      if (!signal?.aborted) setIsLoading(false);
+    }
+  }, []);
+
+  // Cargamos al abrir la página y cancelamos al desmontarla.
+  useEffect(() => {
+    const controller = new AbortController();
+    loadActivities(controller.signal);
+    return () => controller.abort();
+  }, [loadActivities]);
 
   // =========================================================
   // ESTADO DEL FORMULARIO
@@ -154,43 +161,45 @@ function EventsManagement() {
   // Controla si el modal está abierto.
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Almacena el evento seleccionado para edición.
+  // Almacena la actividad seleccionada para edición.
   // null significa que estamos creando uno nuevo.
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState(null);
 
-  // Evento cuyo borrado se está confirmando.
-  // Mantenerlo separado evita eliminar accidentalmente el evento en edición.
-  const [eventToDelete, setEventToDelete] = useState(null);
+  // Actividad cuyo borrado se está confirmando.
+  // Mantenerlo separado evita eliminar accidentalmente la actividad en edición.
+  const [activityToDelete, setActivityToDelete] = useState(null);
 
   // =========================================================
   // ESTADO DE LA VISTA DE DETALLES
   // =========================================================
 
-  // Guarda el identificador del evento que queremos consultar.
-  const [detailsEventId, setDetailsEventId] = useState(null);
+  // Guarda el identificador de la actividad que queremos consultar.
+  const [detailsActivityId, setDetailsActivityId] = useState(null);
 
-  // Obtiene siempre la versión actualizada del evento.
-  const detailsEvent =
-    events.find((event) => event.id === detailsEventId) ?? null;
+  // Obtiene siempre la versión actualizada de la actividad.
+  const detailsActivity =
+    activities.find((event) => event.id === detailsActivityId) ?? null;
 
   // =========================================================
   // ESTADO DE CONFIRMACIONES
   // =========================================================
 
-  const [confirmationsEventId, setConfirmationsEventId] =
+  const [confirmationsActivityId, setConfirmationsActivityId] =
     useState(null);
 
-  const confirmationsEvent =
-    events.find(
-      (event) => event.id === confirmationsEventId
+  const confirmationsActivity =
+    activities.find(
+      (event) => event.id === confirmationsActivityId
     ) ?? null;
 
   function handleViewConfirmations(event) {
-    setConfirmationsEventId(event.id);
+    setConfirmationsActivityId(event.id);
   }
 
   function handleCloseConfirmations() {
-    setConfirmationsEventId(null);
+    setConfirmationsActivityId(null);
+    // Actualizamos los totales al cerrar el modal de asistencia.
+    loadActivities();
   }
 
   // =========================================================
@@ -204,14 +213,12 @@ function EventsManagement() {
   // =========================================================
 
   const [statusFilter, setStatusFilter] = useState("all");
-  const [frequencyFilter, setFrequencyFilter] = useState("all");
   const [modalityFilter, setModalityFilter] = useState("all");
 
   // Restablecer todos los filtros.
   function handleClearFilters() {
     setSearch("");
     setStatusFilter("all");
-    setFrequencyFilter("all");
     setModalityFilter("all");
   }
 
@@ -219,8 +226,8 @@ function EventsManagement() {
   // ABRIR FORMULARIO PARA CREAR
   // =========================================================
 
-  function handleCreateEvent() {
-    setSelectedEvent(null);
+  function handleCreateActivity() {
+    setSelectedActivity(null);
     setIsFormOpen(true);
   }
 
@@ -228,25 +235,25 @@ function EventsManagement() {
   // ABRIR FORMULARIO PARA EDITAR
   // =========================================================
 
-  function handleEditEvent(event) {
-    setSelectedEvent(event);
+  function handleEditActivity(event) {
+    setSelectedActivity(event);
     setIsFormOpen(true);
   }
 
   // =========================================================
-  // ABRIR DETALLES DEL EVENTO
+  // ABRIR DETALLES DE LA ACTIVIDAD
   // =========================================================
 
   function handleViewDetails(event) {
-    setDetailsEventId(event.id);
+    setDetailsActivityId(event.id);
   }
 
   // =========================================================
-  // CERRAR DETALLES DEL EVENTO
+  // CERRAR DETALLES DE LA ACTIVIDAD
   // =========================================================
 
   function handleCloseDetails() {
-    setDetailsEventId(null);
+    setDetailsActivityId(null);
   }
 
   // =========================================================
@@ -255,7 +262,7 @@ function EventsManagement() {
 
   function handleEditFromDetails(event) {
     handleCloseDetails();
-    handleEditEvent(event);
+    handleEditActivity(event);
   }
 
   // =========================================================
@@ -264,150 +271,191 @@ function EventsManagement() {
 
   function handleCloseForm() {
     setIsFormOpen(false);
-    setSelectedEvent(null);
+    setSelectedActivity(null);
   }
 
   // =========================================================
-  // GUARDAR EVENTO
+  // GUARDAR ACTIVIDAD EN MONGODB Y PORTADA EN CLOUDINARY
   // =========================================================
 
-  function handleSaveEvent(eventData) {
-    // Los datos transitorios de carga no se guardan como campos del evento.
-    const { imageFile, imagePreview, removeImage, ...cleanEventData } = eventData;
+  async function handleSaveActivity(activityData) {
+    // No enviamos el mismo formulario dos veces mientras guarda.
+    if (isSaving) return;
 
-    // Mantiene la imagen original si el usuario no la modificó.
-    let eventImage = selectedEvent?.image ?? null;
+    setIsSaving(true);
+    setFeedback(null);
 
-    // Quitar imagen tiene prioridad sobre conservarla.
-    if (removeImage) {
-      eventImage = null;
-    } else if (imageFile && imagePreview) {
-      // En esta vista DEMO solo guardamos una data URL temporal.
-      // En producción el backend subirá imageFile a Cloudinary y guardará URL/publicId.
-      eventImage = {
-        url: imagePreview,
-        fileName: imageFile.name,
-        mimeType: imageFile.type,
-        size: imageFile.size,
-        publicId: null,
-        alt: `Imagen de ${cleanEventData.title}`,
-      };
+    try {
+      // Preparamos el JSON del formulario y, si existe, su imagen.
+      const formData = buildActivityFormData(activityData, Boolean(selectedActivity));
+
+      // Editamos mediante PATCH o creamos mediante POST.
+      // Axios reutiliza las cookies HttpOnly desde api.js.
+      const response = selectedActivity
+        ? await api.patch(`/activities/${encodeURIComponent(selectedActivity.id)}`, formData, {
+            // Igual que Biblioteca Solidaria: envío multipart para archivos.
+            headers: { "Content-Type": "multipart/form-data" },
+            // Cloudinary puede requerir más tiempo que una consulta JSON.
+            timeout: 30000,
+          })
+        : await api.post("/activities", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+            timeout: 30000,
+          });
+
+      // Axios devuelve la respuesta del backend dentro de .data.
+      const result = response.data;
+
+      // Verificamos que el backend devuelva la actividad persistido.
+      if (!result?.activity?.id) {
+        throw new Error("El servidor no devolvió la actividad guardada");
+      }
+
+      // Actualizamos React usando el registro confirmado por MongoDB.
+      setActivities((previous) => selectedActivity
+        ? previous.map((item) =>
+            item.id === result.activity.id
+              ? { ...result.activity, confirmations: item.confirmations }
+              : item
+          )
+        : [result.activity, ...previous]);
+
+      // Informamos cualquier aviso sobre la limpieza de Cloudinary.
+      setFeedback({
+        type: result.warning ? "warning" : "success",
+        message: result.warning || result.message || "Actividad guardada correctamente.",
+      });
+
+      // Cerramos el formulario solamente después de guardar con éxito.
+      handleCloseForm();
+    } catch (error) {
+      // Conservamos los datos del modal para que se puedan corregir.
+      const message = error?.response?.data?.message || getActivitiesErrorMessage(error);
+      setFeedback({ type: "error", message });
+      throw new Error(message);
+    } finally {
+      setIsSaving(false);
     }
-
-    if (selectedEvent) {
-      // Edición: reemplazar los datos del registro sin modificar su ID.
-      setEvents((previousEvents) =>
-        previousEvents.map((event) =>
-          event.id === selectedEvent.id
-            ? { ...event, ...cleanEventData, id: event.id, image: eventImage }
-            : event
-        )
-      );
-    } else {
-      // Creación: construir un evento temporal con cero confirmaciones.
-      const newEvent = {
-        ...cleanEventData,
-        id: `EVT-${crypto.randomUUID()}`,
-        image: eventImage,
-        confirmations: 0,
-      };
-
-      setEvents((previousEvents) => [...previousEvents, newEvent]);
-    }
-
-    // Liberar la selección y cerrar la ventana de edición.
-    handleCloseForm();
   }
 
   // =========================================================
-  // ELIMINACIÓN DE EVENTOS
+  // ELIMINACIÓN DE ACTIVIDADES
   // =========================================================
 
   // Solicita la confirmación: todavía no elimina nada.
   function handleRequestDelete(event) {
-    setEventToDelete(event);
+    setActivityToDelete(event);
   }
 
-  // Cierra la confirmación sin modificar los eventos.
+  // Cierra la confirmación sin modificar las actividades.
   function handleCancelDelete() {
-    setEventToDelete(null);
+    setActivityToDelete(null);
   }
 
-  // Elimina únicamente el evento identificado en la confirmación.
-  function handleConfirmDelete() {
-    if (!eventToDelete) return;
+  // Eliminamos el registro real después de la confirmación.
+  async function handleConfirmDelete() {
+    if (!activityToDelete || isDeleting) return;
 
-    const eventId = eventToDelete.id;
+    // Conservamos el identificador incluso mientras llega la respuesta.
+    const activityId = activityToDelete.id;
+    setIsDeleting(true);
+    setFeedback(null);
 
-    // Actualizamos React; el listado, filtros y resumen se recalculan solos.
-    setEvents((previousEvents) =>
-      previousEvents.filter((event) => event.id !== eventId)
-    );
+    try {
+      // El backend elimina el registro y su imagen opcional.
+      const response = await api.delete(`/activities/${encodeURIComponent(activityId)}`);
+      const result = response.data;
 
-    // Evitamos dejar modales secundarios asociados al registro eliminado.
-    if (detailsEventId === eventId) setDetailsEventId(null);
-    if (confirmationsEventId === eventId) setConfirmationsEventId(null);
-    if (selectedEvent?.id === eventId) handleCloseForm();
+      // React refleja la eliminación confirmada por MongoDB.
+      setActivities((previous) => previous.filter((event) => event.id !== activityId));
 
-    // Quitamos la selección que activó el modal de confirmación.
-    setEventToDelete(null);
+      // Cerramos otros diálogos asociados con ese registro.
+      if (detailsActivityId === activityId) setDetailsActivityId(null);
+      if (confirmationsActivityId === activityId) setConfirmationsActivityId(null);
+      if (selectedActivity?.id === activityId) handleCloseForm();
+
+      setFeedback({ type: "success", message: result?.message || "Actividad eliminada." });
+    } catch (error) {
+      // No eliminamos la actividad en pantalla cuando el backend falla.
+      setFeedback({ type: "error", message: getActivitiesErrorMessage(error) });
+    } finally {
+      // Cerramos el diálogo y liberamos la operación.
+      setActivityToDelete(null);
+      setIsDeleting(false);
+    }
   }
 
   // =========================================================
-  // GESTIÓN DEL ESTADO DE PUBLICACIÓN
+  // GESTIÓN DEL ESTADO DE PUBLICACIÓN EN MONGODB
   // =========================================================
 
-  // Cambia el estado de publicación de un evento.
-  function handleChangePublicationStatus(eventId, newStatus) {
-    setEvents((previousEvents) =>
-      previousEvents.map((event) =>
-        event.id === eventId
-          ? {
-            ...event,
-            publicationStatus: newStatus,
-          }
+  async function handleChangePublicationStatus(activityId, newStatus) {
+    if (changingActivityId) return;
+
+    setChangingActivityId(activityId);
+    setFeedback(null);
+
+    try {
+      // Aplicamos el cambio con el endpoint PATCH protegido.
+      const response = await api.patch(
+        `/activities/${encodeURIComponent(activityId)}/publication`,
+        { publicationStatus: newStatus }
+      );
+      const result = response.data;
+      if (!result?.activity?.id) throw new Error("Respuesta de publicación inválida");
+
+      // Reemplazamos los datos anteriores por los confirmados.
+      setActivities((previous) => previous.map((event) =>
+        event.id === activityId
+          ? { ...result.activity, confirmations: event.confirmations }
           : event
-      )
-    );
+      ));
+
+      setFeedback({
+        type: "success",
+        message: newStatus === "published" ? "Actividad publicada." : "Actividad pasada a borrador.",
+      });
+    } catch (error) {
+      setFeedback({ type: "error", message: getActivitiesErrorMessage(error) });
+    } finally {
+      setChangingActivityId(null);
+    }
   }
 
   // =========================================================
-  // RESUMEN DE EVENTOS
+  // RESUMEN DE ACTIVIDADES
   // =========================================================
 
   // =========================================================
-  // RESUMEN DE EVENTOS
+  // RESUMEN DE ACTIVIDADES
   // =========================================================
 
   const summary = useMemo(() => {
     return {
-      total: events.length,
+      total: activities.length,
 
-      published: events.filter(
+      published: activities.filter(
         (event) =>
           event.publicationStatus === "published"
       ).length,
 
-      drafts: events.filter(
+      drafts: activities.filter(
         (event) =>
           event.publicationStatus === "draft"
       ).length,
 
-      recurring: events.filter(
-        (event) =>
-          event.recurrence?.type === "weekly"
-      ).length,
+      withConfirmation: activities.filter((event) => event.requiresConfirmation).length,
     };
-  }, [events]);
+  }, [activities]);
 
   // =========================================================
   // BÚSQUEDA Y FILTROS COMBINADOS
   // =========================================================
 
-  const filteredEvents = useMemo(() => {
+  const filteredActivities = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("es-CL");
 
-    return events.filter((event) => {
+    return activities.filter((event) => {
       // Búsqueda textual.
       const searchableText = [
         event.title,
@@ -427,11 +475,6 @@ function EventsManagement() {
         statusFilter === "all" ||
         event.publicationStatus === statusFilter;
 
-      // Frecuencia.
-      const matchesFrequency =
-        frequencyFilter === "all" ||
-        event.recurrence?.type === frequencyFilter;
-
       // Modalidad.
       const matchesModality =
         modalityFilter === "all" ||
@@ -440,15 +483,13 @@ function EventsManagement() {
       return (
         matchesSearch &&
         matchesStatus &&
-        matchesFrequency &&
         matchesModality
       );
     });
   }, [
-    events,
+    activities,
     search,
     statusFilter,
-    frequencyFilter,
     modalityFilter,
   ]);
 
@@ -471,12 +512,12 @@ function EventsManagement() {
             COMUNIDAD / ACTIVIDADES
           </span>
 
-          <h1>Gestión de eventos</h1>
+          <h1>Gestión de actividades</h1>
 
           <p>
-            Organiza las actividades de la iglesia,
-            consulta su publicación y administra
-            eventos individuales o recurrentes.
+            Organiza las actividades de la iglesia, administra
+            su programación y consulta las confirmaciones
+            de los miembros registrados.
           </p>
         </div>
 
@@ -485,14 +526,14 @@ function EventsManagement() {
         <button
           className="events-management-page__create"
           type="button"
-          onClick={handleCreateEvent}
+          onClick={handleCreateActivity}
         >
           <CalendarPlus
             size={19}
             aria-hidden="true"
           />
 
-          Nuevo evento
+          Nueva actividad
         </button>
       </header>
 
@@ -510,17 +551,33 @@ function EventsManagement() {
         />
 
         <div>
-          <strong>Vista de demostración</strong>
+          <strong>Actividades sincronizadas</strong>
 
           <p>
-            Los eventos y las estadísticas de esta
-            página son ilustrativos. Todavía no
-            están conectados con MongoDB.
-            La creación, edición y vista previa de imágenes
-            funcionan temporalmente en memoria.
+            La información se guarda en MongoDB Atlas y las imágenes opcionales
+            se almacenan en Cloudinary. Las confirmaciones de asistencia se consultan
+            desde el sistema de participación de miembros.
           </p>
         </div>
       </div>
+
+      {/* Estado de carga, avisos y errores devueltos por la API. */}
+      {isLoading && (
+        <p role="status">Cargando actividades desde el servidor...</p>
+      )}
+
+      {feedback && (
+        <div
+          className="events-management-page__notice"
+          role={feedback.type === "error" ? "alert" : "status"}
+        >
+          <Info size={19} aria-hidden="true" />
+          <div><strong>{feedback.type === "error" ? "No se pudo completar la operación" : "Información"}</strong><p>{feedback.message}</p></div>
+          {feedback.type === "error" && (
+            <button type="button" onClick={() => loadActivities()}>Reintentar consulta</button>
+          )}
+        </div>
+      )}
 
       {/* ============================================= */}
       {/* TARJETAS DE RESUMEN */}
@@ -528,7 +585,7 @@ function EventsManagement() {
 
       <section
         className="events-management-page__summary"
-        aria-label="Resumen de eventos"
+        aria-label="Resumen de actividades"
       >
         <article className="events-management-summary-card">
           <div className="events-management-summary-card__icon">
@@ -536,7 +593,7 @@ function EventsManagement() {
           </div>
 
           <div>
-            <span>Total de eventos</span>
+            <span>Total de actividades</span>
             <strong>{summary.total}</strong>
             <small>Actividades registradas</small>
           </div>
@@ -568,26 +625,26 @@ function EventsManagement() {
 
         <article className="events-management-summary-card">
           <div className="events-management-summary-card__icon">
-            <Repeat2 size={23} aria-hidden="true" />
+            <UsersRound size={23} aria-hidden="true" />
           </div>
 
           <div>
-            <span>Recurrentes</span>
-            <strong>{summary.recurring}</strong>
-            <small>Actividades periódicas</small>
+            <span>Con confirmación</span>
+            <strong>{summary.withConfirmation}</strong>
+            <small>Requieren inscripción</small>
           </div>
         </article>
       </section>
 
       {/* ============================================= */}
-      {/* LISTADO DE EVENTOS */}
+      {/* LISTADO DE ACTIVIDADES */}
       {/* ============================================= */}
 
       <section className="events-management-page__listing">
 
         <div className="events-management-page__listing-header">
           <div>
-            <h2>Eventos registrados</h2>
+            <h2>Actividades registradas</h2>
 
             <p>
               Consulta las actividades y su estado
@@ -596,7 +653,7 @@ function EventsManagement() {
           </div>
 
           <span className="events-management-page__count">
-            {filteredEvents.length} resultados
+            {filteredActivities.length} resultados
           </span>
         </div>
 
@@ -618,7 +675,7 @@ function EventsManagement() {
                 setSearch(event.target.value)
               }
               placeholder="Buscar por nombre, categoría o modalidad..."
-              aria-label="Buscar eventos"
+              aria-label="Buscar actividades"
             />
           </div>
         </div>
@@ -635,16 +692,6 @@ function EventsManagement() {
             <option value="all">Todas las publicaciones</option>
             <option value="published">Publicados</option>
             <option value="draft">Borradores</option>
-          </select>
-
-          <select
-            value={frequencyFilter}
-            onChange={(event) => setFrequencyFilter(event.target.value)}
-            aria-label="Filtrar por frecuencia"
-          >
-            <option value="all">Todas las frecuencias</option>
-            <option value="weekly">Recurrentes</option>
-            <option value="none">Eventos únicos</option>
           </select>
 
           <select
@@ -671,15 +718,14 @@ function EventsManagement() {
         {/* TABLA */}
         {/* ============================================= */}
 
-        {filteredEvents.length > 0 ? (
+        {!isLoading && filteredActivities.length > 0 ? (
           <div className="events-management-page__table-scroll">
             <table className="events-management-page__table">
               <thead>
                 <tr>
-                  <th scope="col">Evento</th>
+                  <th scope="col">Actividad</th>
                   <th scope="col">Fecha y hora</th>
                   <th scope="col">Modalidad</th>
-                  <th scope="col">Frecuencia</th>
                   <th scope="col">Publicación</th>
                   <th scope="col">Asistencia</th>
                   <th scope="col">Acciones</th>
@@ -687,17 +733,14 @@ function EventsManagement() {
               </thead>
 
               <tbody>
-                {filteredEvents.map((event) => {
-                  const isRecurring =
-                    event.recurrence.type !== "none";
-
+                {filteredActivities.map((event) => {
                   const isPublished =
                     event.publicationStatus === "published";
 
                   return (
                     <tr key={event.id}>
 
-                      {/* EVENTO */}
+                      {/* ACTIVIDAD */}
 
                       <td>
                         <div className="events-management-page__event">
@@ -712,7 +755,7 @@ function EventsManagement() {
                             )}
                           </div>
 
-                          {/* Nombre y categoría visibles para cualquier evento. */}
+                          {/* Nombre y categoría visibles para cualquier actividad. */}
                           <div className="events-management-page__event-copy">
                             <strong>{event.title}</strong>
                             <span>{event.category}</span>
@@ -730,7 +773,7 @@ function EventsManagement() {
                               aria-hidden="true"
                             />
 
-                            {formatEventDate(event.date)}
+                            {formatActivityDate(event.date)}
                           </span>
 
                           <span>
@@ -764,31 +807,6 @@ function EventsManagement() {
                         </div>
                       </td>
 
-                      {/* RECURRENCIA */}
-
-                      <td>
-                        <span
-                          className={
-                            isRecurring
-                              ? "events-management-page__frequency events-management-page__frequency--recurring"
-                              : "events-management-page__frequency"
-                          }
-                        >
-                          {isRecurring ? (
-                            <>
-                              <Repeat2
-                                size={14}
-                                aria-hidden="true"
-                              />
-
-                              Semanal
-                            </>
-                          ) : (
-                            "Único"
-                          )}
-                        </span>
-                      </td>
-
                       {/* PUBLICACIÓN */}
 
                       <td>
@@ -819,7 +837,7 @@ function EventsManagement() {
                       </td>
 
                       {/* ============================================= */}
-                      {/* ACCIONES DEL EVENTO */}
+                      {/* ACCIONES DE LA ACTIVIDAD */}
                       {/* ============================================= */}
 
                       <td>
@@ -832,7 +850,7 @@ function EventsManagement() {
                             type="button"
                             onClick={() => handleViewDetails(event)}
                             aria-label={`Ver detalles de ${event.title}`}
-                            title="Ver detalles del evento"
+                            title="Ver detalles de la actividad"
                           >
                             <Eye
                               size={16}
@@ -852,14 +870,15 @@ function EventsManagement() {
                             Confirmaciones
                           </button>
 
-                          {/* EDITAR EVENTO */}
+                          {/* EDITAR ACTIVIDAD */}
 
                           <button
                             className="events-management-page__edit-button"
                             type="button"
-                            onClick={() => handleEditEvent(event)}
-                            aria-label={`Editar evento ${event.title}`}
-                            title="Editar evento"
+                            disabled={isSaving || isDeleting}
+                            onClick={() => handleEditActivity(event)}
+                            aria-label={`Editar actividad ${event.title}`}
+                            title="Editar actividad"
                           >
                             <Pencil
                               size={16}
@@ -877,6 +896,7 @@ function EventsManagement() {
                               : "events-management-page__publication-button--publish"
                               }`}
                             type="button"
+                            disabled={Boolean(changingActivityId) || isSaving || isDeleting}
                             onClick={() =>
                               handleChangePublicationStatus(
                                 event.id,
@@ -892,13 +912,14 @@ function EventsManagement() {
                             {isPublished ? "Pasar a borrador" : "Publicar"}
                           </button>
 
-                          {/* ELIMINAR EVENTO CON CONFIRMACIÓN */}
+                          {/* ELIMINAR ACTIVIDAD CON CONFIRMACIÓN */}
                           <button
                             className="events-management-page__delete-button"
                             type="button"
+                            disabled={isSaving || isDeleting}
                             onClick={() => handleRequestDelete(event)}
-                            aria-label={`Eliminar evento ${event.title}`}
-                            title="Eliminar evento"
+                            aria-label={`Eliminar actividad ${event.title}`}
+                            title="Eliminar actividad"
                           >
                             <Trash2 size={16} aria-hidden="true" />
                             Eliminar
@@ -913,7 +934,7 @@ function EventsManagement() {
               </tbody>
             </table>
           </div>
-        ) : (
+        ) : !isLoading ? (
           <div className="events-management-page__empty">
             <CalendarDays
               size={36}
@@ -921,13 +942,15 @@ function EventsManagement() {
               aria-hidden="true"
             />
 
-            <h3>No se encontraron eventos</h3>
+            <h3>No se encontraron actividades</h3>
 
             <p>
-              Prueba con otro término de búsqueda.
+              {activities.length === 0
+                ? "Todavía no hay actividades registradas. Puedes crear la primera desde Nueva actividad."
+                : "Prueba con otro término de búsqueda o cambia los filtros."}
             </p>
           </div>
-        )}
+        ) : null}
 
       </section>
 
@@ -943,15 +966,14 @@ function EventsManagement() {
 
         <div>
           <strong>
-            Eventos individuales y recurrentes
+            Actividades puntuales para miembros
           </strong>
 
           <p>
-            El módulo permitirá registrar actividades
-            para una fecha específica o configurar
-            recurrencias semanales. También incorporará
-            formularios de edición, publicación y
-            gestión de confirmaciones.
+            El módulo administra actividades con una fecha concreta,
+            permite actualizar su estado de publicación
+            y administrar imágenes opcionales. El registro
+            de confirmaciones se encuentra conectado a la participación de miembros.
           </p>
         </div>
       </footer>
@@ -960,20 +982,21 @@ function EventsManagement() {
       {/* FORMULARIO DE CREACIÓN Y EDICIÓN */}
       {/* ============================================= */}
 
-      <EventFormModal
+      <ActivityFormModal
         isOpen={isFormOpen}
         onClose={handleCloseForm}
-        onSave={handleSaveEvent}
-        eventToEdit={selectedEvent}
+        onSave={handleSaveActivity}
+        activityToEdit={selectedActivity}
+        isSaving={isSaving}
       />
 
       {/* ============================================= */}
-      {/* VISTA DE DETALLES DEL EVENTO */}
+      {/* VISTA DE DETALLES DE LA ACTIVIDAD */}
       {/* ============================================= */}
 
-      <EventDetailsModal
-        isOpen={Boolean(detailsEvent)}
-        event={detailsEvent}
+      <ActivityDetailsModal
+        isOpen={Boolean(detailsActivity)}
+        activity={detailsActivity}
         onClose={handleCloseDetails}
         onEdit={handleEditFromDetails}
       />
@@ -982,25 +1005,22 @@ function EventsManagement() {
       {/* GESTIÓN DE CONFIRMACIONES */}
       {/* ============================================= */}
 
-      <EventConfirmationsModal
-        isOpen={Boolean(confirmationsEvent)}
-        event={confirmationsEvent}
+      <ActivityConfirmationsModal
+        isOpen={Boolean(confirmationsActivity)}
+        activity={confirmationsActivity}
         onClose={handleCloseConfirmations}
       />
 
       {/* Confirmación destructiva; no borra sin autorización explícita. */}
-      <EventDeleteModal
-        event={eventToDelete}
+      <ActivityDeleteModal
+        activity={activityToDelete}
         onCancel={handleCancelDelete}
         onConfirm={handleConfirmDelete}
+        isDeleting={isDeleting}
       />
 
     </div>
   );
 }
 
-export default EventsManagement;
-
-
-
-
+export default ActivitiesManagement;

@@ -1,4 +1,5 @@
 
+
 import { Link, useOutletContext } from "react-router-dom";
 import {
   ArrowRight,
@@ -66,7 +67,8 @@ function MemberDashboard() {
             </h1>
             <p>Encuentra nuestras actividades, explora recursos para crecer en la fe y mantente cerca de la comunidad de El Ancla.</p>
             <div className="member-hero__actions">
-              <a className="member-button member-button--light" href="#actividades">Explorar actividades <ArrowRight size={17} aria-hidden="true" /></a>
+              {/* Enlazamos directamente a los eventos registrados por la administración. */}
+              <Link className="member-button member-button--light" to="/member/eventos">Mis actividades <ArrowRight size={17} aria-hidden="true" /></Link>
               <Link className="member-button member-button--outline" to="/contacto">Contáctanos</Link>
             </div>
           </div>
@@ -165,7 +167,7 @@ function MemberDashboard() {
                   </span>
 
                   <span className="member-resource__arrow">
-                    Ver actividades
+                    Ver mis actividades
                     <ArrowRight size={16} aria-hidden="true" />
                   </span>
                 </Link>
@@ -180,7 +182,8 @@ function MemberDashboard() {
                   <h2 id="member-activities-title">Actividades de la semana</h2>
                   <p>Horarios habituales de nuestra comunidad. Consulta los detalles antes de asistir.</p>
                 </div>
-                <Link className="member-text-link" to="/eventos">Ver eventos <ArrowRight size={17} aria-hidden="true" /></Link>
+                {/* El listado privado muestra los eventos reales y las confirmaciones. */}
+                <Link className="member-text-link" to="/member/eventos">Ver mis actividades <ArrowRight size={17} aria-hidden="true" /></Link>
               </div>
 
               <div className="member-activities">
@@ -260,6 +263,10 @@ function MemberDashboard() {
 }
 
 export default MemberDashboard;
+
+
+
+
 
 
 

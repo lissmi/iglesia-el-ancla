@@ -1,4 +1,5 @@
 
+
 import {
   useEffect,
   useId,
@@ -79,6 +80,9 @@ function createInitialForm() {
     capacity: "",
 
     publicationStatus: "draft",
+
+    // Los eventos internos solo serán visibles tras iniciar sesión.
+    visibility: "members",
   };
 }
 
@@ -91,6 +95,7 @@ function EventFormModal({
   onClose,
   onSave,
   eventToEdit = null,
+  isSaving = false,
 }) {
   const formId = useId();
 
@@ -359,7 +364,7 @@ function EventFormModal({
 
     if (!form.title.trim()) {
       nextErrors.title =
-        "Debes ingresar el nombre del evento.";
+        "Debes ingresar el nombre de la actividad.";
     }
 
     if (!form.description.trim()) {
@@ -409,7 +414,7 @@ function EventFormModal({
       !form.location.trim()
     ) {
       nextErrors.location =
-        "Indica dónde se realizará el evento.";
+        "Indica dónde se realizará la actividad.";
     }
 
     if (
@@ -457,10 +462,11 @@ function EventFormModal({
   // GUARDAR
   // =========================================================
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!validateForm()) return;
+    // Bloqueamos envíos duplicados.
+    if (isSaving || !validateForm()) return;
 
     const isRecurring =
       form.recurrence.type === "weekly";
@@ -494,25 +500,28 @@ function EventFormModal({
         },
     };
 
-    // La página principal decidirá cómo
-    // guardar el evento en su estado local.
+    // Enviamos los datos a la página, que los persiste mediante API.
+    try {
+      await onSave({
+        // Enviamos todos los campos normalizados del formulario.
+        ...normalizedEvent,
 
-    onSave({
-      // Enviamos todos los datos normales del evento.
-      ...normalizedEvent,
+        // Se enviará en FormData solo cuando se seleccione una imagen.
+        imageFile,
 
-      // Enviamos temporalmente el archivo.
-      // Cuando conectemos el backend,
-      // este archivo irá dentro de FormData.
-      imageFile,
+        // La vista previa es local: no se guarda en MongoDB.
+        imagePreview,
 
-      // La vista previa permitirá mostrar
-      // inmediatamente la imagen en esta versión demo.
-      imagePreview,
-
-      // Indica si hay que quitar una imagen existente.
-      removeImage,
-    });
+        // Indicamos si debe eliminarse la portada existente.
+        removeImage,
+      });
+    } catch (error) {
+      // Conservamos el modal abierto e informamos el error del servidor.
+      setErrors((previous) => ({
+        ...previous,
+        submit: error.message || "No fue posible guardar la actividad.",
+      }));
+    }
   }
 
   // =========================================================
@@ -529,7 +538,7 @@ function EventFormModal({
     <div
       className="event-form-modal__overlay"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
+        if (!isSaving && event.target === event.currentTarget) {
           onClose();
         }
       }}
@@ -558,8 +567,8 @@ function EventFormModal({
 
             <h2 id={`${formId}-title`}>
               {isEditing
-                ? "Editar evento"
-                : "Nuevo evento"}
+                ? "Editar actividad"
+                : "Nueva actividad"}
             </h2>
 
             <p>
@@ -573,6 +582,7 @@ function EventFormModal({
             className="event-form-modal__close"
             type="button"
             onClick={onClose}
+            disabled={isSaving}
             aria-label="Cerrar formulario"
           >
             <X size={21} />
@@ -586,6 +596,7 @@ function EventFormModal({
         <form
           className="event-form-modal__form"
           onSubmit={handleSubmit}
+          aria-busy={isSaving}
           noValidate
         >
 
@@ -604,7 +615,7 @@ function EventFormModal({
 
               <div className="event-form-modal__field event-form-modal__field--full">
                 <label htmlFor={`${formId}-title-input`}>
-                  Nombre del evento *
+                  Nombre de la actividad *
                 </label>
 
                 <input
@@ -674,6 +685,21 @@ function EventFormModal({
                 </select>
               </div>
 
+              {/* Definimos quién puede consultar este evento publicado. */}
+              <div className="event-form-modal__field">
+                <label htmlFor={`${formId}-visibility`}>
+                  Visibilidad del evento
+                </label>
+                <select
+                  id={`${formId}-visibility`}
+                  value={form.visibility}
+                  onChange={(event) => updateField("visibility", event.target.value)}
+                >
+                  <option value="members">Solo miembros</option>
+                  <option value="public">Público y miembros</option>
+                </select>
+              </div>
+
               <div className="event-form-modal__field event-form-modal__field--full">
                 <label htmlFor={`${formId}-description`}>
                   Descripción *
@@ -703,7 +729,7 @@ function EventFormModal({
 
               {/* Imagen opcional del evento: misma interfaz para crear o editar. */}
               <div className="event-form-modal__field event-form-modal__field--full">
-                <label htmlFor={`${formId}-image`}>Imagen del evento (opcional)</label>
+                <label htmlFor={`${formId}-image`}>Imagen de la actividad (opcional)</label>
 
                 {/* Este input conserva el archivo real, listo para la futura API. */}
                 <input
@@ -727,7 +753,7 @@ function EventFormModal({
                     </div>
 
                     <div className="event-form-modal__image-preview-info">
-                      <strong>Imagen del evento</strong>
+                      <strong>Imagen de la actividad</strong>
                       <span>Puedes cambiarla o quitarla antes de guardar.</span>
 
                       <div className="event-form-modal__image-actions">
@@ -773,7 +799,7 @@ function EventFormModal({
                   </small>
                 )}
                 <small id={`${formId}-image-hint`} className="event-form-modal__hint">
-                  La imagen es opcional y podrá utilizarse como portada del evento.
+                  La imagen es opcional y podrá utilizarse como portada de la actividad.
                 </small>
               </div>
 
@@ -788,14 +814,14 @@ function EventFormModal({
             <div className="event-form-modal__section-heading">
               <Repeat2 size={19} aria-hidden="true" />
 
-              <h3>Programación del evento</h3>
+              <h3>Programación de la actividad</h3>
             </div>
 
             <div className="event-form-modal__grid">
 
               <div className="event-form-modal__field event-form-modal__field--full">
                 <label htmlFor={`${formId}-recurrence`}>
-                  Tipo de evento
+                  Tipo de actividad
                 </label>
 
                 <select
@@ -809,11 +835,11 @@ function EventFormModal({
                   }
                 >
                   <option value="none">
-                    Evento único
+                    Actividad única
                   </option>
 
                   <option value="weekly">
-                    Evento recurrente semanal
+                    Actividad recurrente semanal
                   </option>
                 </select>
               </div>
@@ -822,7 +848,7 @@ function EventFormModal({
                 <label htmlFor={`${formId}-date`}>
                   {form.recurrence.type === "weekly"
                     ? "Fecha de inicio *"
-                    : "Fecha del evento *"}
+                    : "Fecha de la actividad *"}
                 </label>
 
                 <input
@@ -1132,11 +1158,18 @@ function EventFormModal({
           {/* ACCIONES */}
           {/* =========================================== */}
 
+          {errors.submit && (
+            <p className="event-form-modal__error" role="alert">
+              {errors.submit}
+            </p>
+          )}
+
           <footer className="event-form-modal__actions">
             <button
               className="event-form-modal__cancel"
               type="button"
               onClick={onClose}
+              disabled={isSaving}
             >
               Cancelar
             </button>
@@ -1144,12 +1177,15 @@ function EventFormModal({
             <button
               className="event-form-modal__submit"
               type="submit"
+              disabled={isSaving}
             >
               <Save size={18} aria-hidden="true" />
 
-              {isEditing
-                ? "Guardar cambios"
-                : "Crear evento"}
+              {isSaving
+                ? "Guardando..."
+                : isEditing
+                  ? "Guardar cambios"
+                  : "Crear actividad"}
             </button>
           </footer>
 

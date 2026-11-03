@@ -1,4 +1,5 @@
 
+
 /* =========================================================
    MODELO - BIBLIOTECA SOLIDARIA
    IGLESIA EL ANCLA
@@ -146,6 +147,14 @@ const libraryBookSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
+        },
+
+        // Administrador responsable de la última modificación.
+        // Permanece ausente mientras el libro no haya sido editado.
+        updatedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: undefined,
         },
     },
     {

@@ -41,6 +41,9 @@ import authorizeRoles from "../middleware/authorizeRoles.js";
 import cloudinary from "../services/cloudinary/cloudinary.js";
 import { getGoogleDriveClient } from "../services/drive/googleDrive.js";
 
+// Compartimos el registro de eliminaciones con eventos y canciones.
+import { deleteResourceWithAudit } from "../services/audit/deletionService.js";
+
 // Creamos un router independiente para la biblioteca.
 const router = Router();
 
@@ -619,6 +622,17 @@ router.patch(
                 });
             }
 
+            // Identificamos al administrador desde la sesión protegida del backend.
+            const adminId = req.user?._id || req.user?.id;
+
+            // Rechazamos la edición si la sesión no contiene un ObjectId válido.
+            if (!mongoose.isValidObjectId(adminId)) {
+                return res.status(401).json({
+                    success: false,
+                    message: "No se pudo identificar al administrador",
+                });
+            }
+
             // Exigimos los mismos campos bibliográficos que al crear un libro.
             const { title, author, category, description } = req.body;
             const validFields =
@@ -712,6 +726,10 @@ router.patch(
                 book.document.fileId = newDriveId;
                 book.document.format = format;
             }
+
+            // Registramos quién modificó este libro usando la sesión autenticada.
+            // No alteramos createdBy ni creamos un documento de historial.
+            book.updatedBy = adminId;
 
             // Guardamos primero MongoDB, para conservar la versión antigua si falla.
             await book.save();
@@ -825,7 +843,14 @@ router.delete(
 
             // Solo al confirmar ambas eliminaciones quitamos el registro
             // de MongoDB. Así no perdemos las referencias si un servicio falla.
-            await LibraryBook.deleteOne({ _id: book._id });
+            // Conservamos el historial y eliminamos el documento de forma atómica.
+            // El responsable se obtiene de la sesión, no del formulario.
+            await deleteResourceWithAudit({
+                model: LibraryBook,
+                resourceId: book._id,
+                resourceType: "book",
+                deletedBy: req.user?._id || req.user?.id,
+            });
 
             // Evitamos almacenar datos de administración en cachés.
             res.set("Cache-Control", "private, no-store");
