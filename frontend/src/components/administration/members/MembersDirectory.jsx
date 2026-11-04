@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 
 import {
@@ -22,8 +21,10 @@ const STATUS_CONFIG = {
         label: "Activo",
         className: "active",
     },
-    blocked: {
-        label: "Bloqueado",
+    inactive: {
+        // El modelo User almacena isActive=false (cuenta inactiva).
+        label: "Inactivo",
+        // Conservamos el CSS existente de estado deshabilitado.
         className: "blocked",
     },
 };
@@ -240,8 +241,8 @@ function MembersDirectory({
                         Activos
                     </option>
 
-                    <option value="blocked">
-                        Bloqueados
+                    <option value="inactive">
+                        Inactivos
                     </option>
                 </select>
 

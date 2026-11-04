@@ -11,16 +11,16 @@ const { google } = require("googleapis");
 dotenv.config({ path: path.resolve(__dirname, "../../middleware/.env") });
 
 // Recuperamos credenciales ya autorizadas en Biblioteca Solidaria.
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_DRIVE_REFRESH_TOKEN } = process.env;
+const { GOOGLE_DRIVE_CLIENT_ID, GOOGLE_DRIVE_CLIENT_SECRET, GOOGLE_DRIVE_REFRESH_TOKEN } = process.env;
 
 // Validamos que no falten credenciales.
-if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !GOOGLE_DRIVE_REFRESH_TOKEN) {
+if (!GOOGLE_DRIVE_CLIENT_ID || !GOOGLE_DRIVE_CLIENT_SECRET || !GOOGLE_DRIVE_REFRESH_TOKEN) {
     console.error("Faltan las credenciales de Google Drive en el .env");
     process.exit(1);
 }
 
 // Creamos el cliente OAuth 2.0.
-const auth = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
+const auth = new google.auth.OAuth2(GOOGLE_DRIVE_CLIENT_ID, GOOGLE_DRIVE_CLIENT_SECRET);
 
 // Instalamos el refresh token autorizado previamente.
 auth.setCredentials({ refresh_token: GOOGLE_DRIVE_REFRESH_TOKEN });

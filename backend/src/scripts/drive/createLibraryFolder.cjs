@@ -25,8 +25,8 @@ const envPath = path.resolve(
 dotenv.config({ path: envPath });
 
 // Recuperamos las variables necesarias.
-const clientId = process.env.GOOGLE_CLIENT_ID;
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
 const refreshToken = process.env.GOOGLE_DRIVE_REFRESH_TOKEN;
 
 // Comprobamos que existan todas las credenciales.

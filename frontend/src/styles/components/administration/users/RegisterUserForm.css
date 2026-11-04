@@ -227,14 +227,14 @@
 .register-user-form__notice,
 .register-user-form__validation,
 .register-user-form__confirmation,
-.register-user-form__demo-success {
+.register-user-form__success {
   border-radius: 12px;
   padding: 17px;
   margin-bottom: 20px;
 }
 
 .register-user-form__notice,
-.register-user-form__demo-success {
+.register-user-form__success {
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -247,19 +247,19 @@
 }
 
 .register-user-form__notice svg,
-.register-user-form__demo-success svg {
+.register-user-form__success svg {
   flex-shrink: 0;
 }
 
 .register-user-form__notice strong,
-.register-user-form__demo-success strong {
+.register-user-form__success strong {
   display: block;
   font-size: 12px;
   margin-bottom: 5px;
 }
 
 .register-user-form__notice p,
-.register-user-form__demo-success p {
+.register-user-form__success p {
   margin: 0;
   font-size: 12px;
   line-height: 1.7;
@@ -301,7 +301,7 @@
   gap: 10px;
 }
 
-.register-user-form__demo-success {
+.register-user-form__success {
   color: #347b66;
   background: #eef8f3;
   border: 1px solid #d2e9dc;
@@ -531,4 +531,97 @@
   .register-user-form__button-secondary {
     transition: none;
   }
+}
+
+/* =========================================================
+   REGISTRO REAL: CONTROLES DE ENVÍO Y REENVÍO
+========================================================= */
+
+.register-user-form__button-primary:disabled,
+.register-user-form__button-secondary:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.register-user-form__resend {
+  margin-top: 12px;
+  min-height: 38px;
+}
+
+.register-user-form__validation button {
+  appearance: none;
+  padding: 7px 12px;
+  border: 1px solid #e2aca4;
+  border-radius: 9px;
+  color: #a45f54;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* ========================================================= */
+/* CELULAR CHILENO: PREFIJO FIJO +56 9 Y 8 DÍGITOS EDITABLES */
+/* ========================================================= */
+
+.register-user-form__phone-control {
+  display: flex;
+  align-items: stretch;
+  min-height: 44px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #dce6eb;
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.register-user-form__phone-control:focus-within {
+  border-color: #6bafbe;
+  box-shadow: 0 0 0 3px rgba(107, 175, 190, 0.12);
+}
+
+.register-user-form__phone-control:has(input[aria-invalid="true"]) {
+  border-color: #cf8179;
+}
+
+.register-user-form__phone-prefix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 79px;
+  padding: 0 14px;
+  color: #31576a;
+  background: #edf5f7;
+  border-right: 1px solid #dce6eb;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Sobrescribimos el borde general para no dibujar dos campos. */
+.register-user-form__field .register-user-form__phone-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 42px;
+  width: 100%;
+  padding: 11px 13px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  letter-spacing: 1.1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.register-user-form__field .register-user-form__phone-input:focus,
+.register-user-form__field .register-user-form__phone-input[aria-invalid="true"] {
+  border: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-user-form__phone-control { transition: none; }
 }

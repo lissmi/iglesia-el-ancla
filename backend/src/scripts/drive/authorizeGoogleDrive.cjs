@@ -52,8 +52,8 @@ if (!envPath) {
 dotenv.config({ path: envPath });
 
 // Recuperamos las credenciales OAuth existentes.
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const CLIENT_ID = process.env.GOOGLE_DRIVE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
 
 // Utilizamos la misma URI registrada en Google Cloud.
 const REDIRECT_URI = "http://localhost:53682/oauth2callback";

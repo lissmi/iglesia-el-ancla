@@ -100,33 +100,58 @@ const userSchema = new Schema(
         },
 
 
-        // Teléfono de contacto del usuario.
-        //
-        // Recomendamos guardarlo utilizando
-        // el formato internacional.
-        //
-        // Ejemplo chileno:
-        // +56912345678
+
+        // =========================================================
+        // TELÉFONO DE CONTACTO - OPCIONAL
+        // =========================================================
+
+        // El administrador puede registrar una cuenta sin teléfono.
+        // El número podrá agregarse posteriormente desde el perfil.
         phone: {
+            // Guardamos números telefónicos como texto.
             type: String,
 
-            required: [
-                true,
-                "El teléfono del usuario es obligatorio",
-            ],
+            // El teléfono no es obligatorio para crear la cuenta.
+            required: false,
 
+            // Eliminamos espacios iniciales y finales.
             trim: true,
 
+            // Si no se informa un teléfono, omitimos el campo.
+            default: undefined,
+
+            // Limitamos la longitud total del número.
             maxlength: [
-                30,
-                "El teléfono no puede superar los 30 caracteres",
+                25,
+                "El teléfono no puede superar los 25 caracteres",
             ],
 
-            match: [
-                /^\+?[0-9\s()-]{8,30}$/,
-                "El número telefónico no es válido",
-            ],
+            // Validamos el teléfono cuando se proporciona.
+            validate: {
+                validator(value) {
+                    // Aceptamos la ausencia del teléfono.
+                    if (value == null || value === "") {
+                        return true;
+                    }
+
+                    // Permitimos dígitos y separadores telefónicos.
+                    // No admitimos letras ni símbolos adicionales.
+                    if (!/^\+?[0-9][0-9 ()-]*$/.test(value)) {
+                        return false;
+                    }
+
+                    // Contamos solo los dígitos, sin separadores.
+                    const digits = value.replace(/\D/g, "").length;
+
+                    // Comprobamos una longitud telefónica razonable.
+                    return digits >= 8 && digits <= 15;
+                },
+
+                message:
+                    "El teléfono debe tener entre 8 y 15 dígitos y no contener letras",
+            },
         },
+
 
 
         // Correo utilizado para iniciar sesión.

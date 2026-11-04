@@ -114,6 +114,9 @@ import eventRoutes from "./routes/eventRoutes.js";
 // Importamos la gestión de peticiones de oración.
 import prayerRequestRoutes from "./routes/prayerRequestRoutes.js";
 
+// Importamos la ruta pública para activar cuentas nuevas.
+import accountActivationRoutes from "./routes/accountActivationRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -528,6 +531,9 @@ app.use("/api/activity-history", activityHistoryRoutes);
 
 // Conectamos la API de peticiones de oración.
 app.use("/api/prayer-requests", prayerRequestRoutes);
+
+// Permitimos completar la activación sin una sesión previa.
+app.use("/api/auth/account-activation", accountActivationRoutes);
 
 // =========================================================
 // RUTAS INEXISTENTES (404)

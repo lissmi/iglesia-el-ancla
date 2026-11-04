@@ -9,8 +9,8 @@ import { google } from "googleapis";
 export function getGoogleDriveClient() {
 
     // Credenciales necesarias para operar.
-    const clientId = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
     const refreshToken = process.env.GOOGLE_DRIVE_REFRESH_TOKEN;
 
     // No permitimos conexiones sin configuración completa.

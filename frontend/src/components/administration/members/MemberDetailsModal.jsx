@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 
 import {
@@ -326,7 +325,7 @@ function MemberDetailsModal({ member, onClose }) {
                                 : "member-details-modal__status--blocked")
                         }
                     >
-                        {isActive ? "Activo" : "Bloqueado"}
+                        {isActive ? "Activo" : "Inactivo"}
                     </span>
 
                 </div>

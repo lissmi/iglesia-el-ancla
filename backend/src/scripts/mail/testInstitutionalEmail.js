@@ -91,23 +91,54 @@ Iglesia El Ancla ⚓
       Boolean(result.messageId)
     );
 
+
   } catch (error) {
-    // Evitamos imprimir respuestas completas de Google,
-    // porque podrían contener información sensible.
+
+    // Informamos que la prueba no pudo completarse.
     console.error("No se pudo completar el envío.");
 
-    if (error.message === "MONGODB_URI no configurada") {
-      console.error(error.message);
-    } else {
+    // Recuperamos el código HTTP de Google.
+    const httpCode =
+      error.response?.status ||
+      error.code ||
+      error.status ||
+      "sin código";
+
+    // Recuperamos solamente la información del error de Google.
+    const googleError = error.response?.data?.error;
+
+    // Consultamos el motivo específico devuelto por la API.
+    const reason =
+      googleError?.errors?.[0]?.reason ||
+      googleError?.details?.find((detail) => detail.reason)?.reason ||
+      (typeof googleError === "string" ? googleError : null) ||
+      "No identificado";
+
+    // Consultamos el estado general del proveedor.
+    const googleStatus =
+      typeof googleError === "object"
+        ? googleError?.status
+        : null;
+
+    // Mostramos el diagnóstico sin imprimir tokens ni credenciales.
+    console.error("Código HTTP:", httpCode);
+    console.error("Motivo de Google:", reason);
+    console.error("Estado de Google:", googleStatus || "No disponible");
+
+    // Mostramos el mensaje descriptivo solo en la terminal local.
+    // Antes de compartirlo, revisa que no contenga datos privados.
+    if (typeof googleError?.message === "string") {
       console.error(
-        "Tipo de error:",
-        error.code || error.status || "sin código"
+        "Descripción:",
+        googleError.message.slice(0, 350)
       );
     }
 
+    // Marcamos la ejecución como fallida.
     process.exitCode = 1;
 
   } finally {
+
     await mongoose.disconnect();
   }
 }

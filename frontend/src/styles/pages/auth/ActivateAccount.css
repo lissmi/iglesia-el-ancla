@@ -1,0 +1,203 @@
+/* =========================================================
+   ACTIVACIÓN DE CUENTA - IDENTIDAD VISUAL EL ANCLA
+========================================================= */
+
+.activate-account-page {
+  min-height: 65vh;
+  display: grid;
+  place-items: center;
+  padding: 55px 18px 75px;
+  background: linear-gradient(145deg, #f8f6f2, #f0f5f7);
+}
+
+.activate-account-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 510px;
+  padding: clamp(23px, 5vw, 42px);
+  border: 1px solid #e4e8ea;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 16px 45px rgba(18, 43, 57, .075);
+}
+
+.activate-account-card__symbol {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 17px;
+  background: #f9eee7;
+  color: #b96c56;
+  margin-bottom: 22px;
+}
+
+.activate-account-card__eyebrow {
+  display: block;
+  color: #b96c56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 9px;
+}
+
+.activate-account-card h1 {
+  color: #203c4b;
+  font-size: clamp(27px, 5vw, 34px);
+  margin: 0 0 11px;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.activate-account-card__intro {
+  margin: 0 0 28px;
+  color: #6f8390;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.activate-account-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.activate-account-card label {
+  color: #294656;
+  font-size: 13px;
+  font-weight: 750;
+  margin-top: 7px;
+}
+
+.activate-account-card__password-field {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 12px;
+  min-height: 49px;
+  border: 1px solid #dae3e7;
+  border-radius: 12px;
+  color: #6f8896;
+  background: #fdfdfd;
+}
+
+.activate-account-card__password-field:focus-within {
+  border-color: #b96c56;
+  box-shadow: 0 0 0 3px rgba(185,108,86,.12);
+}
+
+.activate-account-card__password-field input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  color: #203c4b;
+}
+
+.activate-account-card__password-field button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #647e8e;
+  cursor: pointer;
+}
+
+.activate-account-card__password-field button:hover {
+  background: #f0f5f7;
+}
+
+.activate-account-card__requirements {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 8px 12px;
+  margin: 6px 0 10px;
+}
+
+.activate-account-card__requirements span {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #8c9ca5;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.activate-account-card__requirements span.is-valid {
+  color: #327950;
+}
+
+.activate-account-card__error,
+.activate-account-card__success {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.activate-account-card__error {
+  background: #fff3f0;
+  color: #9e453b;
+  border: 1px solid #f1dad4;
+}
+
+.activate-account-card__success {
+  background: #eff8f2;
+  color: #2c704c;
+  border: 1px solid #d4e9da;
+}
+
+.activate-account-card__error p,
+.activate-account-card__success p { margin: 0; }
+.activate-account-card__success p { margin: 7px 0 17px; }
+
+.activate-account-card__submit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 47px;
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #243e54;
+  border-radius: 11px;
+  background: #243e54;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 750;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.activate-account-card__submit:hover:not(:disabled) { background: #365b73; }
+.activate-account-card__submit:disabled { opacity: .55; cursor: not-allowed; }
+.activate-account-card button:focus-visible,
+.activate-account-card a:focus-visible {
+  outline: 3px solid rgba(185,108,86,.35);
+  outline-offset: 3px;
+}
+
+.activate-account-card__privacy {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 0;
+  color: #8a9aa4;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+  .activate-account-card__requirements { grid-template-columns: 1fr; }
+}

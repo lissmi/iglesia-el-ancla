@@ -49,6 +49,9 @@ import PrivacyPolicy from "./pages/public/PrivacyPolicy";
 import Donaciones from "./pages/public/Donaciones";
 import DonacionResultado from "./pages/public/DonacionResultado";
 
+// Página donde el nuevo miembro confirma su cuenta.
+import ActivateAccount from "./pages/auth/ActivateAccount";
+
 // =========================================================
 // LOGIN PÚBLICO
 // =========================================================
@@ -190,6 +193,12 @@ function App() {
               element={<Login />}
             />
 
+            {/* Activación por invitación, disponible sin iniciar sesión. */}
+            <Route
+              path="/activar-cuenta"
+              element={<ActivateAccount />}
+            />
+
             {/* Recursos y Recomendados ya no son públicos.
                 Están definidos bajo /member y protegidos por sesión. */}
 
@@ -253,7 +262,7 @@ function App() {
               <Route path="recursos/preguntas-frecuentes" element={<FrequentlyAskedQuestions />} />
               <Route path="recursos/material-descargable" element={<DownloadableMaterials />} />
               <Route path="recursos/material-descargable/:slug" element={<DownloadableMaterialDetails />} />
-              <Route path="recursos/biblioteca-solidaria" element={<SolidarityLibrary />}/>
+              <Route path="recursos/biblioteca-solidaria" element={<SolidarityLibrary />} />
               {/* Letras de canciones almacenadas como PDF en Google Drive. */}
               <Route path="recursos/cancionero" element={<Songbook />} />
 
