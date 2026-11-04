@@ -1,6 +1,7 @@
 // =========================================================
 // RUTAS DE ACTIVIDADES - PWA IGLESIA EL ANCLA
 // MongoDB Atlas + Cloudinary + roles y cookies HttpOnly
+// activitiesRoutes.js
 // =========================================================
 
 // Importamos las dependencias que ya utiliza el proyecto.
@@ -57,6 +58,7 @@ const WRITABLE_FIELDS = [
   "meetingUrl",
   "requiresConfirmation",
   "capacity",
+  "cooperation",
   "publicationStatus",
 ];
 
@@ -145,6 +147,39 @@ function readActivityPayload(req) {
   // No almacenamos campos opcionales vacíos que vienen desde React.
   for (const key of ["endTime", "location", "meetingUrl"]) {
     if (fields[key] === "" || fields[key] === null) fields[key] = undefined;
+  }
+
+  // Normalizamos solo las opciones permitidas: nunca aceptamos referencias a usuarios.
+  if (fields.cooperation !== undefined) {
+    const value = fields.cooperation;
+    if (!value || typeof value !== "object" || Array.isArray(value) ||
+        typeof value.enabled !== "boolean" ||
+        (value.enabled && !Array.isArray(value.items))) {
+      throw httpError(400, "La configuración de cooperación no es válida");
+    }
+    if (value.enabled) {
+      if (value.items.length < 1 || value.items.length > 20) {
+        throw httpError(400, "Define entre 1 y 20 aportes");
+      }
+      fields.cooperation = {
+        enabled: true,
+        items: value.items.map((item) => {
+          if (!item || typeof item.name !== "string" ||
+              !Number.isInteger(item.maxQuantity) ||
+              item.maxQuantity < 1 || item.maxQuantity > 500 ||
+              item.name.trim().length < 2 || item.name.trim().length > 60) {
+            throw httpError(400, "Cada aporte requiere nombre y cupo válido");
+          }
+          if (item.id !== undefined && !mongoose.isObjectIdOrHexString(item.id)) {
+            throw httpError(400, "Identificador de aporte inválido");
+          }
+          return { ...(item.id ? { _id: item.id } : {}),
+            name: item.name.trim(), maxQuantity: item.maxQuantity };
+        }),
+      };
+    } else {
+      fields.cooperation = { enabled: false };
+    }
   }
 
   // Una capacidad ilimitada no necesita un campo con valor null.
@@ -258,6 +293,15 @@ function serializeActivity(activity) {
     meetingUrl: activity.meetingUrl,
     requiresConfirmation: activity.requiresConfirmation,
     capacity: activity.capacity,
+    // No enviamos documentos Mongoose completos al navegador.
+    cooperation: {
+      enabled: Boolean(activity.cooperation?.enabled),
+      items: activity.cooperation?.enabled
+        ? (activity.cooperation.items || []).map((item) => ({
+            id: String(item._id), name: item.name, maxQuantity: item.maxQuantity,
+          }))
+        : [],
+    },
     publicationStatus: activity.publicationStatus,
     // El contador se calcula en /attendance/admin-summary, no se duplica en Atlas.
     confirmations: 0,
@@ -461,6 +505,34 @@ router.patch(
           const currentTotal = await ActivityConfirmation.countDocuments({ activity: activity._id });
           if (fields.capacity && currentTotal > fields.capacity) {
             throw httpError(409, "La capacidad es inferior a las confirmaciones existentes");
+          }
+        }
+      }
+
+      // Protegemos aportes comprometidos al editar opciones o sus cupos.
+      if (fields.cooperation !== undefined) {
+        const existingReservations = await ActivityConfirmation.aggregate([
+          { $match: { activity: activity._id } },
+          { $unwind: "$contributions" },
+          { $group: { _id: "$contributions.itemId", total: { $sum: "$contributions.quantity" } } },
+        ]);
+        const nextItems = new Map(
+          (fields.cooperation.enabled ? fields.cooperation.items : [])
+            .filter((item) => item._id)
+            .map((item) => [String(item._id), item.maxQuantity])
+        );
+        const currentIds = new Set(
+          (activity.cooperation?.items || []).map((item) => String(item._id))
+        );
+        // Evitamos que el cliente reutilice el ID de un aporte de otra actividad.
+        for (const item of (fields.cooperation.items || [])) {
+          if (item._id && !currentIds.has(String(item._id))) {
+            throw httpError(400, "La opción de cooperación no pertenece a esta actividad");
+          }
+        }
+        for (const row of existingReservations) {
+          if (!nextItems.has(String(row._id)) || nextItems.get(String(row._id)) < row.total) {
+            throw httpError(409, "No puedes quitar un aporte ni reducir su cupo mientras tenga reservas");
           }
         }
       }

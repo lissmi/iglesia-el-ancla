@@ -1,7 +1,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import { AlertTriangle, Trash2, X } from "lucide-react";
-import "../../../styles/components/administration/events/EventDeleteModal.css";
+import "../../../styles/components/administration/activities/ActivityDeleteModal.css";
 
 // =========================================================
 // CONFIRMACIÓN DE ELIMINACIÓN DE UNA ACTIVIDAD

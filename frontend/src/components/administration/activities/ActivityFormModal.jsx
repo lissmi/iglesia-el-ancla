@@ -9,6 +9,7 @@ import {
 
 import {
   CalendarDays,
+  Plus,
   Check,
   Clock3,
   ImagePlus,
@@ -18,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 
-import "../../../styles/components/administration/events/EventFormModal.css";
+import "../../../styles/components/administration/activities/ActivityFormModal.css";
 
 // =========================================================
 // CONFIGURACIONES DEL FORMULARIO
@@ -58,6 +59,7 @@ function createInitialForm() {
 
     requiresConfirmation: false,
     capacity: "",
+    cooperation: { enabled: false, items: [] },
 
     publicationStatus: "draft",
 
@@ -129,6 +131,12 @@ function ActivityFormModal({
         ...activityToEdit,
 
         capacity: activityToEdit.capacity ?? "",
+        cooperation: {
+          enabled: Boolean(activityToEdit.cooperation?.enabled),
+          items: (activityToEdit.cooperation?.items || []).map((item) => ({
+            id: item.id, name: item.name, maxQuantity: String(item.maxQuantity),
+          })),
+        },
       });
 
       // Si la actividad ya posee imagen,
@@ -162,6 +170,59 @@ function ActivityFormModal({
     setErrors((previous) => ({
       ...previous,
       [name]: undefined,
+    }));
+  }
+
+  // =========================================================
+  // APORTES DE COOPERACIÓN (solo datos de configuración)
+  // =========================================================
+
+  // Conservamos los identificadores de aportes existentes para no perder reservas.
+  function updateContribution(index, key, value) {
+    setForm((current) => ({
+      ...current,
+      cooperation: {
+        ...current.cooperation,
+        items: current.cooperation.items.map((item, i) =>
+          i === index ? { ...item, [key]: value } : item),
+      },
+    }));
+    setErrors((old) => ({ ...old, cooperation: undefined }));
+  }
+
+  // Los aportes nuevos reciben su ID definitivo en MongoDB al guardar.
+  function addContribution() {
+    setForm((current) => ({
+      ...current,
+      cooperation: {
+        ...current.cooperation,
+        items: [...current.cooperation.items, { name: "", maxQuantity: "1" }],
+      },
+    }));
+  }
+
+  // No elimina confirmaciones: el backend impide quitar aportes ya reservados.
+  function removeContribution(index) {
+    setForm((current) => ({
+      ...current,
+      cooperation: {
+        ...current.cooperation,
+        items: current.cooperation.items.filter((_, i) => i !== index),
+      },
+    }));
+  }
+
+  function toggleCooperation(enabled) {
+    setForm((current) => ({
+      ...current,
+      // Para cooperar necesitamos saber qué miembro confirmó su asistencia.
+      requiresConfirmation: enabled ? true : current.requiresConfirmation,
+      cooperation: {
+        enabled,
+        items: enabled && !current.cooperation.items.length
+          ? [{ name: "", maxQuantity: "1" }]
+          : current.cooperation.items,
+      },
     }));
   }
 
@@ -353,6 +414,22 @@ function ActivityFormModal({
         "Los cupos deben ser un número entero positivo.";
     }
 
+    // Comprobamos cada aporte antes de subir imágenes o realizar una petición.
+    if (form.cooperation?.enabled) {
+      const items = form.cooperation.items || [];
+      if (!form.requiresConfirmation) {
+        nextErrors.cooperation = "Las actividades con cooperación requieren confirmación de asistencia.";
+      } else if (items.length < 1 || items.length > 20) {
+        nextErrors.cooperation = "Agrega entre 1 y 20 tipos de aporte.";
+      } else if (items.some((item) => !item.name?.trim() ||
+        !Number.isInteger(Number(item.maxQuantity)) || Number(item.maxQuantity) < 1 ||
+        Number(item.maxQuantity) > 500)) {
+        nextErrors.cooperation = "Cada aporte requiere un nombre y un máximo entre 1 y 500.";
+      } else if (new Set(items.map((item) => item.name.trim().toLocaleLowerCase("es-CL"))).size !== items.length) {
+        nextErrors.cooperation = "No repitas nombres de aportes.";
+      }
+    }
+
     setErrors(nextErrors);
 
     return Object.keys(nextErrors).length === 0;
@@ -380,6 +457,15 @@ function ActivityFormModal({
         form.capacity === ""
           ? null
           : Number(form.capacity),
+
+      // Enviamos los mismos IDs de opciones existentes para preservar reservas.
+      cooperation: {
+        enabled: Boolean(form.cooperation.enabled),
+        items: form.cooperation.enabled ? form.cooperation.items.map((item) => ({
+          ...(item.id ? { id: item.id } : {}),
+          name: item.name.trim(), maxQuantity: Number(item.maxQuantity),
+        })) : [],
+      },
 
 
     };
@@ -883,6 +969,7 @@ function ActivityFormModal({
               <input
                 type="checkbox"
                 checked={form.requiresConfirmation}
+                disabled={Boolean(form.cooperation?.enabled)}
                 onChange={(event) =>
                   updateField(
                     "requiresConfirmation",
@@ -925,6 +1012,56 @@ function ActivityFormModal({
                 )}
               </div>
             )}
+          </section>
+
+          {/* =========================================== */}
+          {/* COOPERACIÓN DE LOS PARTICIPANTES */}
+          {/* =========================================== */}
+
+          <section className="event-form-modal__section">
+            <div className="event-form-modal__section-heading">
+              <Info size={19} aria-hidden="true" />
+              <h3>Cooperación para la actividad</h3>
+            </div>
+            <p className="event-form-modal__cooperation-help">
+              Es opcional. Puedes solicitar bebidas, galletas o queques y definir
+              cuántas unidades se necesitan de cada aporte. Los miembros elegirán
+              qué llevar después de confirmar su asistencia.
+            </p>
+            <label className="event-form-modal__checkbox">
+              <input type="checkbox" checked={Boolean(form.cooperation?.enabled)}
+                onChange={(e) => toggleCooperation(e.target.checked)} />
+              <span>Solicitar cooperación de los asistentes</span>
+            </label>
+            {form.cooperation?.enabled && (
+              <div className="event-form-modal__cooperation-list">
+                {form.cooperation.items.map((item, index) => (
+                  <div className="event-form-modal__cooperation-item" key={item.id || `new-${index}`}>
+                    <div className="event-form-modal__field">
+                      <label htmlFor={`${formId}-cooperation-name-${index}`}>Aporte solicitado</label>
+                      <input id={`${formId}-cooperation-name-${index}`} type="text"
+                        maxLength={60} placeholder="Ej.: Bebidas, queque o galletas"
+                        value={item.name} onChange={(e) => updateContribution(index, "name", e.target.value)} />
+                    </div>
+                    <div className="event-form-modal__field">
+                      <label htmlFor={`${formId}-cooperation-limit-${index}`}>Máximo de unidades</label>
+                      <input id={`${formId}-cooperation-limit-${index}`} type="number" min="1" max="500" step="1"
+                        value={item.maxQuantity}
+                        onChange={(e) => updateContribution(index, "maxQuantity", e.target.value)} />
+                    </div>
+                    <button type="button" className="event-form-modal__cooperation-remove"
+                      onClick={() => removeContribution(index)} aria-label={`Quitar aporte ${item.name || index + 1}`}>
+                      <Trash2 size={17} /> Quitar
+                    </button>
+                  </div>
+                ))}
+                <button className="event-form-modal__cooperation-add" type="button"
+                  disabled={form.cooperation.items.length >= 20} onClick={addContribution}>
+                  <Plus size={17} /> Agregar otro aporte
+                </button>
+              </div>
+            )}
+            {errors.cooperation && <small className="event-form-modal__error" role="alert">{errors.cooperation}</small>}
           </section>
 
           {/* =========================================== */}

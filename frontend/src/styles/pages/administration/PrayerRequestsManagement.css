@@ -568,3 +568,768 @@
   font-size: 11px;
   font-weight: 600;
 }
+
+
+/* ========================================================= */
+/* PETICIONES DE ORACIÓN - FORMULARIO ADMINISTRATIVO */
+/* ========================================================= */
+
+/* Distribuimos los elementos del formulario verticalmente. */
+.prayer-details .prayer-details__form {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* Espaciado consistente entre campos. */
+.prayer-details .prayer-details__form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-bottom: 20px;
+}
+
+/* Etiquetas de los campos. */
+.prayer-details .prayer-details__form-field > label {
+    display: block;
+
+    margin: 0;
+
+    color: #29465c;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* ========================================================= */
+/* INPUTS, SELECTS Y TEXTAREAS */
+/* ========================================================= */
+
+/* Unificamos los controles del formulario. */
+.prayer-details .prayer-details__form-field input:not([type="checkbox"]):not([type="radio"]),
+.prayer-details .prayer-details__form-field select,
+.prayer-details .prayer-details__form-field textarea {
+    display: block;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    margin: 0;
+    padding: 12px 15px;
+
+    border: 1px solid #dce3e7;
+    border-radius: 12px;
+
+    outline: none;
+
+    background-color: #fcfbf9;
+    color: #233e54;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Texto de ejemplo en los campos vacíos. */
+.prayer-details .prayer-details__form-field input::placeholder,
+.prayer-details .prayer-details__form-field textarea::placeholder {
+    color: #91a0aa;
+    opacity: 1;
+}
+
+/* Resaltamos suavemente los controles al pasar el cursor. */
+.prayer-details .prayer-details__form-field input:hover,
+.prayer-details .prayer-details__form-field select:hover,
+.prayer-details .prayer-details__form-field textarea:hover {
+    border-color: #c5b59b;
+}
+
+/* Foco uniforme para todos los campos. */
+.prayer-details .prayer-details__form-field input:focus-visible,
+.prayer-details .prayer-details__form-field select:focus-visible,
+.prayer-details .prayer-details__form-field textarea:focus-visible {
+    border-color: #b78b56;
+
+    outline: none;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(183, 139, 86, 0.15);
+}
+
+/* Evitamos el estilo cuadrado antiguo del selector. */
+.prayer-details .prayer-details__form-field select {
+    cursor: pointer;
+}
+
+/* Área de escritura de la petición. */
+.prayer-details .prayer-details__form-field textarea {
+    min-height: 125px;
+
+    resize: vertical;
+
+    line-height: 1.7;
+}
+
+/* ========================================================= */
+/* CHECKBOX DE ANONIMATO */
+/* ========================================================= */
+
+/* Contenedor seleccionable con texto alineado. */
+.prayer-details .prayer-details__checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 11px;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    margin: 2px 0 23px;
+    padding: 14px 15px;
+
+    border: 1px solid #e1e6e8;
+    border-radius: 12px;
+
+    background-color: #f9faf9;
+    color: #3f5a6c;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Destacamos la opción al pasar el cursor. */
+.prayer-details .prayer-details__checkbox:hover {
+    border-color: #d2be9f;
+    background-color: #fbf8f3;
+}
+
+/* El contenedor se resalta al usar el teclado. */
+.prayer-details .prayer-details__checkbox:focus-within {
+    border-color: #b78b56;
+    background-color: #fbf8f3;
+}
+
+/* Evitamos que el checkbox herede estilos de inputs de texto. */
+.prayer-details .prayer-details__checkbox input[type="checkbox"] {
+    appearance: auto;
+
+    box-sizing: border-box;
+
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
+    min-height: 17px;
+    max-width: 17px;
+    max-height: 17px;
+
+    flex: 0 0 17px;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 4px;
+
+    accent-color: #b78b56;
+
+    cursor: pointer;
+}
+
+/* ========================================================= */
+/* TÍTULOS Y TEXTO DE AYUDA */
+/* ========================================================= */
+
+/* Separación de los títulos dentro del formulario. */
+.prayer-details .prayer-details__form h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 12px 0 20px;
+
+    color: #29465c;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* Color del icono de las secciones. */
+.prayer-details .prayer-details__form h3 svg {
+    color: #b18a58;
+    flex-shrink: 0;
+}
+
+/* Textos de ayuda. */
+.prayer-details .prayer-details__form-field small {
+    color: #778a99;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+
+    .prayer-details .prayer-details__form-field {
+        margin-bottom: 17px;
+    }
+
+    .prayer-details .prayer-details__checkbox {
+        align-items: flex-start;
+        padding: 13px;
+    }
+
+    .prayer-details .prayer-details__form-field textarea {
+        min-height: 115px;
+    }
+}
+
+
+/* ========================================================= */
+/* ENCABEZADO - GESTIÓN DE PETICIONES DE ORACIÓN */
+/* ========================================================= */
+
+/* Alineamos horizontalmente el botón y el icono. */
+.prayer-management-page .prayer-management-page__header-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 14px;
+
+    flex-shrink: 0;
+    width: auto;
+    margin: 0;
+}
+
+/* ========================================================= */
+/* BOTÓN NUEVA PETICIÓN */
+/* ========================================================= */
+
+/* Aplicamos el diseño institucional al botón. */
+.prayer-management-page
+.prayer-management-page__header-actions
+> button.prayer-management-page__new-button {
+
+    appearance: none;
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    width: auto;
+    min-width: 155px;
+    height: 44px;
+    min-height: 44px;
+
+    margin: 0;
+    padding: 0 18px;
+
+    border: 1px solid #243e54;
+    border-radius: 12px;
+
+    background-color: #243e54;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    box-shadow: 0 4px 12px rgba(36, 62, 84, 0.12);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Icono + dentro del botón. */
+.prayer-management-page
+.prayer-management-page__new-button svg {
+    display: block;
+
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+
+    color: currentColor;
+    stroke: currentColor;
+}
+
+/* Efecto hover. */
+.prayer-management-page
+.prayer-management-page__header-actions
+> button.prayer-management-page__new-button:hover {
+
+    background-color: #365a73;
+    border-color: #365a73;
+
+    box-shadow: 0 6px 16px rgba(36, 62, 84, 0.18);
+
+    transform: translateY(-1px);
+}
+
+/* Accesibilidad mediante teclado. */
+.prayer-management-page
+.prayer-management-page__new-button:focus-visible {
+
+    outline: 3px solid rgba(181, 139, 82, 0.45);
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* ICONO DECORATIVO */
+/* ========================================================= */
+
+.prayer-management-page
+.prayer-management-page__header-actions
+.prayer-management-page__header-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    flex: 0 0 58px;
+
+    margin: 0;
+
+    border-radius: 16px;
+
+    background-color: #e9eff2;
+    color: #365b70;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 680px) {
+
+    .prayer-management-page
+    .prayer-management-page__header-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .prayer-management-page
+    .prayer-management-page__new-button {
+        min-width: 0;
+    }
+}
+
+/* Respetamos la preferencia de movimiento reducido. */
+@media (prefers-reduced-motion: reduce) {
+
+    .prayer-management-page
+    .prayer-management-page__new-button {
+        transition: none;
+    }
+
+    .prayer-management-page
+    .prayer-management-page__new-button:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   PETICIONES DE ORACIÓN - ACCIONES ADMINISTRATIVAS
+========================================================= */
+
+/* Agrupamos las acciones de la tabla horizontalmente. */
+.prayer-management-page .prayer-management-page__row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+/* Unificamos altura y distribución de los botones. */
+.prayer-management-page .prayer-management-page__row-actions > button {
+    appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 38px;
+
+    margin: 0;
+    padding: 9px 13px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* Botón de eliminación: estilo secundario destructivo. */
+.prayer-management-page
+.prayer-management-page__row-actions
+> button.prayer-management-page__delete-button {
+    border: 1px solid #e9c7c1;
+    border-radius: 10px;
+
+    background-color: #fff7f5;
+    color: #a43d35;
+
+    box-shadow: none;
+}
+
+/* Icono de eliminar. */
+.prayer-management-page
+.prayer-management-page__delete-button svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+
+    color: currentColor;
+}
+
+/* Hover del botón de eliminar. */
+.prayer-management-page
+.prayer-management-page__row-actions
+> button.prayer-management-page__delete-button:hover {
+    border-color: #dca59d;
+
+    background-color: #fceae7;
+    color: #8f3029;
+}
+
+/* Foco accesible para teclado. */
+.prayer-management-page
+.prayer-management-page__delete-button:focus-visible {
+    outline: 3px solid rgba(180, 71, 59, 0.24);
+    outline-offset: 2px;
+}
+
+/* Botones deshabilitados durante las operaciones. */
+.prayer-management-page
+.prayer-management-page__row-actions > button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Ajustamos las acciones en pantallas estrechas. */
+@media (max-width: 600px) {
+    .prayer-management-page
+    .prayer-management-page__row-actions {
+        gap: 7px;
+    }
+}
+
+/* ========================================================= */
+/* MODAL DE ELIMINACIÓN - PETICIONES DE ORACIÓN */
+/* Este bloque utiliza únicamente clases de la página actual. */
+/* ========================================================= */
+
+/* Capa fija sobre el panel administrativo. */
+.prayer-management-page .prayer-management-page__delete-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh;
+    padding: 22px;
+    overflow-y: auto;
+
+    background: rgba(17, 34, 46, 0.64);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Ventana central de confirmación. */
+.prayer-management-page .prayer-management-page__delete-dialog {
+    box-sizing: border-box;
+    width: min(100%, 475px);
+    max-height: calc(100dvh - 44px);
+    overflow-y: auto;
+
+    margin: auto;
+    padding: 28px;
+
+    border: 1px solid #e9e3dd;
+    border-radius: 20px;
+
+    background: #ffffff;
+    color: #243e54;
+    box-shadow: 0 24px 70px rgba(10, 27, 40, 0.26);
+
+    animation: prayer-delete-appear 180ms ease-out both;
+}
+
+/* Cabecera con advertencia y botón cerrar. */
+.prayer-management-page .prayer-management-page__delete-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 19px;
+}
+
+/* Icono de alerta en un recuadro suave. */
+.prayer-management-page .prayer-management-page__delete-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border: 1px solid #f0d4cc;
+    border-radius: 16px;
+    background: #fff3f0;
+    color: #ad4940;
+}
+
+/* Botón X para cerrar el diálogo. */
+.prayer-management-page button.prayer-management-page__delete-close {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 37px;
+    height: 37px;
+    padding: 0;
+    border: 1px solid #e2e7ea;
+    border-radius: 10px;
+    background: #f5f8f9;
+    color: #60798a;
+    cursor: pointer;
+}
+
+.prayer-management-page button.prayer-management-page__delete-close:hover:not(:disabled) {
+    background: #edf2f5;
+    color: #29465a;
+}
+
+/* Texto pequeño que identifica la operación. */
+.prayer-management-page .prayer-management-page__delete-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: #b15d4e;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+/* Pregunta principal del modal. */
+.prayer-management-page .prayer-management-page__delete-dialog h2 {
+    margin: 0 0 11px;
+    color: #203c4b;
+    font-size: clamp(21px, 3vw, 25px);
+    font-weight: 750;
+    line-height: 1.3;
+}
+
+/* Texto explicativo de la eliminación. */
+.prayer-management-page .prayer-management-page__delete-description {
+    margin: 0 0 16px;
+    color: #687e8e;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* Nombre del recurso seleccionado, claramente separado. */
+.prayer-management-page .prayer-management-page__delete-request {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 15px;
+    border: 1px solid #e7e5e0;
+    border-radius: 12px;
+    background: #faf8f5;
+    color: #243e54;
+}
+
+.prayer-management-page .prayer-management-page__delete-request svg {
+    flex-shrink: 0;
+    color: #b58b59;
+}
+
+.prayer-management-page .prayer-management-page__delete-request strong {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* Advertencia de irreversibilidad. */
+.prayer-management-page .prayer-management-page__delete-warning {
+    margin: 15px 0 0;
+    color: #9d4b41;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* Error HTTP sin cerrar la confirmación. */
+.prayer-management-page .prayer-management-page__delete-error {
+    margin: 14px 0 0;
+    padding: 12px;
+    border: 1px solid #efc8c2;
+    border-radius: 10px;
+    background: #fff4f1;
+    color: #9f3e35;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Botonera inferior. */
+.prayer-management-page .prayer-management-page__delete-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* Base compartida: no aplicar estilos genéricos a otros botones. */
+.prayer-management-page .prayer-management-page__delete-actions > button {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 43px;
+    margin: 0;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+/* Cancelar: acción secundaria neutral. */
+.prayer-management-page .prayer-management-page__delete-actions > .prayer-management-page__delete-cancel {
+    border-color: #d9e2e7;
+    background: #ffffff;
+    color: #304b5f;
+}
+
+.prayer-management-page .prayer-management-page__delete-actions > .prayer-management-page__delete-cancel:hover:not(:disabled) {
+    background: #f3f7f9;
+}
+
+/* Eliminar: acción destructiva claramente diferenciada. */
+.prayer-management-page .prayer-management-page__delete-actions > .prayer-management-page__delete-confirm {
+    border-color: #a9433b;
+    background: #a9433b;
+    color: #ffffff;
+}
+
+.prayer-management-page .prayer-management-page__delete-actions > .prayer-management-page__delete-confirm:hover:not(:disabled) {
+    border-color: #8e302a;
+    background: #8e302a;
+}
+
+/* Mantener el contraste durante la operación. */
+.prayer-management-page .prayer-management-page__delete-actions > button:disabled,
+.prayer-management-page button.prayer-management-page__delete-close:disabled {
+    opacity: 0.58;
+    cursor: not-allowed;
+}
+
+/* Accesibilidad con teclado. */
+.prayer-management-page .prayer-management-page__delete-dialog button:focus-visible {
+    outline: 3px solid rgba(181, 139, 82, 0.4);
+    outline-offset: 3px;
+}
+
+/* Aparición suave, sin modificar la página de fondo. */
+@keyframes prayer-delete-appear {
+    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Adaptación a pantallas pequeñas. */
+@media (max-width: 520px) {
+    .prayer-management-page .prayer-management-page__delete-overlay {
+        padding: 12px;
+    }
+
+    .prayer-management-page .prayer-management-page__delete-dialog {
+        max-height: calc(100dvh - 24px);
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .prayer-management-page .prayer-management-page__delete-actions > button {
+        flex: 1 1 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .prayer-management-page .prayer-management-page__delete-dialog {
+        animation: none;
+    }
+}

@@ -554,9 +554,8 @@ function ActivitiesManagement() {
           <strong>Actividades sincronizadas</strong>
 
           <p>
-            La información se guarda en MongoDB Atlas y las imágenes opcionales
-            se almacenan en Cloudinary. Las confirmaciones de asistencia se consultan
-            desde el sistema de participación de miembros.
+            Los miembros pueden ver las actividades publicadas, confirmar su
+            participación y registrar lo que llevarán cuando se solicite cooperación.
           </p>
         </div>
       </div>
@@ -759,6 +758,7 @@ function ActivitiesManagement() {
                           <div className="events-management-page__event-copy">
                             <strong>{event.title}</strong>
                             <span>{event.category}</span>
+            {event.cooperation?.enabled && <span>Con cooperación</span>}
                           </div>
                         </div>
                       </td>

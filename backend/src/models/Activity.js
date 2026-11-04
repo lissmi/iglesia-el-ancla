@@ -36,6 +36,18 @@ const imageSchema = new Schema(
   { _id: false, strict: true }
 );
 
+// Las opciones para cooperar viven dentro de la actividad, no en una colección nueva.
+const cooperationItemSchema = new Schema({
+  name: { type: String, trim: true, required: true, maxlength: 60 },
+  // Cantidad total que todos los miembros pueden comprometer para este aporte.
+  maxQuantity: { type: Number, required: true, min: 1, max: 500 },
+}, { strict: true });
+
+const cooperationSchema = new Schema({
+  enabled: { type: Boolean, default: false },
+  items: { type: [cooperationItemSchema], default: undefined },
+}, { _id: false, strict: true });
+
 // Cada actividad corresponde a una fecha concreta: bingo, lota, taller, etc.
 const activitySchema = new Schema(
   {
@@ -87,6 +99,9 @@ const activitySchema = new Schema(
     requiresConfirmation: { type: Boolean, default: false },
     capacity: { type: Number, min: 1, default: undefined },
 
+    // Lista opcional de aportes (bebida, queque, galletas...) y cupos máximos.
+    cooperation: { type: cooperationSchema, default: () => ({ enabled: false }) },
+
     // Solo se muestra al miembro si el administrador la publicó.
     publicationStatus: {
       type: String,
@@ -126,6 +141,23 @@ activitySchema.pre("validate", function validateRelatedFields(next) {
     } catch {
       this.invalidate("meetingUrl", "Debes indicar un enlace de reunión válido");
     }
+  }
+  // Cooperar exige una inscripción, pues el aporte debe pertenecer a un miembro.
+  if (this.cooperation?.enabled) {
+    if (!this.requiresConfirmation) {
+      this.invalidate("requiresConfirmation", "Activa la confirmación para organizar cooperaciones");
+    }
+    const items = this.cooperation.items || [];
+    if (items.length < 1 || items.length > 20) {
+      this.invalidate("cooperation.items", "Define entre 1 y 20 tipos de cooperación");
+    }
+    const names = items.map((item) => (item.name || "").trim().toLocaleLowerCase("es-CL"));
+    if (new Set(names).size !== names.length) {
+      this.invalidate("cooperation.items", "No repitas nombres de aportes dentro de la actividad");
+    }
+  } else if (this.cooperation) {
+    // Una actividad sin cooperación no guarda listas vacías innecesarias.
+    this.cooperation.items = undefined;
   }
   // Sin confirmaciones tampoco necesitamos un límite de cupos.
   if (!this.requiresConfirmation) this.capacity = undefined;

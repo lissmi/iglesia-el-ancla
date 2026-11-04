@@ -21,6 +21,14 @@ const activityConfirmationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    // Aportes reservados por el miembro; permanecen en su confirmación existente.
+    contributions: {
+      type: [new mongoose.Schema({
+        itemId: { type: mongoose.Schema.Types.ObjectId, required: true },
+        quantity: { type: Number, required: true, min: 1, max: 20 },
+      }, { _id: false, strict: true })],
+      default: undefined,
+    },
     // Instante en que se creó la confirmación.
     confirmedAt: { type: Date, default: Date.now, required: true },
   },

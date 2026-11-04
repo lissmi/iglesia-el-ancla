@@ -111,6 +111,9 @@ import songRoutes from "./routes/songRoutes.js";
 // Importamos los eventos recurrentes visibles en la página pública.
 import eventRoutes from "./routes/eventRoutes.js";
 
+// Importamos la gestión de peticiones de oración.
+import prayerRequestRoutes from "./routes/prayerRequestRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -522,6 +525,9 @@ app.use("/api/events", eventRoutes);
 // Consultamos creaciones, últimas modificaciones y eliminaciones.
 // La autenticación y los permisos se validan dentro del router.
 app.use("/api/activity-history", activityHistoryRoutes);
+
+// Conectamos la API de peticiones de oración.
+app.use("/api/prayer-requests", prayerRequestRoutes);
 
 // =========================================================
 // RUTAS INEXISTENTES (404)

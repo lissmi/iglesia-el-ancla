@@ -3,7 +3,7 @@ import {
   CalendarDays, Clock3, MapPin, MonitorPlay, Pencil,
   UsersRound, X,
 } from "lucide-react";
-import "../../../styles/components/administration/events/EventDetailsModal.css";
+import "../../../styles/components/administration/activities/ActivityDetailsModal.css";
 
 function formatDate(value) {
   if (!value) return "No especificada";
@@ -83,6 +83,20 @@ function ActivityDetailsModal({ isOpen, activity, onClose, onEdit }) {
               {!isPresential && <div><dt>Acceso online</dt><dd>{safeMeetingUrl ? <a href={safeMeetingUrl} target="_blank" rel="noopener noreferrer">Abrir enlace de reunión</a> : meetingUrl || "Sin enlace configurado"}</dd></div>}
             </dl>
           </section>
+
+          {activity.cooperation?.enabled && (
+            <section className="event-details__section">
+              <h3>Cooperación solicitada</h3>
+              <dl className="event-details__grid">
+                {(activity.cooperation.items || []).map((item) => (
+                  <div key={item.id}><dt>{item.name}</dt><dd>Máximo {item.maxQuantity} unidades</dd></div>
+                ))}
+              </dl>
+              <p className="event-details__hint">
+                Los aportes de cada participante se consultan en «Confirmaciones».
+              </p>
+            </section>
+          )}
 
           <section className="event-details__section">
             <h3><UsersRound size={18} /> Asistencia</h3>

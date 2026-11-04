@@ -1,441 +1,236 @@
+/* =========================================================
+   MODAL DE PETICIONES DE ORACIÓN - IGLESIA EL ANCLA
+   Archivo: frontend/src/components/administration/prayers/PrayerRequestDetailsModal.jsx
+   Un solo modal permite crear, consultar, editar y dar seguimiento.
+========================================================= */
 
-import { useEffect, useId, useState } from "react";
+// Hooks de React para formularios y foco.
+import { useEffect, useId, useRef, useState } from "react";
 
-import {
-    CalendarDays,
-    CheckCircle2,
-    Clock3,
-    HandHeart,
-    LockKeyhole,
-    MessageSquareText,
-    Save,
-    ShieldCheck,
-    UserRound,
-    X,
-} from "lucide-react";
+// Iconos del diseño actual del panel.
+import { CalendarDays, HandHeart, LockKeyhole, Save, ShieldCheck, UserRound, X } from "lucide-react";
 
+// Conservamos el CSS del modal original.
 import "../../../styles/components/administration/prayers/PrayerRequestDetailsModal.css";
 
-// =========================================================
-// CONFIGURACIÓN DE ESTADOS
-// =========================================================
+// Categorías que admite el backend.
+const CATEGORIES = ["Salud", "Familia", "Trabajo", "Estudios", "Espiritual", "Personal", "Agradecimiento", "Otro"];
 
+// Estados administrables por la iglesia.
 const STATUS_OPTIONS = [
-    {
-        value: "pending",
-        label: "Pendiente",
-    },
-    {
-        value: "praying",
-        label: "En oración",
-    },
-    {
-        value: "answered",
-        label: "Respondida",
-    },
-    {
-        value: "completed",
-        label: "Finalizada",
-    },
+  { value: "pending", label: "Pendiente" },
+  { value: "praying", label: "En oración" },
+  { value: "answered", label: "Respondida" },
+  { value: "completed", label: "Finalizada" },
 ];
 
-// =========================================================
-// FORMATO DE FECHA
-// =========================================================
-
-function formatPrayerDate(value) {
-    if (!value) return "Sin fecha";
-
-    const date = new Date(`${value}T12:00:00Z`);
-
-    if (Number.isNaN(date.getTime())) {
-        return "Fecha no disponible";
-    }
-
-    return new Intl.DateTimeFormat("es-CL", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        timeZone: "UTC",
-    }).format(date);
+// Formulario nuevo, sin reutilizar un objeto de otra petición.
+function emptyForm() {
+  return { title: "", description: "", category: "Salud", visibility: "community", anonymous: false, status: "pending", followUpNote: "" };
 }
 
-// =========================================================
-// COMPONENTE
-// =========================================================
+// El servidor envía fechas ISO. Las mostramos en la hora de Chile.
+function formatDate(value) {
+  if (!value) return "Sin fecha";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "Fecha no disponible" :
+    new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "long", year: "numeric", timeZone: "America/Santiago" }).format(date);
+}
 
-function PrayerRequestDetailsModal({
-    isOpen,
-    request,
-    onClose,
-    onSave,
-}) {
-    const titleId = useId();
+function PrayerRequestDetailsModal({ isOpen, request, onClose, onSave }) {
+  // ID único para asociar encabezado y ventana.
+  const titleId = useId();
 
-    const [status, setStatus] = useState("pending");
-    const [followUpNote, setFollowUpNote] = useState("");
+  // Referencia para devolver el foco al cerrar.
+  const firstFieldRef = useRef(null);
 
-    const [isSaving, setIsSaving] = useState(false);
+  // Estado de todos los campos editables.
+  const [form, setForm] = useState(emptyForm);
 
-    // -------------------------------------------------------
-    // CARGAR DATOS DE LA PETICIÓN SELECCIONADA
-    // -------------------------------------------------------
+  // Protegemos el guardado contra dobles clics.
+  const [isSaving, setIsSaving] = useState(false);
 
-    useEffect(() => {
-        if (!isOpen || !request) return;
+  // Mostramos los errores en el modal, no solo en la consola.
+  const [error, setError] = useState("");
 
-        setStatus(request.status || "pending");
-        setFollowUpNote(request.followUpNote || "");
-        setIsSaving(false);
-    }, [isOpen, request]);
+  // Un request nulo significa "Crear petición".
+  const creating = !request;
 
-    // -------------------------------------------------------
-    // CERRAR CON ESCAPE
-    // -------------------------------------------------------
+  // Actualizamos el formulario cuando cambia la petición seleccionada.
+  useEffect(() => {
+    if (!isOpen) return;
+    setForm(request ? {
+      title: request.title || "",
+      description: request.description || "",
+      category: request.category || "Salud",
+      visibility: request.visibility || request.privacy || "community",
+      anonymous: Boolean(request.anonymous),
+      status: request.status || "pending",
+      followUpNote: request.followUpNote || "",
+    } : emptyForm());
+    setError("");
+    setIsSaving(false);
+  }, [isOpen, request]);
 
-    useEffect(() => {
-        if (!isOpen) return;
+  // Control del teclado y desplazamiento mientras está abierto.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    firstFieldRef.current?.focus();
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && !isSaving) onClose?.();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus?.();
+    };
+  }, [isOpen, isSaving, onClose]);
 
-        function handleKeyDown(event) {
-            if (event.key === "Escape") {
-                onClose();
-            }
-        }
+  // Cambiamos solo el campo editado.
+  function updateField(key, value) {
+    setForm((old) => ({ ...old, [key]: value }));
+    setError("");
+  }
 
-        document.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isOpen, onClose]);
-
-    // =========================================================
-    // GUARDAR CAMBIOS
-    // =========================================================
-
-    async function handleSubmit(event) {
-        event.preventDefault();
-
-        // Evitamos solicitudes duplicadas.
-        if (!request || isSaving) {
-            return;
-        }
-
-        setIsSaving(true);
-
-        try {
-
-            // Entregamos los cambios a la página principal.
-            //
-            // Actualmente se actualizan datos demostrativos.
-            // Posteriormente onSave podrá ejecutar
-            // una solicitud HTTP al backend.
-            await onSave(request.id, {
-                status,
-                followUpNote: followUpNote.trim(),
-            });
-
-        } catch (error) {
-
-            // Si ocurre un error, lo registramos.
-            // Más adelante mostraremos un mensaje
-            // visual de error dentro del modal.
-            console.error(
-                "No fue posible guardar el seguimiento:",
-                error
-            );
-
-        } finally {
-
-            setIsSaving(false);
-
-        }
+  // Creamos o actualizamos mediante la función proporcionada por el padre.
+  async function handleSubmit(event) {
+    event.preventDefault();
+    if (isSaving) return;
+    const payload = {
+      title: form.title.trim(),
+      description: form.description.trim(),
+      category: form.category,
+      visibility: form.visibility,
+      anonymous: form.anonymous,
+      // Los estados y notas internas se cambian solo en edición administrativa.
+      ...(!creating ? { status: form.status, followUpNote: form.followUpNote.trim() } : {}),
+    };
+    if (payload.title.length < 3 || payload.description.length < 5) {
+      setError("Completa el título y la descripción de la petición.");
+      return;
     }
-
-    if (!isOpen || !request) {
-        return null;
+    setIsSaving(true);
+    try {
+      await onSave?.(request?.id || null, payload);
+    } catch (saveError) {
+      setError(saveError?.response?.data?.message || saveError?.message || "No se pudieron guardar los cambios.");
+    } finally {
+      setIsSaving(false);
     }
+  }
 
-    const isPrivate = request.privacy === "private";
+  // No renderizamos el diálogo mientras está cerrado.
+  if (!isOpen) return null;
 
-    // Los administradores siempre pueden identificar
-    // al miembro que realizó la petición.
-    //
-    // El anonimato solamente oculta su identidad
-    // en las vistas destinadas a otros miembros.
+  return (
+    <div className="prayer-details__overlay" onMouseDown={(event) => {
+      if (event.target === event.currentTarget && !isSaving) onClose?.();
+    }}>
+      <section className="prayer-details" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+        <header className="prayer-details__header">
+          <div>
+            <span className="prayer-details__eyebrow">ADMINISTRACIÓN / PETICIONES DE ORACIÓN</span>
+            <h2 id={titleId}>{creating ? "Nueva petición" : "Detalles y seguimiento"}</h2>
+            <p>{creating ? "Registra una petición desde tu cuenta de administrador." : "Consulta la petición y actualiza su estado o contenido."}</p>
+          </div>
+          <button type="button" className="prayer-details__close" onClick={onClose} disabled={isSaving} aria-label="Cerrar formulario"><X size={20} /></button>
+        </header>
 
-    const requesterName =
-        request.requester || "No informado";
+        <div className="prayer-details__content">
+          {!creating && (
+            <div className="prayer-details__information">
+              <div className="prayer-details__field">
+                <span><UserRound size={15} /> Solicitante</span>
+                <strong>{request.requester || "Sin información"}</strong>
+                {request.anonymous && <small>Su identidad se oculta a otros miembros.</small>}
+              </div>
+              <div className="prayer-details__field">
+                <span><CalendarDays size={15} /> Fecha de recepción</span>
+                <strong>{formatDate(request.date)}</strong>
+              </div>
+              <div className="prayer-details__field">
+                <span><HandHeart size={15} /> Acompañamiento</span>
+                <strong>{request.prayerCount || 0} persona(s) orando</strong>
+              </div>
+              <div className="prayer-details__field">
+                <span><LockKeyhole size={15} /> Privacidad</span>
+                <strong>{request.visibility === "private" ? "Privada" : "Comunitaria"}</strong>
+              </div>
+            </div>
+          )}
 
-    const hasChanges =
-        status !== request.status ||
-        followUpNote.trim() !== (request.followUpNote || "");
+          {error && <p className="prayer-details__error" role="alert">{error}</p>}
 
-    return (
-        <div
-            className="prayer-details__overlay"
-            onMouseDown={(event) => {
-                if (event.target === event.currentTarget) {
-                    onClose();
-                }
-            }}
-        >
-            <section
-                className="prayer-details"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={titleId}
-            >
-                {/* =========================================== */}
-                {/* ENCABEZADO */}
-                {/* =========================================== */}
+          <form className="prayer-details__form" id="prayer-details-form" onSubmit={handleSubmit}>
+            <h3><HandHeart size={19} /> Información de la petición</h3>
+            <div className="prayer-details__form-field">
+              <label htmlFor="admin-prayer-title">Título *</label>
+              <input ref={firstFieldRef} id="admin-prayer-title" value={form.title} maxLength={120} required minLength={3}
+                onChange={(event) => updateField("title", event.target.value)} placeholder="Ej.: Oración por mi familia" />
+            </div>
+            <div className="prayer-details__form-field">
+              <label htmlFor="admin-prayer-category">Categoría *</label>
+              <select id="admin-prayer-category" value={form.category} onChange={(event) => updateField("category", event.target.value)}>
+                {CATEGORIES.map((item) => <option value={item} key={item}>{item}</option>)}
+              </select>
+            </div>
+            <div className="prayer-details__form-field">
+              <label htmlFor="admin-prayer-description">Descripción *</label>
+              <textarea id="admin-prayer-description" value={form.description} rows={5} minLength={5} maxLength={2000} required
+                onChange={(event) => updateField("description", event.target.value)} />
+            </div>
+            <div className="prayer-details__form-field">
+              <label htmlFor="admin-prayer-visibility">Visibilidad</label>
+              <select id="admin-prayer-visibility" value={form.visibility} onChange={(event) => updateField("visibility", event.target.value)}>
+                <option value="community">Comunitaria — visible para miembros</option>
+                <option value="private">Privada — solo autor y administración</option>
+              </select>
+            </div>
+            <label className="prayer-details__checkbox">
+              <input type="checkbox" checked={form.anonymous} onChange={(event) => updateField("anonymous", event.target.checked)} />
+              Ocultar el nombre del solicitante frente a otros miembros
+            </label>
 
-                <header className="prayer-details__header">
-                    <div>
-                        <span className="prayer-details__eyebrow">
-                            {request.id} · PETICIÓN DE ORACIÓN
-                        </span>
-
-                        <h2 id={titleId}>
-                            Detalle de petición
-                        </h2>
-
-                        <p>
-                            Consulta la solicitud y registra su seguimiento.
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        className="prayer-details__close"
-                        onClick={onClose}
-                        aria-label="Cerrar detalles"
-                    >
-                        <X size={20} aria-hidden="true" />
-                    </button>
-                </header>
-
-                {/* =========================================== */}
-                {/* CONTENIDO */}
-                {/* =========================================== */}
-
-                <div className="prayer-details__content">
-
-                    <div className="prayer-details__badges">
-                        <span
-                            className={`prayer-details__privacy ${isPrivate
-                                ? "prayer-details__privacy--private"
-                                : "prayer-details__privacy--community"
-                                }`}
-                        >
-                            {isPrivate ? (
-                                <LockKeyhole size={15} aria-hidden="true" />
-                            ) : (
-                                <HandHeart size={15} aria-hidden="true" />
-                            )}
-
-                            {isPrivate ? "Privada" : "Comunitaria"}
-                        </span>
-
-                        {request.anonymous && (
-                            <span className="prayer-details__anonymous">
-                                <ShieldCheck size={15} aria-hidden="true" />
-                                Anónima para miembros
-                            </span>
-                        )}
-                    </div>
-
-                    {/* ========================================= */}
-                    {/* INFORMACIÓN GENERAL */}
-                    {/* ========================================= */}
-
-                    <div className="prayer-details__information">
-
-                        <div className="prayer-details__field prayer-details__field--wide">
-                            <span>Título de la petición</span>
-                            <strong>{request.title}</strong>
-                        </div>
-
-                        {/* IDENTIDAD DEL SOLICITANTE */}
-
-                        <div className="prayer-details__field">
-                            <span>
-                                <UserRound size={15} aria-hidden="true" />
-                                Solicitante registrado
-                            </span>
-
-                            <strong>{requesterName}</strong>
-
-                            {request.anonymous && (
-                                <small>
-                                    Identidad visible únicamente para
-                                    administradores autorizados.
-                                </small>
-                            )}
-                        </div>
-
-                        <div className="prayer-details__field">
-                            <span>
-                                <CalendarDays size={15} aria-hidden="true" />
-                                Fecha de recepción
-                            </span>
-                            <strong>{formatPrayerDate(request.date)}</strong>
-                        </div>
-
-                        <div className="prayer-details__field">
-                            <span>Categoría</span>
-                            <strong>{request.category}</strong>
-                        </div>
-
-                        <div className="prayer-details__field">
-                            <span>
-                                <Clock3 size={15} aria-hidden="true" />
-                                Estado actual
-                            </span>
-
-                            <strong>
-                                {STATUS_OPTIONS.find(
-                                    (option) => option.value === request.status
-                                )?.label || "Pendiente"}
-                            </strong>
-                        </div>
-
-                    </div>
-
-                    {/* ========================================= */}
-                    {/* CONTENIDO DE LA PETICIÓN */}
-                    {/* ========================================= */}
-
-                    <div className="prayer-details__message">
-
-                        <h3>
-                            <MessageSquareText
-                                size={19}
-                                aria-hidden="true"
-                            />
-                            Contenido de la petición
-                        </h3>
-
-                        <p>
-                            {request.description ||
-                                "Esta petición no contiene una descripción."}
-                        </p>
-
-                    </div>
-
-                    {/* ========================================= */}
-                    {/* FORMULARIO DE SEGUIMIENTO */}
-                    {/* ========================================= */}
-
-                    <form
-                        id="prayer-details-form"
-                        onSubmit={handleSubmit}
-                        className="prayer-details__form"
-                    >
-                        <h3>
-                            <CheckCircle2 size={19} aria-hidden="true" />
-                            Seguimiento de la petición
-                        </h3>
-
-                        <div className="prayer-details__form-field">
-
-                            <label htmlFor="prayer-details-status">
-                                Estado de seguimiento
-                            </label>
-
-                            <select
-                                id="prayer-details-status"
-                                value={status}
-                                onChange={(event) =>
-                                    setStatus(event.target.value)
-                                }
-                            >
-                                {STATUS_OPTIONS.map((option) => (
-                                    <option
-                                        key={option.value}
-                                        value={option.value}
-                                    >
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
-
-                        </div>
-
-                        <div className="prayer-details__form-field">
-
-                            <label htmlFor="prayer-details-note">
-                                Observación de seguimiento
-                            </label>
-
-                            <textarea
-                                id="prayer-details-note"
-                                rows={4}
-                                maxLength={1000}
-                                value={followUpNote}
-                                onChange={(event) =>
-                                    setFollowUpNote(event.target.value)
-                                }
-                                placeholder="Registra una observación breve sobre el seguimiento realizado..."
-                            />
-
-                            <small>
-                                Esta observación será de uso interno y no
-                                deberá mostrarse públicamente.
-                            </small>
-
-                        </div>
-
-                    </form>
-
-                    {/* ========================================= */}
-                    {/* AVISO DE CONFIDENCIALIDAD */}
-                    {/* ========================================= */}
-
-                    <div className="prayer-details__notice">
-                        <ShieldCheck size={18} aria-hidden="true" />
-
-                        <p>
-                            Esta información es confidencial y debe utilizarse
-                            exclusivamente para el acompañamiento espiritual
-                            y seguimiento autorizado. Las peticiones privadas
-                            no deben compartirse con otros miembros y la
-                            identidad de quienes soliciten anonimato debe
-                            permanecer protegida fuera del equipo administrativo.
-                        </p>
-                    </div>
-
+            {!creating && (
+              <>
+                <h3><HandHeart size={19} /> Seguimiento de la petición</h3>
+                <div className="prayer-details__form-field">
+                  <label htmlFor="prayer-details-status">Estado</label>
+                  <select id="prayer-details-status" value={form.status} onChange={(event) => updateField("status", event.target.value)}>
+                    {STATUS_OPTIONS.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                  </select>
                 </div>
+                <div className="prayer-details__form-field">
+                  <label htmlFor="prayer-details-note">Observación interna</label>
+                  <textarea id="prayer-details-note" value={form.followUpNote} rows={4} maxLength={1000}
+                    onChange={(event) => updateField("followUpNote", event.target.value)}
+                    placeholder="Notas de seguimiento, solo para administradores." />
+                  <small>Esta observación nunca se muestra a los miembros.</small>
+                </div>
+              </>
+            )}
+          </form>
 
-                {/* =========================================== */}
-                {/* PIE DEL MODAL */}
-                {/* =========================================== */}
-
-                <footer className="prayer-details__footer">
-
-                    <button
-                        type="button"
-                        className="prayer-details__cancel"
-                        onClick={onClose}
-                    >
-                        Cerrar
-                    </button>
-
-                    <button
-                        type="submit"
-                        form="prayer-details-form"
-                        className="prayer-details__save"
-                        disabled={!hasChanges || isSaving}
-                    >
-                        <Save size={17} aria-hidden="true" />
-                        Guardar cambios
-                    </button>
-
-                </footer>
-
-            </section>
+          <div className="prayer-details__notice">
+            <ShieldCheck size={18} aria-hidden="true" />
+            <p>Trata las peticiones con confidencialidad. Las privadas no se comparten con la comunidad y las notas de seguimiento son internas.</p>
+          </div>
         </div>
-    );
+
+        <footer className="prayer-details__footer">
+          <button type="button" className="prayer-details__cancel" onClick={onClose} disabled={isSaving}>Cancelar</button>
+          <button type="submit" form="prayer-details-form" className="prayer-details__save" disabled={isSaving}>
+            <Save size={17} /> {isSaving ? "Guardando..." : creating ? "Registrar petición" : "Guardar cambios"}
+          </button>
+        </footer>
+      </section>
+    </div>
+  );
 }
 
+// Reutilizamos el mismo diálogo para alta y edición de administración.
 export default PrayerRequestDetailsModal;

@@ -1154,3 +1154,424 @@
     transform: none;
   }
 }
+
+
+/* =========================================================
+   PETICIONES DE ORACIÓN - BOTÓN ESTOY ORANDO
+========================================================= */
+
+/* Alineamos las acciones dentro de cada tarjeta. */
+.member-prayer .member-prayer__card-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    gap: 10px;
+    min-width: 0;
+}
+
+/* Botón inicial de acompañamiento. */
+.member-prayer button.member-prayer__pray-button {
+    appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: auto;
+    min-height: 40px;
+
+    margin: 0;
+    padding: 10px 15px;
+
+    border: 1px solid #c7ded1;
+    border-radius: 11px;
+
+    background-color: #edf7f1;
+    color: #28684a;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Icono de la mano con corazón. */
+.member-prayer button.member-prayer__pray-button svg {
+    display: block;
+
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+
+    stroke: currentColor;
+}
+
+/* Hover antes de confirmar el apoyo. */
+.member-prayer button.member-prayer__pray-button:hover:not(:disabled) {
+    border-color: #a8cbb7;
+    background-color: #e0f0e6;
+
+    transform: translateY(-1px);
+}
+
+/* Estado confirmado: el miembro está orando. */
+.member-prayer button.member-prayer__pray-button--active,
+.member-prayer button.member-prayer__pray-button[aria-pressed="true"] {
+    border-color: #397d58;
+
+    background-color: #327451;
+    color: #ffffff;
+
+    box-shadow: 0 3px 10px rgba(50, 116, 81, 0.14);
+}
+
+/* Hover cuando el apoyo ya está confirmado. */
+.member-prayer button.member-prayer__pray-button--active:hover:not(:disabled),
+.member-prayer button.member-prayer__pray-button[aria-pressed="true"]:hover:not(:disabled) {
+    border-color: #296342;
+    background-color: #296342;
+}
+
+/* Foco accesible. */
+.member-prayer button.member-prayer__pray-button:focus-visible {
+    outline: 3px solid rgba(50, 116, 81, 0.25);
+    outline-offset: 3px;
+}
+
+/* No permitir interacciones mientras se guarda. */
+.member-prayer button.member-prayer__pray-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================================
+   CONTADOR DE PERSONAS ORANDO
+========================================================= */
+
+/* Separación del contador respecto de los demás elementos. */
+.member-prayer .member-prayer__prayer-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 15px 0 12px;
+
+    color: #52705f;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* Icono del contador. */
+.member-prayer .member-prayer__prayer-count svg {
+    flex-shrink: 0;
+    color: #408562;
+}
+
+/* Separación y distribución del pie de la tarjeta. */
+.member-prayer .member-prayer__card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding-top: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+    .member-prayer .member-prayer__card-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .member-prayer .member-prayer__card-actions button {
+        flex: 1 1 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .member-prayer button.member-prayer__pray-button {
+        transition: none;
+    }
+
+    .member-prayer button.member-prayer__pray-button:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   MODAL DE PETICIONES - DISEÑO Y ESPACIADO
+========================================================= */
+
+/* Conservamos el contenedor original del modal. */
+.member-prayer .member-prayer__modal {
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   CONTENIDO DEL MODAL DE DETALLES
+========================================================= */
+
+/* Espaciado entre descripción, estado y acompañamiento. */
+.member-prayer .member-prayer__details-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 18px;
+}
+
+/* Separación de los datos del solicitante y fecha. */
+.member-prayer .member-prayer__details-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px 20px;
+}
+
+/* Contador de personas acompañando en oración. */
+.member-prayer .member-prayer__details-prayers {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0;
+    padding: 12px 14px;
+
+    border: 1px solid #deebe2;
+    border-radius: 11px;
+
+    background-color: #f4f9f5;
+    color: #427052;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* Icono del contador. */
+.member-prayer .member-prayer__details-prayers svg {
+    flex-shrink: 0;
+    color: #43845e;
+}
+
+/* Separación del botón de apoyo dentro del modal. */
+.member-prayer .member-prayer__details-content
+> button.member-prayer__pray-button {
+    align-self: flex-start;
+
+    margin: 0 0 3px;
+}
+
+/* =========================================================
+   PIE DEL MODAL
+========================================================= */
+
+/* Distribución uniforme de los botones del modal. */
+.member-prayer .member-prayer__modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    gap: 11px;
+
+    padding: 18px 25px;
+
+    border-top: 1px solid #e8e5df;
+    background-color: #ffffff;
+}
+
+/* Estilos básicos compartidos por los botones. */
+.member-prayer .member-prayer__modal-footer > button {
+    appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+
+    margin: 0;
+    padding: 10px 17px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* =========================================================
+   BOTÓN EDITAR
+========================================================= */
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__edit-button {
+    border-color: #d8e1e5;
+
+    background-color: #f4f7f8;
+    color: #29465b;
+}
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__edit-button:hover {
+    border-color: #c6d6dd;
+    background-color: #eaf0f3;
+}
+
+/* =========================================================
+   BOTÓN ELIMINAR
+========================================================= */
+
+/* En detalles se muestra como acción destructiva secundaria. */
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__delete-button {
+    border-color: #ebc9c4;
+
+    background-color: #fff5f3;
+    color: #a13b33;
+}
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__delete-button:hover {
+    border-color: #dca59e;
+    background-color: #fce9e6;
+}
+
+/* Dentro de la confirmación usamos rojo sólido. */
+.member-prayer .member-prayer__delete-modal
+.member-prayer__modal-footer
+> button.member-prayer__delete-button {
+    border-color: #a43d35;
+
+    background-color: #a43d35;
+    color: #ffffff;
+}
+
+.member-prayer .member-prayer__delete-modal
+.member-prayer__modal-footer
+> button.member-prayer__delete-button:hover {
+    border-color: #8d3029;
+    background-color: #8d3029;
+}
+
+/* =========================================================
+   BOTÓN CERRAR Y CANCELAR
+========================================================= */
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__secondary-button {
+    border-color: #dce3e7;
+
+    background-color: #ffffff;
+    color: #29465b;
+}
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__secondary-button:hover {
+    border-color: #c5d2da;
+    background-color: #f2f6f8;
+}
+
+/* =========================================================
+   BOTÓN ENVIAR O GUARDAR
+========================================================= */
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__primary-button {
+    border-color: #243e54;
+
+    background-color: #243e54;
+    color: #ffffff;
+}
+
+.member-prayer .member-prayer__modal-footer
+> button.member-prayer__primary-button:hover {
+    border-color: #365a73;
+    background-color: #365a73;
+}
+
+/* =========================================================
+   ICONOS, FOCO Y ESTADOS
+========================================================= */
+
+/* Evitamos iconos desalineados. */
+.member-prayer .member-prayer__modal-footer button svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Foco accesible para todos los botones. */
+.member-prayer .member-prayer__modal-footer > button:focus-visible {
+    outline: 3px solid rgba(181, 139, 82, 0.3);
+    outline-offset: 2px;
+}
+
+/* Botones deshabilitados durante el guardado. */
+.member-prayer .member-prayer__modal-footer > button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Reducimos márgenes interiores en teléfonos. */
+    .member-prayer .member-prayer__modal-footer {
+        padding: 16px;
+        gap: 9px;
+    }
+
+    /* Permitimos que los botones se ajusten al ancho. */
+    .member-prayer .member-prayer__modal-footer > button {
+        flex: 1 1 auto;
+    }
+
+    /* Distribución vertical en el cuerpo del modal. */
+    .member-prayer .member-prayer__details-content {
+        gap: 15px;
+    }
+}

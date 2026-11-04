@@ -9,8 +9,20 @@ import mongoose from "mongoose";
 // Reutilizamos el modelo liviano de eliminaciones.
 import DeletionLog from "../../models/DeletionLog.js";
 
-// Tipos que acepta nuestro historial administrativo.
-const RESOURCE_TYPES = new Set(["activity", "event", "book", "song"]);
+
+/* =========================================================
+   TIPOS DE RECURSOS ADMITIDOS EN LA AUDITORÍA
+========================================================= */
+
+// Definimos los recursos que pueden eliminarse con historial.
+const RESOURCE_TYPES = new Set([
+  "activity",        // Actividades de la comunidad.
+  "event",           // Eventos públicos recurrentes.
+  "book",            // Libros de Biblioteca Solidaria.
+  "song",            // Canciones del cancionero.
+  "prayer_request",  // Peticiones de oración.
+]);
+
 
 // Creamos un error con código HTTP para el manejador de Express.
 function httpError(status, message) {

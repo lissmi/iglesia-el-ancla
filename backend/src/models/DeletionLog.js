@@ -12,12 +12,28 @@ const { Schema } = mongoose;
 // Guardaremos solo datos mínimos del recurso eliminado.
 const deletionLogSchema = new Schema(
   {
-    // Tipo de contenido: actividad, evento público (futuro), libro o canción.
+
+    // =========================================================
+    // TIPO DE RECURSO ELIMINADO
+    // =========================================================
+
+    // Identificamos qué módulo originó la eliminación.
     resourceType: {
       type: String,
+
+      // El tipo de recurso es obligatorio.
       required: true,
-      enum: ["activity", "event", "book", "song"],
+
+      // Debe coincidir con los tipos del servicio de auditoría.
+      enum: [
+        "activity",
+        "event",
+        "book",
+        "song",
+        "prayer_request",
+      ],
     },
+
 
     // ID del documento eliminado (ya no existirá en su colección original).
     resourceId: {

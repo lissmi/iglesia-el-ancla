@@ -1,0 +1,677 @@
+
+/* ========================================================= */
+/* MODAL DE CONFIRMACIONES */
+/* ========================================================= */
+
+.event-confirmations__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+  background: rgba(18, 33, 45, 0.65);
+  backdrop-filter: blur(3px);
+
+  overflow-y: auto;
+}
+
+.event-confirmations {
+  width: 100%;
+  max-width: 760px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 65px rgba(15, 30, 42, 0.25);
+}
+
+.event-confirmations__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 28px 30px;
+  border-bottom: 1px solid #e5ebee;
+}
+
+.event-confirmations__eyebrow {
+  color: #b96c56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.event-confirmations__header h2 {
+  margin: 8px 0;
+  color: #203c4b;
+  font-size: 25px;
+}
+
+.event-confirmations__header p {
+  margin: 0;
+  color: #6c7d87;
+  font-size: 14px;
+}
+
+.event-confirmations__close {
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 9px;
+
+  color: #405c6b;
+  background: #f1f5f7;
+  cursor: pointer;
+}
+
+.event-confirmations__content {
+  padding: 28px 30px;
+}
+
+.event-confirmations__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.event-confirmations__summary article {
+  padding: 19px;
+  background: #f5f8fa;
+  border: 1px solid #e5ebee;
+  border-radius: 14px;
+}
+
+.event-confirmations__summary span {
+  display: block;
+  color: #6c7d87;
+  font-size: 12px;
+}
+
+.event-confirmations__summary strong {
+  display: block;
+  margin-top: 8px;
+  color: #203c4b;
+  font-size: 28px;
+}
+
+.event-confirmations__capacity {
+  margin-top: 25px;
+}
+
+.event-confirmations__capacity-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: #203c4b;
+  font-size: 13px;
+}
+
+.event-confirmations__capacity progress {
+  display: block;
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  accent-color: #b96c56;
+}
+
+.event-confirmations__capacity small {
+  display: block;
+  margin-top: 10px;
+  color: #6c7d87;
+}
+
+.event-confirmations__list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 30px 0 16px;
+}
+
+.event-confirmations__list-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: #203c4b;
+  font-size: 17px;
+}
+
+.event-confirmations__list-header > span {
+  color: #6c7d87;
+  font-size: 12px;
+}
+
+.event-confirmations__search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 14px;
+  margin-bottom: 18px;
+
+  color: #7c8c95;
+  border: 1px solid #dfe7eb;
+  border-radius: 10px;
+}
+
+.event-confirmations__search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #203c4b;
+  font: inherit;
+  font-size: 13px;
+}
+
+.event-confirmations__table-wrap {
+  overflow-x: auto;
+}
+
+.event-confirmations__table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.event-confirmations__table-wrap th,
+.event-confirmations__table-wrap td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #e9eef1;
+  font-size: 13px;
+}
+
+.event-confirmations__table-wrap th {
+  color: #6c7d87;
+  font-weight: 700;
+}
+
+.event-confirmations__table-wrap td {
+  color: #203c4b;
+}
+
+.event-confirmations__status {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.event-confirmations__status--confirmed {
+  color: #24734c;
+  background: #e6f4eb;
+}
+
+.event-confirmations__status--pending {
+  color: #996d22;
+  background: #fff3d8;
+}
+
+.event-confirmations__status--cancelled {
+  color: #8b5961;
+  background: #f9e8eb;
+}
+
+.event-confirmations__empty {
+  padding: 35px 15px;
+  text-align: center;
+  color: #788993;
+  background: #f8fafb;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.event-confirmations__notice {
+  margin: 24px 0 0;
+  color: #82919a;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .event-confirmations__overlay {
+    padding: 12px;
+  }
+
+  .event-confirmations__header,
+  .event-confirmations__content {
+    padding: 20px;
+  }
+
+  .event-confirmations__summary {
+    gap: 8px;
+  }
+
+  .event-confirmations__summary article {
+    padding: 12px;
+  }
+
+  .event-confirmations__summary strong {
+    font-size: 23px;
+  }
+}
+
+
+/* ========================================================= */
+/* COOPERACIONES Y REPORTES - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+/* ========================================================= */
+/* RESUMEN DE CONFIRMACIONES */
+/* ========================================================= */
+
+.event-confirmations__summary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* ========================================================= */
+/* SECCIÓN DE COOPERACIONES */
+/* ========================================================= */
+
+.event-confirmations__cooperation {
+  margin-top: 28px;
+  padding: 22px;
+
+  border: 1px solid #e2e9ed;
+  border-radius: 15px;
+
+  background-color: #f8fafb;
+}
+
+.event-confirmations__cooperation-heading {
+  margin-bottom: 20px;
+}
+
+.event-confirmations__cooperation-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.event-confirmations__cooperation-title svg {
+  flex-shrink: 0;
+  color: #b96c56;
+}
+
+.event-confirmations__cooperation-title h3 {
+  margin: 0;
+  color: #203c4b;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.event-confirmations__cooperation-heading p {
+  margin: 9px 0 0;
+  color: #788b96;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ========================================================= */
+/* TARJETAS DE APORTES */
+/* ========================================================= */
+
+.event-confirmations__contribution-summary {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 200px), 1fr)
+  );
+  gap: 13px;
+}
+
+.event-confirmations__contribution-card {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+
+  min-width: 0;
+  padding: 18px;
+
+  border: 1px solid #e2e8eb;
+  border-radius: 13px;
+
+  background-color: #ffffff;
+}
+
+.event-confirmations__contribution-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-confirmations__contribution-top strong {
+  color: #294656;
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.event-confirmations__contribution-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 30px;
+
+  background-color: #edf3f7;
+  color: #54768a;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.event-confirmations__contribution-card--complete
+.event-confirmations__contribution-status {
+  background-color: #e8f5ec;
+  color: #307c51;
+}
+
+/* ========================================================= */
+/* CANTIDADES Y PROGRESO */
+/* ========================================================= */
+
+.event-confirmations__contribution-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.event-confirmations__contribution-count strong {
+  color: #203c4b;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.event-confirmations__contribution-count span {
+  color: #82919b;
+  font-size: 12px;
+}
+
+.event-confirmations__contribution-progress {
+  width: 100%;
+  height: 8px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+  background-color: #e8eef1;
+}
+
+.event-confirmations__contribution-progress > span {
+  display: block;
+  height: 100%;
+
+  border-radius: inherit;
+  background-color: #b96c56;
+
+  transition: width 0.25s ease;
+}
+
+.event-confirmations__contribution-card--complete
+.event-confirmations__contribution-progress > span {
+  background-color: #438765;
+}
+
+.event-confirmations__contribution-card > small {
+  color: #82919b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ========================================================= */
+/* SECCIÓN DE DESCARGAS */
+/* ========================================================= */
+
+.event-confirmations__exports {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  margin-top: 22px;
+  padding: 19px 20px;
+
+  border: 1px solid #e1e9ed;
+  border-radius: 13px;
+
+  background-color: #ffffff;
+}
+
+.event-confirmations__exports-info {
+  flex: 1 1 210px;
+  min-width: 0;
+}
+
+.event-confirmations__exports-info strong {
+  display: block;
+
+  color: #294656;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.event-confirmations__exports-info p {
+  margin: 6px 0 0;
+
+  color: #82919b;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.event-confirmations__exports-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========================================================= */
+/* BOTONES DE EXPORTACIÓN */
+/* ========================================================= */
+
+.event-confirmations__exports-actions button {
+  appearance: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 41px;
+  margin: 0;
+  padding: 10px 15px;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.event-confirmations__exports-actions button svg {
+  flex-shrink: 0;
+}
+
+/* PDF: color terracota institucional. */
+.event-confirmations__export-pdf {
+  background-color: #fbefeb;
+  border-color: #efd7d0 !important;
+  color: #a65b47;
+}
+
+.event-confirmations__export-pdf:hover:not(:disabled) {
+  background-color: #f5ded7;
+}
+
+/* Excel: verde suave. */
+.event-confirmations__export-excel {
+  background-color: #eaf5ed;
+  border-color: #d4e9da !important;
+  color: #317850;
+}
+
+.event-confirmations__export-excel:hover:not(:disabled) {
+  background-color: #daf0e1;
+}
+
+.event-confirmations__exports-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* TABLA DE PARTICIPANTES Y APORTES */
+/* ========================================================= */
+
+.event-confirmations__table-wrap table {
+  min-width: 570px;
+}
+
+/* Alineamos los datos de participantes. */
+.event-confirmations__table-wrap td {
+  vertical-align: middle;
+}
+
+/* Distribuimos los aportes de un miembro. */
+.event-confirmations__contributions-detail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Etiqueta individual de aporte. */
+.event-confirmations__contribution-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  max-width: 100%;
+  padding: 7px 10px;
+
+  border: 1px solid #e7e1d8;
+  border-radius: 9px;
+
+  background-color: #faf6f0;
+  color: #795e43;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.event-confirmations__contribution-tag svg {
+  flex-shrink: 0;
+  color: #b96c56;
+}
+
+.event-confirmations__contribution-tag strong {
+  color: #294656;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* Miembro que todavía no seleccionó cooperación. */
+.event-confirmations__no-contribution {
+  color: #8b9ba4;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* ========================================================= */
+/* ACCESIBILIDAD */
+/* ========================================================= */
+
+.event-confirmations__exports-actions
+button:focus-visible {
+  outline: 3px solid rgba(185, 108, 86, 0.25);
+  outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 650px) {
+
+  .event-confirmations__cooperation {
+    padding: 16px;
+  }
+
+  .event-confirmations__exports {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .event-confirmations__exports-info {
+    flex: none;
+  }
+
+  .event-confirmations__exports-actions {
+    width: 100%;
+  }
+
+  .event-confirmations__exports-actions button {
+    flex: 1 1 auto;
+  }
+
+}
+
+@media (max-width: 420px) {
+
+  .event-confirmations__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .event-confirmations__contribution-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .event-confirmations__exports-actions {
+    flex-direction: column;
+  }
+
+  .event-confirmations__exports-actions button {
+    width: 100%;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .event-confirmations__contribution-progress > span,
+  .event-confirmations__exports-actions button {
+    transition: none;
+  }
+
+}
