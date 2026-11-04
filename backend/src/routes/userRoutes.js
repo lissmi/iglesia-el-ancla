@@ -497,12 +497,32 @@ function parseRegistrationBirthDate(value) {
     : date;
 }
 
-// El fragmento #token no viaja en las solicitudes HTTP de navegación.
-// El token sí se enviará expresamente al backend mediante POST.
+
+// =========================================================
+// ENLACE PÚBLICO PARA ACTIVACIÓN DE CUENTAS
+// =========================================================
+
+// Generamos el enlace que recibirá el nuevo miembro.
+// Utilizamos siempre el frontend público de la iglesia,
+// incluso cuando el registro se realiza desde localhost.
 function invitationLink(token) {
-  const origin = new URL(process.env.FRONTEND_URL || "http://localhost:3000").origin;
+
+  // Definimos la dirección pública de activación.
+  // Puede cambiarse desde las variables de entorno
+  // sin modificar nuevamente el código.
+  const activationUrl =
+    process.env.ACTIVATION_FRONTEND_URL ||
+    "https://iglesia-el-ancla.vercel.app";
+
+  // Obtenemos el origen HTTPS de la página pública.
+  const origin = new URL(activationUrl).origin;
+
+  // Conservamos el token en el fragmento de la URL.
+  // Este formato es el que utiliza nuestra página
+  // para confirmar el correo y crear la contraseña.
   return `${origin}/activar-cuenta#token=${encodeURIComponent(token)}`;
 }
+
 
 // =========================================================
 // DIAGNÓSTICO SEGURO DEL CORREO INSTITUCIONAL
