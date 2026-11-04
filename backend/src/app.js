@@ -323,48 +323,58 @@ app.get(
 );
 
 
+
 // =========================================================
 // RUTAS DE AUTENTICACIÓN
 // =========================================================
 
-// Registro de las rutas de autenticación.
+// =========================================================
+// 1. ACTIVACIÓN PÚBLICA DE CUENTAS
+// =========================================================
+
+// Permite que un miembro confirme su invitación
+// y cree su contraseña sin iniciar sesión previamente.
 //
-// Ejemplo:
-// POST /api/auth/login
-//
-// La autenticación utiliza las cookies
-// de sesión configuradas en el backend.
+// Debe registrarse antes de cualquier router que
+// aplique autenticación general sobre /api/auth.
+app.use(
+  "/api/auth/account-activation",
+  accountActivationRoutes
+);
+
+
+// =========================================================
+// 2. INICIO Y CIERRE DE SESIÓN
+// =========================================================
+
+// Gestiona el inicio de sesión, cierre de sesión
+// y consulta de la cuenta autenticada.
 app.use(
   "/api/auth",
   loginRoutes
 );
 
 
-
 // =========================================================
-// CONEXIÓN DEL CORREO INSTITUCIONAL
+// 3. CORREO INSTITUCIONAL - GOOGLE OAUTH
 // =========================================================
 
-// Permite iniciar la autorización OAuth de Google.
-//
-// El acceso está restringido al superadministrador.
-// Todavía no implementamos el retorno de Google.
-
+// Gestiona la autorización de Gmail.
+// Sus permisos se validan dentro de googleOAuthRoutes.js.
 app.use(
   "/api/auth/google",
   googleOAuthRoutes
 );
 
+
 // =========================================================
-// GESTIÓN DE CONTRASEÑAS
+// 4. GESTIÓN SEGURA DE CONTRASEÑAS
 // =========================================================
 
-// Permite cambiar la contraseña de la
-// propia cuenta mediante una sesión válida.
+// Estas operaciones requieren una sesión válida.
 //
-// Las comprobaciones de identidad y contraseña
-// se realizan dentro de passwordRoutes.js.
-
+// Mantenemos este router después de la activación
+// pública para evitar bloquear a nuevos miembros.
 app.use(
   "/api/auth",
   passwordRoutes
@@ -532,8 +542,7 @@ app.use("/api/activity-history", activityHistoryRoutes);
 // Conectamos la API de peticiones de oración.
 app.use("/api/prayer-requests", prayerRequestRoutes);
 
-// Permitimos completar la activación sin una sesión previa.
-app.use("/api/auth/account-activation", accountActivationRoutes);
+
 
 // =========================================================
 // RUTAS INEXISTENTES (404)
