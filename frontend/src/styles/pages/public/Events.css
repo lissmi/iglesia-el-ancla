@@ -1178,3 +1178,303 @@
     font-size: 30px;
   }
 }
+/* =========================================================
+   EDITOR VISUAL COMPARTIDO - EXTENSIÓN DEL DISEÑO PÚBLICO
+   No altera la apariencia de los visitantes.
+========================================================= */
+
+/* Los textos conservan las medidas originales aunque estén envueltos
+   por EditableText, tanto en lectura como en modo edición. */
+.events .editable-text {
+  min-width: 0;
+  position: relative;
+}
+
+.events-hero__title .editable-text {
+  display: block;
+}
+
+.events-hero__title-line {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+
+.events-hero__title .events-hero__title-highlight {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.events-hero__icon--lucide {
+  color: #a8804e;
+}
+
+/* Controles del editor: ocultos si no existe events--editing. */
+.events-edit__event-wrapper,
+.events-edit__icon-holder,
+.events-edit__invitation-action {
+  position: relative;
+}
+
+.events-edit__pencil {
+  position: absolute;
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(172, 134, 81, 0.5);
+  border-radius: 12px;
+  background: #fff;
+  color: #20384c;
+  box-shadow: 0 6px 18px rgba(20, 39, 57, 0.16);
+  font: inherit;
+  cursor: pointer;
+}
+
+.events-edit__featured-pencil {
+  right: 20px;
+  top: 20px;
+}
+
+.events-edit__icon-pencil {
+  right: 9px;
+  top: 9px;
+  opacity: 0;
+}
+
+.events-edit__icon-holder:hover .events-edit__icon-pencil,
+.events-edit__icon-pencil:focus-visible {
+  opacity: 1;
+}
+
+.events-edit__icon-menu {
+  position: absolute;
+  top: 48px;
+  right: 8px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 235px;
+  padding: 12px;
+  border: 1px solid #e4ddcf;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 15px 35px rgba(23, 45, 62, 0.18);
+  text-align: left;
+}
+
+.events-edit__icon-menu strong {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: #284358;
+  margin-bottom: 8px;
+}
+
+.events-edit__icon-menu button {
+  padding: 9px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #304b61;
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.events-edit__icon-menu button:hover {
+  background: #f7f2ea;
+}
+
+.events-edit__card-actions {
+  position: absolute;
+  z-index: 7;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.events-edit__event-wrapper:hover .events-edit__card-actions,
+.events-edit__event-wrapper:focus-within .events-edit__card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.events-edit__card-actions button,
+.events-edit__empty-event button,
+.events-edit__add-event {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid #e3dac9;
+  border-radius: 10px;
+  background: #fff;
+  color: #243e53;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.events-edit__card-actions button:hover,
+.events-edit__empty-event button:hover,
+.events-edit__add-event:hover {
+  background: #f7f0e6;
+}
+
+.events-edit__empty-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  min-height: 170px;
+  padding: 35px 18px;
+  border: 1px dashed #d9d0c3;
+  border-radius: 15px;
+  background: #fff;
+  color: #52687a;
+  text-align: center;
+}
+
+.events-edit__empty-event p {
+  margin: 0;
+}
+
+.events-edit__no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #eee8df, #e6edf0);
+  color: #9b825f;
+}
+
+.events-edit__add-event {
+  margin-top: 24px;
+}
+
+.events-edit__invitation-action {
+  flex-shrink: 0;
+}
+
+.events-edit__button-pencil {
+  top: -22px;
+  right: -22px;
+  width: 32px;
+  height: 32px;
+}
+
+.events-edit__button-editor {
+  position: absolute;
+  z-index: 15;
+  top: 40px;
+  right: 0;
+  display: grid;
+  gap: 8px;
+  width: 260px;
+  padding: 14px;
+  border: 1px solid #ded6c9;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 15px 35px rgba(23, 45, 62, .2);
+  color: #304b61;
+  font-size: 12px;
+}
+
+.events-edit__button-editor input {
+  min-height: 40px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d8dfe3;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.events-edit__button-editor > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.events-edit__button-editor button {
+  padding: 7px 9px;
+  border: 1px solid #d8dfe3;
+  border-radius: 7px;
+  background: #f5f3ef;
+  color: #20384c;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Los lápices e iconos nunca sustituyen la navegación pública. */
+.events .events-edit__pencil:focus-visible,
+.events .events-edit__card-actions button:focus-visible {
+  outline: 3px solid rgba(174, 132, 73, 0.55);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .events--editing .events-edit__card-actions,
+  .events--editing .events-edit__icon-pencil {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .events-edit__button-pencil { right: 0; top: -28px; }
+  .events-edit__card-actions { opacity: 1; transform: none; }
+  .events-edit__icon-menu { width: 210px; }
+}
+
+
+/* =========================================================
+   MENSAJE DE ACCESO A REUNIONES ONLINE
+   IGLESIA EL ANCLA
+========================================================= */
+
+/* Mensaje para eventos con enlaces compartidos por privado. */
+.events .events__online-note {
+  width: 100%;
+
+  margin: 16px 0 4px;
+  padding: 13px 16px;
+
+  border-left: 3px solid #b58b59;
+  border-radius: 0 10px 10px 0;
+
+  background-color: #f7f3ec;
+
+  color: #475c6e;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Ajustamos el mensaje en teléfonos. */
+@media (max-width: 480px) {
+
+  .events .events__online-note {
+    padding: 12px;
+    font-size: 12px;
+  }
+}

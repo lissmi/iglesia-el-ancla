@@ -1,457 +1,391 @@
-
 /* =========================================================
-   GESTIÓN DE EVENTOS PÚBLICOS - IGLESIA EL ANCLA
+   ADMINISTRACIÓN VISUAL DE EVENTOS - IGLESIA EL ANCLA
    Archivo: frontend/src/pages/administration/PublicEventsManagement.jsx
-
-   Administra reuniones habituales de la iglesia.
-   No gestiona confirmaciones ni actividades puntuales.
+   Utiliza la misma página Events.jsx que ve el público.
 ========================================================= */
 
-// =========================================================
-// HOOKS DE REACT
-// =========================================================
+// Hooks de React para datos, efectos y bloqueo de solicitudes.
+import { useCallback, useEffect, useRef, useState } from "react";
 
-// Importamos exclusivamente hooks desde React.
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+// Navegación y acceso a la página pública.
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-// =========================================================
-// NAVEGACIÓN
-// =========================================================
+// Reutilizamos el diseño público sin duplicar su JSX.
+import Events from "../public/Events";
 
-// Permite acceder a la página pública sin recargar.
-import { Link } from "react-router-dom";
+// Reutilizamos la barra y el diálogo del editor informativo.
+import EditorToolbar from "../../components/administration/informationalPages/common/EditorToolbar";
+import ConfirmationModal from "../../components/administration/informationalPages/common/ConfirmationModal";
 
-// =========================================================
-// ICONOS DE LUCIDE REACT
-// =========================================================
+// Iconos utilizados en la administración.
+import { ArrowUpRight, CalendarPlus, Eye, ImagePlus, Pencil, Trash2, X } from "lucide-react";
 
-// Todos los iconos, incluido ImagePlus,
-// deben importarse desde lucide-react.
-import {
-  ArrowUpRight,
-  CalendarDays,
-  CalendarPlus,
-  CheckCircle2,
-  Clock3,
-  Eye,
-  FilePenLine,
-  Image as ImageIcon,
-  ImagePlus,
-  MapPin,
-  Pencil,
-  Repeat2,
-  Search,
-  Trash2,
-  X,
-} from "lucide-react";
-
-// =========================================================
-// SERVICIOS
-// =========================================================
-
-// Instancia Axios compartida del proyecto.
-// Mantiene la configuración de autenticación existente.
+// Cliente HTTP configurado por el proyecto y CSS existente.
 import api from "../../services/api";
-
-// =========================================================
-// ESTILOS
-// =========================================================
-
-// Estilos de la administración de eventos públicos.
 import "../../styles/pages/administration/PublicEventsManagement.css";
 
+// Las categorías deben coincidir con el enum de Event.js.
+const EVENT_CATEGORIES = ["Culto", "Oración", "Estudio bíblico", "Jóvenes", "Niños", "Taller", "Otro"];
 
-// =========================================================
-// CATEGORÍAS PERMITIDAS
-// =========================================================
-
-// Deben coincidir con el modelo Event.js.
-const EVENT_CATEGORIES = [
-  "Culto",
-  "Oración",
-  "Estudio bíblico",
-  "Jóvenes",
-  "Niños",
-  "Taller",
-  "Otro",
+// Posiciones disponibles para una recurrencia mensual con semanas fijas.
+// -1 significa el último día semanal de cada mes.
+const MONTH_WEEKS = [
+  { value: 1, label: "Primer" },
+  { value: 2, label: "Segundo" },
+  { value: 3, label: "Tercer" },
+  { value: 4, label: "Cuarto" },
+  { value: -1, label: "Último" },
 ];
 
-// =========================================================
-// DÍAS DE LA SEMANA
-// =========================================================
+// En JavaScript, domingo es 0 y sábado es 6.
+const WEEK_DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-// JavaScript utiliza 0 para domingo y 6 para sábado.
-const WEEK_DAYS = [
-  { value: 0, label: "Domingo" },
-  { value: 1, label: "Lunes" },
-  { value: 2, label: "Martes" },
-  { value: 3, label: "Miércoles" },
-  { value: 4, label: "Jueves" },
-  { value: 5, label: "Viernes" },
-  { value: 6, label: "Sábado" },
-];
-
-// =========================================================
-// FORMULARIO INICIAL
-// =========================================================
-
-// Generamos un formulario independiente para cada evento.
+// Siempre obtenemos un formulario nuevo, sin compartir referencias.
 function emptyForm() {
   return {
-    title: "",
-    category: "Culto",
-    description: "",
-    date: "",
-    time: "",
-    endTime: "",
-    daysOfWeek: [],
-    endDate: "",
-    modality: "Presencial",
-    location: "",
-    meetingUrl: "",
-    publicationStatus: "draft",
-    imageFile: null,
-    imageUrl: "",
-    removeImage: false,
+    title: "", category: "Culto", description: "", date: "",
+    time: "", endTime: "", daysOfWeek: [], endDate: "",
+    recurrenceType: "weekly", monthlyCount: 1,
+    monthlySchedule: "to_confirm", weeksOfMonth: [],
+    modality: "Presencial", location: "", meetingUrl: "",
+    publicationStatus: "draft", imageFile: null, imageUrl: "", removeImage: false,
   };
 }
 
-// =========================================================
-// FUNCIONES AUXILIARES
-// =========================================================
-
-// Convertimos una fecha civil a un formato legible.
-function formatDate(value) {
-  if (!value) return "Sin fecha";
-
-  // Utilizamos mediodía UTC para evitar cambios de día.
-  const date = new Date(`${value}T12:00:00Z`);
-
-  // Conservamos el texto original cuando no es válido.
-  if (Number.isNaN(date.getTime())) return value;
-
-  // Presentamos la fecha en español.
-  return new Intl.DateTimeFormat("es-CL", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(date);
-}
-
-// Transformamos los días numéricos en nombres legibles.
-function formatDays(values = []) {
-  // Recuperamos los días seleccionados.
-  const selected = WEEK_DAYS.filter((day) =>
-    values.includes(day.value)
-  );
-
-  // Unimos sus nombres.
-  return selected.length
-    ? selected.map((day) => day.label).join(", ")
-    : "Sin días asignados";
-}
-
-// Recuperamos un mensaje útil de los errores del servidor.
+// Extraemos mensajes del backend sin mostrar errores técnicos innecesarios.
 function getErrorMessage(error) {
-  return (
-    error?.response?.data?.message ||
-    error?.message ||
-    "No se pudo completar la operación."
-  );
+  return error?.response?.data?.message || error?.message || "No se pudo completar la operación.";
 }
-
-// =========================================================
-// COMPONENTE PRINCIPAL
-// =========================================================
 
 function PublicEventsManagement() {
-  // =====================================================
-  // EVENTOS GUARDADOS
-  // =====================================================
-
-  // Listado obtenido desde el backend.
+  // Datos reales de los eventos guardados en MongoDB.
   const [events, setEvents] = useState([]);
-
-  // Estado de carga del listado.
   const [loading, setLoading] = useState(true);
-
-  // Mensajes de éxito, advertencia o error.
   const [feedback, setFeedback] = useState(null);
 
-  // =====================================================
-  // FILTROS
-  // =====================================================
-
-  // Texto del buscador.
-  const [search, setSearch] = useState("");
-
-  // Estado de publicación seleccionado.
-  const [statusFilter, setStatusFilter] = useState("all");
-
-  // =====================================================
-  // FORMULARIO
-  // =====================================================
-
-  // Controla si el formulario está abierto.
+  // Formulario de creación y edición de eventos.
   const [formOpen, setFormOpen] = useState(false);
-
-  // null indica creación; un ID indica edición.
   const [editingId, setEditingId] = useState(null);
-
-  // Datos que introduce el administrador.
   const [form, setForm] = useState(emptyForm);
-
-  // Error exclusivo del formulario.
   const [formError, setFormError] = useState("");
-
-  // Evita guardar dos veces simultáneamente.
   const [saving, setSaving] = useState(false);
-
-  // URL temporal para previsualizar la imagen seleccionada.
   const [imagePreview, setImagePreview] = useState("");
 
-  // Creamos una vista previa sin subir todavía la imagen.
-  useEffect(() => {
+  // Borrador de los textos y configuración visual de la página.
+  const [pageDraft, setPageDraft] = useState(null);
+  const [savedPage, setSavedPage] = useState(null);
+  // La versión pública es independiente del borrador administrativo.
+  const [publishedPage, setPublishedPage] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [pageSaving, setPageSaving] = useState(false);
+  const [pagePublishing, setPagePublishing] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
+  const [lastSaved, setLastSaved] = useState(null);
+  const [confirmationAction, setConfirmationAction] = useState(null);
 
-    // Si no hay archivo seleccionado, retiramos la vista previa.
+  // Impide guardar dos veces antes de que React actualice el estado.
+  const pageSaveInProgress = useRef(false);
+
+  // Operaciones para eliminar o publicar eventos individuales.
+  const [deletingEvent, setDeletingEvent] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+  // Mostramos los errores dentro del modal, no detrás del fondo oscuro.
+  const [deleteError, setDeleteError] = useState("");
+  const [changingId, setChangingId] = useState(null);
+
+  // Volvemos al panel correspondiente al rol autenticado.
+  const navigate = useNavigate();
+  const location = useLocation();
+  const adminBasePath = location.pathname.startsWith("/super-admin/") ? "/super-admin" : "/admin";
+
+  // Indica si el contenido visual tiene cambios sin guardar.
+  const pageHasChanges = Boolean(
+    pageDraft && savedPage && JSON.stringify(pageDraft) !== JSON.stringify(savedPage)
+  );
+
+  // El lienzo visual conserva los textos en edición, pero utiliza siempre
+  // el destacado público como referencia. Así ambos muestran la misma tarjeta.
+  const visualPage = pageDraft && publishedPage
+    ? { ...pageDraft, featuredEventId: publishedPage.featuredEventId || "" }
+    : pageDraft;
+
+  // Previsualizamos el archivo seleccionado sin subirlo todavía.
+  useEffect(() => {
     if (!formOpen || !form.imageFile) {
       setImagePreview("");
       return undefined;
     }
-
-    // Creamos una URL temporal para mostrar la imagen.
-    const previewUrl = URL.createObjectURL(form.imageFile);
-
-    // Guardamos la URL para utilizarla en el formulario.
-    setImagePreview(previewUrl);
-
-    // Liberamos la memoria cuando cambia la imagen o se cierra.
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
-
+    const url = URL.createObjectURL(form.imageFile);
+    setImagePreview(url);
+    return () => URL.revokeObjectURL(url);
   }, [formOpen, form.imageFile]);
 
-  // =====================================================
-  // ELIMINACIÓN Y PUBLICACIÓN
-  // =====================================================
+  // Recuperamos de MongoDB el último borrador visual guardado.
+  useEffect(() => {
+    const controller = new AbortController();
+    async function loadPage() {
+      setPageLoading(true);
+      try {
+        const response = await api.get("/events/page/admin", { signal: controller.signal });
+        if (!response.data?.draft) throw new Error("No se pudo abrir el editor de eventos.");
+        if (!controller.signal.aborted) {
+          setPageDraft(response.data.draft);
+          setSavedPage(response.data.draft);
+          setPublishedPage(response.data.published || null);
+        }
+      } catch (error) {
+        if (!controller.signal.aborted && error?.code !== "ERR_CANCELED") {
+          setFeedback({ type: "error", message: getErrorMessage(error) });
+        }
+      } finally {
+        if (!controller.signal.aborted) setPageLoading(false);
+      }
+    }
+    loadPage();
+    return () => controller.abort();
+  }, []);
 
-  // Evento seleccionado para eliminar.
-  const [deletingEvent, setDeletingEvent] = useState(null);
-
-  // Estado de eliminación.
-  const [deleting, setDeleting] = useState(false);
-
-  // ID del evento cuyo estado está cambiando.
-  const [changingId, setChangingId] = useState(null);
-
-  // =====================================================
-  // CONSULTAR EVENTOS ADMINISTRATIVOS
-  // =====================================================
-
+  // Recuperamos los eventos, incluidos los que están en borrador.
   const loadEvents = useCallback(async (signal) => {
-    // Activamos la carga.
     setLoading(true);
-
     try {
-      // Consultamos borradores y eventos publicados.
-      const response = await api.get("/events/admin", {
-        signal,
-      });
-
-      // Comprobamos que la respuesta sea un listado.
-      if (!Array.isArray(response.data?.events)) {
-        throw new Error(
-          "No fue posible cargar la lista de eventos."
-        );
-      }
-
-      // Evitamos actualizar React tras cancelar la consulta.
-      if (!signal?.aborted) {
-        setEvents(response.data.events);
-      }
+      const response = await api.get("/events/admin", { signal });
+      if (!Array.isArray(response.data?.events)) throw new Error("No se pudieron cargar los eventos.");
+      if (!signal?.aborted) setEvents(response.data.events);
     } catch (error) {
-      // Ignoramos solicitudes canceladas.
-      if (
-        signal?.aborted ||
-        error?.code === "ERR_CANCELED"
-      ) {
-        return;
+      if (!signal?.aborted && error?.code !== "ERR_CANCELED") {
+        setFeedback({ type: "error", message: getErrorMessage(error) });
       }
-
-      // Informamos el error recibido.
-      setFeedback({
-        type: "error",
-        message: getErrorMessage(error),
-      });
     } finally {
-      // Finalizamos la carga cuando corresponda.
-      if (!signal?.aborted) {
-        setLoading(false);
-      }
+      if (!signal?.aborted) setLoading(false);
     }
   }, []);
 
-  // Consultamos los eventos al abrir la página.
   useEffect(() => {
-    // Permite cancelar peticiones al desmontar.
     const controller = new AbortController();
-
-    // Ejecutamos la consulta.
     loadEvents(controller.signal);
-
-    // Limpiamos la petición anterior.
     return () => controller.abort();
   }, [loadEvents]);
 
-  // Bloqueamos el desplazamiento del fondo con diálogos.
+  // Evitamos el desplazamiento del fondo cuando hay diálogos abiertos.
   useEffect(() => {
-    if (!formOpen && !deletingEvent) {
-      return undefined;
-    }
-
-    // Conservamos el valor anterior.
+    if (!formOpen && !deletingEvent) return undefined;
     const previous = document.body.style.overflow;
-
-    // Bloqueamos el fondo temporalmente.
     document.body.style.overflow = "hidden";
-
-    // Restauramos el comportamiento original.
-    return () => {
-      document.body.style.overflow = previous;
-    };
+    return () => { document.body.style.overflow = previous; };
   }, [formOpen, deletingEvent]);
 
-  // =====================================================
-  // ESTADÍSTICAS
-  // =====================================================
+  // Los lápices modifican solo el borrador, no la página pública.
+  function updatePageField(key, value) {
+    setPageDraft((current) => current ? { ...current, [key]: value } : current);
+    setFeedback(null);
+  }
 
-  // Los contadores se calculan desde los registros reales.
-  const summary = useMemo(
-    () => ({
-      total: events.length,
+  // Guarda en la BD una configuración concreta (o el borrador actual).
+  async function savePageDraft(draftToSave = pageDraft) {
+    if (!draftToSave || pageSaveInProgress.current || pagePublishing) return false;
+    pageSaveInProgress.current = true;
+    // Reflejamos de inmediato en el editor la selección que vamos a guardar.
+    // Si la API falla, el cambio queda pendiente y se puede reintentar.
+    setPageDraft(draftToSave);
+    setPageSaving(true);
+    setFeedback(null);
+    try {
+      const response = await api.patch("/events/page/draft", draftToSave);
+      const savedDraft = response.data?.draft;
+      if (!savedDraft) throw new Error("No se pudo confirmar el guardado del borrador.");
+      setSavedPage(savedDraft);
+      // No sobrescribimos un texto modificado mientras se guardaba.
+      setPageDraft((current) =>
+        JSON.stringify(current) === JSON.stringify(draftToSave) ? savedDraft : current
+      );
+      setLastSaved(new Date());
+      setFeedback({
+        type: "success",
+        message: "Borrador guardado. Presiona «Publicar» para mostrar los cambios a los visitantes.",
+      });
+      return true;
+    } catch (error) {
+      setFeedback({ type: "error", message: getErrorMessage(error) });
+      return false;
+    } finally {
+      pageSaveInProgress.current = false;
+      setPageSaving(false);
+    }
+  }
 
-      published: events.filter(
-        (event) =>
-          event.publicationStatus === "published"
-      ).length,
+  // Cambiar el destacado actualiza inmediatamente ambas vistas de React.
+  // El backend persiste el ID en borrador y versión publicada, sin publicar
+  // otros textos que todavía se estén editando.
+  async function handleChooseFeatured(eventId) {
+    // Impedimos iniciar una operación antes de cargar las dos versiones.
+    if (!pageDraft || !publishedPage || pageSaveInProgress.current || pagePublishing) return;
 
-      drafts: events.filter(
-        (event) =>
-          event.publicationStatus === "draft"
-      ).length,
-    }),
-    [events]
-  );
+    // Solo permitimos destacar eventos que ya estén publicados.
+    const selected = events.find((event) => event.id === eventId);
+    if (!selected || selected.publicationStatus !== "published") {
+      setFeedback({ type: "error", message: "Primero publica este evento para poder destacarlo." });
+      return;
+    }
 
-  // =====================================================
-  // BÚSQUEDA Y FILTROS
-  // =====================================================
+    // No volvemos a guardar una selección que ya coincide en ambas versiones.
+    if (publishedPage.featuredEventId === eventId && pageDraft.featuredEventId === eventId) {
+      setFeedback({ type: "success", message: "Este evento ya está destacado en la página pública." });
+      return;
+    }
 
-  const filteredEvents = useMemo(() => {
-    // Normalizamos el término de búsqueda.
-    const term = search
-      .trim()
-      .toLocaleLowerCase("es-CL");
+    // Conservamos ambas versiones por si el servidor rechaza el cambio.
+    const previousDraftId = pageDraft.featuredEventId || "";
+    const previousPublished = publishedPage;
 
-    // Filtramos los eventos disponibles.
-    return events.filter((event) => {
-      // Construimos el contenido que puede buscarse.
-      const text = [
-        event.title,
-        event.category,
-        event.description,
-        event.location,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLocaleLowerCase("es-CL");
+    // Mostramos el evento elegido sin esperar a la respuesta del servidor.
+    // El lienzo visual utiliza publishedPage para seleccionar la tarjeta.
+    setPageDraft((current) => current ? { ...current, featuredEventId: eventId } : current);
+    setPublishedPage((current) => current ? { ...current, featuredEventId: eventId } : current);
 
-      // Comprobamos coincidencia de texto.
-      const matchesText =
-        !term || text.includes(term);
+    // Bloqueamos solicitudes duplicadas hasta confirmar la persistencia.
+    pageSaveInProgress.current = true;
+    setPageSaving(true);
+    setFeedback(null);
 
-      // Comprobamos el estado seleccionado.
-      const matchesStatus =
-        statusFilter === "all" ||
-        event.publicationStatus === statusFilter;
+    try {
+      // El endpoint solo modifica la selección del destacado, no los textos.
+      const response = await api.patch("/events/page/featured", { featuredEventId: eventId });
+      const nextDraft = response.data?.draft;
+      const nextPublished = response.data?.published;
 
-      // Solo conservamos las coincidencias.
-      return matchesText && matchesStatus;
-    });
-  }, [events, search, statusFilter]);
+      // Exigimos una respuesta que confirme el ID realmente publicado.
+      if (
+        !nextDraft ||
+        !nextPublished ||
+        nextDraft.featuredEventId !== eventId ||
+        nextPublished.featuredEventId !== eventId
+      ) {
+        throw new Error("No se pudo confirmar el cambio del evento destacado.");
+      }
 
-  // =====================================================
-  // ACTUALIZAR EL FORMULARIO
-  // =====================================================
+      // Registramos las versiones oficiales entregadas por el backend.
+      setSavedPage(nextDraft);
+      setPublishedPage(nextPublished);
 
+      // Preservamos textos que el administrador haya editado en paralelo.
+      setPageDraft((current) => current
+        ? { ...current, featuredEventId: nextDraft.featuredEventId }
+        : nextDraft
+      );
+      setLastSaved(new Date());
+      setFeedback({
+        type: "success",
+        message: "Evento destacado actualizado en el editor y en la página pública.",
+      });
+    } catch (error) {
+      // Si falla la petición, restauramos la selección anterior.
+      setPageDraft((current) => current
+        ? { ...current, featuredEventId: previousDraftId }
+        : current
+      );
+      setPublishedPage(previousPublished);
+      setFeedback({ type: "error", message: getErrorMessage(error) });
+    } finally {
+      // React puede aceptar otra selección después de finalizar la petición.
+      pageSaveInProgress.current = false;
+      setPageSaving(false);
+    }
+  }
+
+  // Publicamos los textos e icono, además de la elección del destacado.
+  async function publishPage() {
+    if (!pageDraft || pageSaveInProgress.current || pagePublishing) return;
+    setPagePublishing(true);
+    setFeedback(null);
+    try {
+      const response = await api.post("/events/page/publish", pageDraft);
+      if (!response.data?.page) throw new Error("No se pudo confirmar la publicación.");
+      setPageDraft(response.data.page);
+      setSavedPage(response.data.page);
+      // Ahora esta misma versión es la visible para los visitantes.
+      setPublishedPage(response.data.page);
+      setLastSaved(new Date());
+      setFeedback({ type: "success", message: "La página pública ya muestra los cambios." });
+    } catch (error) {
+      setFeedback({ type: "error", message: getErrorMessage(error) });
+    } finally {
+      setPagePublishing(false);
+    }
+  }
+
+  // Descarta únicamente los cambios visuales que aún no se guardaron.
+  function discardPageChanges() {
+    if (!savedPage || !pageHasChanges) return;
+    setPageDraft({ ...savedPage });
+    setFeedback({ type: "success", message: "Se restauró el último borrador guardado." });
+  }
+
+  // Acciones solicitadas desde la barra compartida.
+  function backToPanel() {
+    if (pageHasChanges) setConfirmationAction("back");
+    else navigate(adminBasePath);
+  }
+  function confirmPageAction() {
+    const action = confirmationAction;
+    setConfirmationAction(null);
+    if (action === "publish") publishPage();
+    if (action === "discard") discardPageChanges();
+    if (action === "back") navigate(adminBasePath);
+  }
+
+  // Mantenemos todos los cambios del formulario en un mismo estado.
   function updateField(field, value) {
-    // Actualizamos únicamente el campo indicado.
-    setForm((previous) => ({
-      ...previous,
-      [field]: value,
+    setForm((current) => ({ ...current, [field]: value }));
+    setFormError("");
+  }
+  // Cambiar la frecuencia mantiene el horario, pero evita días incompatibles.
+  function changeFrequency(type) {
+    setForm((current) => ({
+      ...current,
+      recurrenceType: type,
+      daysOfWeek: type === "monthly" ? current.daysOfWeek.slice(0, 1) : current.daysOfWeek,
     }));
-
-    // Limpiamos el error después de corregir un campo.
     setFormError("");
   }
 
-  // =====================================================
-  // SELECCIONAR DÍAS DE LA SEMANA
-  // =====================================================
-
-  function toggleDay(dayValue) {
-    // Agregamos o retiramos el día seleccionado.
-    setForm((previous) => ({
-      ...previous,
-
-      daysOfWeek: previous.daysOfWeek.includes(dayValue)
-        ? previous.daysOfWeek.filter(
-          (day) => day !== dayValue
-        )
-        : [
-          ...previous.daysOfWeek,
-          dayValue,
-        ].sort((a, b) => a - b),
+  // Semanal admite varios días; mensual admite exactamente uno.
+  function toggleDay(day) {
+    setForm((current) => ({
+      ...current,
+      daysOfWeek: current.recurrenceType === "monthly"
+        ? [day]
+        : current.daysOfWeek.includes(day)
+          ? current.daysOfWeek.filter((value) => value !== day)
+          : [...current.daysOfWeek, day].sort((a, b) => a - b),
     }));
-
-    // Limpiamos los errores de validación.
     setFormError("");
   }
 
-  // =====================================================
-  // CREAR EVENTO
-  // =====================================================
+  // Las semanas concretas son opcionales y no deben superar el número elegido.
+  function toggleMonthWeek(week) {
+    setForm((current) => {
+      const selected = current.weeksOfMonth.includes(week);
+      const next = selected
+        ? current.weeksOfMonth.filter((value) => value !== week)
+        : [...current.weeksOfMonth, week];
+      // Cuarto y último podrían coincidir en meses con cuatro domingos.
+      if (next.includes(4) && next.includes(-1)) return current;
+      if (next.length > current.monthlyCount) return current;
+      return { ...current, weeksOfMonth: next };
+    });
+    setFormError("");
+  }
 
+  // Abrimos el mismo formulario para crear y editar.
   function openCreate() {
-    // Limpiamos el identificador de edición.
     setEditingId(null);
-
-    // Preparamos un formulario vacío.
     setForm(emptyForm());
-
-    // Limpiamos los errores anteriores.
     setFormError("");
-
-    // Abrimos el formulario.
     setFormOpen(true);
   }
-
-  // =====================================================
-  // EDITAR EVENTO
-  // =====================================================
-
   function openEdit(event) {
-    // Identificamos el evento que modificaremos.
     setEditingId(event.id);
-
-    // Cargamos los datos existentes.
     setForm({
       title: event.title || "",
       category: event.category || "Culto",
@@ -459,1380 +393,636 @@ function PublicEventsManagement() {
       date: event.date || "",
       time: event.time || "",
       endTime: event.endTime || "",
-
-      // Recuperamos los días de recurrencia.
-      daysOfWeek: [
-        ...(event.recurrence?.daysOfWeek || []),
-      ],
-
-      // La programación puede no tener fecha final.
+      daysOfWeek: [...(event.recurrence?.daysOfWeek || [])],
+      recurrenceType: event.recurrence?.type === "monthly" ? "monthly" : "weekly",
+      monthlyCount: event.recurrence?.monthlyCount || 1,
+      monthlySchedule: event.recurrence?.weeksOfMonth?.length ? "fixed" : "to_confirm",
+      weeksOfMonth: [...(event.recurrence?.weeksOfMonth || [])],
       endDate: event.recurrence?.endDate || "",
-
       modality: event.modality || "Presencial",
       location: event.location || "",
       meetingUrl: event.meetingUrl || "",
-      publicationStatus:
-        event.publicationStatus || "draft",
-
-      // La imagen anterior no es un archivo del navegador.
+      publicationStatus: event.publicationStatus || "draft",
       imageFile: null,
       imageUrl: event.image?.url || "",
       removeImage: false,
     });
-
-    // Abrimos el formulario sin errores anteriores.
     setFormError("");
     setFormOpen(true);
   }
-
-  // =====================================================
-  // CERRAR FORMULARIO
-  // =====================================================
-
   function closeForm() {
-    // No cerramos mientras se está guardando.
     if (saving) return;
-
-    // Restablecemos el estado de edición.
     setFormOpen(false);
     setEditingId(null);
     setFormError("");
   }
 
-  // =========================================================
-  // SELECCIÓN DE IMAGEN PARA EL EVENTO
-  // =========================================================
-
+  // La imagen es opcional, pero sí se comprueba formato y tamaño.
   function handleImageChange(event) {
-
-    // Obtenemos el archivo seleccionado.
     const file = event.target.files?.[0];
-
-    // No hacemos cambios si el usuario cancela.
     if (!file) return;
-
-    // Formatos aceptados por el backend.
-    const validTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-    ];
-
-    // Validamos el formato.
-    if (!validTypes.includes(file.type)) {
-      setFormError(
-        "La imagen debe estar en formato JPG, PNG o WebP."
-      );
-
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowed.includes(file.type) || file.size > 5 * 1024 * 1024) {
+      setFormError("Selecciona una imagen JPG, PNG o WebP de hasta 5 MB.");
       event.target.value = "";
       return;
     }
-
-    // Comprobamos el máximo de 5 MB.
-    if (file.size > 5 * 1024 * 1024) {
-      setFormError(
-        "La imagen no puede superar los 5 MB."
-      );
-
-      event.target.value = "";
-      return;
-    }
-
-    // Guardamos el archivo para enviarlo cuando se publique.
-    setForm((previous) => ({
-      ...previous,
-      imageFile: file,
-      removeImage: false,
-    }));
-
-    // Eliminamos posibles errores anteriores.
+    setForm((current) => ({ ...current, imageFile: file, removeImage: false }));
     setFormError("");
-
-    // Permitimos volver a seleccionar el mismo archivo.
     event.target.value = "";
   }
-
-  // =========================================================
-  // DESCARTAR UNA IMAGEN RECIÉN SELECCIONADA
-  // =========================================================
-
   function discardSelectedImage() {
-
-    // Retiramos solamente el archivo nuevo.
-    // No modificamos una portada anterior ya guardada.
-    setForm((previous) => ({
-      ...previous,
-      imageFile: null,
-    }));
-
-    // Limpiamos los mensajes de validación.
+    setForm((current) => ({ ...current, imageFile: null }));
     setFormError("");
   }
 
-  // =====================================================
-  // VALIDAR EL FORMULARIO
-  // =====================================================
-
+  // El enlace online solo se comprueba si se proporcionó uno.
   function validateForm() {
-    // Exigimos la información principal.
-    if (
-      !form.title.trim() ||
-      !form.description.trim() ||
-      !form.date ||
-      !form.time
-    ) {
+    if (!form.title.trim() || !form.description.trim() || !form.date || !form.time) {
       return "Completa el nombre, la descripción, la fecha de inicio y la hora.";
     }
-
-    // Toda reunión de este módulo es semanal.
-    if (!form.daysOfWeek.length) {
-      return "Selecciona al menos un día de la semana.";
+    // Semanal acepta varios días; mensual necesita exactamente uno.
+    if (form.recurrenceType === "weekly" && !form.daysOfWeek.length) {
+      return "Selecciona al menos un día para la reunión semanal.";
     }
-
-    // La hora final debe ser posterior a la inicial.
-    if (
-      form.endTime &&
-      form.endTime <= form.time
-    ) {
-      return "La hora de término debe ser posterior a la de inicio.";
-    }
-
-    // La fecha final no puede ser anterior al comienzo.
-    if (
-      form.endDate &&
-      form.endDate < form.date
-    ) {
-      return "La fecha final no puede ser anterior al inicio.";
-    }
-
-    // Las reuniones presenciales necesitan una dirección.
-    if (
-      form.modality !== "Online" &&
-      !form.location.trim()
-    ) {
-      return "Indica el lugar de la reunión.";
-    }
-
-    // Las reuniones en línea necesitan un enlace válido.
-    if (form.modality !== "Presencial") {
-      try {
-        const url = new URL(form.meetingUrl);
-
-        if (
-          !["http:", "https:"].includes(url.protocol)
-        ) {
-          throw new Error("Enlace inválido");
-        }
-      } catch {
-        return "Ingresa un enlace válido para la reunión en línea.";
+    if (form.recurrenceType === "monthly") {
+      if (form.daysOfWeek.length > 1) return "Elige como máximo un día para la reunión mensual.";
+      if (form.monthlySchedule === "fixed" && form.daysOfWeek.length !== 1) {
+        return "Si eliges semanas fijas, indica el día de la semana.";
+      }
+      if (![1, 2, 3, 4].includes(form.monthlyCount)) {
+        return "Indica cuántas veces al mes se realiza el encuentro.";
+      }
+      if (form.monthlySchedule === "fixed" && form.weeksOfMonth.length !== form.monthlyCount) {
+        return `Selecciona ${form.monthlyCount} semana(s) del mes o marca «Fechas por confirmar».`;
       }
     }
-
-    // No encontramos errores.
+    if (form.endTime && form.endTime <= form.time) {
+      return "La hora de término debe ser posterior a la de inicio.";
+    }
+    if (form.endDate && form.endDate < form.date) {
+      return "La fecha final no puede ser anterior a la fecha de inicio.";
+    }
+    if (form.modality !== "Online" && !form.location.trim()) {
+      return "Indica el lugar de la reunión.";
+    }
+    if (form.modality !== "Presencial" && form.meetingUrl.trim()) {
+      try {
+        const url = new URL(form.meetingUrl.trim());
+        if (!["http:", "https:"].includes(url.protocol)) throw new Error("Protocolo no permitido");
+      } catch {
+        return "Ingresa una URL válida o deja el enlace vacío si se compartirá por privado.";
+      }
+    }
     return "";
   }
 
-  // =====================================================
-  // GUARDAR EVENTO
-  // =====================================================
-
+  // El CRUD de eventos conserva las rutas y el formato de la API actual.
   async function handleSave(event) {
-    // Impedimos recargar la página.
     event.preventDefault();
-
-    // Evitamos solicitudes duplicadas.
     if (saving) return;
-
-    // Validamos antes de enviar al servidor.
-    const error = validateForm();
-
-    if (error) {
-      setFormError(error);
-      return;
-    }
-
-    // Activamos el guardado.
+    const validationError = validateForm();
+    if (validationError) { setFormError(validationError); return; }
     setSaving(true);
     setFormError("");
     setFeedback(null);
-
     try {
-      // Construimos los campos permitidos por Event.js.
-      const data = {
-        title: form.title.trim(),
-        category: form.category,
+      const payload = {
+        title: form.title.trim(), category: form.category,
         description: form.description.trim(),
-
-        // Fecha de inicio de la programación.
-        date: form.date,
-
-        // Horario habitual.
-        time: form.time,
-        endTime: form.endTime || "",
-
-        // Modalidad de la reunión.
+        date: form.date, time: form.time, endTime: form.endTime || "",
         modality: form.modality,
-
-        // Guardamos la dirección si corresponde.
-        location:
-          form.modality === "Online"
-            ? ""
-            : form.location.trim(),
-
-        // Guardamos el enlace si corresponde.
-        meetingUrl:
-          form.modality === "Presencial"
-            ? ""
-            : form.meetingUrl.trim(),
-
-        // Programación de los días semanales.
+        location: form.modality === "Online" ? "" : form.location.trim(),
+        meetingUrl: form.modality === "Presencial" ? "" : form.meetingUrl.trim(),
+        // Recurrencia semanal o mensual, validada también por el backend.
         recurrence: {
-          type: "weekly",
+          type: form.recurrenceType,
           daysOfWeek: form.daysOfWeek,
-
-          // La fecha final es opcional.
-          ...(form.endDate
-            ? { endDate: form.endDate }
-            : {}),
+          ...(form.recurrenceType === "monthly" ? {
+            monthlyCount: form.monthlyCount,
+            ...(form.monthlySchedule === "fixed"
+              ? { weeksOfMonth: [...form.weeksOfMonth] }
+              : {}),
+          } : {}),
+          ...(form.endDate ? { endDate: form.endDate } : {}),
         },
-
-        // Borrador o publicado.
         publicationStatus: form.publicationStatus,
-
-        // Solo enviamos removeImage cuando editamos.
-        ...(editingId && form.removeImage
-          ? { removeImage: true }
-          : {}),
+        ...(editingId && form.removeImage ? { removeImage: true } : {}),
       };
-
-      // Preparamos un formulario compatible con imágenes.
       const formData = new FormData();
-
-      // El backend recibe el contenido en data.
-      formData.append(
-        "data",
-        JSON.stringify(data)
-      );
-
-      // Adjuntamos la portada únicamente cuando existe.
-      if (form.imageFile) {
-        formData.append(
-          "image",
-          form.imageFile
-        );
-      }
-
-      // api.js utiliza JSON por defecto.
-      // Para este formulario necesitamos multipart.
-      const options = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-
-        // Las imágenes pueden tardar más en subirse.
-        timeout: 30000,
-      };
-
-      // Editamos cuando existe un identificador.
+      formData.append("data", JSON.stringify(payload));
+      if (form.imageFile) formData.append("image", form.imageFile);
+      const options = { headers: { "Content-Type": "multipart/form-data" }, timeout: 30000 };
       const response = editingId
-        ? await api.patch(
-          `/events/${encodeURIComponent(editingId)}`,
-          formData,
-          options
-        )
-        : await api.post(
-          "/events",
-          formData,
-          options
-        );
-
-      // Recuperamos los datos confirmados por el servidor.
+        ? await api.patch(`/events/${encodeURIComponent(editingId)}`, formData, options)
+        : await api.post("/events", formData, options);
       const savedEvent = response.data?.event;
-
-      // Evitamos mostrar operaciones no confirmadas.
-      if (!savedEvent?.id) {
-        throw new Error(
-          "No fue posible confirmar que el evento se guardó."
-        );
-      }
-
-      // Actualizamos el listado sin registros duplicados.
-      setEvents((previous) =>
-        editingId
-          ? previous.map((item) =>
-            item.id === savedEvent.id
-              ? savedEvent
-              : item
-          )
-          : [savedEvent, ...previous]
-      );
-
-      // Cerramos el formulario tras guardar correctamente.
+      if (!savedEvent?.id) throw new Error("No se pudo confirmar el guardado del evento.");
+      setEvents((current) => editingId
+        ? current.map((item) => item.id === savedEvent.id ? savedEvent : item)
+        : [savedEvent, ...current]);
       setFormOpen(false);
       setEditingId(null);
-
-      // Informamos el resultado.
       setFeedback({
-        type: response.data.warning
-          ? "warning"
-          : "success",
-
-        message:
-          response.data.warning ||
-          response.data.message ||
-          "Evento guardado correctamente.",
+        type: response.data?.warning ? "warning" : "success",
+        message: response.data?.warning || response.data?.message || "Evento guardado correctamente.",
       });
-    } catch (saveError) {
-      // Conservamos los campos para poder corregir errores.
-      setFormError(getErrorMessage(saveError));
+    } catch (error) {
+      setFormError(getErrorMessage(error));
     } finally {
-      // React permite nuevas operaciones.
       setSaving(false);
     }
   }
 
-  // =====================================================
-  // CAMBIAR ESTADO DE PUBLICACIÓN
-  // =====================================================
-
+  // Publicar o volver a borrador afecta solo el evento seleccionado.
   async function changePublication(event) {
-    // Evitamos dos cambios simultáneos.
     if (changingId) return;
-
-    // Alternamos entre publicado y borrador.
-    const nextStatus =
-      event.publicationStatus === "published"
-        ? "draft"
-        : "published";
-
+    const status = event.publicationStatus === "published" ? "draft" : "published";
     setChangingId(event.id);
     setFeedback(null);
-
     try {
-      // Enviamos solamente el estado actualizado.
       const response = await api.patch(
         `/events/${encodeURIComponent(event.id)}/publication`,
-        {
-          publicationStatus: nextStatus,
-        }
+        { publicationStatus: status }
       );
-
-      // Comprobamos la respuesta.
-      if (!response.data?.event?.id) {
-        throw new Error(
-          "No se pudo actualizar la publicación."
-        );
+      if (!response.data?.event?.id) throw new Error("No se confirmó el cambio de estado.");
+      setEvents((current) => current.map((item) => item.id === event.id ? response.data.event : item));
+      // El backend limpia el destacado público si el evento pasa a borrador.
+      // Actualizamos la vista local sin tocar los demás campos de la página.
+      if (status === "draft") {
+        setPageDraft((current) => current?.featuredEventId === event.id
+          ? { ...current, featuredEventId: "" } : current);
+        setSavedPage((current) => current?.featuredEventId === event.id
+          ? { ...current, featuredEventId: "" } : current);
+        setPublishedPage((current) => current?.featuredEventId === event.id
+          ? { ...current, featuredEventId: "" } : current);
       }
-
-      // Actualizamos el evento que cambió.
-      setEvents((previous) =>
-        previous.map((item) =>
-          item.id === event.id
-            ? response.data.event
-            : item
-        )
-      );
-
-      // Informamos el estado final.
       setFeedback({
-        type: "success",
-
-        message:
-          nextStatus === "published"
-            ? "Evento publicado correctamente."
-            : "Evento guardado como borrador.",
+        type: response.data?.warning ? "warning" : "success",
+        message: response.data?.warning || (status === "published"
+          ? "Evento publicado correctamente."
+          : "Evento guardado como borrador."),
       });
     } catch (error) {
-      setFeedback({
-        type: "error",
-        message: getErrorMessage(error),
-      });
+      setFeedback({ type: "error", message: getErrorMessage(error) });
     } finally {
       setChangingId(null);
     }
   }
 
-  // =====================================================
-  // ELIMINAR EVENTO
-  // =====================================================
+  // Abrimos una única confirmación desde cualquier tarjeta de evento.
+  function requestDelete(event) {
+    if (deleting || saving) return;
+    setDeleteError("");
+    setDeletingEvent(event);
+  }
 
+  // El administrador puede cancelar mientras no se haya enviado el borrado.
+  function closeDeleteModal() {
+    if (deleting) return;
+    setDeletingEvent(null);
+    setDeleteError("");
+  }
+
+  // Eliminación real del evento, reutilizada por las tarjetas y el organizador.
   async function confirmDelete() {
-    // Debe existir un evento seleccionado.
+    // La confirmación del usuario es obligatoria.
     if (!deletingEvent || deleting) return;
 
+    // Guardamos el ID antes de modificar el estado.
+    const deletedId = deletingEvent.id;
     setDeleting(true);
+    setDeleteError("");
     setFeedback(null);
 
     try {
-      // Solicitamos la eliminación al backend.
-      const response = await api.delete(
-        `/events/${encodeURIComponent(deletingEvent.id)}`
-      );
+      // DELETE borra el registro, audita y limpia referencias al destacado.
+      const response = await api.delete(`/events/${encodeURIComponent(deletedId)}`);
+      if (response.data?.success !== true) {
+        throw new Error("El servidor no confirmó la eliminación del evento.");
+      }
 
-      // Retiramos el evento del listado.
-      setEvents((previous) =>
-        previous.filter(
-          (item) => item.id !== deletingEvent.id
-        )
-      );
+      // El evento deja de aparecer inmediatamente en ambas vistas.
+      setEvents((current) => current.filter((event) => event.id !== deletedId));
 
-      // Informamos el resultado.
-      setFeedback({
-        type: response.data?.warning
-          ? "warning"
-          : "success",
+      // Retiramos referencias a un evento que ya no existe.
+      // Las demás modificaciones del borrador se mantienen.
+      const removeFeatured = (page) => page?.featuredEventId === deletedId
+        ? { ...page, featuredEventId: "" }
+        : page;
+      setPageDraft(removeFeatured);
+      setSavedPage(removeFeatured);
+      setPublishedPage(removeFeatured);
 
-        message:
-          response.data?.warning ||
-          response.data?.message ||
-          "Evento eliminado correctamente.",
-      });
-
-      // Cerramos la confirmación.
+      // Cerramos el diálogo y mostramos el resultado real.
       setDeletingEvent(null);
-    } catch (error) {
+      setDeleteError("");
       setFeedback({
-        type: "error",
-        message: getErrorMessage(error),
+        type: response.data.warning ? "warning" : "success",
+        message: response.data.warning || "Evento eliminado correctamente de la programación.",
       });
+    } catch (error) {
+      // Conservamos el diálogo abierto y explicamos el error en el modal.
+      setDeleteError(getErrorMessage(error));
+      setFeedback({ type: "error", message: getErrorMessage(error) });
     } finally {
       setDeleting(false);
     }
   }
 
-  // =====================================================
-  // INTERFAZ PRINCIPAL
-  // =====================================================
-
   return (
-    <main className="public-events-management-page">
+    <div className="public-events-management-page">
+      {/* Barra de herramientas del mismo editor informativo. */}
+      <EditorToolbar
+        pageTitle="Nuestros eventos"
+        pageDescription="Pasa el cursor sobre los textos y las imágenes para editarlos."
+        hasChanges={pageHasChanges}
+        isSaving={pageSaving}
+        isPublishing={pagePublishing}
+        isPreview={isPreview}
+        lastSaved={lastSaved}
+        message={feedback?.message || ""}
+        messageType={feedback?.type === "error" ? "error" : "success"}
+        onBack={backToPanel}
+        onSave={() => savePageDraft()}
+        onPublish={() => setConfirmationAction("publish")}
+        onDiscard={() => setConfirmationAction("discard")}
+        onTogglePreview={() => setIsPreview((current) => !current)}
+      />
 
-      {/* =============================================== */}
-      {/* ENCABEZADO */}
-      {/* =============================================== */}
-
-      <header className="public-events-management-page__header">
-
+      {/* Acceso a la página pública y creación de una reunión. */}
+      <div className="public-events-management-page__visual-tools">
         <div>
-          <span className="public-events-management-page__eyebrow">
-            CONTENIDOS DEL SITIO
-          </span>
-
-          <h1>
-            <CalendarDays
-              size={28}
-              aria-hidden="true"
-            />
-            Gestión de eventos
-          </h1>
-
+          <strong>Editor visual de eventos</strong>
           <p>
-            Publica los cultos y encuentros que se
-            realizan habitualmente, con sus días,
-            horarios y lugares.
+            {isPreview
+              ? "Vista previa: así verán la página los visitantes."
+              : "Pasa el cursor sobre los textos o las tarjetas y selecciona el lápiz para editarlos."}
           </p>
         </div>
-
-        {/* Acciones principales. */}
-
         <div className="public-events-management-page__header-actions">
-
-          <Link
-            to="/eventos"
-            className="public-events-management-page__public-link"
-          >
-            <Eye size={17} aria-hidden="true" />
-            Ver página pública
-            <ArrowUpRight size={16} aria-hidden="true" />
+          <Link to="/eventos" target="_blank" rel="noopener noreferrer" className="public-events-management-page__public-link">
+            <Eye size={17} /> Ver página pública <ArrowUpRight size={16} />
           </Link>
-
-          <button
-            className="public-events-management-page__primary"
-            type="button"
-            onClick={openCreate}
-          >
-            <CalendarPlus size={18} aria-hidden="true" />
-            Nuevo evento
-          </button>
-
-        </div>
-      </header>
-
-      {/* =============================================== */}
-      {/* MENSAJES DE OPERACIONES */}
-      {/* =============================================== */}
-
-      {feedback && (
-        <div
-          className={
-            `public-events-management-page__feedback ` +
-            `public-events-management-page__feedback--${feedback.type}`
-          }
-          role={
-            feedback.type === "error"
-              ? "alert"
-              : "status"
-          }
-        >
-          <span>{feedback.message}</span>
-
-          {feedback.type === "error" && (
-            <button
-              type="button"
-              onClick={() => {
-                setFeedback(null);
-                loadEvents();
-              }}
-            >
-              Reintentar
+          {!isPreview && (
+            <button type="button" className="public-events-management-page__primary" onClick={openCreate}>
+              <CalendarPlus size={18} /> Nuevo evento
             </button>
           )}
         </div>
+      </div>
+
+      {/* Mensajes de las operaciones realizadas. */}
+      {feedback && (
+        <div className={`public-events-management-page__feedback public-events-management-page__feedback--${feedback.type}`}
+          role={feedback.type === "error" ? "alert" : "status"}>
+          {feedback.message}
+        </div>
       )}
 
-      {/* =============================================== */}
-      {/* TARJETAS DE RESUMEN */}
-      {/* =============================================== */}
-
-      <section
-        className="public-events-management-page__summary"
-        aria-label="Resumen de eventos"
-      >
-        <article>
-          <CalendarDays size={22} aria-hidden="true" />
-          <span>Total de eventos</span>
-          <strong>{summary.total}</strong>
-        </article>
-
-        <article>
-          <CheckCircle2 size={22} aria-hidden="true" />
-          <span>Publicados</span>
-          <strong>{summary.published}</strong>
-        </article>
-
-        <article>
-          <FilePenLine size={22} aria-hidden="true" />
-          <span>Borradores</span>
-          <strong>{summary.drafts}</strong>
-        </article>
-      </section>
-
-      {/* =============================================== */}
-      {/* LISTADO DE EVENTOS */}
-      {/* =============================================== */}
-
-      <section className="public-events-management-page__panel">
-
-        <div className="public-events-management-page__panel-heading">
-          <div>
-            <span className="public-events-management-page__eyebrow">
-              PROGRAMACIÓN SEMANAL
-            </span>
-
-            <h2>Eventos registrados</h2>
-
-            <p>
-              Consulta y actualiza las reuniones
-              habituales de la iglesia.
-            </p>
-          </div>
-
-          <span className="public-events-management-page__count">
-            {filteredEvents.length} resultados
-          </span>
-        </div>
-
-        {/* Buscador y filtro de publicación. */}
-
-        <div className="public-events-management-page__toolbar">
-
-          <label className="public-events-management-page__search">
-
-            <Search
-              size={18}
-              aria-hidden="true"
-            />
-
-            <input
-              type="search"
-              value={search}
-              onChange={(event) =>
-                setSearch(event.target.value)
-              }
-              placeholder="Buscar por nombre, categoría o lugar..."
-              aria-label="Buscar eventos"
-            />
-          </label>
-
-          <select
-            value={statusFilter}
-            onChange={(event) =>
-              setStatusFilter(event.target.value)
-            }
-            aria-label="Filtrar eventos por estado"
-          >
-            <option value="all">
-              Todos los estados
-            </option>
-
-            <option value="published">
-              Publicados
-            </option>
-
-            <option value="draft">
-              Borradores
-            </option>
-          </select>
-        </div>
-
-        {/* Estado de carga. */}
-
-        {loading ? (
-          <p
-            className="public-events-management-page__empty"
-            role="status"
-          >
-            Cargando eventos...
-          </p>
-        ) : filteredEvents.length === 0 ? (
-
-          /* No hay eventos o los filtros no encontraron resultados. */
-          <div className="public-events-management-page__empty">
-
-            <CalendarDays
-              size={36}
-              strokeWidth={1.5}
-              aria-hidden="true"
-            />
-
-            <h3>
-              {events.length
-                ? "No se encontraron eventos"
-                : "Todavía no hay eventos registrados"}
-            </h3>
-
-            <p>
-              {events.length
-                ? "Prueba con otros filtros de búsqueda."
-                : "Selecciona «Nuevo evento» para comenzar a publicar la programación semanal."}
-            </p>
-
-          </div>
+      {/* Utilizamos la misma página Events.jsx, sin copiar su diseño. */}
+      <section className="public-events-management-page__visual-workspace" aria-label="Editor visual de la página Eventos">
+        {loading || pageLoading || !pageDraft ? (
+          <div className="public-events-management-page__empty" role="status">Cargando la página de eventos...</div>
         ) : (
-
-          /* Tarjetas de eventos reales. */
-          <div className="public-events-management-page__event-grid">
-
-            {filteredEvents.map((event) => (
-              <article
-                className="public-events-management-page__event"
-                key={event.id}
-              >
-
-                {/* Portada opcional. */}
-
-                <div className="public-events-management-page__event-media">
-                  {event.image?.url ? (
-                    <img
-                      src={event.image.url}
-                      alt=""
-                      loading="lazy"
-                    />
-                  ) : (
-                    <ImageIcon
-                      size={30}
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-
-                {/* Información del evento. */}
-
-                <div className="public-events-management-page__event-body">
-
-                  <div className="public-events-management-page__event-top">
-
-                    <span className="public-events-management-page__category">
-                      {event.category}
-                    </span>
-
-                    <span
-                      className={
-                        `public-events-management-page__status ` +
-                        `public-events-management-page__status--${event.publicationStatus}`
-                      }
-                    >
-                      {event.publicationStatus === "published"
-                        ? "Publicado"
-                        : "Borrador"}
-                    </span>
-                  </div>
-
-                  <h3>{event.title}</h3>
-                  <p>{event.description}</p>
-
-                  {/* Días, horas y lugar. */}
-
-                  <div className="public-events-management-page__event-meta">
-
-                    <span>
-                      <Repeat2 size={16} aria-hidden="true" />
-
-                      {formatDays(
-                        event.recurrence?.daysOfWeek
-                      )}
-                    </span>
-
-                    <span>
-                      <Clock3 size={16} aria-hidden="true" />
-
-                      {event.time}
-
-                      {event.endTime
-                        ? ` a ${event.endTime}`
-                        : ""} hrs
-                    </span>
-
-                    <span>
-                      <MapPin size={16} aria-hidden="true" />
-
-                      {event.modality === "Online"
-                        ? "En línea"
-                        : event.location || event.modality}
-                    </span>
-
-                    <span>
-                      <CalendarDays size={16} aria-hidden="true" />
-
-                      Desde {formatDate(event.date)}
-
-                      {event.recurrence?.endDate
-                        ? ` hasta ${formatDate(event.recurrence.endDate)}`
-                        : ""}
-                    </span>
-
-                  </div>
-                </div>
-
-                {/* Acciones administrativas. */}
-
-                <div className="public-events-management-page__event-actions">
-
-                  <button
-                    type="button"
-                    onClick={() => openEdit(event)}
-                    disabled={Boolean(changingId) || deleting}
-                  >
-                    <Pencil size={16} aria-hidden="true" />
-                    Editar
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => changePublication(event)}
-                    disabled={Boolean(changingId) || deleting}
-                  >
-                    {event.publicationStatus === "published"
-                      ? "Pasar a borrador"
-                      : "Publicar"}
-                  </button>
-
-                  <button
-                    className="public-events-management-page__danger"
-                    type="button"
-                    onClick={() => setDeletingEvent(event)}
-                    disabled={Boolean(changingId) || deleting}
-                  >
-                    <Trash2 size={16} aria-hidden="true" />
-                    Eliminar
-                  </button>
-
-                </div>
-
-              </article>
-            ))}
-
-          </div>
+          <Events
+            editorMode
+            isPreview={isPreview}
+            pageData={visualPage}
+            eventData={events}
+            onPageChange={updatePageField}
+            onEditEvent={openEdit}
+            onCreateEvent={openCreate}
+            onChooseFeatured={handleChooseFeatured}
+            onDeleteEvent={requestDelete}
+          />
         )}
-
       </section>
 
-      {/* =============================================== */}
-      {/* FORMULARIO PARA CREAR Y EDITAR */}
-      {/* =============================================== */}
+      {/* Controles compactos que solo aparecen en administración. */}
+      {!isPreview && !loading && !pageLoading && pageDraft && (
+        <section className="public-events-management-page__panel public-events-management-page__event-organizer">
+          <div className="public-events-management-page__panel-heading">
+            <div>
+              <span className="public-events-management-page__eyebrow">ADMINISTRAR PUBLICACIONES</span>
+              <h2>Estado de los eventos</h2>
+              <p>Publica, guarda como borrador o elimina cada reunión desde aquí.</p>
+            </div>
+            <span className="public-events-management-page__count">{events.length} eventos</span>
+          </div>
+          {events.length === 0 ? (
+            <p className="public-events-management-page__empty">Todavía no hay eventos registrados.</p>
+          ) : (
+            <div className="public-events-management-page__organizer-list">
+              {events.map((event) => (
+                <div className="public-events-management-page__organizer-item" key={event.id}>
+                  <div className="public-events-management-page__organizer-info">
+                    <strong>{event.title}</strong>
+                    <small>{event.publicationStatus === "published"
+                      ? "Publicado · visible para todos"
+                      : "Borrador · solo administración"}</small>
+                    {pageDraft.featuredEventId === event.id && (
+                      <small>Destacado seleccionado en edición</small>
+                    )}
+                    {publishedPage?.featuredEventId === event.id && (
+                      <small>Destacado visible actualmente en la página pública</small>
+                    )}
+                  </div>
+                  <div className="public-events-management-page__organizer-actions">
+                    <button
+                      type="button"
+                      disabled={pageSaving || pagePublishing || Boolean(changingId) || deleting || (pageDraft.featuredEventId === event.id && publishedPage?.featuredEventId === event.id)}
+                      onClick={() => handleChooseFeatured(event.id)}
+                      aria-pressed={pageDraft.featuredEventId === event.id}
+                      title={pageDraft.featuredEventId === event.id && publishedPage?.featuredEventId === event.id
+                        ? "Este evento ya está destacado públicamente"
+                        : "Destacar ahora en la página pública"}
+                    >
+                      {publishedPage?.featuredEventId === event.id ? "Destacado" : "Destacar y publicar"}
+                    </button>
+                    <button type="button" onClick={() => openEdit(event)} disabled={saving || deleting}>
+                      <Pencil size={16} /> Editar
+                    </button>
+                    <button type="button" disabled={Boolean(changingId) || deleting}
+                      onClick={() => changePublication(event)}>
+                      {event.publicationStatus === "published" ? "Pasar a borrador" : "Publicar"}
+                    </button>
+                    <button type="button" className="public-events-management-page__danger"
+                      disabled={Boolean(changingId) || deleting} onClick={() => requestDelete(event)}>
+                      <Trash2 size={16} /> Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
+      {/* Formulario que reutiliza el CRUD existente de eventos. */}
       {formOpen && (
-        <div
-          className="public-events-management-page__overlay"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closeForm();
-            }
-          }}
-        >
-          <section
-            className="public-events-management-page__dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="public-event-form-title"
-          >
-
-            {/* Encabezado del formulario. */}
-
+        <div className="public-events-management-page__overlay" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) closeForm();
+        }}>
+          <section className="public-events-management-page__dialog" role="dialog" aria-modal="true"
+            aria-labelledby="public-event-form-title">
             <header className="public-events-management-page__dialog-header">
-
               <div>
-                <span className="public-events-management-page__eyebrow">
-                  PROGRAMACIÓN DE EVENTOS
-                </span>
-
-                <h2 id="public-event-form-title">
-                  {editingId
-                    ? "Editar evento"
-                    : "Nuevo evento"}
-                </h2>
-
-                <p>
-                  Completa los detalles que las personas
-                  necesitan para asistir.
-                </p>
+                <span className="public-events-management-page__eyebrow">PROGRAMACIÓN DE EVENTOS</span>
+                <h2 id="public-event-form-title">{editingId ? "Editar evento" : "Nuevo evento"}</h2>
+                <p>Completa los detalles que las personas necesitan para asistir.</p>
               </div>
-
-              <button
-                type="button"
-                onClick={closeForm}
-                disabled={saving}
-                aria-label="Cerrar formulario"
-              >
-                <X size={21} />
-              </button>
+              <button type="button" onClick={closeForm} disabled={saving} aria-label="Cerrar formulario"><X size={21} /></button>
             </header>
-
-            {/* Formulario principal. */}
-
-            <form
-              className="public-events-management-page__form"
-              onSubmit={handleSave}
-            >
-
-              {formError && (
-                <p
-                  className="public-events-management-page__form-error"
-                  role="alert"
-                >
-                  {formError}
-                </p>
-              )}
-
+            <form className="public-events-management-page__form" onSubmit={handleSave}>
+              {formError && <p className="public-events-management-page__form-error" role="alert">{formError}</p>}
               <div className="public-events-management-page__form-grid">
-
-                {/* Nombre del evento. */}
-
-                <label>
-                  Nombre del evento *
-
-                  <input
-                    value={form.title}
-                    onChange={(event) =>
-                      updateField(
-                        "title",
-                        event.target.value
-                      )
-                    }
-                    required
-                    maxLength={120}
-                    placeholder="Ej.: Culto general"
-                  />
+                <label>Nombre del evento *
+                  <input value={form.title} onChange={(e) => updateField("title", e.target.value)} required
+                    maxLength={120} placeholder="Ej.: Culto general" />
+                </label>
+                <label>Categoría *
+                  <select value={form.category} onChange={(e) => updateField("category", e.target.value)}>
+                    {EVENT_CATEGORIES.map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                </label>
+                <label className="public-events-management-page__full">Descripción *
+                  <textarea rows={3} value={form.description} onChange={(e) => updateField("description", e.target.value)}
+                    maxLength={2000} required placeholder="Cuenta brevemente de qué trata este encuentro." />
+                </label>
+                <label>Fecha desde la que comienza *
+                  <input type="date" value={form.date} onChange={(e) => updateField("date", e.target.value)} required />
+                </label>
+                <label>Fecha de término (opcional)
+                  <input type="date" min={form.date || undefined} value={form.endDate}
+                    onChange={(e) => updateField("endDate", e.target.value)} />
                 </label>
 
-                {/* Categoría. */}
-
-                <label>
-                  Categoría *
-
-                  <select
-                    value={form.category}
-                    onChange={(event) =>
-                      updateField(
-                        "category",
-                        event.target.value
-                      )
-                    }
-                  >
-                    {EVENT_CATEGORIES.map((item) => (
-                      <option
-                        key={item}
-                        value={item}
-                      >
-                        {item}
-                      </option>
-                    ))}
+                {/* El admin elige si la reunión es semanal o mensual. */}
+                <label className="public-events-management-page__full">
+                  ¿Con qué frecuencia se realiza? *
+                  <select value={form.recurrenceType} onChange={(e) => changeFrequency(e.target.value)}>
+                    <option value="weekly">Todas las semanas</option>
+                    <option value="monthly">Una o varias veces al mes</option>
                   </select>
                 </label>
 
-                {/* Descripción pública. */}
-
-                <label className="public-events-management-page__full">
-                  Descripción *
-
-                  <textarea
-                    rows={3}
-                    value={form.description}
-                    onChange={(event) =>
-                      updateField(
-                        "description",
-                        event.target.value
-                      )
-                    }
-                    required
-                    maxLength={2000}
-                    placeholder="Cuenta brevemente de qué trata este encuentro."
-                  />
-                </label>
-
-                {/* Fecha inicial de la programación. */}
-
-                <label>
-                  Fecha desde la que comienza *
-
-                  <input
-                    type="date"
-                    value={form.date}
-                    onChange={(event) =>
-                      updateField(
-                        "date",
-                        event.target.value
-                      )
-                    }
-                    required
-                  />
-                </label>
-
-                {/* Fecha final opcional. */}
-
-                <label>
-                  Fecha de término (opcional)
-
-                  <input
-                    type="date"
-                    min={form.date || undefined}
-                    value={form.endDate}
-                    onChange={(event) =>
-                      updateField(
-                        "endDate",
-                        event.target.value
-                      )
-                    }
-                  />
-                </label>
-
-                {/* Selección de días semanales. */}
-
+                {/* Para un evento mensual se elige un solo día; semanal admite varios. */}
                 <fieldset className="public-events-management-page__days public-events-management-page__full">
-
                   <legend>
-                    ¿Qué días de la semana se realiza? *
+                    {form.recurrenceType === "monthly"
+                      ? "¿Qué día de la semana se realiza? (opcional)"
+                      : "¿Qué días de la semana se realiza? *"}
                   </legend>
-
                   <div>
-                    {WEEK_DAYS.map((day) => (
-                      <label
-                        key={day.value}
-                        className={
-                          form.daysOfWeek.includes(day.value)
-                            ? "selected"
-                            : ""
-                        }
-                      >
-                        <input
-                          type="checkbox"
-                          checked={
-                            form.daysOfWeek.includes(day.value)
-                          }
-                          onChange={() =>
-                            toggleDay(day.value)
-                          }
-                        />
-
-                        {day.label}
+                    {form.recurrenceType === "monthly" && (
+                      <label className={form.daysOfWeek.length === 0 ? "selected" : ""}>
+                        <input type="radio" name="monthly-weekday" checked={form.daysOfWeek.length === 0}
+                          onChange={() => updateField("daysOfWeek", [])} />
+                        Día por confirmar
+                      </label>
+                    )}
+                    {WEEK_DAYS.map((label, day) => (
+                      <label key={label} className={form.daysOfWeek.includes(day) ? "selected" : ""}>
+                        <input type={form.recurrenceType === "monthly" ? "radio" : "checkbox"}
+                          name={form.recurrenceType === "monthly" ? "monthly-weekday" : undefined}
+                          checked={form.daysOfWeek.includes(day)} onChange={() => toggleDay(day)} />
+                        {label}
                       </label>
                     ))}
                   </div>
-
                   <small>
-                    El evento se repetirá semanalmente
-                    en los días seleccionados.
+                    {form.recurrenceType === "monthly"
+                      ? "Selecciona el día habitual si lo conoces; de lo contrario, deja «Día por confirmar»."
+                      : "El evento se realizará cada semana en los días seleccionados."}
                   </small>
-
                 </fieldset>
 
-                {/* Horario habitual. */}
+                {/* La cantidad mensual y las semanas son campos independientes. */}
+                {form.recurrenceType === "monthly" && (
+                  <>
+                    <label className="public-events-management-page__full">
+                      ¿Cuántas veces al mes se realiza? *
+                      <select value={form.monthlyCount} onChange={(e) => {
+                        const count = Number(e.target.value);
+                        setForm((current) => ({ ...current,
+                          monthlyCount: count,
+                          weeksOfMonth: current.weeksOfMonth.slice(0, count),
+                        }));
+                        setFormError("");
+                      }}>
+                        <option value={1}>Una vez al mes</option>
+                        <option value={2}>Dos veces al mes</option>
+                        <option value={3}>Tres veces al mes</option>
+                        <option value={4}>Cuatro veces al mes</option>
+                      </select>
+                    </label>
 
-                <label>
-                  Hora de inicio *
+                    <label className="public-events-management-page__full">
+                      ¿Están definidos cuáles son los encuentros del mes?
+                      <select value={form.monthlySchedule} onChange={(e) =>
+                        updateField("monthlySchedule", e.target.value)}>
+                        <option value="to_confirm">No, fechas por confirmar</option>
+                        <option value="fixed">Sí, semanas fijas del mes</option>
+                      </select>
+                      <small>Si aún no hay fechas acordadas, los visitantes verán «Fechas por confirmar».</small>
+                    </label>
 
-                  <input
-                    type="time"
-                    value={form.time}
-                    onChange={(event) =>
-                      updateField(
-                        "time",
-                        event.target.value
-                      )
-                    }
-                    required
-                  />
+                    {form.monthlySchedule === "fixed" && (
+                      <fieldset className="public-events-management-page__days public-events-management-page__full">
+                        <legend>Selecciona {form.monthlyCount} semana(s) del mes *</legend>
+                        <div>
+                          {MONTH_WEEKS.map((week) => (
+                            <label key={week.value}
+                              className={form.weeksOfMonth.includes(week.value) ? "selected" : ""}>
+                              <input type="checkbox"
+                                checked={form.weeksOfMonth.includes(week.value)}
+                                onChange={() => toggleMonthWeek(week.value)} />
+                              {week.label}
+                            </label>
+                          ))}
+                        </div>
+                        <small>«Último» significa el último {WEEK_DAYS[form.daysOfWeek[0]] || "día"} del mes. No se combina con «Cuarto» para evitar fechas repetidas.</small>
+                      </fieldset>
+                    )}
+                  </>
+                )}
+
+                <label>Hora de inicio *
+                  <input type="time" value={form.time} onChange={(e) => updateField("time", e.target.value)} required />
                 </label>
-
-                <label>
-                  Hora de término (opcional)
-
-                  <input
-                    type="time"
-                    value={form.endTime}
-                    onChange={(event) =>
-                      updateField(
-                        "endTime",
-                        event.target.value
-                      )
-                    }
-                  />
+                <label>Hora de término (opcional)
+                  <input type="time" value={form.endTime} onChange={(e) => updateField("endTime", e.target.value)} />
                 </label>
-
-                {/* Modalidad de reunión. */}
-
-                <label>
-                  Modalidad *
-
-                  <select
-                    value={form.modality}
-                    onChange={(event) =>
-                      updateField(
-                        "modality",
-                        event.target.value
-                      )
-                    }
-                  >
-                    <option value="Presencial">
-                      Presencial
-                    </option>
-
-                    <option value="Online">
-                      En línea
-                    </option>
-
-                    <option value="Híbrida">
-                      Presencial y en línea
-                    </option>
+                <label>Modalidad *
+                  <select value={form.modality} onChange={(e) => updateField("modality", e.target.value)}>
+                    <option value="Presencial">Presencial</option>
+                    <option value="Online">En línea</option>
+                    <option value="Híbrida">Presencial y en línea</option>
                   </select>
                 </label>
-
-                {/* Estado de publicación. */}
-
-                <label>
-                  Estado de publicación
-
-                  <select
-                    value={form.publicationStatus}
-                    onChange={(event) =>
-                      updateField(
-                        "publicationStatus",
-                        event.target.value
-                      )
-                    }
-                  >
-                    <option value="draft">
-                      Guardar como borrador
-                    </option>
-
-                    <option value="published">
-                      Publicar evento
-                    </option>
+                <label>Estado de publicación
+                  <select value={form.publicationStatus} onChange={(e) => updateField("publicationStatus", e.target.value)}>
+                    <option value="draft">Guardar como borrador</option>
+                    <option value="published">Publicar evento</option>
                   </select>
                 </label>
-
-                {/* Ubicación para eventos presenciales. */}
-
                 {form.modality !== "Online" && (
-                  <label className="public-events-management-page__full">
-                    Lugar de reunión *
-
-                    <input
-                      value={form.location}
-                      onChange={(event) =>
-                        updateField(
-                          "location",
-                          event.target.value
-                        )
-                      }
-                      required
-                      maxLength={300}
-                      placeholder="Ej.: Dirección o lugar donde se realiza"
-                    />
+                  <label className="public-events-management-page__full">Lugar de reunión *
+                    <input value={form.location} onChange={(e) => updateField("location", e.target.value)} required
+                      maxLength={300} placeholder="Ej.: Dirección o lugar donde se realiza" />
                   </label>
                 )}
-
-                {/* Enlace para reuniones en línea. */}
-
                 {form.modality !== "Presencial" && (
-                  <label className="public-events-management-page__full">
-                    Enlace para participar en línea *
-
-                    <input
-                      type="url"
-                      value={form.meetingUrl}
-                      onChange={(event) =>
-                        updateField(
-                          "meetingUrl",
-                          event.target.value
-                        )
-                      }
-                      required
-                      maxLength={2000}
-                      placeholder="https://..."
-                    />
+                  <label className="public-events-management-page__full">Enlace para participar en línea (opcional)
+                    <input type="url" value={form.meetingUrl} onChange={(e) => updateField("meetingUrl", e.target.value)}
+                      maxLength={2000} placeholder="https://..." />
+                    <small>Si el enlace se comparte por privado, deja este campo vacío. Las personas podrán solicitarlo a la iglesia.</small>
                   </label>
                 )}
 
-
-                {/* ===================================================== */}
-                {/* CARGA PERSONALIZADA DE IMAGEN DEL EVENTO */}
-                {/* ===================================================== */}
-
+                {/* Selector personalizado y vista previa de la imagen. */}
                 <div className="public-events-management-page__upload-section public-events-management-page__full">
-
-                  {/* Encabezado del apartado. */}
-
                   <div className="public-events-management-page__upload-heading">
-
                     <span>Imagen del evento (opcional)</span>
-
                     <small>JPG, PNG o WebP · Máximo 5 MB</small>
-
                   </div>
-
-                  {/* Área seleccionable para subir o cambiar una imagen. */}
-
                   <label className="public-events-management-page__upload-area">
-
-                    {/* Input real accesible para teclado y mouse. */}
-
-                    <input
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      onChange={handleImageChange}
-                      aria-label="Seleccionar imagen del evento"
-                    />
-
-                    {/* Icono decorativo. */}
-
+                    <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange}
+                      aria-label="Seleccionar imagen del evento" />
                     <span className="public-events-management-page__upload-icon">
-                      <ImagePlus
-                        size={27}
-                        strokeWidth={1.7}
-                        aria-hidden="true"
-                      />
+                      <ImagePlus size={27} strokeWidth={1.7} aria-hidden="true" />
                     </span>
-
-                    {/* Texto principal. */}
-
-                    <strong>
-                      {form.imageFile
-                        ? "Imagen seleccionada"
-                        : form.imageUrl && !form.removeImage
-                          ? "Cambiar imagen del evento"
-                          : "Agrega una imagen para tu evento"}
-                    </strong>
-
-                    {/* Mensaje de ayuda. */}
-
+                    <strong>{form.imageFile ? "Imagen seleccionada" : form.imageUrl && !form.removeImage
+                      ? "Cambiar imagen del evento" : "Agrega una imagen para tu evento"}</strong>
                     <span className="public-events-management-page__upload-description">
-                      {form.imageFile
-                        ? form.imageFile.name
-                        : "Selecciona una imagen desde tu dispositivo."}
+                      {form.imageFile ? form.imageFile.name : "Selecciona una imagen desde tu dispositivo."}
                     </span>
-
-                    {/* Botón visual, sin un segundo input. */}
-
                     <span className="public-events-management-page__upload-button">
-                      {form.imageFile || (form.imageUrl && !form.removeImage)
-                        ? "Seleccionar otra imagen"
-                        : "Seleccionar imagen"}
+                      {form.imageFile || (form.imageUrl && !form.removeImage) ? "Seleccionar otra imagen" : "Seleccionar imagen"}
                     </span>
-
                   </label>
-
-                  {/* ===================================================== */}
-                  {/* VISTA PREVIA */}
-                  {/* ===================================================== */}
-
                   {(imagePreview || (form.imageUrl && !form.removeImage)) && (
-
                     <div className="public-events-management-page__preview">
-
-                      {/* Imagen nueva o portada previamente guardada. */}
-
-                      <img
-                        src={imagePreview || form.imageUrl}
-                        alt="Vista previa de la portada del evento"
-                      />
-
-                      {/* Información de la imagen. */}
-
+                      <img src={imagePreview || form.imageUrl} alt="Vista previa de la portada del evento" />
                       <div className="public-events-management-page__preview-info">
-
-                        <strong>
-                          {form.imageFile
-                            ? "Nueva imagen lista para guardar"
-                            : "Imagen actual del evento"}
-                        </strong>
-
-                        <small>
-                          {form.imageFile
-                            ? form.imageFile.name
-                            : "Esta imagen ya está guardada."}
-                        </small>
-
-                        {/* Descartamos solamente una selección nueva. */}
-
+                        <strong>{form.imageFile ? "Nueva imagen lista para guardar" : "Imagen actual del evento"}</strong>
+                        <small>{form.imageFile ? form.imageFile.name : "Esta imagen ya está guardada."}</small>
                         {form.imageFile && (
-                          <button
-                            type="button"
-                            onClick={discardSelectedImage}
-                            className="public-events-management-page__preview-remove"
-                          >
-                            <X size={15} aria-hidden="true" />
-                            Descartar selección
+                          <button type="button" onClick={discardSelectedImage} className="public-events-management-page__preview-remove">
+                            <X size={15} aria-hidden="true" /> Descartar selección
                           </button>
                         )}
-
                       </div>
-
                     </div>
                   )}
-
-                  {/* ===================================================== */}
-                  {/* QUITAR PORTADA EXISTENTE */}
-                  {/* ===================================================== */}
-
                   {editingId && form.imageUrl && !form.imageFile && (
-
                     <label className="public-events-management-page__remove-image">
-
-                      <input
-                        type="checkbox"
-                        checked={form.removeImage}
-                        onChange={(event) =>
-                          updateField("removeImage", event.target.checked)
-                        }
-                      />
-
+                      <input type="checkbox" checked={form.removeImage}
+                        onChange={(e) => updateField("removeImage", e.target.checked)} />
                       Quitar la imagen actual al guardar los cambios
-
                     </label>
                   )}
-
                 </div>
-
-
               </div>
-
-              {/* Acciones del formulario. */}
-
               <footer className="public-events-management-page__dialog-actions">
-
-                <button
-                  type="button"
-                  className="public-events-management-page__secondary"
-                  onClick={closeForm}
-                  disabled={saving}
-                >
-                  Cancelar
+                <button type="button" className="public-events-management-page__secondary"
+                  onClick={closeForm} disabled={saving}>Cancelar</button>
+                <button type="submit" className="public-events-management-page__primary" disabled={saving}>
+                  {saving ? "Guardando..." : editingId ? "Guardar cambios" : "Guardar evento"}
                 </button>
-
-                <button
-                  type="submit"
-                  className="public-events-management-page__primary"
-                  disabled={saving}
-                >
-                  {saving
-                    ? "Guardando..."
-                    : editingId
-                      ? "Guardar cambios"
-                      : "Guardar evento"}
-                </button>
-
               </footer>
             </form>
-
           </section>
         </div>
       )}
 
-      {/* =============================================== */}
-      {/* CONFIRMACIÓN DE ELIMINACIÓN */}
-      {/* =============================================== */}
-
+      {/* Confirmación antes de eliminar el evento y su portada. */}
       {deletingEvent && (
-        <div
-          className="public-events-management-page__overlay"
-          onMouseDown={(event) => {
-            if (
-              event.target === event.currentTarget &&
-              !deleting
-            ) {
-              setDeletingEvent(null);
-            }
-          }}
-        >
-          <section
-            className="public-events-management-page__confirm"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="public-event-delete-title"
-          >
-
-            <h2 id="public-event-delete-title">
-              ¿Eliminar este evento?
-            </h2>
-
-            <p>
-              Se eliminará «{deletingEvent.title}»
-              de la programación. Esta acción no
-              se puede deshacer.
-            </p>
-
+        <div className="public-events-management-page__overlay" onMouseDown={(event) => {
+          if (event.target === event.currentTarget && !deleting) closeDeleteModal();
+        }}>
+          <section className="public-events-management-page__confirm" role="alertdialog" aria-modal="true"
+            aria-labelledby="public-event-delete-title">
+            <h2 id="public-event-delete-title">¿Eliminar este evento?</h2>
+            <p>Se eliminará «{deletingEvent.title}» de la programación. Esta acción no se puede deshacer.</p>
+            {/* Mostramos errores reales de la API junto a la confirmación. */}
+            {deleteError && (
+              <p className="public-events-management-page__form-error" role="alert">
+                {deleteError}
+              </p>
+            )}
             <div className="public-events-management-page__dialog-actions">
-
-              <button
-                type="button"
-                className="public-events-management-page__secondary"
-                onClick={() => setDeletingEvent(null)}
-                disabled={deleting}
-              >
-                Cancelar
+              <button type="button" className="public-events-management-page__secondary"
+                onClick={closeDeleteModal} disabled={deleting}>Cancelar</button>
+              <button type="button" className="public-events-management-page__danger-button"
+                onClick={confirmDelete} disabled={deleting}>
+                {deleting ? "Eliminando..." : "Sí, eliminar evento"}
               </button>
-
-              <button
-                type="button"
-                className="public-events-management-page__danger-button"
-                onClick={confirmDelete}
-                disabled={deleting}
-              >
-                {deleting
-                  ? "Eliminando..."
-                  : "Sí, eliminar evento"}
-              </button>
-
             </div>
-
           </section>
         </div>
       )}
 
-    </main>
+      {/* Usamos la misma confirmación de las páginas informativas. */}
+      <ConfirmationModal
+        isOpen={confirmationAction !== null}
+        title={confirmationAction === "publish" ? "¿Publicar los cambios de la página?"
+          : confirmationAction === "discard" ? "¿Descartar los cambios?" : "¿Salir sin guardar?"}
+        description={confirmationAction === "publish"
+          ? "Los textos y el evento destacado se mostrarán a todas las personas que visiten la página."
+          : confirmationAction === "discard"
+            ? "Se restaurará el último borrador guardado de la página."
+            : "Se perderán los cambios realizados después del último guardado."}
+        confirmText={confirmationAction === "publish" ? "Publicar cambios"
+          : confirmationAction === "discard" ? "Descartar" : "Salir sin guardar"}
+        cancelText="Cancelar"
+        onConfirm={confirmPageAction}
+        onCancel={() => setConfirmationAction(null)}
+      />
+    </div>
   );
 }
 
-// Página compartida por administradores y superadministradores.
+// El mismo editor se utiliza desde Admin y Superadmin.
 export default PublicEventsManagement;
