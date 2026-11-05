@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -33,6 +32,8 @@ function EditableImage({
     alt = "",
     onChange,
     onAltChange,
+    // Emite imagen y alt en una sola actualización para evitar sobrescrituras.
+    onImageAndAltChange,
     originalSrc,
     className = "",
     wrapperClassName = "",
@@ -131,12 +132,15 @@ function EditableImage({
 
     const handleSave = () => {
 
-        if (preview) {
-            onChange?.(preview);
-        }
-
-        if (draftAlt !== alt) {
-            onAltChange?.(draftAlt.trim());
+        // Cuando se editan imagen y alt a la vez, enviamos una sola acción.
+        if (onImageAndAltChange) {
+            if (preview || draftAlt !== alt) {
+                onImageAndAltChange(preview || src, draftAlt.trim());
+            }
+        } else {
+            // Compatibilidad con otros editores que solo cambian la imagen.
+            if (preview) onChange?.(preview);
+            if (draftAlt !== alt) onAltChange?.(draftAlt.trim());
         }
 
         setPreview(null);

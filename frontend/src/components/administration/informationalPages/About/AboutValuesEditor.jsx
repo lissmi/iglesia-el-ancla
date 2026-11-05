@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 import EditableImage from "../common/EditableImage";
 
@@ -39,7 +38,7 @@ function AboutValuesEditor({
 
                 return {
                     ...item,
-                    [field]: value,
+                    ...(field === "__batch__" ? value : { [field]: value }),
                 };
             }
         );
@@ -153,19 +152,11 @@ function AboutValuesEditor({
                                     wrapperClassName="about-editor-values__editable-icon"
                                     label={`Icono del valor ${item.title}`}
                                     disabled={isPreview}
-                                    onChange={(image) =>
-                                        handleValueChange(
-                                            item.id,
-                                            "icon",
-                                            image
-                                        )
-                                    }
-                                    onAltChange={(alt) =>
-                                        handleValueChange(
-                                            item.id,
-                                            "alt",
-                                            alt
-                                        )
+                                    onImageAndAltChange={(icon, alt) =>
+                                        handleValueChange(item.id, "__batch__", {
+                                            icon,
+                                            alt,
+                                        })
                                     }
                                 />
 

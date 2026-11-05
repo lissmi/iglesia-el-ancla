@@ -117,8 +117,8 @@ import prayerRequestRoutes from "./routes/prayerRequestRoutes.js";
 // CRUD de equipos, turnos y confirmaciones de voluntarios.
 import volunteerRoutes from "./routes/volunteerRoutes.js";
 
-// Ejecución programada con Bearer secreto; no expone envíos al navegador.
-import volunteerReminderCronRoutes from "./routes/volunteerReminderCronRoutes.js";
+// API de contenido público con borradores y publicaciones.
+import informationalPageRoutes from "./routes/informationalPageRoutes.js";
 
 // Importamos la ruta pública para activar cuentas nuevas.
 import accountActivationRoutes from "./routes/accountActivationRoutes.js";
@@ -551,10 +551,14 @@ app.use("/api/prayer-requests", prayerRequestRoutes);
 // Acceso a turnos de servicio. El router comprueba sesión y roles.
 app.use("/api/volunteers", volunteerRoutes);
 
-// Se ejecuta desde un programador autorizado. No requiere sesión de usuario.
-app.use("/api/cron", volunteerReminderCronRoutes);
 
 
+// =========================================================
+// PÁGINAS INFORMATIVAS
+// =========================================================
+
+// El router valida los permisos de escritura y solo expone contenido publicado.
+app.use("/api/informational-pages", informationalPageRoutes);
 
 // =========================================================
 // RUTAS INEXISTENTES (404)

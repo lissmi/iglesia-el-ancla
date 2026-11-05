@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     useLocation,
     useNavigate,
@@ -12,6 +12,12 @@ import {
 
 
 import "../../styles/pages/administration/InformationalPages.css";
+
+// Los estados reales se consultan en Google Drive, nunca desde datos de ejemplo.
+import {
+    getInformationalPageStatuses,
+    informationalPageError,
+} from "../../services/api";
 
 // =========================================================
 // ICONOS DISPONIBLES
@@ -49,6 +55,43 @@ function InformationalPages() {
 
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("Todas");
+    const [statuses, setStatuses] = useState([]);
+    const [statusError, setStatusError] = useState("");
+
+    // Traemos los estados al abrir o volver al listado administrativo.
+    useEffect(() => {
+        let active = true;
+        getInformationalPageStatuses()
+            .then((pages) => {
+                if (active) setStatuses(pages);
+            })
+            .catch((error) => {
+                if (active) setStatusError(informationalPageError(error));
+            });
+        return () => { active = false; };
+    }, []);
+
+    // Solo se utiliza la metadata del catálogo para títulos y rutas.
+    const pages = useMemo(() => {
+        return initialInformationalPages.map((page) => {
+            const persisted = statuses.find((entry) => entry.slug === page.slug);
+            const published = Boolean(persisted?.publishedAt);
+            const draftRevision = persisted?.draftRevision || 0;
+            const publishedRevision = persisted?.publishedRevision || 0;
+
+            return {
+                ...page,
+                publicationStatus: published
+                    ? draftRevision > publishedRevision
+                        ? "Publicada · borrador pendiente"
+                        : "Publicada"
+                    : draftRevision > 0
+                        ? "Solo borrador"
+                        : "Sin publicación en CMS",
+                cmsPublished: published,
+            };
+        });
+    }, [statuses]);
 
     // =====================================================
     // FILTRAR PÁGINAS
@@ -60,7 +103,7 @@ function InformationalPages() {
             .trim()
             .toLocaleLowerCase("es");
 
-        return initialInformationalPages.filter((page) => {
+        return pages.filter((page) => {
 
             const matchesSearch =
                 page.title
@@ -77,15 +120,15 @@ function InformationalPages() {
             return matchesSearch && matchesCategory;
         });
 
-    }, [search, category]);
+    }, [search, category, pages]);
 
     // =====================================================
     // ESTADÍSTICAS
     // =====================================================
 
-    const totalPages = initialInformationalPages.length;
+    const totalPages = pages.length;
 
-    const availableEditors = initialInformationalPages.filter(
+    const availableEditors = pages.filter(
         (page) =>
             [
                 "nosotros",
@@ -208,13 +251,11 @@ function InformationalPages() {
                 <Info size={19} />
 
                 <p>
-                    Los editores de páginas informativas permiten
-                    modificar y visualizar contenido de demostración.
-                    Actualmente, los cambios se mantienen de forma
-                    temporal y no se publican automáticamente.
-                    La persistencia y publicación de contenidos
-                    se implementarán mediante la integración
-                    con el backend.
+                    Los borradores se guardan en Google Drive y no alteran el sitio público.
+                    Al seleccionar «Publicar» se actualiza la versión vigente.
+                    Los estados muestran únicamente publicaciones realizadas desde
+                    este editor; el contenido público anterior debe conectarse al nuevo flujo.
+                    {statusError && ` No fue posible consultar los estados: ${statusError}`}
                 </p>
             </div>
 
@@ -341,14 +382,12 @@ function InformationalPages() {
 
                                         <span
                                             className={
-                                                canEdit
+                                                page.cmsPublished
                                                     ? "informational-pages__status informational-pages__status--available"
                                                     : "informational-pages__status informational-pages__status--pending"
                                             }
                                         >
-                                            {canEdit
-                                                ? "Editor disponible"
-                                                : "Próximamente"}
+                                            {page.publicationStatus}
                                         </span>
 
 
@@ -466,7 +505,3 @@ function InformationalPages() {
 }
 
 export default InformationalPages;
-
-
-
-

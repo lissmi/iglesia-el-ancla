@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 import EditableImage from "../common/EditableImage";
 
@@ -130,17 +129,11 @@ function AboutIntroEditor({
                         className="about-editor-intro__image"
                         label="Fotografía de la comunidad"
                         disabled={isPreview}
-                        onChange={(image) =>
-                            handleFieldChange(
-                                "image",
-                                image
-                            )
-                        }
-                        onAltChange={(alt) =>
-                            handleFieldChange(
-                                "imageAlt",
-                                alt
-                            )
+                        onImageAndAltChange={(image, alt) =>
+                            handleFieldChange("__batch__", {
+                                image,
+                                imageAlt: alt,
+                            })
                         }
                     />
 

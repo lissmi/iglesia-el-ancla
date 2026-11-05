@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 
 // Iconos originales utilizados en la página pública.

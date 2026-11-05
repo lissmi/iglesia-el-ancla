@@ -1,4 +1,3 @@
-
 import TermsHeroEditor from "./TermsHeroEditor";
 import TermsSectionsEditor from "./TermsSectionsEditor";
 

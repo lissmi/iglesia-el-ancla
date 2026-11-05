@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 
 import facebookIcon from "../../../../assets/icons/fb.png";

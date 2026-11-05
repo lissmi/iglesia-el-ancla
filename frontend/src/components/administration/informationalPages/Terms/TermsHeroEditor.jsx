@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 
 import "../../../../styles/components/administration/informationalPages/Terms/TermsHeroEditor.css";

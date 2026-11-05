@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 import EditableImage from "../common/EditableImage";
 
@@ -73,17 +72,11 @@ function AboutPastorEditor({
                             wrapperClassName="about-editor-pastor__editable-image"
                             label="Fotografía del pastor"
                             disabled={isPreview}
-                            onChange={(image) =>
-                                handleFieldChange(
-                                    "image",
-                                    image
-                                )
-                            }
-                            onAltChange={(alt) =>
-                                handleFieldChange(
-                                    "imageAlt",
-                                    alt
-                                )
+                            onImageAndAltChange={(image, alt) =>
+                                handleFieldChange("__batch__", {
+                                    image,
+                                    imageAlt: alt,
+                                })
                             }
                         />
 

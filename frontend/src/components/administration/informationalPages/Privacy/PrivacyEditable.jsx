@@ -1,4 +1,3 @@
-
 import TermsEditable from "../Terms/TermsEditable";
 
 // =========================================================

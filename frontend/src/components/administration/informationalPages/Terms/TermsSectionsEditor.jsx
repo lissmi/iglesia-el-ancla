@@ -1,4 +1,3 @@
-
 import EditableText from "../common/EditableText";
 
 import "../../../../styles/components/administration/informationalPages/Terms/TermsSectionsEditor.css";
@@ -87,6 +86,16 @@ function TermsSectionsEditor({
                 <div className="terms-editor-document__content">
 
                     <div className="terms-editor-document__intro">
+
+                        {/* La fecha de actualización es editable en ambas páginas legales. */}
+                        <EditableText
+                            as="p"
+                            className="terms-editor-document__intro-text"
+                            value={information.lastUpdated}
+                            onChange={(value) => onInformationChange?.("lastUpdated", value)}
+                            disabled={isPreview}
+                            label="Editar fecha de actualización del documento"
+                        />
 
                         <EditableText
                             as="p"

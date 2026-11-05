@@ -1,4 +1,3 @@
-
 import AboutHeroEditor from "./AboutHeroEditor";
 import AboutIntroEditor from "./AboutIntroEditor";
 import AboutPurposeEditor from "./AboutPurposeEditor";
@@ -41,7 +40,8 @@ function AboutEditable({
 
             [section]: {
                 ...content[section],
-                [field]: value,
+                // Permite modificar foto y alt en una sola operación.
+                ...(field === "__batch__" ? value : { [field]: value }),
             },
         };
 

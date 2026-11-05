@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import {
     useNavigate,
@@ -26,14 +25,25 @@ import termsDemoData from "../../data/informationalPages/termsDemoData";
 import PrivacyEditable from "../../components/administration/informationalPages/Privacy/PrivacyEditable";
 
 import privacyDemoData from "../../data/informationalPages/privacyDemoData";
+// API central de borradores, publicaciones e imágenes del backend.
+import {
+    getAdminInformationalPage,
+    saveInformationalPageDraft,
+    publishInformationalPage,
+    prepareInformationalImages,
+    resolveInformationalImages,
+    cleanupPendingInformationalImages,
+    informationalPageError,
+} from "../../services/api";
+
 
 // =========================================================
 // EDITOR ADMINISTRATIVO DE PÁGINAS INFORMATIVAS
 // IGLESIA EL ANCLA
 // =========================================================
 
-// Por ahora solamente Nosotros tiene editor implementado.
-// Contacto, Términos y Privacidad se agregarán después.
+// Las cuatro páginas cuentan con editor visual.
+// El contenido persistente se obtiene del backend.
 const PAGE_CONFIG = {
     nosotros: {
         title: "Nosotros",
@@ -127,29 +137,61 @@ function InformationalPageEditor() {
     // Acción pendiente de confirmación: "discard", "back" o null.
     const [confirmationAction, setConfirmationAction] = useState(null);
 
+    // Controla los procesos reales contra Google Drive y Cloudinary.
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [draftRevision, setDraftRevision] = useState(0);
+    const [publishedRevision, setPublishedRevision] = useState(0);
+    const [publishedAt, setPublishedAt] = useState(null);
+
     // =====================================================
-    // CARGAR CONTENIDO INICIAL
+    // CARGAR EL BORRADOR REAL DESDE GOOGLE DRIVE
     // =====================================================
 
     useEffect(() => {
+        let active = true;
 
-        if (!pageConfig) {
+        async function loadPage() {
+            setIsLoading(true);
             setContent(null);
             setSavedContent(null);
-            return;
+            setMessage("");
+            setIsPreview(false);
+
+            if (!pageConfig) {
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                // Una página nunca editada arranca desde los datos originales.
+                const data = await getAdminInformationalPage(slug);
+                if (!active) return;
+
+                const initial = resolveInformationalImages(
+                    slug,
+                    data.draft || data.published || pageConfig.initialData
+                );
+
+                setContent(initial);
+                setSavedContent(cloneData(initial));
+                setLastSaved(data.lastSaved || null);
+                setDraftRevision(data.draftRevision || 0);
+                setPublishedRevision(data.publishedRevision || 0);
+                setPublishedAt(data.publishedAt || null);
+            } catch (error) {
+                if (!active) return;
+                // No se habilita la edición si no podemos leer la versión real.
+                setMessage(informationalPageError(error));
+                setMessageType("error");
+            } finally {
+                if (active) setIsLoading(false);
+            }
         }
 
-        const initialContent = cloneData(
-            pageConfig.initialData
-        );
-
-        setContent(initialContent);
-        setSavedContent(cloneData(initialContent));
-
-        setIsPreview(false);
-        setLastSaved(null);
-        setMessage("");
-
+        loadPage();
+        return () => { active = false; };
     }, [slug, pageConfig]);
 
     // =====================================================
@@ -175,32 +217,98 @@ function InformationalPageEditor() {
 
     const handleContentChange = (updatedContent) => {
 
-        setContent(updatedContent);
+        setContent((previous) =>
+            typeof updatedContent === "function"
+                ? updatedContent(previous)
+                : updatedContent
+        );
 
         // Eliminamos mensajes anteriores al modificar.
         setMessage("");
     };
 
     // =====================================================
-    // GUARDAR BORRADOR TEMPORAL
+    // GUARDAR UN BORRADOR REAL EN GOOGLE DRIVE
     // =====================================================
 
-    const handleSave = () => {
+    // Se reutiliza al guardar manualmente y al publicar cambios pendientes.
+    const persistDraft = async (snapshot, revision) => {
+        // Solo las imágenes nuevas (data:image/...) se suben a Cloudinary.
+        // Las existentes y los iconos predeterminados nunca se reenvían.
+        const { content: prepared, uploadedUrls } =
+            await prepareInformationalImages(slug, snapshot);
 
-        if (!content || !hasChanges) {
-            return;
+        let result;
+        try {
+            result = await saveInformationalPageDraft(slug, prepared, revision);
+        } catch (error) {
+            // El servidor comprueba si Drive ya referencia esos archivos
+            // antes de borrarlos; protege los guardados parcialmente exitosos.
+            try {
+                await cleanupPendingInformationalImages(slug, uploadedUrls);
+            } catch (cleanupError) {
+                console.error("Limpieza de imágenes pendiente:", cleanupError);
+            }
+            throw error;
         }
 
-        // Copia en memoria del borrador actual.
-        setSavedContent(cloneData(content));
+        // En el editor mostramos las imágenes del build, no los marcadores TXT.
+        const visibleContent = resolveInformationalImages(slug, prepared);
+        setContent(cloneData(visibleContent));
+        setSavedContent(cloneData(visibleContent));
+        setDraftRevision(result.draftRevision);
+        setLastSaved(result.lastSaved);
 
-        setLastSaved(new Date());
+        return { revision: result.draftRevision, content: visibleContent };
+    };
 
-        setMessage(
-            "Borrador guardado temporalmente en esta sesión del editor."
-        );
+    const handleSave = async () => {
+        if (!content || !hasChanges || isSaving || isPublishing) return;
 
-        setMessageType("success");
+        setIsSaving(true);
+        setMessage("");
+        try {
+            await persistDraft(cloneData(content), draftRevision);
+            setMessage("Borrador guardado correctamente en Google Drive.");
+            setMessageType("success");
+        } catch (error) {
+            setMessage(informationalPageError(error));
+            setMessageType("error");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    // =====================================================
+    // PUBLICAR CONTENIDO REAL
+    // =====================================================
+
+    const performPublish = async () => {
+        if (!content || isSaving || isPublishing) return;
+
+        setIsPublishing(true);
+        setMessage("");
+        try {
+            // La publicación siempre parte de una versión guardada.
+            // Si es la primera vez, también guardamos el contenido inicial.
+            let revision = draftRevision;
+            if (hasChanges || draftRevision === 0) {
+                const saved = await persistDraft(cloneData(content), revision);
+                revision = saved.revision;
+            }
+
+            const result = await publishInformationalPage(slug, revision);
+            setPublishedRevision(result.publishedRevision);
+            setPublishedAt(result.publishedAt);
+            setMessage("La página fue publicada. Los visitantes verán la versión actualizada al cargarla.");
+            setMessageType("success");
+        } catch (error) {
+            // El borrador permanece guardado si la publicación falla.
+            setMessage(informationalPageError(error));
+            setMessageType("error");
+        } finally {
+            setIsPublishing(false);
+        }
     };
 
     // =====================================================
@@ -220,25 +328,31 @@ function InformationalPageEditor() {
     };
 
     const handleConfirmAction = () => {
-        if (confirmationAction === "discard") {
-            if (savedContent) {
-                setContent(cloneData(savedContent));
-
-                setMessage(
-                    "Se restauró el último borrador guardado."
-                );
-
-                setMessageType("success");
-            }
-        }
-
-        if (confirmationAction === "back") {
-            navigate(
-                `${adminBasePath}/paginas-informativas`
-            );
-        }
-
+        // Capturamos la acción y cerramos el modal antes del flujo asíncrono.
+        const action = confirmationAction;
         setConfirmationAction(null);
+
+        if (action === "publish") {
+            void performPublish();
+            return;
+        }
+
+        if (action === "discard" && savedContent) {
+            setContent(cloneData(savedContent));
+            setMessage("Se restauró el último borrador guardado.");
+            setMessageType("success");
+        }
+
+        if (action === "back") {
+            navigate(`${adminBasePath}/paginas-informativas`);
+        }
+    };
+
+    // Exigimos confirmación porque publicar afecta al sitio público.
+    const handleRequestPublish = () => {
+        if (content && !isSaving && !isPublishing) {
+            setConfirmationAction("publish");
+        }
     };
 
     // =====================================================
@@ -302,6 +416,25 @@ function InformationalPageEditor() {
         );
     }
 
+    // Si Google Drive no respondió, no se permite editar datos desconocidos.
+    if (isLoading || !content) {
+        return (
+            <main className="informational-page-editor">
+                <div className="informational-page-editor__unavailable" role="status">
+                    <h2>{isLoading ? "Cargando página..." : "No se pudo cargar el editor"}</h2>
+                    <p>{isLoading
+                        ? "Consultando el borrador guardado en Google Drive."
+                        : message || "Comprueba la conexión con el backend e inténtalo de nuevo."}</p>
+                    {!isLoading && (
+                        <button type="button" onClick={() => window.location.reload()}>
+                            Reintentar
+                        </button>
+                    )}
+                </div>
+            </main>
+        );
+    }
+
     // =====================================================
     // RENDERIZADO PRINCIPAL
     // =====================================================
@@ -317,9 +450,9 @@ function InformationalPageEditor() {
                 pageTitle={pageConfig.title}
                 pageDescription={pageConfig.description}
                 hasChanges={hasChanges}
-                isSaving={false}
-                isPublishing={false}
-                isPreview={isPreview}
+                isSaving={isSaving}
+                isPublishing={isPublishing}
+                isPreview={isPreview || isSaving || isPublishing}
                 lastSaved={lastSaved}
                 message={message}
                 messageType={messageType}
@@ -328,9 +461,7 @@ function InformationalPageEditor() {
                 onDiscard={handleDiscard}
                 onTogglePreview={handleTogglePreview}
 
-                // Publicación deshabilitada:
-                // todavía no existe integración backend.
-                onPublish={undefined}
+                onPublish={handleRequestPublish}
             />
 
             {/* ======================================= */}
@@ -376,7 +507,7 @@ function InformationalPageEditor() {
                         <AboutEditable
                             content={content}
                             onChange={handleContentChange}
-                            isPreview={isPreview}
+                            isPreview={isPreview || isSaving || isPublishing}
                         />
                     )}
 
@@ -384,7 +515,7 @@ function InformationalPageEditor() {
                         <ContactEditable
                             content={content}
                             onChange={handleContentChange}
-                            isPreview={isPreview}
+                            isPreview={isPreview || isSaving || isPublishing}
                         />
                     )}
 
@@ -392,7 +523,7 @@ function InformationalPageEditor() {
                         <TermsEditable
                             content={content}
                             onChange={handleContentChange}
-                            isPreview={isPreview}
+                            isPreview={isPreview || isSaving || isPublishing}
                         />
                     )}
 
@@ -400,7 +531,7 @@ function InformationalPageEditor() {
                         <PrivacyEditable
                             content={content}
                             onChange={handleContentChange}
-                            isPreview={isPreview}
+                            isPreview={isPreview || isSaving || isPublishing}
                         />
                     )}
 
@@ -413,14 +544,18 @@ function InformationalPageEditor() {
                 <div className="informational-page-editor__footer">
 
                     <p>
-                        Los cambios realizados aquí no
-                        modifican la página pública.
+                        {publishedAt
+                            ? `Publicado el ${new Date(publishedAt).toLocaleDateString("es-CL")}. `
+                            : "Sin publicación desde este editor. "}
+                        El borrador solo es visible públicamente después de publicar.
                     </p>
 
                     <span>
                         {hasChanges
                             ? "Cambios pendientes"
-                            : "Sin cambios pendientes"}
+                            : draftRevision > publishedRevision
+                                ? "Borrador no publicado"
+                                : "Contenido sincronizado"}
                     </span>
 
                 </div>
@@ -432,22 +567,32 @@ function InformationalPageEditor() {
                 title={
                     confirmationAction === "discard"
                         ? "¿Descartar los cambios?"
-                        : "¿Salir del editor?"
+                        : confirmationAction === "publish"
+                            ? "¿Publicar esta página?"
+                            : "¿Salir del editor?"
                 }
                 description={
                     confirmationAction === "discard"
-                        ? "Los cambios no guardados se perderán y se restaurará el último borrador guardado. Esta acción no se puede deshacer."
-                        : "Tienes cambios sin guardar. Si sales ahora, perderás las modificaciones realizadas."
+                        ? "Se restaurará el último borrador guardado en Google Drive. Los cambios no guardados se perderán."
+                        : confirmationAction === "publish"
+                            ? ["terminos-y-condiciones", "politica-de-privacidad"].includes(slug)
+                                ? "El documento quedará disponible para todos. Comprueba que el contenido legal haya sido revisado y aprobado por la iglesia antes de publicarlo."
+                                : "Los visitantes podrán ver el contenido actualizado. Si existen cambios sin guardar, primero se guardará el borrador."
+                            : "Tienes cambios sin guardar. Si sales ahora, perderás las modificaciones realizadas."
                 }
                 confirmText={
                     confirmationAction === "discard"
                         ? "Descartar cambios"
-                        : "Salir sin guardar"
+                        : confirmationAction === "publish"
+                            ? "Sí, publicar"
+                            : "Salir sin guardar"
                 }
                 cancelText={
                     confirmationAction === "discard"
                         ? "Seguir editando"
-                        : "Permanecer aquí"
+                        : confirmationAction === "publish"
+                            ? "Revisar antes"
+                            : "Permanecer aquí"
                 }
                 onConfirm={handleConfirmAction}
                 onCancel={handleCancelConfirmation}
