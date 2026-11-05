@@ -314,8 +314,9 @@ function VolunteerDeleteModal({
             String(item.id) === String(assignment.volunteerId)
     );
 
-    const volunteerName =
-        assignment.volunteerId == null
+    const volunteerName = (assignment.participants || []).length > 1
+        ? `${assignment.participants.length} voluntarios asignados`
+        : assignment.volunteerId == null
             ? "Sin voluntario asignado"
             : volunteer
                 ? (
@@ -436,9 +437,9 @@ function VolunteerDeleteModal({
                             </h3>
 
                             <p id="volunteer-delete-modal-description">
-                                Esta acción quitará el turno del
-                                listado de asignaciones y del
-                                calendario de voluntarios.
+                                Esta acción quitará este servicio del
+                                calendario y de los turnos de todos
+                                sus voluntarios asignados.
                             </p>
 
                         </div>
@@ -535,9 +536,8 @@ function VolunteerDeleteModal({
                     {/* =================================== */}
 
                     <p className="volunteer-delete-modal__notice">
-                        La eliminación afecta únicamente a esta
-                        asignación. No elimina la cuenta del
-                        voluntario ni el equipo de servicio.
+                        Se eliminarán las asignaciones de todos los participantes de este servicio.
+                        Ninguna cuenta de miembro ni equipo de servicio será eliminado.
                     </p>
 
 

@@ -31,6 +31,7 @@ function VolunteersAssignments({
     volunteers = [],
     onView,
     onEdit,
+    onManage,
     onDelete,
     onCreate,
 }) {
@@ -247,16 +248,31 @@ function VolunteersAssignments({
                     <div className="volunteers-assignments__list">
 
                         {paginatedAssignments.map((assignment) => (
-
-                            <VolunteerAssignmentCard
-                                key={assignment.id}
-                                assignment={assignment}
-                                volunteers={volunteers}
-                                onView={onView}
-                                onEdit={onEdit}
-                                onDelete={onDelete}
-                            />
-
+                            <div key={assignment.id} className="volunteers-connected__assignment-group">
+                                <VolunteerAssignmentCard
+                                    assignment={assignment}
+                                    volunteers={volunteers}
+                                    onView={onView}
+                                    onEdit={onEdit}
+                                    onManage={onManage}
+                                    onDelete={onDelete}
+                                />
+                                <div className="volunteers-connected__service-roster">
+                                    <strong>Voluntarios: {(assignment.participants || []).length} de {assignment.requiredVolunteers || 1}</strong>
+                                    <div className="volunteers-connected__participant-badges">
+                                        {(assignment.participants || []).map((person) => {
+                                            const name = volunteers.find((v) => v.id === person.volunteerId)?.name || "Voluntario no disponible";
+                                            const status = assignment.status === "cancelled" ? "cancelled" : person.status;
+                                            const label = { pending: "Pendiente", confirmed: "Confirmado", declined: "No disponible", cancelled: "Cancelado" }[status] || "Pendiente";
+                                            return <span key={person.volunteerId} className={`volunteers-connected__participant-badge volunteers-connected__participant-badge--${status}`}>{name} · {label}</span>;
+                                        })}
+                                        {(assignment.participants || []).length === 0 && <span>Sin voluntarios asignados</span>}
+                                    </div>
+                                    {assignment.status !== "cancelled" &&
+                                        (assignment.participants || []).filter((p) => p.status !== "declined").length < (assignment.requiredVolunteers || 1) &&
+                                        <small>Hay cupos pendientes de cubrir.</small>}
+                                </div>
+                            </div>
                         ))}
 
                     </div>

@@ -1,341 +1,73 @@
 // =========================================================
-// IMPORTACIONES
+// TARJETA DE SERVICIO - VARIOS VOLUNTARIOS POR ASIGNACIÓN
+// Conserva las clases del CSS original del módulo.
 // =========================================================
-
 import {
-    UsersRound,
-    CalendarDays,
-    Clock3,
-    Eye,
-    Pencil,
-    Trash2,
-    CheckCircle2,
-    AlertCircle,
-    CircleHelp,
+  UsersRound, CalendarDays, Clock3, Eye, Pencil, Trash2, UserRoundPlus,
+  CheckCircle2, AlertCircle, CircleHelp,
 } from "lucide-react";
-
 import { VOLUNTEER_TEAMS } from "./VolunteersTeams";
-
 import "../../../styles/components/administration/volunteers/VolunteerAssignmentCard.css";
 
-
-// =========================================================
-// CONFIGURACIÓN DE ESTADOS
-// =========================================================
-
-const ASSIGNMENT_STATUSES = {
-    pending: {
-        label: "Pendiente",
-        icon: Clock3,
-    },
-    confirmed: {
-        label: "Confirmado",
-        icon: CheckCircle2,
-    },
-    declined: {
-        label: "No disponible",
-        icon: AlertCircle,
-    },
-    unassigned: {
-        label: "Sin voluntario",
-        icon: CircleHelp,
-    },
-    cancelled: {
-        label: "Cancelado",
-        icon: AlertCircle,
-    },
+const STATUS = {
+  pending: { label: "Pendiente", icon: Clock3 },
+  confirmed: { label: "Confirmado", icon: CheckCircle2 },
+  declined: { label: "No disponible", icon: AlertCircle },
+  mixed: { label: "Respuestas diferentes", icon: Clock3 },
+  unassigned: { label: "Sin voluntarios", icon: CircleHelp },
+  cancelled: { label: "Cancelado", icon: AlertCircle },
 };
 
-
-// =========================================================
-// FORMATEAR FECHA
-// =========================================================
-
-function formatAssignmentDate(value) {
-
-    if (
-        typeof value !== "string" ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(value)
-    ) {
-        return "Fecha no definida";
-    }
-
-    const [year, month, day] = value
-        .split("-")
-        .map(Number);
-
-    const date = new Date(year, month - 1, day);
-
-    if (
-        date.getFullYear() !== year ||
-        date.getMonth() !== month - 1 ||
-        date.getDate() !== day
-    ) {
-        return "Fecha no válida";
-    }
-
-    return new Intl.DateTimeFormat("es-CL", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    }).format(date);
+function formatDate(value) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return "Fecha por confirmar";
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day, 12);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return "Fecha no válida";
+  return new Intl.DateTimeFormat("es-CL", { day: "numeric", month: "short", year: "numeric" }).format(date);
 }
 
-
-// =========================================================
-// COMPONENTE PRINCIPAL
-// =========================================================
-
-function VolunteerAssignmentCard({
-    assignment,
-    volunteers = [],
-    onView,
-    onEdit,
-    onDelete,
-}) {
-
-    // =====================================================
-    // VALIDACIÓN
-    // =====================================================
-
-    if (!assignment) {
-        return null;
-    }
-
-
-    // =====================================================
-    // VOLUNTARIO ASIGNADO
-    // =====================================================
-
-    const volunteer = volunteers.find(
-        (item) => item.id === assignment.volunteerId
-    );
-
-    const volunteerName =
-        assignment.volunteerId == null
-            ? "Sin voluntario asignado"
-            : volunteer
-                ? (
-                    volunteer.name ||
-                    [
-                        volunteer.firstName,
-                        volunteer.lastName,
-                    ]
-                        .filter(Boolean)
-                        .join(" ") ||
-                    "Voluntario"
-                )
-                : "Voluntario no encontrado";
-
-
-    // =====================================================
-    // EQUIPO DE SERVICIO
-    // =====================================================
-
-    const team = VOLUNTEER_TEAMS.find(
-        (item) => item.id === assignment.teamId
-    );
-
-    const teamName =
-        team?.name || "Equipo de servicio";
-
-
-    // =====================================================
-    // ESTADO EFECTIVO
-    // =====================================================
-
-    let effectiveStatus = assignment.status || "pending";
-
-    if (effectiveStatus !== "cancelled") {
-
-        if (assignment.volunteerId == null) {
-            effectiveStatus = "unassigned";
-        }
-
-    }
-
-    const status =
-        ASSIGNMENT_STATUSES[effectiveStatus] ||
-        ASSIGNMENT_STATUSES.pending;
-
-    const StatusIcon = status.icon;
-
-
-    // =====================================================
-    // INFORMACIÓN
-    // =====================================================
-
-    const assignmentTitle =
-        assignment.title || "Responsabilidad sin título";
-
-    const assignmentDate =
-        formatAssignmentDate(assignment.date);
-
-    const assignmentTime =
-        assignment.startTime
-            ? (
-                assignment.endTime
-                    ? `${assignment.startTime} - ${assignment.endTime}`
-                    : assignment.startTime
-            )
-            : "Sin hora";
-
-
-    // =====================================================
-    // INTERFAZ
-    // =====================================================
-
-    return (
-        <article className="volunteer-assignment-card">
-
-            {/* =========================================== */}
-            {/* INFORMACIÓN PRINCIPAL */}
-            {/* =========================================== */}
-
-            <div className="volunteer-assignment-card__main">
-
-                {/* EQUIPO Y ESTADO */}
-
-                <div className="volunteer-assignment-card__top">
-
-                    <span className="volunteer-assignment-card__team">
-                        {teamName}
-                    </span>
-
-                    <span
-                        className={
-                            "volunteer-assignment-card__status " +
-                            `volunteer-assignment-card__status--${effectiveStatus}`
-                        }
-                    >
-                        <StatusIcon
-                            size={13}
-                            aria-hidden="true"
-                        />
-
-                        {status.label}
-                    </span>
-
-                </div>
-
-
-                {/* TÍTULO */}
-
-                <h3 className="volunteer-assignment-card__title">
-                    {assignmentTitle}
-                </h3>
-
-
-                {/* DESCRIPCIÓN OPCIONAL */}
-
-                {assignment.description && (
-
-                    <p className="volunteer-assignment-card__description">
-                        {assignment.description}
-                    </p>
-
-                )}
-
-
-                {/* INFORMACIÓN DEL TURNO */}
-
-                <div className="volunteer-assignment-card__metadata">
-
-                    <span>
-                        <UsersRound
-                            size={15}
-                            aria-hidden="true"
-                        />
-
-                        {volunteerName}
-                    </span>
-
-                    <span>
-                        <CalendarDays
-                            size={15}
-                            aria-hidden="true"
-                        />
-
-                        {assignmentDate}
-                    </span>
-
-                    <span>
-                        <Clock3
-                            size={15}
-                            aria-hidden="true"
-                        />
-
-                        {assignmentTime}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            {/* =========================================== */}
-            {/* ACCIONES ADMINISTRATIVAS */}
-            {/* =========================================== */}
-
-            <div className="volunteer-assignment-card__actions">
-
-                {onView && (
-
-                    <button
-                        type="button"
-                        className="volunteer-assignment-card__action volunteer-assignment-card__action--view"
-                        onClick={() => onView(assignment)}
-                        aria-label={`Ver asignación: ${assignmentTitle}`}
-                        title="Ver detalles"
-                    >
-                        <Eye
-                            size={17}
-                            aria-hidden="true"
-                        />
-                    </button>
-
-                )}
-
-
-                {onEdit && (
-
-                    <button
-                        type="button"
-                        className="volunteer-assignment-card__action volunteer-assignment-card__action--edit"
-                        onClick={() => onEdit(assignment)}
-                        aria-label={`Editar asignación: ${assignmentTitle}`}
-                        title="Editar asignación"
-                    >
-                        <Pencil
-                            size={17}
-                            aria-hidden="true"
-                        />
-                    </button>
-
-                )}
-
-
-                {onDelete && (
-
-                    <button
-                        type="button"
-                        className="volunteer-assignment-card__action volunteer-assignment-card__action--delete"
-                        onClick={() => onDelete(assignment)}
-                        aria-label={`Eliminar asignación: ${assignmentTitle}`}
-                        title="Eliminar asignación"
-                    >
-                        <Trash2
-                            size={17}
-                            aria-hidden="true"
-                        />
-                    </button>
-
-                )}
-
-            </div>
-
-        </article>
-    );
+function VolunteerAssignmentCard({ assignment, volunteers = [], onView, onEdit, onManage, onDelete }) {
+  if (!assignment) return null;
+
+  // El servidor entrega una sola tarjeta por servicio, con varios participantes.
+  const people = assignment.participants || [];
+  const names = people.map((person) =>
+    volunteers.find((volunteer) => String(volunteer.id) === String(person.volunteerId))?.name || "Voluntario no encontrado"
+  );
+  const assignedText = names.length === 0
+    ? "Sin voluntarios asignados"
+    : names.length === 1 ? names[0] : `${names.length} voluntarios asignados`;
+  const team = VOLUNTEER_TEAMS.find((item) => item.id === assignment.teamId);
+  const statusKey = assignment.status === "cancelled"
+    ? "cancelled" : !people.length ? "unassigned" : assignment.status;
+  const status = STATUS[statusKey] || STATUS.pending;
+  const StatusIcon = status.icon;
+  const title = assignment.title || "Servicio sin título";
+
+  return (
+    <article className="volunteer-assignment-card">
+      <div className="volunteer-assignment-card__main">
+        <div className="volunteer-assignment-card__top">
+          <span className="volunteer-assignment-card__team">{team?.name || "Equipo de servicio"}</span>
+          <span className={`volunteer-assignment-card__status volunteer-assignment-card__status--${statusKey}`}>
+            <StatusIcon size={13} aria-hidden="true" />{status.label}
+          </span>
+        </div>
+        <h3 className="volunteer-assignment-card__title">{title}</h3>
+        {assignment.description && <p className="volunteer-assignment-card__description">{assignment.description}</p>}
+        <div className="volunteer-assignment-card__metadata">
+          <span><UsersRound size={15} aria-hidden="true" />{assignedText}</span>
+          <span><CalendarDays size={15} aria-hidden="true" />{formatDate(assignment.date)}</span>
+          <span><Clock3 size={15} aria-hidden="true" />{assignment.startTime || "Sin hora"} - {assignment.endTime || "Sin hora"}</span>
+        </div>
+      </div>
+      <div className="volunteer-assignment-card__actions">
+        {onView && <button type="button" className="volunteer-assignment-card__action volunteer-assignment-card__action--view" onClick={() => onView(assignment)} aria-label={`Ver ${title}`} title="Ver detalles"><Eye size={17} /></button>}
+        {onEdit && <button type="button" className="volunteer-assignment-card__action volunteer-assignment-card__action--edit" onClick={() => onEdit(assignment)} aria-label={`Editar ${title}`} title="Editar servicio"><Pencil size={17} /></button>}
+        {onManage && <button type="button" className="volunteer-assignment-card__manage" onClick={() => onManage(assignment)} aria-label={`Gestionar voluntarios de ${title}`} title="Gestionar voluntarios"><UserRoundPlus size={16} /><span>Gestionar voluntarios</span></button>}
+        {onDelete && <button type="button" className="volunteer-assignment-card__action volunteer-assignment-card__action--delete" onClick={() => onDelete(assignment)} aria-label={`Eliminar ${title}`} title="Eliminar servicio"><Trash2 size={17} /></button>}
+      </div>
+    </article>
+  );
 }
-
 export default VolunteerAssignmentCard;

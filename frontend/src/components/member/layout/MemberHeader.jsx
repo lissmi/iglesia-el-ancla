@@ -35,6 +35,7 @@ import logoElAncla from "../../../assets/images/logo-el-ancla.png";
 
 // Se conserva el CSS original para no afectar la identidad del proyecto.
 import "../../../styles/components/member/layout/MemberHeader.css";
+import "../../../styles/components/member/volunteers/MemberVolunteerNotice.css";
 
 // =========================================================
 // ENLACES VISIBLES EN LA NAVEGACIÓN PRINCIPAL
@@ -57,6 +58,7 @@ const mainNavigation = [
 const personalNavigation = [
   { label: "Panel personal", to: "/member", icon: LayoutDashboard, end: true },
   { label: "Mis actividades", to: "/member/actividades", icon: CalendarDays },
+  { label: "Mis turnos de servicio", to: "/member/voluntariado", icon: CalendarDays },
   { label: "Mis recursos", to: "/member/recursos", icon: BookOpen },
   { label: "Mis recomendados", to: "/member/recomendados", icon: Sparkles },
   { label: "Mis peticiones de oración", to: "/member/peticiones-oracion", icon: HeartHandshake },
@@ -68,14 +70,14 @@ const personalNavigation = [
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function MemberHeader({ user }) {
+function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false }) {
   // Muestra u oculta la navegación completa cuando se usa el menú móvil.
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Controla la apertura del submenú de información personal.
   const [personalOpen, setPersonalOpen] = useState(false);
 
-  // Controla el panel de notificaciones (todavía informativo).
+  // Controla el panel de notificaciones reales del voluntariado.
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   // Evita ejecutar dos cierres de sesión simultáneamente.
@@ -98,6 +100,9 @@ function MemberHeader({ user }) {
 
   // Referencia a la campana para controlar el foco de notificaciones.
   const notificationsButtonRef = useRef(null);
+
+  // Referencia al desplegable para poder cerrar al hacer clic fuera.
+  const notificationsPanelRef = useRef(null);
 
   // Obtenemos el rol validado desde la sesión, no desde localStorage.
   const role = user?.role;
@@ -164,6 +169,27 @@ function MemberHeader({ user }) {
 
     // Retiramos la escucha cuando se desmonta el componente.
     return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
+  // Cerramos avisos al hacer clic fuera de la campana y del propio panel.
+  useEffect(() => {
+    // El evento incluye tanto clics de mouse como toques en pantallas móviles.
+    const handleOutsideNotificationClick = (event) => {
+      // Si se interactúa con la campana no debemos cerrar antes de su onClick.
+      if (notificationsButtonRef.current?.contains(event.target)) return;
+
+      // Si se interactúa dentro del panel, conservamos el desplegable visible.
+      if (notificationsPanelRef.current?.contains(event.target)) return;
+
+      // Un clic fuera de ambos elementos oculta las notificaciones.
+      setNotificationsOpen(false);
+    };
+
+    // Escuchamos clics y toques de toda la aplicación.
+    document.addEventListener("pointerdown", handleOutsideNotificationClick);
+
+    // Liberamos el evento para evitar escuchas duplicadas.
+    return () => document.removeEventListener("pointerdown", handleOutsideNotificationClick);
   }, []);
 
   // Cierra la navegación móvil y su submenú cuando se selecciona un enlace.
@@ -233,7 +259,7 @@ function MemberHeader({ user }) {
 
           {/* Acciones de la cuenta disponibles en todas las páginas privadas. */}
           <div className="member-header__actions">
-            {/* Campana de avisos; conserva el estado informativo existente. */}
+            {/* Campana de avisos; los turnos vienen desde la API autenticada. */}
             <div className="member-header__notifications">
               <button
                 ref={notificationsButtonRef}
@@ -242,6 +268,7 @@ function MemberHeader({ user }) {
                 onClick={() => {
                   setNotificationsOpen((open) => !open);
                   setPersonalOpen(false);
+                  setMenuOpen(false);
                 }}
                 aria-label="Notificaciones de la comunidad"
                 aria-expanded={notificationsOpen}
@@ -249,23 +276,13 @@ function MemberHeader({ user }) {
                 title="Notificaciones"
               >
                 <Bell size={21} strokeWidth={1.8} aria-hidden="true" />
+                {volunteerAlerts.length > 0 && (
+                  <span className="member-volunteer-alert-count" aria-hidden="true">
+                    {volunteerAlerts.length > 9 ? "9+" : volunteerAlerts.length}
+                  </span>
+                )}
               </button>
 
-              {notificationsOpen && (
-                <div
-                  id="member-notifications-panel"
-                  className="member-header__notifications-panel"
-                  role="region"
-                  aria-label="Notificaciones de la comunidad"
-                >
-                  <strong>Notificaciones</strong>
-                  <p>
-                    Próximamente verás aquí avisos, recordatorios de eventos
-                    y noticias de la comunidad.
-                  </p>
-                  <small>Esta sección todavía no está conectada a notificaciones reales.</small>
-                </div>
-              )}
             </div>
 
             {/* Volver al panel solamente para administradores autenticados. */}
@@ -417,6 +434,36 @@ function MemberHeader({ user }) {
           </div>
         </nav>
       </div>
+
+      {/* El panel vive al final del header, debajo de la navegación. */}
+      {notificationsOpen && (
+                <div
+                  id="member-notifications-panel"
+                  className="member-header__notifications-panel"
+                  ref={notificationsPanelRef}
+                  role="region"
+                  aria-label="Notificaciones de la comunidad"
+                >
+                  <strong>Mis avisos de servicio</strong>
+                  {assignmentsLoading ? (
+                    <p role="status">Consultando tus avisos...</p>
+                  ) : volunteerAlerts.length === 0 ? (
+                    <p>No tienes avisos de voluntariado pendientes.</p>
+                  ) : (
+                    <div className="member-volunteer-alert-list">
+                      {volunteerAlerts.slice(0, 5).map((alert) => (
+                        <Link key={alert.id} to={alert.to} className="member-volunteer-alert">
+                          <strong>{alert.title}</strong>
+                          <span>{alert.message}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                  <Link className="member-volunteer-alert-more" to="/member/voluntariado">
+                    Ver todos mis turnos
+                  </Link>
+                </div>
+              )}
 
       {/* Notificamos fallos reales de la API durante el cierre de sesión. */}
       {logoutError && (

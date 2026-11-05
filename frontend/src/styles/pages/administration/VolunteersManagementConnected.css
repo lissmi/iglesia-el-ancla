@@ -1,0 +1,197 @@
+/* ========================================================= */
+/* CONEXIÓN REAL Y ADMINISTRACIÓN DE EQUIPOS DE VOLUNTARIADO */
+/* Se suma al CSS original sin alterar su identidad visual. */
+/* ========================================================= */
+.volunteers-connected__roster{margin:24px 0;padding:27px;background:#fff;border:1px solid #e2e9ed;border-radius:19px;box-shadow:0 7px 25px rgba(22,54,73,.035);color:#203c4b}
+.volunteers-connected__roster-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.volunteers-connected__eyebrow{font-size:11px;letter-spacing:1.2px;color:#b96c56;font-weight:800}
+.volunteers-connected__roster-head h2{font-size:21px;margin:8px 0}
+.volunteers-connected__roster-head p{color:#71838e;font-size:13px;margin:0;line-height:1.6}
+.volunteers-connected__count{padding:8px 12px;color:#497184;background:#edf4f7;border-radius:20px;font-weight:750;font-size:12px}
+.volunteers-connected__form{padding:23px;border:1px solid #dfebef;border-radius:15px;background:#f8fbfc;margin-bottom:22px}
+.volunteers-connected__form-top{display:flex;align-items:center;gap:13px;margin-bottom:19px;flex-wrap:wrap}
+.volunteers-connected__form-icon{display:grid;place-items:center;width:43px;height:43px;color:#b96c56;background:#f9eee8;border-radius:12px}
+.volunteers-connected__form-top strong{display:block;font-size:14px}
+.volunteers-connected__form-top small{display:block;margin-top:5px;color:#748895;font-size:12px}
+.volunteers-connected__form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:17px}
+.volunteers-connected__form-grid label{display:flex;flex-direction:column;gap:9px;font-size:12px;color:#37586a;font-weight:750}
+.volunteers-connected__form-grid select{width:100%;height:45px;padding:10px 14px;background:#fff;border:1px solid #d7e5ea;border-radius:10px;font:inherit;font-size:13px;color:#254657;outline:0;cursor:pointer}
+.volunteers-connected__form-grid select:focus-visible{border-color:#3a889f;box-shadow:0 0 0 3px rgba(58,136,159,.15)}
+.volunteers-connected__teams-fieldset{padding:0;border:0;margin:0 0 19px;min-width:0}
+.volunteers-connected__teams-fieldset legend{margin-bottom:13px;color:#37586a;font-size:12px;font-weight:800}
+.volunteers-connected__team-options{display:flex;flex-wrap:wrap;gap:9px}
+.volunteers-connected__team-option{display:inline-flex;align-items:center;gap:8px;min-height:38px;background:#fff;border:1px solid #dce6e9;border-radius:10px;padding:9px 12px;color:#466374;font-size:12px;cursor:pointer;transition:background .15s,border-color .15s}
+.volunteers-connected__team-option input{accent-color:#b96c56;width:15px;height:15px;margin:0}
+.volunteers-connected__team-option--selected{background:#faf2ec;border-color:#d8a68b;color:#96523e}
+.volunteers-connected__save{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:10px;min-height:43px;padding:10px 17px;background:#263e50;color:#fff;font-size:13px;font-weight:750;cursor:pointer}
+.volunteers-connected__save:hover:not(:disabled){background:#355971}
+.volunteers-connected__save:disabled{opacity:.55;cursor:not-allowed}
+.volunteers-connected__cancel{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid #dbe5e9;border-radius:10px;background:white;color:#607788;padding:9px 12px;cursor:pointer;font-size:12px}
+.volunteers-connected__roster-list{display:grid;gap:10px}
+.volunteers-connected__person{display:flex;align-items:center;flex-wrap:wrap;gap:13px;padding:13px 15px;background:#fff;border:1px solid #e4ebee;border-radius:13px}
+.volunteers-connected__avatar{display:grid;place-items:center;width:46px;height:46px;flex-shrink:0;border-radius:12px;background:#e8f3f6;color:#277e98;font-size:14px;font-weight:800}
+.volunteers-connected__person-info{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:5px}
+.volunteers-connected__person-info strong{font-size:13px;color:#203c4b}
+.volunteers-connected__person-info small,.volunteers-connected__person-info span{font-size:12px;color:#6d8491;overflow-wrap:anywhere;line-height:1.5}
+.volunteers-connected__badge{display:inline-flex;padding:7px 11px;border-radius:20px;font-size:11px;font-weight:800;color:#27764f;background:#e8f5ed}
+.volunteers-connected__badge--inactive{background:#faedeb;color:#ac645b}
+.volunteers-connected__person-actions{display:flex;align-items:center;gap:8px}
+.volunteers-connected__person-actions button{border:1px solid #d9e6eb;background:#f8fbfd;color:#315b70;border-radius:9px;min-height:37px;padding:9px 12px;font-size:12px;font-weight:750;cursor:pointer}
+.volunteers-connected__person-actions .volunteers-connected__danger{display:grid;place-items:center;color:#b75b51;border-color:#f0d2cc;background:#fff7f5;width:38px;padding:6px}
+.volunteers-connected__person-actions button:hover{filter:brightness(.96)}
+.volunteers-connected__loading,.volunteers-connected__empty{padding:28px 20px;color:#708592;text-align:center;border:1px dashed #d7e5e9;border-radius:13px;font-size:13px}
+.volunteers-connected__alert,.volunteers-connected__success{display:flex;align-items:center;gap:11px;margin:15px 0;padding:15px 18px;border-radius:12px;font-size:13px}
+.volunteers-connected__alert{color:#a44e46;background:#fff2ef;border:1px solid #f3d4cc}
+.volunteers-connected__success{color:#327756;background:#eaf6ee;border:1px solid #d2ead9}
+.volunteers-connected__alert button{display:inline-flex;align-items:center;gap:5px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:8px;padding:8px 10px;cursor:pointer}
+.volunteers-connected__overlay{position:fixed;inset:0;z-index:3300;display:grid;place-items:center;padding:18px;background:rgba(15,30,41,.64);backdrop-filter:blur(3px)}
+.volunteers-connected__confirm{width:100%;max-width:460px;padding:28px;background:#fff;border:1px solid #efdfd7;border-radius:18px;box-shadow:0 22px 68px rgba(11,28,42,.25)}
+.volunteers-connected__confirm-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:13px;color:#b7584c;background:#fff0ed}
+.volunteers-connected__confirm h2{font-size:21px;color:#203c4b;margin:18px 0 12px}
+.volunteers-connected__confirm p{font-size:13px;color:#667f8b;line-height:1.7}
+.volunteers-connected__confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px;flex-wrap:wrap}
+.volunteers-connected__confirm-actions button{min-height:41px;border:1px solid #dbe5e9;border-radius:10px;background:#fff;color:#35566a;padding:10px 15px;font-weight:700;cursor:pointer}
+.volunteers-connected__confirm-actions .volunteers-connected__confirm-danger{border-color:#b4544b;color:white;background:#b4544b}
+@media(max-width:720px){.volunteers-connected__roster{padding:19px}.volunteers-connected__form{padding:16px}.volunteers-connected__form-grid{grid-template-columns:1fr}.volunteers-connected__person-actions{width:100%;justify-content:flex-end}}
+@media(prefers-reduced-motion:reduce){.volunteers-connected__team-option{transition:none}}
+
+/* Permite consultar nuevas confirmaciones sin recargar todo el panel. */
+.volunteers-connected__roster-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.volunteers-connected__roster-controls button{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid #dce7eb;border-radius:9px;background:#fff;color:#3a667a;font-size:12px;font-weight:700;cursor:pointer}
+.volunteers-connected__roster-controls button:hover{background:#edf6f9}
+
+/* =========================================================
+   EQUIPOS DE VARIOS VOLUNTARIOS EN UN MISMO SERVICIO
+   Se agrega al CSS existente, sin crear otro archivo.
+   ========================================================= */
+.volunteer-assignment-form__volunteer-fieldset {
+  min-width: 0;
+  margin: 18px 0 0;
+  padding: 16px 18px;
+  border: 1px solid #dbe8ec;
+  border-radius: 14px;
+  background: #f8fbfc;
+}
+.volunteer-assignment-form__volunteer-fieldset legend {
+  padding: 0 7px;
+  color: #294c5d;
+  font-size: 13px;
+  font-weight: 800;
+}
+.volunteer-assignment-form__volunteer-fieldset > p {
+  color: #71838e;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 4px 0 9px;
+}
+.volunteer-assignment-form__volunteer-count {
+  color: #277d90;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 11px;
+}
+.volunteer-assignment-form__volunteer-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.volunteer-assignment-form__volunteer-option {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 11px 12px;
+  background: #ffffff;
+  border: 1px solid #dfe9ec;
+  border-radius: 10px;
+  color: #325262;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.volunteer-assignment-form__volunteer-option--selected {
+  background: #e9f7f9;
+  border-color: #8fc9d6;
+}
+.volunteer-assignment-form__volunteer-option input {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  accent-color: #29869b;
+}
+.volunteer-assignment-form__volunteer-option:focus-within {
+  outline: 2px solid #6fb2c2;
+  outline-offset: 2px;
+}
+.volunteer-assignment-form__volunteer-empty {
+  grid-column: 1 / -1;
+  color: #7b8e99;
+  font-size: 12px;
+}
+.volunteers-connected__assignment-group {
+  min-width: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e0e9ed;
+  border-radius: 16px;
+}
+.volunteers-connected__assignment-group > .volunteer-assignment-card {
+  border: none;
+  border-radius: 0;
+}
+.volunteers-connected__service-roster {
+  padding: 12px 18px 15px;
+  border-top: 1px solid #ecf1f3;
+  color: #365363;
+  font-size: 12px;
+}
+.volunteers-connected__service-roster > strong { display: block; margin-bottom: 9px; }
+.volunteers-connected__service-roster > small,
+.volunteers-connected__vacancies { display: block; margin-top: 9px; color: #a36e42; font-size: 12px; }
+.volunteers-connected__participant-badges { display: flex; gap: 7px; flex-wrap: wrap; }
+.volunteers-connected__participant-badge,
+.volunteers-connected__participant-status {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f1f5f7;
+  font-size: 11px;
+  font-weight: 700;
+  color: #637985;
+}
+.volunteers-connected__participant-badge--confirmed,
+.volunteers-connected__participant-status--confirmed { color: #267450; background: #e5f5ec; }
+.volunteers-connected__participant-badge--declined,
+.volunteers-connected__participant-status--declined { color: #a65b4f; background: #faece9; }
+.volunteers-connected__participant-badge--pending,
+.volunteers-connected__participant-status--pending { color: #986b2d; background: #fff3dd; }
+.volunteers-connected__participant-badge--cancelled,
+.volunteers-connected__participant-status--cancelled { color: #798791; background: #edf1f2; }
+.volunteers-connected__participants-list { display: grid; gap: 9px; }
+.volunteers-connected__participant-row {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  padding: 11px 13px; border: 1px solid #e4ecef; border-radius: 10px;
+}
+.volunteers-connected__participant-row strong { color: #28475a; font-size: 13px; }
+@media (max-width: 600px) {
+  .volunteer-assignment-form__volunteer-options { grid-template-columns: 1fr; }
+}
+
+/* Un servicio con respuestas diferentes no equivale a una confirmación pendiente. */
+.volunteer-assignment-card__status--mixed,
+.volunteer-details-modal__status--mixed,
+.volunteers-schedule__assignment--mixed {
+  color: #806890;
+  background: #f3eef8;
+  border-color: #e5d9f0;
+}
+
+/* Botón independiente de asignación de personas; visible también en móviles. */
+.volunteer-assignment-card__actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.volunteer-assignment-card__manage{display:inline-flex;align-items:center;gap:7px;justify-content:center;padding:9px 11px;min-height:36px;border:1px solid #b5d8e2;border-radius:9px;background:#ecf7fa;color:#246a84;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.volunteer-assignment-card__manage:hover{background:#dff0f6}
+.volunteer-assignment-card__manage:focus-visible{outline:3px solid #5fa8bf;outline-offset:2px}
+@media(max-width:500px){.volunteer-assignment-card__manage{width:100%}}

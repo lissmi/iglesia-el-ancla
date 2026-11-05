@@ -114,6 +114,12 @@ import eventRoutes from "./routes/eventRoutes.js";
 // Importamos la gestión de peticiones de oración.
 import prayerRequestRoutes from "./routes/prayerRequestRoutes.js";
 
+// CRUD de equipos, turnos y confirmaciones de voluntarios.
+import volunteerRoutes from "./routes/volunteerRoutes.js";
+
+// Ejecución programada con Bearer secreto; no expone envíos al navegador.
+import volunteerReminderCronRoutes from "./routes/volunteerReminderCronRoutes.js";
+
 // Importamos la ruta pública para activar cuentas nuevas.
 import accountActivationRoutes from "./routes/accountActivationRoutes.js";
 
@@ -541,6 +547,12 @@ app.use("/api/activity-history", activityHistoryRoutes);
 
 // Conectamos la API de peticiones de oración.
 app.use("/api/prayer-requests", prayerRequestRoutes);
+
+// Acceso a turnos de servicio. El router comprueba sesión y roles.
+app.use("/api/volunteers", volunteerRoutes);
+
+// Se ejecuta desde un programador autorizado. No requiere sesión de usuario.
+app.use("/api/cron", volunteerReminderCronRoutes);
 
 
 

@@ -1,6 +1,5 @@
-
-
 import { Link, useOutletContext } from "react-router-dom";
+import MemberVolunteerNotice from "../../components/member/volunteers/MemberVolunteerNotice";
 import {
   ArrowRight,
   BookOpen,
@@ -38,7 +37,7 @@ const resourceLinks = [
 // El usuario debe provenir de una sesión verificada por el backend.
 function MemberDashboard() {
   // Recuperamos el usuario que ProtectedRoute comprobó mediante /auth/me.
-  const { user } = useOutletContext() || {};
+  const { user, volunteerAssignments, volunteerAssignmentsLoading, volunteerAssignmentsError } = useOutletContext() || {};
   // Evitamos usar información del navegador como prueba de identidad.
   const firstName = typeof user?.firstName === "string" ? user.firstName.trim() : "";
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
@@ -79,6 +78,13 @@ function MemberDashboard() {
             <span className="member-hero__verse">Juntos en comunidad</span>
           </div>
         </section>
+
+        {/* Recordatorio basado en las asignaciones que valida el backend. */}
+        <MemberVolunteerNotice
+          assignments={volunteerAssignments || []}
+          loading={volunteerAssignmentsLoading}
+          error={volunteerAssignmentsError}
+        />
 
         <div className="member-grid">
           <div className="member-grid__main">
@@ -263,11 +269,3 @@ function MemberDashboard() {
 }
 
 export default MemberDashboard;
-
-
-
-
-
-
-
-

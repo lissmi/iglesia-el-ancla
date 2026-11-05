@@ -4,7 +4,10 @@
 
 // Outlet renderiza la página seleccionada dentro del área de miembros.
 // useOutletContext obtiene el usuario autenticado por ProtectedRoute.
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet, useLocation, useOutletContext } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import api from "../../../services/api";
+import { deriveVolunteerAlerts } from "../../../utils/memberVolunteerAlerts";
 
 // Reutilizamos el encabezado comunitario para los tres roles.
 import MemberHeader from "./MemberHeader";
@@ -22,11 +25,46 @@ import "../../../styles/components/member/layout/MemberLayout.css";
 function MemberLayout() {
   // La sesión y el rol ya fueron verificados por ProtectedRoute.
   const { user } = useOutletContext() || {};
+  const location = useLocation();
+  const [assignments, setAssignments] = useState([]);
+  const [assignmentsLoading, setAssignmentsLoading] = useState(true);
+  const [assignmentsError, setAssignmentsError] = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Al navegar, volvemos a consultar los turnos reales de esta cuenta.
+  // Solo el backend decide qué servicios pertenecen al usuario autenticado.
+  useEffect(() => {
+    const controller = new AbortController();
+    setAssignmentsLoading(true);
+    setAssignmentsError("");
+
+    api.get("/volunteers/me/assignments", { signal: controller.signal })
+      .then(({ data }) => {
+        if (!data?.success || !Array.isArray(data.assignments)) {
+          throw new Error("No fue posible consultar tus turnos");
+        }
+        if (!controller.signal.aborted) setAssignments(data.assignments);
+      })
+      .catch((error) => {
+        if (controller.signal.aborted || error?.code === "ERR_CANCELED") return;
+        setAssignments([]);
+        setAssignmentsError(error?.response?.data?.message || "No pudimos consultar tus compromisos");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setAssignmentsLoading(false);
+      });
+
+    return () => controller.abort();
+  }, [location.pathname, refreshKey, user?.id, user?._id]);
+
+  // Un único cálculo alimenta la campana y el panel principal.
+  const volunteerAlerts = useMemo(() => deriveVolunteerAlerts(assignments), [assignments]);
+  const refreshMemberAssignments = () => setRefreshKey((number) => number + 1);
 
   return (
     <div className="member-layout">
       {/* Encabezado con navegación y acciones según el usuario. */}
-      <MemberHeader user={user} />
+      <MemberHeader user={user} volunteerAlerts={volunteerAlerts} assignmentsLoading={assignmentsLoading} />
 
       {/* Navegación única para toda el área comunitaria. */}
       <SiteNavigation />
@@ -34,7 +72,14 @@ function MemberLayout() {
       {/* Espacio flexible para la página privada que se esté visitando. */}
       <div className="member-layout__content">
         {/* Conservamos el usuario validado para cada página hija. */}
-        <Outlet context={{ user }} />
+        <Outlet context={{
+          user,
+          volunteerAssignments: assignments,
+          volunteerAlerts,
+          volunteerAssignmentsLoading: assignmentsLoading,
+          volunteerAssignmentsError: assignmentsError,
+          refreshMemberAssignments,
+        }} />
       </div>
 
       {/* Footer público compartido, visible en todas las rutas /member. */}

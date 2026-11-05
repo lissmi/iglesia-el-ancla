@@ -1,0 +1,48 @@
+/* =========================================================
+   MODAL INDEPENDIENTE PARA CUPOS Y PARTICIPANTES
+   ========================================================= */
+.volunteer-participants__overlay{position:fixed;inset:0;z-index:3450;background:rgba(19,34,47,.66);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
+.volunteer-participants__modal{background:#fff;color:#263e50;border-radius:19px;width:min(650px,100%);max-height:min(89vh,800px);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 25px 75px rgba(12,28,41,.3)}
+.volunteer-participants__header{display:flex;align-items:center;gap:13px;padding:22px 25px;border-bottom:1px solid #e3ebef;flex-shrink:0}
+.volunteer-participants__heading-icon{display:grid;place-items:center;width:46px;height:46px;flex-shrink:0;border-radius:12px;color:#327c95;background:#edf6f8}
+.volunteer-participants__heading{flex:1;min-width:0}
+.volunteer-participants__heading h2{font-size:21px;color:#263e50;margin:0 0 5px;font-weight:800}
+.volunteer-participants__heading p{margin:0;color:#78909c;font-size:12px;line-height:1.4}
+.volunteer-participants__close{border:none;border-radius:10px;background:#f1f5f7;color:#60798b;cursor:pointer;width:38px;height:38px;display:grid;place-items:center}
+.volunteer-participants__form{display:flex;flex-direction:column;min-height:0;flex:1}
+.volunteer-participants__body{flex:1;min-height:0;overflow-y:auto;padding:19px 25px;display:grid;gap:16px;align-content:start}
+.volunteer-participants__service{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:12px 15px;color:#436a7e;border-radius:10px;background:#edf6f9;font-size:12px;font-weight:750}
+.volunteer-participants__capacity{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.volunteer-participants__capacity label{font-weight:800;font-size:13px;color:#2f4a5b}
+.volunteer-participants__capacity p{font-size:12px;color:#788d98;margin:5px 0 0;line-height:1.5}
+.volunteer-participants__capacity input{width:93px;flex-shrink:0;height:44px;box-sizing:border-box;padding:8px 11px;border:1px solid #d6e4eb;border-radius:10px;color:#2c4a5c;font-size:15px;font-weight:750}
+.volunteer-participants__search{display:flex;align-items:center;gap:9px;border:1px solid #d9e7eb;border-radius:10px;padding:0 13px;color:#7794a1}
+.volunteer-participants__search:focus-within{border-color:#42879e;box-shadow:0 0 0 3px rgba(65,132,158,.15)}
+.volunteer-participants__search input{width:100%;min-width:0;padding:12px 0;border:0;outline:0;color:#263e50;background:transparent;font-size:13px}
+.volunteer-participants__list{display:grid;gap:8px;max-height:265px;overflow-y:auto;padding:2px}
+.volunteer-participants__item{cursor:pointer;display:flex;gap:10px;align-items:center;min-height:58px;border:1px solid #dfe8ed;border-radius:11px;padding:10px 13px}
+.volunteer-participants__item--checked{border-color:#8bc1ce;background:#f0f9fb}
+.volunteer-participants__item--locked{opacity:.64;cursor:not-allowed}
+.volunteer-participants__item input{accent-color:#41879e;width:17px;height:17px;flex-shrink:0}
+.volunteer-participants__person{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.volunteer-participants__person strong{font-size:13px;color:#2b4a5c}
+.volunteer-participants__person small{font-size:11px;color:#80929c;overflow-wrap:anywhere}
+.volunteer-participants__state{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:5px 8px;border-radius:9px;background:#f2f4f6;color:#526e7a}
+.volunteer-participants__state--confirmed{background:#e8f5ec;color:#277b50}
+.volunteer-participants__state--declined{background:#fff0eb;color:#a45d44}
+.volunteer-participants__unavailable{font-size:10px;color:#a45c50;white-space:nowrap}
+.volunteer-participants__empty{text-align:center;display:grid;justify-items:center;gap:9px;padding:22px 15px;color:#8095a0;border:1px dashed #d8e7ec;border-radius:11px}
+.volunteer-participants__empty strong{font-size:13px;color:#36586a}
+.volunteer-participants__empty p{font-size:12px;max-width:400px;margin:0;line-height:1.6}
+.volunteer-participants__empty button{margin-top:3px;border:1px solid #b5d7e0;background:#eef8fb;color:#286d84;border-radius:9px;padding:9px 13px;cursor:pointer;font-size:12px;font-weight:750}
+.volunteer-participants__hint,.volunteer-participants__warning,.volunteer-participants__error{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.6;margin:0;padding:12px 13px;border-radius:10px}
+.volunteer-participants__hint svg,.volunteer-participants__warning svg,.volunteer-participants__error svg{flex-shrink:0;margin-top:2px}
+.volunteer-participants__hint{background:#eef7fb;color:#3f8197}
+.volunteer-participants__warning{background:#fff7e9;color:#9c7337}
+.volunteer-participants__error{background:#fff1ee;color:#ad5347;border:1px solid #efd0ca}
+.volunteer-participants__footer{display:flex;justify-content:flex-end;gap:10px;padding:15px 25px;border-top:1px solid #e3ebef;flex-shrink:0}
+.volunteer-participants__footer button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:750;cursor:pointer}
+.volunteer-participants__cancel{border:1px solid #dce7eb;color:#4a6c7b;background:#fff}
+.volunteer-participants__save{border:1px solid #40869d;color:#fff;background:#40869d}
+.volunteer-participants__footer button:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:560px){.volunteer-participants__header{padding:17px}.volunteer-participants__body{padding:15px}.volunteer-participants__footer{padding:13px 15px}.volunteer-participants__heading h2{font-size:18px}.volunteer-participants__item{flex-wrap:wrap}}

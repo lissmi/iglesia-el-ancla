@@ -1,0 +1,32 @@
+/* Modal de servicio: detalles mínimos visibles y campos opcionales plegados. */
+.volunteer-service-modal{max-width:650px;width:min(650px,calc(100vw - 26px));max-height:min(90vh,850px);display:flex;flex-direction:column;overflow:hidden}
+.volunteer-service-modal .volunteer-assignment-form__header{flex-shrink:0}
+.volunteer-service-modal__form{min-height:0;display:flex;flex-direction:column;flex:1}
+.volunteer-service-modal__body{padding:22px 29px 18px;overflow-y:auto;flex:1;min-height:0;display:grid;gap:16px;align-content:start}
+.volunteer-service-modal__field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.volunteer-service-modal__field label{color:#37576a;font-weight:750;font-size:12px}
+.volunteer-service-modal__field input,.volunteer-service-modal__field select,.volunteer-service-modal__field textarea{box-sizing:border-box;min-width:0;width:100%;padding:11px 12px;border:1px solid #d8e4ea;border-radius:10px;background:#fff;font:inherit;font-size:13px;line-height:1.45;color:#263e50;outline:0}
+.volunteer-service-modal__field input,.volunteer-service-modal__field select{height:43px}
+.volunteer-service-modal__field textarea{resize:vertical;min-height:75px}
+.volunteer-service-modal__field input:focus-visible,.volunteer-service-modal__field select:focus-visible,.volunteer-service-modal__field textarea:focus-visible{border-color:#42869c;box-shadow:0 0 0 3px rgba(66,134,156,.15)}
+.volunteer-service-modal__field [aria-invalid="true"]{border-color:#c96657}
+.volunteer-service-modal__error,.volunteer-service-modal__submit-error{font-size:12px;color:#a94e42;line-height:1.5}
+.volunteer-service-modal__submit-error{padding:12px 14px;border-radius:10px;background:#fff2ef;border:1px solid #efd1cb;margin:0}
+.volunteer-service-modal__section-title{display:flex;align-items:center;gap:9px;padding-top:11px;border-top:1px solid #e7edf0;color:#29485b;font-weight:800;font-size:13px}
+.volunteer-service-modal__grid{display:grid;gap:12px}
+.volunteer-service-modal__grid--three{grid-template-columns:1.5fr 1fr 1fr}
+.volunteer-service-modal__details{border:1px solid #dbe8ed;border-radius:11px;background:#f9fbfc}
+.volunteer-service-modal__details summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;cursor:pointer;color:#335f73;font-size:13px;font-weight:750}
+.volunteer-service-modal__details summary::-webkit-details-marker{display:none}
+.volunteer-service-modal__details summary span{display:flex;align-items:center;gap:8px}
+.volunteer-service-modal__details[open] summary>svg{transform:rotate(180deg)}
+.volunteer-service-modal__extra{display:grid;gap:15px;padding:4px 15px 16px}
+.volunteer-service-modal__footer-field{display:flex;align-items:flex-end;justify-content:space-between;gap:18px}
+.volunteer-service-modal__footer-field>.volunteer-service-modal__field{min-width:150px;max-width:210px;flex:1}
+.volunteer-service-modal__footer-field p{display:flex;align-items:center;gap:7px;color:#78909b;font-size:11px;line-height:1.5;margin:0 0 4px}
+.volunteer-service-modal__footer{display:flex;justify-content:flex-end;gap:10px;align-items:center;padding:15px 29px;flex-shrink:0;border-top:1px solid #e3eaed;background:#fff}
+.volunteer-service-modal__footer button{display:inline-flex;gap:8px;align-items:center;justify-content:center;min-height:43px;border-radius:10px;padding:10px 17px;font-weight:750;font-size:13px;cursor:pointer}
+.volunteer-service-modal__secondary{border:1px solid #dbe5e9;background:#fff;color:#375d71}
+.volunteer-service-modal__primary{border:1px solid #41879e;background:#41879e;color:#fff}
+.volunteer-service-modal__footer button:disabled{opacity:.6;cursor:not-allowed}
+@media(max-width:620px){.volunteer-service-modal__body{padding:18px 17px}.volunteer-service-modal__footer{padding:13px 17px}.volunteer-service-modal__grid--three{grid-template-columns:1fr 1fr}.volunteer-service-modal__grid--three>.volunteer-service-modal__field:first-child{grid-column:1/-1}.volunteer-service-modal__footer-field{display:block}.volunteer-service-modal__footer-field>.volunteer-service-modal__field{max-width:none}.volunteer-service-modal__footer-field p{margin-top:10px}}

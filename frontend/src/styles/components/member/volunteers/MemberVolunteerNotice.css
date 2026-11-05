@@ -1,0 +1,95 @@
+/* =========================================================
+   AVISOS PERSONALES - PALETA AZUL MARINO Y ARENA
+   Estilos nuevos: no requieren reemplazar el CSS existente.
+   ========================================================= */
+.member-volunteer-notice {
+  margin: 28px 0;
+  padding: 26px;
+  border: 1px solid #dce4e9;
+  border-left: 5px solid #b7a28b;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(21, 43, 59, .06);
+  color: #203647;
+}
+.member-volunteer-notice__heading { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+.member-volunteer-notice__icon { display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 14px; background: #f3eee8; color: #304c5d; }
+.member-volunteer-notice__kicker { display: block; font-size: .76rem; text-transform: uppercase; letter-spacing: .09em; font-weight: 700; color: #977e65; }
+.member-volunteer-notice h2 { margin: 4px 0 0; font-size: clamp(1.15rem, 2.5vw, 1.45rem); color: #1b3445; }
+.member-volunteer-notice p { line-height: 1.55; }
+.member-volunteer-notice__title { font-size: 1.06rem; font-weight: 700; }
+.member-volunteer-notice__details { display: flex; flex-wrap: wrap; gap: 9px 18px; color: #52636b; }
+.member-volunteer-notice__details span { display: inline-flex; align-items: center; gap: 6px; }
+.member-volunteer-notice__status { font-weight: 600; color: #305a62; }
+.member-volunteer-notice__link { display: inline-flex; gap: 8px; align-items: center; margin-top: 10px; text-decoration: none; font-weight: 700; color: #1c4b66; }
+.member-volunteer-notice__link:hover { text-decoration: underline; }
+
+/* La campana comparte el Header existente sin alterar su distribución. */
+.member-header__icon-button { position: relative; }
+.member-volunteer-alert-count { position: absolute; top: -7px; right: -8px; display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 99px; font-size: .68rem; background: #b7a28b; color: #142a37; font-weight: 800; }
+.member-volunteer-alert-list { display: grid; gap: 10px; max-height: 300px; overflow-y: auto; margin-top: 12px; }
+.member-volunteer-alert { display: grid; gap: 3px; padding: 11px; border: 1px solid #e8ecef; border-radius: 12px; text-decoration: none; color: #243e4f; background: #fbfcfd; }
+.member-volunteer-alert:hover { border-color: #b7a28b; background: #f6f3ef; }
+.member-volunteer-alert strong { font-size: .9rem; }
+.member-volunteer-alert span { font-size: .82rem; line-height: 1.4; }
+.member-volunteer-alert-more { display: inline-block; margin-top: 12px; color: #1c4b66; font-weight: 700; }
+
+/* =========================================================
+   CORRECCIÓN DE SUPERPOSICIÓN DEL PANEL DE NOTIFICACIONES
+   El desplegable se monta DESPUÉS de la navegación del header.
+   Por eso su posición depende de la altura real del header.
+   ========================================================= */
+
+/* Contenedor de referencia: incluye franja superior y navegación. */
+.member-header {
+  position: relative;
+  overflow: visible;
+  z-index: 40;
+}
+
+/* Menú flotante: inicia bajo las dos franjas sin tapar enlaces. */
+.member-header .member-header__notifications-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: max(16px, calc((100% - 1200px) / 2));
+  bottom: auto;
+  left: auto;
+  box-sizing: border-box;
+  width: min(360px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(440px, calc(100vh - 170px));
+  overflow-y: auto;
+  padding: 18px 20px;
+  border: 1px solid #e6e0d7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 46px rgba(20, 39, 53, 0.16);
+  color: #203647;
+  z-index: 100;
+}
+
+/* Evitamos que el título del panel herede tamaños desproporcionados. */
+.member-header .member-header__notifications-panel > strong {
+  display: block;
+  font-size: 0.96rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: #1b3445;
+}
+
+/* Separa ligeramente los avisos y optimiza legibilidad móvil. */
+.member-header .member-volunteer-alert-list {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  /* El menú se adapta a la anchura del teléfono sin desbordarse. */
+  .member-header .member-header__notifications-panel {
+    top: calc(100% + 8px);
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: min(420px, calc(100dvh - 165px));
+    padding: 16px;
+  }
+}

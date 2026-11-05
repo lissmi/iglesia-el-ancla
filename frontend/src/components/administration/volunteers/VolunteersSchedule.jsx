@@ -47,6 +47,10 @@ const STATUS_CONFIG = {
         label: "No disponible",
         icon: AlertCircle,
     },
+    mixed: {
+        label: "Respuestas diferentes",
+        icon: Clock3,
+    },
     unassigned: {
         label: "Sin voluntario",
         icon: CircleHelp,
@@ -275,6 +279,13 @@ function VolunteersSchedule({
         );
     };
 
+
+    // Nombres de todos los participantes de un mismo servicio.
+    const getServiceNames = (assignment) => {
+        const people = assignment.participants || [];
+        if (!people.length) return "Sin voluntarios";
+        return people.map((person) => getVolunteerName(person.volunteerId)).join(" · ");
+    };
 
     // =====================================================
     // OBTENER NOMBRE DEL EQUIPO
@@ -538,9 +549,7 @@ function VolunteersSchedule({
                                                 <span className="volunteers-schedule__assignment-volunteer">
                                                     <UsersRound size={11} />
 
-                                                    {getVolunteerName(
-                                                        assignment.volunteerId
-                                                    )}
+                                                    {getServiceNames(assignment)}
                                                 </span>
 
                                                 <span className="volunteers-schedule__assignment-status">

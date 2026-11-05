@@ -1,940 +1,447 @@
 // =========================================================
-// IMPORTACIONES
+// GESTIÓN DE VOLUNTARIOS - DATOS REALES
 // =========================================================
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { AlertCircle, Check, RefreshCw, UserRoundPlus, Trash2, X } from "lucide-react";
+import api from "../../services/api";
 
-import {
-    useCallback,
-    useMemo,
-    useState,
-} from "react";
-
-
-
+// Conservamos los componentes visuales del módulo actual.
 import VolunteersHeader from "../../components/administration/volunteers/VolunteersHeader";
 import VolunteersSummary from "../../components/administration/volunteers/VolunteersSummary";
-import VolunteersTeams from "../../components/administration/volunteers/VolunteersTeams";
+import VolunteersTeams, { VOLUNTEER_TEAMS } from "../../components/administration/volunteers/VolunteersTeams";
 import VolunteersToolbar from "../../components/administration/volunteers/VolunteersToolbar";
 import VolunteersSchedule from "../../components/administration/volunteers/VolunteersSchedule";
 import VolunteersAssignments from "../../components/administration/volunteers/VolunteersAssignments";
-
 import VolunteerAssignmentFormModal from "../../components/administration/volunteers/VolunteerAssignmentFormModal";
+import VolunteerParticipantsModal from "../../components/administration/volunteers/VolunteerParticipantsModal";
 import VolunteerDetailsModal from "../../components/administration/volunteers/VolunteerDetailsModal";
 import VolunteerDeleteModal from "../../components/administration/volunteers/VolunteerDeleteModal";
 
 import "../../styles/pages/administration/VolunteersManagement.css";
+import "../../styles/pages/administration/VolunteersManagementConnected.css";
 
-
-// =========================================================
-// DATOS TEMPORALES: VOLUNTARIOS
-// =========================================================
-
-const INITIAL_VOLUNTEERS = [
-    {
-        id: "VOL-001",
-        name: "María González",
-        status: "active",
-        teams: ["worship", "events"],
-    },
-    {
-        id: "VOL-002",
-        name: "Daniel Rojas",
-        status: "active",
-        teams: ["worship", "youth"],
-    },
-    {
-        id: "VOL-003",
-        name: "Camila Torres",
-        status: "active",
-        teams: ["children", "events"],
-    },
-    {
-        id: "VOL-004",
-        name: "Felipe Muñoz",
-        status: "active",
-        teams: ["bible_studies", "youth"],
-    },
-    {
-        id: "VOL-005",
-        name: "Valentina Pérez",
-        status: "active",
-        teams: ["communications", "events"],
-    },
-    {
-        id: "VOL-006",
-        name: "Jorge Silva",
-        status: "active",
-        teams: ["cleaning", "events"],
-    },
-    {
-        id: "VOL-007",
-        name: "Andrea Morales",
-        status: "active",
-        teams: ["children", "cleaning"],
-    },
-    {
-        id: "VOL-008",
-        name: "Cristóbal Herrera",
-        status: "inactive",
-        teams: ["worship"],
-    },
-];
-
-
-// =========================================================
-// FUNCIONES AUXILIARES DE FECHAS
-// =========================================================
-
-function getLocalDateKey(date) {
-
-    const year = date.getFullYear();
-
-    const month = String(
-        date.getMonth() + 1
-    ).padStart(2, "0");
-
-    const day = String(
-        date.getDate()
-    ).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
+// Fecha YYYY-MM-DD con hora civil de Chile, también en Vercel.
+function todayInChile() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Santiago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 }
-
-
-function getRelativeDate(daysFromToday) {
-
-    const date = new Date();
-
-    date.setHours(12, 0, 0, 0);
-
-    date.setDate(
-        date.getDate() + daysFromToday
-    );
-
-    return getLocalDateKey(date);
-}
-
 
 function parseLocalDate(value) {
-
-    if (
-        typeof value !== "string" ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(value)
-    ) {
-        return null;
-    }
-
-    const [year, month, day] = value
-        .split("-")
-        .map(Number);
-
-    const date = new Date(
-        year,
-        month - 1,
-        day,
-        12
-    );
-
-    if (
-        date.getFullYear() !== year ||
-        date.getMonth() !== month - 1 ||
-        date.getDate() !== day
-    ) {
-        return null;
-    }
-
-    return date;
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const [y, m, d] = value.split("-").map(Number);
+  const result = new Date(y, m - 1, d, 12);
+  return result.getFullYear() === y && result.getMonth() === m - 1 && result.getDate() === d ? result : null;
 }
 
-
-// =========================================================
-// DATOS TEMPORALES: ASIGNACIONES
-// =========================================================
-
-function createInitialAssignments() {
-
-    return [
-        {
-            id: "ASG-001",
-            teamId: "worship",
-            volunteerId: "VOL-001",
-            title: "Alabanza - Culto general",
-            description: "Participación en el equipo de alabanza.",
-            date: getRelativeDate(4),
-            startTime: "10:30",
-            endTime: "13:00",
-            location: "Templo principal",
-            eventId: null,
-            notes: "Llegar con anticipación para el ensayo.",
-            status: "confirmed",
-        },
-        {
-            id: "ASG-002",
-            teamId: "worship",
-            volunteerId: "VOL-002",
-            title: "Apoyo musical - Culto general",
-            description: "Apoyo instrumental durante el culto.",
-            date: getRelativeDate(4),
-            startTime: "10:30",
-            endTime: "13:00",
-            location: "Templo principal",
-            eventId: null,
-            notes: "Revisar previamente el repertorio.",
-            status: "pending",
-        },
-        {
-            id: "ASG-003",
-            teamId: "children",
-            volunteerId: "VOL-003",
-            title: "Clase bíblica infantil",
-            description: "Preparación y enseñanza para niños.",
-            date: getRelativeDate(4),
-            startTime: "11:00",
-            endTime: "12:30",
-            location: "Sala infantil",
-            eventId: null,
-            notes: "Preparar materiales didácticos.",
-            status: "confirmed",
-        },
-        {
-            id: "ASG-004",
-            teamId: "bible_studies",
-            volunteerId: "VOL-004",
-            title: "Descubriendo la Biblia",
-            description: "Dirección del estudio bíblico online.",
-            date: getRelativeDate(6),
-            startTime: "20:00",
-            endTime: "21:30",
-            location: "Online",
-            eventId: null,
-            notes: "Comprobar conexión y material de estudio.",
-            status: "pending",
-        },
-        {
-            id: "ASG-005",
-            teamId: "communications",
-            volunteerId: "VOL-005",
-            title: "Difusión de actividades",
-            description: "Preparación de anuncios de la semana.",
-            date: getRelativeDate(2),
-            startTime: "17:00",
-            endTime: "19:00",
-            location: "Online",
-            eventId: null,
-            notes: "Revisar la información antes de publicar.",
-            status: "confirmed",
-        },
-        {
-            id: "ASG-006",
-            teamId: "cleaning",
-            volunteerId: "VOL-006",
-            title: "Preparación del templo",
-            description: "Aseo y organización de espacios.",
-            date: getRelativeDate(3),
-            startTime: "16:00",
-            endTime: "18:00",
-            location: "Templo principal",
-            eventId: null,
-            notes: "Revisar salón principal y áreas comunes.",
-            status: "confirmed",
-        },
-        {
-            id: "ASG-007",
-            teamId: "events",
-            volunteerId: null,
-            title: "Recepción de participantes",
-            description: "Apoyo en la bienvenida a visitantes.",
-            date: getRelativeDate(9),
-            startTime: "10:00",
-            endTime: "12:00",
-            location: "Entrada principal",
-            eventId: null,
-            notes: "Se necesita una persona responsable.",
-            status: "pending",
-        },
-        {
-            id: "ASG-008",
-            teamId: "youth",
-            volunteerId: "VOL-002",
-            title: "Encuentro juvenil",
-            description: "Apoyo en actividades para jóvenes.",
-            date: getRelativeDate(11),
-            startTime: "17:00",
-            endTime: "19:00",
-            location: "Salón de reuniones",
-            eventId: null,
-            notes: "Coordinar actividades con el equipo.",
-            status: "declined",
-        },
-        {
-            id: "ASG-009",
-            teamId: "children",
-            volunteerId: "VOL-007",
-            title: "Apoyo en enseñanza infantil",
-            description: "Preparación de materiales y acompañamiento.",
-            date: getRelativeDate(11),
-            startTime: "11:00",
-            endTime: "12:30",
-            location: "Sala infantil",
-            eventId: null,
-            notes: "",
-            status: "pending",
-        },
-        {
-            id: "ASG-010",
-            teamId: "events",
-            volunteerId: "VOL-001",
-            title: "Organización de actividad comunitaria",
-            description: "Coordinación de materiales y participantes.",
-            date: getRelativeDate(-5),
-            startTime: "15:00",
-            endTime: "18:00",
-            location: "Templo principal",
-            eventId: null,
-            notes: "",
-            status: "confirmed",
-        },
-    ];
-
+function effectiveStatus(item) {
+  return item.status === "cancelled" ? "cancelled" : !(item.participants || []).length ? "unassigned" : item.status;
 }
 
-
-// =========================================================
-// CONFIGURACIÓN DE ESTADOS
-// =========================================================
-
-function getEffectiveStatus(assignment) {
-
-    if (assignment.status === "cancelled") {
-        return "cancelled";
-    }
-
-    if (assignment.volunteerId == null) {
-        return "unassigned";
-    }
-
-    return assignment.status || "pending";
+function errorMessage(error) {
+  return error?.response?.data?.message || error?.message || "No se pudo completar la operación";
 }
-
-
-// =========================================================
-// COMPONENTE PRINCIPAL
-// =========================================================
 
 function VolunteersManagement() {
+  // Ahora todas las listas provienen de MongoDB y no de ejemplos locales.
+  const [volunteers, setVolunteers] = useState([]);
+  const [eligibleMembers, setEligibleMembers] = useState([]);
+  const [assignments, setAssignments] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
 
-    // =====================================================
-    // DATOS PRINCIPALES
-    // =====================================================
+  // Controles existentes de búsqueda, calendario y modales.
+  const [selectedTeam, setSelectedTeam] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("date_asc");
+  const [showCalendar, setShowCalendar] = useState(true);
+  const [activeModal, setActiveModal] = useState(null);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
-    const [volunteers] = useState(INITIAL_VOLUNTEERS);
+  // Nuevo bloque: incorporación real de miembros a los equipos.
+  const [memberId, setMemberId] = useState("");
+  const [editingVolunteerId, setEditingVolunteerId] = useState("");
+  const [volunteerTeams, setVolunteerTeams] = useState([]);
+  const [volunteerStatus, setVolunteerStatus] = useState("active");
+  const [savingVolunteer, setSavingVolunteer] = useState(false);
+  const [removingVolunteer, setRemovingVolunteer] = useState(null);
 
-    const [assignments, setAssignments] = useState(
-        createInitialAssignments
-    );
+  // =========================================================
+  // CONSULTAS AL BACKEND (SIN DATOS DEMOSTRATIVOS)
+  // =========================================================
+  const reload = useCallback(() => setRefreshKey((current) => current + 1), []);
 
-    // Se conectará con Gestión de Eventos posteriormente.
-    const [events] = useState([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true);
+    setLoadError("");
 
-
-    // =====================================================
-    // FILTROS
-    // =====================================================
-
-    const [selectedTeam, setSelectedTeam] = useState("all");
-
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const [statusFilter, setStatusFilter] = useState("all");
-
-    const [dateFilter, setDateFilter] = useState("all");
-
-    const [sortBy, setSortBy] = useState("date_asc");
-
-
-    // =====================================================
-    // VISTA DE CALENDARIO
-    // =====================================================
-
-    const [showCalendar, setShowCalendar] = useState(true);
-
-
-    // =====================================================
-    // MODALES
-    // =====================================================
-
-    const [activeModal, setActiveModal] = useState(null);
-
-    const [selectedAssignment, setSelectedAssignment] = useState(null);
-
-
-    // =====================================================
-    // FECHA ACTUAL
-    // =====================================================
-
-    const todayKey = getLocalDateKey(new Date());
-
-
-    // =====================================================
-    // OBTENER NOMBRE DEL VOLUNTARIO
-    // =====================================================
-
-    // useCallback mantiene estable la referencia
-    // de esta función mientras no cambien los voluntarios.
-
-    const getVolunteerName = useCallback((volunteerId) => {
-
-        if (volunteerId == null) {
-            return "";
+    async function load() {
+      try {
+        // Las cuatro fuentes pertenecen al mismo módulo protegido.
+        const [rosterRes, assignmentsRes, activitiesRes] = await Promise.all([
+          api.get("/volunteers/roster", { signal: controller.signal }),
+          api.get("/volunteers/assignments", { signal: controller.signal }),
+          api.get("/volunteers/activities", { signal: controller.signal }),
+        ]);
+        // Consultamos todas las páginas, sin asumir un máximo de 100 miembros.
+        const members = [];
+        let page = 1;
+        let pages = 1;
+        while (page <= pages) {
+          const result = await api.get("/volunteers/eligible-members", {
+            params: { page, limit: 100 }, signal: controller.signal,
+          });
+          if (!result.data?.success || !Array.isArray(result.data?.members) ||
+              !Number.isInteger(result.data?.pagination?.totalPages)) {
+            throw new Error("No se pudo cargar la lista de miembros disponibles");
+          }
+          members.push(...result.data.members);
+          pages = result.data.pagination.totalPages;
+          page += 1;
         }
-
-        const volunteer = volunteers.find(
-            (item) =>
-                String(item.id) === String(volunteerId)
-        );
-
-        if (!volunteer) {
-            return "";
+        if (controller.signal.aborted) return;
+        if (![rosterRes.data, assignmentsRes.data, activitiesRes.data].every((data) => data?.success)) {
+          throw new Error("El servidor no devolvió los datos esperados");
         }
+        setVolunteers(rosterRes.data.volunteers || []);
+        setAssignments(assignmentsRes.data.assignments || []);
+        setEligibleMembers(members);
+        setActivities(activitiesRes.data.activities || []);
+      } catch (error) {
+        if (controller.signal.aborted || error?.code === "ERR_CANCELED") return;
+        // Evitamos mostrar datos antiguos después de una falla.
+        setVolunteers([]); setAssignments([]); setEligibleMembers([]); setActivities([]);
+        setLoadError(errorMessage(error));
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+    load();
+    return () => controller.abort();
+  }, [refreshKey]);
 
-        return (
-            volunteer.name ||
-            [
-                volunteer.firstName,
-                volunteer.lastName,
-            ]
-                .filter(Boolean)
-                .join(" ")
-        );
+  const todayKey = todayInChile();
+  const getVolunteerName = useCallback((volunteerId) => {
+    const volunteer = volunteers.find((item) => String(item.id) === String(volunteerId));
+    return volunteer?.name || "";
+  }, [volunteers]);
 
-    }, [volunteers]);
+  // =========================================================
+  // FILTRADO Y ORDENAMIENTO DEL LISTADO REAL
+  // =========================================================
+  const filteredAssignments = useMemo(() => {
+    const search = searchTerm.trim().toLocaleLowerCase("es-CL");
+    const today = parseLocalDate(todayKey);
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - ((weekStart.getDay() + 6) % 7));
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
 
-    // =====================================================
-    // FILTRAR Y ORDENAR ASIGNACIONES
-    // =====================================================
+    const result = assignments.filter((item) => {
+      if (selectedTeam !== "all" && item.teamId !== selectedTeam) return false;
+      if (statusFilter !== "all") {
+        // Un servicio puede tener respuestas diferentes entre sus voluntarios.
+        if (["pending", "confirmed", "declined"].includes(statusFilter)) {
+          if (!(item.participants || []).some((person) => person.status === statusFilter) || item.status === "cancelled") return false;
+        } else if (effectiveStatus(item) !== statusFilter) return false;
+      }
+      if (search) {
+        const searchable = [item.title, item.description, item.location,
+          ...(item.participants || []).map((person) => getVolunteerName(person.volunteerId))]
+          .filter(Boolean).join(" ").toLocaleLowerCase("es-CL");
+        if (!searchable.includes(search)) return false;
+      }
+      if (dateFilter !== "all") {
+        const date = parseLocalDate(item.date);
+        if (!date) return false;
+        if (dateFilter === "today" && item.date !== todayKey) return false;
+        if (dateFilter === "week" && (date < weekStart || date > weekEnd)) return false;
+        if (dateFilter === "month" && (date.getMonth() !== today.getMonth() || date.getFullYear() !== today.getFullYear())) return false;
+        if (dateFilter === "upcoming" && item.date < todayKey) return false;
+        if (dateFilter === "past" && item.date >= todayKey) return false;
+      }
+      return true;
+    });
 
-    const filteredAssignments = useMemo(() => {
+    const groupName = (item) => (item.participants || [])
+      .map((person) => getVolunteerName(person.volunteerId)).sort((a, b) => a.localeCompare(b, "es")).join(", ");
+    result.sort((a, b) => {
+      if (sortBy === "volunteer_asc") return groupName(a).localeCompare(groupName(b), "es");
+      if (sortBy === "volunteer_desc") return groupName(b).localeCompare(groupName(a), "es");
+      if (sortBy === "team_asc") return a.teamId.localeCompare(b.teamId, "es");
+      const left = `${a.date} ${a.startTime}`;
+      const right = `${b.date} ${b.startTime}`;
+      return sortBy === "date_desc" ? right.localeCompare(left) : left.localeCompare(right);
+    });
+    return result;
+  }, [assignments, selectedTeam, statusFilter, searchTerm, dateFilter, sortBy, todayKey, getVolunteerName]);
 
-        const normalizedSearch = searchTerm
-            .trim()
-            .toLocaleLowerCase("es-CL");
+  // =========================================================
+  // EDICIÓN DE EQUIPOS: LAS PERSONAS YA EXISTEN EN USER
+  // =========================================================
+  function resetVolunteerForm() {
+    setMemberId(""); setEditingVolunteerId(""); setVolunteerTeams([]); setVolunteerStatus("active");
+    setActionError("");
+  }
 
-        const today = parseLocalDate(todayKey);
+  function editVolunteer(volunteer) {
+    setEditingVolunteerId(volunteer.id);
+    setMemberId(volunteer.id);
+    setVolunteerTeams([...volunteer.teams]);
+    setVolunteerStatus(volunteer.status);
+    setActionError(""); setSuccess("");
+    document.getElementById("volunteers-roster-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
-        const weekStart = new Date(today);
+  function toggleTeam(teamId) {
+    setVolunteerTeams((previous) => previous.includes(teamId)
+      ? previous.filter((item) => item !== teamId) : [...previous, teamId]);
+  }
 
-        const weekday = (weekStart.getDay() + 6) % 7;
+  async function saveVolunteer(event) {
+    event.preventDefault();
+    if (!memberId || volunteerTeams.length === 0 || savingVolunteer) return;
+    setSavingVolunteer(true); setActionError(""); setSuccess("");
+    try {
+      if (editingVolunteerId) {
+        await api.patch(`/volunteers/roster/${editingVolunteerId}`, { teams: volunteerTeams, status: volunteerStatus });
+        setSuccess("Equipos del voluntario actualizados");
+      } else {
+        await api.post("/volunteers/roster", { userId: memberId, teams: volunteerTeams, status: "active" });
+        setSuccess("El miembro ya forma parte del voluntariado");
+      }
+      resetVolunteerForm();
+      reload();
+    } catch (error) { setActionError(errorMessage(error)); }
+    finally { setSavingVolunteer(false); }
+  }
 
-        weekStart.setDate(
-            weekStart.getDate() - weekday
-        );
+  async function removeVolunteer() {
+    if (!removingVolunteer) return;
+    setSavingVolunteer(true); setActionError("");
+    try {
+      await api.delete(`/volunteers/roster/${removingVolunteer.id}`);
+      setRemovingVolunteer(null); resetVolunteerForm();
+      setSuccess("Voluntario retirado sin eliminar su cuenta");
+      reload();
+    } catch (error) { setActionError(errorMessage(error)); }
+    finally { setSavingVolunteer(false); }
+  }
 
-        const weekEnd = new Date(weekStart);
+  // Solo mostramos miembros que aún no pertenecen a un equipo.
+  const availableMembers = eligibleMembers.filter((member) =>
+    !volunteers.some((volunteer) => volunteer.id === member.id));
 
-        weekEnd.setDate(weekEnd.getDate() + 6);
+  // =========================================================
+  // CRUD DE ASIGNACIONES CON RESPUESTA REAL DEL SERVIDOR
+  // =========================================================
+  function closeModal() { setActiveModal(null); setSelectedAssignment(null); }
+  function openModal(name, assignment = null) { setSelectedAssignment(assignment); setActiveModal(name); setActionError(""); }
 
-
-        // ================================================
-        // FILTROS
-        // ================================================
-
-        const result = assignments.filter((assignment) => {
-
-            // EQUIPO
-
-            if (
-                selectedTeam !== "all" &&
-                assignment.teamId !== selectedTeam
-            ) {
-                return false;
-            }
-
-
-            // ESTADO
-
-            if (
-                statusFilter !== "all" &&
-                getEffectiveStatus(assignment) !== statusFilter
-            ) {
-                return false;
-            }
-
-
-            // BÚSQUEDA
-
-            if (normalizedSearch) {
-
-                const volunteerName =
-                    getVolunteerName(assignment.volunteerId);
-
-                const searchableText = [
-                    assignment.title,
-                    assignment.description,
-                    assignment.location,
-                    volunteerName,
-                ]
-                    .filter(Boolean)
-                    .join(" ")
-                    .toLocaleLowerCase("es-CL");
-
-                if (!searchableText.includes(normalizedSearch)) {
-                    return false;
-                }
-
-            }
-
-
-            // FECHA
-
-            if (dateFilter !== "all") {
-
-                const assignmentDate =
-                    parseLocalDate(assignment.date);
-
-                if (!assignmentDate) {
-                    return false;
-                }
-
-                if (
-                    dateFilter === "today" &&
-                    assignment.date !== todayKey
-                ) {
-                    return false;
-                }
-
-                if (
-                    dateFilter === "week" &&
-                    (
-                        assignmentDate < weekStart ||
-                        assignmentDate > weekEnd
-                    )
-                ) {
-                    return false;
-                }
-
-                if (
-                    dateFilter === "month" &&
-                    (
-                        assignmentDate.getMonth() !== today.getMonth() ||
-                        assignmentDate.getFullYear() !== today.getFullYear()
-                    )
-                ) {
-                    return false;
-                }
-
-                if (
-                    dateFilter === "upcoming" &&
-                    assignment.date < todayKey
-                ) {
-                    return false;
-                }
-
-                if (
-                    dateFilter === "past" &&
-                    assignment.date >= todayKey
-                ) {
-                    return false;
-                }
-
-            }
-
-            return true;
-
+  // Cambia únicamente los datos del servicio, sin tocar la lista de personas.
+  async function saveAssignment(payload, original) {
+    try {
+      if (original) {
+        await api.patch(`/volunteers/assignments/${original.id}/service`, payload);
+      } else {
+        // Los servicios nuevos comienzan con cupo 1, sin participantes.
+        // Luego se usa el botón "Gestionar voluntarios" para incorporarlos.
+        await api.post("/volunteers/assignments", {
+          ...payload,
+          requiredVolunteers: 1,
+          volunteerIds: [],
         });
-
-
-        // ================================================
-        // ORDENAMIENTO
-        // ================================================
-
-        result.sort((first, second) => {
-
-            const firstDate =
-                `${first.date || ""} ${first.startTime || ""}`;
-
-            const secondDate =
-                `${second.date || ""} ${second.startTime || ""}`;
-
-            if (sortBy === "date_desc") {
-                return secondDate.localeCompare(firstDate);
-            }
-
-            if (sortBy === "volunteer_asc") {
-
-                return getVolunteerName(first.volunteerId)
-                    .localeCompare(
-                        getVolunteerName(second.volunteerId),
-                        "es"
-                    );
-
-            }
-
-            if (sortBy === "volunteer_desc") {
-
-                return getVolunteerName(second.volunteerId)
-                    .localeCompare(
-                        getVolunteerName(first.volunteerId),
-                        "es"
-                    );
-
-            }
-
-            if (sortBy === "team_asc") {
-
-                return (first.teamId || "")
-                    .localeCompare(second.teamId || "", "es");
-
-            }
-
-            return firstDate.localeCompare(secondDate);
-
-        });
-
-        return result;
-
-    }, [
-        assignments,
-        selectedTeam,
-        searchTerm,
-        statusFilter,
-        dateFilter,
-        sortBy,
-        todayKey,
-        getVolunteerName,
-    ]);
-
-
-    // =====================================================
-    // LIMPIAR FILTROS
-    // =====================================================
-
-    const handleClearFilters = () => {
-
-        setSelectedTeam("all");
-
-        setSearchTerm("");
-
-        setStatusFilter("all");
-
-        setDateFilter("all");
-
-        setSortBy("date_asc");
-
-    };
-
-
-    // =====================================================
-    // CAMBIAR VISTA DE CALENDARIO
-    // =====================================================
-
-    const handleViewCalendar = () => {
-
-        setShowCalendar((previous) => !previous);
-
-    };
-
-
-    // =====================================================
-    // CREAR ASIGNACIÓN
-    // =====================================================
-
-    const handleCreateAssignment = () => {
-
-        setSelectedAssignment(null);
-
-        setActiveModal("form");
-
-    };
-
-
-    // =====================================================
-    // EDITAR ASIGNACIÓN
-    // =====================================================
-
-    const handleEditAssignment = (assignment) => {
-
-        setSelectedAssignment(assignment);
-
-        setActiveModal("form");
-
-    };
-
-
-    // =====================================================
-    // VER DETALLES
-    // =====================================================
-
-    const handleViewAssignment = (assignment) => {
-
-        setSelectedAssignment(assignment);
-
-        setActiveModal("details");
-
-    };
-
-
-    // =====================================================
-    // ELIMINAR ASIGNACIÓN
-    // =====================================================
-
-    const handleDeleteAssignment = (assignment) => {
-
-        setSelectedAssignment(assignment);
-
-        setActiveModal("delete");
-
-    };
-
-
-    // =====================================================
-    // CERRAR MODALES
-    // =====================================================
-
-    const handleCloseModal = () => {
-
-        setActiveModal(null);
-
-        setSelectedAssignment(null);
-
-    };
-
-
-    // =====================================================
-    // GENERAR IDENTIFICADOR
-    // =====================================================
-
-    const generateAssignmentId = () => {
-
-        const numericIds = assignments
-            .map((item) => {
-
-                const match = String(item.id || "")
-                    .match(/^ASG-(\d+)$/);
-
-                return match ? Number(match[1]) : 0;
-
-            });
-
-        const nextNumber =
-            Math.max(0, ...numericIds) + 1;
-
-        return `ASG-${String(nextNumber).padStart(3, "0")}`;
-
-    };
-
-
-    // =====================================================
-    // GUARDAR ASIGNACIÓN
-    // =====================================================
-
-    const handleSaveAssignment = async (
-        formData,
-        originalAssignment
-    ) => {
-
-        if (originalAssignment) {
-
-            // ============================================
-            // ACTUALIZAR ASIGNACIÓN EXISTENTE
-            // ============================================
-
-            setAssignments((previous) =>
-                previous.map((item) => {
-
-                    if (item.id !== originalAssignment.id) {
-                        return item;
-                    }
-
-                    return {
-                        ...item,
-                        ...formData,
-                        id: item.id,
-                    };
-
-                })
-            );
-
-        } else {
-
-            // ============================================
-            // CREAR NUEVA ASIGNACIÓN
-            // ============================================
-
-            const newAssignment = {
-                ...formData,
-                id: generateAssignmentId(),
-            };
-
-            setAssignments((previous) => [
-                ...previous,
-                newAssignment,
-            ]);
-
-        }
-
-        handleCloseModal();
-
-    };
-
-
-    // =====================================================
-    // CONFIRMAR ELIMINACIÓN
-    // =====================================================
-
-    const handleConfirmDelete = async (assignment) => {
-
-        setAssignments((previous) =>
-            previous.filter(
-                (item) => item.id !== assignment.id
-            )
-        );
-
-        handleCloseModal();
-
-    };
-
-
-    // =====================================================
-    // INTERFAZ PRINCIPAL
-    // =====================================================
-
-    return (
-        <main className="volunteers-management">
-
-            <div className="volunteers-management__container">
-
-                
-
-                {/* ======================================= */}
-                {/* ENCABEZADO */}
-                {/* ======================================= */}
-
-                <VolunteersHeader
-                    onCreateAssignment={handleCreateAssignment}
-                    onViewCalendar={handleViewCalendar}
-                />
-
-
-                {/* ======================================= */}
-                {/* RESUMEN */}
-                {/* ======================================= */}
-
-                <VolunteersSummary
-                    volunteers={volunteers}
-                    assignments={assignments}
-                />
-
-
-                {/* ======================================= */}
-                {/* EQUIPOS DE SERVICIO */}
-                {/* ======================================= */}
-
-                <VolunteersTeams
-                    volunteers={volunteers}
-                    assignments={assignments}
-                    selectedTeam={selectedTeam}
-                    onSelectTeam={setSelectedTeam}
-                />
-
-
-                {/* ======================================= */}
-                {/* FILTROS */}
-                {/* ======================================= */}
-
-                <VolunteersToolbar
-                    searchTerm={searchTerm}
-                    onSearchChange={setSearchTerm}
-                    statusFilter={statusFilter}
-                    onStatusChange={setStatusFilter}
-                    dateFilter={dateFilter}
-                    onDateChange={setDateFilter}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
-                    onClearFilters={handleClearFilters}
-                />
-
-
-                {/* ======================================= */}
-                {/* CALENDARIO */}
-                {/* ======================================= */}
-
-                {showCalendar && (
-
-                    <div className="volunteers-management__calendar">
-
-                        <VolunteersSchedule
-                            assignments={assignments}
-                            volunteers={volunteers}
-                            selectedTeam={selectedTeam}
-                            onViewAssignment={handleViewAssignment}
-                        />
-
+      }
+      closeModal();
+      setSuccess(original
+        ? "Servicio actualizado. Las personas asignadas se mantienen."
+        : "Servicio creado. Ahora presiona «Gestionar voluntarios» para asignar personas.");
+      reload();
+    } catch (error) { throw new Error(errorMessage(error)); }
+  }
+
+  // Este endpoint solo admite cupos e IDs: protege el resto del servicio.
+  async function saveParticipants(payload, original) {
+    try {
+      await api.patch(`/volunteers/assignments/${original.id}/participants`, payload);
+      closeModal();
+      setSuccess("Voluntarios y cupos actualizados correctamente.");
+      reload();
+    } catch (error) { throw new Error(errorMessage(error)); }
+  }
+
+  // Si no hay candidatos, dirigimos al formulario que incorpora miembros a equipos.
+  function goToVolunteerRoster() {
+    closeModal();
+    requestAnimationFrame(() => {
+      document.getElementById("volunteers-roster-form")?.scrollIntoView({
+        behavior: "smooth", block: "center",
+      });
+    });
+  }
+
+  async function deleteAssignment(assignment) {
+    try {
+      await api.delete(`/volunteers/assignments/${assignment.id}`);
+      closeModal(); setSuccess("Asignación eliminada"); reload();
+    } catch (error) { throw new Error(errorMessage(error)); }
+  }
+
+  function clearFilters() { setSelectedTeam("all"); setSearchTerm(""); setStatusFilter("all"); setDateFilter("all"); setSortBy("date_asc"); }
+
+  // =========================================================
+  // INTERFAZ PRINCIPAL
+  // =========================================================
+  return (
+    <main className="volunteers-management">
+      <div className="volunteers-management__container">
+        <VolunteersHeader
+          onCreateAssignment={() => openModal("form")}
+          onViewCalendar={() => setShowCalendar((previous) => !previous)}
+        />
+
+        {loadError && (
+          <div className="volunteers-connected__alert" role="alert">
+            <AlertCircle size={19} /> {loadError}
+            <button type="button" onClick={reload}><RefreshCw size={15} /> Reintentar</button>
+          </div>
+        )}
+        {success && <p className="volunteers-connected__success" role="status"><Check size={17} /> {success}</p>}
+        {actionError && <p className="volunteers-connected__alert" role="alert"><AlertCircle size={17} /> {actionError}</p>}
+
+        {loading ? (
+          <div className="volunteers-connected__loading" role="status">Cargando equipos y asignaciones...</div>
+        ) : !loadError ? (
+          <>
+            <VolunteersSummary volunteers={volunteers} assignments={assignments} />
+
+            {/* Inscribir un miembro real o modificar sus equipos existentes. */}
+            <section className="volunteers-connected__roster" aria-labelledby="volunteers-roster-title">
+              <div className="volunteers-connected__roster-head">
+                <div>
+                  <span className="volunteers-connected__eyebrow">MIEMBROS QUE SIRVEN</span>
+                  <h2 id="volunteers-roster-title">Voluntarios registrados</h2>
+                  <p>Incorpora miembros de la iglesia a sus equipos de servicio, sin crear cuentas nuevas.</p>
+                </div>
+                <div className="volunteers-connected__roster-controls">
+                  <button type="button" onClick={reload}><RefreshCw size={15} /> Actualizar</button>
+                  <span className="volunteers-connected__count">{volunteers.length} voluntarios</span>
+                </div>
+              </div>
+
+              <form id="volunteers-roster-form" className="volunteers-connected__form" onSubmit={saveVolunteer}>
+                <div className="volunteers-connected__form-top">
+                  <span className="volunteers-connected__form-icon"><UserRoundPlus size={20} /></span>
+                  <div><strong>{editingVolunteerId ? "Editar equipos del voluntario" : "Incorporar miembro"}</strong>
+                    <small>Selecciona una persona registrada y los equipos en que prestará servicio.</small></div>
+                  {editingVolunteerId && <button type="button" className="volunteers-connected__cancel" onClick={resetVolunteerForm}><X size={15} /> Cancelar edición</button>}
+                </div>
+
+                <div className="volunteers-connected__form-grid">
+                  <label>Miembro de la iglesia
+                    <select value={memberId} disabled={Boolean(editingVolunteerId) || savingVolunteer}
+                      onChange={(event) => setMemberId(event.target.value)} required>
+                      <option value="">Seleccionar miembro</option>
+                      {editingVolunteerId ? (
+                        volunteers.filter((person) => person.id === editingVolunteerId).map((person) => (
+                          <option key={person.id} value={person.id}>{person.name}</option>
+                        ))
+                      ) : availableMembers.map((person) => (
+                        <option key={person.id} value={person.id}>{person.name} · {person.email}</option>
+                      ))}
+                    </select>
+                  </label>
+                  {editingVolunteerId && <label>Estado de voluntariado
+                    <select value={volunteerStatus} onChange={(event) => setVolunteerStatus(event.target.value)}>
+                      <option value="active">Activo</option>
+                      <option value="inactive">Inactivo</option>
+                    </select>
+                  </label>}
+                </div>
+
+                <fieldset className="volunteers-connected__teams-fieldset">
+                  <legend>Equipos de servicio *</legend>
+                  <div className="volunteers-connected__team-options">
+                    {VOLUNTEER_TEAMS.map((team) => (
+                      <label key={team.id} className={volunteerTeams.includes(team.id) ? "volunteers-connected__team-option volunteers-connected__team-option--selected" : "volunteers-connected__team-option"}>
+                        <input type="checkbox" checked={volunteerTeams.includes(team.id)} onChange={() => toggleTeam(team.id)} />
+                        <span>{team.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <button type="submit" className="volunteers-connected__save" disabled={!memberId || volunteerTeams.length === 0 || savingVolunteer}>
+                  <Check size={16} /> {savingVolunteer ? "Guardando..." : editingVolunteerId ? "Guardar equipos" : "Agregar voluntario"}
+                </button>
+              </form>
+
+              {volunteers.length > 0 && <div className="volunteers-connected__roster-list">
+                {volunteers.map((person) => (
+                  <article key={person.id} className="volunteers-connected__person">
+                    <div className="volunteers-connected__avatar" aria-hidden="true">{person.name.split(" ").slice(0, 2).map((name) => name[0]).join("").toUpperCase()}</div>
+                    <div className="volunteers-connected__person-info"><strong>{person.name}</strong><small>{person.email}</small>
+                      <span>{person.teams.map((id) => VOLUNTEER_TEAMS.find((team) => team.id === id)?.name).filter(Boolean).join(" · ")}</span>
                     </div>
+                    <span className={person.status === "active" ? "volunteers-connected__badge" : "volunteers-connected__badge volunteers-connected__badge--inactive"}>{person.status === "active" ? "Activo" : "Inactivo"}</span>
+                    <div className="volunteers-connected__person-actions">
+                      <button type="button" onClick={() => editVolunteer(person)}>Editar equipos</button>
+                      <button type="button" className="volunteers-connected__danger" onClick={() => { setRemovingVolunteer(person); setActionError(""); }} aria-label={`Retirar a ${person.name} del voluntariado`}><Trash2 size={16} /></button>
+                    </div>
+                  </article>
+                ))}
+              </div>}
+              {volunteers.length === 0 && <p className="volunteers-connected__empty">Todavía no hay voluntarios inscritos. Incorpora un miembro para comenzar.</p>}
+            </section>
 
-                )}
+            <VolunteersTeams volunteers={volunteers} assignments={assignments} selectedTeam={selectedTeam} onSelectTeam={setSelectedTeam} />
+            <VolunteersToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}
+              statusFilter={statusFilter} onStatusChange={setStatusFilter}
+              dateFilter={dateFilter} onDateChange={setDateFilter}
+              sortBy={sortBy} onSortChange={setSortBy} onClearFilters={clearFilters} />
+            {showCalendar && <div className="volunteers-management__calendar">
+              <VolunteersSchedule assignments={assignments} volunteers={volunteers} selectedTeam={selectedTeam} onViewAssignment={(item) => openModal("details", item)} />
+            </div>}
+            <VolunteersAssignments assignments={filteredAssignments} volunteers={volunteers}
+              onView={(item) => openModal("details", item)} onEdit={(item) => openModal("form", item)}
+              onManage={(item) => openModal("participants", item)}
+              onDelete={(item) => openModal("delete", item)} onCreate={() => openModal("form")} />
 
+            <VolunteerAssignmentFormModal isOpen={activeModal === "form"} assignment={selectedAssignment}
+              activities={activities} onClose={closeModal} onSave={saveAssignment} />
+            <VolunteerParticipantsModal isOpen={activeModal === "participants"}
+              assignment={selectedAssignment} volunteers={volunteers} assignments={assignments}
+              onClose={closeModal} onSave={saveParticipants} onGoToRoster={goToVolunteerRoster} />
+            <VolunteerDetailsModal isOpen={activeModal === "details"} assignment={selectedAssignment}
+              volunteers={volunteers} activities={activities} onClose={closeModal}
+              onEdit={(item) => openModal("form", item)}
+              onManage={(item) => openModal("participants", item)} />
+            <VolunteerDeleteModal isOpen={activeModal === "delete"} assignment={selectedAssignment}
+              volunteers={volunteers} onClose={closeModal} onConfirm={deleteAssignment} />
 
-                {/* ======================================= */}
-                {/* LISTADO DE ASIGNACIONES */}
-                {/* ======================================= */}
-
-                <VolunteersAssignments
-                    assignments={filteredAssignments}
-                    volunteers={volunteers}
-                    onView={handleViewAssignment}
-                    onEdit={handleEditAssignment}
-                    onDelete={handleDeleteAssignment}
-                    onCreate={handleCreateAssignment}
-                />
-
-
-                {/* ======================================= */}
-                {/* FORMULARIO CREAR / EDITAR */}
-                {/* ======================================= */}
-
-                <VolunteerAssignmentFormModal
-                    isOpen={activeModal === "form"}
-                    assignment={selectedAssignment}
-                    volunteers={volunteers}
-                    events={events}
-                    assignments={assignments}
-                    onClose={handleCloseModal}
-                    onSave={handleSaveAssignment}
-                />
-
-
-                {/* ======================================= */}
-                {/* DETALLES */}
-                {/* ======================================= */}
-
-                <VolunteerDetailsModal
-                    isOpen={activeModal === "details"}
-                    assignment={selectedAssignment}
-                    volunteers={volunteers}
-                    events={events}
-                    onClose={handleCloseModal}
-                    onEdit={handleEditAssignment}
-                />
-
-
-                {/* ======================================= */}
-                {/* ELIMINACIÓN */}
-                {/* ======================================= */}
-
-                <VolunteerDeleteModal
-                    isOpen={activeModal === "delete"}
-                    assignment={selectedAssignment}
-                    volunteers={volunteers}
-                    onClose={handleCloseModal}
-                    onConfirm={handleConfirmDelete}
-                />
-
-            </div>
-
-        </main>
-    );
+            {/* Confirmación visual antes de retirar a una persona del voluntariado. */}
+            {removingVolunteer && <div className="volunteers-connected__overlay" onMouseDown={(event) => { if (event.target === event.currentTarget && !savingVolunteer) setRemovingVolunteer(null); }}>
+              <section className="volunteers-connected__confirm" role="alertdialog" aria-modal="true" aria-labelledby="volunteers-remove-title">
+                <span className="volunteers-connected__confirm-icon"><AlertCircle size={25} /></span>
+                <h2 id="volunteers-remove-title">¿Retirar del voluntariado?</h2>
+                <p>Se retirará a <strong>{removingVolunteer.name}</strong> de sus equipos. Su cuenta de miembro no será eliminada.</p>
+                <p>Si tiene turnos futuros asignados, primero deberás reasignarlos o cancelarlos.</p>
+                {actionError && <p className="volunteers-connected__alert" role="alert">{actionError}</p>}
+                <div className="volunteers-connected__confirm-actions">
+                  <button type="button" onClick={() => setRemovingVolunteer(null)} disabled={savingVolunteer}>Cancelar</button>
+                  <button type="button" className="volunteers-connected__confirm-danger" onClick={removeVolunteer} disabled={savingVolunteer}>{savingVolunteer ? "Retirando..." : "Retirar voluntario"}</button>
+                </div>
+              </section>
+            </div>}
+          </>
+        ) : null}
+      </div>
+    </main>
+  );
 }
 
 export default VolunteersManagement;
-
-
-

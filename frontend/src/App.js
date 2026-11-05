@@ -76,6 +76,8 @@ import MemberLayout from "./components/member/layout/MemberLayout";
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberActivities from "./pages/member/MemberActivities";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
+// Página privada para confirmar turnos de servicio.
+import MemberVolunteerAssignments from "./pages/member/MemberVolunteerAssignments";
 
 // =========================================================
 // CONTENIDOS EXCLUSIVOS DE MIEMBROS REGISTRADOS
@@ -270,6 +272,7 @@ function App() {
               <Route path="mi-cuenta" element={<MyAccount />} />
               <Route path="actividades" element={<MemberActivities />} />
               <Route path="peticiones-oracion" element={<MemberPrayerRequests />} />
+              <Route path="voluntariado" element={<MemberVolunteerAssignments />} />
               <Route path="finanzas" element={<FinanceOverview />} />
 
             </Route>

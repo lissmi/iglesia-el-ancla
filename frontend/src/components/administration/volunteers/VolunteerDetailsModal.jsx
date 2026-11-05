@@ -15,6 +15,7 @@ import {
     FileText,
     Link2,
     Pencil,
+    UserRoundPlus,
     CheckCircle2,
     AlertCircle,
     CircleHelp,
@@ -45,6 +46,11 @@ const ASSIGNMENT_STATUSES = {
         label: "No disponible",
         description: "El voluntario indicó que no podrá participar.",
         icon: AlertCircle,
+    },
+    mixed: {
+        label: "Respuestas diferentes",
+        description: "Cada voluntario tiene su propio estado de confirmación.",
+        icon: Clock3,
     },
     unassigned: {
         label: "Sin voluntario",
@@ -103,9 +109,10 @@ function VolunteerDetailsModal({
     isOpen = false,
     assignment = null,
     volunteers = [],
-    events = [],
+    activities = [],
     onClose,
     onEdit,
+    onManage,
 }) {
 
     // =====================================================
@@ -207,8 +214,10 @@ function VolunteerDetailsModal({
             String(item.id) === String(assignment.volunteerId)
     );
 
-    const volunteerName =
-        assignment.volunteerId == null
+    const participants = assignment.participants || [];
+    const volunteerName = participants.length > 1
+        ? `${participants.length} voluntarios asignados`
+        : assignment.volunteerId == null
             ? "Sin voluntario asignado"
             : volunteer
                 ? (
@@ -237,22 +246,22 @@ function VolunteerDetailsModal({
 
 
     // =====================================================
-    // IDENTIFICAR EVENTO ASOCIADO
+    // IDENTIFICAR ACTIVIDAD ASOCIADA
     // =====================================================
 
-    const associatedEvent = events.find(
+    const associatedActivity = activities.find(
         (item) =>
-            String(item.id) === String(assignment.eventId)
+            String(item.id) === String(assignment.activityId)
     );
 
-    const eventName =
-        !assignment.eventId
-            ? "Sin evento asociado"
-            : associatedEvent
-                ? associatedEvent.title ||
-                  associatedEvent.name ||
-                  "Evento"
-                : "Evento no encontrado";
+    const activityName =
+        !assignment.activityId
+            ? "Sin actividad asociada"
+            : associatedActivity
+                ? associatedActivity.title ||
+                  associatedActivity.name ||
+                  "Actividad"
+                : "Actividad no encontrada";
 
 
     // =====================================================
@@ -562,7 +571,7 @@ function VolunteerDetailsModal({
                             </div>
 
 
-                            {/* EVENTO */}
+                            {/* ACTIVIDAD */}
 
                             <div className="volunteer-details-modal__info">
 
@@ -572,10 +581,10 @@ function VolunteerDetailsModal({
 
                                 <div>
 
-                                    <span>Evento asociado</span>
+                                    <span>Actividad asociada</span>
 
                                     <strong>
-                                        {eventName}
+                                        {activityName}
                                     </strong>
 
                                 </div>
@@ -586,6 +595,37 @@ function VolunteerDetailsModal({
 
                     </div>
 
+
+                    {/* CONFIRMACIONES INDIVIDUALES DEL SERVICIO */}
+                    <div className="volunteer-details-modal__section">
+                        <div className="volunteer-details-modal__section-title">
+                            <UsersRound size={18} />
+                            <h4>Voluntarios y confirmaciones ({participants.length}/{assignment.requiredVolunteers || 1})</h4>
+                        </div>
+                        {participants.length ? (
+                            <div className="volunteers-connected__participants-list">
+                                {participants.map((person) => {
+                                    const profile = volunteers.find((item) => String(item.id) === String(person.volunteerId));
+                                    const state = assignment.status === "cancelled" ? "cancelled" : person.status;
+                                    const label = { pending: "Pendiente", confirmed: "Confirmado", declined: "No disponible", cancelled: "Cancelado" }[state] || "Pendiente";
+                                    return (
+                                        <div className="volunteers-connected__participant-row" key={person.volunteerId}>
+                                            <strong>{profile?.name || "Voluntario no encontrado"}</strong>
+                                            <span className={`volunteers-connected__participant-status volunteers-connected__participant-status--${state}`}>
+                                                {label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ) : <p>Este servicio todavía no tiene voluntarios asignados.</p>}
+                        {participants.filter((person) => person.status !== "declined").length < (assignment.requiredVolunteers || 1) &&
+                            assignment.status !== "cancelled" && (
+                                <p className="volunteers-connected__vacancies">
+                                    Faltan {Math.max(0, (assignment.requiredVolunteers || 1) - participants.filter((person) => person.status !== "declined").length)} personas por cubrir.
+                                </p>
+                            )}
+                    </div>
 
                     {/* =================================== */}
                     {/* INSTRUCCIONES */}
@@ -637,6 +677,14 @@ function VolunteerDetailsModal({
                     >
                         Cerrar
                     </button>
+
+                    {onManage && (
+                        <button type="button" className="volunteer-details-modal__edit"
+                            onClick={() => onManage(assignment)}>
+                            <UserRoundPlus size={17} aria-hidden="true" />
+                            Gestionar voluntarios
+                        </button>
+                    )}
 
                     {onEdit && (
 
