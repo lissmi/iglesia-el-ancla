@@ -4,7 +4,7 @@
 // =========================================================
 
 import { useEffect, useState } from "react";
-import { getPublishedInformationalPage, resolveInformationalImages } from "../services/api";
+import { getPublishedInformationalPage, resolveInformationalImages } from "../services/informationalPagesApi";
 
 export default function usePublicInformationalPage(slug, fallbackContent = null) {
   // Conserva el contenido original mientras se consulta el backend.

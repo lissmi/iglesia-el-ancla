@@ -3,6 +3,8 @@ import { getYouTubeVideoId, isSpotifyLink, resolveRecommendationThumbnail } from
 import { X, Save, ImagePlus } from "lucide-react";
 import { RECOMMENDATION_CATEGORIES } from "./RecommendationsCategories";
 import "../../../styles/components/administration/recommendations/RecommendationFormModal.css";
+// Estilos adicionales para el nuevo selector de archivos.
+import "../../../styles/components/administration/recommendations/RecommendationFormUpload.css";
 
 const CONTENT_CATEGORIES = RECOMMENDATION_CATEGORIES.filter(
     (category) => category.id !== "kids_youth"
@@ -57,6 +59,11 @@ function RecommendationFormModal({
     const [form, setForm] = useState(() => buildInitialForm(recommendation));
     const [errors, setErrors] = useState({});
     const [isSaving, setIsSaving] = useState(false);
+    // Archivo seleccionado; se enviará únicamente al backend, no a MongoDB.
+    const [imageFile, setImageFile] = useState(null);
+    // URL temporal exclusiva para la vista previa del archivo local.
+    const [localPreview, setLocalPreview] = useState("");
+    const [thumbnailRetry, setThumbnailRetry] = useState(0);
     const [thumbnailState, setThumbnailState] = useState("idle");
     const [thumbnailMessage, setThumbnailMessage] = useState("");
     const manualImageRef = useRef(false);
@@ -66,12 +73,26 @@ function RecommendationFormModal({
     useEffect(() => {
         if (!isOpen) return;
         setForm(buildInitialForm(recommendation));
+        // Cada apertura comienza sin una nueva imagen pendiente.
+        setImageFile(null);
+        setThumbnailRetry(0);
         setErrors({});
         setIsSaving(false);
         setThumbnailState("idle");
         setThumbnailMessage("");
         manualImageRef.current = Boolean(recommendation?.image);
     }, [isOpen, recommendation]);
+
+    // Genera una vista previa local y revoca su URL al reemplazar la imagen.
+    useEffect(() => {
+        if (!imageFile) {
+            setLocalPreview("");
+            return undefined;
+        }
+        const objectUrl = URL.createObjectURL(imageFile);
+        setLocalPreview(objectUrl);
+        return () => URL.revokeObjectURL(objectUrl);
+    }, [imageFile]);
 
     useEffect(() => {
         if (!isOpen) return undefined;
@@ -87,7 +108,11 @@ function RecommendationFormModal({
         if (!isOpen) return undefined;
         const link = form.link.trim();
         const supported = Boolean(getYouTubeVideoId(link)) || isSpotifyLink(link);
-        if (!supported || manualImageRef.current) {
+        if (!supported || manualImageRef.current || imageFile) {
+            // Si el enlace ya no es YouTube/Spotify, retiramos la portada automática.
+            if (!supported && !manualImageRef.current && !imageFile) {
+                setForm((previous) => previous.image ? { ...previous, image: "" } : previous);
+            }
             setThumbnailState("idle");
             setThumbnailMessage("");
             return undefined;
@@ -116,13 +141,48 @@ function RecommendationFormModal({
             clearTimeout(timeout);
             controller.abort();
         };
-    }, [isOpen, form.link]);
+    }, [isOpen, form.link, imageFile, thumbnailRetry]);
 
     if (!isOpen) return null;
 
     function updateField(field, value) {
         setForm((previous) => ({ ...previous, [field]: value }));
         setErrors((previous) => ({ ...previous, [field]: undefined }));
+    }
+
+    // Cambia la portada manualmente escribiendo una URL externa.
+    function handleImageUrlChange(value) {
+        // Una URL manual reemplaza cualquier archivo pendiente.
+        setImageFile(null);
+        manualImageRef.current = Boolean(value.trim());
+        updateField("image", value);
+    }
+
+    // Selecciona una imagen local para subirla a Cloudinary al guardar.
+    function handleImageFileChange(event) {
+        const file = event.target.files?.[0];
+        event.target.value = "";
+        if (!file) return;
+        // Restringimos formato y tamaño antes de enviar al backend.
+        if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+            setErrors((previous) => ({ ...previous, image: "Formato permitido: JPG, PNG o WebP." }));
+            return;
+        }
+        if (file.size > 1_500_000) {
+            setErrors((previous) => ({ ...previous, image: "La portada no puede superar 1,5 MB." }));
+            return;
+        }
+        manualImageRef.current = true;
+        setImageFile(file);
+        setErrors((previous) => ({ ...previous, image: undefined }));
+    }
+
+    // Recupera la miniatura automática si el contenido es YouTube o Spotify.
+    function handleUseAutomaticThumbnail() {
+        setImageFile(null);
+        manualImageRef.current = false;
+        updateField("image", "");
+        setThumbnailRetry((value) => value + 1);
     }
 
     function updateAudience(value, checked) {
@@ -145,12 +205,20 @@ function RecommendationFormModal({
             nextErrors.category = "Selecciona una categoría válida.";
         }
         if (!form.audience.length) nextErrors.audience = "Selecciona al menos un público objetivo.";
+        // No publicamos enlaces vacíos: son recomendaciones a sitios externos.
+        if (form.status === "published" && !form.link.trim()) {
+            nextErrors.link = "Para publicar debes indicar el enlace al contenido.";
+        }
+        // Una publicación debe conducir realmente a una fuente externa.
+        if (form.status === "published" && !form.link.trim()) {
+            nextErrors.link = "Para publicar debes ingresar el enlace al contenido.";
+        }
         for (const field of ["image", "link"]) {
             const value = form[field].trim();
             if (value) {
                 try {
                     const url = new URL(value);
-                    if (!["http:", "https:"].includes(url.protocol)) throw new Error("Protocolo inválido");
+                    if (url.protocol !== "https:") throw new Error("Protocolo inválido");
                 } catch {
                     nextErrors[field] = "Ingresa una dirección URL válida (https://...).";
                 }
@@ -166,14 +234,15 @@ function RecommendationFormModal({
         setErrors(nextErrors);
         if (Object.keys(nextErrors).length) return;
 
+        // Solo enviamos campos editables, nunca id, fechas ni datos de auditoría.
         const payload = {
-            ...(recommendation || {}),
             title: form.title.trim(),
             category: form.category,
             creator: form.creator.trim(),
             description: form.description.trim(),
             reason: form.reason.trim(),
-            image: form.image.trim(),
+            // Un archivo nuevo tiene prioridad sobre la URL de portada anterior.
+            image: imageFile ? "" : form.image.trim(),
             link: form.link.trim(),
             audience: [...form.audience],
             status: form.status,
@@ -183,7 +252,8 @@ function RecommendationFormModal({
         if (!onSave) return;
         try {
             setIsSaving(true);
-            await onSave(payload);
+            // Enviamos el registro de texto y el archivo por separado.
+            await onSave(payload, imageFile);
             onClose?.();
         } catch (error) {
             setErrors((previous) => ({
@@ -260,16 +330,26 @@ function RecommendationFormModal({
                                 <label htmlFor="recommendation-image">URL de la portada</label>
                                 <div className="recommendation-form-modal__input-icon">
                                     <ImagePlus size={18} aria-hidden="true" />
-                                    <input id="recommendation-image" type="url" value={form.image} onChange={(event) => { manualImageRef.current = Boolean(event.target.value.trim()); updateField("image", event.target.value); }} aria-invalid={Boolean(errors.image)} placeholder="https://ejemplo.com/portada.jpg" />
+                                    <input id="recommendation-image" type="url" value={form.image} onChange={(event) => handleImageUrlChange(event.target.value)} aria-invalid={Boolean(errors.image)} placeholder="https://ejemplo.com/portada.jpg" />
                                 </div>
                                 {errors.image && <small className="recommendation-form-modal__error">{errors.image}</small>}
-                                <small>La portada se obtiene automáticamente desde YouTube o Spotify. También puedes ingresar una URL manual.</small>
+                                <small>Se usará una URL cuando esté disponible. Los archivos propios se subirán a Cloudinary.</small>
+                                {/* Selección de un archivo local opcional. */}
+                                <label htmlFor="recommendation-image-file">O subir una portada desde tu equipo</label>
+                                <input id="recommendation-image-file" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={handleImageFileChange} />
+                                {imageFile && <small role="status">Archivo seleccionado: {imageFile.name} (se subirá al guardar).</small>}
+                                {/* Restablecer miniatura de la fuente cuando no se requiere imagen propia. */}
+                                {(getYouTubeVideoId(form.link) || isSpotifyLink(form.link)) && (
+                                    <button type="button" onClick={handleUseAutomaticThumbnail}>
+                                        Usar portada automática
+                                    </button>
+                                )}
                                 {thumbnailState === "loading" && <small role="status">Buscando portada...</small>}
                                 {thumbnailState === "success" && <small role="status">Portada detectada automáticamente.</small>}
                                 {thumbnailMessage && <small role="status">{thumbnailMessage}</small>}
-                                {form.image && (
+                                {(localPreview || form.image) && (
                                     <div className="recommendation-form-modal__image-preview">
-                                        <img src={form.image} alt="Vista previa de la portada" onError={(event) => { event.currentTarget.style.display = "none"; }} />
+                                        <img src={localPreview || form.image} alt="Vista previa de la portada" onError={(event) => { event.currentTarget.style.display = "none"; }} />
                                     </div>
                                 )}
                             </div>

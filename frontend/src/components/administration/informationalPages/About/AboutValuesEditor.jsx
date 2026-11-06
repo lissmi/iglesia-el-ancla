@@ -1,8 +1,13 @@
-import EditableText from "../common/EditableText";
-import EditableImage from "../common/EditableImage";
 
+import EditableText from "../common/EditableText";
+
+// Importamos el editor especializado en iconos.
+import EditableIcon from "../common/EditableIcon";
+
+// Importamos los datos originales de la página.
 import aboutDemoData from "../../../../data/informationalPages/aboutDemoData";
 
+// Importamos los estilos de Nuestros valores.
 import "../../../../styles/components/administration/informationalPages/About/AboutValuesEditor.css";
 
 // =========================================================
@@ -20,6 +25,8 @@ function AboutValuesEditor({
     // =====================================================
 
     const handleFieldChange = (field, value) => {
+
+        // Notificamos los cambios al componente padre.
         onChange?.(field, value);
     };
 
@@ -29,39 +36,53 @@ function AboutValuesEditor({
 
     const handleValueChange = (id, field, value) => {
 
+        // Recorremos los valores de la iglesia.
         const updatedItems = (data.items || []).map(
             (item) => {
 
+                // Conservamos los elementos no seleccionados.
                 if (item.id !== id) {
                     return item;
                 }
 
+                // Actualizamos solamente el elemento seleccionado.
                 return {
                     ...item,
-                    ...(field === "__batch__" ? value : { [field]: value }),
+
+                    // Permite actualizar icono y alt juntos.
+                    ...(field === "__batch__"
+                        ? value
+                        : { [field]: value }
+                    ),
                 };
             }
         );
 
-        handleFieldChange("items", updatedItems);
+        // Enviamos la colección actualizada al padre.
+        handleFieldChange(
+            "items",
+            updatedItems
+        );
     };
 
     // =====================================================
-    // OBTENER ICONO ORIGINAL
+    // OBTENER ICONO ORIGINAL DE CADA VALOR
     // =====================================================
 
     const getOriginalIcon = (id) => {
 
+        // Buscamos el valor original mediante su identificador.
         const originalItem =
             aboutDemoData.values.items.find(
                 (item) => item.id === id
             );
 
+        // Devolvemos el icono predeterminado.
         return originalItem?.icon;
     };
 
     // =====================================================
-    // RENDERIZADO
+    // RENDERIZADO PRINCIPAL
     // =====================================================
 
     return (
@@ -78,6 +99,7 @@ function AboutValuesEditor({
 
                 <div className="about-editor-values__header">
 
+                    {/* Subtítulo. */}
                     <EditableText
                         as="span"
                         className="about-editor-values__eyebrow"
@@ -92,6 +114,7 @@ function AboutValuesEditor({
                         disabled={isPreview}
                     />
 
+                    {/* Título principal. */}
                     <EditableText
                         as="h2"
                         className="about-editor-values__title"
@@ -106,6 +129,7 @@ function AboutValuesEditor({
                         disabled={isPreview}
                     />
 
+                    {/* Descripción general. */}
                     <EditableText
                         as="p"
                         className="about-editor-values__description"
@@ -124,7 +148,7 @@ function AboutValuesEditor({
                 </div>
 
                 {/* ======================================= */}
-                {/* TARJETAS DE VALORES */}
+                {/* TARJETAS DE NUESTROS VALORES */}
                 {/* ======================================= */}
 
                 <div className="about-editor-values__grid">
@@ -136,15 +160,18 @@ function AboutValuesEditor({
                             className="about-editor-values__card"
                         >
 
-                            {/* Número identificador. */}
+                            {/* Número identificador del valor. */}
                             <span className="about-editor-values__number">
                                 {String(index + 1).padStart(2, "0")}
                             </span>
 
-                            {/* Icono editable. */}
+                            {/* ================================= */}
+                            {/* ICONO EDITABLE DEL VALOR */}
+                            {/* ================================= */}
+
                             <div className="about-editor-values__icon-container">
 
-                                <EditableImage
+                                <EditableIcon
                                     src={item.icon}
                                     alt={item.alt}
                                     originalSrc={getOriginalIcon(item.id)}
@@ -153,16 +180,23 @@ function AboutValuesEditor({
                                     label={`Icono del valor ${item.title}`}
                                     disabled={isPreview}
                                     onImageAndAltChange={(icon, alt) =>
-                                        handleValueChange(item.id, "__batch__", {
-                                            icon,
-                                            alt,
-                                        })
+                                        handleValueChange(
+                                            item.id,
+                                            "__batch__",
+                                            {
+                                                icon,
+                                                alt,
+                                            }
+                                        )
                                     }
                                 />
 
                             </div>
 
-                            {/* Título del valor. */}
+                            {/* ================================= */}
+                            {/* TÍTULO DEL VALOR */}
+                            {/* ================================= */}
+
                             <EditableText
                                 as="h3"
                                 className="about-editor-values__card-title"
@@ -178,7 +212,10 @@ function AboutValuesEditor({
                                 disabled={isPreview}
                             />
 
-                            {/* Descripción del valor. */}
+                            {/* ================================= */}
+                            {/* DESCRIPCIÓN DEL VALOR */}
+                            {/* ================================= */}
+
                             <EditableText
                                 as="p"
                                 className="about-editor-values__card-description"

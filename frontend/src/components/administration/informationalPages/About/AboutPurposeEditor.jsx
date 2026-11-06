@@ -1,6 +1,7 @@
 
 import EditableText from "../common/EditableText";
-import EditableImage from "../common/EditableImage";
+// Importamos el editor especializado de iconos.
+import EditableIcon from "../common/EditableIcon";
 
 import aboutDemoData from "../../../../data/informationalPages/aboutDemoData";
 
@@ -71,10 +72,10 @@ function AboutPurposeEditor({
                             className={`about-editor-purpose__card about-editor-purpose__card--${card.key}`}
                         >
 
-                            {/* ICONO EDITABLE */}
+                            {/* Icono editable de Misión o Visión. */}
                             <div className="about-editor-purpose__icon-container">
 
-                                <EditableImage
+                                <EditableIcon
                                     src={card.content.icon}
                                     alt={`Icono de ${card.label}`}
                                     originalSrc={card.originalIcon}

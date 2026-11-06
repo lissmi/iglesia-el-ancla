@@ -34,7 +34,7 @@ import {
     resolveInformationalImages,
     cleanupPendingInformationalImages,
     informationalPageError,
-} from "../../services/api";
+} from "../../services/informationalPagesApi";
 
 
 // =========================================================

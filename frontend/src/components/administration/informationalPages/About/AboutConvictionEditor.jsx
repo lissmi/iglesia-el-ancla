@@ -1,9 +1,13 @@
 
 import EditableText from "../common/EditableText";
-import EditableImage from "../common/EditableImage";
 
+// Importamos el componente especializado en editar iconos.
+import EditableIcon from "../common/EditableIcon";
+
+// Importamos los datos originales para restaurar el icono.
 import aboutDemoData from "../../../../data/informationalPages/aboutDemoData";
 
+// Importamos los estilos de Nuestra convicción.
 import "../../../../styles/components/administration/informationalPages/About/AboutConvictionEditor.css";
 
 // =========================================================
@@ -21,6 +25,8 @@ function AboutConvictionEditor({
     // =====================================================
 
     const handleFieldChange = (field, value) => {
+
+        // Notificamos al componente padre sobre el cambio.
         onChange?.(field, value);
     };
 
@@ -30,12 +36,15 @@ function AboutConvictionEditor({
 
     const handleParagraphChange = (index, value) => {
 
+        // Copiamos los párrafos para no modificar las props.
         const updatedParagraphs = [
             ...(data.paragraphs || []),
         ];
 
+        // Actualizamos únicamente el párrafo seleccionado.
         updatedParagraphs[index] = value;
 
+        // Enviamos los nuevos párrafos al componente padre.
         handleFieldChange(
             "paragraphs",
             updatedParagraphs
@@ -43,7 +52,7 @@ function AboutConvictionEditor({
     };
 
     // =====================================================
-    // RENDERIZADO
+    // RENDERIZADO PRINCIPAL
     // =====================================================
 
     return (
@@ -55,12 +64,12 @@ function AboutConvictionEditor({
             <div className="about-editor-conviction__container">
 
                 {/* ======================================= */}
-                {/* ICONO DE LA SECCIÓN */}
+                {/* ICONO EDITABLE DE NUESTRA CONVICCIÓN */}
                 {/* ======================================= */}
 
                 <div className="about-editor-conviction__icon-container">
 
-                    <EditableImage
+                    <EditableIcon
                         src={data.icon}
                         alt="Icono de nuestra convicción"
                         originalSrc={aboutDemoData.conviction.icon}
@@ -84,7 +93,7 @@ function AboutConvictionEditor({
 
                 <div className="about-editor-conviction__content">
 
-                    {/* Subtítulo. */}
+                    {/* Subtítulo de la sección. */}
                     <EditableText
                         as="span"
                         className="about-editor-conviction__eyebrow"
@@ -99,7 +108,7 @@ function AboutConvictionEditor({
                         disabled={isPreview}
                     />
 
-                    {/* Título. */}
+                    {/* Título principal de la sección. */}
                     <EditableText
                         as="h2"
                         className="about-editor-conviction__title"
@@ -114,7 +123,7 @@ function AboutConvictionEditor({
                         disabled={isPreview}
                     />
 
-                    {/* Párrafos. */}
+                    {/* Contenedor de párrafos editables. */}
                     <div className="about-editor-conviction__paragraphs">
 
                         {(data.paragraphs || []).map(

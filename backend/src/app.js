@@ -123,6 +123,9 @@ import informationalPageRoutes from "./routes/informationalPageRoutes.js";
 // Importamos la ruta pública para activar cuentas nuevas.
 import accountActivationRoutes from "./routes/accountActivationRoutes.js";
 
+// Importamos las rutas de recomendaciones externas.
+import recommendationRoutes from "./routes/recommendationRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -551,7 +554,8 @@ app.use("/api/prayer-requests", prayerRequestRoutes);
 // Acceso a turnos de servicio. El router comprueba sesión y roles.
 app.use("/api/volunteers", volunteerRoutes);
 
-
+// Registramos la API pública y administrativa de Recomendados.
+app.use("/api/recommendations", recommendationRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

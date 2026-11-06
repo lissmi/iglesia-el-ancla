@@ -17,7 +17,7 @@ import "../../styles/pages/administration/InformationalPages.css";
 import {
     getInformationalPageStatuses,
     informationalPageError,
-} from "../../services/api";
+} from "../../services/informationalPagesApi";
 
 // =========================================================
 // ICONOS DISPONIBLES

@@ -1,0 +1,556 @@
+
+/* ========================================================= */
+/* EDITABLE ICON - IGLESIA EL ANCLA */
+/* ========================================================= */
+
+/* Contenedor del icono dentro de su tarjeta. */
+.editable-icon {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+}
+
+/* Evita comportamientos inesperados en los tamaños. */
+.editable-icon,
+.editable-icon * {
+    box-sizing: border-box;
+}
+
+/* Icono de respaldo si la imagen no carga. */
+.editable-icon__placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #718f9d;
+}
+
+/* ========================================================= */
+/* BOTÓN DE EDICIÓN */
+/* ========================================================= */
+
+.editable-icon__trigger {
+    position: absolute;
+
+    top: -11px;
+    right: -11px;
+
+    z-index: 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+
+    background-color: #2c8199;
+    color: #ffffff;
+
+    box-shadow: 0 4px 12px rgba(23, 56, 76, 0.2);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Resalta el botón cuando el administrador interactúa. */
+.editable-icon__trigger:hover {
+    background-color: #17384c;
+    transform: scale(1.08);
+}
+
+/* Indicador de navegación por teclado. */
+.editable-icon__trigger:focus-visible {
+    outline: 3px solid #8cd4e4;
+    outline-offset: 3px;
+}
+
+/* ========================================================= */
+/* VENTANA MODAL */
+/* ========================================================= */
+
+.editable-icon__dialog {
+    width: min(440px, calc(100vw - 32px));
+    max-width: 440px;
+    max-height: min(90vh, 760px);
+    max-height: min(90dvh, 760px);
+
+    margin: auto;
+    padding: 0;
+
+    overflow-y: auto;
+
+    border: 1px solid #dce7ed;
+    border-radius: 20px;
+
+    background-color: #ffffff;
+    color: #17384c;
+
+    box-shadow: 0 25px 75px rgba(16, 42, 56, 0.24);
+}
+
+/* Fondo oscuro detrás del editor. */
+.editable-icon__dialog::backdrop {
+    background-color: rgba(15, 35, 48, 0.58);
+    backdrop-filter: blur(3px);
+}
+
+/* ========================================================= */
+/* ENCABEZADO */
+/* ========================================================= */
+
+.editable-icon__dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 25px 27px 20px;
+
+    border-bottom: 1px solid #e6edf1;
+}
+
+.editable-icon__heading {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Etiqueta superior. */
+.editable-icon__eyebrow {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #2c8199;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+/* Nombre del icono seleccionado. */
+.editable-icon__title {
+    margin: 0;
+
+    color: #17384c;
+
+    font-size: 21px;
+    font-weight: 750;
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+/* Descripción. */
+.editable-icon__subtitle {
+    margin: 7px 0 0;
+
+    color: #6b8190;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Botón para cerrar. */
+.editable-icon__close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 10px;
+
+    background-color: #f1f5f7;
+    color: #536978;
+
+    cursor: pointer;
+}
+
+.editable-icon__close:hover {
+    background-color: #e5eef2;
+    color: #17384c;
+}
+
+/* ========================================================= */
+/* CUERPO DEL EDITOR */
+/* ========================================================= */
+
+.editable-icon__dialog-body {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+
+    padding: 25px 27px;
+}
+
+/* Etiquetas de los campos. */
+.editable-icon__field-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #29495b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ========================================================= */
+/* VISTA PREVIA */
+/* ========================================================= */
+
+.editable-icon__preview-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 145px;
+
+    padding: 20px;
+
+    border: 1px solid #dce9ee;
+    border-radius: 14px;
+
+    background-color: #f2f8fa;
+
+    color: #8ba6b3;
+}
+
+/* Imagen de la vista previa. */
+.editable-icon__preview-frame img {
+    display: block;
+
+    width: 86px;
+    height: 86px;
+
+    max-width: 100%;
+
+    object-fit: contain;
+}
+
+/* ========================================================= */
+/* SELECCIÓN DE IMAGEN */
+/* ========================================================= */
+
+.editable-icon__upload-field {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Oculta visualmente el input sin eliminar su accesibilidad. */
+.editable-icon__file-input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* Zona seleccionable para subir imágenes. */
+.editable-icon__upload-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+    min-height: 54px;
+
+    padding: 13px 16px;
+
+    border: 1.5px dashed #88b7c5;
+    border-radius: 12px;
+
+    background-color: #f2f9fb;
+    color: #26758c;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Interacción con la zona de subida. */
+.editable-icon__upload-button:hover {
+    background-color: #e8f4f7;
+    border-color: #2c8199;
+}
+
+/* Foco accesible mediante teclado. */
+.editable-icon__file-input:focus-visible
++ .editable-icon__upload-button {
+    outline: 3px solid #8cd4e4;
+    outline-offset: 3px;
+}
+
+/* Información sobre formatos admitidos. */
+.editable-icon__hint {
+    margin: 9px 0 0;
+
+    color: #728795;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+/* ========================================================= */
+/* TEXTO ALTERNATIVO */
+/* ========================================================= */
+
+.editable-icon__alt-field {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* Campo para describir el icono. */
+.editable-icon__alt-field input {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #ccdce4;
+    border-radius: 10px;
+
+    outline: none;
+
+    background-color: #ffffff;
+    color: #17384c;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.editable-icon__alt-field input:focus {
+    border-color: #2c8199;
+
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.15);
+}
+
+/* ========================================================= */
+/* MENSAJES DE ERROR */
+/* ========================================================= */
+
+.editable-icon__error {
+    margin: 0;
+
+    padding: 11px 13px;
+
+    border: 1px solid #f1cccc;
+    border-radius: 9px;
+
+    background-color: #fff4f4;
+    color: #a33c3c;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ========================================================= */
+/* PIE DEL EDITOR */
+/* ========================================================= */
+
+.editable-icon__dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 19px 27px;
+
+    border-top: 1px solid #e6edf1;
+
+    background-color: #fbfcfd;
+}
+
+/* Acciones agrupadas. */
+.editable-icon__footer-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+/* Estilo base de las acciones. */
+.editable-icon__dialog-footer button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    min-height: 40px;
+
+    padding: 10px 13px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Restaurar imagen predeterminada. */
+.editable-icon__restore {
+    border: 1px solid #dce5ea;
+
+    background-color: #ffffff;
+    color: #536978;
+}
+
+.editable-icon__restore:hover:not(:disabled) {
+    background-color: #edf4f7;
+}
+
+/* Botón cancelar. */
+.editable-icon__cancel {
+    border: 1px solid #d4e0e6;
+
+    background-color: #ffffff;
+    color: #536978;
+}
+
+.editable-icon__cancel:hover {
+    background-color: #f1f5f7;
+}
+
+/* Botón confirmar. */
+.editable-icon__confirm {
+    border: 1px solid #2c8199;
+
+    background-color: #2c8199;
+    color: #ffffff;
+}
+
+.editable-icon__confirm:hover {
+    background-color: #206c82;
+    border-color: #206c82;
+}
+
+/* Botón deshabilitado. */
+.editable-icon__dialog-footer button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+
+    .editable-icon__dialog {
+        width: calc(100vw - 24px);
+        max-height: 90vh;
+        max-height: 90dvh;
+
+        border-radius: 16px;
+    }
+
+    .editable-icon__dialog-header {
+        padding: 20px 18px 17px;
+    }
+
+    .editable-icon__title {
+        font-size: 19px;
+    }
+
+    .editable-icon__dialog-body {
+        gap: 19px;
+        padding: 21px 18px;
+    }
+
+    .editable-icon__preview-frame {
+        min-height: 125px;
+    }
+
+    .editable-icon__preview-frame img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .editable-icon__dialog-footer {
+        padding: 17px 18px;
+    }
+}
+
+/* ========================================================= */
+/* RESPONSIVE - MÓVILES PEQUEÑOS */
+/* ========================================================= */
+
+@media (max-width: 360px) {
+
+    .editable-icon__dialog-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .editable-icon__footer-actions {
+        width: 100%;
+    }
+
+    .editable-icon__restore {
+        width: 100%;
+    }
+
+    .editable-icon__footer-actions button {
+        flex: 1;
+    }
+}

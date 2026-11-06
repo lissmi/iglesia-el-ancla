@@ -1,0 +1,50 @@
+/* ========================================================= */
+/* CAMPO DE CARGA DE PORTADA - RECOMENDADOS */
+/* ========================================================= */
+
+/* Evita que el selector de archivos sobresalga de la ventana. */
+.recommendation-form-modal__field input[type="file"] {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    border: 1px dashed #9bc2cf;
+    border-radius: 10px;
+    background: #f3f9fb;
+    color: #536978;
+    font: inherit;
+    font-size: 13px;
+}
+
+/* Personaliza el botón nativo de selección. */
+.recommendation-form-modal__field input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #2c8199;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Botón para recuperar una miniatura de YouTube o Spotify. */
+.recommendation-form-modal__field button[type="button"] {
+    align-self: flex-start;
+    padding: 8px 12px;
+    border: 1px solid #c4dce6;
+    border-radius: 8px;
+    background: #fff;
+    color: #2c8199;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Resalta la navegación con teclado. */
+.recommendation-form-modal__field input[type="file"]:focus-visible,
+.recommendation-form-modal__field button[type="button"]:focus-visible {
+    outline: 3px solid rgba(44, 129, 153, 0.27);
+    outline-offset: 2px;
+}

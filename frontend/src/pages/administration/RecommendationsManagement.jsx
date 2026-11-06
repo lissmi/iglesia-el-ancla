@@ -1,7 +1,7 @@
 // =========================================================
 // IMPORTACIONES
 // =========================================================
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import RecommendationsHeader from "../../components/administration/recommendations/RecommendationsHeader";
 import RecommendationsSummary from "../../components/administration/recommendations/RecommendationsSummary";
@@ -16,66 +16,23 @@ import RecommendationDeleteModal from "../../components/administration/recommend
 
 import "../../styles/pages/administration/RecommendationsManagement.css";
 
-// =========================================================
-// DATOS TEMPORALES: se reemplazarán por la API
-// =========================================================
-const INITIAL_RECOMMENDATIONS = [
-    {
-        id: "rec-001",
-        title: "Ansiosos por nada",
-        category: "books",
-        creator: "Max Lucado",
-        description: "Una lectura sobre la ansiedad, la confianza y la paz desde una perspectiva cristiana.",
-        reason: "Invita a reflexionar sobre la confianza en Dios en momentos difíciles.",
-        image: "",
-        link: "",
-        audience: ["general"],
-        status: "published",
-        featured: true,
-        createdAt: "2026-10-10T12:00:00.000Z",
-    },
-    {
-        id: "rec-002",
-        title: "The Chosen",
-        category: "series",
-        creator: "Dallas Jenkins",
-        description: "Serie dramática inspirada en los relatos de los Evangelios.",
-        reason: "Puede servir como punto de partida para conversar sobre los relatos bíblicos.",
-        image: "",
-        link: "",
-        audience: ["general", "kids_youth"],
-        status: "published",
-        featured: false,
-        createdAt: "2026-10-08T12:00:00.000Z",
-    },
-    {
-        id: "rec-003",
-        title: "Selección musical para jóvenes",
-        category: "music",
-        creator: "Equipo de contenidos",
-        description: "Selección musical pendiente de revisión y publicación.",
-        reason: "Propuesta de material para actividades juveniles.",
-        image: "",
-        link: "",
-        audience: ["kids_youth"],
-        status: "draft",
-        featured: false,
-        createdAt: "2026-10-12T12:00:00.000Z",
-    },
-];
-
-function makeRecommendationId() {
-    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-        return crypto.randomUUID();
-    }
-    return `rec-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
+// Las operaciones reales se realizan mediante la API administrativa.
+import {
+    listAdminRecommendations,
+    createRecommendation,
+    updateRecommendation,
+    deleteRecommendation,
+} from "../../services/recommendationsApi";
 
 // =========================================================
 // PÁGINA PRINCIPAL
 // =========================================================
 function RecommendationsManagement() {
-    const [recommendations, setRecommendations] = useState(INITIAL_RECOMMENDATIONS);
+    // Los registros se descargan desde MongoDB mediante el backend.
+    const [recommendations, setRecommendations] = useState([]);
+    // Estado de carga inicial y errores generales de conexión.
+    const [isLoading, setIsLoading] = useState(true);
+    const [pageError, setPageError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
@@ -86,6 +43,31 @@ function RecommendationsManagement() {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [editingRecommendation, setEditingRecommendation] = useState(null);
     const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+
+    // =====================================================
+    // OBTENER RECOMENDACIONES DEL BACKEND
+    // =====================================================
+    useEffect(() => {
+        // Evita actualizar el estado cuando el componente ya se desmontó.
+        let active = true;
+
+        async function loadRecommendations() {
+            setIsLoading(true);
+            setPageError("");
+            try {
+                // La API administrativa incluye publicados y borradores.
+                const items = await listAdminRecommendations();
+                if (active) setRecommendations(items);
+            } catch (error) {
+                if (active) setPageError(error.message || "No se pudieron cargar las recomendaciones.");
+            } finally {
+                if (active) setIsLoading(false);
+            }
+        }
+
+        void loadRecommendations();
+        return () => { active = false; };
+    }, []);
 
     // =====================================================
     // FILTRADO Y ORDENAMIENTO
@@ -149,27 +131,24 @@ function RecommendationsManagement() {
         setIsDeleteOpen(true);
     }
 
-    async function handleSaveRecommendation(payload) {
-        if (editingRecommendation) {
-            setRecommendations((previous) =>
-                previous.map((item) =>
-                    item.id === editingRecommendation.id
-                        ? { ...item, ...payload, id: item.id }
-                        : item
-                )
-            );
-        } else {
-            const newRecommendation = {
-                ...payload,
-                id: makeRecommendationId(),
-                createdAt: new Date().toISOString(),
-            };
-            setRecommendations((previous) => [newRecommendation, ...previous]);
-        }
+    // Crea o actualiza en MongoDB y modifica la interfaz solo después de confirmar.
+    async function handleSaveRecommendation(payload, imageFile) {
+        // La imagen local se envía a Cloudinary a través del backend.
+        const saved = editingRecommendation
+            ? await updateRecommendation(editingRecommendation.id, payload, imageFile)
+            : await createRecommendation(payload, imageFile);
+
+        // Conserva la respuesta normalizada del servidor (incluye id y fechas).
+        setRecommendations((previous) => editingRecommendation
+            ? previous.map((item) => item.id === saved.id ? saved : item)
+            : [saved, ...previous]
+        );
         setEditingRecommendation(null);
     }
 
+    // Elimina en backend antes de quitar la tarjeta en pantalla.
     async function handleConfirmDelete(recommendation) {
+        await deleteRecommendation(recommendation.id);
         setRecommendations((previous) =>
             previous.filter((item) => item.id !== recommendation.id)
         );
@@ -193,31 +172,40 @@ function RecommendationsManagement() {
                     onCreateRecommendation={handleCreateRecommendation}
                 />
 
-                <RecommendationsSummary recommendations={recommendations} />
+                {/* Notificamos fallos de red; nunca mostramos registros ficticios. */}
+                {pageError && <p role="alert">{pageError}</p>}
+                {isLoading && <p role="status">Cargando recomendaciones...</p>}
 
-                <RecommendationsCategories
-                    recommendations={recommendations}
-                    selectedCategory={selectedCategory}
-                    onSelectCategory={setSelectedCategory}
-                />
+                {/* Las secciones se muestran solo después de recibir datos. */}
+                {!isLoading && !pageError && (
+                    <>
+                        <RecommendationsSummary recommendations={recommendations} />
 
-                <RecommendationsToolbar
-                    searchTerm={searchTerm}
-                    onSearchChange={setSearchTerm}
-                    statusFilter={statusFilter}
-                    onStatusChange={setStatusFilter}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
-                    onClearFilters={handleClearFilters}
-                />
+                        <RecommendationsCategories
+                            recommendations={recommendations}
+                            selectedCategory={selectedCategory}
+                            onSelectCategory={setSelectedCategory}
+                        />
 
-                <RecommendationsList
-                    recommendations={filteredRecommendations}
-                    onView={handleViewRecommendation}
-                    onEdit={handleEditRecommendation}
-                    onDelete={handleDeleteRecommendation}
-                    onCreate={handleCreateRecommendation}
-                />
+                        <RecommendationsToolbar
+                            searchTerm={searchTerm}
+                            onSearchChange={setSearchTerm}
+                            statusFilter={statusFilter}
+                            onStatusChange={setStatusFilter}
+                            sortBy={sortBy}
+                            onSortChange={setSortBy}
+                            onClearFilters={handleClearFilters}
+                        />
+
+                        <RecommendationsList
+                            recommendations={filteredRecommendations}
+                            onView={handleViewRecommendation}
+                            onEdit={handleEditRecommendation}
+                            onDelete={handleDeleteRecommendation}
+                            onCreate={handleCreateRecommendation}
+                        />
+                    </>
+                )}
             </div>
 
             <RecommendationFormModal
