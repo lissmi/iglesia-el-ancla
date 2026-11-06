@@ -424,3 +424,85 @@
     }
 
 }
+
+
+/* Agrupamos actualizar y registrar sin romper el encabezado. */
+.belongings-inventory__header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Botón secundario para consultar la versión actual del inventario. */
+.belongings-inventory__refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid #d7e4eb;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #286f87;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease,
+              box-shadow .2s ease, transform .2s ease;
+}
+
+.belongings-inventory__refresh:hover:not(:disabled) {
+  background: #eef7fa;
+  border-color: #8dbbc9;
+  color: #205f73;
+}
+
+.belongings-inventory__refresh:focus-visible {
+  outline: 2px solid #2c8199;
+  outline-offset: 3px;
+}
+
+.belongings-inventory__refresh:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.belongings-inventory__refresh:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.belongings-inventory__refresh svg {
+  flex-shrink: 0;
+}
+
+/* Animación discreta durante la actualización. */
+.belongings-inventory__refresh-icon--loading {
+  animation: belongings-refresh-spin 1.1s linear infinite;
+}
+
+@keyframes belongings-refresh-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 720px) {
+  .belongings-inventory__header-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .belongings-inventory__header-actions > button {
+    flex: 1 1 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .belongings-inventory__refresh-icon--loading {
+    animation: none;
+  }
+}

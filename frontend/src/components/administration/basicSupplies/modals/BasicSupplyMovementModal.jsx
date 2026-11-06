@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 
 import {
@@ -24,6 +23,7 @@ function BasicSupplyMovementModal({
     currentStock,
     onSubmit,
     onClose,
+    isSaving = false,
 }) {
 
     const quantityInputRef = useRef(null);
@@ -185,7 +185,7 @@ function BasicSupplyMovementModal({
                         </span>
 
                         <strong>
-                            {currentStock} {supply.unit}
+                            {currentStock} unidades
                         </strong>
 
                     </div>
@@ -201,7 +201,7 @@ function BasicSupplyMovementModal({
                     <label className="basic-supply-movement__field">
 
                         <span>
-                            Cantidad ({supply.unit})
+                            Cantidad (unidades)
                         </span>
 
                         <input
@@ -261,7 +261,7 @@ function BasicSupplyMovementModal({
                                     ? currentStock + quantity
                                     : currentStock - quantity}
                                 {" "}
-                                {supply.unit}
+                                unidades
                             </strong>
 
                         </div>
@@ -285,11 +285,11 @@ function BasicSupplyMovementModal({
                         <button
                             type="submit"
                             className="basic-supply-movement__submit"
-                            disabled={!isValidQuantity}
+                            disabled={!isValidQuantity || isSaving}
                         >
                             <Save size={17} />
 
-                            Registrar
+                            {isSaving ? "Guardando..." : "Registrar"}
                         </button>
 
                     </div>

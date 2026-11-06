@@ -135,6 +135,12 @@ import expenseRoutes from "./routes/expenseRoutes.js";
 // API financiera consolidada para miembros, administradores y superadministradores.
 import financeOverviewRoutes from "./routes/financeOverviewRoutes.js";
 
+// Inventario y compromisos comunitarios de insumos básicos.
+import basicSupplyRoutes from "./routes/basicSupplyRoutes.js";
+
+// Inventario de bienes: lectura y movimientos administrativos.
+import belongingRoutes from "./routes/belongingRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -574,6 +580,12 @@ app.use("/api/expenses", expenseRoutes);
 
 // Solo lectura: no entrega movimientos privados ni modifica información.
 app.use("/api/finance-overview", financeOverviewRoutes);
+
+// Un solo router para administración y colaboración de miembros.
+app.use("/api/basic-supplies", basicSupplyRoutes);
+
+// Bienes: una API para inventario y movimientos.
+app.use("/api/belongings", belongingRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

@@ -1,9 +1,8 @@
-
 import {
     Package,
     AlertTriangle,
     Clock3,
-    RotateCcw,
+    CheckCircle2,
 } from "lucide-react";
 
 import "../../../styles/components/administration/basicSupplies/BasicSuppliesSummary.css";
@@ -84,10 +83,10 @@ function BasicSuppliesSummary({ summary }) {
             />
 
             <BasicSupplyMetric
-                title="Insumos frecuentes"
-                value={summary.frequent}
-                description="Productos de uso habitual"
-                icon={RotateCcw}
+                title="Stock suficiente"
+                value={summary.available}
+                description="Insumos por encima del mínimo"
+                icon={CheckCircle2}
                 variant="frequent"
             />
 

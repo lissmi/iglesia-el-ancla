@@ -1,4 +1,3 @@
-
 import {
     Search,
     Filter,
@@ -6,6 +5,8 @@ import {
     ArrowUpRight,
     ArrowDownRight,
     ChevronDown,
+    Pencil,
+    Trash2,
 } from "lucide-react";
 
 import {
@@ -47,6 +48,8 @@ function BasicSuppliesInventory({
     statusFilter,
     setStatusFilter,
     onOpenMovement,
+    onEditSupply,
+    onDeleteSupply,
 }) {
 
     return (
@@ -254,13 +257,13 @@ function BasicSuppliesInventory({
                                             {supply.stock}
                                         </strong>
                                         {" "}
-                                        {supply.unit}
+                                        unidades
                                     </td>
 
                                     <td>
                                         {supply.minimumStock}
                                         {" "}
-                                        {supply.unit}
+                                        unidades
                                     </td>
 
                                     <td>
@@ -303,6 +306,16 @@ function BasicSuppliesInventory({
                                                 }
                                             >
                                                 <ArrowDownRight size={17} />
+                                            </button>
+
+                                            {/* Editamos información sin alterar las existencias. */}
+                                            <button type="button" title="Editar insumo" aria-label={`Editar ${supply.name}`} onClick={() => onEditSupply?.(supply)}>
+                                                <Pencil size={17} />
+                                            </button>
+
+                                            {/* La confirmación irreversible se solicita en la página. */}
+                                            <button type="button" title="Eliminar insumo" aria-label={`Eliminar ${supply.name}`} onClick={() => onDeleteSupply?.(supply)}>
+                                                <Trash2 size={17} />
                                             </button>
 
                                         </div>

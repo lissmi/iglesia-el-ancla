@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useBelongings } from "../../../context/belongings/BelongingsContext";
 
-import { ArrowLeftRight, ArrowRight, Boxes, ClipboardList, FolderOpen, MapPin, Package } from "lucide-react";
+import { ArrowLeftRight, ArrowRight, Boxes, ClipboardList, FolderOpen, Package } from "lucide-react";
 import {
     belongingsMovementTypes,
 } from "../../../data/belongings/belongingsDemoData";
@@ -26,6 +26,7 @@ function BelongingsDashboard() {
     const {
         belongings,
         movements,
+        loading, error, reload,
         statistics: inventoryStatistics,
     } = useBelongings();
 
@@ -120,7 +121,7 @@ function BelongingsDashboard() {
 
     const recentMovements = [...movements]
         .sort((first, second) =>
-            second.date.localeCompare(first.date)
+            String(second.date || "").localeCompare(String(first.date || ""))
         )
         .slice(0, 4);
 
@@ -207,6 +208,11 @@ function BelongingsDashboard() {
                 </div>
 
             </header>
+
+            {loading && <p role="status">Cargando inventario...</p>}
+            {error && <p role="alert" style={{ color: "#a23f35" }}>{error}
+                <button type="button" onClick={() => reload().catch(() => {})}>Volver a intentar</button>
+            </p>}
 
             {/* ========================================= */}
             {/* INDICADORES */}
@@ -443,22 +449,6 @@ function BelongingsDashboard() {
                 </div>
 
             </section>
-
-            {/* ========================================= */}
-            {/* INFORMACIÓN DE DESARROLLO */}
-            {/* ========================================= */}
-
-            <div className="belongings-dashboard__notice">
-
-                <MapPin size={17} />
-
-                <p>
-                    Este módulo utiliza datos de demostración.
-                    Los registros reales se conectarán a la
-                    base de datos en una etapa posterior.
-                </p>
-
-            </div>
 
         </div>
     );

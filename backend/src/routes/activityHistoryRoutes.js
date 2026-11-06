@@ -17,6 +17,7 @@ import LibraryBook from "../models/LibraryBook.js";
 import Song from "../models/Song.js";
 import Income from "../models/Income.js";
 import Expense from "../models/Expense.js";
+import BasicSupply from "../models/BasicSupply.js";
 import DeletionLog from "../models/DeletionLog.js";
 import User from "../models/User.js";
 
@@ -53,7 +54,7 @@ function currentResourceActivityPipeline(resourceType) {
               {
                 resourceId: "$_id",
                 resourceType,
-                resourceTitle: "$title",
+                resourceTitle: { $ifNull: ["$title", "$name"] },
                 action: "created",
                 actorId: "$createdBy",
                 occurredAt: "$createdAt",
@@ -72,7 +73,7 @@ function currentResourceActivityPipeline(resourceType) {
                   {
                     resourceId: "$_id",
                     resourceType,
-                    resourceTitle: "$title",
+                    resourceTitle: { $ifNull: ["$title", "$name"] },
                     action: "updated",
                     actorId: "$updatedBy",
                     occurredAt: "$updatedAt",
@@ -205,11 +206,11 @@ function describeActivity(activity) {
   const resourceNames = {
     activity: "la actividad", event: "el evento",
     book: "el libro", song: "la canción",
-    income: "el ingreso", expense: "el gasto",
+    income: "el ingreso", expense: "el gasto", basic_supply: "el insumo",
   };
   const resourceName = resourceNames[activity.resourceType] || "el contenido";
   const verb = activity.action === "created"
-    ? (["income", "expense", "activity"].includes(activity.resourceType) ? "Registró" : "Publicó")
+    ? (["income", "expense", "activity", "basic_supply"].includes(activity.resourceType) ? "Registró" : "Publicó")
     : activity.action === "updated"
       ? "Modificó"
       : activity.action === "archived" ? "Archivó" : "Eliminó";
@@ -277,6 +278,14 @@ router.get("/", async (req, res, next) => {
       $unionWith: {
         coll: Song.collection.name,
         pipeline: currentResourceActivityPipeline("song"),
+      },
+    });
+
+    // Las creaciones y últimas modificaciones del inventario también se consultan.
+    pipeline.push({
+      $unionWith: {
+        coll: BasicSupply.collection.name,
+        pipeline: currentResourceActivityPipeline("basic_supply"),
       },
     });
 
@@ -366,6 +375,7 @@ router.get("/", async (req, res, next) => {
               { case: { $eq: ["$resourceType", "song"] }, then: "canción" },
               { case: { $eq: ["$resourceType", "income"] }, then: "ingreso finanzas" },
               { case: { $eq: ["$resourceType", "expense"] }, then: "gasto finanzas" },
+              { case: { $eq: ["$resourceType", "basic_supply"] }, then: "insumo inventario colaboración" },
             ],
             default: "recurso",
           },

@@ -76,6 +76,8 @@ import MemberLayout from "./components/member/layout/MemberLayout";
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberActivities from "./pages/member/MemberActivities";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
+// Necesidades reales de inventario y colaboración.
+import MemberBasicSupplies from "./pages/member/MemberBasicSupplies";
 // Página privada para confirmar turnos de servicio.
 import MemberVolunteerAssignments from "./pages/member/MemberVolunteerAssignments";
 
@@ -274,6 +276,7 @@ function App() {
               <Route path="peticiones-oracion" element={<MemberPrayerRequests />} />
               <Route path="voluntariado" element={<MemberVolunteerAssignments />} />
               <Route path="finanzas" element={<FinanceOverview />} />
+              <Route path="insumos-basicos" element={<MemberBasicSupplies />} />
 
             </Route>
 

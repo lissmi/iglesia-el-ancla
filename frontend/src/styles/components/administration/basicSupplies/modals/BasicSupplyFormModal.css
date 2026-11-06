@@ -278,3 +278,6 @@
     }
 
 }
+
+.basic-supply-form__field select{appearance:none;-webkit-appearance:none;-moz-appearance:none;border:1px solid #d6e3e9;border-radius:12px;min-height:44px;width:100%;background:#fff;color:#17384c;padding:0 38px 0 12px;font:inherit;cursor:pointer}
+.basic-supply-form__field select:focus-visible{outline:2px solid #2c8199;outline-offset:2px}

@@ -1,4 +1,3 @@
-
 import {
     ShoppingCart,
     HandHeart,
@@ -122,7 +121,7 @@ function BasicSuppliesNeeds({
                                     </span>
 
                                     <strong>
-                                        {quantity} {supply.unit}
+                                        {quantity} unidades
                                     </strong>
 
                                 </div>
@@ -192,11 +191,9 @@ function BasicSuppliesNeeds({
                     </strong>
 
                     <p>
-                        Próximamente, los administradores
-                        podrán publicar estas necesidades
-                        para que los miembros registrados
-                        se comprometan a colaborar con
-                        determinados insumos.
+                        Las necesidades visibles se comparten con los miembros
+                        en su espacio personal. Allí pueden ofrecer una cantidad
+                        y ustedes podrán confirmar la entrega cuando llegue a la iglesia.
                     </p>
 
                 </div>

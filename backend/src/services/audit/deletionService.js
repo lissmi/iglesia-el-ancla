@@ -24,6 +24,8 @@ const RESOURCE_TYPES = new Set([
   "book",            // Libros de Biblioteca Solidaria.
   "song",            // Canciones del cancionero.
   "prayer_request",  // Peticiones de oración.
+  "basic_supply",    // Insumos básicos del inventario.
+  "belonging",       // Bienes físicos de la iglesia.
 ]);
 
 
@@ -88,7 +90,7 @@ export async function deleteResourceWithAudit({
     }
 
     // Guardamos solamente el título, nunca el documento completo.
-    const resourceTitle = String(deleted.title || "").trim().slice(0, 160);
+    const resourceTitle = String(deleted.title || deleted.name || "").trim().slice(0, 160);
 
     // Exigimos los datos mínimos que hacen útil el historial.
     if (!resourceTitle || !deleted.createdBy) {

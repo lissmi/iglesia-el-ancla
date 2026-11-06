@@ -7,6 +7,7 @@
 import { Outlet, useLocation, useOutletContext } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import api from "../../../services/api";
+import { listBasicSuppliesNeeds } from "../../../services/basicSuppliesApi";
 import { deriveVolunteerAlerts } from "../../../utils/memberVolunteerAlerts";
 
 // Reutilizamos el encabezado comunitario para los tres roles.
@@ -30,6 +31,21 @@ function MemberLayout() {
   const [assignmentsLoading, setAssignmentsLoading] = useState(true);
   const [assignmentsError, setAssignmentsError] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+  // Las alertas se calculan desde la colección real, sin guardarlas por duplicado.
+  const [supplyNeeds, setSupplyNeeds] = useState([]);
+  const [supplyNeedsLoading, setSupplyNeedsLoading] = useState(true);
+  const [supplyRefreshKey, setSupplyRefreshKey] = useState(0);
+  const refreshBasicSupplyNeeds = () => setSupplyRefreshKey((n) => n + 1);
+  useEffect(() => {
+    let cancelled = false;
+    setSupplyNeedsLoading(true);
+    listBasicSuppliesNeeds().then((data) => {
+      if (!cancelled) setSupplyNeeds(data.supplies || []);
+    }).catch(() => {
+      if (!cancelled) setSupplyNeeds([]);
+    }).finally(() => { if (!cancelled) setSupplyNeedsLoading(false); });
+    return () => { cancelled = true; };
+  }, [location.pathname, supplyRefreshKey, user?.id, user?._id]);
 
   // Al navegar, volvemos a consultar los turnos reales de esta cuenta.
   // Solo el backend decide qué servicios pertenecen al usuario autenticado.
@@ -64,7 +80,9 @@ function MemberLayout() {
   return (
     <div className="member-layout">
       {/* Encabezado con navegación y acciones según el usuario. */}
-      <MemberHeader user={user} volunteerAlerts={volunteerAlerts} assignmentsLoading={assignmentsLoading} />
+      <MemberHeader user={user} volunteerAlerts={volunteerAlerts} assignmentsLoading={assignmentsLoading}
+        supplyNeeds={supplyNeeds.filter((item) => item.status !== "available")}
+        supplyNeedsLoading={supplyNeedsLoading} />
 
       {/* Navegación única para toda el área comunitaria. */}
       <SiteNavigation />
@@ -79,6 +97,8 @@ function MemberLayout() {
           volunteerAssignmentsLoading: assignmentsLoading,
           volunteerAssignmentsError: assignmentsError,
           refreshMemberAssignments,
+          refreshBasicSupplyNeeds,
+          supplyNeeds,
         }} />
       </div>
 

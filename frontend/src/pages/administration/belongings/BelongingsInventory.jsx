@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useBelongings } from "../../../context/belongings/BelongingsContext";
 
-import { ChevronLeft, ChevronRight, ClipboardList, PackagePlus, SearchX, Trash2, X, AlertTriangle } from "lucide-react";
+import { ChevronLeft, ChevronRight, ClipboardList, PackagePlus, RefreshCw, SearchX, Trash2, X, AlertTriangle } from "lucide-react";
 import BelongingsFilters from "../../../components/administration/belongings/BelongingsFilters";
 import BelongingsTable from "../../../components/administration/belongings/BelongingsTable";
 import BelongingFormModal from "../../../components/administration/belongings/BelongingFormModal";
@@ -10,7 +10,6 @@ import BelongingDetailModal from "../../../components/administration/belongings/
 import {
     belongingsCategories,
     belongingsConditions,
-    belongingsLocations,
 } from "../../../data/belongings/belongingsDemoData";
 
 import "../../../styles/pages/administration/belongings/BelongingsInventory.css";
@@ -31,7 +30,6 @@ function BelongingsInventory() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     const [condition, setCondition] = useState("");
-    const [selectedLocation, setSelectedLocation] = useState("");
 
     // =====================================================
     // ORDENAMIENTO Y PAGINACIÓN
@@ -54,6 +52,7 @@ function BelongingsInventory() {
 
     // Mensaje de error de eliminación.
     const [deleteError, setDeleteError] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
 
     // =====================================================
     // CONTEXTO COMPARTIDO
@@ -62,6 +61,7 @@ function BelongingsInventory() {
     const {
         belongings,
         movements,
+        loading, busy, error, reload,
         createBelonging,
         updateBelonging,
         deleteBelonging,
@@ -86,16 +86,11 @@ function BelongingsInventory() {
         setCurrentPage(1);
     };
 
-    const handleLocationChange = (value) => {
-        setSelectedLocation(value);
-        setCurrentPage(1);
-    };
 
     const handleResetFilters = () => {
         setSearch("");
         setCategory("");
         setCondition("");
-        setSelectedLocation("");
         setCurrentPage(1);
     };
 
@@ -147,25 +142,17 @@ function BelongingsInventory() {
     // GUARDAR BIEN
     // =====================================================
 
-    const handleSaveBelonging = (formData) => {
-
+    // Guardamos en MongoDB antes de cerrar el formulario.
+    // Si falla, el modal conserva la información para corregirla.
+    const handleSaveBelonging = async (formData) => {
         if (editingBelonging) {
-
-            updateBelonging(
-                editingBelonging.id,
-                formData
-            );
-
+            await updateBelonging(editingBelonging.id, formData, editingBelonging.__v);
         } else {
-
-            createBelonging(formData);
-
+            await createBelonging(formData);
             handleResetFilters();
-
             setSortBy("name");
             setSortDirection("asc");
         }
-
         handleCloseForm();
     };
 
@@ -183,6 +170,7 @@ function BelongingsInventory() {
     // =====================================================
 
     const handleCloseDelete = () => {
+        if (isDeleting) return;
         setDeletingBelonging(null);
         setDeleteError("");
     };
@@ -203,27 +191,20 @@ function BelongingsInventory() {
     // CONFIRMAR ELIMINACIÓN EN CASCADA
     // =====================================================
 
-    const handleConfirmDelete = () => {
-
-        if (!deletingBelonging) return;
-
+    const handleConfirmDelete = async () => {
+        if (!deletingBelonging || isDeleting) return;
+        setIsDeleting(true);
+        setDeleteError("");
         try {
-
-            deleteBelonging(deletingBelonging.id);
-
+            await deleteBelonging(deletingBelonging.id);
             setCurrentPage(1);
-
-            handleCloseDelete();
-
-        } catch (error) {
-
-            setDeleteError(
-                error.message ||
-                "No fue posible eliminar el bien."
-            );
+            setDeletingBelonging(null);
+        } catch (cause) {
+            setDeleteError(cause?.message || "No fue posible eliminar el bien.");
+        } finally {
+            setIsDeleting(false);
         }
     };
-
 
     // =====================================================
     // ORDENAMIENTO
@@ -272,15 +253,10 @@ function BelongingsInventory() {
                 !condition ||
                 belonging.condition === condition;
 
-            const matchesLocation =
-                !selectedLocation ||
-                belonging.locationId === selectedLocation;
-
             return (
                 matchesSearch &&
                 matchesCategory &&
-                matchesCondition &&
-                matchesLocation
+                matchesCondition
             );
         });
 
@@ -308,7 +284,6 @@ function BelongingsInventory() {
         search,
         category,
         condition,
-        selectedLocation,
         sortBy,
         sortDirection,
     ]);
@@ -347,7 +322,7 @@ function BelongingsInventory() {
     );
 
     const hasActiveFilters = Boolean(
-        search || category || condition || selectedLocation
+        search || category || condition
     );
 
     // =====================================================
@@ -381,14 +356,31 @@ function BelongingsInventory() {
 
                 </div>
 
-                <button
-                    type="button"
-                    className="belongings-inventory__add"
-                    onClick={handleCreateBelonging}
-                >
-                    <PackagePlus size={18} />
-                    <span>Registrar bien</span>
-                </button>
+                {/* Acciones agrupadas dentro del encabezado. */}
+                <div className="belongings-inventory__header-actions">
+                    {/* Recargamos únicamente los datos, sin modificar el inventario. */}
+                    <button
+                        type="button"
+                        className="belongings-inventory__refresh"
+                        onClick={() => reload().catch(() => {})}
+                        disabled={loading || busy}
+                        aria-label={loading ? "Actualizando inventario" : "Actualizar inventario"}
+                    >
+                        <RefreshCw size={17} aria-hidden="true" className={loading ? "belongings-inventory__refresh-icon--loading" : ""} />
+                        <span>{loading ? "Actualizando..." : "Actualizar inventario"}</span>
+                    </button>
+
+                    {/* Conservamos el botón original para registrar un bien. */}
+                    <button
+                        type="button"
+                        className="belongings-inventory__add"
+                        onClick={handleCreateBelonging}
+                        disabled={loading || busy}
+                    >
+                        <PackagePlus size={18} aria-hidden="true" />
+                        <span>Registrar bien</span>
+                    </button>
+                </div>
 
             </header>
 
@@ -396,18 +388,16 @@ function BelongingsInventory() {
             {/* FILTROS */}
             {/* ========================================= */}
 
+            {error && <p role="alert" style={{ color: "#9d3c36", padding: "12px" }}>{error}</p>}
             <BelongingsFilters
                 search={search}
                 category={category}
                 condition={condition}
-                location={selectedLocation}
                 categories={belongingsCategories}
                 conditions={belongingsConditions}
-                locations={belongingsLocations}
                 onSearchChange={handleSearchChange}
                 onCategoryChange={handleCategoryChange}
                 onConditionChange={handleConditionChange}
-                onLocationChange={handleLocationChange}
                 onReset={handleResetFilters}
             />
 
@@ -452,12 +442,15 @@ function BelongingsInventory() {
                 {/* TABLA O ESTADO VACÍO */}
                 {/* ===================================== */}
 
-                {totalResults > 0 ? (
+                {loading ? (
+                    <p role="status" style={{ padding: "20px" }}>Cargando bienes...</p>
+                ) : error && belongings.length === 0 ? (
+                    <p>No pudimos cargar el inventario. Utiliza Actualizar para intentarlo nuevamente.</p>
+                ) : totalResults > 0 ? (
 
                     <BelongingsTable
                         belongings={paginatedBelongings}
                         categories={belongingsCategories}
-                        locations={belongingsLocations}
                         conditions={belongingsConditions}
                         sortBy={sortBy}
                         sortDirection={sortDirection}
@@ -553,15 +546,6 @@ function BelongingsInventory() {
             </section>
 
             {/* ========================================= */}
-            {/* AVISO DE DESARROLLO */}
-            {/* ========================================= */}
-
-            <div className="belongings-inventory__notice">
-                Los datos mostrados son temporales y se utilizan
-                exclusivamente para probar el frontend.
-            </div>
-
-            {/* ========================================= */}
             {/* FORMULARIO */}
             {/* ========================================= */}
 
@@ -614,6 +598,7 @@ function BelongingsInventory() {
                             <button
                                 type="button"
                                 onClick={handleCloseDelete}
+                                disabled={isDeleting}
                                 aria-label="Cerrar confirmación"
                             >
                                 <X size={20} />
@@ -629,6 +614,7 @@ function BelongingsInventory() {
                             Estás a punto de eliminar el siguiente bien:
                         </p>
 
+                        <p>Esta acción es definitiva y no se puede deshacer.</p>
                         <div className="belongings-inventory__delete-item">
                             <strong>{deletingBelonging.name}</strong>
                             <span>{deletingBelonging.code}</span>
@@ -644,8 +630,7 @@ function BelongingsInventory() {
                                 <p>
                                     Este bien tiene movimientos registrados.
                                     Al eliminarlo, también se eliminará
-                                    permanentemente todo su historial
-                                    de movimientos asociado.
+                                    su historial de movimientos. No podrás deshacerlo.
                                 </p>
 
                             </div>
@@ -668,6 +653,7 @@ function BelongingsInventory() {
                                 type="button"
                                 className="belongings-inventory__delete-cancel"
                                 onClick={handleCloseDelete}
+                                disabled={isDeleting}
                             >
                                 Cancelar
                             </button>
@@ -679,7 +665,7 @@ function BelongingsInventory() {
                                 onClick={handleConfirmDelete}
                             >
                                 <Trash2 size={17} />
-                                Eliminar bien
+                                {isDeleting ? "Eliminando..." : "Eliminar bien definitivamente"}
                             </button>
                             
 

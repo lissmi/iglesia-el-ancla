@@ -1,0 +1,35 @@
+/* INSUMOS BÁSICOS: área de miembros, estilo azul del proyecto */
+.member-basic-supplies{background:#f5f8fa;min-height:60vh;padding:35px 20px 55px;font-family:inherit}
+.member-basic-supplies__container{max-width:1160px;margin:0 auto}
+.member-basic-supplies__header{padding:30px;border:1px solid #dce8ee;background:#fff;border-radius:24px;margin-bottom:16px}
+.member-basic-supplies__eyebrow{display:inline-flex;align-items:center;gap:8px;color:#2c8199;font-weight:750;letter-spacing:.09em;text-transform:uppercase;font-size:12px}
+.member-basic-supplies__header h1{font-size:clamp(25px,3.5vw,36px);color:#17384c;margin:10px 0}
+.member-basic-supplies__header p{max-width:770px;color:#577488;line-height:1.7;margin:0 0 18px}
+.member-basic-supplies__header button{display:inline-flex;align-items:center;gap:7px;border:1px solid #cfdee5;border-radius:12px;background:white;padding:10px 13px;color:#356f85;cursor:pointer}
+.member-basic-supplies__note{display:flex;align-items:flex-start;gap:12px;padding:16px 20px;border:1px solid #d9e9ee;border-radius:15px;background:#eef7fa;color:#385f73;margin-bottom:24px}
+.member-basic-supplies__note svg{flex-shrink:0}.member-basic-supplies__note p{margin:0;line-height:1.65}
+.member-basic-supplies__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+.member-basic-supplies__card{padding:25px;background:white;border:1px solid #dce8ee;border-radius:22px;box-shadow:0 8px 25px rgba(23,56,76,.035)}
+.member-basic-supplies__card-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;color:#728c9b;font-size:12px}
+.member-basic-supplies__status{display:inline-flex;align-items:center;gap:5px;background:#fff0e8;color:#aa6348;padding:6px 10px;border-radius:99px;font-weight:700}
+.member-basic-supplies__status--out{background:#faeeee;color:#af4f51}
+.member-basic-supplies__card h2{font-size:21px;color:#17384c;margin:18px 0 8px}
+.member-basic-supplies__card>p{font-size:14px;color:#6f8794;line-height:1.6;min-height:45px}
+.member-basic-supplies__figures{display:flex;justify-content:space-between;gap:12px;margin:18px 0;padding:17px 0;border-top:1px solid #ebeff2;border-bottom:1px solid #ebeff2}
+.member-basic-supplies__figures div{display:flex;flex-direction:column;gap:5px}.member-basic-supplies__figures span{font-size:12px;color:#7f96a3}.member-basic-supplies__figures strong{font-size:15px;color:#17384c}
+.member-basic-supplies__people{font-size:13px!important;color:#387f77!important;min-height:0!important}
+.member-basic-supplies__form label{display:block;color:#3a586b;font-size:13px;font-weight:700;margin:16px 0 9px}
+.member-basic-supplies__form-row{display:flex;gap:10px;align-items:center}
+.member-basic-supplies__form-row input{width:85px;min-height:44px;padding:0 12px;border:1px solid #d1e0e7;border-radius:12px;font:inherit;color:#17384c}
+.member-basic-supplies__form-row button{display:inline-flex;flex:1;justify-content:center;align-items:center;gap:7px;min-height:44px;background:#2c8199;border:0;border-radius:12px;color:white;font-weight:700;cursor:pointer}
+.member-basic-supplies__form-row button:disabled{opacity:.55;cursor:not-allowed}
+.member-basic-supplies__pledged{padding:15px;border-radius:14px;background:#eff8f3;border:1px solid #cae7d7;color:#2b634a}
+.member-basic-supplies__pledged strong{display:flex;align-items:center;gap:8px}.member-basic-supplies__pledged p{margin:8px 0 12px;font-size:13px}
+.member-basic-supplies__pledged button{background:white;border:1px solid #c7ddd0;color:#315f49;border-radius:9px;padding:9px 11px;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.member-basic-supplies__covered{font-weight:700;color:#3b796d!important}
+.member-basic-supplies__empty{text-align:center;border:1px solid #d9e9ee;background:#fff;border-radius:22px;padding:65px 22px;color:#387d79}
+.member-basic-supplies__empty h2{color:#17384c}
+.member-basic-supplies__empty p{color:#6f8794}
+.member-basic-supplies__error,.member-basic-supplies__success{padding:13px 16px;border-radius:13px;margin-bottom:15px}
+.member-basic-supplies__error{background:#fff0ee;color:#8c3e30}.member-basic-supplies__success{background:#eff8f3;color:#27654a}
+@media(max-width:550px){.member-basic-supplies__header,.member-basic-supplies__card{padding:19px}.member-basic-supplies__form-row{flex-wrap:wrap}.member-basic-supplies__form-row button{flex-basis:100%}}

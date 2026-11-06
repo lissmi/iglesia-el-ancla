@@ -31,6 +31,8 @@ const deletionLogSchema = new Schema(
         "book",
         "song",
         "prayer_request",
+        "basic_supply", // Insumos del inventario.
+        "belonging", // Bienes de la iglesia.
         "income",   // Movimiento financiero de ingreso.
         "expense",  // Movimiento financiero de gasto.
       ],

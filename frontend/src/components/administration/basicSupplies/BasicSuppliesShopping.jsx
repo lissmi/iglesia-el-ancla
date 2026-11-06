@@ -1,4 +1,3 @@
-
 import {
     ShoppingCart,
     ClipboardList,
@@ -85,7 +84,7 @@ function BasicSuppliesShopping({
                                         </strong>
 
                                         <span>
-                                            {quantity} {supply.unit}
+                                            {quantity} unidades
                                         </span>
 
                                     </div>

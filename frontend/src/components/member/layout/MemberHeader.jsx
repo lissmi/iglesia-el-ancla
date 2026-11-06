@@ -20,6 +20,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  Package,
   ShieldCheck,
   Sparkles,
   UserRound,
@@ -61,6 +62,7 @@ const personalNavigation = [
   { label: "Mis turnos de servicio", to: "/member/voluntariado", icon: CalendarDays },
   { label: "Mis recursos", to: "/member/recursos", icon: BookOpen },
   { label: "Mis recomendados", to: "/member/recomendados", icon: Sparkles },
+  { label: "Insumos básicos", to: "/member/insumos-basicos", icon: Package },
   { label: "Mis peticiones de oración", to: "/member/peticiones-oracion", icon: HeartHandshake },
   { label: "Resumen financiero", to: "/member/finanzas", icon: Wallet },
   { label: "Mi cuenta", to: "/member/mi-cuenta", icon: UserRound },
@@ -70,7 +72,7 @@ const personalNavigation = [
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false }) {
+function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, supplyNeeds = [], supplyNeedsLoading = false }) {
   // Muestra u oculta la navegación completa cuando se usa el menú móvil.
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -276,9 +278,9 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false }
                 title="Notificaciones"
               >
                 <Bell size={21} strokeWidth={1.8} aria-hidden="true" />
-                {volunteerAlerts.length > 0 && (
+                {(volunteerAlerts.length + supplyNeeds.length) > 0 && (
                   <span className="member-volunteer-alert-count" aria-hidden="true">
-                    {volunteerAlerts.length > 9 ? "9+" : volunteerAlerts.length}
+                    {volunteerAlerts.length + supplyNeeds.length > 9 ? "9+" : volunteerAlerts.length + supplyNeeds.length}
                   </span>
                 )}
               </button>
@@ -459,8 +461,23 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false }
                       ))}
                     </div>
                   )}
-                  <Link className="member-volunteer-alert-more" to="/member/voluntariado">
+                  <Link className="member-volunteer-alert-more" to="/member/voluntariado" onClick={() => setNotificationsOpen(false)}>
                     Ver todos mis turnos
+                  </Link>
+                  <strong style={{display:"block", marginTop: "14px"}}>Insumos que necesitamos</strong>
+                  {supplyNeedsLoading ? <p>Consultando necesidades...</p> : supplyNeeds.length === 0 ?
+                    <p>Por ahora estamos bien abastecidos.</p> :
+                    <div className="member-volunteer-alert-list">
+                      {supplyNeeds.slice(0, 5).map((supply) =>
+                        <Link key={supply.id} to="/member/insumos-basicos" className="member-volunteer-alert" onClick={() => setNotificationsOpen(false)}>
+                          <strong>{supply.name}</strong>
+                          <span>{supply.status === "out" ? "Agotado" : "Quedan pocas unidades"} · Puedes colaborar si lo deseas.</span>
+                        </Link>
+                      )}
+                    </div>
+                  }
+                  <Link className="member-volunteer-alert-more" to="/member/insumos-basicos" onClick={() => setNotificationsOpen(false)}>
+                    Ver necesidades de la iglesia
                   </Link>
                 </div>
               )}
