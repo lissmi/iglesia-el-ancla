@@ -1,4 +1,3 @@
-
 import {
     BarChart,
     Bar,
@@ -62,14 +61,14 @@ function FinanceEvolutionChart({ data = null }) {
 
     const selectedPeriod = data?.period ?? null;
 
-    const hasData = chartData.length > 0;
+    const hasData = chartData.some((item) => item.income > 0 || item.expenses > 0);
 
     // =====================================================
     // DESCRIPCIÓN DEL PERÍODO
     // =====================================================
 
     const periodDescription = selectedPeriod === "month"
-        ? "Comparación de ingresos y gastos del mes actual."
+        ? "Ingresos y gastos del mes seleccionado."
         : "Comparación mensual de ingresos y gastos durante el año seleccionado.";
 
     // =====================================================
@@ -244,7 +243,7 @@ function FinanceEvolutionChart({ data = null }) {
                     <Info size={26} aria-hidden="true" />
 
                     <strong>
-                        Sin datos de demostración
+                        Todavía no hay movimientos
                     </strong>
 
                     <p>
@@ -269,8 +268,7 @@ function FinanceEvolutionChart({ data = null }) {
                 />
 
                 <span>
-                    Información ficticia utilizada
-                    exclusivamente para el diseño.
+                    Solo se consideran ingresos recibidos y gastos pagados. Los pendientes se presentan por separado.
                 </span>
 
             </div>

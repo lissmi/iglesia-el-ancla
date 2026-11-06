@@ -8,8 +8,7 @@ import "../../../styles/components/administration/expenses/ExpenseAlerts.css";
 
 // El comprobante es opcional; su ausencia se señala como revisión, no como infracción.
 function hasReceipt(expense) {
-  const image = expense?.receiptImage;
-  return typeof image === "string" ? !!image.trim() : !!image?.url?.trim?.();
+  return expense?.hasReceipt === true;
 }
 
 function ExpenseAlerts({ expenses = [], onViewExpense }) {

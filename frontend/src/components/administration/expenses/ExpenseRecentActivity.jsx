@@ -26,8 +26,7 @@ function ExpenseRecentActivity({ expenses = [], onViewExpense }) {
       ) : (
         <div className="expense-recent__list">
           {recentExpenses.map((expense) => {
-            const receipt = expense.receiptImage;
-            const hasReceipt = typeof receipt === "string" ? !!receipt.trim() : !!receipt?.url?.trim?.();
+            const hasReceipt = expense.hasReceipt === true;
             return (
               <button type="button" key={expense.id} className="expense-recent__item" onClick={() => onViewExpense?.(expense)} disabled={!onViewExpense}>
                 <span className="expense-recent__icon"><ReceiptText size={18} aria-hidden="true" /></span>

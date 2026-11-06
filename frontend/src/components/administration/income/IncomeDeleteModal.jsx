@@ -313,9 +313,9 @@ function IncomeDeleteModal({
 
         if (
             !income ||
+            income.status !== "cancelled" ||
             !onConfirm ||
-            isDeleting ||
-            !["pending", "cancelled", "void"].includes(income.status)
+            isDeleting
         ) {
             return;
         }
@@ -370,12 +370,8 @@ function IncomeDeleteModal({
         income.concept?.trim() ||
         "Ingreso sin concepto";
 
-    const isReceived =
-        !income.status ||
-        income.status === "received";
-
-    // Un recibido debe anularse mediante edición antes de archivarse.
-    const canArchive = !isReceived;
+    // El estado Anulado es obligatorio antes de habilitar la eliminación.
+    const canDelete = income.status === "cancelled";
 
 
     // =====================================================
@@ -445,12 +441,13 @@ function IncomeDeleteModal({
                 <div className="income-delete-modal__intro">
 
                     <h2 id={`${modalId}-title`}>
-                        ¿Retirar este ingreso del listado?
+                        ¿Eliminar definitivamente este ingreso?
                     </h2>
 
                     <p id={`${modalId}-description`}>
-                        El registro permanecerá en MongoDB con su historial.
-                        Solo se retira del listado de gestión.
+                        {canDelete
+                            ? "Se eliminará definitivamente de MongoDB. Esta acción es irreversible."
+                            : "Primero debes editar este ingreso y cambiar su estado a Anulado."}
                     </p>
 
                 </div>
@@ -573,14 +570,14 @@ function IncomeDeleteModal({
                     <div>
 
                         <strong>
-                            Conservación del historial financiero
+                            {canDelete ? "Eliminación irreversible" : "Anulación obligatoria"}
                         </strong>
 
                         <p>
 
-                            {isReceived
-                                ? "Este ingreso está recibido. Primero pulsa Editar y cambia su estado a Anulado para dejar constancia financiera; después podrás retirarlo del listado."
-                                : "Este ingreso se archivará sin eliminar su registro ni su historial de modificaciones."}
+                            {canDelete
+                                ? "Se eliminará el registro y se solicitará retirar sus comprobantes privados de Cloudinary. Solo quedará una constancia mínima de auditoría."
+                                : "El ingreso debe encontrarse Anulado antes de eliminarse. Cierra esta ventana y cambia su estado desde Editar."}
 
                         </p>
 
@@ -635,7 +632,7 @@ function IncomeDeleteModal({
                         disabled={
                             isDeleting ||
                             !onConfirm ||
-                            !canArchive
+                            !canDelete
                         }
                     >
 
@@ -657,8 +654,8 @@ function IncomeDeleteModal({
                         )}
 
                         {isDeleting
-                            ? "Retirando..."
-                            : "Retirar del listado"}
+                            ? "Eliminando..."
+                            : "Sí, eliminar definitivamente"}
 
                     </button>
 

@@ -366,8 +366,8 @@ function ExpenseTable({
                         type="button"
                         className="expense-table__action expense-table__action--danger"
                         onClick={() => onDeleteExpense(expense)}
-                        title="Eliminar gasto"
-                        aria-label={`Eliminar ${expense.description}`}
+                        title="Archivar gasto"
+                        aria-label={`Archivar ${expense.description}`}
                     >
                         <Trash2 size={16} aria-hidden="true" />
                     </button>
@@ -503,6 +503,10 @@ function ExpenseTable({
 
                         <option value="Pendiente">
                             Pendiente
+                        </option>
+
+                        <option value="Anulado">
+                            Anulado
                         </option>
                     </select>
 
@@ -656,7 +660,7 @@ function ExpenseTable({
                                                 <strong className="expense-table__expense-name">
                                                     {expense.description}
                                                 </strong>
-                                                {expense.receiptImage?.url && (
+                                                {expense.hasReceipt && (
                                                     <span className="expense-table__receipt-tag" title="Comprobante adjunto">
                                                         <Paperclip size={12} aria-hidden="true" />
                                                         Con boleta
@@ -726,7 +730,7 @@ function ExpenseTable({
                                         <strong className="expense-table__expense-name">
                                             {expense.description}
                                         </strong>
-                                        {expense.receiptImage?.url && (
+                                        {expense.hasReceipt && (
                                             <span className="expense-table__receipt-tag" title="Comprobante adjunto">
                                                 <Paperclip size={12} aria-hidden="true" />
                                                 Con boleta

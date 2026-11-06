@@ -129,6 +129,12 @@ import recommendationRoutes from "./routes/recommendationRoutes.js";
 // Importamos las rutas administrativas de ingresos.
 import incomeRoutes from "./routes/incomeRoutes.js";
 
+// Importamos las rutas financieras de gastos.
+import expenseRoutes from "./routes/expenseRoutes.js";
+
+// API financiera consolidada para miembros, administradores y superadministradores.
+import financeOverviewRoutes from "./routes/financeOverviewRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -562,6 +568,12 @@ app.use("/api/recommendations", recommendationRoutes);
 
 // Habilitamos la gestión financiera de ingresos.
 app.use("/api/incomes", incomeRoutes);
+
+// Habilitamos la API privada de gastos.
+app.use("/api/expenses", expenseRoutes);
+
+// Solo lectura: no entrega movimientos privados ni modifica información.
+app.use("/api/finance-overview", financeOverviewRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

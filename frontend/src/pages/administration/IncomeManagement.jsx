@@ -51,7 +51,7 @@ import {
     listIncomes,
     createIncome,
     updateIncome,
-    archiveIncome,
+    deleteIncome,
     incomeApiError,
 } from "../../services/incomesApi";
 
@@ -641,7 +641,7 @@ function IncomeManagement() {
     };
 
     // =====================================================
-    // ARCHIVADO LÓGICO (NO BORRADO FÍSICO)
+    // ELIMINACIÓN DEFINITIVA CON AUDITORÍA MÍNIMA
     // =====================================================
 
     const handleConfirmDelete = async (income) => {
@@ -650,14 +650,16 @@ function IncomeManagement() {
         setIsDeletingIncome(true);
         try {
             const id = income._id || income.id;
-            // Solo pendientes o anulados pueden archivarse.
-            await archiveIncome(id, income.version);
+            // El backend borra realmente y conserva una constancia mínima.
+            const result = await deleteIncome(id, income.version);
             setIncomes((previous) => previous.filter(
                 (item) => (item._id || item.id) !== id
             ));
             setIsDeleteModalOpen(false);
             setSelectedIncome(null);
-            showNotification("success", "Ingreso retirado del listado. Su historial permanece en MongoDB.");
+            showNotification("success", result.cleanupPending
+                ? "Ingreso eliminado; algunos comprobantes están pendientes de limpieza en Cloudinary."
+                : "Ingreso eliminado definitivamente. La acción quedó en el historial.");
             return true;
         } catch (error) {
             const message = incomeApiError(error);

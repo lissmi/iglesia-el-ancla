@@ -1,0 +1,64 @@
+/* ========================================================= */
+/* ESTADOS DE CONEXIÓN - GESTIÓN DE GASTOS */
+/* ========================================================= */
+
+.expense-data-state {
+    padding: 26px;
+    border: 1px solid #dbe7ed;
+    border-radius: 15px;
+    background: #ffffff;
+    color: #456a7e;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.expense-data-state--error {
+    border-color: #e7c4c4;
+    background: #fffafa;
+    color: #913c3c;
+}
+
+.expense-data-state--error p {
+    margin: 8px 0 14px;
+}
+
+.expense-data-state--error button {
+    min-height: 37px;
+    padding: 0 15px;
+    border: 1px solid #c4dce5;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #236d83;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.expense-data-state--error button:hover {
+    background: #eaf5f8;
+}
+
+/* Mensajes de confirmación de borrado y limpieza pendiente. */
+.expense-data-state--success {
+    border: 1px solid #b7dccf;
+    background-color: #effaf5;
+    color: #205d4b;
+}
+.expense-data-state--warning {
+    border: 1px solid #e8d1a0;
+    background-color: #fff8ea;
+    color: #785522;
+}
+
+/* Botón para cerrar las notificaciones de resultado. */
+.expense-data-state--success button,
+.expense-data-state--warning button {
+    margin-left: 14px;
+    padding: 5px 12px;
+    border: 1px solid currentColor;
+    border-radius: 9px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}

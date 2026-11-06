@@ -1,142 +1,92 @@
+// =========================================================
+// CONTEXTO GLOBAL DE GASTOS - IGLESIA EL ANCLA
+// MongoDB es la fuente de verdad. No cargamos datos ficticios.
+// =========================================================
 
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
+  createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from "react";
 
-// Importamos los gastos de demostración existentes.
 import {
-  expenses as initialExpenses,
-} from "../../data/admin/expensesData";
+  deleteGasto as deleteExpenseRequest, createExpense, expenseApiError, listExpenses, updateExpense,
+} from "../../services/expensesApi";
 
-// =========================================================
-// CREAR CONTEXTO
-// =========================================================
-
-// Este contexto permitirá compartir los gastos
-// entre diferentes componentes administrativos.
 const ExpensesContext = createContext(null);
 
-
-// =========================================================
-// PROVEEDOR DE GASTOS
-// =========================================================
-
 export function ExpensesProvider({ children }) {
+  // La misma colección alimenta el resumen, gráficos y notificaciones.
+  const [expenses, setExpenses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Inicializamos los gastos con los registros existentes.
-  // Más adelante estos datos vendrán de MongoDB.
-  const [expenses, setExpenses] = useState(() =>
-    initialExpenses.map((expense) => ({
-      ...expense,
-    }))
-  );
-
-
-  // =======================================================
-  // GUARDAR O ACTUALIZAR GASTO
-  // =======================================================
-
-  const saveExpense = useCallback((
-    expenseData,
-    expenseToEdit = null
-  ) => {
-
-    // Si existe un gasto seleccionado, lo actualizamos.
-    if (expenseToEdit) {
-
-      setExpenses((previousExpenses) =>
-        previousExpenses.map((expense) =>
-          expense.id === expenseToEdit.id
-            ? {
-                ...expense,
-                ...expenseData,
-                id: expense.id,
-              }
-            : expense
-        )
-      );
-
-      return;
+  // Se solicita al entrar al panel administrativo; evita consultar finanzas
+  // desde páginas públicas y antes de que exista una sesión activa.
+  const refreshExpenses = useCallback(async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const records = await listExpenses();
+      setExpenses(records);
+      return records;
+    } catch (requestError) {
+      const message = expenseApiError(requestError);
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setIsLoading(false);
     }
-
-    // Creamos un nuevo gasto con un ID temporal.
-    const newExpense = {
-      ...expenseData,
-      id: crypto.randomUUID(),
-    };
-
-    // Lo agregamos al comienzo del listado.
-    setExpenses((previousExpenses) => [
-      newExpense,
-      ...previousExpenses,
-    ]);
-
   }, []);
 
+  // AdminLayout monta este proveedor solo dentro de rutas administrativas.
+  // Cargamos una vez al entrar para poblar también el encabezado y las alertas.
+  useEffect(() => {
+    refreshExpenses().catch(() => {
+      // El mensaje ya está en error; se muestra en la pantalla de gastos.
+    });
+  }, [refreshExpenses]);
 
-  // =======================================================
-  // ELIMINAR GASTO
-  // =======================================================
-
-  const deleteExpense = useCallback((expenseId) => {
-
-    // Eliminamos únicamente el registro indicado.
-    setExpenses((previousExpenses) =>
-      previousExpenses.filter(
-        (expense) => expense.id !== expenseId
-      )
-    );
-
+  // Guardado completo, sin estados temporales ni identificadores inventados.
+  const saveExpense = useCallback(async (expenseData, expenseToEdit = null, receiptFile = null) => {
+    const { receiptImage, ...fields } = expenseData;
+    // receiptImage es solo la vista previa local del formulario, NUNCA se persiste.
+    void receiptImage;
+    try {
+      const updated = expenseToEdit
+        ? await updateExpense(expenseToEdit.id, fields, expenseToEdit.version, receiptFile)
+        : await createExpense(fields, receiptFile);
+      setExpenses((previous) => expenseToEdit
+        ? previous.map((item) => item.id === updated.id ? updated : item)
+        : [updated, ...previous]);
+      setError("");
+      return updated;
+    } catch (requestError) {
+      throw new Error(expenseApiError(requestError));
+    }
   }, []);
 
+  // Eliminación definitiva: MongoDB y auditoría se confirman en una transacción.
+  const deleteExpense = useCallback(async (id) => {
+    const current = expenses.find((item) => item.id === id);
+    if (!current) throw new Error("No se encontró el gasto solicitado");
+    try {
+      const result = await deleteExpenseRequest(id, current.version);
+      setExpenses((previous) => previous.filter((item) => item.id !== id));
+      setError("");
+      return result;
+    } catch (requestError) {
+      throw new Error(expenseApiError(requestError));
+    }
+  }, [expenses]);
 
-  // =======================================================
-  // COMPARTIR INFORMACIÓN
-  // =======================================================
-
-  // useMemo evita crear innecesariamente
-  // un nuevo objeto de contexto.
   const value = useMemo(() => ({
-    expenses,
-    saveExpense,
-    deleteExpense,
-  }), [
-    expenses,
-    saveExpense,
-    deleteExpense,
-  ]);
+    expenses, isLoading, error, refreshExpenses, saveExpense, deleteExpense,
+  }), [expenses, isLoading, error, refreshExpenses, saveExpense, deleteExpense]);
 
-
-  // Hacemos que los componentes hijos
-  // puedan acceder a estos datos.
-  return (
-    <ExpensesContext.Provider value={value}>
-      {children}
-    </ExpensesContext.Provider>
-  );
+  return <ExpensesContext.Provider value={value}>{children}</ExpensesContext.Provider>;
 }
 
-
-// =========================================================
-// HOOK PERSONALIZADO
-// =========================================================
-
 export function useExpenses() {
-
-  // Accedemos al contexto de gastos.
   const context = useContext(ExpensesContext);
-
-  // Detectamos si se utiliza fuera del proveedor.
-  if (!context) {
-    throw new Error(
-      "useExpenses requiere ExpensesProvider."
-    );
-  }
-
-  // Devolvemos las funciones y los registros.
+  if (!context) throw new Error("useExpenses requiere ExpensesProvider.");
   return context;
 }

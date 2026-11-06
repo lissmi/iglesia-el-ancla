@@ -102,12 +102,12 @@ function UpcomingExpenses({
             .sort((first, second) => {
 
                 // Priorizamos fechas válidas.
-                const firstDate = isValidDate(first.date)
-                    ? first.date
+                const firstDate = isValidDate(first.dueDate)
+                    ? first.dueDate
                     : "9999-12-31";
 
-                const secondDate = isValidDate(second.date)
-                    ? second.date
+                const secondDate = isValidDate(second.dueDate)
+                    ? second.dueDate
                     : "9999-12-31";
 
                 return firstDate.localeCompare(secondDate);
@@ -138,7 +138,7 @@ function UpcomingExpenses({
 
             totalCommitted += amount;
 
-            if (!isValidDate(expense.date)) {
+            if (!isValidDate(expense.dueDate)) {
                 return;
             }
 
@@ -147,7 +147,7 @@ function UpcomingExpenses({
             // PAGOS VENCIDOS
             // --------------------------------------------
 
-            if (expense.date < today) {
+            if (expense.dueDate < today) {
 
                 overdueCount += 1;
 
@@ -161,8 +161,8 @@ function UpcomingExpenses({
             // --------------------------------------------
 
             if (
-                expense.date >= today &&
-                expense.date <= nextSevenDays
+                expense.dueDate >= today &&
+                expense.dueDate <= nextSevenDays
             ) {
 
                 upcomingCount += 1;
@@ -193,7 +193,7 @@ function UpcomingExpenses({
 
     const getDueStatus = (expense) => {
 
-        if (!isValidDate(expense.date)) {
+        if (!isValidDate(expense.dueDate)) {
 
             return {
                 label: "Sin fecha válida",
@@ -202,7 +202,7 @@ function UpcomingExpenses({
 
         }
 
-        if (expense.date < today) {
+        if (expense.dueDate < today) {
 
             return {
                 label: "Vencido",
@@ -211,7 +211,7 @@ function UpcomingExpenses({
 
         }
 
-        if (expense.date === today) {
+        if (expense.dueDate === today) {
 
             return {
                 label: "Vence hoy",
@@ -220,7 +220,7 @@ function UpcomingExpenses({
 
         }
 
-        if (expense.date <= nextSevenDays) {
+        if (expense.dueDate <= nextSevenDays) {
 
             return {
                 label: "Próximo a vencer",
@@ -468,7 +468,7 @@ function UpcomingExpenses({
                                         </span>
 
                                         <strong className="upcoming-expenses__column-value">
-                                            {formatExpenseDate(expense.date)}
+                                            {formatExpenseDate(expense.dueDate)}
                                         </strong>
 
                                     </div>

@@ -2,11 +2,11 @@
 // HISTORIAL GLOBAL DE ACTIVIDAD - IGLESIA EL ANCLA
 // Archivo: backend/src/routes/activityHistoryRoutes.js
 // =========================================================
-// Esta ruta UNE información existente, sin generar logs extra:
-// - Creación de las actividades, libros y canciones vigentes.
-// - Última edición de cada recurso vigente, si tiene updatedBy.
-// - Eliminaciones conservadas en la colección deletionlogs.
-// No pretende reconstruir cada modificación histórica.
+// Esta ruta UNE información existente sin crear otro historial:
+// - Actividades, libros y canciones: creación y última edición.
+// - Ingresos y gastos: creación y TODAS las ediciones ya registradas.
+// - Eliminaciones definitivas: constancia mínima en deletionlogs.
+// - Archivados financieros antiguos: se muestran como archivados.
 
 // Importamos Express para definir la ruta de solo lectura.
 import { Router } from "express";
@@ -15,6 +15,8 @@ import { Router } from "express";
 import Activity from "../models/Activity.js";
 import LibraryBook from "../models/LibraryBook.js";
 import Song from "../models/Song.js";
+import Income from "../models/Income.js";
+import Expense from "../models/Expense.js";
 import DeletionLog from "../models/DeletionLog.js";
 import User from "../models/User.js";
 
@@ -90,19 +92,106 @@ function currentResourceActivityPipeline(resourceType) {
   ];
 }
 
-// Convertimos las eliminaciones a la misma estructura de actividad.
+// =========================================================
+// MOVIMIENTOS FINANCIEROS QUE TODAVÍA EXISTEN EN MONGODB
+// =========================================================
+// El historial del movimiento guarda cada edición, no solo la última.
+// No proyectamos cantidades ni valores anteriores de los campos.
+function financialResourceActivityPipeline(resourceType, titleField) {
+  return [
+    {
+      $project: {
+        entries: {
+          $concatArrays: [
+            [{
+              resourceId: "$_id", resourceType,
+              resourceTitle: `$${titleField}`,
+              action: "created", actorId: "$createdBy", occurredAt: "$createdAt",
+              changedFields: [],
+            }],
+            {
+              $map: {
+                input: {
+                  $filter: {
+                    input: { $ifNull: ["$history", []] },
+                    as: "event",
+                    cond: { $in: ["$$event.action", ["updated", "archived"]] },
+                  },
+                },
+                as: "event",
+                in: {
+                  resourceId: "$_id", resourceType,
+                  resourceTitle: `$${titleField}`,
+                  action: "$$event.action",
+                  actorId: "$$event.by", occurredAt: "$$event.at",
+                  changedFields: {
+                    $map: {
+                      input: { $ifNull: ["$$event.changes", []] },
+                      as: "change", in: "$$change.field",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+    { $unwind: { path: "$entries", includeArrayIndex: "sequence" } },
+    { $replaceRoot: { newRoot: { $mergeObjects: ["$entries", { sequence: "$sequence" }] } } },
+  ];
+}
+
+// =========================================================
+// ELIMINACIONES: CONTENIDO Y FINANZAS
+// =========================================================
+// Para ingresos y gastos eliminados, el log también permite mostrar su
+// creación y sus ediciones anteriores, sin conservar el movimiento completo.
 const deletedResourcePipeline = [
   {
     $project: {
-      _id: 0,
-      resourceId: 1,
-      resourceType: 1,
-      resourceTitle: 1,
-      action: { $literal: "deleted" },
-      actorId: "$deletedBy",
-      occurredAt: "$deletedAt",
+      entries: {
+        $concatArrays: [
+          [{
+            resourceId: "$resourceId", resourceType: "$resourceType",
+            resourceTitle: "$resourceTitle", action: "deleted",
+            actorId: "$deletedBy", occurredAt: "$deletedAt", changedFields: [],
+          }],
+          {
+            $cond: [
+              {
+                $and: [
+                  { $in: ["$resourceType", ["income", "expense"]] },
+                  { $ne: [{ $ifNull: ["$resourceCreatedAt", null] }, null] },
+                ],
+              },
+              [{
+                resourceId: "$resourceId", resourceType: "$resourceType",
+                resourceTitle: "$resourceTitle", action: "created",
+                actorId: "$createdBy", occurredAt: "$resourceCreatedAt",
+                changedFields: [],
+              }],
+              [],
+            ],
+          },
+          {
+            $map: {
+              input: { $ifNull: ["$financialEdits", []] },
+              as: "edit",
+              in: {
+                resourceId: "$resourceId", resourceType: "$resourceType",
+                resourceTitle: "$resourceTitle", action: "updated",
+                actorId: "$$edit.by", occurredAt: "$$edit.at",
+                changedFields: { $ifNull: ["$$edit.fields", []] },
+              },
+            },
+          },
+        ],
+      },
     },
   },
+  { $unwind: { path: "$entries", includeArrayIndex: "sequence" } },
+  { $replaceRoot: { newRoot: { $mergeObjects: ["$entries", { sequence: "$sequence" }] } } },
 ];
 
 // Recuperamos los nombres de los administradores solo para los registros visibles.
@@ -114,18 +203,33 @@ function actorName(actor) {
 // Preparamos la descripción en español que aparecía en la tabla original.
 function describeActivity(activity) {
   const resourceNames = {
-    activity: "la actividad",
-    event: "el evento",
-    book: "el libro",
-    song: "la canción",
+    activity: "la actividad", event: "el evento",
+    book: "el libro", song: "la canción",
+    income: "el ingreso", expense: "el gasto",
   };
   const resourceName = resourceNames[activity.resourceType] || "el contenido";
   const verb = activity.action === "created"
-    ? (activity.resourceType === "activity" ? "Creó" : "Publicó")
+    ? (["income", "expense", "activity"].includes(activity.resourceType) ? "Registró" : "Publicó")
     : activity.action === "updated"
       ? "Modificó"
-      : "Eliminó";
-  return `${verb} ${resourceName} «${activity.resourceTitle || "Sin título"}».`;
+      : activity.action === "archived" ? "Archivó" : "Eliminó";
+
+  // Los campos cambiados se indican por su nombre, no por sus valores.
+  const fieldNames = {
+    concept: "concepto", description: "descripción", amount: "monto",
+    date: "fecha", category: "categoría", status: "estado",
+    paymentMethod: "medio de pago", paidAt: "fecha de pago",
+    dueDate: "vencimiento", notes: "observaciones", receipt: "comprobante",
+    reference: "referencia", responsible: "responsable",
+  };
+  const changed = (activity.changedFields || [])
+    .filter((field) => typeof field === "string")
+    .slice(0, 5)
+    .map((field) => fieldNames[field] || field);
+  const extra = activity.action === "updated" && changed.length
+    ? ` (campos: ${changed.join(", ")})`
+    : "";
+  return `${verb} ${resourceName} «${activity.resourceTitle || "Sin título"}»${extra}.`;
 }
 
 // =========================================================
@@ -173,6 +277,20 @@ router.get("/", async (req, res, next) => {
       $unionWith: {
         coll: Song.collection.name,
         pipeline: currentResourceActivityPipeline("song"),
+      },
+    });
+
+    // Incorporamos las creaciones y TODAS las ediciones de ingresos y gastos.
+    pipeline.push({
+      $unionWith: {
+        coll: Income.collection.name,
+        pipeline: financialResourceActivityPipeline("income", "concept"),
+      },
+    });
+    pipeline.push({
+      $unionWith: {
+        coll: Expense.collection.name,
+        pipeline: financialResourceActivityPipeline("expense", "description"),
       },
     });
 
@@ -234,6 +352,7 @@ router.get("/", async (req, res, next) => {
               { case: { $eq: ["$action", "created"] }, then: "creó publicó creación publicación" },
               { case: { $eq: ["$action", "updated"] }, then: "modificó actualizó edición" },
               { case: { $eq: ["$action", "deleted"] }, then: "eliminó borró eliminación" },
+              { case: { $eq: ["$action", "archived"] }, then: "archivó archivado retiro" },
             ],
             default: "actividad",
           },
@@ -245,6 +364,8 @@ router.get("/", async (req, res, next) => {
               { case: { $eq: ["$resourceType", "event"] }, then: "evento" },
               { case: { $eq: ["$resourceType", "book"] }, then: "libro" },
               { case: { $eq: ["$resourceType", "song"] }, then: "canción" },
+              { case: { $eq: ["$resourceType", "income"] }, then: "ingreso finanzas" },
+              { case: { $eq: ["$resourceType", "expense"] }, then: "gasto finanzas" },
             ],
             default: "recurso",
           },
@@ -275,7 +396,7 @@ router.get("/", async (req, res, next) => {
       $facet: {
         totalItems: [{ $count: "value" }],
         rows: [
-          { $sort: { occurredAt: -1, resourceId: -1, action: 1 } },
+          { $sort: { occurredAt: -1, resourceId: -1, sequence: -1, action: 1 } },
           { $skip: (page - 1) * PAGE_SIZE },
           { $limit: PAGE_SIZE },
           {
@@ -286,6 +407,8 @@ router.get("/", async (req, res, next) => {
               resourceTitle: 1,
               action: 1,
               occurredAt: 1,
+              changedFields: 1,
+              sequence: 1,
               actor: 1,
             },
           },
@@ -305,7 +428,7 @@ router.get("/", async (req, res, next) => {
     return res.json({
       success: true,
       activities: rows.map((entry) => ({
-        id: `${entry.resourceType}:${entry.resourceId}:${entry.action}`,
+        id: `${entry.resourceType}:${entry.resourceId}:${entry.action}:${entry.sequence ?? 0}:${new Date(entry.occurredAt).getTime()}`,
         actorName: actorName(entry.actor),
         actorEmail: entry.actor?.email || "—",
         createdAt: entry.occurredAt,

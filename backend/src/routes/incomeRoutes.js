@@ -18,6 +18,7 @@ import Income, {
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import validateRequestOrigin from "../middleware/validateRequestOrigin.js";
+import { deleteFinancialMovement } from "../services/audit/deletionService.js";
 
 const router = Router();
 
@@ -345,33 +346,25 @@ router.patch("/:id", optionalReceiptUpload, async (req, res, next) => {
   } catch (error) { return next(error); }
 });
 
-// DELETE /api/incomes/:id: solo archivado lógico, nunca borrado físico.
-// No se permite retirar un ingreso recibido: primero debe anularse con auditoría.
+// DELETE /api/incomes/:id - SOLO TRAS ANULAR.
+// Solo confirma éxito después de borrar en MongoDB y registrar la auditoría.
+// Si Cloudinary falla, sus referencias quedan pendientes para mantenimiento.
 router.delete("/:id", async (req, res, next) => {
   try {
     const id = validId(req.params.id);
-    const version = validVersion(req.body?.expectedVersion);
-    const previous = await Income.findOne({ _id: id, deletedAt: null }).lean();
-    if (!previous) throw httpError(404, "Ingreso no encontrado");
-    if (previous.status === "received") {
-      throw httpError(409, "Primero edita el ingreso y cambia su estado a Anulado. Los ingresos recibidos no se eliminan directamente");
-    }
-    if (previous.__v !== version) {
-      throw httpError(409, "Otro administrador modificó el ingreso. Actualiza el listado");
-    }
-    const now = new Date();
-    const updated = await Income.findOneAndUpdate(
-      { _id: id, deletedAt: null, __v: version, status: { $in: ["pending", "cancelled"] } },
-      {
-        $set: { deletedAt: now, deletedBy: req.user._id, updatedBy: req.user._id },
-        $inc: { __v: 1 },
-        $push: { history: { action: "archived", by: req.user._id, at: now } },
-      },
-      { new: true }
-    );
-    if (!updated) throw httpError(409, "El ingreso cambió mientras intentabas archivarlo");
+    const expectedVersion = validVersion(req.body?.expectedVersion);
+    const outcome = await deleteFinancialMovement({
+      model: Income, resourceType: "income",
+      resourceId: id, expectedVersion, deletedBy: req.user._id,
+    });
     res.set("Cache-Control", "private, no-store");
-    return res.json({ success: true, message: "Ingreso retirado del listado, con historial conservado" });
+    return res.json({
+      success: true,
+      ...outcome,
+      message: outcome.cleanupPending
+        ? "Ingreso eliminado definitivamente. Hay comprobantes pendientes de limpieza externa"
+        : "Ingreso eliminado definitivamente; auditoría conservada",
+    });
   } catch (error) { return next(error); }
 });
 

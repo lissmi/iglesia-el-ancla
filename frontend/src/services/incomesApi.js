@@ -53,8 +53,8 @@ export async function updateIncome(id, payload, expectedVersion) {
   return response.data.income;
 }
 
-// Retira lógicamente un pendiente o anulado; no borra su auditoría.
-export async function archiveIncome(id, expectedVersion) {
+// Elimina definitivamente el documento; conserva solo la constancia mínima de auditoría.
+export async function deleteIncome(id, expectedVersion) {
   const response = await api.delete(`/incomes/${encodeURIComponent(id)}`, {
     data: { expectedVersion },
   });

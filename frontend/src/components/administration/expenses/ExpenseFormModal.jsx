@@ -21,6 +21,7 @@ import {
 } from "../../../utils/expenseUtils";
 
 import "../../../styles/components/administration/expenses/ExpenseFormModal.css";
+import { fetchExpenseReceipt } from "../../../services/expensesApi";
 
 
 // =========================================================
@@ -35,10 +36,9 @@ const PAYMENT_METHODS = [
     "Otro",
 ];
 
-// Se aceptan únicamente imágenes comunes, con un máximo de 5 MB.
-// Esta validación se debe repetir en el servidor cuando exista la API.
+// Permitimos imágenes pequeñas; el backend también valida el contenido real.
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 3 * 1024 * 1024;
 
 const createEmptyForm = () => ({
     description: "",
@@ -97,15 +97,17 @@ function ExpenseFormModal({
 
     const [isSaving, setIsSaving] = useState(false);
 
-    // Archivo original: se usará al integrar la carga en Cloudinary.
+    // Archivo seleccionado: se enviará por separado a Cloudinary mediante el backend.
     const [receiptFile, setReceiptFile] = useState(null);
 
-    // Durante la demostración, image.url contiene una vista previa Base64.
-    // En producción será una URL protegida o entregada por el backend.
+    // Imagen nueva: vista previa temporal. Imagen existente: Blob privado del backend.
     const [receiptImage, setReceiptImage] = useState(null);
+    const [receiptRemoved, setReceiptRemoved] = useState(false);
+    const [receiptLoading, setReceiptLoading] = useState(false);
     const [isReadingImage, setIsReadingImage] = useState(false);
     const imageInputRef = useRef(null);
     const imageReaderRef = useRef(null);
+    const previousReceiptUrlRef = useRef(null);
 
     const isEditing = expense !== null;
 
@@ -148,6 +150,8 @@ function ExpenseFormModal({
 
         // Recuperamos la fotografía anterior al editar.
         setReceiptImage(expense?.receiptImage ?? null);
+        setReceiptRemoved(false);
+        setReceiptLoading(false);
         setReceiptFile(null);
         setIsReadingImage(false);
         if (imageReaderRef.current) imageReaderRef.current.abort();
@@ -158,6 +162,46 @@ function ExpenseFormModal({
 
     }, [isOpen, expense]);
 
+    // =====================================================
+    // CARGAR PREVISUALIZACIÓN DE UNA BOLETA PRIVADA
+    // =====================================================
+
+    useEffect(() => {
+        if (!isOpen || !expense?.id || !expense.hasReceipt || receiptRemoved || receiptFile) return;
+
+        let active = true;
+        const controller = new AbortController();
+        let temporaryUrl = null;
+        setReceiptLoading(true);
+
+        fetchExpenseReceipt(expense.id, controller.signal)
+            .then((blob) => {
+                if (!active) return;
+                temporaryUrl = URL.createObjectURL(blob);
+                previousReceiptUrlRef.current = temporaryUrl;
+                setReceiptImage((current) => current || {
+                    url: temporaryUrl,
+                    fileName: "Boleta almacenada de forma privada",
+                });
+            })
+            .catch((error) => {
+                if (!active || error?.code === "ERR_CANCELED") return;
+                setErrors((previous) => ({
+                    ...previous,
+                    receiptImage: "No fue posible cargar la vista previa del comprobante.",
+                }));
+            })
+            .finally(() => { if (active) setReceiptLoading(false); });
+
+        return () => {
+            active = false;
+            controller.abort();
+            if (temporaryUrl) URL.revokeObjectURL(temporaryUrl);
+            if (previousReceiptUrlRef.current === temporaryUrl) {
+                previousReceiptUrlRef.current = null;
+            }
+        };
+    }, [isOpen, expense?.id, expense?.hasReceipt, receiptRemoved, receiptFile]);
 
     // =====================================================
     // CONTROLAR CAMBIOS
@@ -179,7 +223,7 @@ function ExpenseFormModal({
 
             if (
                 name === "status" &&
-                value === "Pendiente"
+                value !== "Pagado"
             ) {
                 updated.paidAt = "";
             }
@@ -228,7 +272,7 @@ function ExpenseFormModal({
         if (file.size > MAX_IMAGE_SIZE) {
             setErrors((previous) => ({
                 ...previous,
-                receiptImage: "El comprobante no puede superar los 5 MB.",
+                receiptImage: "El comprobante no puede superar los 3 MB.",
             }));
             event.target.value = "";
             return;
@@ -242,6 +286,7 @@ function ExpenseFormModal({
 
         reader.onload = () => {
             setReceiptFile(file);
+            setReceiptRemoved(false);
             setReceiptImage({
                 url: reader.result,
                 fileName: file.name,
@@ -269,6 +314,7 @@ function ExpenseFormModal({
         imageReaderRef.current?.abort();
         setReceiptImage(null);
         setReceiptFile(null);
+        setReceiptRemoved(Boolean(expense?.hasReceipt));
         setIsReadingImage(false);
         if (imageInputRef.current) imageInputRef.current.value = "";
         setErrors((previous) => ({ ...previous, receiptImage: "" }));
@@ -317,7 +363,8 @@ function ExpenseFormModal({
 
         if (
             formData.status !== "Pagado" &&
-            formData.status !== "Pendiente"
+            formData.status !== "Pendiente" &&
+            formData.status !== "Anulado"
         ) {
 
             nextErrors.status =
@@ -366,6 +413,9 @@ function ExpenseFormModal({
 
                 nextErrors.paidAt =
                     "La fecha de pago no puede ser anterior a la fecha del gasto.";
+
+            } else if (formData.paidAt > getExpenseLocalDate()) {
+                nextErrors.paidAt = "La fecha de pago no puede ser futura.";
 
             }
 
@@ -428,9 +478,8 @@ function ExpenseFormModal({
                     : null,
             notes: formData.notes.trim(),
 
-            // La imagen es opcional. Conservar, reemplazar o quitar
-            // funciona de la misma manera en creación y edición.
-            receiptImage,
+            // La vista previa NO viaja a MongoDB. Solo indicamos si se quitó.
+            removeReceipt: receiptRemoved,
         };
 
         setIsSaving(true);
@@ -440,8 +489,7 @@ function ExpenseFormModal({
             // El componente padre se encarga de guardar
             // o actualizar el registro.
 
-            // El archivo no va dentro del gasto persistido.
-            // En la integración definitiva se enviará como FormData.
+            // El backend guardará en MongoDB solo la referencia de Cloudinary.
             await onSave(payload, expense, receiptFile);
 
             onClose?.();
@@ -720,6 +768,10 @@ function ExpenseFormModal({
                             <option value="Pendiente">
                                 Pendiente
                             </option>
+
+                            <option value="Anulado">
+                                Anulado
+                            </option>
                         </select>
 
                     </div>
@@ -935,7 +987,7 @@ function ExpenseFormModal({
                                 <ReceiptText size={24} aria-hidden="true" />
                                 <span>
                                     <strong>Adjuntar boleta o tomar fotografía</strong>
-                                    <small>JPG, PNG o WEBP · Máximo 5 MB</small>
+                                    <small>JPG, PNG o WEBP · Máximo 3 MB</small>
                                 </span>
                             </button>
                         )}
@@ -946,6 +998,7 @@ function ExpenseFormModal({
                         </small>
 
                         {isReadingImage && <small role="status">Preparando imagen...</small>}
+                        {receiptLoading && <small role="status">Cargando boleta privada...</small>}
                         {errors.receiptImage && (
                             <span className="expense-form__error" role="alert">
                                 {errors.receiptImage}

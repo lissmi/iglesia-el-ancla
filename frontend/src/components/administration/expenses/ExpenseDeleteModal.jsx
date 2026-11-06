@@ -1,4 +1,3 @@
-
 import { useEffect, useId, useRef, useState } from "react";
 
 import {
@@ -121,7 +120,7 @@ function ExpenseDeleteModal({
 
     const handleConfirm = async () => {
 
-        if (isDeleting || !expense) {
+        if (isDeleting || !expense || expense.status !== "Anulado") {
             return;
         }
 
@@ -143,9 +142,8 @@ function ExpenseDeleteModal({
             // El componente principal realiza
             // la eliminación del registro.
 
-            await onConfirm(expense);
-
-            onClose?.();
+            const result = await onConfirm(expense);
+            if (result !== false) onClose?.();
 
         } catch (deleteError) {
 
@@ -171,6 +169,9 @@ function ExpenseDeleteModal({
         return null;
     }
 
+
+    // Solo los gastos previamente anulados pueden eliminarse.
+    const canDelete = expense.status === "Anulado";
 
     // =====================================================
     // INTERFAZ
@@ -234,16 +235,16 @@ function ExpenseDeleteModal({
                 {/* ======================================= */}
 
                 <h2 id={titleId}>
-                    ¿Eliminar este gasto?
+                    ¿Eliminar definitivamente este gasto?
                 </h2>
 
                 <p
                     id={descriptionId}
                     className="expense-delete__description"
                 >
-                    Estás a punto de eliminar un movimiento
-                    del registro financiero. Esta acción
-                    no se puede deshacer en la sesión actual.
+                    {canDelete
+                        ? "Se borrará definitivamente de MongoDB. Solo quedará la auditoría mínima. Esta acción es irreversible."
+                        : "Para eliminar este gasto, primero debes cambiar su estado a Anulado desde Editar."}
                 </p>
 
 
@@ -292,9 +293,9 @@ function ExpenseDeleteModal({
                     />
 
                     <span>
-                        Al eliminarlo, también dejará de aparecer
-                        en el historial, los resúmenes y los
-                        gráficos financieros.
+                        {canDelete
+                            ? "El gasto y sus comprobantes privados se eliminarán definitivamente. Se conservará una constancia mínima en Historial de actividad."
+                            : "La eliminación está bloqueada mientras el gasto no esté Anulado. Cierra y edita el movimiento para anularlo primero."}
                     </span>
 
                 </div>
@@ -333,7 +334,7 @@ function ExpenseDeleteModal({
                         type="button"
                         className="expense-delete__confirm"
                         onClick={handleConfirm}
-                        disabled={isDeleting}
+                        disabled={isDeleting || !canDelete}
                     >
 
                         <Trash2
@@ -343,7 +344,7 @@ function ExpenseDeleteModal({
 
                         {isDeleting
                             ? "Eliminando..."
-                            : "Sí, eliminar gasto"}
+                            : "Sí, eliminar definitivamente"}
 
                     </button>
 

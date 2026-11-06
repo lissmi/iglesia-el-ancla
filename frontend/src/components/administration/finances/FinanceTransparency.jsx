@@ -1,153 +1,56 @@
-
-import {
-    ShieldCheck,
-    Eye,
-    LockKeyhole,
-    HeartHandshake,
-    Info,
-} from "lucide-react";
-
 // =========================================================
-// ESTILOS
+// INFORMACIÓN PARA LA COMUNIDAD - IGLESIA EL ANCLA
+// Usamos palabras sencillas para acompañar las cifras.
 // =========================================================
 
+import { ShieldCheck, Eye, LockKeyhole, HeartHandshake, Info } from "lucide-react";
 import "../../../styles/components/administration/finances/FinanceTransparency.css";
 
-// =========================================================
-// COMPONENTE PRINCIPAL
-// =========================================================
-
 function FinanceTransparency() {
-
     return (
-
         <section className="finance-transparency">
-
-            {/* =========================================== */}
-            {/* ENCABEZADO */}
-            {/* =========================================== */}
-
             <div className="finance-transparency__header">
-
                 <div className="finance-transparency__main-icon">
-                    <ShieldCheck
-                        size={26}
-                        strokeWidth={1.8}
-                    />
+                    <ShieldCheck size={26} strokeWidth={1.8} aria-hidden="true" />
                 </div>
-
-                <span className="finance-transparency__eyebrow">
-                    Compromiso con nuestra comunidad
-                </span>
-
-                <h2>
-                    Transparencia financiera
-                </h2>
-
+                <span className="finance-transparency__eyebrow">Compromiso con nuestra comunidad</span>
+                <h2>Transparencia financiera</h2>
                 <p>
-                    Creemos en una administración responsable
-                    y transparente de los recursos que
-                    contribuyen al desarrollo de nuestra iglesia.
+                    Cada aporte es valioso. Queremos compartir con claridad cómo
+                    cuidamos y utilizamos los recursos que recibimos como iglesia.
                 </p>
-
             </div>
-
-            {/* =========================================== */}
-            {/* PRINCIPIOS */}
-            {/* =========================================== */}
-
             <div className="finance-transparency__items">
-
                 <div className="finance-transparency__item">
-
-                    <div className="finance-transparency__item-icon">
-                        <Eye size={19} />
-                    </div>
-
+                    <div className="finance-transparency__item-icon"><Eye size={19} aria-hidden="true" /></div>
                     <div>
-
-                        <h3>
-                            Información clara
-                        </h3>
-
-                        <p>
-                            Los miembros podrán consultar
-                            resúmenes generales de ingresos,
-                            gastos y balance financiero.
-                        </p>
-
+                        <h3>Cuentas claras</h3>
+                        <p>Puedes conocer cuánto hemos recibido, cuánto se ha gastado y cuál es el resultado del período.</p>
                     </div>
-
                 </div>
-
                 <div className="finance-transparency__item">
-
-                    <div className="finance-transparency__item-icon">
-                        <LockKeyhole size={19} />
-                    </div>
-
+                    <div className="finance-transparency__item-icon"><LockKeyhole size={19} aria-hidden="true" /></div>
                     <div>
-
-                        <h3>
-                            Protección de datos
-                        </h3>
-
-                        <p>
-                            Los reportes públicos para miembros
-                            no mostrarán datos personales,
-                            donantes individuales ni detalles
-                            administrativos sensibles.
-                        </p>
-
+                        <h3>Respeto por la privacidad</h3>
+                        <p>Compartimos los totales generales sin mostrar nombres, datos personales ni comprobantes privados.</p>
                     </div>
-
                 </div>
-
                 <div className="finance-transparency__item">
-
-                    <div className="finance-transparency__item-icon">
-                        <HeartHandshake size={19} />
-                    </div>
-
+                    <div className="finance-transparency__item-icon"><HeartHandshake size={19} aria-hidden="true" /></div>
                     <div>
-
-                        <h3>
-                            Administración responsable
-                        </h3>
-
-                        <p>
-                            La información financiera permitirá
-                            comprender de manera general
-                            cómo se distribuyen los recursos
-                            de nuestra comunidad.
-                        </p>
-
+                        <h3>Recursos al servicio de todos</h3>
+                        <p>Este resumen nos ayuda a comprender cómo se apoyan las actividades y necesidades de nuestra comunidad.</p>
                     </div>
-
                 </div>
-
             </div>
-
-            {/* =========================================== */}
-            {/* NOTA DE PRIVACIDAD */}
-            {/* =========================================== */}
-
             <div className="finance-transparency__notice">
-
-                <Info size={18} />
-
+                <Info size={18} aria-hidden="true" />
                 <p>
-                    Este módulo presenta información
-                    consolidada. El acceso a registros
-                    individuales y funciones administrativas
-                    deberá estar restringido según los
-                    permisos de cada usuario.
+                    Este es un resumen general. Los detalles de cada ingreso y gasto
+                    se mantienen protegidos y solo pueden consultarlos las personas autorizadas.
                 </p>
-
             </div>
-
         </section>
-
     );
 }
 

@@ -31,6 +31,8 @@ const deletionLogSchema = new Schema(
         "book",
         "song",
         "prayer_request",
+        "income",   // Movimiento financiero de ingreso.
+        "expense",  // Movimiento financiero de gasto.
       ],
     },
 
@@ -69,6 +71,24 @@ const deletionLogSchema = new Schema(
       ref: "User",
       required: true,
     },
+
+    // Para finanzas conservamos la fecha original de creación, sin el monto.
+    resourceCreatedAt: { type: Date, default: undefined },
+
+    // Registro mínimo de ediciones anteriores de un movimiento BORRADO.
+    // No copiamos el documento ni los valores anteriores de sus campos.
+    financialEdits: {
+      type: [new Schema({
+        by: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        at: { type: Date, required: true },
+        fields: { type: [String], default: undefined },
+      }, { _id: false, strict: true })],
+      default: undefined,
+    },
+
+    // IDs transitorios para limpiar los comprobantes en Cloudinary.
+    // Se van retirando cuando el borrado externo se confirma.
+    pendingCloudinaryIds: { type: [String], default: undefined, select: false },
 
     // Fecha real de eliminación (MongoDB almacena fechas en UTC).
     deletedAt: {

@@ -1,4 +1,3 @@
-
 import {
     PieChart,
     Pie,
@@ -141,6 +140,8 @@ function FinanceDistributionCard({
             {/* GRÁFICO CIRCULAR */}
             {/* =========================================== */}
 
+            {total > 0 ? (
+              <>
             <div className="finance-distribution__chart">
 
                 <ResponsiveContainer
@@ -251,6 +252,13 @@ function FinanceDistributionCard({
                 })}
 
             </div>
+              </>
+            ) : (
+                <div className="finance-distribution__empty">
+                    <Info size={24} aria-hidden="true" />
+                    <p>Aún no hay movimientos en esta categoría para el período elegido.</p>
+                </div>
+            )}
 
         </section>
 
@@ -272,7 +280,7 @@ function FinanceDistributionCharts({ data = null }) {
     //
     // No utilizamos arreglos locales duplicados.
 
-    const hasDemoData = data !== null;
+    const hasData = data !== null;
 
     // =====================================================
     // INTERFAZ PRINCIPAL
@@ -282,7 +290,7 @@ function FinanceDistributionCharts({ data = null }) {
 
         <div className="finance-distribution">
 
-            {hasDemoData ? (
+            {hasData ? (
 
                 <div className="finance-distribution__grid">
 
@@ -328,7 +336,7 @@ function FinanceDistributionCharts({ data = null }) {
                     />
 
                     <strong>
-                        Sin datos de demostración
+                        Todavía no hay movimientos
                     </strong>
 
                     <p>
@@ -352,8 +360,7 @@ function FinanceDistributionCharts({ data = null }) {
                     aria-hidden="true"
                 />
 
-                Los valores son ficticios y se utilizan
-                exclusivamente para el diseño.
+                Se muestra el origen de los ingresos recibidos y el destino de los gastos pagados.
 
             </p>
 

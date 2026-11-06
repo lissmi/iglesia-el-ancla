@@ -1,5 +1,6 @@
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { fetchExpenseReceipt } from "../../../services/expensesApi";
 
 import {
     X,
@@ -8,6 +9,7 @@ import {
     CalendarDays,
     Clock3,
     CheckCircle2,
+    Ban,
     AlertCircle,
     CreditCard,
     Tag,
@@ -94,6 +96,42 @@ function ExpenseDetailsModal({
     const closeButtonRef = useRef(null);
 
     const isPaid = expense?.status === "Pagado";
+    const isPending = expense?.status === "Pendiente";
+    const isCancelled = expense?.status === "Anulado";
+    const [receiptUrl, setReceiptUrl] = useState("");
+    const [receiptError, setReceiptError] = useState("");
+    const [receiptLoading, setReceiptLoading] = useState(false);
+
+    // Boleta privada: recuperamos un Blob después de validar cookie y rol.
+    useEffect(() => {
+        if (!isOpen || !expense?.id || !expense.hasReceipt) {
+            setReceiptUrl("");
+            return;
+        }
+        let active = true;
+        let temporaryUrl = null;
+        const controller = new AbortController();
+        setReceiptUrl("");
+        setReceiptLoading(true);
+        setReceiptError("");
+        fetchExpenseReceipt(expense.id, controller.signal)
+            .then((blob) => {
+                if (!active) return;
+                temporaryUrl = URL.createObjectURL(blob);
+                setReceiptUrl(temporaryUrl);
+            })
+            .catch((error) => {
+                if (active && error?.code !== "ERR_CANCELED") {
+                    setReceiptError("No se pudo recuperar el comprobante privado.");
+                }
+            })
+            .finally(() => { if (active) setReceiptLoading(false); });
+        return () => {
+            active = false;
+            controller.abort();
+            if (temporaryUrl) URL.revokeObjectURL(temporaryUrl);
+        };
+    }, [isOpen, expense?.id, expense?.hasReceipt]);
 
 
     // =====================================================
@@ -262,11 +300,10 @@ function ExpenseDetailsModal({
                                 size={15}
                                 aria-hidden="true"
                             />
+                        ) : isCancelled ? (
+                            <Ban size={15} aria-hidden="true" />
                         ) : (
-                            <Clock3
-                                size={15}
-                                aria-hidden="true"
-                            />
+                            <Clock3 size={15} aria-hidden="true" />
                         )}
 
                         {expense.status || "Sin estado"}
@@ -344,14 +381,14 @@ function ExpenseDetailsModal({
                             value={
                                 isPaid
                                     ? displayDate(paidAt)
-                                    : "Pendiente de pago"
+                                    : isPending ? "Pendiente de pago" : "No corresponde"
                             }
                         />
 
                     </div>
 
 
-                    {!isPaid && (
+                    {isPending && (
 
                         <div className="expense-details__notice">
 
@@ -371,6 +408,13 @@ function ExpenseDetailsModal({
 
                     )}
 
+
+                    {isCancelled && (
+                        <div className="expense-details__notice">
+                            <Ban size={18} aria-hidden="true" />
+                            <p>Gasto anulado: no se contabiliza en los egresos realizados.</p>
+                        </div>
+                    )}
 
                     {isPaid && !paidAt && (
 
@@ -427,20 +471,26 @@ function ExpenseDetailsModal({
                         <ImageIcon size={17} aria-hidden="true" />
                         Boleta o comprobante
                     </h3>
-                    {expense.receiptImage?.url ? (
+                    {expense.hasReceipt ? (
                         <div className="expense-details__receipt">
-                            <a
-                                href={expense.receiptImage.url}
+                            {receiptLoading && <p role="status">Cargando comprobante privado...</p>}
+                            {receiptError && <p role="alert">{receiptError}</p>}
+                            {receiptUrl && (
+                              <>
+                              <a
+                                href={receiptUrl || undefined}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Ver comprobante en tamaño completo"
                             >
                                 <img
-                                    src={expense.receiptImage.url}
+                                    src={receiptUrl || undefined}
                                     alt={`Comprobante del gasto ${expense.description || "registrado"}`}
                                 />
                             </a>
-                            <span>Selecciona la imagen para verla en tamaño completo.</span>
+                              <span>Selecciona la imagen para verla en tamaño completo.</span>
+                              </>
+                            )}
                         </div>
                     ) : (
                         <div className="expense-details__receipt-empty">

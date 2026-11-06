@@ -1,4 +1,3 @@
-
 import {
     ArrowUpRight,
     ArrowDownRight,
@@ -241,8 +240,8 @@ function FinanceSummary({ data = null }) {
             <p className="finance-summary__disclaimer">
 
                 {hasData
-                    ? "Los valores presentados son datos de demostración y no corresponden a registros financieros reales."
-                    : "No existen datos de demostración para el período seleccionado."}
+                    ? "Estas cifras incluyen ingresos recibidos y gastos pagados en el período elegido."
+                    : "Cuando haya movimientos registrados en este período, los verás aquí."}
 
             </p>
 

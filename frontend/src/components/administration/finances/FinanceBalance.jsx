@@ -1,4 +1,3 @@
-
 import {
     Scale,
     ArrowUpRight,
@@ -41,8 +40,7 @@ function FinanceBalance({ data = null }) {
     // FinanceOverview proporciona los datos ya
     // procesados según el año y período seleccionado.
     //
-    // Si data es null, no existen registros de
-    // demostración para el período consultado.
+    // Si data es null, no hay movimientos registrados para el período.
 
     const hasData = data !== null;
 
@@ -275,7 +273,7 @@ function FinanceBalance({ data = null }) {
                     />
 
                     <strong>
-                        Sin datos de demostración
+                        Todavía no hay movimientos
                     </strong>
 
                     <p>
@@ -300,10 +298,8 @@ function FinanceBalance({ data = null }) {
                 />
 
                 <span>
-                    Valores ficticios utilizados para
-                    el diseño. El balance no representa
-                    necesariamente el saldo bancario
-                    o efectivo real.
+                    Este balance muestra ingresos recibidos menos gastos pagados.
+                    Puede ser distinto del dinero disponible en cuentas o efectivo.
                 </span>
 
             </p>

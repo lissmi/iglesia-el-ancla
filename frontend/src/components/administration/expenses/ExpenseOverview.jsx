@@ -8,9 +8,7 @@ import "../../../styles/components/administration/expenses/ExpenseOverview.css";
 
 // Identificamos comprobantes almacenados como objeto o URL.
 function hasReceipt(expense) {
-  const receipt = expense?.receiptImage;
-  if (typeof receipt === "string") return receipt.trim().length > 0;
-  return typeof receipt?.url === "string" && receipt.url.trim().length > 0;
+  return expense?.hasReceipt === true;
 }
 
 function ExpenseOverview({ expenses = [] }) {

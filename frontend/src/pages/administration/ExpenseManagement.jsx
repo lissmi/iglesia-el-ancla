@@ -1,4 +1,3 @@
-
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -63,6 +62,7 @@ import { useExpenses } from "../../context/expenses/ExpensesContext";
 // =========================================================
 
 import "../../styles/pages/administration/ExpenseManagement.css";
+import "../../styles/components/administration/expenses/ExpenseDataState.css";
 
 
 
@@ -93,6 +93,9 @@ function ExpenseManagement() {
   const [activeSection, setActiveSection] =
     useState("summary");
 
+  // Informamos el resultado de la eliminación sin ocultar fallos externos.
+  const [deletionNotice, setDeletionNotice] = useState(null);
+
 
   // =====================================================
   // DATOS COMPARTIDOS DE GASTOS
@@ -103,6 +106,9 @@ function ExpenseManagement() {
   // produciría dos fuentes de datos independientes.
   const {
     expenses,
+    isLoading,
+    error,
+    refreshExpenses,
     saveExpense,
     deleteExpense,
   } = useExpenses();
@@ -164,8 +170,8 @@ function ExpenseManagement() {
     );
 
     if (!expense) {
-      // Evitamos abrir registros inexistentes o eliminados.
-      console.warn("No se encontró el gasto solicitado:", requestedId);
+      // El registro puede estar cargándose desde MongoDB.
+      // No eliminamos el parámetro mientras se recuperan los datos.
       return;
     }
 
@@ -311,10 +317,13 @@ function ExpenseManagement() {
   // CONFIRMAR ELIMINACIÓN
   // =========================================================
 
-  const handleConfirmDeleteExpense = (expense) => {
+  const handleConfirmDeleteExpense = async (expense) => {
 
-    // Eliminamos el registro desde el contexto compartido.
-    deleteExpense(expense.id);
+    // MongoDB confirma el borrado y registra su auditoría atómicamente.
+    const result = await deleteExpense(expense.id);
+    setDeletionNotice(result.cleanupPending
+      ? { type: "warning", text: "Gasto eliminado definitivamente. La eliminación de algunas boletas en Cloudinary quedó pendiente de revisión." }
+      : { type: "success", text: "Gasto eliminado definitivamente. La acción quedó en el historial administrativo." });
 
     // Cerramos los detalles si correspondían al gasto eliminado.
     setSelectedExpenseId((previousId) =>
@@ -323,6 +332,7 @@ function ExpenseManagement() {
 
     // Cerramos el modal de confirmación.
     setExpenseToDeleteId(null);
+    return true;
 
   };
 
@@ -340,14 +350,16 @@ function ExpenseManagement() {
   // - null: creamos un registro.
   // - objeto: actualizamos un registro existente.
 
-  const handleSaveExpense = (
+  const handleSaveExpense = async (
     expenseData,
-    expenseToEdit
+    expenseToEdit,
+    receiptFile = null
   ) => {
 
-    // El contexto se encarga de actualizar o crear el gasto.
-    // Conserva todos los campos, incluido receiptImage.
-    saveExpense(expenseData, expenseToEdit);
+    // El contexto crea o actualiza el gasto y sube el archivo si corresponde.
+    // Nunca se envía la vista previa de la boleta a MongoDB.
+    // Esperamos la respuesta del servidor antes de cerrar el formulario.
+    return await saveExpense(expenseData, expenseToEdit, receiptFile);
 
   };
 
@@ -375,6 +387,14 @@ function ExpenseManagement() {
           onRegisterExpense={handleOpenExpenseModal}
         />
 
+        {/* Confirmamos la eliminación y notificamos si Cloudinary necesita un reintento. */}
+        {deletionNotice && (
+          <div className={`expense-data-state expense-data-state--${deletionNotice.type}`} role="status">
+            <span>{deletionNotice.text}</span>
+            <button type="button" onClick={() => setDeletionNotice(null)}>Cerrar</button>
+          </div>
+        )}
+
 
         {/* ======================================= */}
         {/* NAVEGACIÓN INTERNA */}
@@ -390,6 +410,19 @@ function ExpenseManagement() {
         {/* CONTENIDO DINÁMICO */}
         {/* ======================================= */}
 
+        {isLoading ? (
+          <div className="expense-data-state" role="status">
+            Cargando movimientos de gastos registrados...
+          </div>
+        ) : error ? (
+          <div className="expense-data-state expense-data-state--error" role="alert">
+            <strong>No se pudieron cargar los gastos.</strong>
+            <p>{error}</p>
+            <button type="button" onClick={() => refreshExpenses().catch(() => {})}>
+              Reintentar
+            </button>
+          </div>
+        ) : (
         <div className="expense-management__content">
 
 
@@ -476,6 +509,7 @@ function ExpenseManagement() {
 
 
         </div>
+        )}
 
       </div>
 

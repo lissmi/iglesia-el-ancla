@@ -154,8 +154,8 @@ function ActivityHistory() {
           </h1>
 
           <p>
-            Consulta quién publicó, modificó por última vez o eliminó contenido
-            del sistema, y cuándo se realizó cada acción registrada.
+            Consulta quién creó, modificó o eliminó contenido del sistema,
+            incluidos los movimientos financieros de ingresos y gastos.
           </p>
         </div>
 
@@ -171,9 +171,10 @@ function ActivityHistory() {
         <div>
           <strong>Actividad real del sistema</strong>
           <p>
-            Se muestran las publicaciones y últimas ediciones de los recursos
-            que todavía existen, junto con las eliminaciones registradas.
-            No se conserva el detalle de cada edición anterior.
+            Se muestran las creaciones, modificaciones y eliminaciones de ingresos
+            y gastos; también la actividad de los demás módulos compatibles.
+            En otros recursos puede mostrarse solo la última edición.
+            No se presentan montos ni valores anteriores de campos financieros.
           </p>
         </div>
       </div>
@@ -241,8 +242,8 @@ function ActivityHistory() {
         <LockKeyhole size={18} aria-hidden="true" />
         <p>
           Este historial es exclusivamente de consulta. Las responsabilidades de
-          creación y edición se obtienen de los documentos originales y las
-          eliminaciones se conservan mediante registros protegidos del backend.
+          creación y edición financiera se obtienen de los movimientos vigentes;
+          después de una eliminación, solo se conserva su auditoría mínima.
         </p>
       </footer>
     </div>
