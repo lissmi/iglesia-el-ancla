@@ -28,9 +28,12 @@ import {
     AlignLeft,
     Pencil,
     ArrowDownLeft,
+    ExternalLink,
 } from "lucide-react";
 
 import "../../../styles/components/administration/income/IncomeDetailsModal.css";
+import "../../../styles/components/administration/income/IncomeReceipt.css";
+import { incomeReceiptUrl } from "../../../services/incomesApi";
 
 
 // =========================================================
@@ -689,6 +692,22 @@ function IncomeDetailsModal({
                             </p>
 
                         </div>
+
+                        {/* Respaldo protegido: Express comprueba JWT y rol. */}
+                        {income.hasReceipt && (
+                            <div className="income-receipt-field__details">
+                                <strong>Comprobante de respaldo</strong>
+                                <a
+                                    className="income-receipt-field__link"
+                                    href={incomeReceiptUrl(income._id || income.id)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <ExternalLink size={16} aria-hidden="true" />
+                                    Ver comprobante privado
+                                </a>
+                            </div>
+                        )}
 
                     </section>
 

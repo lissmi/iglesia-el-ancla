@@ -126,6 +126,9 @@ import accountActivationRoutes from "./routes/accountActivationRoutes.js";
 // Importamos las rutas de recomendaciones externas.
 import recommendationRoutes from "./routes/recommendationRoutes.js";
 
+// Importamos las rutas administrativas de ingresos.
+import incomeRoutes from "./routes/incomeRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -556,6 +559,9 @@ app.use("/api/volunteers", volunteerRoutes);
 
 // Registramos la API pública y administrativa de Recomendados.
 app.use("/api/recommendations", recommendationRoutes);
+
+// Habilitamos la gestión financiera de ingresos.
+app.use("/api/incomes", incomeRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

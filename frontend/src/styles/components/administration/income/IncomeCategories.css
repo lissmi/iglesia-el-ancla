@@ -431,3 +431,98 @@
         margin-bottom: 15px;
     }
 }
+
+
+/* ========================================================= */
+/* SELECTOR DE PERÍODO - DISEÑO MEJORADO */
+/* ========================================================= */
+
+.income-categories__period {
+    /* Organiza la etiqueta y el selector horizontalmente. */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    /* Mantiene una altura uniforme. */
+    min-height: 44px;
+    padding: 0 14px;
+
+    /* Apariencia visual de El Ancla. */
+    background: #ffffff;
+    border: 1px solid #d9e6ed;
+    border-radius: 13px;
+
+    /* Animación de interacción. */
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Etiqueta del período. */
+.income-categories__period label {
+    margin: 0;
+    white-space: nowrap;
+
+    color: #718b9d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Desplegable. */
+.income-categories__period select {
+    /* Elimina el borde y la flecha nativos. */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Evita un segundo rectángulo dentro del control. */
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+
+    /* Dimensiones. */
+    min-width: 100px;
+    min-height: 42px;
+    padding: 0 20px 0 0;
+
+    /* Tipografía. */
+    color: #17384c;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+/* Flecha personalizada. */
+.income-categories__period::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    right: 15px;
+
+    width: 7px;
+    height: 7px;
+
+    border-right: 2px solid #6f8d9e;
+    border-bottom: 2px solid #6f8d9e;
+
+    transform: translateY(-70%) rotate(45deg);
+
+    pointer-events: none;
+}
+
+/* Resaltado al seleccionar el control. */
+.income-categories__period:focus-within {
+    border-color: #2c8199;
+    box-shadow: 0 0 0 4px rgba(44, 129, 153, 0.12);
+}
+
+/* Resaltado sutil al pasar el cursor. */
+.income-categories__period:hover {
+    border-color: #9fc5d0;
+}

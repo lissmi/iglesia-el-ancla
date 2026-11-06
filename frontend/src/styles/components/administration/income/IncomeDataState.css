@@ -1,0 +1,70 @@
+/* ========================================================= */
+/* ESTADOS DE CARGA Y ERROR - GESTIÓN DE INGRESOS */
+/* ========================================================= */
+
+.income-management__data-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 220px;
+    padding: 30px 20px;
+    border: 1px solid #dbe6eb;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #2c8199;
+    text-align: center;
+}
+
+.income-management__data-state h2 {
+    margin: 0;
+    color: #17384c;
+    font-size: 19px;
+}
+
+.income-management__data-state p {
+    max-width: 520px;
+    margin: 0;
+    color: #587483;
+    line-height: 1.6;
+}
+
+.income-management__data-state--error {
+    color: #ad594d;
+}
+
+.income-management__data-state button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #bad6df;
+    border-radius: 12px;
+    background: #eaf5f7;
+    color: #17384c;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.income-management__data-state button:hover {
+    background: #dceff3;
+}
+
+.income-management__data-state button:focus-visible {
+    outline: 3px solid #2c8199;
+    outline-offset: 3px;
+}
+
+.income-management__data-spinner {
+    animation: income-data-spin 1s linear infinite;
+}
+
+@keyframes income-data-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .income-management__data-spinner { animation: none; }
+}

@@ -541,3 +541,94 @@
         width: 100%;
     }
 }
+
+
+/* ========================================================= */
+/* SELECTS PERSONALIZADOS - FORMULARIO DE INGRESOS */
+/* ========================================================= */
+
+/* Identificamos los contenedores que tienen un select. */
+.income-form-modal__control:has(> select) {
+    position: relative;
+}
+
+/* Eliminamos la apariencia rectangular del navegador. */
+.income-form-modal__control select {
+    /* Retiramos el estilo nativo y la flecha original. */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* El contenedor ya tiene su propio borde. */
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    /* Conservamos el fondo del formulario. */
+    background: transparent;
+
+    /* Permitimos que ocupe el espacio disponible. */
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    /* Dejamos espacio para nuestra flecha. */
+    padding: 0 30px 0 0;
+
+    /* Tipografía del proyecto. */
+    color: #17384c;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+
+    /* Indicamos que es un elemento desplegable. */
+    cursor: pointer;
+}
+
+/* Creamos una flecha personalizada a la derecha. */
+.income-form-modal__control:has(> select)::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    right: 17px;
+
+    width: 8px;
+    height: 8px;
+
+    border-right: 2px solid #7893a3;
+    border-bottom: 2px solid #7893a3;
+
+    transform: translateY(-65%) rotate(45deg);
+
+    /* La flecha no interfiere con los clics. */
+    pointer-events: none;
+}
+
+/* Mejoramos el borde al pasar el cursor. */
+.income-form-modal__control:has(> select):hover {
+    border-color: #b2cdd8;
+}
+
+/* Resaltamos el contenedor cuando el select recibe foco. */
+.income-form-modal__control:has(> select):focus-within {
+    border-color: #2c8199;
+    box-shadow: 0 0 0 3px rgba(44, 129, 153, 0.12);
+}
+
+/* Mantenemos los colores de las opciones. */
+.income-form-modal__control select option {
+    color: #17384c;
+    background-color: #ffffff;
+}
+
+/* Mostramos un texto más suave cuando no hay selección. */
+.income-form-modal__control select:has(option[value=""]:checked) {
+    color: #8295a3;
+}
+
+/* Evitamos que parezca interactivo durante el guardado. */
+.income-form-modal__control select:disabled {
+    cursor: not-allowed;
+}

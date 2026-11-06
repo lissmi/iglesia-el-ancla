@@ -5,11 +5,16 @@
 import {
     useMemo,
     useState,
+    useEffect,
+    useCallback,
+    useRef,
 } from "react";
 
 import {
     AlertCircle,
     CheckCircle2,
+    RefreshCw,
+    LoaderCircle,
     X,
 } from "lucide-react";
 
@@ -41,192 +46,30 @@ import IncomeDeleteModal from "../../components/administration/income/IncomeDele
 // ESTILOS
 // =========================================================
 
+// Compartimos una sola instancia Axios desde services/api.js.
+import {
+    listIncomes,
+    createIncome,
+    updateIncome,
+    archiveIncome,
+    incomeApiError,
+} from "../../services/incomesApi";
+
 import "../../styles/pages/administration/IncomeManagement.css";
+import "../../styles/components/administration/income/IncomeDataState.css";
 
 
 // =========================================================
-// FECHA LOCAL
+// FECHA LOCAL (NECESARIA PARA FILTROS POR PERÍODO)
 // =========================================================
 
+// Conservamos esta utilidad original para «Hoy» y «Esta semana».
 const getLocalDate = (date = new Date()) => {
-
     const year = date.getFullYear();
-
-    const month = String(
-        date.getMonth() + 1
-    ).padStart(2, "0");
-
-    const day = String(
-        date.getDate()
-    ).padStart(2, "0");
-
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
-
 };
-
-
-// =========================================================
-// RESTAR DÍAS A UNA FECHA
-// =========================================================
-
-const subtractDays = (days) => {
-
-    const date = new Date();
-
-    date.setHours(12, 0, 0, 0);
-
-    date.setDate(
-        date.getDate() - days
-    );
-
-    return getLocalDate(date);
-
-};
-
-
-// =========================================================
-// DATOS TEMPORALES
-// =========================================================
-
-// Estos datos permiten probar el módulo mientras
-// todavía no se conecta con MongoDB.
-//
-// No representan movimientos financieros reales
-// de Iglesia El Ancla.
-
-const INITIAL_INCOMES = [
-
-    {
-        id: "INC-001",
-        concept: "Ofrenda general",
-        category: "offerings",
-        amount: 185000,
-        date: subtractDays(1),
-        paymentMethod: "cash",
-        status: "received",
-        reference: "",
-        responsible: "Administración",
-        notes: "Registro de prueba.",
-    },
-
-    {
-        id: "INC-002",
-        concept: "Diezmos de miembros",
-        category: "tithes",
-        amount: 320000,
-        date: subtractDays(2),
-        paymentMethod: "transfer",
-        status: "received",
-        reference: "TRX-002",
-        responsible: "Tesorería",
-        notes: "",
-    },
-
-    {
-        id: "INC-003",
-        concept: "Donación especial",
-        category: "donations",
-        amount: 95000,
-        date: subtractDays(4),
-        paymentMethod: "transfer",
-        status: "received",
-        reference: "TRX-003",
-        responsible: "Tesorería",
-        notes: "Aporte voluntario.",
-    },
-
-    {
-        id: "INC-004",
-        concept: "Actividad comunitaria",
-        category: "activities",
-        amount: 78000,
-        date: subtractDays(6),
-        paymentMethod: "cash",
-        status: "received",
-        reference: "",
-        responsible: "Administración",
-        notes: "",
-    },
-
-    {
-        id: "INC-005",
-        concept: "Ofrenda de reunión",
-        category: "offerings",
-        amount: 112000,
-        date: subtractDays(8),
-        paymentMethod: "cash",
-        status: "received",
-        reference: "",
-        responsible: "Tesorería",
-        notes: "",
-    },
-
-    {
-        id: "INC-006",
-        concept: "Diezmo mensual",
-        category: "tithes",
-        amount: 145000,
-        date: subtractDays(11),
-        paymentMethod: "transfer",
-        status: "received",
-        reference: "TRX-006",
-        responsible: "Administración",
-        notes: "",
-    },
-
-    {
-        id: "INC-007",
-        concept: "Donación para materiales",
-        category: "donations",
-        amount: 65000,
-        date: subtractDays(14),
-        paymentMethod: "card",
-        status: "received",
-        reference: "TRX-007",
-        responsible: "Tesorería",
-        notes: "",
-    },
-
-    {
-        id: "INC-008",
-        concept: "Aporte para actividad",
-        category: "activities",
-        amount: 45000,
-        date: subtractDays(17),
-        paymentMethod: "cash",
-        status: "pending",
-        reference: "",
-        responsible: "Administración",
-        notes: "Pendiente de confirmación.",
-    },
-
-    {
-        id: "INC-009",
-        concept: "Ofrenda especial",
-        category: "offerings",
-        amount: 210000,
-        date: subtractDays(21),
-        paymentMethod: "transfer",
-        status: "received",
-        reference: "TRX-009",
-        responsible: "Tesorería",
-        notes: "",
-    },
-
-    {
-        id: "INC-010",
-        concept: "Otros aportes",
-        category: "other",
-        amount: 25000,
-        date: subtractDays(26),
-        paymentMethod: "other",
-        status: "received",
-        reference: "",
-        responsible: "Administración",
-        notes: "",
-    },
-
-];
 
 
 // =========================================================
@@ -425,33 +268,6 @@ const sortIncomes = (incomes, sortBy) => {
 
 
 // =========================================================
-// GENERAR IDENTIFICADOR
-// =========================================================
-
-const generateIncomeId = (incomes) => {
-
-    const numericIds = incomes
-        .map((income) => {
-
-            const match = String(
-                income.id ?? ""
-            ).match(/^INC-(\d+)$/);
-
-            return match
-                ? Number(match[1])
-                : 0;
-
-        });
-
-    const nextNumber =
-        Math.max(0, ...numericIds) + 1;
-
-    return `INC-${String(nextNumber).padStart(3, "0")}`;
-
-};
-
-
-// =========================================================
 // COMPONENTE PRINCIPAL
 // =========================================================
 
@@ -461,9 +277,34 @@ function IncomeManagement() {
     // ESTADO DE INGRESOS
     // =====================================================
 
-    const [incomes, setIncomes] = useState(
-        INITIAL_INCOMES
-    );
+    // Nunca inicializamos montos financieros con datos ficticios.
+    const [incomes, setIncomes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState("");
+
+    // Leemos el listado REAL del backend. Soporta cancelación al desmontar.
+    const loadIncomes = useCallback(async (signal) => {
+        setIsLoading(true);
+        setLoadError("");
+        try {
+            const actual = await listIncomes(signal);
+            if (signal?.aborted) return;
+            setIncomes(actual);
+        } catch (error) {
+            // Un fallo de red no puede confundirse con ingresos en cero.
+            if (signal?.aborted || error?.code === "ERR_CANCELED") return;
+            setLoadError(incomeApiError(error));
+        } finally {
+            if (!signal?.aborted) setIsLoading(false);
+        }
+    }, []);
+
+    // La PWA consulta MongoDB a través de Express al montar la página.
+    useEffect(() => {
+        const controller = new AbortController();
+        loadIncomes(controller.signal);
+        return () => controller.abort();
+    }, [loadIncomes]);
 
 
     // =====================================================
@@ -503,6 +344,10 @@ function IncomeManagement() {
 
     const [isSavingIncome, setIsSavingIncome] =
         useState(false);
+
+    // Bloqueo síncrono: evita dos envíos antes de que React actualice la vista.
+    const savingRef = useRef(false);
+    const deletingRef = useRef(false);
 
     const [isDeletingIncome, setIsDeletingIncome] =
         useState(false);
@@ -761,159 +606,68 @@ function IncomeManagement() {
 
 
     // =====================================================
-    // GUARDAR INGRESO
+    // GUARDAR INGRESO REAL EN MONGODB
     // =====================================================
 
-    const handleSaveIncome = async (
-        formData,
-        editingIncome
-    ) => {
-
-        if (isSavingIncome) {
-            return false;
-        }
-
+    const handleSaveIncome = async (formData, editingIncome) => {
+        if (savingRef.current) return false;
+        savingRef.current = true;
         setIsSavingIncome(true);
-
         try {
-
-            // ---------------------------------------------
-            // EDITAR INGRESO EXISTENTE
-            // ---------------------------------------------
-
             if (editingIncome) {
-
-                const editingId =
-                    editingIncome.id ||
-                    editingIncome._id;
-
-                setIncomes((previous) =>
-                    previous.map((income) => {
-
-                        const currentId =
-                            income.id ||
-                            income._id;
-
-                        if (currentId !== editingId) {
-                            return income;
-                        }
-
-                        return {
-                            ...income,
-                            ...formData,
-                        };
-
-                    })
-                );
-
-                showNotification(
-                    "success",
-                    "El ingreso se actualizó correctamente."
-                );
-
+                // El servidor verifica permisos, montos y versión del registro.
+                const id = editingIncome._id || editingIncome.id;
+                const saved = await updateIncome(id, formData, editingIncome.version);
+                setIncomes((previous) => previous.map((item) =>
+                    (item._id || item.id) === id ? saved : item
+                ));
+                showNotification("success", "El ingreso se actualizó en MongoDB.");
             } else {
-
-                // -----------------------------------------
-                // CREAR NUEVO INGRESO
-                // -----------------------------------------
-
-                const newIncome = {
-                    id: generateIncomeId(incomes),
-                    ...formData,
-                };
-
-                setIncomes((previous) => [
-                    newIncome,
-                    ...previous,
-                ]);
-
-                showNotification(
-                    "success",
-                    "El ingreso se registró correctamente."
-                );
-
+                // MongoDB genera el identificador; React no genera IDs financieros.
+                const saved = await createIncome(formData);
+                setIncomes((previous) => [saved, ...previous]);
+                showNotification("success", "El ingreso se registró en MongoDB.");
             }
-
             setIsFormModalOpen(false);
-
             setSelectedIncome(null);
-
             return true;
-
         } catch (error) {
-
-            showNotification(
-                "error",
-                "No se pudo guardar el ingreso."
-            );
-
+            showNotification("error", incomeApiError(error));
             return false;
-
         } finally {
-
+            savingRef.current = false;
             setIsSavingIncome(false);
-
         }
-
     };
 
-
     // =====================================================
-    // CONFIRMAR ELIMINACIÓN
+    // ARCHIVADO LÓGICO (NO BORRADO FÍSICO)
     // =====================================================
 
     const handleConfirmDelete = async (income) => {
-
-        if (isDeletingIncome) {
-            return false;
-        }
-
+        if (deletingRef.current) return false;
+        deletingRef.current = true;
         setIsDeletingIncome(true);
-
         try {
-
-            const deletingId =
-                income.id ||
-                income._id;
-
-            setIncomes((previous) =>
-                previous.filter((item) => {
-
-                    const currentId =
-                        item.id ||
-                        item._id;
-
-                    return currentId !== deletingId;
-
-                })
-            );
-
+            const id = income._id || income.id;
+            // Solo pendientes o anulados pueden archivarse.
+            await archiveIncome(id, income.version);
+            setIncomes((previous) => previous.filter(
+                (item) => (item._id || item.id) !== id
+            ));
             setIsDeleteModalOpen(false);
-
             setSelectedIncome(null);
-
-            showNotification(
-                "success",
-                "El ingreso se eliminó correctamente."
-            );
-
+            showNotification("success", "Ingreso retirado del listado. Su historial permanece en MongoDB.");
             return true;
-
         } catch (error) {
-
-            showNotification(
-                "error",
-                "No se pudo eliminar el ingreso."
-            );
-
-            return false;
-
+            const message = incomeApiError(error);
+            showNotification("error", message);
+            // Permite mostrar el motivo exacto dentro del modal.
+            throw new Error(message);
         } finally {
-
+            deletingRef.current = false;
             setIsDeletingIncome(false);
-
         }
-
     };
 
 
@@ -931,7 +685,7 @@ function IncomeManagement() {
                 {/* ======================================= */}
 
                 <IncomeHeader
-                    onCreateIncome={handleCreateIncome}
+                    onCreateIncome={isLoading || loadError ? undefined : handleCreateIncome}
                 />
 
 
@@ -993,6 +747,25 @@ function IncomeManagement() {
                 )}
 
 
+                {/* No mostramos $0 como si fuera real si la API no respondió. */}
+                {isLoading ? (
+                    <section className="income-management__data-state" role="status">
+                        <LoaderCircle size={28} className="income-management__data-spinner" aria-hidden="true" />
+                        <h2>Cargando ingresos</h2>
+                        <p>Consultando los movimientos registrados en MongoDB.</p>
+                    </section>
+                ) : loadError ? (
+                    <section className="income-management__data-state income-management__data-state--error" role="alert">
+                        <AlertCircle size={27} aria-hidden="true" />
+                        <h2>No se pudieron cargar los ingresos</h2>
+                        <p>{loadError}</p>
+                        <button type="button" onClick={() => loadIncomes()}>
+                            <RefreshCw size={17} aria-hidden="true" />
+                            Reintentar consulta
+                        </button>
+                    </section>
+                ) : (
+                    <>
                 {/* ======================================= */}
                 {/* RESUMEN FINANCIERO */}
                 {/* ======================================= */}
@@ -1131,6 +904,8 @@ function IncomeManagement() {
                     />
 
                 </section>
+                    </>
+                )}
 
             </div>
 

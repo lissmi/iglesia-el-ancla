@@ -23,9 +23,14 @@ import {
     Save,
     Plus,
     AlertCircle,
+    ImagePlus,
+    FileImage,
+    ExternalLink,
 } from "lucide-react";
 
 import "../../../styles/components/administration/income/IncomeFormModal.css";
+import "../../../styles/components/administration/income/IncomeReceipt.css";
+import { incomeReceiptUrl } from "../../../services/incomesApi";
 
 
 // =========================================================
@@ -172,6 +177,21 @@ function IncomeFormModal({
 
     const [submitError, setSubmitError] = useState("");
 
+    // El archivo queda temporalmente en memoria; jamás en MongoDB.
+    const [receiptFile, setReceiptFile] = useState(null);
+    const [receiptPreview, setReceiptPreview] = useState("");
+
+    // Vista previa temporal: nunca se envía a MongoDB.
+    useEffect(() => {
+        if (!receiptFile) {
+            setReceiptPreview("");
+            return;
+        }
+        const temporaryUrl = URL.createObjectURL(receiptFile);
+        setReceiptPreview(temporaryUrl);
+        return () => URL.revokeObjectURL(temporaryUrl);
+    }, [receiptFile]);
+
 
     // =====================================================
     // CARGAR DATOS AL ABRIR EL MODAL
@@ -205,6 +225,7 @@ function IncomeFormModal({
 
         setErrors({});
         setSubmitError("");
+        setReceiptFile(null);
 
     }, [isOpen, income]);
 
@@ -287,6 +308,29 @@ function IncomeFormModal({
 
     };
 
+
+    // =====================================================
+    // VALIDACIÓN INMEDIATA DEL COMPROBANTE OPCIONAL
+    // =====================================================
+
+    const handleReceiptChange = (event) => {
+        const file = event.target.files?.[0] || null;
+        // Permitimos seleccionar nuevamente el mismo archivo tras cancelarlo.
+        event.target.value = "";
+        setErrors((previous) => ({ ...previous, receiptFile: "" }));
+        if (!file) return;
+        const allowed = ["image/jpeg", "image/png", "image/webp"];
+        if (!allowed.includes(file.type) || file.size <= 0 ||
+            file.size > 3 * 1024 * 1024) {
+            setReceiptFile(null);
+            setErrors((previous) => ({
+                ...previous,
+                receiptFile: "Selecciona una imagen JPG, PNG o WebP de hasta 3 MB.",
+            }));
+            return;
+        }
+        setReceiptFile(file);
+    };
 
     // =====================================================
     // VALIDAR FORMULARIO
@@ -425,6 +469,8 @@ function IncomeFormModal({
             reference: formData.reference.trim(),
             responsible: formData.responsible.trim(),
             notes: formData.notes.trim(),
+            // El servicio incomesApi prepara FormData si se eligió archivo.
+            ...(receiptFile ? { receiptFile } : {}),
         };
 
         try {
@@ -1041,6 +1087,80 @@ function IncomeFormModal({
 
                     </div>
 
+
+                    {/* =================================== */}
+                    {/* COMPROBANTE OPCIONAL Y PRIVADO */}
+                    {/* =================================== */}
+
+                    <div className="income-form-modal__section">
+                        <div className="income-form-modal__section-heading">
+                            <ImagePlus size={18} aria-hidden="true" />
+                            <h3>Comprobante de respaldo (opcional)</h3>
+                        </div>
+
+                        <div className="income-receipt-field">
+                            <label
+                                className="income-receipt-field__upload"
+                                htmlFor={`${formId}-receipt`}
+                            >
+                                <FileImage size={20} aria-hidden="true" />
+                                <span>
+                                    {receiptFile
+                                        ? receiptFile.name
+                                        : "Seleccionar imagen del comprobante"}
+                                </span>
+                                <input
+                                    id={`${formId}-receipt`}
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    onChange={handleReceiptChange}
+                                    disabled={isSaving}
+                                />
+                            </label>
+
+                            {receiptPreview && (
+                                <img
+                                    className="income-receipt-field__preview"
+                                    src={receiptPreview}
+                                    alt="Vista previa del comprobante seleccionado"
+                                />
+                            )}
+
+                            {receiptFile && (
+                                <button
+                                    type="button"
+                                    className="income-receipt-field__remove"
+                                    onClick={() => setReceiptFile(null)}
+                                    disabled={isSaving}
+                                >
+                                    Quitar selección
+                                </button>
+                            )}
+
+                            {isEditing && income?.hasReceipt && (
+                                <a
+                                    className="income-receipt-field__link"
+                                    href={incomeReceiptUrl(income._id || income.id)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <ExternalLink size={16} aria-hidden="true" />
+                                    Ver comprobante guardado
+                                </a>
+                            )}
+
+                            {errors.receiptFile && (
+                                <span className="income-form-modal__error" role="alert">
+                                    {errors.receiptFile}
+                                </span>
+                            )}
+                            <p className="income-receipt-field__hint">
+                                JPG, PNG o WebP · máximo 3 MB. Solo administradores.
+                                Si reemplazas un comprobante guardado, el anterior
+                                permanece registrado para auditoría.
+                            </p>
+                        </div>
+                    </div>
 
                     {/* =================================== */}
                     {/* AVISO INFORMATIVO */}

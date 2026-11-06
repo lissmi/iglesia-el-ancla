@@ -314,7 +314,8 @@ function IncomeDeleteModal({
         if (
             !income ||
             !onConfirm ||
-            isDeleting
+            isDeleting ||
+            !["pending", "cancelled", "void"].includes(income.status)
         ) {
             return;
         }
@@ -372,6 +373,9 @@ function IncomeDeleteModal({
     const isReceived =
         !income.status ||
         income.status === "received";
+
+    // Un recibido debe anularse mediante edición antes de archivarse.
+    const canArchive = !isReceived;
 
 
     // =====================================================
@@ -441,13 +445,12 @@ function IncomeDeleteModal({
                 <div className="income-delete-modal__intro">
 
                     <h2 id={`${modalId}-title`}>
-                        ¿Eliminar este ingreso?
+                        ¿Retirar este ingreso del listado?
                     </h2>
 
                     <p id={`${modalId}-description`}>
-                        Estás a punto de eliminar un movimiento
-                        financiero. Revisa los datos del registro
-                        antes de confirmar esta acción.
+                        El registro permanecerá en MongoDB con su historial.
+                        Solo se retira del listado de gestión.
                     </p>
 
                 </div>
@@ -570,14 +573,14 @@ function IncomeDeleteModal({
                     <div>
 
                         <strong>
-                            Atención: acción destructiva
+                            Conservación del historial financiero
                         </strong>
 
                         <p>
 
                             {isReceived
-                                ? "Este ingreso figura como recibido. Por trazabilidad financiera, se recomienda anular el movimiento y conservar su historial en lugar de eliminarlo."
-                                : "Al eliminar este registro, dejará de aparecer en el listado. Esta operación podría no ser reversible."}
+                                ? "Este ingreso está recibido. Primero pulsa Editar y cambia su estado a Anulado para dejar constancia financiera; después podrás retirarlo del listado."
+                                : "Este ingreso se archivará sin eliminar su registro ni su historial de modificaciones."}
 
                         </p>
 
@@ -631,7 +634,8 @@ function IncomeDeleteModal({
                         onClick={handleConfirm}
                         disabled={
                             isDeleting ||
-                            !onConfirm
+                            !onConfirm ||
+                            !canArchive
                         }
                     >
 
@@ -653,8 +657,8 @@ function IncomeDeleteModal({
                         )}
 
                         {isDeleting
-                            ? "Eliminando..."
-                            : "Eliminar ingreso"}
+                            ? "Retirando..."
+                            : "Retirar del listado"}
 
                     </button>
 
