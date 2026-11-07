@@ -1,3 +1,4 @@
+
 // =========================================================
 // IMPORTACIONES
 // =========================================================
@@ -99,6 +100,7 @@ export const RESOURCE_CATEGORIES = [
 
 function ResourcesCategories({
     resources = [],
+    externalCounts = {},
     selectedCategory = "all",
     onSelectCategory,
 }) {
@@ -131,7 +133,16 @@ function ResourcesCategories({
 
         // Para el filtro general contamos todos los recursos.
         if (categoryId === "all") {
-            return resources.length;
+            // No mostramos un total incompleto si uno de los catálogos no respondió.
+            if (!Number.isSafeInteger(externalCounts.solidarity_library) ||
+                !Number.isSafeInteger(externalCounts.songbook)) return null;
+            return resources.length + externalCounts.solidarity_library +
+                externalCounts.songbook;
+        }
+
+        // Biblioteca y cancionero consultan su propio backend, no datos de prueba.
+        if (categoryId === "solidarity_library" || categoryId === "songbook") {
+            return externalCounts[categoryId];
         }
 
         // Contamos los recursos de la categoría seleccionada.
@@ -182,7 +193,13 @@ function ResourcesCategories({
             }
         }
 
-        // Las categorías normales conservan su funcionamiento.
+        // Cada categoría de estudio abre una página con su propia URL.
+        // Conservamos la misma página de administración, sin duplicar componentes.
+        if (category.id === "all") {
+            navigate(`${administrationBasePath}/recursos`);
+        } else {
+            navigate(`${administrationBasePath}/recursos/${category.id}`);
+        }
         onSelectCategory?.(category.id);
     }
 
@@ -259,12 +276,8 @@ function ResourcesCategories({
                                 handleCategoryClick(category);
                             }}
 
-                            // Solo los filtros utilizan aria-pressed.
-                            aria-pressed={
-                                isManagementModule
-                                    ? undefined
-                                    : isSelected
-                            }
+                            // Ahora todas las tarjetas navegan; no son filtros de selección.
+                            aria-label={`Abrir ${category.name}`}
                         >
 
                             {/* Icono de la categoría. */}
@@ -299,11 +312,12 @@ function ResourcesCategories({
                                 {/* Los módulos independientes no usan
                                     el contador de recursos generales. */}
 
-                                {!isManagementModule && (
-                                    <span className="resources-categories__count">
-                                        {count}
-                                    </span>
-                                )}
+                                {/* Las cantidades del cancionero y biblioteca son reales.
+                                    Si su API falla, no mostramos un cero inventado. */}
+                                <span className="resources-categories__count"
+                                    title={count === null || count === undefined ? "Cantidad no disponible" : undefined}>
+                                    {count ?? "—"}
+                                </span>
 
                                 {/* Icono para indicar acceso. */}
                                 <ArrowRight
@@ -330,3 +344,6 @@ function ResourcesCategories({
 
 // Exportamos el componente administrativo.
 export default ResourcesCategories;
+
+
+

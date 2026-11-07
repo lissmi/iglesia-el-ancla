@@ -2,16 +2,31 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
+import {
+    useResourceCatalog,
+    resourceEntryKey,
+    downloadAvailableResource,
+} from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 
-import downloadableMaterials, {
+import defaultDownloadableMaterials, {
     downloadableMaterialCategories,
 } from "../../../data/resources/downloadableMaterials";
 
 import "../../../styles/pages/member/resources/DownloadableMaterials.css";
 
 function DownloadableMaterials() {
+    // Carga únicamente las ediciones publicadas; conserva los originales.
+    const { items: downloadableMaterials, heading } = useResourceCatalog("downloads", defaultDownloadableMaterials, RESOURCE_CONTENT_DEFAULTS.downloads.heading);
+
     // Texto escrito por el usuario en el buscador.
     const [searchTerm, setSearchTerm] = useState("");
+
+    // Identificamos el material que se está descargando.
+    const [downloadingKey, setDownloadingKey] = useState(null);
+
+    // Mostramos un error sin cerrar ni abandonar el catálogo.
+    const [downloadError, setDownloadError] = useState("");
 
     // Categoría seleccionada.
     const [selectedCategory, setSelectedCategory] =
@@ -54,9 +69,24 @@ function DownloadableMaterials() {
                 );
             }
         );
-    }, [searchTerm, selectedCategory]);
+    }, [searchTerm, selectedCategory, downloadableMaterials]);
 
  
+
+    // Descargamos desde Drive solamente cuando hay un archivo publicado.
+    // Los documentos originales que todavía no existen no se ofrecen para descarga.
+    const handleDownload = async (material) => {
+        const key = resourceEntryKey(material);
+        setDownloadError("");
+        setDownloadingKey(key);
+        try {
+            await downloadAvailableResource(material);
+        } catch (error) {
+            setDownloadError(error?.message || "No pudimos descargar el documento.");
+        } finally {
+            setDownloadingKey(null);
+        }
+    };
 
     // Cambia la categoría activa.
     const handleCategoryChange = (category) => {
@@ -107,20 +137,12 @@ function DownloadableMaterials() {
                             </span>
                         </nav>
 
-                        <p className="downloadable-materials-hero__eyebrow">
-                            Documentos y guías
-                        </p>
+                        <p className="downloadable-materials-hero__eyebrow">{heading.eyebrow}</p>
 
-                        <h1>
-                            Material descargable
-                        </h1>
+                        <h1>{heading.title}{" "}
+{heading.highlight && <span>{heading.highlight}</span>}</h1>
 
-                        <p className="downloadable-materials-hero__description">
-                            Descarga documentos, guías,
-                            planes de lectura y recursos
-                            prácticos para estudiar, imprimir
-                            o utilizar cuando los necesites.
-                        </p>
+                        <p className="downloadable-materials-hero__description">{heading.description}</p>
                     </div>
 
                     <div className="downloadable-materials-hero__curve" />
@@ -307,6 +329,13 @@ function DownloadableMaterials() {
                             </p>
                         </div>
 
+                        {/* La consulta puede fallar o el archivo haber sido retirado. */}
+                        {downloadError && (
+                            <p className="downloadable-materials-download-error" role="alert">
+                                {downloadError}
+                            </p>
+                        )}
+
                         {filteredMaterials.length > 0 ? (
                             <div className="downloadable-materials-grid">
                                 {filteredMaterials.map(
@@ -342,7 +371,7 @@ function DownloadableMaterials() {
                                                     aria-hidden="true"
                                                 >
                                                     <span>
-                                                        PDF
+                                                        {["DOC", "DOCX"].includes(String(material.format).toUpperCase()) ? "Word" : "PDF"}
                                                     </span>
                                                 </div>
                                             </div>
@@ -374,21 +403,6 @@ function DownloadableMaterials() {
                                                         </strong>
                                                     </div>
 
-                                                    <div>
-                                                        <span>
-                                                            Extensión
-                                                        </span>
-
-                                                        <strong>
-                                                            {
-                                                                material.pages
-                                                            }{" "}
-                                                            {material.pages ===
-                                                                1
-                                                                ? "página"
-                                                                : "páginas"}
-                                                        </strong>
-                                                    </div>
                                                 </div>
 
                                                 {material.includedContent
@@ -426,26 +440,28 @@ function DownloadableMaterials() {
                                                     )}
                                             </div>
 
-                                            {/* Parte inferior. */}
+                                            {/* Parte inferior: una sola acción para el miembro. */}
                                             <div className="downloadable-material-card__footer">
-                                                <Link
-                                                    to={`/recursos/material-descargable/${material.slug}`}
-                                                    aria-label={`Ver detalles de ${material.title}`}
-                                                >
-                                                    Ver material
-
-                                                    <span
-                                                        aria-hidden="true"
+                                                {material.available ? (
+                                                    // Descargamos el documento publicado, sin abrir una ficha adicional.
+                                                    <button
+                                                        type="button"
+                                                        className="downloadable-material-card__download"
+                                                        onClick={() => handleDownload(material)}
+                                                        disabled={downloadingKey !== null}
+                                                        aria-label={`Descargar ${material.title}`}
                                                     >
-                                                        →
+                                                        {downloadingKey === resourceEntryKey(material)
+                                                            ? "Descargando..."
+                                                            : "Descargar material"}
+                                                        <span aria-hidden="true">↓</span>
+                                                    </button>
+                                                ) : (
+                                                    // Si todavía no hay archivo publicado, no mostramos acciones inútiles.
+                                                    <span className="downloadable-material-card__file-size">
+                                                        En preparación
                                                     </span>
-                                                </Link>
-
-                                                <span className="downloadable-material-card__file-size">
-                                                    {material.available
-                                                        ? material.fileSize
-                                                        : "En preparación"}
-                                                </span>
+                                                )}
                                             </div>
                                         </article>
                                     )
@@ -497,7 +513,7 @@ function DownloadableMaterials() {
 
                             <p>
                                 Los materiales podrán
-                                descargarse en formato PDF para
+                                descargarse en PDF o Word para
                                 leerlos desde tu dispositivo,
                                 guardarlos o imprimirlos para
                                 uso personal y comunitario.

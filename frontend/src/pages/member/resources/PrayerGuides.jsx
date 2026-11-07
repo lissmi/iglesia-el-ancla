@@ -2,12 +2,17 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
+import { useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 
-import prayerGuides from "../../../data/resources/prayerGuides";
+import defaultPrayerGuides from "../../../data/resources/prayerGuides";
 
 import "../../../styles/pages/member/resources/PrayerGuides.css";
 
 function PrayerGuides() {
+    // Carga únicamente las ediciones publicadas; conserva los originales.
+    const { items: prayerGuides, heading } = useResourceCatalog("prayer_guides", defaultPrayerGuides, RESOURCE_CONTENT_DEFAULTS.prayer_guides.heading);
+
     // Guarda el texto escrito en el buscador.
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,7 +31,7 @@ function PrayerGuides() {
             "Todas",
             ...new Set(guideCategories),
         ];
-    }, []);
+    }, [prayerGuides]);
 
     // Filtramos las guías según la búsqueda y categoría.
     const filteredGuides = useMemo(() => {
@@ -43,9 +48,9 @@ function PrayerGuides() {
                 guide.title,
                 guide.category,
                 guide.summary,
-                guide.duration,
-                ...(guide.description || []),
-                ...(guide.prayerPoints || []),
+                // Si el estudio está en Drive, no indexamos textos originales obsoletos.
+                ...(guide.driveStored ? [] : (guide.description || [])),
+                ...(guide.driveStored ? [] : (guide.prayerPoints || [])),
             ]
                 .join(" ")
                 .toLowerCase();
@@ -56,7 +61,7 @@ function PrayerGuides() {
 
             return matchesCategory && matchesSearch;
         });
-    }, [searchTerm, selectedCategory]);
+    }, [searchTerm, selectedCategory, prayerGuides]);
 
     // Limpia los filtros activos.
     const clearFilters = () => {
@@ -86,7 +91,7 @@ function PrayerGuides() {
                                 /
                             </span>
 
-                            <Link to="/recursos">
+                            <Link to="/member/recursos">
                                 Recursos
                             </Link>
 
@@ -99,19 +104,12 @@ function PrayerGuides() {
                             </span>
                         </nav>
 
-                        <p className="prayer-guides-hero__eyebrow">
-                            Guía espiritual
-                        </p>
+                        <p className="prayer-guides-hero__eyebrow">{heading.eyebrow}</p>
 
-                        <h1>
-                            Guías de oración
-                        </h1>
+                        <h1>{heading.title}{" "}
+{heading.highlight && <span>{heading.highlight}</span>}</h1>
 
-                        <p className="prayer-guides-hero__description">
-                            Encuentra orientaciones prácticas para
-                            fortalecer tu vida de oración, acompañar
-                            momentos difíciles y acercarte más a Dios.
-                        </p>
+                        <p className="prayer-guides-hero__description">{heading.description}</p>
                     </div>
 
                     <div className="prayer-guides-hero__curve" />
@@ -231,10 +229,6 @@ function PrayerGuides() {
                                             <span className="prayer-guide-card__category">
                                                 {guide.category}
                                             </span>
-
-                                            <span className="prayer-guide-card__duration">
-                                                {guide.duration}
-                                            </span>
                                         </div>
 
                                         <div className="prayer-guide-card__content">
@@ -253,12 +247,12 @@ function PrayerGuides() {
 
                                         <div className="prayer-guide-card__footer">
                                             <span>
-                                                {guide.prayerPoints.length}{" "}
+                                                {guide.driveStored ? guide.prayerPointsCount ?? 0 : (guide.prayerPoints?.length ?? 0)}{" "}
                                                 puntos para orar
                                             </span>
 
                                             <Link
-                                                to={`/recursos/guias-oracion/${guide.slug}`}
+                                                to={`/member/recursos/guias-oracion/${guide.slug}`}
                                             >
                                                 Ver guía
 
@@ -316,7 +310,7 @@ function PrayerGuides() {
                             </p>
                         </div>
 
-                        <Link to="/recursos">
+                        <Link to="/member/recursos">
                             Volver a Recursos
                         </Link>
                     </div>

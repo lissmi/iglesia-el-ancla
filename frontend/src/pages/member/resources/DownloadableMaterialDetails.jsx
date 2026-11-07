@@ -1,23 +1,28 @@
+import { useResourceCatalog, downloadAvailableResource } from "../../../services/resourcesContentApi";
+import { useState } from "react";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 import { Link, useParams } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
 
-import downloadableMaterials, {
-    getDownloadableMaterialBySlug,
-    getRelatedDownloadableMaterials,
-} from "../../../data/resources/downloadableMaterials";
+import defaultDownloadableMaterials from "../../../data/resources/downloadableMaterials";
 
 import "../../../styles/pages/member/resources/DownloadableMaterialDetails.css";
 
 function DownloadableMaterialDetails() {
+    const [downloadError, setDownloadError] = useState("");
+    const [isDownloading, setIsDownloading] = useState(false);
+    const { items: downloadableMaterials, loading } = useResourceCatalog("downloads", defaultDownloadableMaterials, RESOURCE_CONTENT_DEFAULTS.downloads.heading);
+
     // Obtenemos el slug desde la URL.
     const { slug } = useParams();
 
     // Buscamos el material correspondiente.
     const material =
-        getDownloadableMaterialBySlug(slug);
+        downloadableMaterials.find((item) => item.slug === slug);
 
     // Estado cuando el material no existe.
+    if (loading) return <><Header /><main style={{ padding: "3rem", textAlign: "center" }}>Cargando material...</main></>;
     if (!material) {
         return (
             <>
@@ -72,11 +77,6 @@ function DownloadableMaterialDetails() {
               ]
             : null;
 
-    // Materiales relacionados.
-    const relatedMaterials =
-        getRelatedDownloadableMaterials(
-            material.relatedMaterials
-        );
 
     return (
         <>
@@ -165,7 +165,7 @@ function DownloadableMaterialDetails() {
                             </h2>
 
                             <div className="downloadable-material-details-intro__description">
-                                {material.description.map(
+                                {(Array.isArray(material.description) ? material.description : [material.description].filter(Boolean)).map(
                                     (
                                         paragraph,
                                         index
@@ -186,7 +186,7 @@ function DownloadableMaterialDetails() {
                                 aria-hidden="true"
                             >
                                 <span>
-                                    PDF
+                                    {["DOC", "DOCX"].includes(String(material.format).toUpperCase()) ? "Word" : "PDF"}
                                 </span>
                             </div>
 
@@ -205,32 +205,7 @@ function DownloadableMaterialDetails() {
                                     </dt>
 
                                     <dd>
-                                        {material.format}
-                                    </dd>
-                                </div>
-
-                                <div>
-                                    <dt>
-                                        Extensión
-                                    </dt>
-
-                                    <dd>
-                                        {material.pages}{" "}
-                                        {material.pages === 1
-                                            ? "página"
-                                            : "páginas"}
-                                    </dd>
-                                </div>
-
-                                <div>
-                                    <dt>
-                                        Tamaño
-                                    </dt>
-
-                                    <dd>
-                                        {material.available
-                                            ? material.fileSize
-                                            : "Por confirmar"}
+                                        {["DOC", "DOCX"].includes(String(material.format).toUpperCase()) ? "Word" : "PDF"}
                                     </dd>
                                 </div>
 
@@ -248,19 +223,27 @@ function DownloadableMaterialDetails() {
                             </dl>
 
                             {material.available ? (
-                                <a
-                                    href={material.filePath}
-                                    download
-                                    className="downloadable-material-details-file__download"
-                                >
-                                    Descargar material
-
-                                    <span
-                                        aria-hidden="true"
+                                <>
+                                    <button type="button"
+                                        className="downloadable-material-details-file__download"
+                                        disabled={isDownloading}
+                                        onClick={async () => {
+                                            setDownloadError("");
+                                            setIsDownloading(true);
+                                            try {
+                                                // Usamos el mismo servicio privado del catálogo.
+                                                await downloadAvailableResource(material);
+                                            } catch (failure) {
+                                                setDownloadError(failure?.message ||
+                                                    "No pudimos descargar el archivo. Inténtalo nuevamente.");
+                                            } finally { setIsDownloading(false); }
+                                        }}
                                     >
-                                        ↓
-                                    </span>
-                                </a>
+                                        {isDownloading ? "Preparando descarga..." : "Descargar material"}
+                                        <span aria-hidden="true">↓</span>
+                                    </button>
+                                    {downloadError && <p role="alert" style={{ color: "#ad5447" }}>{downloadError}</p>}
+                                </>
                             ) : (
                                 <div className="downloadable-material-details-file__soon">
                                     <strong>
@@ -289,6 +272,7 @@ function DownloadableMaterialDetails() {
                 {/* CONTENIDO INCLUIDO */}
                 {/* ================================================= */}
 
+                {(material.includedContent || []).length > 0 && (
                 <section className="downloadable-material-details-content">
                     <div className="downloadable-material-details-content__container">
                         <div className="downloadable-material-details-content__heading">
@@ -309,7 +293,7 @@ function DownloadableMaterialDetails() {
                         </div>
 
                         <div className="downloadable-material-details-content__grid">
-                            {material.includedContent.map(
+                            {(material.includedContent || []).map(
                                 (item, index) => (
                                     <article
                                         key={`${material.id}-content-${index}`}
@@ -332,11 +316,13 @@ function DownloadableMaterialDetails() {
                         </div>
                     </div>
                 </section>
+                )}
 
                 {/* ================================================= */}
                 {/* RECOMENDADO PARA */}
                 {/* ================================================= */}
 
+                {(material.recommendedFor || []).length > 0 && (
                 <section className="downloadable-material-details-recommended">
                     <div className="downloadable-material-details-recommended__container">
                         <div className="downloadable-material-details-recommended__heading">
@@ -350,7 +336,7 @@ function DownloadableMaterialDetails() {
                         </div>
 
                         <div className="downloadable-material-details-recommended__list">
-                            {material.recommendedFor.map(
+                            {(material.recommendedFor || []).map(
                                 (item, index) => (
                                     <article
                                         key={`${material.id}-recommended-${index}`}
@@ -370,6 +356,7 @@ function DownloadableMaterialDetails() {
                         </div>
                     </div>
                 </section>
+                )}
 
                 {/* ================================================= */}
                 {/* MENSAJE DE USO */}
@@ -411,82 +398,6 @@ function DownloadableMaterialDetails() {
                         </div>
                     </div>
                 </section>
-
-                {/* ================================================= */}
-                {/* MATERIALES RELACIONADOS */}
-                {/* ================================================= */}
-
-                {relatedMaterials.length > 0 && (
-                    <section className="downloadable-material-details-related">
-                        <div className="downloadable-material-details-related__container">
-                            <div className="downloadable-material-details-related__heading">
-                                <div>
-                                    <p className="downloadable-material-details-section__eyebrow">
-                                        Continúa explorando
-                                    </p>
-
-                                    <h2>
-                                        Materiales relacionados
-                                    </h2>
-                                </div>
-
-                                <Link to="/recursos/material-descargable">
-                                    Ver todos
-                                </Link>
-                            </div>
-
-                            <div className="downloadable-material-details-related__grid">
-                                {relatedMaterials.map(
-                                    (relatedMaterial) => (
-                                        <article
-                                            key={
-                                                relatedMaterial.id
-                                            }
-                                        >
-                                            <div className="downloadable-material-details-related__top">
-                                                <span>
-                                                    {
-                                                        relatedMaterial.category
-                                                    }
-                                                </span>
-
-                                                <strong>
-                                                    {
-                                                        relatedMaterial.format
-                                                    }
-                                                </strong>
-                                            </div>
-
-                                            <h3>
-                                                {
-                                                    relatedMaterial.title
-                                                }
-                                            </h3>
-
-                                            <p>
-                                                {
-                                                    relatedMaterial.summary
-                                                }
-                                            </p>
-
-                                            <Link
-                                                to={`/recursos/material-descargable/${relatedMaterial.slug}`}
-                                            >
-                                                Ver material
-
-                                                <span
-                                                    aria-hidden="true"
-                                                >
-                                                    →
-                                                </span>
-                                            </Link>
-                                        </article>
-                                    )
-                                )}
-                            </div>
-                        </div>
-                    </section>
-                )}
 
                 {/* ================================================= */}
                 {/* NAVEGACIÓN ENTRE MATERIALES */}

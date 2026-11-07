@@ -8,7 +8,6 @@ const prayerGuides = [
         slug: "comenzar-el-dia",
         title: "Oración para comenzar el día",
         category: "Vida personal",
-        duration: "5 minutos",
 
         summary:
             "Una guía breve para entregar la nueva jornada a Dios, agradecer por sus misericordias y pedir dirección para cada decisión.",
@@ -41,7 +40,6 @@ const prayerGuides = [
         slug: "antes-de-dormir",
         title: "Oración antes de dormir",
         category: "Vida personal",
-        duration: "5 minutos",
 
         summary:
             "Un momento para agradecer por el día vivido, entregar las preocupaciones y descansar confiando en el cuidado de Dios.",
@@ -74,7 +72,6 @@ const prayerGuides = [
         slug: "por-la-familia",
         title: "Oración por la familia",
         category: "Familia",
-        duration: "7 minutos",
 
         summary:
             "Una guía para orar por la unidad, la protección, la salud y el crecimiento espiritual de cada integrante de la familia.",
@@ -107,7 +104,6 @@ const prayerGuides = [
         slug: "en-momentos-de-ansiedad",
         title: "Oración en momentos de ansiedad",
         category: "Momentos difíciles",
-        duration: "8 minutos",
 
         summary:
             "Una guía para expresar las preocupaciones delante de Dios y encontrar calma, consuelo y confianza en su presencia.",
@@ -140,7 +136,6 @@ const prayerGuides = [
         slug: "por-una-persona-enferma",
         title: "Oración por una persona enferma",
         category: "Momentos difíciles",
-        duration: "7 minutos",
 
         summary:
             "Una orientación para pedir consuelo, fortaleza, atención adecuada y acompañamiento para alguien que enfrenta una enfermedad.",
@@ -173,7 +168,6 @@ const prayerGuides = [
         slug: "para-tomar-decisiones",
         title: "Oración para tomar decisiones",
         category: "Fe y crecimiento",
-        duration: "7 minutos",
 
         summary:
             "Una guía para buscar sabiduría, reconocer las motivaciones personales y confiar en la dirección de Dios.",
@@ -206,7 +200,6 @@ const prayerGuides = [
         slug: "de-agradecimiento",
         title: "Oración de agradecimiento",
         category: "Agradecimiento",
-        duration: "5 minutos",
 
         summary:
             "Una guía para reconocer la bondad de Dios y cultivar un corazón agradecido aun en las cosas sencillas.",
@@ -239,7 +232,6 @@ const prayerGuides = [
         slug: "para-pedir-perdon",
         title: "Oración para pedir perdón",
         category: "Fe y crecimiento",
-        duration: "6 minutos",
 
         summary:
             "Una guía para reconocer los errores con sinceridad, recibir el perdón de Dios y buscar restauración.",
@@ -272,7 +264,6 @@ const prayerGuides = [
         slug: "por-la-iglesia",
         title: "Oración por la iglesia",
         category: "Iglesia y comunidad",
-        duration: "8 minutos",
 
         summary:
             "Una orientación para orar por los líderes, ministerios, familias, necesidades y misión de la comunidad cristiana.",
@@ -305,7 +296,6 @@ const prayerGuides = [
         slug: "en-tiempos-de-dificultad",
         title: "Oración en tiempos de dificultad",
         category: "Momentos difíciles",
-        duration: "8 minutos",
 
         summary:
             "Una guía para buscar fortaleza, esperanza y perseverancia cuando atravesamos circunstancias dolorosas o inciertas.",

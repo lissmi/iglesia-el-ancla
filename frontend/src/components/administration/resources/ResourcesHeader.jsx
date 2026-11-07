@@ -1,3 +1,4 @@
+
 import { LibraryBig, Plus } from "lucide-react";
 // =========================================================
 // ESTILOS
@@ -58,7 +59,7 @@ function ResourcesHeader({ onCreateResource }) {
                     />
                 </div>
 
-                <button
+                {onCreateResource && <button
                     type="button"
                     className="resources-header__create"
                     onClick={onCreateResource}
@@ -70,7 +71,7 @@ function ResourcesHeader({ onCreateResource }) {
                     />
 
                     Nuevo recurso
-                </button>
+                </button>}
 
             </div>
 
@@ -79,6 +80,9 @@ function ResourcesHeader({ onCreateResource }) {
 }
 
 export default ResourcesHeader;
+
+
+
 
 
 

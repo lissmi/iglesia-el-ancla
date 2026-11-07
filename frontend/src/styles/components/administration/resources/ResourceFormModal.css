@@ -419,3 +419,130 @@
         padding: 18px;
     }
 }
+
+
+
+/* Los desplegables tienen el mismo acabado que los demás campos. */
+.resource-edit-modal__field select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #d7e5ec;
+  border-radius: 12px;
+  background: #f9fcfd;
+  padding: 0 38px 0 13px;
+  font: inherit;
+  font-size: 14px;
+  color: #17384c;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23667d8b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.resource-edit-modal__field select:focus-visible {
+  border-color: #2c8199;
+  outline: 2px solid #bee1eb;
+  outline-offset: 1px;
+}
+
+.resource-edit-modal__field select:disabled { cursor: not-allowed; opacity: .65; }
+.resource-edit-modal__download-fields { display: grid; gap: 18px; }
+.resource-edit-modal__download-fields > .resource-edit-modal__field { min-width: 0; }
+.resource-edit-modal__download-fields textarea { width: 100%; resize: vertical; }
+.resource-edit-modal__download-fields .resource-edit-modal__field small {
+  display: block; margin-top: 7px; color: #607b8c; font-size: 12px; line-height: 1.55;
+}
+
+/* Selector de archivo con apariencia de botón del proyecto. */
+.resource-edit-modal__pdf {
+  border: 1px dashed #9fc8d7;
+  border-radius: 16px;
+  padding: 18px;
+  background: #f5fafc;
+}
+.resource-edit-modal__pdf .resource-edit-modal__field { display: grid; justify-items: start; gap: 10px; }
+.resource-edit-modal__file-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  padding: 11px 17px;
+  border-radius: 12px;
+  background: #2c8199;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.resource-edit-modal__file-button:hover { background: #246e84; }
+.resource-edit-modal__file-button:focus-within { outline: 3px solid #a0d5e5; outline-offset: 2px; }
+.resource-edit-modal__file-button input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.resource-edit-modal__file-button:has(input:disabled) { opacity: .65; cursor: not-allowed; }
+.resource-edit-modal__pdf-feedback {
+  color: #2d5366;
+  font-weight: 650;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 11px 0 0;
+  overflow-wrap: anywhere;
+}
+.resource-edit-modal__pdf-help {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  color: #5f7c8b;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 9px 0 0;
+}
+.resource-edit-modal__pdf-help svg { flex: none; margin-top: 1px; }
+.resource-edit-modal__auto-count {
+  margin: 16px 0 0;
+  border: 1px solid #d8e9ee;
+  background: #f1f9fb;
+  color: #2f7189;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+.resource-edit-modal__auto-count strong { color: #17384c; }
+
+@media(max-width: 600px) {
+  .resource-edit-modal__pdf { padding: 14px; }
+  .resource-edit-modal__file-button { width: 100%; justify-content: center; }
+}
+
+.resource-edit-modal__download-fields .resource-edit-modal__counter {
+  display: block;
+  margin-top: 5px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+  color: #648195;
+}
+.resource-edit-modal__download-fields textarea {
+  resize: vertical;
+}
+.resource-edit-modal__download-fields :is(input, textarea, select):focus-visible {
+  outline: 2px solid #2c8199;
+  outline-offset: 2px;
+}
+
+.resource-edit-modal__field > .resource-edit-modal__counter {
+  display: block;
+  margin-top: 5px;
+  color: #648195;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+}

@@ -1,9 +1,9 @@
-
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import {
     AlertTriangle,
     Trash2,
+    EyeOff,
     X,
 } from "lucide-react";
 
@@ -12,12 +12,40 @@ import "../../../styles/components/administration/resources/ResourceDeleteModal.
 function ResourceDeleteModal({
     resource,
     onClose,
-    onConfirm,
+    onHide,
+    onDeletePermanently,
 }) {
 
     const titleId = useId();
     const modalRef = useRef(null);
     const cancelRef = useRef(null);
+    const [busy, setBusy] = useState(false);
+    const [error, setError] = useState("");
+    const [confirmedPermanent, setConfirmedPermanent] = useState(false);
+
+    useEffect(() => {
+        setBusy(false);
+        setError("");
+        setConfirmedPermanent(false);
+    }, [resource]);
+
+    // Ocultar no destruye información; eliminar sí requiere confirmación.
+    async function confirm(action) {
+        if (!resource || busy) return;
+        if (action === "permanent" && !confirmedPermanent) return;
+        const handler = action === "permanent" ? onDeletePermanently : onHide;
+        if (!handler) return;
+        setBusy(true);
+        setError("");
+        try {
+            await handler(resource);
+        } catch (failure) {
+            setError(failure?.response?.data?.message || failure?.message ||
+                "No pudimos completar la operación. Intenta nuevamente.");
+        } finally {
+            setBusy(false);
+        }
+    }
 
     // =====================================================
     // ACCESIBILIDAD
@@ -33,7 +61,7 @@ function ResourceDeleteModal({
         cancelRef.current?.focus();
 
         function handleKeyDown(event) {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && !busy) {
                 event.preventDefault();
                 onClose?.();
                 return;
@@ -74,7 +102,7 @@ function ResourceDeleteModal({
             document.body.style.overflow = previousOverflow;
             previousFocus?.focus?.();
         };
-    }, [resource, onClose]);
+    }, [resource, onClose, busy]);
 
     if (!resource) return null;
 
@@ -82,7 +110,7 @@ function ResourceDeleteModal({
         <div
             className="resource-delete-modal__overlay"
             onMouseDown={(event) => {
-                if (event.target === event.currentTarget) {
+                if (event.target === event.currentTarget && !busy) {
                     onClose?.();
                 }
             }}
@@ -99,6 +127,7 @@ function ResourceDeleteModal({
                     type="button"
                     className="resource-delete-modal__close"
                     onClick={onClose}
+                    disabled={busy}
                     aria-label="Cerrar confirmación"
                 >
                     <X size={19} />
@@ -113,44 +142,98 @@ function ResourceDeleteModal({
                 </div>
 
                 <h2 id={titleId}>
-                    ¿Eliminar este recurso?
+                    ¿Qué deseas hacer con este material?
                 </h2>
 
-                <p>
-                    Estás a punto de eliminar el siguiente
-                    contenido del catálogo:
-                </p>
-
+                <p>Selecciona una acción para el recurso:</p>
                 <div className="resource-delete-modal__resource">
                     {resource.title}
                 </div>
 
                 <p className="resource-delete-modal__warning">
-                    Esta acción quitará el recurso de la
-                    lista actual y no podrá deshacerse
-                    durante esta sesión.
+                    <strong>Ocultar:</strong> el contenido y su archivo permanecen guardados;
+                    podrás volver a mostrarlo cuando quieras.
                 </p>
 
-                <div className="resource-delete-modal__actions">
 
+                {/* Mensaje para materiales que venían con la plataforma. */}
+                {resource.isBuiltin ? (
+                    <p className="resource-delete-modal__warning">
+                        <strong>Restaurar versión original:</strong>{" "}
+                        se eliminarán los cambios realizados a este material
+                        y los archivos que se hayan agregado.
+                        El material volverá a mostrarse como estaba originalmente.
+                        Esta acción no se puede deshacer.
+                    </p>
+                ) : (
+                    /* Mensaje para materiales creados por administradores. */
+                    <p className="resource-delete-modal__warning">
+                        <strong>Eliminar definitivamente:</strong>{" "}
+                        este material y sus archivos adjuntos se eliminarán
+                        permanentemente. Ya no estará disponible para los
+                        miembros. Esta acción no se puede deshacer.
+                    </p>
+                )}
+
+                {/* Solicitamos confirmación antes de realizar la acción. */}
+                {resource.hasDbRecord && (
+                    <label className="resource-delete-modal__permanent-check">
+                        <input
+                            type="checkbox"
+                            checked={confirmedPermanent}
+                            disabled={busy}
+                            onChange={(event) =>
+                                setConfirmedPermanent(event.target.checked)
+                            }
+                        />
+
+                        <span>
+                            {resource.isBuiltin
+                                ? "Confirmo que deseo restaurar la versión original."
+                                : "Confirmo que deseo eliminar este material definitivamente."}
+                        </span>
+                    </label>
+                )}
+
+
+                {error && <p role="alert" style={{ color: "#a34b38", marginTop: "12px" }}>{error}</p>}
+
+                <div className="resource-delete-modal__actions resource-delete-modal__actions--choices">
                     <button
                         ref={cancelRef}
                         type="button"
                         className="resource-delete-modal__cancel"
                         onClick={onClose}
+                        disabled={busy}
                     >
                         Cancelar
                     </button>
 
-                    <button
-                        type="button"
-                        className="resource-delete-modal__confirm"
-                        onClick={() => onConfirm?.(resource)}
-                    >
-                        <Trash2 size={17} />
-                        Eliminar recurso
-                    </button>
+                    {!resource.hidden && (
+                        <button
+                            type="button"
+                            className="resource-delete-modal__confirm resource-delete-modal__hide"
+                            onClick={() => confirm("hide")}
+                            disabled={busy}
+                        >
+                            <EyeOff size={17} />
+                            {busy ? "Procesando..." : "Ocultar material"}
+                        </button>
+                    )}
 
+                    {resource.hasDbRecord && (
+                        <button
+                            type="button"
+                            className="resource-delete-modal__confirm"
+                            onClick={() => confirm("permanent")}
+                            disabled={busy || !confirmedPermanent}
+                        >
+                            <Trash2 size={17} />
+                            {busy ? "Procesando..." : resource.isBuiltin
+                                ? "Eliminar cambios guardados"
+                                : "Eliminar definitivamente"}
+                        </button>
+                    )}
                 </div>
 
             </section>

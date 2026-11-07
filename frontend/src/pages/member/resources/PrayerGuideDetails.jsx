@@ -1,20 +1,67 @@
+import { useEffect, useState } from "react";
+import { downloadPrayerGuidePdf, getPublishedPrayerGuideContent, useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 import { Link, useParams } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
 
-import prayerGuides from "../../../data/resources/prayerGuides";
+import defaultPrayerGuides from "../../../data/resources/prayerGuides";
 
 import "../../../styles/pages/member/resources/PrayerGuideDetails.css";
 
 function PrayerGuideDetails() {
+    const { items: prayerGuides, loading } = useResourceCatalog("prayer_guides", defaultPrayerGuides, RESOURCE_CONTENT_DEFAULTS.prayer_guides.heading);
+
     // Obtenemos el slug desde una URL como:
-    // /recursos/guias-oracion/comenzar-el-dia
+    // /member/recursos/guias-oracion/comenzar-el-dia
     const { slug } = useParams();
 
     // Buscamos la guía que corresponde al slug recibido.
-    const guide = prayerGuides.find(
+    const listedGuide = prayerGuides.find(
         (currentGuide) => currentGuide.slug === slug
     );
+
+    // El identificador y el indicador son valores estables para el efecto.
+    const guideId = listedGuide?.id;
+    const needsDrive = Boolean(listedGuide?.driveStored);
+    const [fullContent, setFullContent] = useState(null);
+    const [contentLoading, setContentLoading] = useState(false);
+    const [contentError, setContentError] = useState("");
+    const [pdfDownloading, setPdfDownloading] = useState(false);
+    const [pdfError, setPdfError] = useState("");
+
+    // Las versiones guardadas recuperan el TXT publicado al abrir la ficha.
+    useEffect(() => {
+        let active = true;
+        setFullContent(null);
+        setContentError("");
+        if (!needsDrive || !guideId) {
+            setContentLoading(false);
+            return undefined;
+        }
+        setContentLoading(true);
+        getPublishedPrayerGuideContent(guideId)
+            .then((content) => { if (active) setFullContent(content); })
+            .catch(() => {
+                if (active) setContentError("No pudimos abrir esta guía. Intenta nuevamente más tarde.");
+            })
+            .finally(() => { if (active) setContentLoading(false); });
+        return () => { active = false; };
+    }, [guideId, needsDrive]);
+
+    // El contenido original permanece en React hasta que exista una publicación.
+    const guide = needsDrive
+        ? (fullContent ? { ...listedGuide, ...fullContent } : null)
+        : listedGuide;
+
+    async function handlePdfDownload() {
+        if (!guide || pdfDownloading) return;
+        setPdfError("");
+        setPdfDownloading(true);
+        try { await downloadPrayerGuidePdf(guide); }
+        catch (error) { setPdfError(error.message || "No pudimos descargar la guía. Intenta nuevamente."); }
+        finally { setPdfDownloading(false); }
+    }
 
     // Buscamos la posición actual para permitir
     // navegar hacia la guía anterior o siguiente.
@@ -33,6 +80,12 @@ function PrayerGuideDetails() {
             : null;
 
     // Si no encontramos la guía, mostramos un mensaje de error.
+    if (loading || contentLoading || (needsDrive && !fullContent && !contentError)) {
+        return <><Header /><main style={{ padding: "3rem", textAlign: "center" }}>Cargando guía...</main></>;
+    }
+    if (contentError) {
+        return <><Header /><main style={{ padding: "3rem", textAlign: "center" }} role="alert">{contentError}</main></>;
+    }
     if (!guide) {
         return (
             <>
@@ -53,7 +106,7 @@ function PrayerGuideDetails() {
                             guía todavía no esté disponible.
                         </p>
 
-                        <Link to="/recursos/guias-oracion">
+                        <Link to="/member/recursos/guias-oracion">
                             Volver a Guías de oración
                         </Link>
                     </section>
@@ -84,7 +137,7 @@ function PrayerGuideDetails() {
                                 /
                             </span>
 
-                            <Link to="/recursos">
+                            <Link to="/member/recursos">
                                 Recursos
                             </Link>
 
@@ -92,7 +145,7 @@ function PrayerGuideDetails() {
                                 /
                             </span>
 
-                            <Link to="/recursos/guias-oracion">
+                            <Link to="/member/recursos/guias-oracion">
                                 Guías de oración
                             </Link>
 
@@ -110,9 +163,6 @@ function PrayerGuideDetails() {
                                 {guide.category}
                             </span>
 
-                            <span>
-                                {guide.duration}
-                            </span>
                         </div>
 
                         <p className="prayer-guide-details-hero__eyebrow">
@@ -126,6 +176,23 @@ function PrayerGuideDetails() {
                         <p className="prayer-guide-details-hero__summary">
                             {guide.summary}
                         </p>
+
+                        {/* PDF generado al descargar: no agregamos copias en Drive. */}
+                        <div className="prayer-guide-details-hero__download-area">
+                            <button type="button"
+                                className="prayer-guide-details-hero__download"
+                                onClick={handlePdfDownload}
+                                disabled={pdfDownloading}
+                                aria-busy={pdfDownloading}>
+                                <span aria-hidden="true">↓</span>
+                                {pdfDownloading ? "Preparando PDF..." : "Descargar guía en PDF"}
+                            </button>
+                            {pdfError && (
+                                <p className="prayer-guide-details-hero__download-error" role="alert">
+                                    {pdfError}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     <div className="prayer-guide-details-hero__curve" />
@@ -274,7 +341,7 @@ function PrayerGuideDetails() {
                             </p>
                         </div>
 
-                        <Link to="/recursos/guias-oracion">
+                        <Link to="/member/recursos/guias-oracion">
                             Ver todas las guías
                         </Link>
                     </div>
@@ -289,7 +356,7 @@ function PrayerGuideDetails() {
                         {previousGuide ? (
                             <Link
                                 className="prayer-guide-details-navigation__link prayer-guide-details-navigation__link--previous"
-                                to={`/recursos/guias-oracion/${previousGuide.slug}`}
+                                to={`/member/recursos/guias-oracion/${previousGuide.slug}`}
                             >
                                 <span aria-hidden="true">
                                     ←
@@ -311,7 +378,7 @@ function PrayerGuideDetails() {
 
                         <Link
                             className="prayer-guide-details-navigation__all"
-                            to="/recursos/guias-oracion"
+                            to="/member/recursos/guias-oracion"
                         >
                             Ver todas las guías
                         </Link>
@@ -319,7 +386,7 @@ function PrayerGuideDetails() {
                         {nextGuide ? (
                             <Link
                                 className="prayer-guide-details-navigation__link prayer-guide-details-navigation__link--next"
-                                to={`/recursos/guias-oracion/${nextGuide.slug}`}
+                                to={`/member/recursos/guias-oracion/${nextGuide.slug}`}
                             >
                                 <div>
                                     <small>

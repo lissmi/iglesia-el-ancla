@@ -141,6 +141,8 @@ import basicSupplyRoutes from "./routes/basicSupplyRoutes.js";
 // Inventario de bienes: lectura y movimientos administrativos.
 import belongingRoutes from "./routes/belongingRoutes.js";
 
+import resourceContentRoutes from "./routes/resourceContentRoutes.js";
+
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
 /* ========================================================= */
@@ -586,6 +588,8 @@ app.use("/api/basic-supplies", basicSupplyRoutes);
 
 // Bienes: una API para inventario y movimientos.
 app.use("/api/belongings", belongingRoutes);
+
+app.use("/api/resource-content", resourceContentRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

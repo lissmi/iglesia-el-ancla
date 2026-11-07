@@ -1,4 +1,3 @@
-
 import {
     Search,
     SlidersHorizontal,
@@ -13,6 +12,7 @@ function ResourcesToolbar({
     statusFilter = "all",
     onStatusChange,
     sortOrder = "newest",
+    devotionalMode = false,
     onSortChange,
     onClearFilters,
 }) {
@@ -20,7 +20,7 @@ function ResourcesToolbar({
     const hasActiveFilters =
         search.trim() !== "" ||
         statusFilter !== "all" ||
-        sortOrder !== "newest";
+        sortOrder !== (devotionalMode ? "step" : "newest");
 
     return (
         <div className="resources-toolbar">
@@ -69,6 +69,7 @@ function ResourcesToolbar({
                     }
                     aria-label="Ordenar recursos"
                 >
+                    {devotionalMode && <option value="step">Orden de los pasos</option>}
                     <option value="newest">Más recientes</option>
                     <option value="oldest">Más antiguos</option>
                     <option value="title-asc">Título A-Z</option>

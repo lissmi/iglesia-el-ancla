@@ -175,6 +175,13 @@ function SharedAdminRoutes() {
                 element={<ResourcesManagement />}
             />
 
+            {/* Página administrativa independiente para cada categoría de estudio.
+                Reutiliza el mismo componente: no duplicamos siete páginas JSX. */}
+            <Route
+                path="recursos/:section"
+                element={<ResourcesManagement />}
+            />
+
 
             {/* =========================================== */}
             {/* GESTIÓN DE RECOMENDADOS */}

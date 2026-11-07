@@ -1,6 +1,9 @@
+import defaultDevotionalSteps from "../../../data/resources/devotionalSteps";
+import { useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 // Importamos useState para controlar el paso seleccionado
 // y los campos temporales de reflexión.
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 // Importamos Link para navegar dentro de la aplicación.
 import { Link } from "react-router-dom";
@@ -19,8 +22,15 @@ import "../../../styles/pages/member/resources/PersonalDevotionalGuide.css";
 
 // Creamos la página pública de la Guía Devocional.
 function PersonalDevotionalGuide() {
-    // Guardamos el paso actualmente seleccionado.
-    const [selectedStep, setSelectedStep] = useState(1);
+    // Fusionamos el material inicial con los cambios publicados por Administración.
+    const { items: storedSteps, heading } = useResourceCatalog("devotionals", defaultDevotionalSteps, RESOURCE_CONTENT_DEFAULTS.devotionals.heading);
+
+    // Ordenamos por el número del paso, incluso los agregados por administradores.
+    const devotionalSteps = useMemo(() => [...storedSteps].sort((a, b) =>
+        Number(a.number) - Number(b.number)), [storedSteps]);
+
+    // Guardamos el ID estable del contenido, no su posición ni su número visible.
+    const [selectedStep, setSelectedStep] = useState("1");
 
     // Guardamos las notas temporales del usuario.
     const [devotionalNotes, setDevotionalNotes] = useState({
@@ -32,145 +42,14 @@ function PersonalDevotionalGuide() {
     });
 
     // Creamos los pasos principales del devocional.
-    const devotionalSteps = [
-        {
-            // Identificador del paso.
-            id: 1,
 
-            // Número visual.
-            number: "01",
-
-            // Título del paso.
-            title: "Prepara tu momento",
-
-            // Descripción breve.
-            summary:
-                "Busca un espacio tranquilo y dispón tu corazón para estar con Dios.",
-
-            // Explicación completa.
-            description:
-                "No necesitas un lugar perfecto ni demasiado tiempo. Lo importante es apartar unos minutos con intención, evitando distracciones y preparando todo lo que puedas necesitar.",
-
-            // Recomendaciones prácticas.
-            tips: [
-                "Escoge un horario que puedas mantener con regularidad.",
-                "Busca un lugar cómodo y con pocas distracciones.",
-                "Ten cerca tu Biblia, un cuaderno y algo para escribir.",
-                "Silencia las notificaciones del teléfono durante ese momento.",
-            ],
-
-            // Frase de ayuda.
-            reminder:
-                "La constancia es más importante que comenzar con sesiones demasiado largas.",
-        },
-        {
-            id: 2,
-            number: "02",
-            title: "Comienza con oración",
-            summary:
-                "Habla con Dios con sinceridad y pídele ayuda para comprender Su Palabra.",
-            description:
-                "Antes de leer, reconoce que necesitas la dirección de Dios. No es necesario utilizar palabras complicadas. Puedes hablar con Él de manera sencilla, agradeciendo y pidiendo sabiduría.",
-            tips: [
-                "Agradece a Dios por un nuevo día.",
-                "Reconoce aquello que está ocupando tu mente.",
-                "Pide sabiduría para comprender el pasaje.",
-                "Pídele disposición para obedecer lo aprendido.",
-            ],
-            reminder:
-                "La oración prepara el corazón para escuchar y responder a la Palabra.",
-        },
-        {
-            id: 3,
-            number: "03",
-            title: "Escoge un pasaje breve",
-            summary:
-                "Selecciona una porción de la Biblia que puedas leer con atención.",
-            description:
-                "Para comenzar, es mejor estudiar pocos versículos con calma que leer muchos capítulos sin detenerse. Puedes avanzar ordenadamente por un Evangelio, una carta o un plan de lectura.",
-            tips: [
-                "Comienza con uno de los Evangelios.",
-                "Lee entre cinco y quince versículos.",
-                "Evita escoger textos al azar todos los días.",
-                "Mantén una secuencia para comprender mejor el contexto.",
-            ],
-            reminder:
-                "Leer poco con atención puede ser más provechoso que leer mucho apresuradamente.",
-        },
-        {
-            id: 4,
-            number: "04",
-            title: "Lee y observa",
-            summary:
-                "Lee el pasaje varias veces y presta atención a lo que realmente dice.",
-            description:
-                "La observación consiste en identificar palabras, personajes, acciones, ideas repetidas y conexiones dentro del texto antes de intentar aplicarlo inmediatamente.",
-            tips: [
-                "Lee el pasaje lentamente al menos dos veces.",
-                "Identifica quién habla y a quién se dirige.",
-                "Observa palabras o ideas que se repitan.",
-                "Revisa qué ocurre antes y después del pasaje.",
-            ],
-            reminder:
-                "Antes de preguntarte qué significa para ti, observa qué comunica realmente el texto.",
-        },
-        {
-            id: 5,
-            number: "05",
-            title: "Comprende la enseñanza",
-            summary:
-                "Reflexiona sobre lo que el pasaje enseña acerca de Dios y de la vida cristiana.",
-            description:
-                "Después de observar, intenta resumir la enseñanza central con tus propias palabras. Considera el contexto y evita construir conclusiones únicamente a partir de una frase aislada.",
-            tips: [
-                "Pregunta qué revela el pasaje acerca de Dios.",
-                "Identifica una verdad, promesa, mandato o advertencia.",
-                "Resume la idea principal en una sola frase.",
-                "Compara tu conclusión con el resto de la Biblia.",
-            ],
-            reminder:
-                "Una buena aplicación comienza con una comprensión responsable del texto.",
-        },
-        {
-            id: 6,
-            number: "06",
-            title: "Llévalo a tu vida",
-            summary:
-                "Piensa en una manera concreta de responder a lo aprendido.",
-            description:
-                "La aplicación no consiste solamente en sentir inspiración. Busca una decisión, actitud o acción específica que refleje la enseñanza del pasaje en tu vida diaria.",
-            tips: [
-                "Identifica una actitud que necesites cambiar.",
-                "Piensa en una acción concreta para esta semana.",
-                "Relaciona la enseñanza con tus decisiones actuales.",
-                "Evita aplicaciones demasiado generales.",
-            ],
-            reminder:
-                "Una aplicación sencilla y concreta puede producir cambios reales.",
-        },
-        {
-            id: 7,
-            number: "07",
-            title: "Termina orando",
-            summary:
-                "Responde a Dios con gratitud, confesión y una decisión personal.",
-            description:
-                "La oración final permite convertir lo aprendido en una respuesta sincera. Agradece por la enseñanza, reconoce aquello que necesitas cambiar y pide ayuda para vivirla.",
-            tips: [
-                "Agradece por la verdad aprendida.",
-                "Confiesa aquello que el pasaje haya mostrado.",
-                "Pide fuerzas para ponerlo en práctica.",
-                "Ora por alguien que también necesite esa enseñanza.",
-            ],
-            reminder:
-                "El devocional termina cuando lo aprendido comienza a convertirse en una respuesta.",
-        },
-    ];
 
     // Buscamos la información del paso seleccionado.
-    const currentStep =
-        devotionalSteps.find((step) => step.id === selectedStep) ||
-        devotionalSteps[0];
+    const selectedIndex = devotionalSteps.findIndex((step) =>
+        String(step.id) === selectedStep);
+    const currentIndex = selectedIndex >= 0 ? selectedIndex : 0;
+    const currentStep = devotionalSteps[currentIndex];
+    const currentKey = currentStep ? String(currentStep.id) : "";
 
     // Actualizamos los campos de notas.
     const handleNotesChange = (event) => {
@@ -208,17 +87,17 @@ function PersonalDevotionalGuide() {
 
     // Avanzamos al siguiente paso.
     const handleNextStep = () => {
-        // Verificamos que todavía exista un paso siguiente.
-        if (selectedStep < devotionalSteps.length) {
-            setSelectedStep((previousStep) => previousStep + 1);
+        // Avanzamos por posición ordenada, sin asumir que el ID es numérico.
+        if (currentIndex < devotionalSteps.length - 1) {
+            setSelectedStep(String(devotionalSteps[currentIndex + 1].id));
         }
     };
 
     // Retrocedemos al paso anterior.
     const handlePreviousStep = () => {
-        // Verificamos que no estemos en el primer paso.
-        if (selectedStep > 1) {
-            setSelectedStep((previousStep) => previousStep - 1);
+        // Retrocedemos por posición, también cuando existen pasos nuevos.
+        if (currentIndex > 0) {
+            setSelectedStep(String(devotionalSteps[currentIndex - 1].id));
         }
     };
 
@@ -255,24 +134,14 @@ function PersonalDevotionalGuide() {
                             </nav>
 
                             {/* Texto introductorio. */}
-                            <p className="personal-devotional-hero__eyebrow">
-                                Un momento diario con Dios
-                            </p>
+                            <p className="personal-devotional-hero__eyebrow">{heading.eyebrow}</p>
 
                             {/* Título principal. */}
-                            <h1 className="personal-devotional-hero__title">
-                                Guía para tu
-                                <span className="personal-devotional-hero__highlight">
-                                    devocional personal
-                                </span>
-                            </h1>
+                            <h1 className="personal-devotional-hero__title">{heading.title}{" "}
+<span className="personal-devotional-hero__highlight">{heading.highlight}</span></h1>
 
                             {/* Descripción. */}
-                            <p className="personal-devotional-hero__description">
-                                Aprende a preparar un tiempo sencillo de
-                                lectura bíblica, reflexión y oración que puedas
-                                incorporar a tu vida cotidiana.
-                            </p>
+                            <p className="personal-devotional-hero__description">{heading.description}</p>
                         </div>
 
                         {/* Imagen representativa. */}
@@ -376,20 +245,20 @@ function PersonalDevotionalGuide() {
                             {devotionalSteps.map((step) => (
                                 <button
                                     className={`personal-devotional-steps__button ${
-                                        selectedStep === step.id
+                                        currentKey === String(step.id)
                                             ? "personal-devotional-steps__button--active"
                                             : ""
                                     }`}
                                     key={step.id}
                                     type="button"
                                     role="tab"
-                                    aria-selected={selectedStep === step.id}
+                                    aria-selected={currentKey === String(step.id)}
                                     onClick={() =>
-                                        setSelectedStep(step.id)
+                                        setSelectedStep(String(step.id))
                                     }
                                 >
                                     <span className="personal-devotional-steps__number">
-                                        {step.number}
+                                        {String(step.number).padStart(2, "0")}
                                     </span>
 
                                     <span className="personal-devotional-steps__name">
@@ -400,19 +269,19 @@ function PersonalDevotionalGuide() {
                         </div>
 
                         {/* Contenido del paso seleccionado. */}
-                        <article className="personal-devotional-step-content">
+                        {currentStep ? <article className="personal-devotional-step-content">
                             {/* Número grande. */}
                             <div
                                 className="personal-devotional-step-content__number"
                                 aria-hidden="true"
                             >
-                                {currentStep.number}
+                                {String(currentStep.number).padStart(2, "0")}
                             </div>
 
                             {/* Contenido textual. */}
                             <div className="personal-devotional-step-content__main">
                                 <p className="personal-devotional-step-content__eyebrow">
-                                    Paso {currentStep.id} de{" "}
+                                    Paso {Number(currentStep.number)} de{" "}
                                     {devotionalSteps.length}
                                 </p>
 
@@ -452,7 +321,7 @@ function PersonalDevotionalGuide() {
                                         className="personal-devotional-step-content__button personal-devotional-step-content__button--secondary"
                                         type="button"
                                         onClick={handlePreviousStep}
-                                        disabled={selectedStep === 1}
+                                        disabled={currentIndex === 0}
                                     >
                                         <span aria-hidden="true">←</span>
                                         Paso anterior
@@ -462,17 +331,16 @@ function PersonalDevotionalGuide() {
                                         className="personal-devotional-step-content__button personal-devotional-step-content__button--primary"
                                         type="button"
                                         onClick={handleNextStep}
-                                        disabled={
-                                            selectedStep ===
-                                            devotionalSteps.length
-                                        }
+                                        disabled={currentIndex === devotionalSteps.length - 1}
                                     >
                                         Siguiente paso
                                         <span aria-hidden="true">→</span>
                                     </button>
                                 </div>
                             </div>
-                        </article>
+                        </article> : (
+                            <p role="status">Todavía no hay pasos disponibles en esta guía.</p>
+                        )}
                     </div>
                 </section>
 

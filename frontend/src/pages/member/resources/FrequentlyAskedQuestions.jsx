@@ -2,12 +2,17 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
+import { useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 
-import frequentlyAskedQuestions from "../../../data/resources/frequentlyAskedQuestions";
+import defaultFrequentlyAskedQuestions from "../../../data/resources/frequentlyAskedQuestions";
 
 import "../../../styles/pages/member/resources/FrequentlyAskedQuestions.css";
 
 function FrequentlyAskedQuestions() {
+    // Carga únicamente las ediciones publicadas; conserva los originales.
+    const { items: frequentlyAskedQuestions, heading } = useResourceCatalog("faq", defaultFrequentlyAskedQuestions, RESOURCE_CONTENT_DEFAULTS.faq.heading);
+
     // Texto ingresado en el buscador.
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -30,7 +35,7 @@ function FrequentlyAskedQuestions() {
             "Todos",
             ...new Set(faqCategories),
         ];
-    }, []);
+    }, [frequentlyAskedQuestions]);
 
     // Preguntas filtradas.
     const filteredQuestions = useMemo(() => {
@@ -69,7 +74,7 @@ function FrequentlyAskedQuestions() {
                 );
             }
         );
-    }, [searchTerm, selectedCategory]);
+    }, [searchTerm, selectedCategory, frequentlyAskedQuestions]);
 
     // Abre o cierra una pregunta.
     const toggleQuestion = (questionId) => {
@@ -128,21 +133,12 @@ function FrequentlyAskedQuestions() {
                             </span>
                         </nav>
 
-                        <p className="faq-hero__eyebrow">
-                            Información general
-                        </p>
+                        <p className="faq-hero__eyebrow">{heading.eyebrow}</p>
 
-                        <h1>
-                            Preguntas frecuentes
-                        </h1>
+                        <h1>{heading.title}{" "}
+{heading.highlight && <span>{heading.highlight}</span>}</h1>
 
-                        <p className="faq-hero__description">
-                            Encuentra respuestas sencillas
-                            sobre reuniones, actividades,
-                            primeras visitas, participación
-                            y otros aspectos de nuestra
-                            comunidad.
-                        </p>
+                        <p className="faq-hero__description">{heading.description}</p>
                     </div>
 
                     <div className="faq-hero__curve" />

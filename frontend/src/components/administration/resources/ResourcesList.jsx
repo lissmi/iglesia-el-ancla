@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import {
@@ -30,6 +29,8 @@ function ResourcesList({
     onView,
     onEdit,
     onDelete,
+    onDownloadPdf,
+    downloadingPdfKey = null,
 }) {
 
     // =====================================================
@@ -136,6 +137,8 @@ function ResourcesList({
                                 onView={onView}
                                 onEdit={onEdit}
                                 onDelete={onDelete}
+                                onDownloadPdf={onDownloadPdf}
+                                downloadingPdf={downloadingPdfKey === resource.id}
                             />
                         ))}
 

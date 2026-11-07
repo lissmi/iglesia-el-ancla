@@ -204,3 +204,64 @@
         flex: none;
     }
 }
+
+/* Diferencia visual entre la acción reversible y la definitiva. */
+.resource-delete-modal__hide {
+  background: #eaf5f8;
+  color: #2c7b94;
+  border: 1px solid #bbd8e3;
+}
+
+.resource-delete-modal__hide:hover:not(:disabled) {
+  background: #dceff4;
+  border-color: #82b5c6;
+}
+
+/* Exigimos una confirmación explícita para borrar datos. */
+.resource-delete-modal__permanent-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0;
+  padding: 12px 14px;
+  background: #fff9f5;
+  border: 1px solid #f0d8ca;
+  border-radius: 12px;
+  color: #84472f;
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.resource-delete-modal__permanent-check input {
+  accent-color: #b94d31;
+  margin-top: 3px;
+  flex: none;
+}
+
+.resource-delete-modal__confirm:disabled,
+.resource-delete-modal__hide:disabled {
+  opacity: .52;
+  cursor: not-allowed;
+}
+
+.resource-delete-modal__actions--choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.resource-delete-modal__actions--choices button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 560px) {
+  .resource-delete-modal__actions--choices { flex-direction: column; }
+  .resource-delete-modal__actions--choices button { width: 100%; }
+}

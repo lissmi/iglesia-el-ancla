@@ -1,4 +1,3 @@
-
 import {
     BookOpen,
     NotebookTabs,
@@ -11,6 +10,7 @@ import {
     Pencil,
     Trash2,
     ExternalLink,
+    FileDown as PdfDownloadIcon,
 } from "lucide-react";
 
 import "../../../styles/components/administration/resources/ResourceCard.css";
@@ -74,6 +74,8 @@ function ResourceCard({
     onView,
     onEdit,
     onDelete,
+    onDownloadPdf,
+    downloadingPdf = false,
 }) {
 
     // =====================================================
@@ -116,7 +118,7 @@ function ResourceCard({
                             : "resource-card__status--draft")
                     }
                 >
-                    {isPublished ? "Publicado" : "Borrador"}
+                    {isPublished ? "Publicado" : (resource.hasPublishedVersion ? "Cambios sin publicar" : "Borrador")}
                 </span>
 
             </div>
@@ -127,12 +129,23 @@ function ResourceCard({
 
             <div className="resource-card__content">
 
-                <span className="resource-card__category">
-                    {categoryName || "Sin categoría"}
-                </span>
+                {resource.category === "devotionals" ? (
+                    // Identificamos de inmediato el orden de cada paso.
+                    <span className="resource-card__step">
+                        Paso {Number(resource.content?.number) || "sin asignar"}
+                    </span>
+                ) : (
+                    <span className="resource-card__category">
+                        {categoryName || "Sin categoría"}
+                    </span>
+                )}
 
                 <h3>
-                    {resource.title || "Sin título"}
+                    <button type="button" className="resource-cms__card-title-link"
+                        onClick={() => onView?.(resource)} disabled={!onView}
+                        aria-label={`Ver contenido de ${resource.title}`}>
+                        {resource.title || "Sin título"}
+                    </button>
                 </h3>
 
                 <p>
@@ -155,7 +168,7 @@ function ResourceCard({
             <div className="resource-card__footer">
 
                 <span className="resource-card__date">
-                    {formatDate(resource.createdAt)}
+                    {resource.createdAt ? formatDate(resource.createdAt) : "Material de la iglesia"}
                 </span>
 
                 <div className="resource-card__actions">
@@ -173,6 +186,29 @@ function ResourceCard({
                         >
                             <ExternalLink size={17} />
                         </a>
+                    )}
+
+                    {/* Descarga PDF: Discipulado y Guías de oración. */}
+                    {["discipleship", "prayer_guides"].includes(resource.category) && (
+                        <button
+                            type="button"
+                            className="resource-card__action"
+                            onClick={() => onDownloadPdf?.(resource)}
+                            disabled={
+                                !onDownloadPdf ||
+                                downloadingPdf ||
+                                (!resource.isBuiltin && !resource.hasPublishedVersion)
+                            }
+                            aria-label={downloadingPdf
+                                ? `Preparando PDF de ${resource.title}`
+                                : `Descargar PDF de ${resource.title}`}
+                            title={!resource.isBuiltin && !resource.hasPublishedVersion
+                                ? "Publica este material para poder descargarlo"
+                                : downloadingPdf ? "Preparando PDF..." : "Descargar material en PDF"}
+                            aria-busy={downloadingPdf}
+                        >
+                            <PdfDownloadIcon size={17} aria-hidden="true" />
+                        </button>
                     )}
 
                     {/* VER DETALLES */}

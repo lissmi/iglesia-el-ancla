@@ -207,3 +207,17 @@
         margin-left: auto;
     }
 }
+
+/* Etiqueta de orden de la guía devocional; solo tarjetas de Administración. */
+.resource-card__step {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 10px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #eaf4f7;
+  color: #266f8c;
+  font-size: 12px;
+  font-weight: 700;
+}

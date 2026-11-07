@@ -1,4 +1,5 @@
 
+
 import { useMemo } from "react";
 
 import {
@@ -13,7 +14,7 @@ import "../../../styles/components/administration/resources/ResourcesSummary.css
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function ResourcesSummary({ resources = [] }) {
+function ResourcesSummary({ resources = [], externalCounts = {} }) {
 
     // =====================================================
     // ESTADÍSTICAS
@@ -21,12 +22,20 @@ function ResourcesSummary({ resources = [] }) {
 
     const summary = useMemo(() => {
 
-        const total = resources.length;
+        // Biblioteca y Cancionero manejan sus propias colecciones y API.
+        const externalTotal = (externalCounts.solidarity_library ?? 0) +
+            (externalCounts.songbook ?? 0);
 
-        const published = resources.filter(
-            (resource) => resource.status === "published"
-        ).length;
+        const externalReady = Number.isSafeInteger(externalCounts.solidarity_library) &&
+            Number.isSafeInteger(externalCounts.songbook);
+        const total = externalReady ? resources.length + externalTotal : "—";
 
+        // Un contenido original continúa publicado aunque tenga cambios sin publicar.
+        const published = externalReady ? resources.filter(
+            (resource) => resource.hasPublishedVersion || resource.status === "published"
+        ).length + externalTotal : "—";
+
+        // La cifra de borradores cuenta ediciones pendientes y materiales inéditos.
         const drafts = resources.filter(
             (resource) => resource.status === "draft"
         ).length;
@@ -37,7 +46,7 @@ function ResourcesSummary({ resources = [] }) {
             drafts,
         };
 
-    }, [resources]);
+    }, [resources, externalCounts]);
 
     // =====================================================
     // TARJETAS
@@ -116,3 +125,6 @@ function ResourcesSummary({ resources = [] }) {
 }
 
 export default ResourcesSummary;
+
+
+

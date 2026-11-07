@@ -1,22 +1,74 @@
+
+import { useEffect, useState } from "react";
+import { downloadDiscipleshipPdf, getPublishedDiscipleshipContent, useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 import { Link, useParams } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
 
-import discipleshipMaterials from "../../../data/resources/discipleshipMaterials";
+import defaultDiscipleshipMaterials from "../../../data/resources/discipleshipMaterials";
 
 import "../../../styles/pages/member/resources/DiscipleshipMaterialDetails.css";
 
 function DiscipleshipMaterialDetails() {
+    const { items: discipleshipMaterials, loading } = useResourceCatalog("discipleship", defaultDiscipleshipMaterials, RESOURCE_CONTENT_DEFAULTS.discipleship.heading);
+
     // Obtenemos el slug desde la URL.
     // Ejemplo:
     // /recursos/discipulado/primeros-pasos-en-la-fe
     const { slug } = useParams();
 
     // Buscamos el material que coincide con el slug.
-    const material = discipleshipMaterials.find(
-        (currentMaterial) =>
-            currentMaterial.slug === slug
+    const listedMaterial = discipleshipMaterials.find(
+        (currentMaterial) => currentMaterial.slug === slug
     );
+
+    // Cargamos el TXT completo solo cuando el miembro abre un estudio editado.
+    // Los materiales originales se leen directamente desde React, sin consultar Drive.
+    const [fullContent, setFullContent] = useState(null);
+    const [contentLoading, setContentLoading] = useState(false);
+    const [contentError, setContentError] = useState("");
+    // Estado separado para que el botón no permita descargas repetidas.
+    const [pdfDownloading, setPdfDownloading] = useState(false);
+    const [pdfError, setPdfError] = useState("");
+    // El efecto depende de valores estables, no del objeto del catálogo.
+    const materialId = listedMaterial?.id;
+    const needsDrive = Boolean(listedMaterial?.driveStored);
+    useEffect(() => {
+        let active = true;
+        setFullContent(null);
+        setContentError("");
+        if (!needsDrive || !materialId) {
+            setContentLoading(false);
+            return undefined;
+        }
+        setContentLoading(true);
+        getPublishedDiscipleshipContent(materialId)
+            .then((content) => { if (active) setFullContent(content); })
+            .catch(() => { if (active) setContentError("No pudimos abrir este material. Intenta nuevamente más tarde."); })
+            .finally(() => { if (active) setContentLoading(false); });
+        return () => { active = false; };
+    }, [materialId, needsDrive]);
+
+    // Reutilizamos el mismo diseño con los originales y los TXT publicados.
+    const material = needsDrive
+        ? (fullContent ? { ...listedMaterial, ...fullContent } : null)
+        : listedMaterial;
+
+    // El backend genera el PDF del estudio publicado al solicitarlo.
+    // No creamos ningún archivo nuevo en Drive.
+    const handlePdfDownload = async () => {
+        if (!material || pdfDownloading) return;
+        setPdfError("");
+        setPdfDownloading(true);
+        try {
+            await downloadDiscipleshipPdf(material);
+        } catch (error) {
+            setPdfError(error.message || "No pudimos descargar el estudio. Intenta nuevamente.");
+        } finally {
+            setPdfDownloading(false);
+        }
+    };
 
     // Buscamos la posición del material actual.
     const currentMaterialIndex =
@@ -43,6 +95,12 @@ function DiscipleshipMaterialDetails() {
             : null;
 
     // Si no existe un material con ese slug.
+    if (loading || contentLoading || (needsDrive && !fullContent && !contentError)) {
+        return <><Header /><main style={{ padding: "3rem", textAlign: "center" }}>Cargando material...</main></>;
+    }
+    if (contentError) {
+        return <><Header /><main style={{ padding: "3rem", textAlign: "center" }} role="alert">{contentError}</main></>;
+    }
     if (!material) {
         return (
             <>
@@ -64,7 +122,7 @@ function DiscipleshipMaterialDetails() {
                             todavía no esté disponible.
                         </p>
 
-                        <Link to="/recursos/discipulado">
+                        <Link to="/member/recursos/discipulado">
                             Volver a Material de discipulado
                         </Link>
                     </section>
@@ -95,7 +153,7 @@ function DiscipleshipMaterialDetails() {
                                 /
                             </span>
 
-                            <Link to="/recursos">
+                            <Link to="/member/recursos">
                                 Recursos
                             </Link>
 
@@ -103,7 +161,7 @@ function DiscipleshipMaterialDetails() {
                                 /
                             </span>
 
-                            <Link to="/recursos/discipulado">
+                            <Link to="/member/recursos/discipulado">
                                 Material de discipulado
                             </Link>
 
@@ -132,9 +190,7 @@ function DiscipleshipMaterialDetails() {
                                     : "lecciones"}
                             </span>
 
-                            <span>
-                                {material.duration}
-                            </span>
+
                         </div>
 
                         <p className="discipleship-material-details-hero__eyebrow">
@@ -148,6 +204,25 @@ function DiscipleshipMaterialDetails() {
                         <p className="discipleship-material-details-hero__summary">
                             {material.summary}
                         </p>
+
+                        {/* Descarga del estudio completo, incluida la versión publicada. */}
+                        <div className="discipleship-material-details-hero__download-area">
+                            <button
+                                type="button"
+                                className="discipleship-material-details-hero__download"
+                                onClick={handlePdfDownload}
+                                disabled={pdfDownloading}
+                                aria-busy={pdfDownloading}
+                            >
+                                <span aria-hidden="true">↓</span>
+                                {pdfDownloading ? "Preparando PDF..." : "Descargar estudio en PDF"}
+                            </button>
+                            {pdfError && (
+                                <p className="discipleship-material-details-hero__download-error" role="alert">
+                                    {pdfError}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     <div className="discipleship-material-details-hero__curve" />
@@ -461,7 +536,7 @@ function DiscipleshipMaterialDetails() {
                             </p>
                         </div>
 
-                        <Link to="/recursos/discipulado">
+                        <Link to="/member/recursos/discipulado">
                             Ver todos los materiales
                         </Link>
                     </div>
@@ -476,7 +551,7 @@ function DiscipleshipMaterialDetails() {
                         {previousMaterial ? (
                             <Link
                                 className="discipleship-material-details-navigation__link discipleship-material-details-navigation__link--previous"
-                                to={`/recursos/discipulado/${previousMaterial.slug}`}
+                                to={`/member/recursos/discipulado/${previousMaterial.slug}`}
                             >
                                 <span aria-hidden="true">
                                     ←
@@ -500,7 +575,7 @@ function DiscipleshipMaterialDetails() {
 
                         <Link
                             className="discipleship-material-details-navigation__all"
-                            to="/recursos/discipulado"
+                            to="/member/recursos/discipulado"
                         >
                             Ver todos
                         </Link>
@@ -508,7 +583,7 @@ function DiscipleshipMaterialDetails() {
                         {nextMaterial ? (
                             <Link
                                 className="discipleship-material-details-navigation__link discipleship-material-details-navigation__link--next"
-                                to={`/recursos/discipulado/${nextMaterial.slug}`}
+                                to={`/member/recursos/discipulado/${nextMaterial.slug}`}
                             >
                                 <div>
                                     <small>

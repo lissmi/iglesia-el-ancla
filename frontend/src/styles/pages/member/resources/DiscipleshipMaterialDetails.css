@@ -1282,3 +1282,54 @@
         transform: none;
     }
 }
+
+
+.discipleship-material-details-hero__download-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.discipleship-material-details-hero__download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  color: #183445;
+  background-color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(5, 19, 29, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.discipleship-material-details-hero__download:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 25px rgba(5, 19, 29, 0.17);
+}
+
+.discipleship-material-details-hero__download:focus-visible {
+  outline: 3px solid #b4dce9;
+  outline-offset: 3px;
+}
+
+.discipleship-material-details-hero__download:disabled {
+  cursor: wait;
+  opacity: 0.76;
+}
+
+.discipleship-material-details-hero__download-error {
+  max-width: 480px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #fff5f3;
+  color: #8b2925;
+  font-size: 0.9rem;
+}

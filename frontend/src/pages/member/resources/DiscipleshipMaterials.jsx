@@ -1,13 +1,19 @@
+
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../../../components/public/Header";
+import { useResourceCatalog } from "../../../services/resourcesContentApi";
+import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
 
-import discipleshipMaterials from "../../../data/resources/discipleshipMaterials";
+import defaultDiscipleshipMaterials from "../../../data/resources/discipleshipMaterials";
 
 import "../../../styles/pages/member/resources/DiscipleshipMaterials.css";
 
 function DiscipleshipMaterials() {
+    // Carga únicamente las ediciones publicadas; conserva los originales.
+    const { items: discipleshipMaterials, heading } = useResourceCatalog("discipleship", defaultDiscipleshipMaterials, RESOURCE_CONTENT_DEFAULTS.discipleship.heading);
+
     // Texto ingresado en el buscador.
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -30,7 +36,7 @@ function DiscipleshipMaterials() {
             "Todos",
             ...new Set(materialCategories),
         ];
-    }, []);
+    }, [discipleshipMaterials]);
 
     // Niveles creados automáticamente desde los datos.
     const levels = useMemo(() => {
@@ -43,7 +49,7 @@ function DiscipleshipMaterials() {
             "Todos",
             ...new Set(materialLevels),
         ];
-    }, []);
+    }, [discipleshipMaterials]);
 
     // Materiales filtrados.
     const filteredMaterials = useMemo(() => {
@@ -66,7 +72,6 @@ function DiscipleshipMaterials() {
                     material.title,
                     material.category,
                     material.level,
-                    material.duration,
                     material.summary,
                     ...(material.description || []),
                     ...(material.objectives || []),
@@ -92,6 +97,7 @@ function DiscipleshipMaterials() {
         searchTerm,
         selectedCategory,
         selectedLevel,
+        discipleshipMaterials,
     ]);
 
     // Limpia todos los filtros.
@@ -136,20 +142,12 @@ function DiscipleshipMaterials() {
                             </span>
                         </nav>
 
-                        <p className="discipleship-materials-hero__eyebrow">
-                            Formación cristiana
-                        </p>
+                        <p className="discipleship-materials-hero__eyebrow">{heading.eyebrow}</p>
 
-                        <h1>
-                            Material de discipulado
-                        </h1>
+                        <h1>{heading.title}{" "}
+{heading.highlight && <span>{heading.highlight}</span>}</h1>
 
-                        <p className="discipleship-materials-hero__description">
-                            Encuentra contenidos preparados
-                            para fortalecer tu fe, comprender
-                            la Biblia y avanzar en tu caminar
-                            cristiano.
-                        </p>
+                        <p className="discipleship-materials-hero__description">{heading.description}</p>
                     </div>
 
                     <div className="discipleship-materials-hero__curve" />
@@ -369,17 +367,6 @@ function DiscipleshipMaterials() {
                                                         : "lecciones"}
                                                 </span>
 
-                                                <span
-                                                    aria-hidden="true"
-                                                >
-                                                    ·
-                                                </span>
-
-                                                <span>
-                                                    {
-                                                        material.duration
-                                                    }
-                                                </span>
                                             </div>
 
                                             <div className="discipleship-material-card__footer">
@@ -392,7 +379,7 @@ function DiscipleshipMaterials() {
                                                 </span>
 
                                                 <Link
-                                                    to={`/recursos/discipulado/${material.slug}`}
+                                                    to={`/member/recursos/discipulado/${material.slug}`}
                                                 >
                                                     Comenzar material
 

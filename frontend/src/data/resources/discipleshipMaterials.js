@@ -1,3 +1,4 @@
+
 // =====================================================
 // MATERIALES DE DISCIPULADO
 // =====================================================
@@ -24,8 +25,6 @@ const discipleshipMaterials = [
         category: "Fundamentos de la fe",
 
         level: "Inicial",
-
-        duration: "35 minutos",
 
         lessons: 5,
 
@@ -164,8 +163,6 @@ const discipleshipMaterials = [
 
         level: "Inicial",
 
-        duration: "45 minutos",
-
         lessons: 4,
 
         summary:
@@ -286,8 +283,6 @@ const discipleshipMaterials = [
         category: "Oración",
 
         level: "Inicial",
-
-        duration: "35 minutos",
 
         lessons: 4,
 
@@ -414,8 +409,6 @@ const discipleshipMaterials = [
 
         level: "Intermedio",
 
-        duration: "40 minutos",
-
         lessons: 4,
 
         summary:
@@ -536,8 +529,6 @@ const discipleshipMaterials = [
         category: "Carácter cristiano",
 
         level: "Intermedio",
-
-        duration: "50 minutos",
 
         lessons: 5,
 
@@ -676,8 +667,6 @@ const discipleshipMaterials = [
 
         level: "Intermedio",
 
-        duration: "45 minutos",
-
         lessons: 4,
 
         summary:
@@ -800,8 +789,6 @@ const discipleshipMaterials = [
 
         level: "Inicial",
 
-        duration: "40 minutos",
-
         lessons: 4,
 
         summary:
@@ -922,8 +909,6 @@ const discipleshipMaterials = [
         category: "Servicio",
 
         level: "Intermedio",
-
-        duration: "45 minutos",
 
         lessons: 4,
 
@@ -1047,8 +1032,6 @@ const discipleshipMaterials = [
 
         level: "Intermedio",
 
-        duration: "45 minutos",
-
         lessons: 4,
 
         summary:
@@ -1170,8 +1153,6 @@ const discipleshipMaterials = [
         category: "Vida cristiana",
 
         level: "Intermedio",
-
-        duration: "45 minutos",
 
         lessons: 4,
 

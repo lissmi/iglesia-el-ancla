@@ -1,5 +1,6 @@
 // Importamos useState para controlar los filtros.
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getPublishedResourceContent } from "../../services/resourcesContentApi";
 
 // Importamos Link para navegar dentro de la aplicación.
 import { Link } from "react-router-dom";
@@ -23,6 +24,17 @@ import cancioneroImage from "../../assets/images/resources/estudios-biblicos.png
 import "../../styles/pages/member/Resources.css";
 
 // Creamos la página de Recursos para usuarios autenticados: member, admin y super_admin.
+// Rutas estables: Biblioteca y Cancionero conservan sus propios módulos.
+const SECTION_BY_ROUTE = {
+        "/member/recursos/estudios": "studies",
+        "/member/recursos/devocional": "devotionals",
+        "/member/recursos/biblia": "bible",
+        "/member/recursos/discipulado": "discipleship",
+        "/member/recursos/guias-oracion": "prayer_guides",
+        "/member/recursos/material-descargable": "downloads",
+        "/member/recursos/preguntas-frecuentes": "faq",
+};
+
 function Resources() {
     // Creamos las categorías disponibles para filtrar.
     const categories = [
@@ -41,8 +53,8 @@ function Resources() {
     // Guardamos la categoría seleccionada.
     const [selectedCategory, setSelectedCategory] = useState("Todos");
 
-    // Creamos información temporal mientras todavía no usamos el backend.
-    const resources = [
+    // Conservamos las tarjetas originales, incluido el acceso a Biblioteca y Cancionero.
+    const originalResources = [
         {
             // Identificador temporal.
             id: 1,
@@ -241,6 +253,34 @@ function Resources() {
             featured: false,
         },
     ];
+
+    // Cada tarjeta mantiene su ruta actual; únicamente se actualizan sus textos.
+
+
+    const [publishedHeadings, setPublishedHeadings] = useState({});
+    useEffect(() => {
+        let active = true;
+        // La biblioteca y el cancionero ya utilizan sus propias consultas.
+        Promise.all(Object.values(SECTION_BY_ROUTE).map((section) =>
+            getPublishedResourceContent(section)
+                .then((result) => [section, result.page])
+                .catch(() => [section, null])
+        )).then((rows) => {
+            if (active) setPublishedHeadings(Object.fromEntries(rows));
+        });
+        return () => { active = false; };
+    // El mapa está definido fuera del componente y no cambia entre renders.
+    }, []);
+
+    const resources = originalResources.map((resource) => {
+        const section = SECTION_BY_ROUTE[resource.link];
+        const heading = section ? publishedHeadings[section] : null;
+        return heading ? {
+            ...resource,
+            title: [heading.title, heading.highlight].filter(Boolean).join(" "),
+            description: heading.description || resource.description,
+        } : resource;
+    });
 
     // Filtramos los recursos según la categoría seleccionada.
     const filteredResources =
