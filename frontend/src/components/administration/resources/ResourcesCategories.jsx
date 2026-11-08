@@ -1,4 +1,3 @@
-
 // =========================================================
 // IMPORTACIONES
 // =========================================================
@@ -33,7 +32,7 @@ export const RESOURCE_CATEGORIES = [
     {
         id: "bible",
         name: "Biblia",
-        description: "Lectura y consulta bíblica",
+        description: "66 libros y herramientas de estudio",
         icon: BookOpen,
     },
     {
@@ -136,7 +135,7 @@ function ResourcesCategories({
             // No mostramos un total incompleto si uno de los catálogos no respondió.
             if (!Number.isSafeInteger(externalCounts.solidarity_library) ||
                 !Number.isSafeInteger(externalCounts.songbook)) return null;
-            return resources.length + externalCounts.solidarity_library +
+            return resources.length + 66 + externalCounts.solidarity_library +
                 externalCounts.songbook;
         }
 
@@ -144,6 +143,9 @@ function ResourcesCategories({
         if (categoryId === "solidarity_library" || categoryId === "songbook") {
             return externalCounts[categoryId];
         }
+
+        // En Biblia contamos los 66 libros y también las seis herramientas.
+        if (categoryId === "bible") return 66 + resources.filter((item) => item.category === "bible").length;
 
         // Contamos los recursos de la categoría seleccionada.
         return resources.filter(
@@ -344,6 +346,3 @@ function ResourcesCategories({
 
 // Exportamos el componente administrativo.
 export default ResourcesCategories;
-
-
-

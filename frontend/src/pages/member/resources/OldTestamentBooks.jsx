@@ -1,3 +1,4 @@
+
 // Importamos useMemo para calcular los resultados filtrados
 // solamente cuando cambie la búsqueda, el filtro o los datos.
 import { useMemo, useState } from "react";
@@ -11,7 +12,9 @@ import Header from "../../../components/public/Header";
 
 
 // Importamos los 39 libros del Antiguo Testamento.
-import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
+import { useBibleBookCatalog } from "../../../services/useBibleBookCatalog";
+
+import "../../../styles/pages/member/resources/BibleReaderUnavailable.css";
 
 // Importamos el CSS exclusivo de esta página.
 import "../../../styles/pages/member/resources/OldTestamentBooks.css";
@@ -30,6 +33,8 @@ function normalizeText(text = "") {
 
 // Creamos el componente principal.
 function OldTestamentBooks() {
+    // Recuperamos las fichas publicadas sin alterar el catálogo bíblico.
+    const { oldTestamentBooks } = useBibleBookCatalog();
     // Guardamos el texto escrito en la barra de búsqueda.
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -45,7 +50,7 @@ function OldTestamentBooks() {
 
         // Utilizamos Set para eliminar los grupos repetidos.
         return ["Todos", ...new Set(groups)];
-    }, []);
+    }, [oldTestamentBooks]);
 
     // Filtramos los libros según la búsqueda y el grupo.
     const filteredBooks = useMemo(() => {
@@ -79,7 +84,7 @@ function OldTestamentBooks() {
             // tanto con el filtro como con la búsqueda.
             return matchesGroup && matchesSearch;
         });
-    }, [searchTerm, selectedGroup]);
+    }, [searchTerm, selectedGroup, oldTestamentBooks]);
 
     // Esta variable indica si existe algún filtro activo.
     const hasActiveFilters =
@@ -118,7 +123,7 @@ function OldTestamentBooks() {
                                 /
                             </span>
 
-                            <Link to="/recursos">
+                            <Link to="/member/recursos">
                                 Recursos
                             </Link>
 
@@ -126,7 +131,7 @@ function OldTestamentBooks() {
                                 /
                             </span>
 
-                            <Link to="/recursos/biblia">
+                            <Link to="/member/recursos/biblia">
                                 Biblia y herramientas
                             </Link>
 
@@ -342,7 +347,7 @@ function OldTestamentBooks() {
                                             <div className="old-testament-book-card__actions">
                                                 <Link
                                                     className="old-testament-book-card__details"
-                                                    to={`/recursos/biblia/libro/${book.slug}`}
+                                                    to={`/member/recursos/biblia/libro/${book.slug}`}
                                                 >
                                                     Conocer el libro
 
@@ -353,7 +358,8 @@ function OldTestamentBooks() {
 
                                                 <Link
                                                     className="old-testament-book-card__reader"
-                                                    to={`/recursos/biblia/leer/${book.slug}`}
+                                                    to={`/member/recursos/biblia/leer/${book.slug}/1`}
+                                                    aria-label={`Leer ${book.name} desde el capítulo 1`}
                                                 >
                                                     Leer libro
                                                 </Link>
@@ -392,7 +398,7 @@ function OldTestamentBooks() {
 
                         {/* Navegación inferior. */}
                         <div className="old-testament-books__back">
-                            <Link to="/recursos/biblia">
+                            <Link to="/member/recursos/biblia">
                                 <span aria-hidden="true">
                                     ←
                                 </span>

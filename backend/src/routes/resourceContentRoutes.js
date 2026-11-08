@@ -20,6 +20,7 @@ import ResourceContent, { RESOURCE_CONTENT_SECTIONS } from "../models/ResourceCo
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import validateRequestOrigin from "../middleware/validateRequestOrigin.js";
+import { isBibleBookKey, validateBibleBookContent } from "../utils/bibleBookContent.js";
 
 const router = Router();
 const SECTIONS = new Set(RESOURCE_CONTENT_SECTIONS);
@@ -603,7 +604,7 @@ router.param("key", (req, _res, next, value) => {
 });
 
 // Aceptamos SOLO JSON simple: sin HTML, binarios, tipos raros ni propiedades peligrosas.
-function validateContent(content, kind, section = "") {
+function validateContent(content, kind, section = "", key = "") {
   if (!content || typeof content !== "object" || Array.isArray(content)) {
     throw bad("Completa los datos del contenido antes de guardar");
   }
@@ -653,6 +654,11 @@ function validateContent(content, kind, section = "") {
     }
   }
   inspect(content);
+  // Las fichas bíblicas contienen solo textos auxiliares y no pueden
+  // modificar el nombre, la posición ni los capítulos del libro.
+  if (kind === "entry" && section === "bible" && isBibleBookKey(key)) {
+    return validateBibleBookContent(key, content);
+  }
   if (kind === "page") {
     const allowed = new Set(["eyebrow", "title", "highlight", "description"]);
     if (Object.keys(content).some((field) => !allowed.has(field)) ||
@@ -800,7 +806,11 @@ async function saveDraft(req, res, next, kind) {
       if (!matchingId) uploadedTxtId = await uploadDiscipleshipText(fullGuide, key, section);
       clean = prayerGuideMetadata(fullGuide, matchingId || uploadedTxtId);
     }
-    clean = validateContent(clean, kind, section);
+    // Un libro bíblico no es un recurso nuevo: siempre edita una ficha existente.
+    if (section === "bible" && kind === "entry" && isBibleBookKey(key) && isCustom) {
+      throw bad("Solo puedes editar la información de los libros existentes.");
+    }
+    clean = validateContent(clean, kind, section, key);
     if (section === "devotionals" && kind === "entry") {
       await ensureDevotionalNumberAvailable(key, clean.number);
     }

@@ -1,0 +1,149 @@
+/* ============================================================ */
+/* EDICIÓN VISUAL CONTEXTUAL: LÁPICES EN LA FICHA BÍBLICA */
+/* ============================================================ */
+
+/* Se conserva el bloque visual del sitio; no usamos un modal global. */
+.bible-inline-edit {
+  position: relative;
+  min-width: 0;
+  border-radius: 10px;
+  outline: 1px dashed transparent;
+  outline-offset: 5px;
+  transition: outline-color 160ms ease;
+}
+.bible-inline-edit:hover,
+.bible-inline-edit:focus-within,
+.bible-inline-edit--active {
+  outline-color: rgba(55, 132, 158, .65);
+}
+.bible-inline-edit--inline { display: inline-block; vertical-align: baseline; }
+.bible-inline-edit--inline > span:first-child { vertical-align: baseline; }
+.bible-inline-edit__pencil {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #a9c9d7;
+  border-radius: 10px;
+  background: #fff;
+  color: #267998;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(12, 34, 48, .12);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+.bible-inline-edit--inline .bible-inline-edit__pencil { top: -30px; right: -36px; }
+.bible-inline-edit:hover > .bible-inline-edit__pencil,
+.bible-inline-edit:focus-within > .bible-inline-edit__pencil,
+.bible-inline-edit__pencil:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bible-inline-edit__pencil:focus-visible,
+.bible-inline-edit__panel button:focus-visible {
+  outline: 3px solid #3f9bb8;
+  outline-offset: 2px;
+}
+.bible-inline-edit__panel {
+  display: block;
+  width: min(100%, 780px);
+  margin: 9px 0 16px;
+  padding: 16px;
+  border: 1px solid #bdd5e1;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 26px rgba(15, 36, 47, .1);
+  color: #203c50;
+  font-family: inherit;
+  text-align: left;
+}
+.bible-inline-edit--inline .bible-inline-edit__panel { width: min(580px, 75vw); }
+.bible-inline-edit__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2e6179;
+}
+.bible-inline-edit__panel textarea,
+.bible-inline-edit__panel input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid #c9dce5;
+  border-radius: 9px;
+  background: #f9fcfd;
+  color: #203c50;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.bible-inline-edit__panel textarea { min-height: 85px; resize: vertical; }
+.bible-inline-edit__controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.bible-inline-edit__controls small {
+  margin-right: auto;
+  font-size: 11px;
+  color: #5f7888;
+}
+.bible-inline-edit__controls button,
+.bible-inline-edit__row button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border: 1px solid #cbdde5;
+  border-radius: 8px;
+  background: #fff;
+  color: #295d75;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bible-inline-edit__controls button:last-child { background: #3b839b; border-color: #3b839b; color: #fff; }
+.bible-inline-edit__controls button:disabled,
+.bible-inline-edit__row button:disabled { opacity: .45; cursor: not-allowed; }
+.bible-inline-edit__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 8px 0;
+}
+.bible-inline-edit__row textarea,
+.bible-inline-edit__row input { flex: 1 1 auto; width: auto; }
+.bible-inline-edit__row small { flex: 0 0 58px; text-align: right; font-size: 11px; color: #61798b; }
+.bible-inline-edit__row button { flex: 0 0 35px; height: 36px; padding: 4px; }
+.bible-inline-edit__flex { flex: 1; }
+.bible-inline-edit--list .bible-inline-edit__panel { margin-top: 12px; }
+.bible-inline-edit__paragraphs p + p { margin-top: 12px; }
+
+/* Sobre la portada oscura se mantiene el contraste de los controles. */
+.book-details-hero .bible-inline-edit__panel { position: relative; z-index: 6; }
+@media (hover: none) {
+  .bible-inline-edit__pencil { opacity: 1; transform: none; }
+}
+@media (max-width: 620px) {
+  .bible-inline-edit__panel { padding: 12px; }
+  .bible-inline-edit__row { flex-wrap: wrap; }
+  .bible-inline-edit__row textarea,
+  .bible-inline-edit__row input { flex: 1 0 100%; }
+  .bible-inline-edit__row small { flex: 1; }
+}

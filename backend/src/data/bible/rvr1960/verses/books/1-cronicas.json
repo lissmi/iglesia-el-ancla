@@ -1,0 +1,3833 @@
+{
+  "version": "rvr1960",
+  "libro": "1-cronicas",
+  "nombre": "1 Crónicas",
+  "capitulos": {
+    "1": [
+      {
+        "numero": 1,
+        "texto": "Adán, Set, Enós,"
+      },
+      {
+        "numero": 2,
+        "texto": "Cainán, Mahalaleel, Jared,"
+      },
+      {
+        "numero": 3,
+        "texto": "Enoc, Matusalén, Lamec,"
+      },
+      {
+        "numero": 4,
+        "texto": "Noé, Sem, Cam y Jafet."
+      },
+      {
+        "numero": 5,
+        "texto": "Los hijos de Jafet: Gomer, Magog, Madai, Javán, Tubal, Mesec y Tiras."
+      },
+      {
+        "numero": 6,
+        "texto": "Los hijos de Gomer: Askenaz, Rifat y Togarma."
+      },
+      {
+        "numero": 7,
+        "texto": "Los hijos de Javán: Elisa, Tarsis, Quitim y Dodanim."
+      },
+      {
+        "numero": 8,
+        "texto": "Los hijos de Cam: Cus, Mizraim, Fut y Canaán."
+      },
+      {
+        "numero": 9,
+        "texto": "Los hijos de Cus: Seba, Havila, Sabta, Raama y Sabteca. Y los hijos de Raama: Seba y Dedán."
+      },
+      {
+        "numero": 10,
+        "texto": "Cus engendró a Nimrod; éste llegó a ser poderoso en la tierra."
+      },
+      {
+        "numero": 11,
+        "texto": "Mizraim engendró a Ludim, Anamim, Lehabim, Naftuhim,"
+      },
+      {
+        "numero": 12,
+        "texto": "Patrusim y Casluhim; de éstos salieron los filisteos y los caftoreos."
+      },
+      {
+        "numero": 13,
+        "texto": "Canaán engendró a Sidón su primogénito, y a Het,"
+      },
+      {
+        "numero": 14,
+        "texto": "al jebuseo, al amorreo, al gergeseo,"
+      },
+      {
+        "numero": 15,
+        "texto": "al heveo, al araceo, al sineo,"
+      },
+      {
+        "numero": 16,
+        "texto": "al arvadeo, al zemareo y al hamateo."
+      },
+      {
+        "numero": 17,
+        "texto": "Los hijos de Sem: Elam, Asur, Arfaxad, Lud, Aram, Uz, Hul, Geter y Mesec."
+      },
+      {
+        "numero": 18,
+        "texto": "Arfaxad engendró a Sela, y Sela engendró a Heber."
+      },
+      {
+        "numero": 19,
+        "texto": "Y a Heber nacieron dos hijos; el nombre del uno fue Peleg, por cuanto en sus días fue dividida la tierra; y el nombre de su hermano fue Joctán."
+      },
+      {
+        "numero": 20,
+        "texto": "Joctán engendró a Almodad, Selef, Hazar-mavet y Jera."
+      },
+      {
+        "numero": 21,
+        "texto": "A Adoram también, a Uzal, Dicla,"
+      },
+      {
+        "numero": 22,
+        "texto": "Ebal, Abimael, Seba,"
+      },
+      {
+        "numero": 23,
+        "texto": "Ofir, Havila y Jobab; todos hijos de Joctán."
+      },
+      {
+        "numero": 24,
+        "texto": "Sem, Arfaxad, Sela,"
+      },
+      {
+        "numero": 25,
+        "texto": "Heber, Peleg, Reu,"
+      },
+      {
+        "numero": 26,
+        "texto": "Serug, Nacor, Taré,"
+      },
+      {
+        "numero": 27,
+        "texto": "y Abram, el cual es Abraham."
+      },
+      {
+        "numero": 28,
+        "texto": "Los hijos de Abraham: Isaac e Ismael."
+      },
+      {
+        "numero": 29,
+        "texto": "Y estas son sus descendencias: el primogénito de Ismael, Nebaiot; después Cedar, Adbeel, Mibsam,"
+      },
+      {
+        "numero": 30,
+        "texto": "Misma, Duma, Massa, Hadad, Tema,"
+      },
+      {
+        "numero": 31,
+        "texto": "Jetur, Nafis y Cedema; éstos son los hijos de Ismael."
+      },
+      {
+        "numero": 32,
+        "texto": "Y Cetura, concubina de Abraham, dio a luz a Zimram, Jocsán, Medán, Madián, Isbac y Súa. Los hijos de Jocsán: Seba y Dedán."
+      },
+      {
+        "numero": 33,
+        "texto": "Los hijos de Madián: Efa, Efer, Hanoc, Abida y Elda; todos éstos fueron hijos de Cetura."
+      },
+      {
+        "numero": 34,
+        "texto": "Abraham engendró a Isaac, y los hijos de Isaac fueron Esaú e Israel."
+      },
+      {
+        "numero": 35,
+        "texto": "Los hijos de Esaú: Elifaz, Reuel, Jeús, Jaalam y Coré."
+      },
+      {
+        "numero": 36,
+        "texto": "Los hijos de Elifaz: Temán, Omar, Zefo, Gatam, Cenaz, Timna y Amalec."
+      },
+      {
+        "numero": 37,
+        "texto": "Los hijos de Reuel: Nahat, Zera, Sama y Miza."
+      },
+      {
+        "numero": 38,
+        "texto": "Los hijos de Seir: Lotán, Sobal, Zibeón, Aná, Disón, Ezer y Disán."
+      },
+      {
+        "numero": 39,
+        "texto": "Los hijos de Lotán: Hori y Homam; y Timna fue hermana de Lotán."
+      },
+      {
+        "numero": 40,
+        "texto": "Los hijos de Sobal: Alván, Manahat, Ebal, Sefo y Onam. Los hijos de Zibeón: Aja y Aná."
+      },
+      {
+        "numero": 41,
+        "texto": "Disón fue hijo de Aná; y los hijos de Disón: Amram, Esbán, Itrán y Querán."
+      },
+      {
+        "numero": 42,
+        "texto": "Los hijos de Ezer: Bilhán, Zaaván y Jaacán. Los hijos de Disán: Uz y Arán."
+      },
+      {
+        "numero": 43,
+        "texto": "Y estos son los reyes que reinaron en la tierra de Edom, antes que reinase rey sobre los hijos de Israel: Bela hijo de Beor; y el nombre de su ciudad fue Dinaba."
+      },
+      {
+        "numero": 44,
+        "texto": "Muerto Bela, reinó en su lugar Jobab hijo de Zera, de Bosra."
+      },
+      {
+        "numero": 45,
+        "texto": "Y muerto Jobab, reinó en su lugar Husam, de la tierra de los temanitas."
+      },
+      {
+        "numero": 46,
+        "texto": "Muerto Husam, reinó en su lugar Hadad hijo de Bedad, el que derrotó a Madián en el campo de Moab; y el nombre de su ciudad fue Avit."
+      },
+      {
+        "numero": 47,
+        "texto": "Muerto Hadad, reinó en su lugar Samla de Masreca."
+      },
+      {
+        "numero": 48,
+        "texto": "Muerto también Samla, reinó en su lugar Saúl de Rehobot, que está junto al Eufrates."
+      },
+      {
+        "numero": 49,
+        "texto": "Y muerto Saúl, reinó en su lugar Baal-hanán hijo de Acbor."
+      },
+      {
+        "numero": 50,
+        "texto": "Muerto Baal-hanán, reinó en su lugar Hadad, el nombre de cuya ciudad fue Pai; y el nombre de su mujer, Mehetabel hija de Matred, hija de Mezaab."
+      },
+      {
+        "numero": 51,
+        "texto": "Muerto Hadad, sucedieron en Edom los jefes Timna, Alva, Jetet,"
+      },
+      {
+        "numero": 52,
+        "texto": "Aholibama, Ela, Pinón,"
+      },
+      {
+        "numero": 53,
+        "texto": "Cenaz, Temán, Mibzar,"
+      },
+      {
+        "numero": 54,
+        "texto": "Magdiel e Iram. Estos fueron los jefes de Edom."
+      }
+    ],
+    "2": [
+      {
+        "numero": 1,
+        "texto": "Estos son los hijos de Israel: Rubén, Simeón, Leví, Judá, Isacar, Zabulón,"
+      },
+      {
+        "numero": 2,
+        "texto": "Dan, José, Benjamín, Neftalí, Gad y Aser."
+      },
+      {
+        "numero": 3,
+        "texto": "Los hijos de Judá: Er, Onán y Sela. Estos tres le nacieron de la hija de Súa, cananea. Y Er, primogénito de Judá, fue malo delante de Jehová, quien lo mató."
+      },
+      {
+        "numero": 4,
+        "texto": "Y Tamar su nuera dio a luz a Fares y a Zera. Todos los hijos de Judá fueron cinco."
+      },
+      {
+        "numero": 5,
+        "texto": "Los hijos de Fares: Hezrón y Hamul."
+      },
+      {
+        "numero": 6,
+        "texto": "Y los hijos de Zera: Zimri, Etán, Hemán, Calcol y Dara; por todos cinco."
+      },
+      {
+        "numero": 7,
+        "texto": "Hijo de Carmi fue Acán, el que perturbó a Israel, porque prevaricó en el anatema."
+      },
+      {
+        "numero": 8,
+        "texto": "Azarías fue hijo de Etán."
+      },
+      {
+        "numero": 9,
+        "texto": "Los hijos que nacieron a Hezrón: Jerameel, Ram y Quelubai."
+      },
+      {
+        "numero": 10,
+        "texto": "Ram engendró a Aminadab, y Aminadab engendró a Naasón, príncipe de los hijos de Judá."
+      },
+      {
+        "numero": 11,
+        "texto": "Naasón engendró a Salmón, y Salmón engendró a Booz."
+      },
+      {
+        "numero": 12,
+        "texto": "Booz engendró a Obed, y Obed engendró a Isaí,"
+      },
+      {
+        "numero": 13,
+        "texto": "e Isaí engendró a Eliab su primogénito, el segundo Abinadab, Simea el tercero,"
+      },
+      {
+        "numero": 14,
+        "texto": "el cuarto Natanael, el quinto Radai,"
+      },
+      {
+        "numero": 15,
+        "texto": "el sexto Ozem, el séptimo David,"
+      },
+      {
+        "numero": 16,
+        "texto": "de los cuales Sarvia y Abigail fueron hermanas. Los hijos de Sarvia fueron tres: Abisai, Joab y Asael."
+      },
+      {
+        "numero": 17,
+        "texto": "Abigail dio a luz a Amasa, cuyo padre fue Jeter ismaelita,"
+      },
+      {
+        "numero": 18,
+        "texto": "Caleb hijo de Hezrón engendró a Jeriot de su mujer Azuba. Y los hijos de ella fueron Jeser, Sobab y Ardón."
+      },
+      {
+        "numero": 19,
+        "texto": "Muerta Azuba, tomó Caleb por mujer a Efrata, la cual dio a luz a Hur."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Hur engendró a Uri, y Uri engendró a Bezaleel."
+      },
+      {
+        "numero": 21,
+        "texto": "Después entró Hezrón a la hija de Maquir padre de Galaad, la cual tomó siendo él de sesenta años, y ella dio a luz a Segub."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Segub engendró a Jair, el cual tuvo veintitrés ciudades en la tierra de Galaad."
+      },
+      {
+        "numero": 23,
+        "texto": "Pero Gesur y Aram tomaron de ellos las ciudades de Jair, con Kenat y sus aldeas, sesenta lugares. Todos éstos fueron de los hijos de Maquir padre de Galaad."
+      },
+      {
+        "numero": 24,
+        "texto": "Muerto Hezrón en Caleb de Efrata, Abías mujer de Hezrón dio a luz a Asur padre de Tecoa."
+      },
+      {
+        "numero": 25,
+        "texto": "Los hijos de Jerameel primogénito de Hezrón fueron Ram su primogénito, Buna, Orén, Ozem y Ahías."
+      },
+      {
+        "numero": 26,
+        "texto": "Y tuvo Jerameel otra mujer llamada Atara, que fue madre de Onam."
+      },
+      {
+        "numero": 27,
+        "texto": "Los hijos de Ram primogénito de Jerameel fueron Maaz, Jamín y Equer."
+      },
+      {
+        "numero": 28,
+        "texto": "Y los hijos de Onam fueron Samai y Jada. Los hijos de Samai: Nadab y Abisur."
+      },
+      {
+        "numero": 29,
+        "texto": "Y el nombre de la mujer de Abisur fue Abihail, la cual dio a luz a Ahbán y a Molid."
+      },
+      {
+        "numero": 30,
+        "texto": "Los hijos de Nadab: Seled y Apaim. Y Seled murió sin hijos."
+      },
+      {
+        "numero": 31,
+        "texto": "Isi fue hijo de Apaim, y Sesán hijo de Isi, e hijo de Sesán, Ahlai."
+      },
+      {
+        "numero": 32,
+        "texto": "Los hijos de Jada hermano de Samai: Jeter y Jonatán. Y murió Jeter sin hijos."
+      },
+      {
+        "numero": 33,
+        "texto": "Los hijos de Jonatán: Pelet y Zaza. Estos fueron los hijos de Jerameel."
+      },
+      {
+        "numero": 34,
+        "texto": "Y Sesán no tuvo hijos, sino hijas; pero tenía Sesán un siervo egipcio llamado Jarha."
+      },
+      {
+        "numero": 35,
+        "texto": "A éste Sesán dio su hija por mujer, y ella dio a luz a Atai."
+      },
+      {
+        "numero": 36,
+        "texto": "Atai engendró a Natán, y Natán engendró a Zabad;"
+      },
+      {
+        "numero": 37,
+        "texto": "Zabad engendró a Eflal, Eflal engendró a Obed;"
+      },
+      {
+        "numero": 38,
+        "texto": "Obed engendró a Jehú, Jehú engendró a Azarías;"
+      },
+      {
+        "numero": 39,
+        "texto": "Azarías engendró a Heles, Heles engendró a Elasa;"
+      },
+      {
+        "numero": 40,
+        "texto": "Elasa engendró a Sismai, Sismai engendró a Salum;"
+      },
+      {
+        "numero": 41,
+        "texto": "Salum engendró a Jecamías, y Jecamías engendró a Elisama."
+      },
+      {
+        "numero": 42,
+        "texto": "Los hijos de Caleb hermano de Jerameel fueron: Mesa su primogénito, que fue el padre de Zif; y los hijos de Maresa padre de Hebrón."
+      },
+      {
+        "numero": 43,
+        "texto": "Y los hijos de Hebrón: Coré, Tapúa, Requem y Sema."
+      },
+      {
+        "numero": 44,
+        "texto": "Sema engendró a Raham padre de Jorcoam, y Requem engendró a Samai."
+      },
+      {
+        "numero": 45,
+        "texto": "Maón fue hijo de Samai, y Maón padre de Bet-sur."
+      },
+      {
+        "numero": 46,
+        "texto": "Y Efa concubina de Caleb dio a luz a Harán, a Mosa y a Gazez. Y Harán engendró a Gazez."
+      },
+      {
+        "numero": 47,
+        "texto": "Los hijos de Jahdai: Regem, Jotam, Gesam, Pelet, Efa y Saaf."
+      },
+      {
+        "numero": 48,
+        "texto": "Maaca concubina de Caleb dio a luz a Seber y a Tirhana."
+      },
+      {
+        "numero": 49,
+        "texto": "También dio a luz a Saaf padre de Madmana, y a Seva padre de Macbena y padre de Gibea. Y Acsa fue hija de Caleb."
+      },
+      {
+        "numero": 50,
+        "texto": "Estos fueron los hijos de Caleb. Los hijos de Hur primogénito de Efrata: Sobal padre de Quiriat-jearim,"
+      },
+      {
+        "numero": 51,
+        "texto": "Salma padre de Belén, y Haref padre de Bet-gader."
+      },
+      {
+        "numero": 52,
+        "texto": "Y los hijos de Sobal padre de Quiriat-jearim fueron Haroe, la mitad de los manahetitas."
+      },
+      {
+        "numero": 53,
+        "texto": "Y las familias de Quiriat-jearim fueron los itritas, los futitas, los sumatitas y los misraítas, de los cuales salieron los zoratitas y los estaolitas."
+      },
+      {
+        "numero": 54,
+        "texto": "Los hijos de Salma: Belén, y los netofatitas, Atrot-bet-joab, y la mitad de los manahetitas, los zoraítas."
+      },
+      {
+        "numero": 55,
+        "texto": "Y las familias de los escribas que moraban en Jabes fueron los tirateos, los simeateos y los sucateos, los cuales son los ceneos que vinieron de Hamat padre de la casa de Recab."
+      }
+    ],
+    "3": [
+      {
+        "numero": 1,
+        "texto": "Estos son los hijos de David que le nacieron en Hebrón: Amnón el primogénito, de Ahinoam jezreelita; el segundo, Daniel, de Abigail la de Carmel;"
+      },
+      {
+        "numero": 2,
+        "texto": "el tercero, Absalón hijo de Maaca, hija de Talmai rey de Gesur; el cuarto, Adonías hijo de Haguit;"
+      },
+      {
+        "numero": 3,
+        "texto": "el quinto, Sefatías, de Abital; el sexto, Itream, de Egla su mujer."
+      },
+      {
+        "numero": 4,
+        "texto": "Estos seis le nacieron en Hebrón, donde reinó siete años y seis meses; y en Jerusalén reinó treinta y tres años."
+      },
+      {
+        "numero": 5,
+        "texto": "Estos cuatro le nacieron en Jerusalén: Simea, Sobab, Natán, y Salomón hijo de Bet-súa hija de Amiel."
+      },
+      {
+        "numero": 6,
+        "texto": "Y otros nueve: Ibhar, Elisama, Elifelet,"
+      },
+      {
+        "numero": 7,
+        "texto": "Noga, Nefeg, Jafía,"
+      },
+      {
+        "numero": 8,
+        "texto": "Elisama, Eliada y Elifelet."
+      },
+      {
+        "numero": 9,
+        "texto": "Todos éstos fueron los hijos de David, sin los hijos de las concubinas. Y Tamar fue hermana de ellos."
+      },
+      {
+        "numero": 10,
+        "texto": "Hijo de Salomón fue Roboam, cuyo hijo fue Abías, del cual fue hijo Asa, cuyo hijo fue Josafat,"
+      },
+      {
+        "numero": 11,
+        "texto": "de quien fue hijo Joram, cuyo hijo fue Ocozías, hijo del cual fue Joás,"
+      },
+      {
+        "numero": 12,
+        "texto": "del cual fue hijo Amasías, cuyo hijo fue Azarías, e hijo de éste, Jotam."
+      },
+      {
+        "numero": 13,
+        "texto": "Hijo de éste fue Acaz, del que fue hijo Ezequías, cuyo hijo fue Manasés,"
+      },
+      {
+        "numero": 14,
+        "texto": "del cual fue hijo Amón, cuyo hijo fue Josías."
+      },
+      {
+        "numero": 15,
+        "texto": "Y los hijos de Josías: Johanán su primogénito, el segundo Joacim, el tercero Sedequías, el cuarto Salum."
+      },
+      {
+        "numero": 16,
+        "texto": "Los hijos de Joacim: Jeconías su hijo, hijo del cual fue Sedequías."
+      },
+      {
+        "numero": 17,
+        "texto": "Y los hijos de Jeconías: Asir, Salatiel,"
+      },
+      {
+        "numero": 18,
+        "texto": "Malquiram, Pedaías, Senazar, Jecamías, Hosama y Nedabías."
+      },
+      {
+        "numero": 19,
+        "texto": "Los hijos de Pedaías: Zorobabel y Simei. Y los hijos de Zorobabel: Mesulam, Hananías, y Selomit su hermana;"
+      },
+      {
+        "numero": 20,
+        "texto": "y Hasuba, Ohel, Berequías, Hasadías y Jusab-hesed; cinco por todos."
+      },
+      {
+        "numero": 21,
+        "texto": "Los hijos de Hananías: Pelatías y Jesaías; su hijo, Refaías; su hijo, Arnán; su hijo, Abdías; su hijo, Secanías."
+      },
+      {
+        "numero": 22,
+        "texto": "Hijo de Secanías fue Semaías; y los hijos de Semaías: Hatús, Igal, Barías, Nearías y Safat, seis."
+      },
+      {
+        "numero": 23,
+        "texto": "Los hijos de Nearías fueron estos tres: Elioenai, Ezequías y Azricam."
+      },
+      {
+        "numero": 24,
+        "texto": "Los hijos de Elioenai fueron estos siete: Hodavías, Eliasib, Pelaías, Acub, Johanán, Dalaías y Anani."
+      }
+    ],
+    "4": [
+      {
+        "numero": 1,
+        "texto": "Los hijos de Judá: Fares, Hezrón, Carmi, Hur y Sobal."
+      },
+      {
+        "numero": 2,
+        "texto": "Reaía hijo de Sobal engendró a Jahat, y Jahat engendró a Ahumai y a Lahad. Estas son las familias de los zoratitas."
+      },
+      {
+        "numero": 3,
+        "texto": "Y estas son las del padre de Etam: Jezreel, Isma e Ibdas. Y el nombre de su hermana fue Haze-lelponi."
+      },
+      {
+        "numero": 4,
+        "texto": "Penuel fue padre de Gedor, y Ezer padre de Husa. Estos fueron los hijos de Hur primogénito de Efrata, padre de Belén."
+      },
+      {
+        "numero": 5,
+        "texto": "Asur padre de Tecoa tuvo dos mujeres, Hela y Naara."
+      },
+      {
+        "numero": 6,
+        "texto": "Y Naara dio a luz a Ahuzam, Hefer, Temeni y Ahastari. Estos fueron los hijos de Naara."
+      },
+      {
+        "numero": 7,
+        "texto": "Los hijos de Hela: Zeret, Jezoar y Etnán."
+      },
+      {
+        "numero": 8,
+        "texto": "Cos engendró a Anub, a Zobeba, y la familia de Aharhel hijo de Harum."
+      },
+      {
+        "numero": 9,
+        "texto": "Y Jabes fue más ilustre que sus hermanos, al cual su madre llamó Jabes, diciendo: Por cuanto lo di a luz en dolor."
+      },
+      {
+        "numero": 10,
+        "texto": "E invocó Jabes al Dios de Israel, diciendo: ¡Oh, si me dieras bendición, y ensancharas mi territorio, y si tu mano estuviera conmigo, y me libraras de mal, para que no me dañe! Y le otorgó Dios lo que pidió."
+      },
+      {
+        "numero": 11,
+        "texto": "Quelub hermano de Súa engendró a Mehir, el cual fue padre de Estón."
+      },
+      {
+        "numero": 12,
+        "texto": "Y Estón engendró a Bet-rafa, a Paseah, y a Tehina padre de la ciudad de Nahas; éstos son los varones de Reca."
+      },
+      {
+        "numero": 13,
+        "texto": "Los hijos de Cenaz: Otoniel y Seraías. Los hijos de Otoniel: Hatat,"
+      },
+      {
+        "numero": 14,
+        "texto": "y Meonotai, el cual engendró a Ofra. Y Seraías engendró a Joab, padre de los habitantes del valle de Carisim, porque fueron artífices."
+      },
+      {
+        "numero": 15,
+        "texto": "Los hijos de Caleb hijo de Jefone: Iru, Ela y Naam; e hijo de Ela fue Cenaz."
+      },
+      {
+        "numero": 16,
+        "texto": "Los hijos de Jehalelel: Zif, Zifa, Tirías y Asareel."
+      },
+      {
+        "numero": 17,
+        "texto": "Y los hijos de Esdras: Jeter, Mered, Efer y Jalón; también engendró a María, a Samai y a Isba padre de Estemoa."
+      },
+      {
+        "numero": 18,
+        "texto": "Y su mujer Jehudaía dio a luz a Jered padre de Gedor, a Heber padre de Soco y a Jecutiel padre de Zanoa. Estos fueron los hijos de Bitia hija de Faraón, con la cual casó Mered."
+      },
+      {
+        "numero": 19,
+        "texto": "Y los hijos de la mujer de Hodías, hermana de Naham, fueron el padre de Keila garmita, y Estemoa maacateo."
+      },
+      {
+        "numero": 20,
+        "texto": "Los hijos de Simón: Amnón, Rina, Ben-hanán y Tilón. Y los hijos de Isi: Zohet y Benzohet."
+      },
+      {
+        "numero": 21,
+        "texto": "Los hijos de Sela hijo de Judá: Er padre de Leca, y Laada padre de Maresa, y las familias de los que trabajan lino en Bet- asbea;"
+      },
+      {
+        "numero": 22,
+        "texto": "y Joacim, y los varones de Cozeba, Joás, y Saraf, los cuales dominaron en Moab y volvieron a Lehem, según registros antiguos."
+      },
+      {
+        "numero": 23,
+        "texto": "Estos eran alfareros, y moraban en medio de plantíos y cercados; moraban allá con el rey, ocupados en su servicio."
+      },
+      {
+        "numero": 24,
+        "texto": "Los hijos de Simeón: Nemuel, Jamín, Jarib, Zera, Saúl,"
+      },
+      {
+        "numero": 25,
+        "texto": "y Salum su hijo, Mibsam su hijo y Misma su hijo."
+      },
+      {
+        "numero": 26,
+        "texto": "Los hijos de Misma: Hamuel su hijo, Zacur su hijo, y Simei su hijo."
+      },
+      {
+        "numero": 27,
+        "texto": "Los hijos de Simei fueron dieciséis, y seis hijas; pero sus hermanos no tuvieron muchos hijos, ni multiplicaron toda su familia como los hijos de Judá."
+      },
+      {
+        "numero": 28,
+        "texto": "Y habitaron en Beerseba, Molada, Hazar-sual,"
+      },
+      {
+        "numero": 29,
+        "texto": "Bilha, Ezem, Tolad,"
+      },
+      {
+        "numero": 30,
+        "texto": "Betuel, Horma, Siclag,"
+      },
+      {
+        "numero": 31,
+        "texto": "Bet-marcabot, Hazar-susim, Bet-birai y Saaraim. Estas fueron sus ciudades hasta el reinado de David."
+      },
+      {
+        "numero": 32,
+        "texto": "Y sus aldeas fueron Etam, Aín, Rimón, Toquén y Asán; cinco pueblos,"
+      },
+      {
+        "numero": 33,
+        "texto": "y todas sus aldeas que estaban en contorno de estas ciudades hasta Baal. Esta fue su habitación, y esta su descendencia."
+      },
+      {
+        "numero": 34,
+        "texto": "Y Mesobab, Jamlec, Josías hijo de Amasías,"
+      },
+      {
+        "numero": 35,
+        "texto": "Joel, Jehú hijo de Josibías, hijo de Seraías, hijo de Asiel,"
+      },
+      {
+        "numero": 36,
+        "texto": "Elioenai, Jaacoba, Jesohaía, Asaías, Adiel, Jesimiel, Benaía,"
+      },
+      {
+        "numero": 37,
+        "texto": "y Ziza hijo de Sifi, hijo de Alón, hijo de Jedaías, hijo de Simri, hijo de Semaías."
+      },
+      {
+        "numero": 38,
+        "texto": "Estos, por sus nombres, son los principales entre sus familias; y las casas de sus padres fueron multiplicadas en gran manera."
+      },
+      {
+        "numero": 39,
+        "texto": "Y llegaron hasta la entrada de Gedor hasta el oriente del valle, buscando pastos para sus ganados."
+      },
+      {
+        "numero": 40,
+        "texto": "Y hallaron gruesos y buenos pastos, y tierra ancha y espaciosa, quieta y reposada, porque los de Cam la habitaban antes."
+      },
+      {
+        "numero": 41,
+        "texto": "Y estos que han sido escritos por sus nombres, vinieron en días de Ezequías rey de Judá, y desbarataron sus tiendas y cabañas que allí hallaron, y los destruyeron hasta hoy, y habitaron allí en lugar de ellos; por cuanto había allí pastos para sus ganados."
+      },
+      {
+        "numero": 42,
+        "texto": "Asimismo quinientos hombres de ellos, de los hijos de Simeón, fueron al monte de Seir, llevando por capitanes a Pelatías, Nearías, Refaías y Uziel, hijos de Isi,"
+      },
+      {
+        "numero": 43,
+        "texto": "y destruyeron a los que habían quedado de Amalec, y habitaron allí hasta hoy."
+      }
+    ],
+    "5": [
+      {
+        "numero": 1,
+        "texto": "Los hijos de Rubén primogénito de Israel (porque él era el primogénito, mas como violó el lecho de su padre, sus derechos de primogenitura fueron dados a los hijos de José, hijo de Israel, y no fue contado por primogénito;"
+      },
+      {
+        "numero": 2,
+        "texto": "bien que Judá llegó a ser el mayor sobre sus hermanos, y el príncipe de ellos; mas el derecho de primogenitura fue de José);"
+      },
+      {
+        "numero": 3,
+        "texto": "fueron, pues, los hijos de Rubén primogénito de Israel: Hanoc, Falú, Hezrón y Carmi."
+      },
+      {
+        "numero": 4,
+        "texto": "Los hijos de Joel: Semaías su hijo, Gog su hijo, Simei su hijo,"
+      },
+      {
+        "numero": 5,
+        "texto": "Micaía su hijo, Reaía su hijo, Baal su hijo,"
+      },
+      {
+        "numero": 6,
+        "texto": "Beera su hijo, el cual fue transportado por Tiglat-pileser rey de los asirios. Este era principal de los rubenitas."
+      },
+      {
+        "numero": 7,
+        "texto": "Y sus hermanos por sus familias, cuando eran contados en sus descendencias, tenían por príncipes a Jeiel y a Zacarías."
+      },
+      {
+        "numero": 8,
+        "texto": "Y Bela hijo de Azaz, hijo de Sema, hijo de Joel, habitó en Aroer hasta Nebo y Baal-meón."
+      },
+      {
+        "numero": 9,
+        "texto": "Habitó también desde el oriente hasta la entrada del desierto, desde el río Eufrates; porque tenía mucho ganado en la tierra de Galaad."
+      },
+      {
+        "numero": 10,
+        "texto": "Y en los días de Saúl hicieron guerra contra los agarenos, los cuales cayeron en su mano; y ellos habitaron en sus tiendas en toda la región oriental de Galaad."
+      },
+      {
+        "numero": 11,
+        "texto": "Y los hijos de Gad habitaron enfrente de ellos en la tierra de Basán hasta Salca."
+      },
+      {
+        "numero": 12,
+        "texto": "Joel fue el principal en Basán; el segundo Safán, luego Jaanai, después Safat."
+      },
+      {
+        "numero": 13,
+        "texto": "Y sus hermanos, según las familias de sus padres, fueron Micael, Mesulam, Seba, Jorai, Jacán, Zía y Heber; por todos siete."
+      },
+      {
+        "numero": 14,
+        "texto": "Estos fueron los hijos de Abihail hijo de Huri, hijo de Jaroa, hijo de Galaad, hijo de Micael, hijo de Jesisai, hijo de Jahdo, hijo de Buz."
+      },
+      {
+        "numero": 15,
+        "texto": "También Ahí hijo de Abdiel, hijo de Guni, fue principal en la casa de sus padres."
+      },
+      {
+        "numero": 16,
+        "texto": "Y habitaron en Galaad, en Basán y en sus aldeas, y en todos los ejidos de Sarón hasta salir de ellos."
+      },
+      {
+        "numero": 17,
+        "texto": "Todos éstos fueron contados por sus generaciones en días de Jotam rey de Judá y en días de Jeroboam rey de Israel."
+      },
+      {
+        "numero": 18,
+        "texto": "Los hijos de Rubén y de Gad, y la media tribu de Manasés, hombres valientes, hombres que traían escudo y espada, que entesaban arco, y diestros en la guerra, eran cuarenta y cuatro mil setecientos sesenta que salían a batalla."
+      },
+      {
+        "numero": 19,
+        "texto": "Estos tuvieron guerra contra los agarenos, y Jetur, Nafis y Nodab."
+      },
+      {
+        "numero": 20,
+        "texto": "Y fueron ayudados contra ellos, y los agarenos y todos los que con ellos estaban se rindieron en sus manos; porque clamaron a Dios en la guerra, y les fue favorable, porque esperaron en él."
+      },
+      {
+        "numero": 21,
+        "texto": "Y tomaron sus ganados, cincuenta mil camellos, doscientas cincuenta mil ovejas y dos mil asnos; y cien mil personas."
+      },
+      {
+        "numero": 22,
+        "texto": "Y cayeron muchos muertos, porque la guerra era de Dios; y habitaron en sus lugares hasta el cautiverio."
+      },
+      {
+        "numero": 23,
+        "texto": "Los hijos de la media tribu de Manasés, multiplicados en gran manera, habitaron en la tierra desde Basán hasta Baal- hermón y Senir y el monte de Hermón."
+      },
+      {
+        "numero": 24,
+        "texto": "Y estos fueron los jefes de las casas de sus padres: Efer, Isi, Eliel, Azriel, Jeremías, Hodavías y Jahdiel, hombres valientes y esforzados, varones de nombre y jefes de las casas de sus padres."
+      },
+      {
+        "numero": 25,
+        "texto": "Pero se rebelaron contra el Dios de sus padres, y se prostituyeron siguiendo a los dioses de los pueblos de la tierra, a los cuales Jehová había quitado de delante de ellos;"
+      },
+      {
+        "numero": 26,
+        "texto": "por lo cual el Dios de Israel excitó el espíritu de Pul rey de los asirios, y el espíritu de Tiglat-pileser rey de los asirios, el cual transportó a los rubenitas y gaditas y a la media tribu de Manasés, y los llevó a Halah, a Habor, a Hara y al río Gozán, hasta hoy."
+      }
+    ],
+    "6": [
+      {
+        "numero": 1,
+        "texto": "Los hijos de Leví: Gersón, Coat y Merari."
+      },
+      {
+        "numero": 2,
+        "texto": "Los hijos de Coat: Amram, Izhar, Hebrón y Uziel."
+      },
+      {
+        "numero": 3,
+        "texto": "Los hijos de Amram: Aarón, Moisés y María. Los hijos de Aarón: Nadab, Abiú, Eleazar e Itamar."
+      },
+      {
+        "numero": 4,
+        "texto": "Eleazar engendró a Finees, Finees engendró a Abisúa,"
+      },
+      {
+        "numero": 5,
+        "texto": "Abisúa engendró a Buqui, Buqui engendró a Uzi,"
+      },
+      {
+        "numero": 6,
+        "texto": "Uzi engendró a Zeraías, Zeraías engendró a Meraiot,"
+      },
+      {
+        "numero": 7,
+        "texto": "Meraiot engendró a Amarías, Amarías engendró a Ahitob,"
+      },
+      {
+        "numero": 8,
+        "texto": "Ahitob engendró a Sadoc, Sadoc engendró a Ahimaas,"
+      },
+      {
+        "numero": 9,
+        "texto": "Ahimaas engendró a Azarías, Azarías engendró a Johanán,"
+      },
+      {
+        "numero": 10,
+        "texto": "y Johanán engendró a Azarías, el que tuvo el sacerdocio en la casa que Salomón edificó en Jerusalén."
+      },
+      {
+        "numero": 11,
+        "texto": "Azarías engendró a Amarías, Amarías engendró a Ahitob,"
+      },
+      {
+        "numero": 12,
+        "texto": "Ahitob engendró a Sadoc, Sadoc engendró a Salum,"
+      },
+      {
+        "numero": 13,
+        "texto": "Salum engendró a Hilcías, Hilcías engendró a Azarías,"
+      },
+      {
+        "numero": 14,
+        "texto": "Azarías engendró a Seraías, y Seraías engendró a Josadac,"
+      },
+      {
+        "numero": 15,
+        "texto": "y Josadac fue llevado cautivo cuando Jehová transportó a Judá y a Jerusalén por mano de Nabucodonosor."
+      },
+      {
+        "numero": 16,
+        "texto": "Los hijos de Leví: Gersón, Coat y Merari."
+      },
+      {
+        "numero": 17,
+        "texto": "Y estos son los nombres de los hijos de Gersón: Libni y Simei."
+      },
+      {
+        "numero": 18,
+        "texto": "Los hijos de Coat: Amram, Izhar, Hebrón y Uziel."
+      },
+      {
+        "numero": 19,
+        "texto": "Los hijos de Merari: Mahli y Musi. Estas son las familias de Leví, según sus descendencias."
+      },
+      {
+        "numero": 20,
+        "texto": "Gersón: Libni su hijo, Jahat su hijo, Zima su hijo,"
+      },
+      {
+        "numero": 21,
+        "texto": "Joa su hijo, Iddo su hijo, Zera su hijo, Jeatrai su hijo."
+      },
+      {
+        "numero": 22,
+        "texto": "Los hijos de Coat: Aminadab su hijo, Coré su hijo, Asir su hijo,"
+      },
+      {
+        "numero": 23,
+        "texto": "Elcana su hijo, Ebiasaf su hijo, Asir su hijo,"
+      },
+      {
+        "numero": 24,
+        "texto": "Tahat su hijo, Uriel su hijo, Uzías su hijo, y Saúl su hijo."
+      },
+      {
+        "numero": 25,
+        "texto": "Los hijos de Elcana: Amasai y Ahimot;"
+      },
+      {
+        "numero": 26,
+        "texto": "Elcana su hijo, Zofai su hijo, Nahat su hijo."
+      },
+      {
+        "numero": 27,
+        "texto": "Eliab su hijo, Jeroham su hijo, Elcana su hijo."
+      },
+      {
+        "numero": 28,
+        "texto": "Los hijos de Samuel: el primogénito Vasni, y Abías."
+      },
+      {
+        "numero": 29,
+        "texto": "Los hijos de Merari: Mahli, Libni su hijo, Simei su hijo, Uza su hijo,"
+      },
+      {
+        "numero": 30,
+        "texto": "Simea su hijo, Haguía su hijo, Asaías su hijo."
+      },
+      {
+        "numero": 31,
+        "texto": "Estos son los que David puso sobre el servicio de canto en la casa de Jehová, después que el arca tuvo reposo,"
+      },
+      {
+        "numero": 32,
+        "texto": "los cuales servían delante de la tienda del tabernáculo de reunión en el canto, hasta que Salomón edificó la casa de Jehová en Jerusalén; después estuvieron en su ministerio según su costumbre."
+      },
+      {
+        "numero": 33,
+        "texto": "Estos, pues, con sus hijos, ayudaban: de los hijos de Coat, el cantor Hemán hijo de Joel, hijo de Samuel,"
+      },
+      {
+        "numero": 34,
+        "texto": "hijo de Elcana, hijo de Jeroham, hijo de Eliel, hijo de Toa,"
+      },
+      {
+        "numero": 35,
+        "texto": "hijo de Zuf, hijo de Elcana, hijo de Mahat, hijo de Amasai,"
+      },
+      {
+        "numero": 36,
+        "texto": "hijo de Elcana, hijo de Joel, hijo de Azarías, hijo de Sofonías,"
+      },
+      {
+        "numero": 37,
+        "texto": "hijo de Tahat, hijo de Asir, hijo de Ebiasaf, hijo de Coré,"
+      },
+      {
+        "numero": 38,
+        "texto": "hijo de Izhar, hijo de Coat, hijo de Leví, hijo de Israel;"
+      },
+      {
+        "numero": 39,
+        "texto": "y su hermano Asaf, el cual estaba a su mano derecha; Asaf, hijo de Berequías, hijo de Simea,"
+      },
+      {
+        "numero": 40,
+        "texto": "hijo de Micael, hijo de Baasías, hijo de Malquías,"
+      },
+      {
+        "numero": 41,
+        "texto": "hijo de Etni, hijo de Zera, hijo de Adaía,"
+      },
+      {
+        "numero": 42,
+        "texto": "hijo de Etán, hijo de Zima, hijo de Simei,"
+      },
+      {
+        "numero": 43,
+        "texto": "hijo de Jahat, hijo de Gersón, hijo de Leví."
+      },
+      {
+        "numero": 44,
+        "texto": "Pero a la mano izquierda estaban sus hermanos los hijos de Merari, esto es, Etán hijo de Quisi, hijo de Abdi, hijo de Maluc,"
+      },
+      {
+        "numero": 45,
+        "texto": "hijo de Hasabías, hijo de Amasías, hijo de Hilcías,"
+      },
+      {
+        "numero": 46,
+        "texto": "hijo de Amsi, hijo de Bani, hijo de Semer,"
+      },
+      {
+        "numero": 47,
+        "texto": "hijo de Mahli, hijo de Musi, hijo de Merari, hijo de Leví."
+      },
+      {
+        "numero": 48,
+        "texto": "Y sus hermanos los levitas fueron puestos sobre todo el ministerio del tabernáculo de la casa de Dios."
+      },
+      {
+        "numero": 49,
+        "texto": "Mas Aarón y sus hijos ofrecían sacrificios sobre el altar del holocausto, y sobre el altar del perfume quemaban incienso, y ministraban en toda la obra del lugar santísimo, y hacían las expiaciones por Israel conforme a todo lo que Moisés siervo de Dios había mandado."
+      },
+      {
+        "numero": 50,
+        "texto": "Los hijos de Aarón son estos: Eleazar su hijo, Finees su hijo, Abisúa su hijo,"
+      },
+      {
+        "numero": 51,
+        "texto": "Buqui su hijo, Uzi su hijo, Zeraías su hijo,"
+      },
+      {
+        "numero": 52,
+        "texto": "Meraiot su hijo, Amarías su hijo, Ahitob su hijo,"
+      },
+      {
+        "numero": 53,
+        "texto": "Sadoc su hijo, Ahimaas su hijo."
+      },
+      {
+        "numero": 54,
+        "texto": "Estas son sus habitaciones, conforme a sus domicilios y sus términos, las de los hijos de Aarón por las familias de los coatitas, porque a ellos les tocó en suerte."
+      },
+      {
+        "numero": 55,
+        "texto": "Les dieron, pues, Hebrón en tierra de Judá, y sus ejidos alrededor de ella."
+      },
+      {
+        "numero": 56,
+        "texto": "Pero el territorio de la ciudad y sus aldeas se dieron a Caleb, hijo de Jefone."
+      },
+      {
+        "numero": 57,
+        "texto": "De Judá dieron a los hijos de Aarón la ciudad de refugio, esto es, Hebrón; además, Libna con sus ejidos, Jatir, Estemoa con sus ejidos,"
+      },
+      {
+        "numero": 58,
+        "texto": "Hilén con sus ejidos, Debir con sus ejidos,"
+      },
+      {
+        "numero": 59,
+        "texto": "Asán con sus ejidos y Bet-semes con sus ejidos."
+      },
+      {
+        "numero": 60,
+        "texto": "Y de la tribu de Benjamín, Geba con sus ejidos, Alemet con sus ejidos y Anatot con sus ejidos. Todas sus ciudades fueron trece ciudades, repartidas por sus linajes."
+      },
+      {
+        "numero": 61,
+        "texto": "A los hijos de Coat que quedaron de su parentela, dieron por suerte diez ciudades de la media tribu de Manasés."
+      },
+      {
+        "numero": 62,
+        "texto": "A los hijos de Gersón, por sus linajes, dieron de la tribu de Isacar, de la tribu de Aser, de la tribu de Neftalí y de la tribu de Manasés en Basán, trece ciudades."
+      },
+      {
+        "numero": 63,
+        "texto": "Y a los hijos de Merari, por sus linajes, de la tribu de Rubén, de la tribu de Gad y de la tribu de Zabulón, dieron por suerte doce ciudades."
+      },
+      {
+        "numero": 64,
+        "texto": "Y los hijos de Israel dieron a los levitas ciudades con sus ejidos."
+      },
+      {
+        "numero": 65,
+        "texto": "Dieron por suerte de la tribu de los hijos de Judá, de la tribu de los hijos de Simeón y de la tribu de los hijos de Benjamín, las ciudades que nombraron por sus nombres."
+      },
+      {
+        "numero": 66,
+        "texto": "A las familias de los hijos de Coat dieron ciudades con sus ejidos de la tribu de Efraín."
+      },
+      {
+        "numero": 67,
+        "texto": "Les dieron la ciudad de refugio, Siquem con sus ejidos en el monte de Efraín; además, Gezer con sus ejidos,"
+      },
+      {
+        "numero": 68,
+        "texto": "Jocmeam con sus ejidos, Bet-horón con sus ejidos,"
+      },
+      {
+        "numero": 69,
+        "texto": "Ajalón con sus ejidos y Gat-rimón con sus ejidos."
+      },
+      {
+        "numero": 70,
+        "texto": "De la media tribu de Manasés, Aner con sus ejidos y Bileam con sus ejidos, para los de las familias de los hijos de Coat que habían quedado."
+      },
+      {
+        "numero": 71,
+        "texto": "A los hijos de Gersón dieron de la media tribu de Manasés, Golán en Basán con sus ejidos y Astarot con sus ejidos."
+      },
+      {
+        "numero": 72,
+        "texto": "De la tribu de Isacar, Cedes con sus ejidos, Daberat con sus ejidos,"
+      },
+      {
+        "numero": 73,
+        "texto": "Ramot con sus ejidos y Anem con sus ejidos."
+      },
+      {
+        "numero": 74,
+        "texto": "De la tribu de Aser, Masal con sus ejidos, Abdón con sus ejidos,"
+      },
+      {
+        "numero": 75,
+        "texto": "Hucoc con sus ejidos y Rehob con sus ejidos."
+      },
+      {
+        "numero": 76,
+        "texto": "De la tribu de Neftalí, Cedes en Galilea con sus ejidos, Hamón con sus ejidos y Quiriataim con sus ejidos."
+      },
+      {
+        "numero": 77,
+        "texto": "A los hijos de Merari que habían quedado, dieron de la tribu de Zabulón, Rimón con sus ejidos y Tabor con sus ejidos."
+      },
+      {
+        "numero": 78,
+        "texto": "Del otro lado del Jordán frente a Jericó, al oriente del Jordán, dieron de la tribu de Rubén, Beser en el desierto con sus ejidos, Jaza con sus ejidos,"
+      },
+      {
+        "numero": 79,
+        "texto": "Cademot con sus ejidos y Mefaat con sus ejidos."
+      },
+      {
+        "numero": 80,
+        "texto": "Y de la tribu de Gad, Ramot de Galaad con sus ejidos, Mahanaim con sus ejidos,"
+      },
+      {
+        "numero": 81,
+        "texto": "Hesbón con sus ejidos y Jazer con sus ejidos."
+      }
+    ],
+    "7": [
+      {
+        "numero": 1,
+        "texto": "Los hijos de Isacar fueron cuatro: Tola, Fúa, Jasub y Simrón."
+      },
+      {
+        "numero": 2,
+        "texto": "Los hijos de Tola: Uzi, Refaías, Jeriel, Jahmai, Jibsam y Semuel, jefes de las familias de sus padres. De Tola fueron contados por sus linajes en el tiempo de David, veintidós mil seiscientos hombres muy valerosos."
+      },
+      {
+        "numero": 3,
+        "texto": "Hijo de Uzi fue Israhías; y los hijos de Israhías: Micael, Obadías, Joel e Isías; por todos, cinco príncipes."
+      },
+      {
+        "numero": 4,
+        "texto": "Y había con ellos en sus linajes, por las familias de sus padres, treinta y seis mil hombres de guerra; porque tuvieron muchas mujeres e hijos."
+      },
+      {
+        "numero": 5,
+        "texto": "Y sus hermanos por todas las familias de Isacar, contados todos por sus genealogías, eran ochenta y siete mil hombres valientes en extremo."
+      },
+      {
+        "numero": 6,
+        "texto": "Los hijos de Benjamín fueron tres: Bela, Bequer y Jediael."
+      },
+      {
+        "numero": 7,
+        "texto": "Los hijos de Bela: Ezbón, Uzi, Uziel, Jerimot e Iri; cinco jefes de casas paternas, hombres de gran valor, y de cuya descendencia fueron contados veintidós mil treinta y cuatro."
+      },
+      {
+        "numero": 8,
+        "texto": "Los hijos de Bequer: Zemira, Joás, Eliezer, Elioenai, Omri, Jerimot, Abías, Anatot y Alamet; todos éstos fueron hijos de Bequer."
+      },
+      {
+        "numero": 9,
+        "texto": "Y contados por sus descendencias, por sus linajes, los que eran jefes de familias resultaron veinte mil doscientos hombres de grande esfuerzo."
+      },
+      {
+        "numero": 10,
+        "texto": "Hijo de Jediael fue Bilhán; y los hijos de Bilhán: Jeús, Benjamín, Aod, Quenaana, Zetán, Tarsis y Ahisahar."
+      },
+      {
+        "numero": 11,
+        "texto": "Todos éstos fueron hijos de Jediael, jefes de familias, hombres muy valerosos, diecisiete mil doscientos que salían a combatir en la guerra."
+      },
+      {
+        "numero": 12,
+        "texto": "Supim y Hupim fueron hijos de Hir; y Husim, hijo de Aher."
+      },
+      {
+        "numero": 13,
+        "texto": "Los hijos de Neftalí: Jahzeel, Guni, Jezer y Salum, hijos de Bilha."
+      },
+      {
+        "numero": 14,
+        "texto": "Los hijos de Manasés: Asriel, al cual dio a luz su concubina la siria, la cual también dio a luz a Maquir padre de Galaad."
+      },
+      {
+        "numero": 15,
+        "texto": "Y Maquir tomó mujer de Hupim y Supim, cuya hermana tuvo por nombre Maaca; y el nombre del segundo fue Zelofehad. Y Zelofehad tuvo hijas."
+      },
+      {
+        "numero": 16,
+        "texto": "Y Maaca mujer de Maquir dio a luz un hijo, y lo llamó Peres; y el nombre de su hermano fue Seres, cuyos hijos fueron Ulam y Requem."
+      },
+      {
+        "numero": 17,
+        "texto": "Hijo de Ulam fue Bedán. Estos fueron los hijos de Galaad, hijo de Maquir, hijo de Manasés."
+      },
+      {
+        "numero": 18,
+        "texto": "Y su hermana Hamolequet dio a luz a Isod, Abiezer y Mahala,"
+      },
+      {
+        "numero": 19,
+        "texto": "Y los hijos de Semida fueron Ahián, Siquem, Likhi y Aniam."
+      },
+      {
+        "numero": 20,
+        "texto": "Los hijos de Efraín: Sutela, Bered su hijo, Tahat su hijo, Elada su hijo, Tahat su hijo,"
+      },
+      {
+        "numero": 21,
+        "texto": "Zabad su hijo, Sutela su hijo, Ezer y Elad. Mas los hijos de Gat, naturales de aquella tierra, los mataron, porque vinieron a tomarles sus ganados."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Efraín su padre hizo duelo por muchos días, y vinieron sus hermanos a consolarlo."
+      },
+      {
+        "numero": 23,
+        "texto": "Después él se llegó a su mujer, y ella concibió y dio a luz un hijo, al cual puso por nombre Bería, por cuanto había estado en aflicción en su casa."
+      },
+      {
+        "numero": 24,
+        "texto": "Y su hija fue Seera, la cual edificó a Bet-horón la baja y la alta, y a Uzen-seera."
+      },
+      {
+        "numero": 25,
+        "texto": "Hijo de este Bería fue Refa, y Resef, y Telah su hijo, y Tahán su hijo,"
+      },
+      {
+        "numero": 26,
+        "texto": "Laadán su hijo, Amiud su hijo, Elisama su hijo,"
+      },
+      {
+        "numero": 27,
+        "texto": "Nun su hijo, Josué su hijo."
+      },
+      {
+        "numero": 28,
+        "texto": "Y la heredad y habitación de ellos fue Bet-el con sus aldeas; y hacia el oriente Naarán, y a la parte del occidente Gezer y sus aldeas; asimismo Siquem con sus aldeas, hasta Gaza y sus aldeas;"
+      },
+      {
+        "numero": 29,
+        "texto": "y junto al territorio de los hijos de Manasés, Bet-seán con sus aldeas, Taanac con sus aldeas, Meguido con sus aldeas, y Dor con sus aldeas. En estos lugares habitaron los hijos de José hijo de Israel."
+      },
+      {
+        "numero": 30,
+        "texto": "Los hijos de Aser: Imna, Isúa, Isúi, Bería, y su hermana Sera."
+      },
+      {
+        "numero": 31,
+        "texto": "Los hijos de Bería: Heber, y Malquiel, el cual fue padre de Birzavit."
+      },
+      {
+        "numero": 32,
+        "texto": "Y Heber engendró a Jaflet, Somer, Hotam, y Súa hermana de ellos."
+      },
+      {
+        "numero": 33,
+        "texto": "Los hijos de Jaflet: Pasac, Bimhal y Asvat. Estos fueron los hijos de Jaflet."
+      },
+      {
+        "numero": 34,
+        "texto": "Y los hijos de Semer: Ahí, Rohga, Jehúba y Aram."
+      },
+      {
+        "numero": 35,
+        "texto": "Los hijos de Helem su hermano: Zofa, Imna, Seles y Amal."
+      },
+      {
+        "numero": 36,
+        "texto": "Los hijos de Zofa: Súa, Harnefer, Súal, Beri, Imra,"
+      },
+      {
+        "numero": 37,
+        "texto": "Beser, Hod, Sama, Silsa, Itrán y Beera."
+      },
+      {
+        "numero": 38,
+        "texto": "Los hijos de Jeter: Jefone, Pispa y Ara."
+      },
+      {
+        "numero": 39,
+        "texto": "Y los hijos de Ula: Ara, Haniel y Rezia."
+      },
+      {
+        "numero": 40,
+        "texto": "Todos éstos fueron hijos de Aser, cabezas de familias paternas, escogidos, esforzados, jefes de príncipes; y contados que fueron por sus linajes entre los que podían tomar las armas, el número de ellos fue veintiséis mil hombres."
+      }
+    ],
+    "8": [
+      {
+        "numero": 1,
+        "texto": "Benjamín engendró a Bela su primogénito, Asbel el segundo, Ahara el tercero,"
+      },
+      {
+        "numero": 2,
+        "texto": "Noha el cuarto, y Rafa el quinto."
+      },
+      {
+        "numero": 3,
+        "texto": "Y los hijos de Bela fueron Adar, Gera, Abiud,"
+      },
+      {
+        "numero": 4,
+        "texto": "Abisúa, Naamán, Ahoa,"
+      },
+      {
+        "numero": 5,
+        "texto": "Gera, Sefufán e Hiram."
+      },
+      {
+        "numero": 6,
+        "texto": "Y estos son los hijos de Aod, estos los jefes de casas paternas que habitaron en Geba y fueron transportados a Manahat:"
+      },
+      {
+        "numero": 7,
+        "texto": "Naamán, Ahías y Gera; éste los transportó, y engendró a Uza y a Ahiud."
+      },
+      {
+        "numero": 8,
+        "texto": "Y Saharaim engendró hijos en la provincia de Moab, después que dejó a Husim y a Baara que eran sus mujeres."
+      },
+      {
+        "numero": 9,
+        "texto": "Engendró, pues, de Hodes su mujer a Jobab, Sibia, Mesa, Malcam,"
+      },
+      {
+        "numero": 10,
+        "texto": "Jeúz, Saquías y Mirma. Estos son sus hijos, jefes de familias."
+      },
+      {
+        "numero": 11,
+        "texto": "Mas de Husim engendró a Abitob y a Elpaal."
+      },
+      {
+        "numero": 12,
+        "texto": "Y los hijos de Elpaal: Heber, Misam y Semed (el cual edificó Ono, y Lod con sus aldeas),"
+      },
+      {
+        "numero": 13,
+        "texto": "Bería también, y Sema, que fueron jefes de las familias de los moradores de Ajalón, los cuales echaron a los moradores de Gat."
+      },
+      {
+        "numero": 14,
+        "texto": "Y Ahío, Sasac, Jeremot,"
+      },
+      {
+        "numero": 15,
+        "texto": "Zebadías, Arad, Ader,"
+      },
+      {
+        "numero": 16,
+        "texto": "Micael, Ispa y Joha, hijos de Bería."
+      },
+      {
+        "numero": 17,
+        "texto": "Y Zebadías, Mesulam, Hizqui, Heber,"
+      },
+      {
+        "numero": 18,
+        "texto": "Ismerai, Jezlías y Jobab, hijos de Elpaal."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Jaquim, Zicri, Zabdi,"
+      },
+      {
+        "numero": 20,
+        "texto": "Elienai, Ziletai, Eliel,"
+      },
+      {
+        "numero": 21,
+        "texto": "Adaías, Beraías y Simrat, hijos de Simei."
+      },
+      {
+        "numero": 22,
+        "texto": "E Ispán, Heber, Eliel,"
+      },
+      {
+        "numero": 23,
+        "texto": "Abdón, Zicri, Hanán,"
+      },
+      {
+        "numero": 24,
+        "texto": "Hananías, Elam, Anatotías,"
+      },
+      {
+        "numero": 25,
+        "texto": "Ifdaías y Peniel, hijos de Sasac."
+      },
+      {
+        "numero": 26,
+        "texto": "Y Samserai, Seharías, Atalías,"
+      },
+      {
+        "numero": 27,
+        "texto": "Jaresías, Elías y Zicri, hijos de Jeroham."
+      },
+      {
+        "numero": 28,
+        "texto": "Estos fueron jefes principales de familias por sus linajes, y habitaron en Jerusalén."
+      },
+      {
+        "numero": 29,
+        "texto": "Y en Gabaón habitaron Abigabaón, la mujer del cual se llamó Maaca,"
+      },
+      {
+        "numero": 30,
+        "texto": "y su hijo primogénito Abdón, y Zur, Cis, Baal, Nadab,"
+      },
+      {
+        "numero": 31,
+        "texto": "Gedor, Ahío y Zequer."
+      },
+      {
+        "numero": 32,
+        "texto": "Y Miclot engendró a Simea. Estos también habitaron con sus hermanos en Jerusalén, enfrente de ellos."
+      },
+      {
+        "numero": 33,
+        "texto": "Ner engendró a Cis, Cis engendró a Saúl, y Saúl engendró a Jonatán, Malquisúa, Abinadab y Es-baal."
+      },
+      {
+        "numero": 34,
+        "texto": "Hijo de Jonatán fue Merib-baal, y Merib-baal engendró a Micaía."
+      },
+      {
+        "numero": 35,
+        "texto": "Los hijos de Micaía: Pitón, Melec, Tarea y Acaz."
+      },
+      {
+        "numero": 36,
+        "texto": "Acaz engendró a Joada, Joada engendró a Alemet, Azmavet y Zimri, y Zimri engendró a Mosa."
+      },
+      {
+        "numero": 37,
+        "texto": "Mosa engendró a Bina, hijo del cual fue Rafa, hijo del cual fue Elasa, cuyo hijo fue Azel."
+      },
+      {
+        "numero": 38,
+        "texto": "Los hijos de Azel fueron seis, cuyos nombres son Azricam, Bocru, Ismael, Searías, Obadías y Hanán; todos éstos fueron hijos de Azel."
+      },
+      {
+        "numero": 39,
+        "texto": "Y los hijos de Esec su hermano: Ulam su primogénito, Jehús el segundo, Elifelet el tercero."
+      },
+      {
+        "numero": 40,
+        "texto": "Y fueron los hijos de Ulam hombres valientes y vigorosos, flecheros diestros, los cuales tuvieron muchos hijos y nietos, ciento cincuenta. Todos éstos fueron de los hijos de Benjamín."
+      }
+    ],
+    "9": [
+      {
+        "numero": 1,
+        "texto": "Contado todo Israel por sus genealogías, fueron escritos en el libro de los reyes de Israel. Y los de Judá fueron transportados a Babilonia por su rebelión."
+      },
+      {
+        "numero": 2,
+        "texto": "Los primeros moradores que entraron en sus posesiones en las ciudades fueron israelitas, sacerdotes, levitas y sirvientes del templo."
+      },
+      {
+        "numero": 3,
+        "texto": "Habitaron en Jerusalén, de los hijos de Judá, de los hijos de Benjamín, de los hijos de Efraín y Manasés:"
+      },
+      {
+        "numero": 4,
+        "texto": "Utai hijo de Amiud, hijo de Omri, hijo de Imri, hijo de Bani, de los hijos de Fares hijo de Judá."
+      },
+      {
+        "numero": 5,
+        "texto": "Y de los silonitas, Asaías el primogénito, y sus hijos."
+      },
+      {
+        "numero": 6,
+        "texto": "De los hijos de Zera, Jeuel y sus hermanos, seiscientos noventa."
+      },
+      {
+        "numero": 7,
+        "texto": "Y de los hijos de Benjamín: Salú hijo de Mesulam, hijo de Hodavías, hijo de Asenúa,"
+      },
+      {
+        "numero": 8,
+        "texto": "Ibneías hijo de Jeroham, Ela hijo de Uzi, hijo de Micri, y Mesulam hijo de Sefatías, hijo de Reuel, hijo de Ibnías."
+      },
+      {
+        "numero": 9,
+        "texto": "Y sus hermanos por sus linajes fueron novecientos cincuenta y seis. Todos estos hombres fueron jefes de familia en sus casas paternas."
+      },
+      {
+        "numero": 10,
+        "texto": "De los sacerdotes: Jedaías, Joiarib, Jaquín,"
+      },
+      {
+        "numero": 11,
+        "texto": "Azarías hijo de Hilcías, hijo de Mesulam, hijo de Sadoc, hijo de Meraiot, hijo de Ahitob, príncipe de la casa de Dios;"
+      },
+      {
+        "numero": 12,
+        "texto": "Adaía hijo de Jeroham, hijo de Pasur, hijo de Malquías; Masai hijo de Adiel, hijo de Jazera, hijo de Mesulam, hijo de Mesilemit, hijo de Imer,"
+      },
+      {
+        "numero": 13,
+        "texto": "y sus hermanos, jefes de sus casas paternas, en número de mil setecientos sesenta, hombres muy eficaces en la obra del ministerio en la casa de Dios."
+      },
+      {
+        "numero": 14,
+        "texto": "De los levitas: Semaías hijo de Hasub, hijo de Azricam, hijo de Hasabías, de los hijos de Merari,"
+      },
+      {
+        "numero": 15,
+        "texto": "Bacbacar, Heres, Galal, Matanías hijo de Micaía, hijo de Zicri, hijo de Asaf;"
+      },
+      {
+        "numero": 16,
+        "texto": "Obadías hijo de Semaías, hijo de Galal, hijo de Jedutún; y Berequías hijo de Asa, hijo de Elcana, el cual habitó en las aldeas de los netofatitas."
+      },
+      {
+        "numero": 17,
+        "texto": "Y los porteros: Salum, Acub, Talmón, Ahimán y sus hermanos. Salum era el jefe."
+      },
+      {
+        "numero": 18,
+        "texto": "Hasta ahora entre las cuadrillas de los hijos de Leví han sido estos los porteros en la puerta del rey que está al oriente."
+      },
+      {
+        "numero": 19,
+        "texto": "Salum hijo de Coré, hijo de Ebiasaf, hijo de Coré, y sus hermanos los coreítas por la casa de su padre, tuvieron a su cargo la obra del ministerio, guardando las puertas del tabernáculo, como sus padres guardaron la entrada del campamento de Jehová."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Finees hijo de Eleazar fue antes capitán sobre ellos; y Jehová estaba con él."
+      },
+      {
+        "numero": 21,
+        "texto": "Zacarías hijo de Meselemías era portero de la puerta del tabernáculo de reunión."
+      },
+      {
+        "numero": 22,
+        "texto": "Todos éstos, escogidos para guardas en las puertas, eran doscientos doce cuando fueron contados por el orden de sus linajes en sus villas, a los cuales constituyó en su oficio David y Samuel el vidente."
+      },
+      {
+        "numero": 23,
+        "texto": "Así ellos y sus hijos eran porteros por sus turnos a las puertas de la casa de Jehová, y de la casa del tabernáculo."
+      },
+      {
+        "numero": 24,
+        "texto": "Y estaban los porteros a los cuatro lados; al oriente, al occidente, al norte y al sur."
+      },
+      {
+        "numero": 25,
+        "texto": "Y sus hermanos que estaban en sus aldeas, venían cada siete días según su turno para estar con ellos."
+      },
+      {
+        "numero": 26,
+        "texto": "Porque cuatro principales de los porteros levitas estaban en el oficio, y tenían a su cargo las cámaras y los tesoros de la casa de Dios."
+      },
+      {
+        "numero": 27,
+        "texto": "Estos moraban alrededor de la casa de Dios, porque tenían el cargo de guardarla, y de abrirla todas las mañanas."
+      },
+      {
+        "numero": 28,
+        "texto": "Algunos de éstos tenían a su cargo los utensilios para el ministerio, los cuales se metían por cuenta, y por cuenta se sacaban."
+      },
+      {
+        "numero": 29,
+        "texto": "Y otros de ellos tenían el cargo de la vajilla, y de todos los utensilios del santuario, de la harina, del vino, del aceite, del incienso y de las especias."
+      },
+      {
+        "numero": 30,
+        "texto": "Y algunos de los hijos de los sacerdotes hacían los perfumes aromáticos."
+      },
+      {
+        "numero": 31,
+        "texto": "Matatías, uno de los levitas, primogénito de Salum coreíta, tenía a su cargo las cosas que se hacían en sartén."
+      },
+      {
+        "numero": 32,
+        "texto": "Y algunos de los hijos de Coat, y de sus hermanos, tenían a su cargo los panes de la proposición, los cuales ponían por orden cada día de reposo."
+      },
+      {
+        "numero": 33,
+        "texto": "También había cantores, jefes de familias de los levitas, los cuales moraban en las cámaras del templo, exentos de otros servicios, porque de día y de noche estaban en aquella obra."
+      },
+      {
+        "numero": 34,
+        "texto": "Estos eran jefes de familias de los levitas por sus linajes, jefes que habitaban en Jerusalén."
+      },
+      {
+        "numero": 35,
+        "texto": "En Gabaón habitaba Jehiel padre de Gabaón, el nombre de cuya mujer era Maaca;"
+      },
+      {
+        "numero": 36,
+        "texto": "y su hijo primogénito Abdón, luego Zur, Cis, Baal, Ner, Nadab,"
+      },
+      {
+        "numero": 37,
+        "texto": "Gedor, Ahío, Zacarías y Miclot;"
+      },
+      {
+        "numero": 38,
+        "texto": "y Miclot engendró a Simeam. Estos habitaban también en Jerusalén con sus hermanos enfrente de ellos."
+      },
+      {
+        "numero": 39,
+        "texto": "Ner engendró a Cis, Cis engendró a Saúl, y Saúl engendró a Jonatán, Malquisúa, Abinadab y Es-baal."
+      },
+      {
+        "numero": 40,
+        "texto": "Hijo de Jonatán fue Merib-baal, y Merib-baal engendró a Micaía."
+      },
+      {
+        "numero": 41,
+        "texto": "Y los hijos de Micaía: Pitón, Melec, Tarea y Acaz."
+      },
+      {
+        "numero": 42,
+        "texto": "Acaz engendró a Jara, Jara engendró a Alemet, Azmavet y Zimri, y Zimri engendró a Mosa,"
+      },
+      {
+        "numero": 43,
+        "texto": "y Mosa engendró a Bina, cuyo hijo fue Refaías, del que fue hijo Elasa, cuyo hijo fue Azel."
+      },
+      {
+        "numero": 44,
+        "texto": "Y Azel tuvo seis hijos, los nombres de los cuales son: Azricam, Bocru, Ismael, Searías, Obadías y Hanán. Estos fueron los hijos de Azel."
+      }
+    ],
+    "10": [
+      {
+        "numero": 1,
+        "texto": "Los filisteos pelearon contra Israel; y huyeron delante de ellos los israelitas, y cayeron heridos en el monte de Gilboa."
+      },
+      {
+        "numero": 2,
+        "texto": "Y los filisteos siguieron a Saúl y a sus hijos, y mataron los filisteos a Jonatán, a Abinadab y a Malquisúa, hijos de Saúl."
+      },
+      {
+        "numero": 3,
+        "texto": "Y arreciando la batalla contra Saúl, le alcanzaron los flecheros, y fue herido por los flecheros."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces dijo Saúl a su escudero: Saca tu espada y traspásame con ella, no sea que vengan estos incircuncisos y hagan escarnio de mí; pero su escudero no quiso, porque tenía mucho miedo. Entonces Saúl tomó la espada, y se echó sobre ella."
+      },
+      {
+        "numero": 5,
+        "texto": "Cuando su escudero vio a Saúl muerto, él también se echó sobre su espada y se mató."
+      },
+      {
+        "numero": 6,
+        "texto": "Así murieron Saúl y sus tres hijos; y toda su casa murió juntamente con él."
+      },
+      {
+        "numero": 7,
+        "texto": "Y viendo todos los de Israel que habitaban en el valle, que habían huido, y que Saúl y sus hijos eran muertos, dejaron sus ciudades y huyeron, y vinieron los filisteos y habitaron en ellas."
+      },
+      {
+        "numero": 8,
+        "texto": "Sucedió al día siguiente, que al venir los filisteos a despojar a los muertos, hallaron a Saúl y a sus hijos tendidos en el monte de Gilboa."
+      },
+      {
+        "numero": 9,
+        "texto": "Y luego que le despojaron, tomaron su cabeza y sus armas, y enviaron mensajeros por toda la tierra de los filisteos para dar las nuevas a sus ídolos y al pueblo."
+      },
+      {
+        "numero": 10,
+        "texto": "Y pusieron sus armas en el templo de sus dioses, y colgaron la cabeza en el templo de Dagón."
+      },
+      {
+        "numero": 11,
+        "texto": "Y oyendo todos los de Jabes de Galaad lo que los filisteos habían hecho de Saúl,"
+      },
+      {
+        "numero": 12,
+        "texto": "se levantaron todos los hombres valientes, y tomaron el cuerpo de Saúl y los cuerpos de sus hijos, y los trajeron a Jabes; y enterraron sus huesos debajo de una encina en Jabes, y ayunaron siete días."
+      },
+      {
+        "numero": 13,
+        "texto": "Así murió Saúl por su rebelión con que prevaricó contra Jehová, contra la palabra de Jehová, la cual no guardó, y porque consultó a una adivina,"
+      },
+      {
+        "numero": 14,
+        "texto": "y no consultó a Jehová; por esta causa lo mató, y traspasó el reino a David hijo de Isaí."
+      }
+    ],
+    "11": [
+      {
+        "numero": 1,
+        "texto": "Entonces todo Israel se juntó a David en Hebrón, diciendo: He aquí nosotros somos tu hueso y tu carne."
+      },
+      {
+        "numero": 2,
+        "texto": "También antes de ahora, mientras Saúl reinaba, tú eras quien sacaba a la guerra a Israel, y lo volvía a traer. También Jehová tu Dios te ha dicho: Tú apacentarás a mi pueblo Israel, y tú serás príncipe sobre Israel mi pueblo."
+      },
+      {
+        "numero": 3,
+        "texto": "Y vinieron todos los ancianos de Israel al rey en Hebrón, y David hizo con ellos pacto delante de Jehová; y ungieron a David por rey sobre Israel, conforme a la palabra de Jehová por medio de Samuel."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces se fue David con todo Israel a Jerusalén, la cual es Jebús; y los jebuseos habitaban en aquella tierra."
+      },
+      {
+        "numero": 5,
+        "texto": "Y los moradores de Jebús dijeron a David: No entrarás acá. Mas David tomó la fortaleza de Sion, que es la ciudad de David."
+      },
+      {
+        "numero": 6,
+        "texto": "Y David había dicho: El que primero derrote a los jebuseos será cabeza y jefe. Entonces Joab hijo de Sarvia subió el primero, y fue hecho jefe."
+      },
+      {
+        "numero": 7,
+        "texto": "Y David habitó en la fortaleza, y por esto la llamaron la Ciudad de David."
+      },
+      {
+        "numero": 8,
+        "texto": "Y edificó la ciudad alrededor, desde Milo hasta el muro; y Joab reparó el resto de la ciudad."
+      },
+      {
+        "numero": 9,
+        "texto": "Y David iba adelantando y creciendo, y Jehová de los ejércitos estaba con él."
+      },
+      {
+        "numero": 10,
+        "texto": "Estos son los principales de los valientes que David tuvo, y los que le ayudaron en su reino, con todo Israel, para hacerle rey sobre Israel, conforme a la palabra de Jehová."
+      },
+      {
+        "numero": 11,
+        "texto": "Y este es el número de los valientes que David tuvo: Jasobeam hijo de Hacmoni, caudillo de los treinta, el cual blandió su lanza una vez contra trescientos, a los cuales mató."
+      },
+      {
+        "numero": 12,
+        "texto": "Tras de éste estaba Eleazar hijo de Dodo, ahohíta, el cual era de los tres valientes."
+      },
+      {
+        "numero": 13,
+        "texto": "Este estuvo con David en Pasdamim, estando allí juntos en batalla los filisteos; y había allí una parcela de tierra llena de cebada, y huyendo el pueblo delante de los filisteos,"
+      },
+      {
+        "numero": 14,
+        "texto": "se pusieron ellos en medio de la parcela y la defendieron, y vencieron a los filisteos, porque Jehová los favoreció con una gran victoria."
+      },
+      {
+        "numero": 15,
+        "texto": "Y tres de los treinta principales descendieron a la peña a David, a la cueva de Adulam, estando el campamento de los filisteos en el valle de Refaim."
+      },
+      {
+        "numero": 16,
+        "texto": "David estaba entonces en la fortaleza, y había entonces guarnición de los filisteos en Belén."
+      },
+      {
+        "numero": 17,
+        "texto": "David deseó entonces, y dijo: ¡Quién me diera de beber de las aguas del pozo de Belén, que está a la puerta!"
+      },
+      {
+        "numero": 18,
+        "texto": "Y aquellos tres rompieron por el campamento de los filisteos, y sacaron agua del pozo de Belén, que está a la puerta, y la tomaron y la trajeron a David; mas él no la quiso beber, sino que la derramó para Jehová, y dijo:"
+      },
+      {
+        "numero": 19,
+        "texto": "Guárdeme mi Dios de hacer esto. ¿Había yo de beber la sangre y la vida de estos varones, que con peligro de sus vidas la han traído? Y no la quiso beber. Esto hicieron aquellos tres valientes."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Abisai, hermano de Joab, era jefe de los treinta, el cual blandió su lanza contra trescientos y los mató, y ganó renombre con los tres."
+      },
+      {
+        "numero": 21,
+        "texto": "Fue el más ilustre de los treinta, y fue el jefe de ellos, pero no igualó a los tres primeros."
+      },
+      {
+        "numero": 22,
+        "texto": "Benaía hijo de Joiada, hijo de un varón valiente de Cabseel, de grandes hechos; él venció a los dos leones de Moab; también descendió y mató a un león en medio de un foso, en tiempo de nieve."
+      },
+      {
+        "numero": 23,
+        "texto": "El mismo venció a un egipcio, hombre de cinco codos  de estatura; y el egipcio traía una lanza como un rodillo de tejedor, mas él descendió con un báculo, y arrebató al egipcio la lanza de la mano, y lo mató con su misma lanza."
+      },
+      {
+        "numero": 24,
+        "texto": "Esto hizo Benaía hijo de Joiada, y fue nombrado con los tres valientes."
+      },
+      {
+        "numero": 25,
+        "texto": "Y fue el más distinguido de los treinta, pero no igualó a los tres primeros. A éste puso David en su guardia personal."
+      },
+      {
+        "numero": 26,
+        "texto": "Y los valientes de los ejércitos: Asael hermano de Joab, Elhanan hijo de Dodo de Belén,"
+      },
+      {
+        "numero": 27,
+        "texto": "Samot harodita, Heles pelonita;"
+      },
+      {
+        "numero": 28,
+        "texto": "Ira hijo de Iques tecoíta, Abiezer anatotita,"
+      },
+      {
+        "numero": 29,
+        "texto": "Sibecai husatita, Ilai ahohíta,"
+      },
+      {
+        "numero": 30,
+        "texto": "Maharai netofatita, Heled hijo de Baana netofatita,"
+      },
+      {
+        "numero": 31,
+        "texto": "Itai hijo de Ribai, de Gabaa de los hijos de Benjamín, Benaía piratonita,"
+      },
+      {
+        "numero": 32,
+        "texto": "Hurai del río Gaas, Abiel arbatita,"
+      },
+      {
+        "numero": 33,
+        "texto": "Azmavet barhumita, Eliaba saalbonita,"
+      },
+      {
+        "numero": 34,
+        "texto": "los hijos de Hasem gizonita, Jonatán hijo de Sage ararita,"
+      },
+      {
+        "numero": 35,
+        "texto": "Ahíam hijo de Sacar ararita, Elifal hijo de Ur,"
+      },
+      {
+        "numero": 36,
+        "texto": "Hefer mequeratita, Ahías pelonita,"
+      },
+      {
+        "numero": 37,
+        "texto": "Hezro carmelita, Naarai hijo de Ezbai,"
+      },
+      {
+        "numero": 38,
+        "texto": "Joel hermano de Natán, Mibhar hijo de Hagrai,"
+      },
+      {
+        "numero": 39,
+        "texto": "Selec amonita, Naharai beerotita, escudero de Joab hijo de Sarvia,"
+      },
+      {
+        "numero": 40,
+        "texto": "Ira itrita, Gareb itrita,"
+      },
+      {
+        "numero": 41,
+        "texto": "Urías heteo, Zabad hijo de Ahlai,"
+      },
+      {
+        "numero": 42,
+        "texto": "Adina hijo de Siza rubenita, príncipe de los rubenitas, y con él treinta,"
+      },
+      {
+        "numero": 43,
+        "texto": "Hanán hijo de Maaca, Josafat mitnita,"
+      },
+      {
+        "numero": 44,
+        "texto": "Uzías astarotita, Sama y Jehiel hijos de Hotam aroerita;"
+      },
+      {
+        "numero": 45,
+        "texto": "Jediael hijo de Simri, y Joha su hermano, tizita,"
+      },
+      {
+        "numero": 46,
+        "texto": "Eliel mahavita, Jerebai y Josavía hijos de Elnaam, Itma moabita,"
+      },
+      {
+        "numero": 47,
+        "texto": "Eliel, Obed, y Jaasiel mesobaíta."
+      }
+    ],
+    "12": [
+      {
+        "numero": 1,
+        "texto": "Estos son los que vinieron a David en Siclag, estando él aún encerrado por causa de Saúl hijo de Cis, y eran de los valientes que le ayudaron en la guerra."
+      },
+      {
+        "numero": 2,
+        "texto": "Estaban armados de arcos, y usaban de ambas manos para tirar piedras con honda y saetas con arco. De los hermanos de Saúl de Benjamín:"
+      },
+      {
+        "numero": 3,
+        "texto": "El principal Ahiezer, después Joás, hijos de Semaa gabaatita; Jeziel y Pelet hijos de Azmavet, Beraca, Jehú anatotita,"
+      },
+      {
+        "numero": 4,
+        "texto": "Ismaías gabaonita, valiente entre los treinta, y más que los treinta; Jeremías, Jahaziel, Johanán, Jozabad gederatita,"
+      },
+      {
+        "numero": 5,
+        "texto": "Eluzai, Jerimot, Bealías, Semarías, Sefatías harufita,"
+      },
+      {
+        "numero": 6,
+        "texto": "Elcana, Isías, Azareel, Joezer y Jasobeam, coreítas,"
+      },
+      {
+        "numero": 7,
+        "texto": "y Joela y Zebadías hijos de Jeroham de Gedor."
+      },
+      {
+        "numero": 8,
+        "texto": "También de los de Gad huyeron y fueron a David, al lugar fuerte en el desierto, hombres de guerra muy valientes para pelear, diestros con escudo y pavés; sus rostros eran como rostros de leones, y eran ligeros como las gacelas sobre las montañas."
+      },
+      {
+        "numero": 9,
+        "texto": "Ezer el primero, Obadías el segundo, Eliab el tercero,"
+      },
+      {
+        "numero": 10,
+        "texto": "Mismana el cuarto, Jeremías el quinto,"
+      },
+      {
+        "numero": 11,
+        "texto": "Atai el sexto, Eliel el séptimo,"
+      },
+      {
+        "numero": 12,
+        "texto": "Johanán el octavo, Elzabad el noveno,"
+      },
+      {
+        "numero": 13,
+        "texto": "Jeremías el décimo y Macbanai el undécimo."
+      },
+      {
+        "numero": 14,
+        "texto": "Estos fueron capitanes del ejército de los hijos de Gad. El menor tenía cargo de cien hombres, y el mayor de mil."
+      },
+      {
+        "numero": 15,
+        "texto": "Estos pasaron el Jordán en el mes primero, cuando se había desbordado por todas sus riberas; e hicieron huir a todos los de los valles al oriente y al poniente."
+      },
+      {
+        "numero": 16,
+        "texto": "Asimismo algunos de los hijos de Benjamín y de Judá vinieron a David al lugar fuerte."
+      },
+      {
+        "numero": 17,
+        "texto": "Y David salió a ellos, y les habló diciendo: Si habéis venido a mí para paz y para ayudarme, mi corazón será unido con vosotros; mas si es para entregarme a mis enemigos, sin haber iniquidad en mis manos, véalo el Dios de nuestros padres, y lo demande."
+      },
+      {
+        "numero": 18,
+        "texto": "Entonces el Espíritu vino sobre Amasai, jefe de los treinta, y dijo: Por ti, oh David, y contigo, oh hijo de Isaí. Paz, paz contigo, y paz con tus ayudadores, pues también tu Dios te ayuda. Y David los recibió, y los puso entre los capitanes de la tropa."
+      },
+      {
+        "numero": 19,
+        "texto": "También se pasaron a David algunos de Manasés, cuando vino con los filisteos a la batalla contra Saúl (pero David no les ayudó, porque los jefes de los filisteos, habido consejo, lo despidieron, diciendo: Con peligro de nuestras cabezas se pasará a su señor Saúl)."
+      },
+      {
+        "numero": 20,
+        "texto": "Así que viniendo él a Siclag, se pasaron a él de los de Manasés, Adnas, Jozabad, Jediaiel, Micael, Jozabad, Eliú y Ziletai, príncipes de millares de los de Manasés."
+      },
+      {
+        "numero": 21,
+        "texto": "Estos ayudaron a David contra la banda de merodeadores, pues todos ellos eran hombres valientes, y fueron capitanes en el ejército."
+      },
+      {
+        "numero": 22,
+        "texto": "Porque entonces todos los días venía ayuda a David, hasta hacerse un gran ejército, como ejército de Dios."
+      },
+      {
+        "numero": 23,
+        "texto": "Y este es el número de los principales que estaban listos para la guerra, y vinieron a David en Hebrón para traspasarle el reino de Saúl, conforme a la palabra de Jehová:"
+      },
+      {
+        "numero": 24,
+        "texto": "De los hijos de Judá que traían escudo y lanza, seis mil ochocientos, listos para la guerra."
+      },
+      {
+        "numero": 25,
+        "texto": "De los hijos de Simeón, siete mil cien hombres, valientes y esforzados para la guerra."
+      },
+      {
+        "numero": 26,
+        "texto": "De los hijos de Leví, cuatro mil seiscientos;"
+      },
+      {
+        "numero": 27,
+        "texto": "asimismo Joiada, príncipe de los del linaje de Aarón, y con él tres mil setecientos,"
+      },
+      {
+        "numero": 28,
+        "texto": "y Sadoc, joven valiente y esforzado, con veintidós de los principales de la casa de su padre."
+      },
+      {
+        "numero": 29,
+        "texto": "De los hijos de Benjamín hermanos de Saúl, tres mil; porque hasta entonces muchos de ellos se mantenían fieles a la casa de Saúl."
+      },
+      {
+        "numero": 30,
+        "texto": "De los hijos de Efraín, veinte mil ochocientos, muy valientes, varones ilustres en las casas de sus padres."
+      },
+      {
+        "numero": 31,
+        "texto": "De la media tribu de Manasés, dieciocho mil, los cuales fueron tomados por lista para venir a poner a David por rey."
+      },
+      {
+        "numero": 32,
+        "texto": "De los hijos de Isacar, doscientos principales, entendidos en los tiempos, y que sabían lo que Israel debía hacer, cuyo dicho seguían todos sus hermanos."
+      },
+      {
+        "numero": 33,
+        "texto": "De Zabulón cincuenta mil, que salían a campaña prontos para la guerra, con toda clase de armas de guerra, dispuestos a pelear sin doblez de corazón."
+      },
+      {
+        "numero": 34,
+        "texto": "De Neftalí, mil capitanes, y con ellos treinta y siete mil con escudo y lanza."
+      },
+      {
+        "numero": 35,
+        "texto": "De los de Dan, dispuestos a pelear, veintiocho mil seiscientos."
+      },
+      {
+        "numero": 36,
+        "texto": "De Aser, dispuestos para la guerra y preparados para pelear, cuarenta mil."
+      },
+      {
+        "numero": 37,
+        "texto": "Y del otro lado del Jordán, de los rubenitas y gaditas y de la media tribu de Manasés, ciento veinte mil con toda clase de armas de guerra."
+      },
+      {
+        "numero": 38,
+        "texto": "Todos estos hombres de guerra, dispuestos para guerrear, vinieron con corazón perfecto a Hebrón, para poner a David por rey sobre todo Israel; asimismo todos los demás de Israel estaban de un mismo ánimo para poner a David por rey."
+      },
+      {
+        "numero": 39,
+        "texto": "Y estuvieron allí con David tres días comiendo y bebiendo, porque sus hermanos habían preparado para ellos."
+      },
+      {
+        "numero": 40,
+        "texto": "También los que les eran vecinos, hasta Isacar y Zabulón y Neftalí, trajeron víveres en asnos, camellos, mulos y bueyes; provisión de harina, tortas de higos, pasas, vino y aceite, y bueyes y ovejas en abundancia, porque en Israel había alegría."
+      }
+    ],
+    "13": [
+      {
+        "numero": 1,
+        "texto": "Entonces David tomó consejo con los capitanes de millares y de centenas, y con todos los jefes."
+      },
+      {
+        "numero": 2,
+        "texto": "Y dijo David a toda la asamblea de Israel: Si os parece bien y si es la voluntad de Jehová nuestro Dios, enviaremos a todas partes por nuestros hermanos que han quedado en todas las tierras de Israel, y por los sacerdotes y levitas que están con ellos en sus ciudades y ejidos, para que se reúnan con nosotros;"
+      },
+      {
+        "numero": 3,
+        "texto": "y traigamos el arca de nuestro Dios a nosotros, porque desde el tiempo de Saúl no hemos hecho caso de ella."
+      },
+      {
+        "numero": 4,
+        "texto": "Y dijo toda la asamblea que se hiciese así, porque la cosa parecía bien a todo el pueblo."
+      },
+      {
+        "numero": 5,
+        "texto": "Entonces David reunió a todo Israel, desde Sihor de Egipto hasta la entrada de Hamat, para que trajesen el arca de Dios de Quiriat-jearim."
+      },
+      {
+        "numero": 6,
+        "texto": "Y subió David con todo Israel a Baala de Quiriat-jearim, que está en Judá, para pasar de allí el arca de Jehová Dios, que mora entre los querubines, sobre la cual su nombre es invocado."
+      },
+      {
+        "numero": 7,
+        "texto": "Y llevaron el arca de Dios de la casa de Abinadab en un carro nuevo; y Uza y Ahío guiaban el carro."
+      },
+      {
+        "numero": 8,
+        "texto": "Y David y todo Israel se regocijaban delante de Dios con todas sus fuerzas, con cánticos, arpas, salterios, tamboriles, címbalos y trompetas."
+      },
+      {
+        "numero": 9,
+        "texto": "Pero cuando llegaron a la era de Quidón, Uza extendió su mano al arca para sostenerla, porque los bueyes tropezaban."
+      },
+      {
+        "numero": 10,
+        "texto": "Y el furor de Jehová se encendió contra Uza, y lo hirió, porque había extendido su mano al arca; y murió allí delante de Dios."
+      },
+      {
+        "numero": 11,
+        "texto": "Y David tuvo pesar, porque Jehová había quebrantado a Uza; por lo que llamó aquel lugar Pérez-uza, hasta hoy."
+      },
+      {
+        "numero": 12,
+        "texto": "Y David temió a Dios aquel día, y dijo: ¿Cómo he de traer a mi casa el arca de Dios?"
+      },
+      {
+        "numero": 13,
+        "texto": "Y no trajo David el arca a su casa en la ciudad de David, sino que la llevó a casa de Obed-edom geteo."
+      },
+      {
+        "numero": 14,
+        "texto": "Y el arca de Dios estuvo con la familia de Obed-edom, en su casa, tres meses; y bendijo Jehová la casa de Obed-edom, y todo lo que tenía."
+      }
+    ],
+    "14": [
+      {
+        "numero": 1,
+        "texto": "Hiram rey de Tiro envió a David embajadores, y madera de cedro, y albañiles y carpinteros, para que le edificasen una casa."
+      },
+      {
+        "numero": 2,
+        "texto": "Y entendió David que Jehová lo había confirmado como rey sobre Israel, y que había exaltado su reino sobre su pueblo Israel."
+      },
+      {
+        "numero": 3,
+        "texto": "Entonces David tomó también mujeres en Jerusalén, y engendró David más hijos e hijas."
+      },
+      {
+        "numero": 4,
+        "texto": "Y estos son los nombres de los que le nacieron en Jerusalén: Samúa, Sobab, Natán, Salomón,"
+      },
+      {
+        "numero": 5,
+        "texto": "Ibhar, Elisúa, Elpelet,"
+      },
+      {
+        "numero": 6,
+        "texto": "Noga, Nefeg, Jafía,"
+      },
+      {
+        "numero": 7,
+        "texto": "Elisama, Beeliada y Elifelet."
+      },
+      {
+        "numero": 8,
+        "texto": "Oyendo los filisteos que David había sido ungido rey sobre todo Israel, subieron todos los filisteos en busca de David. Y cuando David lo oyó, salió contra ellos."
+      },
+      {
+        "numero": 9,
+        "texto": "Y vinieron los filisteos, y se extendieron por el valle de Refaim."
+      },
+      {
+        "numero": 10,
+        "texto": "Entonces David consultó a Dios, diciendo: ¿Subiré contra los filisteos? ¿Los entregarás en mi mano? Y Jehová le dijo: Sube, porque yo los entregaré en tus manos."
+      },
+      {
+        "numero": 11,
+        "texto": "Subieron, pues, a Baal-perazim, y allí los derrotó David. Dijo luego David: Dios rompió mis enemigos por mi mano, como se rompen las aguas. Por esto llamaron el nombre de aquel lugar Baal-perazim."
+      },
+      {
+        "numero": 12,
+        "texto": "Y dejaron allí sus dioses, y David dijo que los quemasen."
+      },
+      {
+        "numero": 13,
+        "texto": "Y volviendo los filisteos a extenderse por el valle,"
+      },
+      {
+        "numero": 14,
+        "texto": "David volvió a consultar a Dios, y Dios le dijo: No subas tras ellos, sino rodéalos, para venir a ellos por delante de las balsameras."
+      },
+      {
+        "numero": 15,
+        "texto": "Y así que oigas venir un estruendo por las copas de las balsameras, sal luego a la batalla, porque Dios saldrá delante de ti y herirá el ejército de los filisteos."
+      },
+      {
+        "numero": 16,
+        "texto": "Hizo, pues, David como Dios le mandó, y derrotaron al ejército de los filisteos desde Gabaón hasta Gezer."
+      },
+      {
+        "numero": 17,
+        "texto": "Y la fama de David fue divulgada por todas aquellas tierras; y Jehová puso el temor de David sobre todas las naciones."
+      }
+    ],
+    "15": [
+      {
+        "numero": 1,
+        "texto": "Hizo David también casas para sí en la ciudad de David, y arregló un lugar para el arca de Dios, y le levantó una tienda."
+      },
+      {
+        "numero": 2,
+        "texto": "Entonces dijo David: El arca de Dios no debe ser llevada sino por los levitas; porque a ellos ha elegido Jehová para que lleven el arca de Jehová, y le sirvan perpetuamente."
+      },
+      {
+        "numero": 3,
+        "texto": "Y congregó David a todo Israel en Jerusalén, para que pasasen el arca de Jehová a su lugar, el cual le había él preparado."
+      },
+      {
+        "numero": 4,
+        "texto": "Reunió también David a los hijos de Aarón y a los levitas;"
+      },
+      {
+        "numero": 5,
+        "texto": "de los hijos de Coat, Uriel el principal, y sus hermanos, ciento veinte."
+      },
+      {
+        "numero": 6,
+        "texto": "De los hijos de Merari, Asaías el principal, y sus hermanos, doscientos veinte."
+      },
+      {
+        "numero": 7,
+        "texto": "De los hijos de Gersón, Joel el principal, y sus hermanos, ciento treinta."
+      },
+      {
+        "numero": 8,
+        "texto": "De los hijos de Elizafán, Semaías el principal, y sus hermanos, doscientos."
+      },
+      {
+        "numero": 9,
+        "texto": "De los hijos de Hebrón, Eliel el principal, y sus hermanos, ochenta."
+      },
+      {
+        "numero": 10,
+        "texto": "De los hijos de Uziel, Aminadab el principal, y sus hermanos, ciento doce."
+      },
+      {
+        "numero": 11,
+        "texto": "Y llamó David a los sacerdotes Sadoc y Abiatar, y a los levitas Uriel, Asaías, Joel, Semaías, Eliel y Aminadab,"
+      },
+      {
+        "numero": 12,
+        "texto": "y les dijo: Vosotros que sois los principales padres de las familias de los levitas, santificaos, vosotros y vuestros hermanos, y pasad el arca de Jehová Dios de Israel al lugar que le he preparado;"
+      },
+      {
+        "numero": 13,
+        "texto": "pues por no haberlo hecho así vosotros la primera vez, Jehová nuestro Dios nos quebrantó, por cuanto no le buscamos según su ordenanza."
+      },
+      {
+        "numero": 14,
+        "texto": "Así los sacerdotes y los levitas se santificaron para traer el arca de Jehová Dios de Israel."
+      },
+      {
+        "numero": 15,
+        "texto": "Y los hijos de los levitas trajeron el arca de Dios puesta sobre sus hombros en las barras, como lo había mandado Moisés, conforme a la palabra de Jehová."
+      },
+      {
+        "numero": 16,
+        "texto": "Asimismo dijo David a los principales de los levitas, que designasen de sus hermanos a cantores con instrumentos de música, con salterios y arpas y címbalos, que resonasen y alzasen la voz con alegría."
+      },
+      {
+        "numero": 17,
+        "texto": "Y los levitas designaron a Hemán hijo de Joel; y de sus hermanos, a Asaf hijo de Berequías; y de los hijos de Merari y de sus hermanos, a Etán hijo de Cusaías."
+      },
+      {
+        "numero": 18,
+        "texto": "Y con ellos a sus hermanos del segundo orden, a Zacarías, Jaaziel, Semiramot, Jehiel, Uni, Eliab, Benaía, Maasías, Matatías, Elifelehu, Micnías, Obed-edom y Jeiel, los porteros."
+      },
+      {
+        "numero": 19,
+        "texto": "Así Hemán, Asaf y Etán, que eran cantores, sonaban címbalos de bronce."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Zacarías, Aziel, Semiramot, Jehiel, Uni, Eliab, Maasías y Benaía, con salterios sobre Alamot."
+      },
+      {
+        "numero": 21,
+        "texto": "Matatías, Elifelehu, Micnías, Obed-edom, Jeiel y Azazías tenían arpas afinadas en la octava para dirigir."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Quenanías, principal de los levitas en la música, fue puesto para dirigir el canto, porque era entendido en ello."
+      },
+      {
+        "numero": 23,
+        "texto": "Berequías y Elcana eran porteros del arca."
+      },
+      {
+        "numero": 24,
+        "texto": "Y Sebanías, Josafat, Natanael, Amasai, Zacarías, Benaía y Eliezer, sacerdotes, tocaban las trompetas delante del arca de Dios; Obed-edom y Jehías eran también porteros del arca."
+      },
+      {
+        "numero": 25,
+        "texto": "David, pues, y los ancianos de Israel y los capitanes de millares, fueron a traer el arca del pacto de Jehová, de casa de Obed-edom, con alegría."
+      },
+      {
+        "numero": 26,
+        "texto": "Y ayudando Dios a los levitas que llevaban el arca del pacto de Jehová, sacrificaron siete novillos y siete carneros."
+      },
+      {
+        "numero": 27,
+        "texto": "Y David iba vestido de lino fino, y también todos los levitas que llevaban el arca, y asimismo los cantores; y Quenanías era maestro de canto entre los cantores. Llevaba también David sobre sí un efod de lino."
+      },
+      {
+        "numero": 28,
+        "texto": "De esta manera llevaba todo Israel el arca del pacto de Jehová, con júbilo y sonido de bocinas y trompetas y címbalos, y al son de salterios y arpas."
+      },
+      {
+        "numero": 29,
+        "texto": "Pero cuando el arca del pacto de Jehová llegó a la ciudad de David, Mical, hija de Saúl, mirando por una ventana, vio al rey David que saltaba y danzaba; y lo menospreció en su corazón."
+      }
+    ],
+    "16": [
+      {
+        "numero": 1,
+        "texto": "Así trajeron el arca de Dios, y la pusieron en medio de la tienda que David había levantado para ella; y ofrecieron holocaustos y sacrificios de paz delante de Dios."
+      },
+      {
+        "numero": 2,
+        "texto": "Y cuando David acabó de ofrecer el holocausto y los sacrificios de paz, bendijo al pueblo en el nombre de Jehová."
+      },
+      {
+        "numero": 3,
+        "texto": "Y repartió a todo Israel, así a hombres como a mujeres, a cada uno una torta de pan, una pieza de carne, y una torta de pasas."
+      },
+      {
+        "numero": 4,
+        "texto": "Y puso delante del arca de Jehová ministros de los levitas, para que recordasen y confesasen y loasen a Jehová Dios de Israel:"
+      },
+      {
+        "numero": 5,
+        "texto": "Asaf el primero; el segundo después de él, Zacarías; Jeiel, Semiramot, Jehiel, Matatías, Eliab, Benaía, Obed-edom y Jeiel, con sus instrumentos de salterios y arpas; pero Asaf sonaba los címbalos."
+      },
+      {
+        "numero": 6,
+        "texto": "También los sacerdotes Benaía y Jahaziel sonaban continuamente las trompetas delante del arca del pacto de Dios."
+      },
+      {
+        "numero": 7,
+        "texto": "Entonces, en aquel día, David comenzó a aclamar a Jehová por mano de Asaf y de sus hermanos:"
+      },
+      {
+        "numero": 8,
+        "texto": "Alabad a Jehová, invocad su nombre, Dad a conocer en los pueblos sus obras."
+      },
+      {
+        "numero": 9,
+        "texto": "Cantad a él, cantadle salmos; Hablad de todas sus maravillas."
+      },
+      {
+        "numero": 10,
+        "texto": "Gloriaos en su santo nombre; Alégrese el corazón de los que buscan a Jehová."
+      },
+      {
+        "numero": 11,
+        "texto": "Buscad a Jehová y su poder; Buscad su rostro continuamente."
+      },
+      {
+        "numero": 12,
+        "texto": "Haced memoria de las maravillas que ha hecho, De sus prodigios, y de los juicios de su boca,"
+      },
+      {
+        "numero": 13,
+        "texto": "Oh vosotros, hijos de Israel su siervo, Hijos de Jacob, sus escogidos."
+      },
+      {
+        "numero": 14,
+        "texto": "Jehová, él es nuestro Dios; Sus juicios están en toda la tierra."
+      },
+      {
+        "numero": 15,
+        "texto": "El hace memoria de su pacto perpetuamente, Y de la palabra que él mandó para mil generaciones;"
+      },
+      {
+        "numero": 16,
+        "texto": "Del pacto que concertó con Abraham, Y de su juramento a Isaac;"
+      },
+      {
+        "numero": 17,
+        "texto": "El cual confirmó a Jacob por estatuto, Y a Israel por pacto sempiterno,"
+      },
+      {
+        "numero": 18,
+        "texto": "Diciendo: A ti daré la tierra de Canaán, Porción de tu heredad."
+      },
+      {
+        "numero": 19,
+        "texto": "Cuando ellos eran pocos en número, Pocos y forasteros en ella,"
+      },
+      {
+        "numero": 20,
+        "texto": "Y andaban de nación en nación, Y de un reino a otro pueblo,"
+      },
+      {
+        "numero": 21,
+        "texto": "No permitió que nadie los oprimiese; Antes por amor de ellos castigó a los reyes."
+      },
+      {
+        "numero": 22,
+        "texto": "No toquéis, dijo, a mis ungidos, Ni hagáis mal a mis profetas."
+      },
+      {
+        "numero": 23,
+        "texto": "Cantad a Jehová toda la tierra, Proclamad de día en día su salvación."
+      },
+      {
+        "numero": 24,
+        "texto": "Cantad entre las gentes su gloria, Y en todos los pueblos sus maravillas."
+      },
+      {
+        "numero": 25,
+        "texto": "Porque grande es Jehová, y digno de suprema alabanza, Y de ser temido sobre todos los dioses."
+      },
+      {
+        "numero": 26,
+        "texto": "Porque todos los dioses de los pueblos son ídolos; Mas Jehová hizo los cielos."
+      },
+      {
+        "numero": 27,
+        "texto": "Alabanza y magnificencia delante de él; Poder y alegría en su morada."
+      },
+      {
+        "numero": 28,
+        "texto": "Tributad a Jehová, oh familias de los pueblos, Dad a Jehová gloria y poder."
+      },
+      {
+        "numero": 29,
+        "texto": "Dad a Jehová la honra debida a su nombre; Traed ofrenda, y venid delante de él; Postraos delante de Jehová en la hermosura de la santidad."
+      },
+      {
+        "numero": 30,
+        "texto": "Temed en su presencia, toda la tierra; El mundo será aún establecido, para que no se conmueva."
+      },
+      {
+        "numero": 31,
+        "texto": "Alégrense los cielos, y gócese la tierra, Y digan en las naciones: Jehová reina."
+      },
+      {
+        "numero": 32,
+        "texto": "Resuene el mar, y su plenitud; Alégrese el campo, y todo lo que contiene."
+      },
+      {
+        "numero": 33,
+        "texto": "Entonces cantarán los árboles de los bosques delante de Jehová, Porque viene a juzgar la tierra."
+      },
+      {
+        "numero": 34,
+        "texto": "Aclamad a Jehová, porque él es bueno; Porque su misericordia es eterna."
+      },
+      {
+        "numero": 35,
+        "texto": "Y decid: Sálvanos, oh Dios, salvación nuestra; Recógenos, y líbranos de las naciones, Para que confesemos tu santo nombre, Y nos gloriemos en tus alabanzas."
+      },
+      {
+        "numero": 36,
+        "texto": "Bendito sea Jehová Dios de Israel, De eternidad a eternidad. Y dijo todo el pueblo, Amén, y alabó a Jehová."
+      },
+      {
+        "numero": 37,
+        "texto": "Y dejó allí, delante del arca del pacto de Jehová, a Asaf y a sus hermanos, para que ministrasen de continuo delante del arca, cada cosa en su día;"
+      },
+      {
+        "numero": 38,
+        "texto": "y a Obed-edom y a sus sesenta y ocho hermanos; y a Obed-edom hijo de Jedutún y a Hosa como porteros."
+      },
+      {
+        "numero": 39,
+        "texto": "Asimismo al sacerdote Sadoc, y a los sacerdotes sus hermanos, delante del tabernáculo de Jehová en el lugar alto que estaba en Gabaón,"
+      },
+      {
+        "numero": 40,
+        "texto": "para que sacrificasen continuamente, a mañana y tarde, holocaustos a Jehová en el altar del holocausto, conforme a todo lo que está escrito en la ley de Jehová, que él prescribió a Israel;"
+      },
+      {
+        "numero": 41,
+        "texto": "y con ellos a Hemán, a Jedutún y a los otros escogidos declarados por sus nombres, para glorificar a Jehová, porque es eterna su misericordia."
+      },
+      {
+        "numero": 42,
+        "texto": "Con ellos a Hemán y a Jedutún con trompetas y címbalos para los que tocaban, y con otros instrumentos de música de Dios; y a los hijos de Jedutún para porteros."
+      },
+      {
+        "numero": 43,
+        "texto": "Y todo el pueblo se fue cada uno a su casa; y David se volvió para bendecir su casa."
+      }
+    ],
+    "17": [
+      {
+        "numero": 1,
+        "texto": "Aconteció que morando David en su casa, dijo David al profeta Natán: He aquí yo habito en casa de cedro, y el arca del pacto de Jehová debajo de cortinas."
+      },
+      {
+        "numero": 2,
+        "texto": "Y Natán dijo a David: Haz todo lo que está en tu corazón, porque Dios está contigo."
+      },
+      {
+        "numero": 3,
+        "texto": "En aquella misma noche vino palabra de Dios a Natán, diciendo:"
+      },
+      {
+        "numero": 4,
+        "texto": "Ve y di a David mi siervo: Así ha dicho Jehová: Tú no me edificarás casa en que habite."
+      },
+      {
+        "numero": 5,
+        "texto": "Porque no he habitado en casa alguna desde el día que saqué a los hijos de Israel hasta hoy; antes estuve de tienda en tienda, y de tabernáculo en tabernáculo."
+      },
+      {
+        "numero": 6,
+        "texto": "Por dondequiera que anduve con todo Israel, ¿hablé una palabra a alguno de los jueces de Israel, a los cuales mandé que apacentasen a mi pueblo, para decirles: ¿Por qué no me edificáis una casa de cedro?"
+      },
+      {
+        "numero": 7,
+        "texto": "Por tanto, ahora dirás a mi siervo David: Así ha dicho Jehová de los ejércitos: Yo te tomé del redil, de detrás de las ovejas, para que fueses príncipe sobre mi pueblo Israel;"
+      },
+      {
+        "numero": 8,
+        "texto": "y he estado contigo en todo cuanto has andado, y he cortado a todos tus enemigos de delante de ti, y te haré gran nombre, como el nombre de los grandes en la tierra."
+      },
+      {
+        "numero": 9,
+        "texto": "Asimismo he dispuesto lugar para mi pueblo Israel, y lo he plantado para que habite en él y no sea más removido; ni los hijos de iniquidad lo consumirán más, como antes,"
+      },
+      {
+        "numero": 10,
+        "texto": "y desde el tiempo que puse los jueces sobre mi pueblo Israel; mas humillaré a todos tus enemigos. Te hago saber, además, que Jehová te edificará casa."
+      },
+      {
+        "numero": 11,
+        "texto": "Y cuando tus días sean cumplidos para irte con tus padres, levantaré descendencia después de ti, a uno de entre tus hijos, y afirmaré su reino."
+      },
+      {
+        "numero": 12,
+        "texto": "El me edificará casa, y yo confirmaré su trono eternamente."
+      },
+      {
+        "numero": 13,
+        "texto": "Yo le seré por padre, y él me será por hijo; y no quitaré de él mi misericordia, como la quité de aquel que fue antes de ti;"
+      },
+      {
+        "numero": 14,
+        "texto": "sino que lo confirmaré en mi casa y en mi reino eternamente, y su trono será firme para siempre."
+      },
+      {
+        "numero": 15,
+        "texto": "Conforme a todas estas palabras, y conforme a toda esta visión, así habló Natán a David."
+      },
+      {
+        "numero": 16,
+        "texto": "Y entró el rey David y estuvo delante de Jehová, y dijo: Jehová Dios, ¿quién soy yo, y cuál es mi casa, para que me hayas traído hasta este lugar?"
+      },
+      {
+        "numero": 17,
+        "texto": "Y aun esto, oh Dios, te ha parecido poco, pues que has hablado de la casa de tu siervo para tiempo más lejano, y me has mirado como a un hombre excelente, oh Jehová Dios."
+      },
+      {
+        "numero": 18,
+        "texto": "¿Qué más puede añadir David pidiendo de ti para glorificar a tu siervo? Mas tú conoces a tu siervo."
+      },
+      {
+        "numero": 19,
+        "texto": "Oh Jehová, por amor de tu siervo y según tu corazón, has hecho toda esta grandeza, para hacer notorias todas tus grandezas."
+      },
+      {
+        "numero": 20,
+        "texto": "Jehová, no hay semejante a ti, ni hay Dios sino tú, según todas las cosas que hemos oído con nuestros oídos."
+      },
+      {
+        "numero": 21,
+        "texto": "¿Y qué pueblo hay en la tierra como tu pueblo Israel, cuyo Dios fuese y se redimiese un pueblo, para hacerte nombre con grandezas y maravillas, echando a las naciones de delante de tu pueblo, que tú rescataste de Egipto?"
+      },
+      {
+        "numero": 22,
+        "texto": "Tú has constituido a tu pueblo Israel por pueblo tuyo para siempre; y tú, Jehová, has venido a ser su Dios."
+      },
+      {
+        "numero": 23,
+        "texto": "Ahora pues, Jehová, la palabra que has hablado acerca de tu siervo y de su casa, sea firme para siempre, y haz como has dicho."
+      },
+      {
+        "numero": 24,
+        "texto": "Permanezca, pues, y sea engrandecido tu nombre para siempre, a fin de que se diga: Jehová de los ejércitos, Dios de Israel, es Dios para Israel. Y sea la casa de tu siervo David firme delante de ti."
+      },
+      {
+        "numero": 25,
+        "texto": "Porque tú, Dios mío, revelaste al oído a tu siervo que le has de edificar casa; por eso ha hallado tu siervo motivo para orar delante de ti."
+      },
+      {
+        "numero": 26,
+        "texto": "Ahora pues, Jehová, tú eres el Dios que has hablado de tu siervo este bien;"
+      },
+      {
+        "numero": 27,
+        "texto": "y ahora has querido bendecir la casa de tu siervo, para que permanezca perpetuamente delante de ti; porque tú, Jehová, la has bendecido, y será bendita para siempre."
+      }
+    ],
+    "18": [
+      {
+        "numero": 1,
+        "texto": "Después de estas cosas aconteció que David derrotó a los filisteos, y los humilló, y tomó a Gat y sus villas de mano de los filisteos."
+      },
+      {
+        "numero": 2,
+        "texto": "También derrotó a Moab, y los moabitas fueron siervos de David, trayéndole presentes."
+      },
+      {
+        "numero": 3,
+        "texto": "Asimismo derrotó David a Hadad-ezer rey de Soba, en Hamat, yendo éste a asegurar su dominio junto al río Eufrates."
+      },
+      {
+        "numero": 4,
+        "texto": "Y le tomó David mil carros, siete mil de a caballo, y veinte mil hombres de a pie; y desjarretó David los caballos de todos los carros, excepto los de cien carros que dejó."
+      },
+      {
+        "numero": 5,
+        "texto": "Y viniendo los sirios de Damasco en ayuda de Hadad-ezer rey de Soba, David hirió de ellos veintidós mil hombres."
+      },
+      {
+        "numero": 6,
+        "texto": "Y puso David guarnición en Siria de Damasco, y los sirios fueron hechos siervos de David, trayéndole presentes; porque Jehová daba la victoria a David dondequiera que iba."
+      },
+      {
+        "numero": 7,
+        "texto": "Tomó también David los escudos de oro que llevaban los siervos de Hadad-ezer, y los trajo a Jerusalén."
+      },
+      {
+        "numero": 8,
+        "texto": "Asimismo de Tibhat y de Cun, ciudades de Hadad-ezer, tomó David muchísimo bronce, con el que Salomón hizo el mar de bronce, las columnas, y utensilios de bronce."
+      },
+      {
+        "numero": 9,
+        "texto": "Y oyendo Toi rey de Hamat que David había deshecho todo el ejército de Hadad-ezer rey de Soba,"
+      },
+      {
+        "numero": 10,
+        "texto": "envió a Adoram su hijo al rey David, para saludarle y bendecirle por haber peleado con Hadad-ezer y haberle vencido; porque Toi tenía guerra contra Hadad-ezer. Le envió también toda clase de utensilios de oro, de plata y de bronce;"
+      },
+      {
+        "numero": 11,
+        "texto": "los cuales el rey David dedicó a Jehová, con la plata y el oro que había tomado de todas las naciones de Edom, de Moab, de los hijos de Amón, de los filisteos y de Amalec."
+      },
+      {
+        "numero": 12,
+        "texto": "Además de esto, Abisai hijo de Sarvia destrozó en el valle de la Sal a dieciocho mil edomitas."
+      },
+      {
+        "numero": 13,
+        "texto": "Y puso guarnición en Edom, y todos los edomitas fueron siervos de David; porque Jehová daba el triunfo a David dondequiera que iba."
+      },
+      {
+        "numero": 14,
+        "texto": "Reinó David sobre todo Israel, y juzgaba con justicia a todo su pueblo."
+      },
+      {
+        "numero": 15,
+        "texto": "Y Joab hijo de Sarvia era general del ejército, y Josafat hijo de Ahilud, canciller."
+      },
+      {
+        "numero": 16,
+        "texto": "Sadoc hijo de Ahitob y Abimelec hijo de Abiatar eran sacerdotes, y Savsa, secretario."
+      },
+      {
+        "numero": 17,
+        "texto": "Y Benaía hijo de Joiada estaba sobre los cereteos y peleteos; y los hijos de David eran los príncipes cerca del rey."
+      }
+    ],
+    "19": [
+      {
+        "numero": 1,
+        "texto": "Después de estas cosas aconteció que murió Nahas rey de los hijos de Amón, y reinó en su lugar su hijo."
+      },
+      {
+        "numero": 2,
+        "texto": "Y dijo David: Manifestaré misericordia con Hanún hijo de Nahas, porque también su padre me mostró misericordia. Así David envió embajadores que lo consolasen de la muerte de su padre. Pero cuando llegaron los siervos de David a la tierra de los hijos de Amón a Hanún, para consolarle,"
+      },
+      {
+        "numero": 3,
+        "texto": "los príncipes de los hijos de Amón dijeron a Hanún: ¿A tu parecer honra David a tu padre, que te ha enviado consoladores? ¿No vienen más bien sus siervos a ti para espiar, e inquirir, y reconocer la tierra?"
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces Hanún tomó los siervos de David y los rapó, y les cortó los vestidos por la mitad, hasta las nalgas, y los despachó."
+      },
+      {
+        "numero": 5,
+        "texto": "Se fueron luego, y cuando llegó a David la noticia sobre aquellos varones, él envió a recibirlos, porque estaban muy afrentados. El rey mandó que les dijeran: Estaos en Jericó hasta que os crezca la barba, y entonces volveréis."
+      },
+      {
+        "numero": 6,
+        "texto": "Y viendo los hijos de Amón que se habían hecho odiosos a David, Hanún y los hijos de Amón enviaron mil talentos de plata  para tomar a sueldo carros y gente de a caballo de Mesopotamia, de Siria, de Maaca y de Soba."
+      },
+      {
+        "numero": 7,
+        "texto": "Y tomaron a sueldo treinta y dos mil carros, y al rey de Maaca y a su ejército, los cuales vinieron y acamparon delante de Medeba. Y se juntaron también los hijos de Amón de sus ciudades, y vinieron a la guerra."
+      },
+      {
+        "numero": 8,
+        "texto": "Oyéndolo David, envió a Joab con todo el ejército de los hombres valientes."
+      },
+      {
+        "numero": 9,
+        "texto": "Y los hijos de Amón salieron, y ordenaron la batalla a la entrada de la ciudad; y los reyes que habían venido estaban aparte en el campo."
+      },
+      {
+        "numero": 10,
+        "texto": "Y viendo Joab que el ataque contra él había sido dispuesto por el frente y por la retaguardia, escogió de los más aventajados que había en Israel, y con ellos ordenó su ejército contra los sirios."
+      },
+      {
+        "numero": 11,
+        "texto": "Puso luego el resto de la gente en mano de Abisai su hermano, y los ordenó en batalla contra los amonitas."
+      },
+      {
+        "numero": 12,
+        "texto": "Y dijo: Si los sirios fueren más fuertes que yo, tú me ayudarás; y si los amonitas fueren más fuertes que tú, yo te ayudaré."
+      },
+      {
+        "numero": 13,
+        "texto": "Esfuérzate, y esforcémonos por nuestro pueblo, y por las ciudades de nuestro Dios; y haga Jehová lo que bien le parezca."
+      },
+      {
+        "numero": 14,
+        "texto": "Entonces se acercó Joab y el pueblo que tenía consigo, para pelear contra los sirios; mas ellos huyeron delante de él."
+      },
+      {
+        "numero": 15,
+        "texto": "Y los hijos de Amón, viendo que los sirios habían huido, huyeron también ellos delante de Abisai su hermano, y entraron en la ciudad. Entonces Joab volvió a Jerusalén."
+      },
+      {
+        "numero": 16,
+        "texto": "Viendo los sirios que habían caído delante de Israel, enviaron embajadores, y trajeron a los sirios que estaban al otro lado del Eufrates, cuyo capitán era Sofac, general del ejército de Hadad-ezer."
+      },
+      {
+        "numero": 17,
+        "texto": "Luego que fue dado aviso a David, reunió a todo Israel, y cruzando el Jordán vino a ellos, y ordenó batalla contra ellos. Y cuando David hubo ordenado su tropa contra ellos, pelearon contra él los sirios."
+      },
+      {
+        "numero": 18,
+        "texto": "Mas el pueblo sirio huyó delante de Israel; y mató David de los sirios a siete mil hombres de los carros, y cuarenta mil hombres de a pie; asimismo mató a Sofac general del ejército."
+      },
+      {
+        "numero": 19,
+        "texto": "Y viendo los siervos de Hadad-ezer que habían caído delante de Israel, concertaron paz con David, y fueron sus siervos; y el pueblo sirio nunca más quiso ayudar a los hijos de Amón."
+      }
+    ],
+    "20": [
+      {
+        "numero": 1,
+        "texto": "Aconteció a la vuelta del año, en el tiempo que suelen los reyes salir a la guerra, que Joab sacó las fuerzas del ejército, y destruyó la tierra de los hijos de Amón, y vino y sitió a Rabá. Mas David estaba en Jerusalén; y Joab batió a Rabá, y la destruyó."
+      },
+      {
+        "numero": 2,
+        "texto": "Y tomó David la corona de encima de la cabeza del rey de Rabá, y la halló de peso de un talento de oro, y había en ella piedras preciosas; y fue puesta sobre la cabeza de David. Además de esto sacó de la ciudad muy grande botín."
+      },
+      {
+        "numero": 3,
+        "texto": "Sacó también al pueblo que estaba en ella, y lo puso a trabajar con sierras, con trillos de hierro y con hachas. Lo mismo hizo David a todas las ciudades de los hijos de Amón. Y volvió David con todo el pueblo a Jerusalén."
+      },
+      {
+        "numero": 4,
+        "texto": "Después de esto aconteció que se levantó guerra en Gezer contra los filisteos; y Sibecai husatita mató a Sipai, de los descendientes de los gigantes; y fueron humillados."
+      },
+      {
+        "numero": 5,
+        "texto": "Volvió a levantarse guerra contra los filisteos; y Elhanán hijo de Jair mató a Lahmi, hermano de Goliat geteo, el asta de cuya lanza era como un rodillo de telar."
+      },
+      {
+        "numero": 6,
+        "texto": "Y volvió a haber guerra en Gat, donde había un hombre de grande estatura, el cual tenía seis dedos en pies y manos, veinticuatro por todos; y era descendiente de los gigantes."
+      },
+      {
+        "numero": 7,
+        "texto": "Este hombre injurió a Israel, pero lo mató Jonatán, hijo de Simea hermano de David."
+      },
+      {
+        "numero": 8,
+        "texto": "Estos eran descendientes de los gigantes en Gat, los cuales cayeron por mano de David y de sus siervos."
+      }
+    ],
+    "21": [
+      {
+        "numero": 1,
+        "texto": "Pero Satanás se levantó contra Israel, e incitó a David a que hiciese censo de Israel."
+      },
+      {
+        "numero": 2,
+        "texto": "Y dijo David a Joab y a los príncipes del pueblo: Id, haced censo de Israel desde Beerseba hasta Dan, e informadme sobre el número de ellos para que yo lo sepa."
+      },
+      {
+        "numero": 3,
+        "texto": "Y dijo Joab: Añada Jehová a su pueblo cien veces más, rey señor mío; ¿no son todos éstos siervos de mi señor? ¿Para qué procura mi señor esto, que será para pecado a Israel?"
+      },
+      {
+        "numero": 4,
+        "texto": "Mas la orden del rey pudo más que Joab. Salió, por tanto, Joab, y recorrió todo Israel, y volvió a Jerusalén y dio la cuenta del número del pueblo a David."
+      },
+      {
+        "numero": 5,
+        "texto": "Y había en todo Israel un millón cien mil que sacaban espada, y de Judá cuatrocientos setenta mil hombres que sacaban espada."
+      },
+      {
+        "numero": 6,
+        "texto": "Entre éstos no fueron contados los levitas, ni los hijos de Benjamín, porque la orden del rey era abominable a Joab."
+      },
+      {
+        "numero": 7,
+        "texto": "Asimismo esto desagradó a Dios, e hirió a Israel."
+      },
+      {
+        "numero": 8,
+        "texto": "Entonces dijo David a Dios: He pecado gravemente al hacer esto; te ruego que quites la iniquidad de tu siervo, porque he hecho muy locamente."
+      },
+      {
+        "numero": 9,
+        "texto": "Y habló Jehová a Gad, vidente de David, diciendo:"
+      },
+      {
+        "numero": 10,
+        "texto": "Ve y habla a David, y dile: Así ha dicho Jehová: Tres cosas te propongo; escoge de ellas una que yo haga contigo."
+      },
+      {
+        "numero": 11,
+        "texto": "Y viniendo Gad a David, le dijo: Así ha dicho Jehová:"
+      },
+      {
+        "numero": 12,
+        "texto": "Escoge para ti: o tres años de hambre, o por tres meses ser derrotado delante de tus enemigos con la espada de tus adversarios, o por tres días la espada de Jehová, esto es, la peste en la tierra, y que el ángel de Jehová haga destrucción en todos los términos de Israel. Mira, pues, qué responderé al que me ha enviado."
+      },
+      {
+        "numero": 13,
+        "texto": "Entonces David dijo a Gad: Estoy en grande angustia. Ruego que yo caiga en la mano de Jehová, porque sus misericordias son muchas en extremo; pero que no caiga en manos de hombres."
+      },
+      {
+        "numero": 14,
+        "texto": "Así Jehová envió una peste en Israel, y murieron de Israel setenta mil hombres."
+      },
+      {
+        "numero": 15,
+        "texto": "Y envió Jehová el ángel a Jerusalén para destruirla; pero cuando él estaba destruyendo, miró Jehová y se arrepintió de aquel mal, y dijo al ángel que destruía: Basta ya; detén tu mano. El ángel de Jehová estaba junto a la era de Ornán jebuseo."
+      },
+      {
+        "numero": 16,
+        "texto": "Y alzando David sus ojos, vio al ángel de Jehová, que estaba entre el cielo y la tierra, con una espada desnuda en su mano, extendida contra Jerusalén. Entonces David y los ancianos se postraron sobre sus rostros, cubiertos de cilicio."
+      },
+      {
+        "numero": 17,
+        "texto": "Y dijo David a Dios: ¿No soy yo el que hizo contar el pueblo? Yo mismo soy el que pequé, y ciertamente he hecho mal; pero estas ovejas, ¿qué han hecho? Jehová Dios mío, sea ahora tu mano contra mi, y contra la casa de mi padre, y no venga la peste sobre tu pueblo."
+      },
+      {
+        "numero": 18,
+        "texto": "Y el ángel de Jehová ordenó a Gad que dijese a David que subiese y construyese un altar a Jehová en la era de Ornán jebuseo."
+      },
+      {
+        "numero": 19,
+        "texto": "Entonces David subió, conforme a la palabra que Gad le había dicho en nombre de Jehová."
+      },
+      {
+        "numero": 20,
+        "texto": "Y volviéndose Ornán, vio al ángel, por lo que se escondieron cuatro hijos suyos que con él estaban. Y Ornán trillaba el trigo."
+      },
+      {
+        "numero": 21,
+        "texto": "Y viniendo David a Ornán, miró Ornán, y vio a David; y saliendo de la era, se postró en tierra ante David."
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces dijo David a Ornán: Dame este lugar de la era, para que edifique un altar a Jehová; dámelo por su cabal precio, para que cese la mortandad en el pueblo."
+      },
+      {
+        "numero": 23,
+        "texto": "Y Ornán respondió a David: Tómala para ti, y haga mi señor el rey lo que bien le parezca; y aun los bueyes daré para el holocausto, y los trillos para leña, y trigo para la ofrenda; yo lo doy todo."
+      },
+      {
+        "numero": 24,
+        "texto": "Entonces el rey David dijo a Ornán: No, sino que efectivamente la compraré por su justo precio; porque no tomaré para Jehová lo que es tuyo, ni sacrificaré holocausto que nada me cueste."
+      },
+      {
+        "numero": 25,
+        "texto": "Y dio David a Ornán por aquel lugar el peso de seiscientos siclos de oro."
+      },
+      {
+        "numero": 26,
+        "texto": "Y edificó allí David un altar a Jehová, en el que ofreció holocaustos y ofrendas de paz, e invocó a Jehová, quien le respondió por fuego desde los cielos en el altar del holocausto."
+      },
+      {
+        "numero": 27,
+        "texto": "Entonces Jehová habló al ángel, y éste volvió su espada a la vaina."
+      },
+      {
+        "numero": 28,
+        "texto": "Viendo David que Jehová le había oído en la era de Ornán jebuseo, ofreció sacrificios allí."
+      },
+      {
+        "numero": 29,
+        "texto": "Y el tabernáculo de Jehová que Moisés había hecho en el desierto, y el altar del holocausto, estaban entonces en el lugar alto de Gabaón;"
+      },
+      {
+        "numero": 30,
+        "texto": "pero David no pudo ir allá a consultar a Dios, porque estaba atemorizado a causa de la espada del ángel de Jehová."
+      }
+    ],
+    "22": [
+      {
+        "numero": 1,
+        "texto": "Y dijo David: Aquí estará la casa de Jehová Dios, y aquí el altar del holocausto para Israel."
+      },
+      {
+        "numero": 2,
+        "texto": "Después mandó David que se reuniese a los extranjeros que había en la tierra de Israel, y señaló de entre ellos canteros que labrasen piedras para edificar la casa de Dios."
+      },
+      {
+        "numero": 3,
+        "texto": "Asimismo preparó David mucho hierro para la clavazón de las puertas, y para las junturas; y mucho bronce sin peso, y madera de cedro sin cuenta."
+      },
+      {
+        "numero": 4,
+        "texto": "Porque los sidonios y tirios habían traído a David abundancia de madera de cedro."
+      },
+      {
+        "numero": 5,
+        "texto": "Y dijo David: Salomón mi hijo es muchacho y de tierna edad, y la casa que se ha de edificar a Jehová ha de ser magnífica por excelencia, para renombre y honra en todas las tierras; ahora, pues, yo le prepararé lo necesario. Y David antes de su muerte hizo preparativos en gran abundancia."
+      },
+      {
+        "numero": 6,
+        "texto": "Llamó entonces David a Salomón su hijo, y le mandó que edificase casa a Jehová Dios de Israel."
+      },
+      {
+        "numero": 7,
+        "texto": "Y dijo David a Salomón: Hijo mío, en mi corazón tuve el edificar templo al nombre de Jehová mi Dios."
+      },
+      {
+        "numero": 8,
+        "texto": "Mas vino a mí palabra de Jehová, diciendo: Tú has derramado mucha sangre, y has hecho grandes guerras; no edificarás casa a mi nombre, porque has derramado mucha sangre en la tierra delante de mí."
+      },
+      {
+        "numero": 9,
+        "texto": "He aquí te nacerá un hijo, el cual será varón de paz, porque yo le daré paz de todos sus enemigos en derredor; por tanto, su nombre será Salomón, y yo daré paz y reposo sobre Israel en sus días."
+      },
+      {
+        "numero": 10,
+        "texto": "El edificará casa a mi nombre, y él me será a mí por hijo, y yo le seré por padre; y afirmaré el trono de su reino sobre Israel para siempre."
+      },
+      {
+        "numero": 11,
+        "texto": "Ahora pues, hijo mío, Jehová esté contigo, y seas prosperado, y edifiques casa a Jehová tu Dios, como él ha dicho de ti."
+      },
+      {
+        "numero": 12,
+        "texto": "Y Jehová te dé entendimiento y prudencia, para que cuando gobiernes a Israel, guardes la ley de Jehová tu Dios."
+      },
+      {
+        "numero": 13,
+        "texto": "Entonces serás prosperado, si cuidares de poner por obra los estatutos y decretos que Jehová mandó a Moisés para Israel. Esfuérzate, pues, y cobra ánimo; no temas, ni desmayes."
+      },
+      {
+        "numero": 14,
+        "texto": "He aquí, yo con grandes esfuerzos he preparado para la casa de Jehová cien mil talentos de oro, y un millón de talentos de plata, y bronce y hierro sin medida, porque es mucho. Asimismo he preparado madera y piedra, a lo cual tú añadirás."
+      },
+      {
+        "numero": 15,
+        "texto": "Tú tienes contigo muchos obreros, canteros, albañiles, carpinteros, y todo hombre experto en toda obra."
+      },
+      {
+        "numero": 16,
+        "texto": "Del oro, de la plata, del bronce y del hierro, no hay cuenta. Levántate, y manos a la obra; y Jehová esté contigo."
+      },
+      {
+        "numero": 17,
+        "texto": "Asimismo mandó David a todos los principales de Israel que ayudasen a Salomón su hijo, diciendo:"
+      },
+      {
+        "numero": 18,
+        "texto": "¿No está con vosotros Jehová vuestro Dios, el cual os ha dado paz por todas partes? Porque él ha entregado en mi mano a los moradores de la tierra, y la tierra ha sido sometida delante de Jehová, y delante de su pueblo."
+      },
+      {
+        "numero": 19,
+        "texto": "Poned, pues, ahora vuestros corazones y vuestros ánimos en buscar a Jehová vuestro Dios; y levantaos, y edificad el santuario de Jehová Dios, para traer el arca del pacto de Jehová, y los utensilios consagrados a Dios, a la casa edificada al nombre de Jehová."
+      }
+    ],
+    "23": [
+      {
+        "numero": 1,
+        "texto": "Siendo, pues, David ya viejo y lleno de días, hizo a Salomón su hijo rey sobre Israel."
+      },
+      {
+        "numero": 2,
+        "texto": "Y juntando a todos los principales de Israel, y a los sacerdotes y levitas,"
+      },
+      {
+        "numero": 3,
+        "texto": "fueron contados los levitas de treinta años arriba; y fue el número de ellos por sus cabezas, contados uno por uno, treinta y ocho mil."
+      },
+      {
+        "numero": 4,
+        "texto": "De éstos, veinticuatro mil para dirigir la obra de la casa de Jehová, y seis mil para gobernadores y jueces."
+      },
+      {
+        "numero": 5,
+        "texto": "Además, cuatro mil porteros, y cuatro mil para alabar a Jehová, dijo David, con los instrumentos que he hecho para tributar alabanzas."
+      },
+      {
+        "numero": 6,
+        "texto": "Y los repartió David en grupos conforme a los hijos de Leví: Gersón, Coat y Merari."
+      },
+      {
+        "numero": 7,
+        "texto": "Los hijos de Gersón: Laadán y Simei."
+      },
+      {
+        "numero": 8,
+        "texto": "Los hijos de Laadán, tres: Jehiel el primero, después Zetam y Joel."
+      },
+      {
+        "numero": 9,
+        "texto": "Los hijos de Simei, tres: Selomit, Haziel y Harán. Estos fueron los jefes de las familias de Laadán."
+      },
+      {
+        "numero": 10,
+        "texto": "Y los hijos de Simei: Jahat, Zina, Jeús y Bería. Estos cuatro fueron los hijos de Simei."
+      },
+      {
+        "numero": 11,
+        "texto": "Jahat era el primero, y Zina el segundo; pero Jeús y Bería no tuvieron muchos hijos, por lo cual fueron contados como una familia."
+      },
+      {
+        "numero": 12,
+        "texto": "Los hijos de Coat: Amram, Izhar, Hebrón y Uziel, ellos cuatro."
+      },
+      {
+        "numero": 13,
+        "texto": "Los hijos de Amram: Aarón y Moisés. Y Aarón fue apartado para ser dedicado a las cosas más santas, él y sus hijos para siempre, para que quemasen incienso delante de Jehová, y le ministrasen y bendijesen en su nombre, para siempre."
+      },
+      {
+        "numero": 14,
+        "texto": "Y los hijos de Moisés varón de Dios fueron contados en la tribu de Leví."
+      },
+      {
+        "numero": 15,
+        "texto": "Los hijos de Moisés fueron Gersón y Eliezer."
+      },
+      {
+        "numero": 16,
+        "texto": "Hijo de Gersón fue Sebuel el jefe."
+      },
+      {
+        "numero": 17,
+        "texto": "E hijo de Eliezer fue Rehabías el jefe. Y Eliezer no tuvo otros hijos; mas los hijos de Rehabías fueron muchos."
+      },
+      {
+        "numero": 18,
+        "texto": "Hijo de Izhar fue Selomit el jefe."
+      },
+      {
+        "numero": 19,
+        "texto": "Los hijos de Hebrón: Jerías el jefe, Amarías el segundo, Jahaziel el tercero, y Jecamán el cuarto."
+      },
+      {
+        "numero": 20,
+        "texto": "Los hijos de Uziel: Micaía el jefe, e Isías el segundo."
+      },
+      {
+        "numero": 21,
+        "texto": "Los hijos de Merari: Mahli y Musi. Los hijos de Mahli: Eleazar y Cis."
+      },
+      {
+        "numero": 22,
+        "texto": "Y murió Eleazar sin hijos; pero tuvo hijas, y los hijos de Cis, sus parientes, las tomaron por mujeres."
+      },
+      {
+        "numero": 23,
+        "texto": "Los hijos de Musi: Mahli, Edar y Jeremot, ellos tres."
+      },
+      {
+        "numero": 24,
+        "texto": "Estos son los hijos de Leví en las familias de sus padres, jefes de familias según el censo de ellos, contados por sus nombres, por sus cabezas, de veinte años arriba, los cuales trabajaban en el ministerio de la casa de Jehová."
+      },
+      {
+        "numero": 25,
+        "texto": "Porque David dijo: Jehová Dios de Israel ha dado paz a su pueblo Israel, y él habitará en Jerusalén para siempre."
+      },
+      {
+        "numero": 26,
+        "texto": "Y también los levitas no tendrán que llevar más el tabernáculo y todos los utensilios para su ministerio."
+      },
+      {
+        "numero": 27,
+        "texto": "Así que, conforme a las postreras palabras de David, se hizo la cuenta de los hijos de Leví de veinte años arriba."
+      },
+      {
+        "numero": 28,
+        "texto": "Y estaban bajo las órdenes de los hijos de Aarón para ministrar en la casa de Jehová, en los atrios, en las cámaras, y en la purificación de toda cosa santificada, y en la demás obra del ministerio de la casa de Dios."
+      },
+      {
+        "numero": 29,
+        "texto": "Asimismo para los panes de la proposición, para la flor de harina para el sacrificio, para las hojuelas sin levadura, para lo preparado en sartén, para lo tostado, y para toda medida y cuenta;"
+      },
+      {
+        "numero": 30,
+        "texto": "y para asistir cada mañana todos los días a dar gracias y tributar alabanzas a Jehová, y asimismo por la tarde;"
+      },
+      {
+        "numero": 31,
+        "texto": "y para ofrecer todos los holocaustos a Jehová los días de reposo, lunas nuevas y fiestas solemnes, según su número y de acuerdo con su rito, continuamente delante de Jehová;"
+      },
+      {
+        "numero": 32,
+        "texto": "y para que tuviesen la guarda del tabernáculo de reunión, y la guarda del santuario, bajo las órdenes de los hijos de Aarón sus hermanos, en el ministerio de la casa de Jehová."
+      }
+    ],
+    "24": [
+      {
+        "numero": 1,
+        "texto": "También los hijos de Aarón fueron distribuidos en grupos. Los hijos de Aarón: Nadab, Abiú, Eleazar e Itamar."
+      },
+      {
+        "numero": 2,
+        "texto": "Mas como Nadab y Abiú murieron antes que su padre, y no tuvieron hijos, Eleazar e Itamar ejercieron el sacerdocio."
+      },
+      {
+        "numero": 3,
+        "texto": "Y David, con Sadoc de los hijos de Eleazar, y Ahimelec de los hijos de Itamar, los repartió por sus turnos en el ministerio."
+      },
+      {
+        "numero": 4,
+        "texto": "Y de los hijos de Eleazar había más varones principales que de los hijos de Itamar; y los repartieron así: De los hijos de Eleazar, dieciséis cabezas de casas paternas; y de los hijos de Itamar, por sus casas paternas, ocho."
+      },
+      {
+        "numero": 5,
+        "texto": "Los repartieron, pues, por suerte los unos con los otros; porque de los hijos de Eleazar y de los hijos de Itamar hubo príncipes del santuario, y príncipes de la casa de Dios."
+      },
+      {
+        "numero": 6,
+        "texto": "Y el escriba Semaías hijo de Natanael, de los levitas, escribió sus nombres en presencia del rey y de los príncipes, y delante de Sadoc el sacerdote, de Ahimelec hijo de Abiatar y de los jefes de las casas paternas de los sacerdotes y levitas, designando por suerte una casa paterna para Eleazar, y otra para Itamar."
+      },
+      {
+        "numero": 7,
+        "texto": "La primera suerte tocó a Joiarib, la segunda a Jedaías,"
+      },
+      {
+        "numero": 8,
+        "texto": "la tercera a Harim, la cuarta a Seorim,"
+      },
+      {
+        "numero": 9,
+        "texto": "la quinta a Malquías, la sexta a Mijamín,"
+      },
+      {
+        "numero": 10,
+        "texto": "la séptima a Cos, la octava a Abías,"
+      },
+      {
+        "numero": 11,
+        "texto": "la novena a Jesúa, la décima a Secanías,"
+      },
+      {
+        "numero": 12,
+        "texto": "la undécima a Eliasib, la duodécima a Jaquim,"
+      },
+      {
+        "numero": 13,
+        "texto": "la decimatercera a Hupa, la decimacuarta a Jesebeab,"
+      },
+      {
+        "numero": 14,
+        "texto": "la decimaquinta a Bilga, la decimasexta a Imer,"
+      },
+      {
+        "numero": 15,
+        "texto": "la decimaséptima a Hezir, la decimaoctava a Afses,"
+      },
+      {
+        "numero": 16,
+        "texto": "la decimanovena a Petaías, la vigésima a Hezequiel,"
+      },
+      {
+        "numero": 17,
+        "texto": "la vigesimaprimera a Jaquín, la vigesimasegunda a Gamul,"
+      },
+      {
+        "numero": 18,
+        "texto": "la vigesimatercera a Delaía, la vigesimacuarta a Maazías."
+      },
+      {
+        "numero": 19,
+        "texto": "Estos fueron distribuidos para su ministerio, para que entrasen en la casa de Jehová, según les fue ordenado por Aarón su padre, de la manera que le había mandado Jehová el Dios de Israel."
+      },
+      {
+        "numero": 20,
+        "texto": "Y de los hijos de Leví que quedaron: Subael, de los hijos de Amram; y de los hijos de Subael, Jehedías."
+      },
+      {
+        "numero": 21,
+        "texto": "Y de los hijos de Rehabías, Isías el jefe."
+      },
+      {
+        "numero": 22,
+        "texto": "De los izharitas, Selomot; e hijo de Selomot, Jahat."
+      },
+      {
+        "numero": 23,
+        "texto": "De los hijos de Hebrón: Jerías el jefe, el segundo Amarías, el tercero Jahaziel, el cuarto Jecamán."
+      },
+      {
+        "numero": 24,
+        "texto": "Hijo de Uziel, Micaía; e hijo de Micaía, Samir."
+      },
+      {
+        "numero": 25,
+        "texto": "Hermano de Micaía, Isías; e hijo de Isías, Zacarías."
+      },
+      {
+        "numero": 26,
+        "texto": "Los hijos de Merari: Mahli y Musi; hijo de Jaazías, Beno."
+      },
+      {
+        "numero": 27,
+        "texto": "Los hijos de Merari por Jaazías: Beno, Soham, Zacur e Ibri."
+      },
+      {
+        "numero": 28,
+        "texto": "Y de Mahli, Eleazar, quien no tuvo hijos."
+      },
+      {
+        "numero": 29,
+        "texto": "Hijo de Cis, Jerameel."
+      },
+      {
+        "numero": 30,
+        "texto": "Los hijos de Musi: Mahli, Edar y Jerimot. Estos fueron los hijos de los levitas conforme a sus casas paternas."
+      },
+      {
+        "numero": 31,
+        "texto": "Estos también echaron suertes, como sus hermanos los hijos de Aarón, delante del rey David, y de Sadoc y de Ahimelec, y de los jefes de las casas paternas de los sacerdotes y levitas; el principal de los padres igualmente que el menor de sus hermanos."
+      }
+    ],
+    "25": [
+      {
+        "numero": 1,
+        "texto": "Asimismo David y los jefes del ejército apartaron para el ministerio a los hijos de Asaf, de Hemán y de Jedutún, para que profetizasen con arpas, salterios y címbalos; y el número de ellos, hombres idóneos para la obra de su ministerio, fue:"
+      },
+      {
+        "numero": 2,
+        "texto": "De los hijos de Asaf: Zacur, José, Netanías y Asarela, hijos de Asaf, bajo la dirección de Asaf, el cual profetizaba bajo las órdenes del rey."
+      },
+      {
+        "numero": 3,
+        "texto": "De los hijos de Jedutún: Gedalías, Zeri, Jesaías, Hasabías, Matatías y Simei; seis, bajo la dirección de su padre Jedutún, el cual profetizaba con arpa, para aclamar y alabar a Jehová."
+      },
+      {
+        "numero": 4,
+        "texto": "De los hijos de Hemán: Buquías, Matanías, Uziel, Sebuel, Jeremot, Hananías, Hanani, Eliata, Gidalti, Romanti-ezer, Josbecasa, Maloti, Hotir y Mahaziot."
+      },
+      {
+        "numero": 5,
+        "texto": "Todos éstos fueron hijos de Hemán, vidente del rey en las cosas de Dios, para exaltar su poder; y Dios dio a Hemán catorce hijos y tres hijas."
+      },
+      {
+        "numero": 6,
+        "texto": "Y todos éstos estaban bajo la dirección de su padre en la música, en la casa de Jehová, con címbalos, salterios y arpas, para el ministerio del templo de Dios. Asaf, Jedutún y Hemán estaban por disposición del rey."
+      },
+      {
+        "numero": 7,
+        "texto": "Y el número de ellos, con sus hermanos, instruidos en el canto para Jehová, todos los aptos, fue doscientos ochenta y ocho."
+      },
+      {
+        "numero": 8,
+        "texto": "Y echaron suertes para servir por turnos, entrando el pequeño con el grande, lo mismo el maestro que el discípulo."
+      },
+      {
+        "numero": 9,
+        "texto": "La primera suerte salió por Asaf, para José; la segunda para Gedalías, quien con sus hermanos e hijos fueron doce."
+      },
+      {
+        "numero": 10,
+        "texto": "la tercera para Zacur, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 11,
+        "texto": "la cuarta para Izri, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 12,
+        "texto": "la quinta para Netanías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 13,
+        "texto": "la sexta para Buquías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 14,
+        "texto": "la séptima para Jesarela, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 15,
+        "texto": "la octava para Jesahías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 16,
+        "texto": "la novena para Matanías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 17,
+        "texto": "la décima para Simei, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 18,
+        "texto": "la undécima para Azareel, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 19,
+        "texto": "la duodécima para Hasabías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 20,
+        "texto": "la decimatercera para Subael, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 21,
+        "texto": "la decimacuarta para Matatías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 22,
+        "texto": "la decimaquinta para Jeremot, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 23,
+        "texto": "la decimasexta para Hananías, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 24,
+        "texto": "la decimaséptima para Josbecasa, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 25,
+        "texto": "la decimaoctava para Hanani, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 26,
+        "texto": "la decimanovena para Maloti, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 27,
+        "texto": "la vigésima para Eliata, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 28,
+        "texto": "la vigesimaprimera para Hotir, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 29,
+        "texto": "la vigesimasegunda para Gidalti, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 30,
+        "texto": "la vigesimatercera para Mahaziot, con sus hijos y sus hermanos, doce;"
+      },
+      {
+        "numero": 31,
+        "texto": "la vigesimacuarta para Romanti-ezer, con sus hijos y sus hermanos, doce."
+      }
+    ],
+    "26": [
+      {
+        "numero": 1,
+        "texto": "También fueron distribuidos los porteros: de los coreítas, Meselemías hijo de Coré, de los hijos de Asaf."
+      },
+      {
+        "numero": 2,
+        "texto": "Los hijos de Meselemías: Zacarías el primogénito, Jediael el segundo, Zebadías el tercero, Jatniel el cuarto,"
+      },
+      {
+        "numero": 3,
+        "texto": "Elam el quinto, Johanán el sexto, Elioenai el séptimo."
+      },
+      {
+        "numero": 4,
+        "texto": "Los hijos de Obed-edom: Semaías el primogénito, Jozabad el segundo, Joa el tercero, el cuarto Sacar, el quinto Natanael,"
+      },
+      {
+        "numero": 5,
+        "texto": "el sexto Amiel, el séptimo Isacar, el octavo Peultai; porque Dios había bendecido a Obed-edom."
+      },
+      {
+        "numero": 6,
+        "texto": "También de Semaías su hijo nacieron hijos que fueron señores sobre la casa de sus padres; porque eran varones valerosos y esforzados."
+      },
+      {
+        "numero": 7,
+        "texto": "Los hijos de Semaías: Otni, Rafael, Obed, Elzabad, y sus hermanos, hombres esforzados; asimismo Eliú y Samaquías."
+      },
+      {
+        "numero": 8,
+        "texto": "Todos éstos de los hijos de Obed-edom; ellos con sus hijos y sus hermanos, hombres robustos y fuertes para el servicio; sesenta y dos, de Obed-edom."
+      },
+      {
+        "numero": 9,
+        "texto": "Y los hijos de Meselemías y sus hermanos, dieciocho hombres valientes."
+      },
+      {
+        "numero": 10,
+        "texto": "De Hosa, de los hijos de Merari: Simri el jefe (aunque no era el primogénito, mas su padre lo puso por jefe),"
+      },
+      {
+        "numero": 11,
+        "texto": "el segundo Hilcías, el tercero Tebalías, el cuarto Zacarías; todos los hijos de Hosa y sus hermanos fueron trece."
+      },
+      {
+        "numero": 12,
+        "texto": "Entre éstos se hizo la distribución de los porteros, alternando los principales de los varones en la guardia con sus hermanos, para servir en la casa de Jehová."
+      },
+      {
+        "numero": 13,
+        "texto": "Echaron suertes, el pequeño con el grande, según sus casas paternas, para cada puerta."
+      },
+      {
+        "numero": 14,
+        "texto": "Y la suerte para la del oriente cayó a Selemías. Y metieron en las suertes a Zacarías su hijo, consejero entendido; y salió la suerte suya para la del norte."
+      },
+      {
+        "numero": 15,
+        "texto": "Y para Obed-edom la puerta del sur, y a sus hijos la casa de provisiones del templo."
+      },
+      {
+        "numero": 16,
+        "texto": "Para Supim y Hosa, la del occidente, la puerta de Salequet, en el camino de la subida, correspondiéndose guardia con guardia."
+      },
+      {
+        "numero": 17,
+        "texto": "Al oriente seis levitas, al norte cuatro de día; al sur cuatro de día; y a la casa de provisiones de dos en dos."
+      },
+      {
+        "numero": 18,
+        "texto": "En la cámara de los utensilios al occidente, cuatro al camino, y dos en la cámara."
+      },
+      {
+        "numero": 19,
+        "texto": "Estas son las distribuciones de los porteros, hijos de los coreítas y de los hijos de Merari."
+      },
+      {
+        "numero": 20,
+        "texto": "Y de los levitas, Ahías tenía cargo de los tesoros de la casa de Dios, y de los tesoros de las cosas santificadas."
+      },
+      {
+        "numero": 21,
+        "texto": "Cuanto a los hijos de Laadán hijo de Gersón: de Laadán, los jefes de las casas paternas de Laadán gersonita fueron los jehielitas."
+      },
+      {
+        "numero": 22,
+        "texto": "Los hijos de Jehieli, Zetam y Joel su hermano, tuvieron cargo de los tesoros de la casa de Jehová."
+      },
+      {
+        "numero": 23,
+        "texto": "De entre los amramitas, de los izharitas, de los hebronitas y de los uzielitas,"
+      },
+      {
+        "numero": 24,
+        "texto": "Sebuel hijo de Gersón, hijo de Moisés, era jefe sobre los tesoros."
+      },
+      {
+        "numero": 25,
+        "texto": "En cuanto a su hermano Eliezer, hijo de éste era Rehabías, hijo de éste Jesaías, hijo de éste Joram, hijo de éste Zicri, del que fue hijo Selomit."
+      },
+      {
+        "numero": 26,
+        "texto": "Este Selomit y sus hermanos tenían a su cargo todos los tesoros de todas las cosas santificadas que había consagrado el rey David, y los jefes de las casas paternas, los capitanes de millares y de centenas, y los jefes del ejército;"
+      },
+      {
+        "numero": 27,
+        "texto": "de lo que habían consagrado de las guerras y de los botines, para reparar la casa de Jehová."
+      },
+      {
+        "numero": 28,
+        "texto": "Asimismo todas las cosas que había consagrado el vidente Samuel, y Saúl hijo de Cis, Abner hijo de Ner y Joab hijo de Sarvia, y todo lo que cualquiera consagraba, estaba a cargo de Selomit y de sus hermanos."
+      },
+      {
+        "numero": 29,
+        "texto": "De los izharitas, Quenanías y sus hijos eran gobernadores y jueces sobre Israel en asuntos exteriores."
+      },
+      {
+        "numero": 30,
+        "texto": "De los hebronitas, Hasabías y sus hermanos, hombres de vigor, mil setecientos, gobernaban a Israel al otro lado del Jordán, al occidente, en toda la obra de Jehová, y en el servicio del rey."
+      },
+      {
+        "numero": 31,
+        "texto": "De los hebronitas, Jerías era el jefe de los hebronitas repartidos en sus linajes por sus familias. En el año cuarenta del reinado de David se registraron, y fueron hallados entre ellos hombres fuertes y vigorosos en Jazer de Galaad."
+      },
+      {
+        "numero": 32,
+        "texto": "Y sus hermanos, hombres valientes, eran dos mil setecientos, jefes de familias, los cuales el rey David constituyó sobre los rubenitas, los gaditas y la media tribu de Manasés, para todas las cosas de Dios y los negocios del rey."
+      }
+    ],
+    "27": [
+      {
+        "numero": 1,
+        "texto": "Estos son los principales de los hijos de Israel, jefes de familias, jefes de millares y de centenas, y oficiales que servían al rey en todos los negocios de las divisiones que entraban y salían cada mes durante todo el año, siendo cada división de veinticuatro mil."
+      },
+      {
+        "numero": 2,
+        "texto": "Sobre la primera división del primer mes estaba Jasobeam hijo de Zabdiel; y había en su división veinticuatro mil."
+      },
+      {
+        "numero": 3,
+        "texto": "De los hijos de Fares, él fue jefe de todos los capitanes de las compañías del primer mes."
+      },
+      {
+        "numero": 4,
+        "texto": "Sobre la división del segundo mes estaba Dodai ahohíta; y Miclot era jefe en su división, en la que también había veinticuatro mil."
+      },
+      {
+        "numero": 5,
+        "texto": "El jefe de la tercera división para el tercer mes era Benaía, hijo del sumo sacerdote Joiada; y en su división había veinticuatro mil."
+      },
+      {
+        "numero": 6,
+        "texto": "Este Benaía era valiente entre los treinta y sobre los treinta; y en su división estaba Amisabad su hijo."
+      },
+      {
+        "numero": 7,
+        "texto": "El cuarto jefe para el cuarto mes era Asael hermano de Joab, y después de él Zebadías su hijo; y en su división había veinticuatro mil."
+      },
+      {
+        "numero": 8,
+        "texto": "El quinto jefe para el quinto mes era Samhut izraíta; y en su división había veinticuatro mil."
+      },
+      {
+        "numero": 9,
+        "texto": "El sexto para el sexto mes era Ira hijo de Iques, de Tecoa; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 10,
+        "texto": "El séptimo para el séptimo mes era Heles pelonita, de los hijos de Efraín; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 11,
+        "texto": "El octavo para el octavo mes era Sibecai husatita, de los zeraítas; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 12,
+        "texto": "El noveno para el noveno mes era Abiezer anatotita, de los benjamitas; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 13,
+        "texto": "El décimo para el décimo mes era Maharai netofatita, de los zeraítas; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 14,
+        "texto": "El undécimo para el undécimo mes era Benaía piratonita, de los hijos de Efraín; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 15,
+        "texto": "El duodécimo para el duodécimo mes era Heldai netofatita, de Otoniel; y en su división veinticuatro mil."
+      },
+      {
+        "numero": 16,
+        "texto": "Asimismo sobre las tribus de Israel: el jefe de los rubenitas era Eliezer hijo de Zicri; de los simeonitas, Sefatías, hijo de Maaca."
+      },
+      {
+        "numero": 17,
+        "texto": "De los levitas, Hasabías hijo de Kemuel; de los de Aarón, Sadoc."
+      },
+      {
+        "numero": 18,
+        "texto": "De Judá, Eliú, uno de los hermanos de David; de los de Isacar, Omri hijo de Micael."
+      },
+      {
+        "numero": 19,
+        "texto": "De los de Zabulón, Ismaías hijo de Abdías; de los de Neftalí, Jerimot hijo de Azriel."
+      },
+      {
+        "numero": 20,
+        "texto": "De los hijos de Efraín, Oseas hijo de Azazías; de la media tribu de Manasés, Joel hijo de Pedaías."
+      },
+      {
+        "numero": 21,
+        "texto": "De la otra media tribu de Manasés, en Galaad, Iddo hijo de Zacarías; de los de Benjamín, Jaasiel hijo de Abner."
+      },
+      {
+        "numero": 22,
+        "texto": "Y de Dan, Azareel hijo de Jeroham. Estos fueron los jefes de las tribus de Israel."
+      },
+      {
+        "numero": 23,
+        "texto": "Y no tomó David el número de los que eran de veinte años abajo, por cuanto Jehová había dicho que él multiplicaría a Israel como las estrellas del cielo."
+      },
+      {
+        "numero": 24,
+        "texto": "Joab hijo de Sarvia había comenzado a contar; pero no acabó, pues por esto vino el castigo sobre Israel, y así el número no fue puesto en el registro de las crónicas del rey David."
+      },
+      {
+        "numero": 25,
+        "texto": "Azmavet hijo de Adiel tenía a su cargo los tesoros del rey; y Jonatán hijo de Uzías los tesoros de los campos, de las ciudades, de las aldeas y de las torres."
+      },
+      {
+        "numero": 26,
+        "texto": "Y de los que trabajaban en la labranza de las tierras, Ezri hijo de Quelub."
+      },
+      {
+        "numero": 27,
+        "texto": "De las viñas, Simei ramatita; y del fruto de las viñas para las bodegas, Zabdi sifmita."
+      },
+      {
+        "numero": 28,
+        "texto": "De los olivares e higuerales de la Sefela, Baal-hanán gederita; y de los almacenes del aceite, Joás."
+      },
+      {
+        "numero": 29,
+        "texto": "Del ganado que pastaba en Sarón, Sitrai saronita; y del ganado que estaba en los valles, Safat hijo de Adlai."
+      },
+      {
+        "numero": 30,
+        "texto": "De los camellos, Obil ismaelita; de las asnas, Jehedías meronotita;"
+      },
+      {
+        "numero": 31,
+        "texto": "y de las ovejas, Jaziz agareno. Todos estos eran administradores de la hacienda del rey David."
+      },
+      {
+        "numero": 32,
+        "texto": "Y Jonatán tío de David era consejero, varón prudente y escriba; y Jehiel hijo de Hacmoni estaba con los hijos del rey."
+      },
+      {
+        "numero": 33,
+        "texto": "También Ahitofel era consejero del rey, y Husai arquita amigo del rey."
+      },
+      {
+        "numero": 34,
+        "texto": "Después de Ahitofel estaba Joiada hijo de Benaía, y Abiatar. Y Joab era el general del ejército del rey."
+      }
+    ],
+    "28": [
+      {
+        "numero": 1,
+        "texto": "Reunió David en Jerusalén a todos los principales de Israel, los jefes de las tribus, los jefes de las divisiones que servían al rey, los jefes de millares y de centenas, los administradores de toda la hacienda y posesión del rey y de sus hijos, y los oficiales y los más poderosos y valientes de sus hombres."
+      },
+      {
+        "numero": 2,
+        "texto": "Y levantándose el rey David, puesto en pie dijo: Oídme, hermanos míos, y pueblo mío. Yo tenía el propósito de edificar una casa en la cual reposara el arca del pacto de Jehová, y para el estrado de los pies de nuestro Dios; y había ya preparado todo para edificar."
+      },
+      {
+        "numero": 3,
+        "texto": "Mas Dios me dijo: Tú no edificarás casa a mi nombre, porque eres hombre de guerra, y has derramado mucha sangre."
+      },
+      {
+        "numero": 4,
+        "texto": "Pero Jehová el Dios de Israel me eligió de toda la casa de mi padre, para que perpetuamente fuese rey sobre Israel; porque a Judá escogió por caudillo, y de la casa de Judá a la familia de mi padre; y de entre los hijos de mi padre se agradó de mí para ponerme por rey sobre todo Israel."
+      },
+      {
+        "numero": 5,
+        "texto": "Y de entre todos mis hijos (porque Jehová me ha dado muchos hijos), eligió a mi hijo Salomón para que se siente en el trono del reino de Jehová sobre Israel."
+      },
+      {
+        "numero": 6,
+        "texto": "Y me ha dicho: Salomón tu hijo, él edificará mi casa y mis atrios; porque a éste he escogido por hijo, y yo le seré a él por padre."
+      },
+      {
+        "numero": 7,
+        "texto": "Asimismo yo confirmaré su reino para siempre, si él se esforzare a poner por obra mis mandamientos y mis decretos, como en este día."
+      },
+      {
+        "numero": 8,
+        "texto": "Ahora, pues, ante los ojos de todo Israel, congregación de Jehová, y en oídos de nuestro Dios, guardad e inquirid todos los preceptos de Jehová vuestro Dios, para que poseáis la buena tierra, y la dejéis en herencia a vuestros hijos después de vosotros perpetuamente."
+      },
+      {
+        "numero": 9,
+        "texto": "Y tú, Salomón, hijo mío, reconoce al Dios de tu padre, y sírvele con corazón perfecto y con ánimo voluntario; porque Jehová escudriña los corazones de todos, y entiende todo intento de los pensamientos. Si tú le buscares, lo hallarás; mas si lo dejares, él te desechará para siempre."
+      },
+      {
+        "numero": 10,
+        "texto": "Mira, pues, ahora, que Jehová te ha elegido para que edifiques casa para el santuario; esfuérzate, y hazla."
+      },
+      {
+        "numero": 11,
+        "texto": "Y David dio a Salomón su hijo el plano del pórtico del templo y sus casas, sus tesorerías, sus aposentos, sus cámaras y la casa del propiciatorio."
+      },
+      {
+        "numero": 12,
+        "texto": "Asimismo el plano de todas las cosas que tenía en mente para los atrios de la casa de Jehová, para todas las cámaras alrededor, para las tesorerías de la casa de Dios, y para las tesorerías de las cosas santificadas."
+      },
+      {
+        "numero": 13,
+        "texto": "También para los grupos de los sacerdotes y de los levitas, para toda la obra del ministerio de la casa de Jehová, y para todos los utensilios del ministerio de la casa de Jehová."
+      },
+      {
+        "numero": 14,
+        "texto": "Y dio oro en peso para las cosas de oro, para todos los utensilios de cada servicio, y plata en peso para todas las cosas de plata, para todos los utensilios de cada servicio."
+      },
+      {
+        "numero": 15,
+        "texto": "Oro en peso para los candeleros de oro, y para sus lámparas; en peso el oro para cada candelero y sus lámparas; y para los candeleros de plata, plata en peso para cada candelero y sus lámparas, conforme al servicio de cada candelero."
+      },
+      {
+        "numero": 16,
+        "texto": "Asimismo dio oro en peso para las mesas de la proposición, para cada mesa; del mismo modo plata para las mesas de plata."
+      },
+      {
+        "numero": 17,
+        "texto": "También oro puro para los garfios, para los lebrillos, para las copas y para las tazas de oro; para cada taza por peso; y para las tazas de plata, por peso para cada taza."
+      },
+      {
+        "numero": 18,
+        "texto": "Además, oro puro en peso para el altar del incienso, y para el carro de los querubines de oro, que con las alas extendidas cubrían el arca del pacto de Jehová."
+      },
+      {
+        "numero": 19,
+        "texto": "Todas estas cosas, dijo David, me fueron trazadas por la mano de Jehová, que me hizo entender todas las obras del diseño."
+      },
+      {
+        "numero": 20,
+        "texto": "Dijo además David a Salomón su hijo: Anímate y esfuérzate, y manos a la obra; no temas, ni desmayes, porque Jehová Dios, mi Dios, estará contigo; él no te dejará ni te desamparará, hasta que acabes toda la obra para el servicio de la casa de Jehová."
+      },
+      {
+        "numero": 21,
+        "texto": "He aquí los grupos de los sacerdotes y de los levitas, para todo el ministerio de la casa de Dios, estarán contigo en toda la obra; asimismo todos los voluntarios e inteligentes para toda forma de servicio, y los príncipes, y todo el pueblo para ejecutar todas tus órdenes."
+      }
+    ],
+    "29": [
+      {
+        "numero": 1,
+        "texto": "Después dijo el rey David a toda la asamblea: Solamente a Salomón mi hijo ha elegido Dios; él es joven y tierno de edad, y la obra grande; porque la casa no es para hombre, sino para Jehová Dios."
+      },
+      {
+        "numero": 2,
+        "texto": "Yo con todas mis fuerzas he preparado para la casa de mi Dios, oro para las cosas de oro, plata para las cosas de plata, bronce para las de bronce, hierro para las de hierro, y madera para las de madera; y piedras de ónice, piedras preciosas, piedras negras, piedras de diversos colores, y toda clase de piedras preciosas, y piedras de mármol en abundancia."
+      },
+      {
+        "numero": 3,
+        "texto": "Además de esto, por cuanto tengo mi afecto en la casa de mi Dios, yo guardo en mi tesoro particular oro y plata que, además de todas las cosas que he preparado para la casa del santuario, he dado para la casa de mi Dios:"
+      },
+      {
+        "numero": 4,
+        "texto": "tres mil talentos de oro, de oro de Ofir, y siete mil talentos de plata refinada para cubrir las paredes de las casas;"
+      },
+      {
+        "numero": 5,
+        "texto": "oro, pues, para las cosas de oro, y plata para las cosas de plata, y para toda la obra de las manos de los artífices. ¿Y quién quiere hacer hoy ofrenda voluntaria a Jehová?"
+      },
+      {
+        "numero": 6,
+        "texto": "Entonces los jefes de familia, y los príncipes de las tribus de Israel, jefes de millares y de centenas, con los administradores de la hacienda del rey, ofrecieron voluntariamente."
+      },
+      {
+        "numero": 7,
+        "texto": "Y dieron para el servicio de la casa de Dios cinco mil talentos  y diez mil dracmas de oro, diez mil talentos de plata, dieciocho mil talentos de bronce, y cinco mil talentos de hierro."
+      },
+      {
+        "numero": 8,
+        "texto": "Y todo el que tenía piedras preciosas las dio para el tesoro de la casa de Jehová, en mano de Jehiel gersonita."
+      },
+      {
+        "numero": 9,
+        "texto": "Y se alegró el pueblo por haber contribuido voluntariamente; porque de todo corazón ofrecieron a Jehová voluntariamente."
+      },
+      {
+        "numero": 10,
+        "texto": "Asimismo se alegró mucho el rey David, y bendijo a Jehová delante de toda la congregación; y dijo David: Bendito seas tú, oh Jehová, Dios de Israel nuestro padre, desde el siglo y hasta el siglo."
+      },
+      {
+        "numero": 11,
+        "texto": "Tuya es, oh Jehová, la magnificencia y el poder, la gloria, la victoria y el honor; porque todas las cosas que están en los cielos y en la tierra son tuyas. Tuyo, oh Jehová, es el reino, y tú eres excelso sobre todos."
+      },
+      {
+        "numero": 12,
+        "texto": "Las riquezas y la gloria proceden de ti, y tú dominas sobre todo; en tu mano está la fuerza y el poder, y en tu mano el hacer grande y el dar poder a todos."
+      },
+      {
+        "numero": 13,
+        "texto": "Ahora pues, Dios nuestro, nosotros alabamos y loamos tu glorioso nombre."
+      },
+      {
+        "numero": 14,
+        "texto": "Porque ¿quién soy yo, y quién es mi pueblo, para que pudiésemos ofrecer voluntariamente cosas semejantes? Pues todo es tuyo, y de lo recibido de tu mano te damos."
+      },
+      {
+        "numero": 15,
+        "texto": "Porque nosotros, extranjeros y advenedizos somos delante de ti, como todos nuestros padres; y nuestros días sobre la tierra, cual sombra que no dura."
+      },
+      {
+        "numero": 16,
+        "texto": "Oh Jehová Dios nuestro, toda esta abundancia que hemos preparado para edificar casa a tu santo nombre, de tu mano es, y todo es tuyo."
+      },
+      {
+        "numero": 17,
+        "texto": "Yo sé, Dios mío, que tú escudriñas los corazones, y que la rectitud te agrada; por eso yo con rectitud de mi corazón voluntariamente te he ofrecido todo esto, y ahora he visto con alegría que tu pueblo, reunido aquí ahora, ha dado para ti espontáneamente."
+      },
+      {
+        "numero": 18,
+        "texto": "Jehová, Dios de Abraham, de Isaac y de Israel nuestros padres, conserva perpetuamente esta voluntad del corazón de tu pueblo, y encamina su corazón a ti."
+      },
+      {
+        "numero": 19,
+        "texto": "Asimismo da a mi hijo Salomón corazón perfecto, para que guarde tus mandamientos, tus testimonios y tus estatutos, y para que haga todas las cosas, y te edifique la casa para la cual yo he hecho preparativos."
+      },
+      {
+        "numero": 20,
+        "texto": "Después dijo David a toda la congregación: Bendecid ahora a Jehová vuestro Dios. Entonces toda la congregación bendijo a Jehová Dios de sus padres, e inclinándose adoraron delante de Jehová y del rey."
+      },
+      {
+        "numero": 21,
+        "texto": "Y sacrificaron víctimas a Jehová, y ofrecieron a Jehová holocaustos al día siguiente; mil becerros, mil carneros, mil corderos con sus libaciones, y muchos sacrificios de parte de todo Israel."
+      },
+      {
+        "numero": 22,
+        "texto": "Y comieron y bebieron delante de Jehová aquel día con gran gozo; y dieron por segunda vez la investidura del reino a Salomón hijo de David, y ante Jehová le ungieron por príncipe, y a Sadoc por sacerdote."
+      },
+      {
+        "numero": 23,
+        "texto": "Y se sentó Salomón por rey en el trono de Jehová en lugar de David su padre, y fue prosperado; y le obedeció todo Israel."
+      },
+      {
+        "numero": 24,
+        "texto": "Y todos los príncipes y poderosos, y todos los hijos del rey David, prestaron homenaje al rey Salomón."
+      },
+      {
+        "numero": 25,
+        "texto": "Y Jehová engrandeció en extremo a Salomón a ojos de todo Israel, y le dio tal gloria en su reino, cual ningún rey la tuvo antes de él en Israel."
+      },
+      {
+        "numero": 26,
+        "texto": "Así reinó David hijo de Isaí sobre todo Israel."
+      },
+      {
+        "numero": 27,
+        "texto": "El tiempo que reinó sobre Israel fue cuarenta años. Siete años reinó en Hebrón, y treinta y tres reinó en Jerusalén."
+      },
+      {
+        "numero": 28,
+        "texto": "Y murió en buena vejez, lleno de días, de riquezas y de gloria; y reinó en su lugar Salomón su hijo."
+      },
+      {
+        "numero": 29,
+        "texto": "Y los hechos del rey David, primeros y postreros, están escritos en el libro de las crónicas de Samuel vidente, en las crónicas del profeta Natán, y en las crónicas de Gad vidente,"
+      },
+      {
+        "numero": 30,
+        "texto": "con todo lo relativo a su reinado, y su poder, y los tiempos que pasaron sobre él, y sobre Israel y sobre todos los reinos de aquellas tierras."
+      }
+    ]
+  }
+}

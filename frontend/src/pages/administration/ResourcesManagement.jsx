@@ -16,6 +16,7 @@ import ResourcesList from "../../components/administration/resources/ResourcesLi
 import ResourceFormModal from "../../components/administration/resources/ResourceFormModal";
 import ResourceDetailsModal from "../../components/administration/resources/ResourceDetailsModal";
 import ResourceDeleteModal from "../../components/administration/resources/ResourceDeleteModal";
+import BibleBooksAdmin from "../../components/administration/resources/BibleBooksAdmin";
 
 import { RESOURCE_CONTENT_DEFAULTS, RESOURCE_CONTENT_ORDER } from "../../data/resources/resourceCatalogDefaults";
 import {
@@ -167,6 +168,8 @@ function ResourcesManagement() {
   const selectedCategory = RESOURCE_CONTENT_ORDER.includes(section) ? section : "all";
   const isCategoryPage = selectedCategory !== "all";
   const [externalCounts, setExternalCounts] = useState({ solidarity_library: null, songbook: null });
+  // En Biblia separamos las 66 fichas de libros de las seis herramientas.
+  const [bibleView, setBibleView] = useState("books");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -393,7 +396,7 @@ function ResourcesManagement() {
 
   return (
     <main className="resources-management">
-      <ResourcesHeader onCreateResource={isCategoryPage ? openNew : undefined} />
+      <ResourcesHeader onCreateResource={isCategoryPage && selectedCategory !== "bible" ? openNew : undefined} />
       <div className="resources-management__content">
         {error && <p className="resource-cms__alert resource-cms__alert--error" role="alert">{error}</p>}
         {notice && <p className="resource-cms__alert" role="status">{notice}</p>}
@@ -405,7 +408,8 @@ function ResourcesManagement() {
         </div>
         {!isCategoryPage ? (
           <>
-            <ResourcesSummary resources={available} externalCounts={externalCounts} />
+            <ResourcesSummary resources={available} externalCounts={externalCounts}
+              bibleEntries={remote.bible?.entries || []} />
             <ResourcesCategories resources={available} externalCounts={externalCounts}
               selectedCategory="all" />
           </>
@@ -424,7 +428,7 @@ function ResourcesManagement() {
                 <h2>{publicHeading.title} {publicHeading.highlight && <em>{publicHeading.highlight}</em>}</h2>
                 <p>{publicHeading.description}</p>
                 <div className="resource-cms__category-links">
-                  <span>{countInCategory} {countInCategory === 1 ? "material" : "materiales"} en esta sección</span>
+                  <span>{selectedCategory === "bible" ? "66 libros bíblicos y 6 herramientas de estudio" : `${countInCategory} ${countInCategory === 1 ? "material" : "materiales"} en esta sección`}</span>
                   <Link to={`/member/recursos/${memberSectionPaths[selected]}`} target="_blank" rel="noopener noreferrer">
                     <ExternalLink size={15} aria-hidden="true" /> Ver la página del miembro
                   </Link>
@@ -463,6 +467,17 @@ function ResourcesManagement() {
             </div>
               </section>
             </details>
+            {selectedCategory === "bible" && (
+              <div className="resource-cms__bible-tabs" role="group" aria-label="Tipo de contenido bíblico">
+                <button type="button" aria-pressed={bibleView === "books"} onClick={() => setBibleView("books")}>Libros bíblicos (66)</button>
+                <button type="button" aria-pressed={bibleView === "tools"} onClick={() => setBibleView("tools")}>Herramientas de estudio (6)</button>
+              </div>
+            )}
+            {selectedCategory === "bible" && bibleView === "books" && (
+              <BibleBooksAdmin entries={activeData.entries || []} onSaved={refresh} />
+            )}
+            {(selectedCategory !== "bible" || bibleView === "tools") && (
+            <>
             <ResourcesToolbar search={search} onSearchChange={setSearch} statusFilter={statusFilter}
           onStatusChange={setStatusFilter} sortOrder={sortOrder} onSortChange={setSortOrder}
           devotionalMode={selectedCategory === "devotionals"} onClearFilters={clearFilters} />
@@ -490,6 +505,8 @@ function ResourcesManagement() {
             ))}
           </section>
         )}
+            </>
+            )}
           </>
         )}
       </div>

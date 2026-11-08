@@ -1,0 +1,22 @@
+/* EDICIÓN SOBRE LA MISMA FICHA BÍBLICA QUE LEE EL MIEMBRO */
+.bible-visual-editor{min-height:100vh;background:#fff;color:#20394b}
+.bible-visual-editor__toolbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:13px clamp(16px,3vw,38px);border-bottom:1px solid #dce6ec;background:rgba(255,255,255,.97);box-shadow:0 3px 14px rgba(27,53,73,.08)}
+.bible-visual-editor__heading,.bible-visual-editor__actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bible-visual-editor__heading>a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:#eef5f8;color:#316b85}
+.bible-visual-editor__heading>div{display:grid;gap:2px}
+.bible-visual-editor__heading>div span{font-size:10px;color:#3e809c;font-weight:800;letter-spacing:.1em}
+.bible-visual-editor__heading>div strong{font-size:16px;color:#1c3648}
+.bible-visual-editor__status{padding:6px 10px;border-radius:20px;background:#e8f4ee;color:#277451;font-size:11px;font-weight:700}
+.bible-visual-editor__status--pending{background:#fff2da;color:#865512}
+.bible-visual-editor__actions button{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:8px 12px;border:1px solid #c9dfe8;border-radius:9px;background:#fff;color:#316b85;font-size:12px;font-weight:700;cursor:pointer}
+.bible-visual-editor__actions .bible-visual-editor__publish{background:#3b839b;border-color:#3b839b;color:#fff}
+.bible-visual-editor__actions button:disabled{opacity:.55;cursor:wait}
+.bible-visual-editor__notice-bar{padding:9px clamp(16px,3vw,38px);background:#eff7fa;font-size:12px;color:#3c6c82}
+.bible-visual-editor__notice-bar p{margin:4px 0}
+.bible-visual-editor__success{color:#287451;font-weight:700}
+.bible-visual-editor__error{color:#a83c28;font-weight:700}
+.bible-visual-editor__bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:24px clamp(16px,3vw,38px);border-top:1px solid #e4eaee;font-size:13px}
+.bible-visual-editor__bottom a{display:inline-flex;align-items:center;gap:6px;color:#32758f}
+.bible-visual-editor__bottom span{color:#78909e}
+.bible-visual-editor__state{padding:50px 22px;text-align:center}
+@media(max-width:740px){.bible-visual-editor__toolbar{position:relative}.bible-visual-editor__actions{width:100%}.bible-visual-editor__actions button{flex:1 1 140px;justify-content:center}}

@@ -1,5 +1,3 @@
-
-
 import { useMemo } from "react";
 
 import {
@@ -14,7 +12,7 @@ import "../../../styles/components/administration/resources/ResourcesSummary.css
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function ResourcesSummary({ resources = [], externalCounts = {} }) {
+function ResourcesSummary({ resources = [], externalCounts = {}, bibleEntries = [] }) {
 
     // =====================================================
     // ESTADÍSTICAS
@@ -28,17 +26,20 @@ function ResourcesSummary({ resources = [], externalCounts = {} }) {
 
         const externalReady = Number.isSafeInteger(externalCounts.solidarity_library) &&
             Number.isSafeInteger(externalCounts.songbook);
-        const total = externalReady ? resources.length + externalTotal : "—";
+        const total = externalReady ? resources.length + 66 + externalTotal : "—";
 
         // Un contenido original continúa publicado aunque tenga cambios sin publicar.
         const published = externalReady ? resources.filter(
             (resource) => resource.hasPublishedVersion || resource.status === "published"
-        ).length + externalTotal : "—";
+        ).length + 66 + externalTotal : "—";
 
         // La cifra de borradores cuenta ediciones pendientes y materiales inéditos.
+        const bibleDrafts = bibleEntries.filter((entry) =>
+            entry.key?.startsWith("book-") && entry.draftRevision > entry.publishedRevision
+        ).length;
         const drafts = resources.filter(
             (resource) => resource.status === "draft"
-        ).length;
+        ).length + bibleDrafts;
 
         return {
             total,
@@ -46,7 +47,7 @@ function ResourcesSummary({ resources = [], externalCounts = {} }) {
             drafts,
         };
 
-    }, [resources, externalCounts]);
+    }, [resources, externalCounts, bibleEntries]);
 
     // =====================================================
     // TARJETAS
@@ -125,6 +126,3 @@ function ResourcesSummary({ resources = [], externalCounts = {} }) {
 }
 
 export default ResourcesSummary;
-
-
-

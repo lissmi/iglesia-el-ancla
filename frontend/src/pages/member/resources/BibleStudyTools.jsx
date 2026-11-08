@@ -1,3 +1,4 @@
+
 import defaultBibleStudyTools from "../../../data/resources/bibleStudyTools";
 import { useResourceCatalog } from "../../../services/resourcesContentApi";
 import { RESOURCE_CONTENT_DEFAULTS } from "../../../data/resources/resourceCatalogDefaults";
@@ -17,13 +18,14 @@ import recursosIcon from "../../../assets/icons/recursos.png";
 import bibleToolsImage from "../../../assets/images/resources/biblia-estudio.png";
 
 // Importamos los datos de los 39 libros del Antiguo Testamento.
-import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
+import { useBibleBookCatalog } from "../../../services/useBibleBookCatalog";
 
 // Importamos los datos de los 27 libros del Nuevo Testamento.
-import newTestamentBooks from "../../../data/bible/newTestamentBooks";
+
 
 // Importamos los estilos exclusivos de esta página.
 import "../../../styles/pages/member/resources/BibleStudyTools.css";
+import "../../../styles/pages/member/resources/BibleReaderUnavailable.css";
 
 // Guardamos fuera del componente las herramientas de estudio.
 //
@@ -80,7 +82,7 @@ function BibleBookCard({ book }) {
                     {/* Enlace hacia la futura página informativa del libro. */}
                     <Link
                         className="bible-book-card__button"
-                        to={`/recursos/biblia/libro/${book.slug}`}
+                        to={`/member/recursos/biblia/libro/${book.slug}`}
                         aria-label={`Conocer el libro de ${book.name}`}
                     >
                         Conocer el libro
@@ -90,11 +92,11 @@ function BibleBookCard({ book }) {
                         </span>
                     </Link>
 
-                    {/* Enlace hacia el futuro lector bíblico. */}
+                    {/* Abrimos el primer capítulo usando nuestra API bíblica local. */}
                     <Link
                         className="bible-book-card__reader-link"
-                        to={`/recursos/biblia/leer/${book.slug}`}
-                        aria-label={`Leer el libro de ${book.name}`}
+                        to={`/member/recursos/biblia/leer/${book.slug}/1`}
+                        aria-label={`Leer ${book.name} desde el capítulo 1`}
                     >
                         Leer libro
                     </Link>
@@ -108,6 +110,9 @@ function BibleBookCard({ book }) {
 function BibleStudyTools() {
     // Fusionamos el material inicial con los cambios publicados por Administración.
     const { items: studyTools, heading } = useResourceCatalog("bible", defaultBibleStudyTools, RESOURCE_CONTENT_DEFAULTS.bible.heading);
+
+    // Las fichas de libros incorporan solamente los cambios publicados.
+    const { oldTestamentBooks, newTestamentBooks } = useBibleBookCatalog();
 
     // Guardamos el identificador de la herramienta seleccionada.
     const [selectedToolId, setSelectedToolId] = useState(1);
@@ -150,7 +155,7 @@ function BibleStudyTools() {
                                 aria-label="Ruta de navegación"
                             >
                                 {/* Enlace para volver a Recursos. */}
-                                <Link to="/recursos">
+                                <Link to="/member/recursos">
                                     Recursos
                                 </Link>
 
@@ -329,7 +334,7 @@ function BibleStudyTools() {
                             <div className="bible-testament-section__actions">
                                 <Link
                                     className="bible-testament-section__button"
-                                    to="/recursos/biblia/libros/antiguo-testamento"
+                                    to="/member/recursos/biblia/libros/antiguo-testamento"
                                 >
                                     Ver los 39 libros
 
@@ -385,7 +390,7 @@ function BibleStudyTools() {
                             <div className="bible-testament-section__actions">
                                 <Link
                                     className="bible-testament-section__button"
-                                    to="/recursos/biblia/libros/nuevo-testamento"
+                                    to="/member/recursos/biblia/libros/nuevo-testamento"
                                 >
                                     Ver los 27 libros
 
@@ -682,7 +687,7 @@ function BibleStudyTools() {
                             {/* Enlace hacia los estudios bíblicos. */}
                             <Link
                                 className="bible-tools-help__button bible-tools-help__button--primary"
-                                to="/recursos/estudios"
+                                to="/member/recursos/estudios"
                             >
                                 Ver estudios bíblicos
                             </Link>
@@ -690,7 +695,7 @@ function BibleStudyTools() {
                             {/* Enlace hacia la guía devocional. */}
                             <Link
                                 className="bible-tools-help__button bible-tools-help__button--secondary"
-                                to="/recursos/devocional"
+                                to="/member/recursos/devocional"
                             >
                                 Ver guía devocional
                             </Link>
@@ -698,7 +703,7 @@ function BibleStudyTools() {
                             {/* Enlace para volver a Recursos. */}
                             <Link
                                 className="bible-tools-help__back"
-                                to="/recursos"
+                                to="/member/recursos"
                             >
                                 Volver a Recursos
                             </Link>

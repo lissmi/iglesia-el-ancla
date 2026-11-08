@@ -1,0 +1,471 @@
+{
+  "version": "rvr1960",
+  "nombre": "Reina-Valera 1960",
+  "idioma": "es",
+  "formato": "texto-por-capitulo",
+  "nivel": "capitulo",
+  "libros": [
+    {
+      "id": "genesis",
+      "nombre": "Génesis",
+      "testamento": "antiguo",
+      "capitulos": 50,
+      "archivo": "books/genesis.json"
+    },
+    {
+      "id": "exodo",
+      "nombre": "Éxodo",
+      "testamento": "antiguo",
+      "capitulos": 40,
+      "archivo": "books/exodo.json"
+    },
+    {
+      "id": "levitico",
+      "nombre": "Levítico",
+      "testamento": "antiguo",
+      "capitulos": 27,
+      "archivo": "books/levitico.json"
+    },
+    {
+      "id": "numeros",
+      "nombre": "Números",
+      "testamento": "antiguo",
+      "capitulos": 36,
+      "archivo": "books/numeros.json"
+    },
+    {
+      "id": "deuteronomio",
+      "nombre": "Deuteronomio",
+      "testamento": "antiguo",
+      "capitulos": 34,
+      "archivo": "books/deuteronomio.json"
+    },
+    {
+      "id": "josue",
+      "nombre": "Josué",
+      "testamento": "antiguo",
+      "capitulos": 24,
+      "archivo": "books/josue.json"
+    },
+    {
+      "id": "jueces",
+      "nombre": "Jueces",
+      "testamento": "antiguo",
+      "capitulos": 21,
+      "archivo": "books/jueces.json"
+    },
+    {
+      "id": "rut",
+      "nombre": "Rut",
+      "testamento": "antiguo",
+      "capitulos": 4,
+      "archivo": "books/rut.json"
+    },
+    {
+      "id": "1-samuel",
+      "nombre": "1 Samuel",
+      "testamento": "antiguo",
+      "capitulos": 31,
+      "archivo": "books/1-samuel.json"
+    },
+    {
+      "id": "2-samuel",
+      "nombre": "2 Samuel",
+      "testamento": "antiguo",
+      "capitulos": 24,
+      "archivo": "books/2-samuel.json"
+    },
+    {
+      "id": "1-reyes",
+      "nombre": "1 Reyes",
+      "testamento": "antiguo",
+      "capitulos": 22,
+      "archivo": "books/1-reyes.json"
+    },
+    {
+      "id": "2-reyes",
+      "nombre": "2 Reyes",
+      "testamento": "antiguo",
+      "capitulos": 25,
+      "archivo": "books/2-reyes.json"
+    },
+    {
+      "id": "1-cronicas",
+      "nombre": "1 Crónicas",
+      "testamento": "antiguo",
+      "capitulos": 29,
+      "archivo": "books/1-cronicas.json"
+    },
+    {
+      "id": "2-cronicas",
+      "nombre": "2 Crónicas",
+      "testamento": "antiguo",
+      "capitulos": 36,
+      "archivo": "books/2-cronicas.json"
+    },
+    {
+      "id": "esdras",
+      "nombre": "Esdras",
+      "testamento": "antiguo",
+      "capitulos": 10,
+      "archivo": "books/esdras.json"
+    },
+    {
+      "id": "nehemias",
+      "nombre": "Nehemías",
+      "testamento": "antiguo",
+      "capitulos": 13,
+      "archivo": "books/nehemias.json"
+    },
+    {
+      "id": "ester",
+      "nombre": "Ester",
+      "testamento": "antiguo",
+      "capitulos": 10,
+      "archivo": "books/ester.json"
+    },
+    {
+      "id": "job",
+      "nombre": "Job",
+      "testamento": "antiguo",
+      "capitulos": 42,
+      "archivo": "books/job.json"
+    },
+    {
+      "id": "salmos",
+      "nombre": "Salmos",
+      "testamento": "antiguo",
+      "capitulos": 150,
+      "archivo": "books/salmos.json"
+    },
+    {
+      "id": "proverbios",
+      "nombre": "Proverbios",
+      "testamento": "antiguo",
+      "capitulos": 31,
+      "archivo": "books/proverbios.json"
+    },
+    {
+      "id": "eclesiastes",
+      "nombre": "Eclesiastés",
+      "testamento": "antiguo",
+      "capitulos": 12,
+      "archivo": "books/eclesiastes.json"
+    },
+    {
+      "id": "cantares",
+      "nombre": "Cantar de los Cantares",
+      "testamento": "antiguo",
+      "capitulos": 8,
+      "archivo": "books/cantares.json"
+    },
+    {
+      "id": "isaias",
+      "nombre": "Isaías",
+      "testamento": "antiguo",
+      "capitulos": 66,
+      "archivo": "books/isaias.json"
+    },
+    {
+      "id": "jeremias",
+      "nombre": "Jeremías",
+      "testamento": "antiguo",
+      "capitulos": 52,
+      "archivo": "books/jeremias.json"
+    },
+    {
+      "id": "lamentaciones",
+      "nombre": "Lamentaciones",
+      "testamento": "antiguo",
+      "capitulos": 5,
+      "archivo": "books/lamentaciones.json"
+    },
+    {
+      "id": "ezequiel",
+      "nombre": "Ezequiel",
+      "testamento": "antiguo",
+      "capitulos": 48,
+      "archivo": "books/ezequiel.json"
+    },
+    {
+      "id": "daniel",
+      "nombre": "Daniel",
+      "testamento": "antiguo",
+      "capitulos": 12,
+      "archivo": "books/daniel.json"
+    },
+    {
+      "id": "oseas",
+      "nombre": "Oseas",
+      "testamento": "antiguo",
+      "capitulos": 14,
+      "archivo": "books/oseas.json"
+    },
+    {
+      "id": "joel",
+      "nombre": "Joel",
+      "testamento": "antiguo",
+      "capitulos": 3,
+      "archivo": "books/joel.json"
+    },
+    {
+      "id": "amos",
+      "nombre": "Amós",
+      "testamento": "antiguo",
+      "capitulos": 9,
+      "archivo": "books/amos.json"
+    },
+    {
+      "id": "abdias",
+      "nombre": "Abdías",
+      "testamento": "antiguo",
+      "capitulos": 1,
+      "archivo": "books/abdias.json"
+    },
+    {
+      "id": "jonas",
+      "nombre": "Jonás",
+      "testamento": "antiguo",
+      "capitulos": 4,
+      "archivo": "books/jonas.json"
+    },
+    {
+      "id": "miqueas",
+      "nombre": "Miqueas",
+      "testamento": "antiguo",
+      "capitulos": 7,
+      "archivo": "books/miqueas.json"
+    },
+    {
+      "id": "nahum",
+      "nombre": "Nahúm",
+      "testamento": "antiguo",
+      "capitulos": 3,
+      "archivo": "books/nahum.json"
+    },
+    {
+      "id": "habacuc",
+      "nombre": "Habacuc",
+      "testamento": "antiguo",
+      "capitulos": 3,
+      "archivo": "books/habacuc.json"
+    },
+    {
+      "id": "sofonias",
+      "nombre": "Sofonías",
+      "testamento": "antiguo",
+      "capitulos": 3,
+      "archivo": "books/sofonias.json"
+    },
+    {
+      "id": "hageo",
+      "nombre": "Hageo",
+      "testamento": "antiguo",
+      "capitulos": 2,
+      "archivo": "books/hageo.json"
+    },
+    {
+      "id": "zacarias",
+      "nombre": "Zacarías",
+      "testamento": "antiguo",
+      "capitulos": 14,
+      "archivo": "books/zacarias.json"
+    },
+    {
+      "id": "malaquias",
+      "nombre": "Malaquías",
+      "testamento": "antiguo",
+      "capitulos": 4,
+      "archivo": "books/malaquias.json"
+    },
+    {
+      "id": "mateo",
+      "nombre": "Mateo",
+      "testamento": "nuevo",
+      "capitulos": 28,
+      "archivo": "books/mateo.json"
+    },
+    {
+      "id": "marcos",
+      "nombre": "Marcos",
+      "testamento": "nuevo",
+      "capitulos": 16,
+      "archivo": "books/marcos.json"
+    },
+    {
+      "id": "lucas",
+      "nombre": "Lucas",
+      "testamento": "nuevo",
+      "capitulos": 24,
+      "archivo": "books/lucas.json"
+    },
+    {
+      "id": "juan",
+      "nombre": "Juan",
+      "testamento": "nuevo",
+      "capitulos": 21,
+      "archivo": "books/juan.json"
+    },
+    {
+      "id": "hechos",
+      "nombre": "Hechos",
+      "testamento": "nuevo",
+      "capitulos": 28,
+      "archivo": "books/hechos.json"
+    },
+    {
+      "id": "romanos",
+      "nombre": "Romanos",
+      "testamento": "nuevo",
+      "capitulos": 16,
+      "archivo": "books/romanos.json"
+    },
+    {
+      "id": "1-corintios",
+      "nombre": "1 Corintios",
+      "testamento": "nuevo",
+      "capitulos": 16,
+      "archivo": "books/1-corintios.json"
+    },
+    {
+      "id": "2-corintios",
+      "nombre": "2 Corintios",
+      "testamento": "nuevo",
+      "capitulos": 13,
+      "archivo": "books/2-corintios.json"
+    },
+    {
+      "id": "galatas",
+      "nombre": "Gálatas",
+      "testamento": "nuevo",
+      "capitulos": 6,
+      "archivo": "books/galatas.json"
+    },
+    {
+      "id": "efesios",
+      "nombre": "Efesios",
+      "testamento": "nuevo",
+      "capitulos": 6,
+      "archivo": "books/efesios.json"
+    },
+    {
+      "id": "filipenses",
+      "nombre": "Filipenses",
+      "testamento": "nuevo",
+      "capitulos": 4,
+      "archivo": "books/filipenses.json"
+    },
+    {
+      "id": "colosenses",
+      "nombre": "Colosenses",
+      "testamento": "nuevo",
+      "capitulos": 4,
+      "archivo": "books/colosenses.json"
+    },
+    {
+      "id": "1-tesalonicenses",
+      "nombre": "1 Tesalonicenses",
+      "testamento": "nuevo",
+      "capitulos": 5,
+      "archivo": "books/1-tesalonicenses.json"
+    },
+    {
+      "id": "2-tesalonicenses",
+      "nombre": "2 Tesalonicenses",
+      "testamento": "nuevo",
+      "capitulos": 3,
+      "archivo": "books/2-tesalonicenses.json"
+    },
+    {
+      "id": "1-timoteo",
+      "nombre": "1 Timoteo",
+      "testamento": "nuevo",
+      "capitulos": 6,
+      "archivo": "books/1-timoteo.json"
+    },
+    {
+      "id": "2-timoteo",
+      "nombre": "2 Timoteo",
+      "testamento": "nuevo",
+      "capitulos": 4,
+      "archivo": "books/2-timoteo.json"
+    },
+    {
+      "id": "tito",
+      "nombre": "Tito",
+      "testamento": "nuevo",
+      "capitulos": 3,
+      "archivo": "books/tito.json"
+    },
+    {
+      "id": "filemon",
+      "nombre": "Filemón",
+      "testamento": "nuevo",
+      "capitulos": 1,
+      "archivo": "books/filemon.json"
+    },
+    {
+      "id": "hebreos",
+      "nombre": "Hebreos",
+      "testamento": "nuevo",
+      "capitulos": 13,
+      "archivo": "books/hebreos.json"
+    },
+    {
+      "id": "santiago",
+      "nombre": "Santiago",
+      "testamento": "nuevo",
+      "capitulos": 5,
+      "archivo": "books/santiago.json"
+    },
+    {
+      "id": "1-pedro",
+      "nombre": "1 Pedro",
+      "testamento": "nuevo",
+      "capitulos": 5,
+      "archivo": "books/1-pedro.json"
+    },
+    {
+      "id": "2-pedro",
+      "nombre": "2 Pedro",
+      "testamento": "nuevo",
+      "capitulos": 3,
+      "archivo": "books/2-pedro.json"
+    },
+    {
+      "id": "1-juan",
+      "nombre": "1 Juan",
+      "testamento": "nuevo",
+      "capitulos": 5,
+      "archivo": "books/1-juan.json"
+    },
+    {
+      "id": "2-juan",
+      "nombre": "2 Juan",
+      "testamento": "nuevo",
+      "capitulos": 1,
+      "archivo": "books/2-juan.json"
+    },
+    {
+      "id": "3-juan",
+      "nombre": "3 Juan",
+      "testamento": "nuevo",
+      "capitulos": 1,
+      "archivo": "books/3-juan.json"
+    },
+    {
+      "id": "judas",
+      "nombre": "Judas",
+      "testamento": "nuevo",
+      "capitulos": 1,
+      "archivo": "books/judas.json"
+    },
+    {
+      "id": "apocalipsis",
+      "nombre": "Apocalipsis",
+      "testamento": "nuevo",
+      "capitulos": 22,
+      "archivo": "books/apocalipsis.json"
+    }
+  ]
+}

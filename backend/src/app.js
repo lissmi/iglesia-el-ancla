@@ -1,3 +1,4 @@
+
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -142,6 +143,9 @@ import basicSupplyRoutes from "./routes/basicSupplyRoutes.js";
 import belongingRoutes from "./routes/belongingRoutes.js";
 
 import resourceContentRoutes from "./routes/resourceContentRoutes.js";
+
+// Lector bíblico local basado en JSON, sin API externa ni MongoDB.
+import bibleReaderRoutes from "./routes/bibleReaderRoutes.js";
 
 /* ========================================================= */
 /* CREACIÓN DE LA APLICACIÓN */
@@ -590,6 +594,9 @@ app.use("/api/basic-supplies", basicSupplyRoutes);
 app.use("/api/belongings", belongingRoutes);
 
 app.use("/api/resource-content", resourceContentRoutes);
+
+// Exponemos lectura protegida de capítulos bíblicos para cuentas autenticadas.
+app.use("/api/bible-reader", bibleReaderRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

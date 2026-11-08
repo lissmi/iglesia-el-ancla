@@ -1,0 +1,3309 @@
+{
+  "version": "rvr1960",
+  "libro": "1-samuel",
+  "nombre": "1 Samuel",
+  "capitulos": {
+    "1": [
+      {
+        "numero": 1,
+        "texto": "Hubo un varón de Ramataim de Zofim, del monte de Efraín, que se llamaba Elcana hijo de Jeroham, hijo de Eliú, hijo de Tohu, hijo de Zuf, efrateo."
+      },
+      {
+        "numero": 2,
+        "texto": "Y tenía él dos mujeres; el nombre de una era Ana, y el de la otra, Penina. Y Penina tenía hijos, mas Ana no los tenía."
+      },
+      {
+        "numero": 3,
+        "texto": "Y todos los años aquel varón subía de su ciudad para adorar y para ofrecer sacrificios a Jehová de los ejércitos en Silo, donde estaban dos hijos de Elí, Ofni y Finees, sacerdotes de Jehová."
+      },
+      {
+        "numero": 4,
+        "texto": "Y cuando llegaba el día en que Elcana ofrecía sacrificio, daba a Penina su mujer, a todos sus hijos y a todas sus hijas, a cada uno su parte."
+      },
+      {
+        "numero": 5,
+        "texto": "Pero a Ana daba una parte escogida; porque amaba a Ana, aunque Jehová no le había concedido tener hijos."
+      },
+      {
+        "numero": 6,
+        "texto": "Y su rival la irritaba, enojándola y entristeciéndola, porque Jehová no le había concedido tener hijos."
+      },
+      {
+        "numero": 7,
+        "texto": "Así hacía cada año; cuando subía a la casa de Jehová, la irritaba así; por lo cual Ana lloraba, y no comía."
+      },
+      {
+        "numero": 8,
+        "texto": "Y Elcana su marido le dijo: Ana, ¿por qué lloras? ¿por qué no comes? ¿y por qué está afligido tu corazón? ¿No te soy yo mejor que diez hijos?"
+      },
+      {
+        "numero": 9,
+        "texto": "Y se levantó Ana después que hubo comido y bebido en Silo; y mientras el sacerdote Elí estaba sentado en una silla junto a un pilar del templo de Jehová,"
+      },
+      {
+        "numero": 10,
+        "texto": "ella con amargura de alma oró a Jehová, y lloró abundantemente."
+      },
+      {
+        "numero": 11,
+        "texto": "E hizo voto, diciendo: Jehová de los ejércitos, si te dignares mirar a la aflicción de tu sierva, y te acordares de mí, y no te olvidares de tu sierva, sino que dieres a tu sierva un hijo varón, yo lo dedicaré a Jehová todos los días de su vida, y no pasará navaja sobre su cabeza."
+      },
+      {
+        "numero": 12,
+        "texto": "Mientras ella oraba largamente delante de Jehová, Elí estaba observando la boca de ella."
+      },
+      {
+        "numero": 13,
+        "texto": "Pero Ana hablaba en su corazón, y solamente se movían sus labios, y su voz no se oía; y Elí la tuvo por ebria."
+      },
+      {
+        "numero": 14,
+        "texto": "Entonces le dijo Elí: ¿Hasta cuándo estarás ebria? Digiere tu vino."
+      },
+      {
+        "numero": 15,
+        "texto": "Y Ana le respondió diciendo: No, señor mío; yo soy una mujer atribulada de espíritu; no he bebido vino ni sidra, sino que he derramado mi alma delante de Jehová."
+      },
+      {
+        "numero": 16,
+        "texto": "No tengas a tu sierva por una mujer impía; porque por la magnitud de mis congojas y de mi aflicción he hablado hasta ahora."
+      },
+      {
+        "numero": 17,
+        "texto": "Elí respondió y dijo: Ve en paz, y el Dios de Israel te otorgue la petición que le has hecho."
+      },
+      {
+        "numero": 18,
+        "texto": "Y ella dijo: Halle tu sierva gracia delante de tus ojos. Y se fue la mujer por su camino, y comió, y no estuvo más triste."
+      },
+      {
+        "numero": 19,
+        "texto": "Y levantándose de mañana, adoraron delante de Jehová, y volvieron y fueron a su casa en Ramá. Y Elcana se llegó a Ana su mujer, y Jehová se acordó de ella."
+      },
+      {
+        "numero": 20,
+        "texto": "Aconteció que al cumplirse el tiempo, después de haber concebido Ana, dio a luz un hijo, y le puso por nombre Samuel, diciendo: Por cuanto lo pedí a Jehová."
+      },
+      {
+        "numero": 21,
+        "texto": "Después subió el varón Elcana con toda su familia, para ofrecer a Jehová el sacrificio acostumbrado y su voto."
+      },
+      {
+        "numero": 22,
+        "texto": "Pero Ana no subió, sino dijo a su marido: Yo no subiré hasta que el niño sea destetado, para que lo lleve y sea presentado delante de Jehová, y se quede allá para siempre."
+      },
+      {
+        "numero": 23,
+        "texto": "Y Elcana su marido le respondió: Haz lo que bien te parezca; quédate hasta que lo destetes; solamente que cumpla Jehová su palabra. Y se quedó la mujer, y crió a su hijo hasta que lo destetó."
+      },
+      {
+        "numero": 24,
+        "texto": "Después que lo hubo destetado, lo llevó consigo, con tres becerros, un efa  de harina, y una vasija de vino, y lo trajo a la casa de Jehová en Silo; y el niño era pequeño."
+      },
+      {
+        "numero": 25,
+        "texto": "Y matando el becerro, trajeron el niño a Elí."
+      },
+      {
+        "numero": 26,
+        "texto": "Y ella dijo: ¡Oh, señor mío! Vive tu alma, señor mío, yo soy aquella mujer que estuvo aquí junto a ti orando a Jehová."
+      },
+      {
+        "numero": 27,
+        "texto": "Por este niño oraba, y Jehová me dio lo que le pedí."
+      },
+      {
+        "numero": 28,
+        "texto": "Yo, pues, lo dedico también a Jehová; todos los días que viva, será de Jehová. Y adoró allí a Jehová."
+      }
+    ],
+    "2": [
+      {
+        "numero": 1,
+        "texto": "Y Ana oró y dijo: Mi corazón se regocija en Jehová, Mi poder se exalta en Jehová; Mi boca se ensanchó sobre mis enemigos, Por cuanto me alegré en tu salvación."
+      },
+      {
+        "numero": 2,
+        "texto": "No hay santo como Jehová; Porque no hay ninguno fuera de ti, Y no hay refugio como el Dios nuestro."
+      },
+      {
+        "numero": 3,
+        "texto": "No multipliquéis palabras de grandeza y altanería; Cesen las palabras arrogantes de vuestra boca; Porque el Dios de todo saber es Jehová, Y a él toca el pesar las acciones."
+      },
+      {
+        "numero": 4,
+        "texto": "Los arcos de los fuertes fueron quebrados, Y los débiles se ciñeron de poder."
+      },
+      {
+        "numero": 5,
+        "texto": "Los saciados se alquilaron por pan, Y los hambrientos dejaron de tener hambre; Hasta la estéril ha dado a luz siete, Y la que tenía muchos hijos languidece."
+      },
+      {
+        "numero": 6,
+        "texto": "Jehová mata, y él da vida; El hace descender al Seol, y hace subir."
+      },
+      {
+        "numero": 7,
+        "texto": "Jehová empobrece, y él enriquece; Abate, y enaltece."
+      },
+      {
+        "numero": 8,
+        "texto": "El levanta del polvo al pobre, Y del muladar exalta al menesteroso, Para hacerle sentarse con príncipes y heredar un sitio de honor. Porque de Jehová son las columnas de la tierra, Y él afirmó sobre ellas el mundo."
+      },
+      {
+        "numero": 9,
+        "texto": "El guarda los pies de sus santos, Mas los impíos perecen en tinieblas; Porque nadie será fuerte por su propia fuerza."
+      },
+      {
+        "numero": 10,
+        "texto": "Delante de Jehová serán quebrantados sus adversarios, Y sobre ellos tronará desde los cielos; Jehová juzgará los confines de la tierra, Dará poder a su Rey, Y exaltará el poderío de su Ungido."
+      },
+      {
+        "numero": 11,
+        "texto": "Y Elcana se volvió a su casa en Ramá; y el niño ministraba a Jehová delante del sacerdote Elí."
+      },
+      {
+        "numero": 12,
+        "texto": "Los hijos de Elí eran hombres impíos, y no tenían conocimiento de Jehová."
+      },
+      {
+        "numero": 13,
+        "texto": "Y era costumbre de los sacerdotes con el pueblo, que cuando alguno ofrecía sacrificio, venía el criado del sacerdote mientras se cocía la carne, trayendo en su mano un garfio de tres dientes,"
+      },
+      {
+        "numero": 14,
+        "texto": "y lo metía en el perol, en la olla, en el caldero o en la marmita; y todo lo que sacaba el garfio, el sacerdote lo tomaba para sí. De esta manera hacían con todo israelita que venía a Silo."
+      },
+      {
+        "numero": 15,
+        "texto": "Asimismo, antes de quemar la grosura, venía el criado del sacerdote, y decía al que sacrificaba: Da carne que asar para el sacerdote; porque no tomará de ti carne cocida, sino cruda."
+      },
+      {
+        "numero": 16,
+        "texto": "Y si el hombre le respondía: Quemen la grosura primero, y después toma tanto como quieras; él respondía: No, sino dámela ahora mismo; de otra manera yo la tomaré por la fuerza."
+      },
+      {
+        "numero": 17,
+        "texto": "Era, pues, muy grande delante de Jehová el pecado de los jóvenes; porque los hombres menospreciaban las ofrendas de Jehová."
+      },
+      {
+        "numero": 18,
+        "texto": "Y el joven Samuel ministraba en la presencia de Jehová, vestido de un efod de lino."
+      },
+      {
+        "numero": 19,
+        "texto": "Y le hacía su madre una túnica pequeña y se la traía cada año, cuando subía con su marido para ofrecer el sacrificio acostumbrado."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Elí bendijo a Elcana y a su mujer, diciendo: Jehová te dé hijos de esta mujer en lugar del que pidió a Jehová. Y se volvieron a su casa."
+      },
+      {
+        "numero": 21,
+        "texto": "Y visitó Jehová a Ana, y ella concibió, y dio a luz tres hijos y dos hijas. Y el joven Samuel crecía delante de Jehová."
+      },
+      {
+        "numero": 22,
+        "texto": "Pero Elí era muy viejo; y oía de todo lo que sus hijos hacían con todo Israel, y cómo dormían con las mujeres que velaban a la puerta del tabernáculo de reunión."
+      },
+      {
+        "numero": 23,
+        "texto": "Y les dijo: ¿Por qué hacéis cosas semejantes? Porque yo oigo de todo este pueblo vuestros malos procederes."
+      },
+      {
+        "numero": 24,
+        "texto": "No, hijos míos, porque no es buena fama la que yo oigo; pues hacéis pecar al pueblo de Jehová."
+      },
+      {
+        "numero": 25,
+        "texto": "Si pecare el hombre contra el hombre, los jueces le juzgarán; mas si alguno pecare contra Jehová, ¿quién rogará por él? Pero ellos no oyeron la voz de su padre, porque Jehová había resuelto hacerlos morir."
+      },
+      {
+        "numero": 26,
+        "texto": "Y el joven Samuel iba creciendo, y era acepto delante de Dios y delante de los hombres."
+      },
+      {
+        "numero": 27,
+        "texto": "Y vino un varón de Dios a Elí, y le dijo: Así ha dicho Jehová: ¿No me manifesté yo claramente a la casa de tu padre, cuando estaban en Egipto en casa de Faraón?"
+      },
+      {
+        "numero": 28,
+        "texto": "Y yo le escogí por mi sacerdote entre todas las tribus de Israel, para que ofreciese sobre mi altar, y quemase incienso, y llevase efod delante de mí; y di a la casa de tu padre todas las ofrendas de los hijos de Israel."
+      },
+      {
+        "numero": 29,
+        "texto": "¿Por qué habéis hollado mis sacrificios y mis ofrendas, que yo mandé ofrecer en el tabernáculo; y has honrado a tus hijos más que a mí, engordándoos de lo principal de todas las ofrendas de mi pueblo Israel?"
+      },
+      {
+        "numero": 30,
+        "texto": "Por tanto, Jehová el Dios de Israel dice: Yo había dicho que tu casa y la casa de tu padre andarían delante de mí perpetuamente; mas ahora ha dicho Jehová: Nunca yo tal haga, porque yo honraré a los que me honran, y los que me desprecian serán tenidos en poco."
+      },
+      {
+        "numero": 31,
+        "texto": "He aquí, vienen días en que cortaré tu brazo y el brazo de la casa de tu padre, de modo que no haya anciano en tu casa."
+      },
+      {
+        "numero": 32,
+        "texto": "Verás tu casa humillada, mientras Dios colma de bienes a Israel; y en ningún tiempo habrá anciano en tu casa."
+      },
+      {
+        "numero": 33,
+        "texto": "El varón de los tuyos que yo no corte de mi altar, será para consumir tus ojos y llenar tu alma de dolor; y todos los nacidos en tu casa morirán en la edad viril."
+      },
+      {
+        "numero": 34,
+        "texto": "Y te será por señal esto que acontecerá a tus dos hijos, Ofni y Finees: ambos morirán en un día."
+      },
+      {
+        "numero": 35,
+        "texto": "Y yo me suscitaré un sacerdote fiel, que haga conforme a mi corazón y a mi alma; y yo le edificaré casa firme, y andará delante de mi ungido todos los días."
+      },
+      {
+        "numero": 36,
+        "texto": "Y el que hubiere quedado en tu casa vendrá a postrarse delante de él por una moneda de plata y un bocado de pan, diciéndole: Te ruego que me agregues a alguno de los ministerios, para que pueda comer un bocado de pan."
+      }
+    ],
+    "3": [
+      {
+        "numero": 1,
+        "texto": "El joven Samuel ministraba a Jehová en presencia de Elí; y la palabra de Jehová escaseaba en aquellos días; no había visión con frecuencia."
+      },
+      {
+        "numero": 2,
+        "texto": "Y aconteció un día, que estando Elí acostado en su aposento, cuando sus ojos comenzaban a oscurecerse de modo que no podía ver,"
+      },
+      {
+        "numero": 3,
+        "texto": "Samuel estaba durmiendo en el templo de Jehová, donde estaba el arca de Dios; y antes que la lámpara de Dios fuese apagada,"
+      },
+      {
+        "numero": 4,
+        "texto": "Jehová llamó a Samuel; y él respondió: Heme aquí."
+      },
+      {
+        "numero": 5,
+        "texto": "Y corriendo luego a Elí, dijo: Heme aquí, ¿Para qué me llamaste? Y Elí le dijo: Yo no he llamado; vuelve y acuéstate. Y él se volvió y se acostó."
+      },
+      {
+        "numero": 6,
+        "texto": "Y Jehová volvió a llamar otra vez a Samuel. Y levantándose Samuel, vino a Elí y dijo: Heme aquí; ¿para qué me has llamado? Y él dijo: Hijo mío, yo no he llamado; vuelve y acuéstate."
+      },
+      {
+        "numero": 7,
+        "texto": "Y Samuel no había conocido aún a Jehová, ni la palabra de Jehová le había sido revelada."
+      },
+      {
+        "numero": 8,
+        "texto": "Jehová, pues, llamó la tercera vez a Samuel. Y él se levantó y vino a Elí, y dijo: Heme aquí; ¿para qué me has llamado? Entonces entendió Elí que Jehová llamaba al joven."
+      },
+      {
+        "numero": 9,
+        "texto": "Y dijo Elí a Samuel: Ve y acuéstate; y si te llamare, dirás: Habla, Jehová, porque tu siervo oye. Así se fue Samuel, y se acostó en su lugar."
+      },
+      {
+        "numero": 10,
+        "texto": "Y vino Jehová y se paró, y llamó como las otras veces: ¡Samuel, Samuel! Entonces Samuel dijo: Habla, porque tu siervo oye."
+      },
+      {
+        "numero": 11,
+        "texto": "Y Jehová dijo a Samuel: He aquí haré yo una cosa en Israel, que a quien la oyere, le retiñirán ambos oídos."
+      },
+      {
+        "numero": 12,
+        "texto": "Aquel día yo cumpliré contra Elí todas las cosas que he dicho sobre su casa, desde el principio hasta el fin."
+      },
+      {
+        "numero": 13,
+        "texto": "Y le mostraré que yo juzgaré su casa para siempre, por la iniquidad que él sabe; porque sus hijos han blasfemado a Dios, y él no los ha estorbado."
+      },
+      {
+        "numero": 14,
+        "texto": "Por tanto, yo he jurado a la casa de Elí que la iniquidad de la casa de Elí no será expiada jamás, ni con sacrificios ni con ofrendas."
+      },
+      {
+        "numero": 15,
+        "texto": "Y Samuel estuvo acostado hasta la mañana, y abrió las puertas de la casa de Jehová. Y Samuel temía descubrir la visión a Elí."
+      },
+      {
+        "numero": 16,
+        "texto": "Llamando, pues, Elí a Samuel, le dijo: Hijo mío, Samuel. Y él respondió: Heme aquí."
+      },
+      {
+        "numero": 17,
+        "texto": "Y Elí dijo: ¿Qué es la palabra que te habló? Te ruego que no me la encubras; así te haga Dios y aun te añada, si me encubrieres palabra de todo lo que habló contigo."
+      },
+      {
+        "numero": 18,
+        "texto": "Y Samuel se lo manifestó todo, sin encubrirle nada. Entonces él dijo: Jehová es; haga lo que bien le pareciere."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Samuel creció, y Jehová estaba con él, y no dejó caer a tierra ninguna de sus palabras."
+      },
+      {
+        "numero": 20,
+        "texto": "Y todo Israel, desde Dan hasta Beerseba, conoció que Samuel era fiel profeta de Jehová."
+      },
+      {
+        "numero": 21,
+        "texto": "Y Jehová volvió a aparecer en Silo; porque Jehová se manifestó a Samuel en Silo por la palabra de Jehová."
+      }
+    ],
+    "4": [
+      {
+        "numero": 1,
+        "texto": "Y Samuel habló a todo Israel. Por aquel tiempo salió Israel a encontrar en batalla a los filisteos, y acampó junto a Eben- ezer, y los filisteos acamparon en Afec."
+      },
+      {
+        "numero": 2,
+        "texto": "Y los filisteos presentaron la batalla a Israel; y trabándose el combate, Israel fue vencido delante de los filisteos, los cuales hirieron en la batalla en el campo como a cuatro mil hombres."
+      },
+      {
+        "numero": 3,
+        "texto": "Cuando volvió el pueblo al campamento, los ancianos de Israel dijeron: ¿Por qué nos ha herido hoy Jehová delante de los filisteos? Traigamos a nosotros de Silo el arca del pacto de Jehová, para que viniendo entre nosotros nos salve de la mano de nuestros enemigos."
+      },
+      {
+        "numero": 4,
+        "texto": "Y envió el pueblo a Silo, y trajeron de allá el arca del pacto de Jehová de los ejércitos, que moraba entre los querubines; y los dos hijos de Elí, Ofni y Finees, estaban allí con el arca del pacto de Dios."
+      },
+      {
+        "numero": 5,
+        "texto": "Aconteció que cuando el arca del pacto de Jehová llegó al campamento, todo Israel gritó con tan gran júbilo que la tierra tembló."
+      },
+      {
+        "numero": 6,
+        "texto": "Cuando los filisteos oyeron la voz de júbilo, dijeron: ¿Qué voz de gran júbilo es esta en el campamento de los hebreos? Y supieron que el arca de Jehová había sido traída al campamento."
+      },
+      {
+        "numero": 7,
+        "texto": "Y los filisteos tuvieron miedo, porque decían: Ha venido Dios al campamento. Y dijeron: ¡Ay de nosotros! pues antes de ahora no fue así."
+      },
+      {
+        "numero": 8,
+        "texto": "¡Ay de nosotros! ¿Quién nos librará de la mano de estos dioses poderosos? Estos son los dioses que hirieron a Egipto con toda plaga en el desierto."
+      },
+      {
+        "numero": 9,
+        "texto": "Esforzaos, oh filisteos, y sed hombres, para que no sirváis a los hebreos, como ellos os han servido a vosotros; sed hombres, y pelead."
+      },
+      {
+        "numero": 10,
+        "texto": "Pelearon, pues, los filisteos, e Israel fue vencido, y huyeron cada cual a sus tiendas; y fue hecha muy grande mortandad, pues cayeron de Israel treinta mil hombres de a pie."
+      },
+      {
+        "numero": 11,
+        "texto": "Y el arca de Dios fue tomada, y muertos los dos hijos de Elí, Ofni y Finees."
+      },
+      {
+        "numero": 12,
+        "texto": "Y corriendo de la batalla un hombre de Benjamín, llegó el mismo día a Silo, rotos sus vestidos y tierra sobre su cabeza;"
+      },
+      {
+        "numero": 13,
+        "texto": "y cuando llegó, he aquí que Elí estaba sentado en una silla vigilando junto al camino, porque su corazón estaba temblando por causa del arca de Dios. Llegado, pues, aquel hombre a la ciudad, y dadas las nuevas, toda la ciudad gritó."
+      },
+      {
+        "numero": 14,
+        "texto": "Cuando Elí oyó el estruendo de la gritería, dijo: ¿Qué estruendo de alboroto es este? Y aquel hombre vino aprisa y dio las nuevas a Elí."
+      },
+      {
+        "numero": 15,
+        "texto": "Era ya Elí de edad de noventa y ocho años, y sus ojos se habían oscurecido, de modo que no podía ver."
+      },
+      {
+        "numero": 16,
+        "texto": "Dijo, pues, aquel hombre a Elí: Yo vengo de la batalla, he escapado hoy del combate. Y Elí dijo: ¿Qué ha acontecido, hijo mío?"
+      },
+      {
+        "numero": 17,
+        "texto": "Y el mensajero respondió diciendo: Israel huyó delante de los filisteos, y también fue hecha gran mortandad en el pueblo; y también tus dos hijos, Ofni y Finees, fueron muertos, y el arca de Dios ha sido tomada."
+      },
+      {
+        "numero": 18,
+        "texto": "Y aconteció que cuando él hizo mención del arca de Dios, Elí cayó hacia atrás de la silla al lado de la puerta, y se desnucó y murió; porque era hombre viejo y pesado. Y había juzgado a Israel cuarenta años."
+      },
+      {
+        "numero": 19,
+        "texto": "Y su nuera la mujer de Finees, que estaba encinta, cercana al alumbramiento, oyendo el rumor que el arca de Dios había sido tomada, y muertos su suegro y su marido, se inclinó y dio a luz; porque le sobrevinieron sus dolores de repente."
+      },
+      {
+        "numero": 20,
+        "texto": "Y al tiempo que moría, le decían las que estaban junto a ella: No tengas temor, porque has dado a luz un hijo. Mas ella no respondió, ni se dio por entendida."
+      },
+      {
+        "numero": 21,
+        "texto": "Y llamó al niño Icabod, diciendo: ¡Traspasada es la gloria de Israel! por haber sido tomada el arca de Dios, y por la muerte de su suegro y de su marido."
+      },
+      {
+        "numero": 22,
+        "texto": "Dijo, pues: Traspasada es la gloria de Israel; porque ha sido tomada el arca de Dios."
+      }
+    ],
+    "5": [
+      {
+        "numero": 1,
+        "texto": "Cuando los filisteos capturaron el arca de Dios, la llevaron desde Eben-ezer a Asdod."
+      },
+      {
+        "numero": 2,
+        "texto": "Y tomaron los filisteos el arca de Dios, y la metieron en la casa de Dagón, y la pusieron junto a Dagón."
+      },
+      {
+        "numero": 3,
+        "texto": "Y cuando al siguiente día los de Asdod se levantaron de mañana, he aquí Dagón postrado en tierra delante del arca de Jehová; y tomaron a Dagón y lo volvieron a su lugar."
+      },
+      {
+        "numero": 4,
+        "texto": "Y volviéndose a levantar de mañana el siguiente día, he aquí que Dagón había caído postrado en tierra delante del arca de Jehová; y la cabeza de Dagón y las dos palmas de sus manos estaban cortadas sobre el umbral, habiéndole quedado a Dagón el tronco solamente."
+      },
+      {
+        "numero": 5,
+        "texto": "Por esta causa los sacerdotes de Dagón y todos los que entran en el templo de Dagón no pisan el umbral de Dagón en Asdod, hasta hoy."
+      },
+      {
+        "numero": 6,
+        "texto": "Y se agravó la mano de Jehová sobre los de Asdod, y los destruyó y los hirió con tumores en Asdod y en todo su territorio."
+      },
+      {
+        "numero": 7,
+        "texto": "Y viendo esto los de Asdod, dijeron: No quede con nosotros el arca del Dios de Israel, porque su mano es dura sobre nosotros y sobre nuestro dios Dagón."
+      },
+      {
+        "numero": 8,
+        "texto": "Convocaron, pues, a todos los príncipes de los filisteos, y les dijeron: ¿Qué haremos del arca del Dios de Israel? Y ellos respondieron: Pásese el arca del Dios de Israel a Gat. Y pasaron allá el arca del Dios de Israel."
+      },
+      {
+        "numero": 9,
+        "texto": "Y aconteció que cuando la habían pasado, la mano de Jehová estuvo contra la ciudad con gran quebrantamiento, y afligió a los hombres de aquella ciudad desde el chico hasta el grande, y se llenaron de tumores."
+      },
+      {
+        "numero": 10,
+        "texto": "Entonces enviaron el arca de Dios a Ecrón. Y cuando el arca de Dios vino a Ecrón, los ecronitas dieron voces, diciendo: Han pasado a nosotros el arca del Dios de Israel para matarnos a nosotros y a nuestro pueblo."
+      },
+      {
+        "numero": 11,
+        "texto": "Y enviaron y reunieron a todos los príncipes de los filisteos, diciendo: Enviad el arca del Dios de Israel, y vuélvase a su lugar, y no nos mate a nosotros ni a nuestro pueblo; porque había consternación de muerte en toda la ciudad, y la mano de Dios se había agravado allí."
+      },
+      {
+        "numero": 12,
+        "texto": "Y los que no morían, eran heridos de tumores; y el clamor de la ciudad subía al cielo."
+      }
+    ],
+    "6": [
+      {
+        "numero": 1,
+        "texto": "Estuvo el arca de Jehová en la tierra de los filisteos siete meses."
+      },
+      {
+        "numero": 2,
+        "texto": "Entonces los filisteos, llamando a los sacerdotes y adivinos, preguntaron: ¿Qué haremos del arca de Jehová? Hacednos saber de qué manera la hemos de volver a enviar a su lugar."
+      },
+      {
+        "numero": 3,
+        "texto": "Ellos dijeron: Si enviáis el arca del Dios de Israel, no la enviéis vacía, sino pagadle la expiación; entonces seréis sanos, y conoceréis por qué no se apartó de vosotros su mano."
+      },
+      {
+        "numero": 4,
+        "texto": "Y ellos dijeron: ¿Y qué será la expiación que le pagaremos? Ellos respondieron: Conforme al número de los príncipes de los filisteos, cinco tumores de oro, y cinco ratones de oro, porque una misma plaga ha afligido a todos vosotros y a vuestros príncipes."
+      },
+      {
+        "numero": 5,
+        "texto": "Haréis, pues, figuras de vuestros tumores, y de vuestros ratones que destruyen la tierra, y daréis gloria al Dios de Israel; quizá aliviará su mano de sobre vosotros y de sobre vuestros dioses, y de sobre vuestra tierra."
+      },
+      {
+        "numero": 6,
+        "texto": "¿Por qué endurecéis vuestro corazón, como los egipcios y Faraón endurecieron su corazón? Después que los había tratado así, ¿no los dejaron ir, y se fueron?"
+      },
+      {
+        "numero": 7,
+        "texto": "Haced, pues, ahora un carro nuevo, y tomad luego dos vacas que críen, a las cuales no haya sido puesto yugo, y uncid las vacas al carro, y haced volver sus becerros de detrás de ellas a casa."
+      },
+      {
+        "numero": 8,
+        "texto": "Tomaréis luego el arca de Jehová, y la pondréis sobre el carro, y las joyas de oro que le habéis de pagar en ofrenda por la culpa, las pondréis en una caja al lado de ella; y la dejaréis que se vaya."
+      },
+      {
+        "numero": 9,
+        "texto": "Y observaréis; si sube por el camino de su tierra a Bet-semes, él nos ha hecho este mal tan grande; y si no, sabremos que no es su mano la que nos ha herido, sino que esto ocurrió por accidente."
+      },
+      {
+        "numero": 10,
+        "texto": "Y aquellos hombres lo hicieron así; tomando dos vacas que criaban, las uncieron al carro, y encerraron en casa sus becerros."
+      },
+      {
+        "numero": 11,
+        "texto": "Luego pusieron el arca de Jehová sobre el carro, y la caja con los ratones de oro y las figuras de sus tumores."
+      },
+      {
+        "numero": 12,
+        "texto": "Y las vacas se encaminaron por el camino de Bet-semes, y seguían camino recto, andando y bramando, sin apartarse ni a derecha ni a izquierda; y los príncipes de los filisteos fueron tras ellas hasta el límite de Bet-semes."
+      },
+      {
+        "numero": 13,
+        "texto": "Y los de Bet-semes segaban el trigo en el valle; y alzando los ojos vieron el arca, y se regocijaron cuando la vieron."
+      },
+      {
+        "numero": 14,
+        "texto": "Y el carro vino al campo de Josué de Bet-semes, y paró allí donde había una gran piedra; y ellos cortaron la madera del carro, y ofrecieron las vacas en holocausto a Jehová."
+      },
+      {
+        "numero": 15,
+        "texto": "Y los levitas bajaron el arca de Jehová, y la caja que estaba junto a ella, en la cual estaban las joyas de oro, y las pusieron sobre aquella gran piedra; y los hombres de Bet-semes sacrificaron holocaustos y dedicaron sacrificios a Jehová en aquel día."
+      },
+      {
+        "numero": 16,
+        "texto": "Cuando vieron esto los cinco príncipes de los filisteos, volvieron a Ecrón el mismo día."
+      },
+      {
+        "numero": 17,
+        "texto": "Estos fueron los tumores de oro que pagaron los filisteos en expiación a Jehová: por Asdod uno, por Gaza uno, por Ascalón uno, por Gat uno, por Ecrón uno."
+      },
+      {
+        "numero": 18,
+        "texto": "Y los ratones de oro fueron conforme al número de todas las ciudades de los filisteos pertenecientes a los cinco príncipes, así las ciudades fortificadas como las aldeas sin muro. La gran piedra sobre la cual pusieron el arca de Jehová está en el campo de Josué de Bet-semes hasta hoy."
+      },
+      {
+        "numero": 19,
+        "texto": "Entonces Dios hizo morir a los hombres de Bet-semes, porque habían mirado dentro del arca de Jehová; hizo morir del pueblo a cincuenta mil setenta hombres. Y lloró el pueblo, porque Jehová lo había herido con tan gran mortandad."
+      },
+      {
+        "numero": 20,
+        "texto": "Y dijeron los de Bet-semes: ¿Quién podrá estar delante de Jehová el Dios santo? ¿A quién subirá desde nosotros?"
+      },
+      {
+        "numero": 21,
+        "texto": "Y enviaron mensajeros a los habitantes de Quiriat-jearim, diciendo: Los filisteos han devuelto el arca de Jehová; descended, pues, y llevadla a vosotros."
+      }
+    ],
+    "7": [
+      {
+        "numero": 1,
+        "texto": "Vinieron los de Quiriat-jearim y llevaron el arca de Jehová, y la pusieron en casa de Abinadab, situada en el collado; y santificaron a Eleazar su hijo para que guardase el arca de Jehová."
+      },
+      {
+        "numero": 2,
+        "texto": "Desde el día que llegó el arca a Quiriat-jearim pasaron muchos días, veinte años; y toda la casa de Israel lamentaba en pos de Jehová."
+      },
+      {
+        "numero": 3,
+        "texto": "Habló Samuel a toda la casa de Israel, diciendo: Si de todo vuestro corazón os volvéis a Jehová, quitad los dioses ajenos y a Astarot de entre vosotros, y preparad vuestro corazón a Jehová, y sólo a él servid, y os librará de la mano de los filisteos."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces los hijos de Israel quitaron a los baales y a Astarot, y sirvieron sólo a Jehová."
+      },
+      {
+        "numero": 5,
+        "texto": "Y Samuel dijo: Reunid a todo Israel en Mizpa, y yo oraré por vosotros a Jehová."
+      },
+      {
+        "numero": 6,
+        "texto": "Y se reunieron en Mizpa, y sacaron agua, y la derramaron delante de Jehová, y ayunaron aquel día, y dijeron allí: Contra Jehová hemos pecado. Y juzgó Samuel a los hijos de Israel en Mizpa."
+      },
+      {
+        "numero": 7,
+        "texto": "Cuando oyeron los filisteos que los hijos de Israel estaban reunidos en Mizpa, subieron los príncipes de los filisteos contra Israel; y al oír esto los hijos de Israel, tuvieron temor de los filisteos."
+      },
+      {
+        "numero": 8,
+        "texto": "Entonces dijeron los hijos de Israel a Samuel: No ceses de clamar por nosotros a Jehová nuestro Dios, para que nos guarde de la mano de los filisteos."
+      },
+      {
+        "numero": 9,
+        "texto": "Y Samuel tomó un cordero de leche y lo sacrificó entero en holocausto a Jehová; y clamó Samuel a Jehová por Israel, y Jehová le oyó."
+      },
+      {
+        "numero": 10,
+        "texto": "Y aconteció que mientras Samuel sacrificaba el holocausto, los filisteos llegaron para pelear con los hijos de Israel. Mas Jehová tronó aquel día con gran estruendo sobre los filisteos, y los atemorizó, y fueron vencidos delante de Israel."
+      },
+      {
+        "numero": 11,
+        "texto": "Y saliendo los hijos de Israel de Mizpa, siguieron a los filisteos, hiriéndolos hasta abajo de Bet-car."
+      },
+      {
+        "numero": 12,
+        "texto": "Tomó luego Samuel una piedra y la puso entre Mizpa y Sen, y le puso por nombre Eben-ezer, diciendo: Hasta aquí nos ayudó Jehová."
+      },
+      {
+        "numero": 13,
+        "texto": "Así fueron sometidos los filisteos, y no volvieron más a entrar en el territorio de Israel; y la mano de Jehová estuvo contra los filisteos todos los días de Samuel."
+      },
+      {
+        "numero": 14,
+        "texto": "Y fueron restituidas a los hijos de Israel las ciudades que los filisteos habían tomado a los israelitas, desde Ecrón hasta Gat; e Israel libró su territorio de mano de los filisteos. Y hubo paz entre Israel y el amorreo."
+      },
+      {
+        "numero": 15,
+        "texto": "Y juzgó Samuel a Israel todo el tiempo que vivió."
+      },
+      {
+        "numero": 16,
+        "texto": "Y todos los años iba y daba vuelta a Bet-el, a Gilgal y a Mizpa, y juzgaba a Israel en todos estos lugares."
+      },
+      {
+        "numero": 17,
+        "texto": "Después volvía a Ramá, porque allí estaba su casa, y allí juzgaba a Israel; y edificó allí un altar a Jehová."
+      }
+    ],
+    "8": [
+      {
+        "numero": 1,
+        "texto": "Aconteció que habiendo Samuel envejecido, puso a sus hijos por jueces sobre Israel."
+      },
+      {
+        "numero": 2,
+        "texto": "Y el nombre de su hijo primogénito fue Joel, y el nombre del segundo, Abías; y eran jueces en Beerseba."
+      },
+      {
+        "numero": 3,
+        "texto": "Pero no anduvieron los hijos por los caminos de su padre, antes se volvieron tras la avaricia, dejándose sobornar y pervirtiendo el derecho."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces todos los ancianos de Israel se juntaron, y vinieron a Ramá para ver a Samuel,"
+      },
+      {
+        "numero": 5,
+        "texto": "y le dijeron: He aquí tú has envejecido, y tus hijos no andan en tus caminos; por tanto, constitúyenos ahora un rey que nos juzgue, como tienen todas las naciones."
+      },
+      {
+        "numero": 6,
+        "texto": "Pero no agradó a Samuel esta palabra que dijeron: Danos un rey que nos juzgue. Y Samuel oró a Jehová."
+      },
+      {
+        "numero": 7,
+        "texto": "Y dijo Jehová a Samuel: Oye la voz del pueblo en todo lo que te digan; porque no te han desechado a ti, sino a mí me han desechado, para que no reine sobre ellos."
+      },
+      {
+        "numero": 8,
+        "texto": "Conforme a todas las obras que han hecho desde el día que los saqué de Egipto hasta hoy, dejándome a mí y sirviendo a dioses ajenos, así hacen también contigo."
+      },
+      {
+        "numero": 9,
+        "texto": "Ahora, pues, oye su voz; mas protesta solemnemente contra ellos, y muéstrales cómo les tratará el rey que reinará sobre ellos."
+      },
+      {
+        "numero": 10,
+        "texto": "Y refirió Samuel todas las palabras de Jehová al pueblo que le había pedido rey."
+      },
+      {
+        "numero": 11,
+        "texto": "Dijo, pues: Así hará el rey que reinará sobre vosotros: tomará vuestros hijos, y los pondrá en sus carros y en su gente de a caballo, para que corran delante de su carro;"
+      },
+      {
+        "numero": 12,
+        "texto": "y nombrará para sí jefes de miles y jefes de cincuentenas; los pondrá asimismo a que aren sus campos y sieguen sus mieses, y a que hagan sus armas de guerra y los pertrechos de sus carros."
+      },
+      {
+        "numero": 13,
+        "texto": "Tomará también a vuestras hijas para que sean perfumadoras, cocineras y amasadoras."
+      },
+      {
+        "numero": 14,
+        "texto": "Asimismo tomará lo mejor de vuestras tierras, de vuestras viñas y de vuestros olivares, y los dará a sus siervos."
+      },
+      {
+        "numero": 15,
+        "texto": "Diezmará vuestro grano y vuestras viñas, para dar a sus oficiales y a sus siervos."
+      },
+      {
+        "numero": 16,
+        "texto": "Tomará vuestros siervos y vuestras siervas, vuestros mejores jóvenes, y vuestros asnos, y con ellos hará sus obras."
+      },
+      {
+        "numero": 17,
+        "texto": "Diezmará también vuestros rebaños, y seréis sus siervos."
+      },
+      {
+        "numero": 18,
+        "texto": "Y clamaréis aquel día a causa de vuestro rey que os habréis elegido, mas Jehová no os responderá en aquel día."
+      },
+      {
+        "numero": 19,
+        "texto": "Pero el pueblo no quiso oír la voz de Samuel, y dijo: No, sino que habrá rey sobre nosotros;"
+      },
+      {
+        "numero": 20,
+        "texto": "y nosotros seremos también como todas las naciones, y nuestro rey nos gobernará, y saldrá delante de nosotros, y hará nuestras guerras."
+      },
+      {
+        "numero": 21,
+        "texto": "Y oyó Samuel todas las palabras del pueblo, y las refirió en oídos de Jehová."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Jehová dijo a Samuel: Oye su voz, y pon rey sobre ellos. Entonces dijo Samuel a los varones de Israel: Idos cada uno a vuestra ciudad."
+      }
+    ],
+    "9": [
+      {
+        "numero": 1,
+        "texto": "Había un varón de Benjamín, hombre valeroso, el cual se llamaba Cis, hijo de Abiel, hijo de Zeror, hijo de Becorat, hijo de Afía, hijo de un benjamita."
+      },
+      {
+        "numero": 2,
+        "texto": "Y tenía él un hijo que se llamaba Saúl, joven y hermoso. Entre los hijos de Israel no había otro más hermoso que él; de hombros arriba sobrepasaba a cualquiera del pueblo."
+      },
+      {
+        "numero": 3,
+        "texto": "Y se habían perdido las asnas de Cis, padre de Saúl; por lo que dijo Cis a Saúl su hijo: Toma ahora contigo alguno de los criados, y levántate, y ve a buscar las asnas."
+      },
+      {
+        "numero": 4,
+        "texto": "Y él pasó el monte de Efraín, y de allí a la tierra de Salisa, y no las hallaron. Pasaron luego por la tierra de Saalim, y tampoco. Después pasaron por la tierra de Benjamín, y no las encontraron."
+      },
+      {
+        "numero": 5,
+        "texto": "Cuando vinieron a la tierra de Zuf, Saúl dijo a su criado que tenía consigo: Ven, volvámonos; porque quizá mi padre, abandonada la preocupación por las asnas, estará acongojado por nosotros."
+      },
+      {
+        "numero": 6,
+        "texto": "El le respondió: He aquí ahora hay en esta ciudad un varón de Dios, que es hombre insigne; todo lo que él dice acontece sin falta. Vamos, pues, allá; quizá nos dará algún indicio acerca del objeto por el cual emprendimos nuestro camino."
+      },
+      {
+        "numero": 7,
+        "texto": "Respondió Saúl a su criado: Vamos ahora; pero ¿qué llevaremos al varón? Porque el pan de nuestras alforjas se ha acabado, y no tenemos qué ofrecerle al varón de Dios. ¿Qué tenemos?"
+      },
+      {
+        "numero": 8,
+        "texto": "Entonces volvió el criado a responder a Saúl, diciendo: He aquí se halla en mi mano la cuarta parte de un siclo de plata; esto daré al varón de Dios, para que nos declare nuestro camino."
+      },
+      {
+        "numero": 9,
+        "texto": "(Antiguamente en Israel cualquiera que iba a consultar a Dios, decía así: Venid y vamos al vidente; porque al que hoy se llama profeta, entonces se le llamaba vidente.)"
+      },
+      {
+        "numero": 10,
+        "texto": "Dijo entonces Saúl a su criado: Dices bien; anda, vamos. Y fueron a la ciudad donde estaba el varón de Dios."
+      },
+      {
+        "numero": 11,
+        "texto": "Y cuando subían por la cuesta de la ciudad, hallaron unas doncellas que salían por agua, a las cuales dijeron: ¿Está en este lugar el vidente?"
+      },
+      {
+        "numero": 12,
+        "texto": "Ellas, respondiéndoles, dijeron: Sí; helo allí delante de ti; date prisa, pues, porque hoy ha venido a la ciudad en atención a que el pueblo tiene hoy un sacrificio en el lugar alto."
+      },
+      {
+        "numero": 13,
+        "texto": "Cuando entréis en la ciudad, le encontraréis luego, antes que suba al lugar alto a comer; pues el pueblo no comerá hasta que él haya llegado, por cuanto él es el que bendice el sacrificio; después de esto comen los convidados. Subid, pues, ahora, porque ahora le hallaréis."
+      },
+      {
+        "numero": 14,
+        "texto": "Ellos entonces subieron a la ciudad; y cuando estuvieron en medio de ella, he aquí Samuel venía hacía ellos para subir al lugar alto."
+      },
+      {
+        "numero": 15,
+        "texto": "Y un día antes que Saúl viniese, Jehová había revelado al oído de Samuel, diciendo:"
+      },
+      {
+        "numero": 16,
+        "texto": "Mañana a esta misma hora yo enviaré a ti un varón de la tierra de Benjamín, al cual ungirás por príncipe sobre mi pueblo Israel, y salvará a mi pueblo de mano de los filisteos; porque yo he mirado a mi pueblo, por cuanto su clamor ha llegado hasta mí."
+      },
+      {
+        "numero": 17,
+        "texto": "Y luego que Samuel vio a Saúl, Jehová le dijo: He aquí éste es el varón del cual te hablé; éste gobernará a mi pueblo."
+      },
+      {
+        "numero": 18,
+        "texto": "Acercándose, pues, Saúl a Samuel en medio de la puerta, le dijo: Te ruego que me enseñes dónde está la casa del vidente."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Samuel respondió a Saúl, diciendo: Yo soy el vidente; sube delante de mí al lugar alto, y come hoy conmigo, y por la mañana te despacharé, y te descubriré todo lo que está en tu corazón."
+      },
+      {
+        "numero": 20,
+        "texto": "Y de las asnas que se te perdieron hace ya tres días, pierde cuidado de ellas, porque se han hallado. Mas ¿para quién es todo lo que hay de codiciable en Israel, sino para ti y para toda la casa de tu padre?"
+      },
+      {
+        "numero": 21,
+        "texto": "Saúl respondió y dijo: ¿No soy yo hijo de Benjamín, de la más pequeña de las tribus de Israel? Y mi familia ¿no es la más pequeña de todas las familias de la tribu de Benjamín? ¿Por qué, pues, me has dicho cosa semejante?"
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces Samuel tomó a Saúl y a su criado, los introdujo a la sala, y les dio lugar a la cabecera de los convidados, que eran unos treinta hombres."
+      },
+      {
+        "numero": 23,
+        "texto": "Y dijo Samuel al cocinero: Trae acá la porción que te di, la cual te dije que guardases aparte."
+      },
+      {
+        "numero": 24,
+        "texto": "Entonces alzó el cocinero una espaldilla, con lo que estaba sobre ella, y la puso delante de Saúl. Y Samuel dijo: He aquí lo que estaba reservado; ponlo delante de ti y come, porque para esta ocasión se te guardó, cuando dije: Yo he convidado al pueblo. Y Saúl comió aquel día con Samuel."
+      },
+      {
+        "numero": 25,
+        "texto": "Y cuando hubieron descendido del lugar alto a la ciudad, él habló con Saúl en el terrado."
+      },
+      {
+        "numero": 26,
+        "texto": "Al otro día madrugaron; y al despuntar el alba, Samuel llamó a Saúl, que estaba en el terrado, y dijo: Levántate, para que te despida. Luego se levantó Saúl, y salieron ambos, él y Samuel."
+      },
+      {
+        "numero": 27,
+        "texto": "Y descendiendo ellos al extremo de la ciudad, dijo Samuel a Saúl: Di al criado que se adelante (y se adelantó el criado), mas espera tú un poco para que te declare la palabra de Dios."
+      }
+    ],
+    "10": [
+      {
+        "numero": 1,
+        "texto": "Tomando entonces Samuel una redoma de aceite, la derramó sobre su cabeza, y lo besó, y le dijo: ¿No te ha ungido Jehová por príncipe sobre su pueblo Israel?"
+      },
+      {
+        "numero": 2,
+        "texto": "Hoy, después que te hayas apartado de mí, hallarás dos hombres junto al sepulcro de Raquel, en el territorio de Benjamín, en Selsa, los cuales te dirán: Las asnas que habías ido a buscar se han hallado; tu padre ha dejado ya de inquietarse por las asnas, y está afligido por vosotros, diciendo: ¿Qué haré acerca de mi hijo?"
+      },
+      {
+        "numero": 3,
+        "texto": "Y luego que de allí sigas más adelante, y llegues a la encina de Tabor, te saldrán al encuentro tres hombres que suben a Dios en Bet-el, llevando uno tres cabritos, otro tres tortas de pan, y el tercero una vasija de vino;"
+      },
+      {
+        "numero": 4,
+        "texto": "los cuales, luego que te hayan saludado, te darán dos panes, los que tomarás de mano de ellos."
+      },
+      {
+        "numero": 5,
+        "texto": "Después de esto llegarás al collado de Dios donde está la guarnición de los filisteos; y cuando entres allá en la ciudad encontrarás una compañía de profetas que descienden del lugar alto, y delante de ellos salterio, pandero, flauta y arpa, y ellos profetizando."
+      },
+      {
+        "numero": 6,
+        "texto": "Entonces el Espíritu de Jehová vendrá sobre ti con poder, y profetizarás con ellos, y serás mudado en otro hombre."
+      },
+      {
+        "numero": 7,
+        "texto": "Y cuando te hayan sucedido estas señales, haz lo que te viniere a la mano, porque Dios está contigo."
+      },
+      {
+        "numero": 8,
+        "texto": "Luego bajarás delante de mí a Gilgal; entonces descenderé yo a ti para ofrecer holocaustos y sacrificar ofrendas de paz. Espera siete días, hasta que yo venga a ti y te enseñe lo que has de hacer."
+      },
+      {
+        "numero": 9,
+        "texto": "Aconteció luego, que al volver él la espalda para apartarse de Samuel, le mudó Dios su corazón; y todas estas señales acontecieron en aquel día."
+      },
+      {
+        "numero": 10,
+        "texto": "Y cuando llegaron allá al collado, he aquí la compañía de los profetas que venía a encontrarse con él; y el Espíritu de Dios vino sobre él con poder, y profetizó entre ellos."
+      },
+      {
+        "numero": 11,
+        "texto": "Y aconteció que cuando todos los que le conocían antes vieron que profetizaba con los profetas, el pueblo decía el uno al otro: ¿Qué le ha sucedido al hijo de Cis? ¿Saúl también entre los profetas?"
+      },
+      {
+        "numero": 12,
+        "texto": "Y alguno de allí respondió diciendo: ¿Y quién es el padre de ellos? Por esta causa se hizo proverbio: ¿También Saúl entre los profetas?"
+      },
+      {
+        "numero": 13,
+        "texto": "Y cesó de profetizar, y llegó al lugar alto."
+      },
+      {
+        "numero": 14,
+        "texto": "Un tío de Saúl dijo a él y a su criado: ¿A dónde fuisteis? Y él respondió: A buscar las asnas; y como vimos que no parecían, fuimos a Samuel."
+      },
+      {
+        "numero": 15,
+        "texto": "Dijo el tío de Saúl: Yo te ruego me declares qué os dijo Samuel."
+      },
+      {
+        "numero": 16,
+        "texto": "Y Saúl respondió a su tío: Nos declaró expresamente que las asnas habían sido halladas. Mas del asunto del reino, de que Samuel le había hablado, no le descubrió nada."
+      },
+      {
+        "numero": 17,
+        "texto": "Después Samuel convocó al pueblo delante de Jehová en Mizpa,"
+      },
+      {
+        "numero": 18,
+        "texto": "y dijo a los hijos de Israel: Así ha dicho Jehová el Dios de Israel: Yo saqué a Israel de Egipto, y os libré de mano de los egipcios, y de mano de todos los reinos que os afligieron."
+      },
+      {
+        "numero": 19,
+        "texto": "Pero vosotros habéis desechado hoy a vuestro Dios, que os guarda de todas vuestras aflicciones y angustias, y habéis dicho: No, sino pon rey sobre nosotros. Ahora, pues, presentaos delante de Jehová por vuestras tribus y por vuestros millares."
+      },
+      {
+        "numero": 20,
+        "texto": "Y haciendo Samuel que se acercasen todas las tribus de Israel, fue tomada la tribu de Benjamín."
+      },
+      {
+        "numero": 21,
+        "texto": "E hizo llegar la tribu de Benjamín por sus familias, y fue tomada la familia de Matri; y de ella fue tomado Saúl hijo de Cis. Y le buscaron, pero no fue hallado."
+      },
+      {
+        "numero": 22,
+        "texto": "Preguntaron, pues, otra vez a Jehová si aún no había venido allí aquel varón. Y respondió Jehová: He aquí que él está escondido entre el bagaje."
+      },
+      {
+        "numero": 23,
+        "texto": "Entonces corrieron y lo trajeron de allí; y puesto en medio del pueblo, desde los hombros arriba era más alto que todo el pueblo."
+      },
+      {
+        "numero": 24,
+        "texto": "Y Samuel dijo a todo el pueblo: ¿Habéis visto al que ha elegido Jehová, que no hay semejante a él en todo el pueblo? Entonces el pueblo clamó con alegría, diciendo: ¡Viva el rey!"
+      },
+      {
+        "numero": 25,
+        "texto": "Samuel recitó luego al pueblo las leyes del reino, y las escribió en un libro, el cual guardó delante de Jehová."
+      },
+      {
+        "numero": 26,
+        "texto": "Y envió Samuel a todo el pueblo cada uno a su casa. Saúl también se fue a su casa en Gabaa, y fueron con él los hombres de guerra cuyos corazones Dios había tocado."
+      },
+      {
+        "numero": 27,
+        "texto": "Pero algunos perversos dijeron: ¿Cómo nos ha de salvar éste? Y le tuvieron en poco, y no le trajeron presente; mas él disimuló."
+      }
+    ],
+    "11": [
+      {
+        "numero": 1,
+        "texto": "Después subió Nahas amonita, y acampó contra Jabes de Galaad. Y todos los de Jabes dijeron a Nahas: Haz alianza con nosotros, y te serviremos."
+      },
+      {
+        "numero": 2,
+        "texto": "Y Nahas amonita les respondió: Con esta condición haré alianza con vosotros, que a cada uno de todos vosotros saque el ojo derecho, y ponga esta afrenta sobre todo Israel."
+      },
+      {
+        "numero": 3,
+        "texto": "Entonces los ancianos de Jabes le dijeron: Danos siete días, para que enviemos mensajeros por todo el territorio de Israel; y si no hay nadie que nos defienda, saldremos a ti."
+      },
+      {
+        "numero": 4,
+        "texto": "Llegando los mensajeros a Gabaa de Saúl, dijeron estas palabras en oídos del pueblo; y todo el pueblo alzó su voz y lloró."
+      },
+      {
+        "numero": 5,
+        "texto": "Y he aquí Saúl que venía del campo, tras los bueyes; y dijo Saúl: ¿Qué tiene el pueblo, que llora? Y le contaron las palabras de los hombres de Jabes."
+      },
+      {
+        "numero": 6,
+        "texto": "Al oír Saúl estas palabras, el Espíritu de Dios vino sobre él con poder; y él se encendió en ira en gran manera."
+      },
+      {
+        "numero": 7,
+        "texto": "Y tomando un par de bueyes, los cortó en trozos y los envió por todo el territorio de Israel por medio de mensajeros, diciendo: Así se hará con los bueyes del que no saliere en pos de Saúl y en pos de Samuel. Y cayó temor de Jehová sobre el pueblo, y salieron como un solo hombre."
+      },
+      {
+        "numero": 8,
+        "texto": "Y los contó en Bezec; y fueron los hijos de Israel trescientos mil, y treinta mil los hombres de Judá."
+      },
+      {
+        "numero": 9,
+        "texto": "Y respondieron a los mensajeros que habían venido: Así diréis a los de Jabes de Galaad: Mañana al calentar el sol, seréis librados. Y vinieron los mensajeros y lo anunciaron a los de Jabes, los cuales se alegraron."
+      },
+      {
+        "numero": 10,
+        "texto": "Y los de Jabes dijeron a los enemigos: Mañana saldremos a vosotros, para que hagáis con nosotros todo lo que bien os pareciere."
+      },
+      {
+        "numero": 11,
+        "texto": "Aconteció que al día siguiente dispuso Saúl al pueblo en tres compañías, y entraron en medio del campamento a la vigilia de la mañana, e hirieron a los amonitas hasta que el día calentó; y los que quedaron fueron dispersos, de tal manera que no quedaron dos de ellos juntos."
+      },
+      {
+        "numero": 12,
+        "texto": "El pueblo entonces dijo a Samuel: ¿Quiénes son los que decían: ¿Ha de reinar Saúl sobre nosotros? Dadnos esos hombres, y los mataremos."
+      },
+      {
+        "numero": 13,
+        "texto": "Y Saúl dijo: No morirá hoy ninguno, porque hoy Jehová ha dado salvación en Israel."
+      },
+      {
+        "numero": 14,
+        "texto": "Mas Samuel dijo al pueblo: Venid, vamos a Gilgal para que renovemos allí el reino."
+      },
+      {
+        "numero": 15,
+        "texto": "Y fue todo el pueblo a Gilgal, e invistieron allí a Saúl por rey delante de Jehová en Gilgal. Y sacrificaron allí ofrendas de paz delante de Jehová, y se alegraron mucho allí Saúl y todos los de Israel."
+      }
+    ],
+    "12": [
+      {
+        "numero": 1,
+        "texto": "Dijo Samuel a todo Israel: He aquí, yo he oído vuestra voz en todo cuanto me habéis dicho, y os he puesto rey."
+      },
+      {
+        "numero": 2,
+        "texto": "Ahora, pues, he aquí vuestro rey va delante de vosotros. Yo soy ya viejo y lleno de canas; pero mis hijos están con vosotros, y yo he andado delante de vosotros desde mi juventud hasta este día."
+      },
+      {
+        "numero": 3,
+        "texto": "Aquí estoy; atestiguad contra mí delante de Jehová y delante de su ungido, si he tomado el buey de alguno, si he tomado el asno de alguno, si he calumniado a alguien, si he agraviado a alguno, o si de alguien he tomado cohecho para cegar mis ojos con él; y os lo restituiré."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces dijeron: Nunca nos has calumniado ni agraviado, ni has tomado algo de mano de ningún hombre."
+      },
+      {
+        "numero": 5,
+        "texto": "Y él les dijo: Jehová es testigo contra vosotros, y su ungido también es testigo en este día, que no habéis hallado cosa alguna en mi mano. Y ellos respondieron: Así es."
+      },
+      {
+        "numero": 6,
+        "texto": "Entonces Samuel dijo al pueblo: Jehová que designó a Moisés y a Aarón, y sacó a vuestros padres de la tierra de Egipto, es testigo."
+      },
+      {
+        "numero": 7,
+        "texto": "Ahora, pues, aguardad, y contenderé con vosotros delante de Jehová acerca de todos los hechos de salvación que Jehová ha hecho con vosotros y con vuestros padres."
+      },
+      {
+        "numero": 8,
+        "texto": "Cuando Jacob hubo entrado en Egipto, y vuestros padres clamaron a Jehová, Jehová envió a Moisés y a Aarón, los cuales sacaron a vuestros padres de Egipto, y los hicieron habitar en este lugar."
+      },
+      {
+        "numero": 9,
+        "texto": "Y olvidaron a Jehová su Dios, y él los vendió en mano de Sísara jefe del ejército de Hazor, y en mano de los filisteos, y en mano del rey de Moab, los cuales les hicieron guerra."
+      },
+      {
+        "numero": 10,
+        "texto": "Y ellos clamaron a Jehová, y dijeron: Hemos pecado, porque hemos dejado a Jehová y hemos servido a los baales y a Astarot; líbranos, pues, ahora de mano de nuestros enemigos, y te serviremos."
+      },
+      {
+        "numero": 11,
+        "texto": "Entonces Jehová envió a Jerobaal, a Barac, a Jefté y a Samuel, y os libró de mano de vuestros enemigos en derredor, y habitasteis seguros."
+      },
+      {
+        "numero": 12,
+        "texto": "Y habiendo visto que Nahas rey de los hijos de Amón venía contra vosotros, me dijisteis: No, sino que ha de reinar sobre nosotros un rey; siendo así que Jehová vuestro Dios era vuestro rey."
+      },
+      {
+        "numero": 13,
+        "texto": "Ahora, pues, he aquí el rey que habéis elegido, el cual pedisteis; ya veis que Jehová ha puesto rey sobre vosotros."
+      },
+      {
+        "numero": 14,
+        "texto": "Si temiereis a Jehová y le sirviereis, y oyereis su voz, y no fuereis rebeldes a la palabra de Jehová, y si tanto vosotros como el rey que reina sobre vosotros servís a Jehová vuestro Dios, haréis bien."
+      },
+      {
+        "numero": 15,
+        "texto": "Mas si no oyereis la voz de Jehová, y si fuereis rebeldes a las palabras de Jehová, la mano de Jehová estará contra vosotros como estuvo contra vuestros padres."
+      },
+      {
+        "numero": 16,
+        "texto": "Esperad aún ahora, y mirad esta gran cosa que Jehová hará delante de vuestros ojos."
+      },
+      {
+        "numero": 17,
+        "texto": "¿No es ahora la siega del trigo? Yo clamaré a Jehová, y él dará truenos y lluvias, para que conozcáis y veáis que es grande vuestra maldad que habéis hecho ante los ojos de Jehová, pidiendo para vosotros rey."
+      },
+      {
+        "numero": 18,
+        "texto": "Y Samuel clamó a Jehová, y Jehová dio truenos y lluvias en aquel día; y todo el pueblo tuvo gran temor de Jehová y de Samuel."
+      },
+      {
+        "numero": 19,
+        "texto": "Entonces dijo todo el pueblo a Samuel: Ruega por tus siervos a Jehová tu Dios, para que no muramos; porque a todos nuestros pecados hemos añadido este mal de pedir rey para nosotros."
+      },
+      {
+        "numero": 20,
+        "texto": "Y Samuel respondió al pueblo: No temáis; vosotros habéis hecho todo este mal; pero con todo eso no os apartéis de en pos de Jehová, sino servidle con todo vuestro corazón."
+      },
+      {
+        "numero": 21,
+        "texto": "No os apartéis en pos de vanidades que no aprovechan ni libran, porque son vanidades."
+      },
+      {
+        "numero": 22,
+        "texto": "Pues Jehová no desamparará a su pueblo, por su grande nombre; porque Jehová ha querido haceros pueblo suyo."
+      },
+      {
+        "numero": 23,
+        "texto": "Así que, lejos sea de mí que peque yo contra Jehová cesando de rogar por vosotros; antes os instruiré en el camino bueno y recto."
+      },
+      {
+        "numero": 24,
+        "texto": "Solamente temed a Jehová y servidle de verdad con todo vuestro corazón, pues considerad cuán grandes cosas ha hecho por vosotros."
+      },
+      {
+        "numero": 25,
+        "texto": "Mas si perseverareis en hacer mal, vosotros y vuestro rey pereceréis."
+      }
+    ],
+    "13": [
+      {
+        "numero": 1,
+        "texto": "Había ya reinado Saúl un año; y cuando hubo reinado dos años sobre Israel,"
+      },
+      {
+        "numero": 2,
+        "texto": "escogió luego a tres mil hombres de Israel, de los cuales estaban con Saúl dos mil en Micmas y en el monte de Bet-el, y mil estaban con Jonatán en Gabaa de Benjamín; y envió al resto del pueblo cada uno a sus tiendas."
+      },
+      {
+        "numero": 3,
+        "texto": "Y Jonatán atacó a la guarnición de los filisteos que había en el collado, y lo oyeron los filisteos. E hizo Saúl tocar trompeta por todo el país, diciendo: Oigan los hebreos."
+      },
+      {
+        "numero": 4,
+        "texto": "Y todo Israel oyó que se decía: Saúl ha atacado a la guarnición de los filisteos; y también que Israel se había hecho abominable a los filisteos. Y se juntó el pueblo en pos de Saúl en Gilgal."
+      },
+      {
+        "numero": 5,
+        "texto": "Entonces los filisteos se juntaron para pelear contra Israel, treinta mil carros, seis mil hombres de a caballo, y pueblo numeroso como la arena que está a la orilla del mar; y subieron y acamparon en Micmas, al oriente de Bet-avén."
+      },
+      {
+        "numero": 6,
+        "texto": "Cuando los hombres de Israel vieron que estaban en estrecho (porque el pueblo estaba en aprieto), se escondieron en cuevas, en fosos, en peñascos, en rocas y en cisternas."
+      },
+      {
+        "numero": 7,
+        "texto": "Y algunos de los hebreos pasaron el Jordán a la tierra de Gad y de Galaad; pero Saúl permanecía aún en Gilgal, y todo el pueblo iba tras él temblando."
+      },
+      {
+        "numero": 8,
+        "texto": "Y él esperó siete días, conforme al plazo que Samuel había dicho; pero Samuel no venía a Gilgal, y el pueblo se le desertaba."
+      },
+      {
+        "numero": 9,
+        "texto": "Entonces dijo Saúl: Traedme holocausto y ofrendas de paz. Y ofreció el holocausto."
+      },
+      {
+        "numero": 10,
+        "texto": "Y cuando él acababa de ofrecer el holocausto, he aquí Samuel que venía; y Saúl salió a recibirle, para saludarle."
+      },
+      {
+        "numero": 11,
+        "texto": "Entonces Samuel dijo: ¿Qué has hecho? Y Saúl respondió: Porque vi que el pueblo se me desertaba, y que tú no venías dentro del plazo señalado, y que los filisteos estaban reunidos en Micmas,"
+      },
+      {
+        "numero": 12,
+        "texto": "me dije: Ahora descenderán los filisteos contra mí a Gilgal, y yo no he implorado el favor de Jehová. Me esforcé, pues, y ofrecí holocausto."
+      },
+      {
+        "numero": 13,
+        "texto": "Entonces Samuel dijo a Saúl: Locamente has hecho; no guardaste el mandamiento de Jehová tu Dios que él te había ordenado; pues ahora Jehová hubiera confirmado tu reino sobre Israel para siempre."
+      },
+      {
+        "numero": 14,
+        "texto": "Mas ahora tu reino no será duradero. Jehová se ha buscado un varón conforme a su corazón, al cual Jehová ha designado para que sea príncipe sobre su pueblo, por cuanto tú no has guardado lo que Jehová te mandó."
+      },
+      {
+        "numero": 15,
+        "texto": "Y levantándose Samuel, subió de Gilgal a Gabaa de Benjamín. Y Saúl contó la gente que se hallaba con él, como seiscientos hombres."
+      },
+      {
+        "numero": 16,
+        "texto": "Saúl, pues, y Jonatán su hijo, y el pueblo que con ellos se hallaba, se quedaron en Gabaa de Benjamín; pero los filisteos habían acampado en Micmas."
+      },
+      {
+        "numero": 17,
+        "texto": "Y salieron merodeadores del campamento de los filisteos en tres escuadrones; un escuadrón marchaba por el camino de Ofra hacia la tierra de Sual,"
+      },
+      {
+        "numero": 18,
+        "texto": "otro escuadrón marchaba hacia Bet-horón, y el tercer escuadrón marchaba hacia la región que mira al valle de Zeboim, hacia el desierto."
+      },
+      {
+        "numero": 19,
+        "texto": "Y en toda la tierra de Israel no se hallaba herrero; porque los filisteos habían dicho: Para que los hebreos no hagan espada o lanza."
+      },
+      {
+        "numero": 20,
+        "texto": "Por lo cual todos los de Israel tenían que descender a los filisteos para afilar cada uno la reja de su arado, su azadón, su hacha o su hoz."
+      },
+      {
+        "numero": 21,
+        "texto": "Y el precio era un pim por las rejas de arado y por los azadones, y la tercera parte de un siclo  por afilar las hachas y por componer las aguijadas."
+      },
+      {
+        "numero": 22,
+        "texto": "Así aconteció que en el día de la batalla no se halló espada ni lanza en mano de ninguno del pueblo que estaba con Saúl y con Jonatán, excepto Saúl y Jonatán su hijo, que las tenían."
+      },
+      {
+        "numero": 23,
+        "texto": "Y la guarnición de los filisteos avanzó hasta el paso de Micmas."
+      }
+    ],
+    "14": [
+      {
+        "numero": 1,
+        "texto": "Aconteció un día, que Jonatán hijo de Saúl dijo a su criado que le traía las armas: Ven y pasemos a la guarnición de los filisteos, que está de aquel lado. Y no lo hizo saber a su padre."
+      },
+      {
+        "numero": 2,
+        "texto": "Y Saúl se hallaba al extremo de Gabaa, debajo de un granado que hay en Migrón, y la gente que estaba con él era como seiscientos hombres."
+      },
+      {
+        "numero": 3,
+        "texto": "Y Ahías hijo de Ahitob, hermano de Icabod, hijo de Finees, hijo de Elí, sacerdote de Jehová en Silo, llevaba el efod; y no sabía el pueblo que Jonatán se hubiese ido."
+      },
+      {
+        "numero": 4,
+        "texto": "Y entre los desfiladeros por donde Jonatán procuraba pasar a la guarnición de los filisteos, había un peñasco agudo de un lado, y otro del otro lado; el uno se llamaba Boses, y el otro Sene."
+      },
+      {
+        "numero": 5,
+        "texto": "Uno de los peñascos estaba situado al norte, hacia Micmas, y el otro al sur, hacia Gabaa."
+      },
+      {
+        "numero": 6,
+        "texto": "Dijo, pues, Jonatán a su paje de armas: Ven, pasemos a la guarnición de estos incircuncisos; quizá haga algo Jehová por nosotros, pues no es difícil para Jehová salvar con muchos o con pocos."
+      },
+      {
+        "numero": 7,
+        "texto": "Y su paje de armas le respondió: Haz todo lo que tienes en tu corazón; ve, pues aquí estoy contigo a tu voluntad."
+      },
+      {
+        "numero": 8,
+        "texto": "Dijo entonces Jonatán: Vamos a pasar a esos hombres, y nos mostraremos a ellos."
+      },
+      {
+        "numero": 9,
+        "texto": "Si nos dijeren así: Esperad hasta que lleguemos a vosotros, entonces nos estaremos en nuestro lugar, y no subiremos a ellos."
+      },
+      {
+        "numero": 10,
+        "texto": "Mas si nos dijeren así: Subid a nosotros, entonces subiremos, porque Jehová los ha entregado en nuestra mano; y esto nos será por señal."
+      },
+      {
+        "numero": 11,
+        "texto": "Se mostraron, pues, ambos a la guarnición de los filisteos, y los filisteos dijeron: He aquí los hebreos, que salen de las cavernas donde se habían escondido."
+      },
+      {
+        "numero": 12,
+        "texto": "Y los hombres de la guarnición respondieron a Jonatán y a su paje de armas, y dijeron: Subid a nosotros, y os haremos saber una cosa. Entonces Jonatán dijo a su paje de armas: Sube tras mí, porque Jehová los ha entregado en manos de Israel."
+      },
+      {
+        "numero": 13,
+        "texto": "Y subió Jonatán trepando con sus manos y sus pies, y tras él su paje de armas; y a los que caían delante de Jonatán, su paje de armas que iba tras él los mataba."
+      },
+      {
+        "numero": 14,
+        "texto": "Y fue esta primera matanza que hicieron Jonatán y su paje de armas, como veinte hombres, en el espacio de una media yugada de tierra."
+      },
+      {
+        "numero": 15,
+        "texto": "Y hubo pánico en el campamento y por el campo, y entre toda la gente de la guarnición; y los que habían ido a merodear, también ellos tuvieron pánico, y la tierra tembló; hubo, pues, gran consternación."
+      },
+      {
+        "numero": 16,
+        "texto": "Y los centinelas de Saúl vieron desde Gabaa de Benjamín cómo la multitud estaba turbada, e iba de un lado a otro y era deshecha."
+      },
+      {
+        "numero": 17,
+        "texto": "Entonces Saúl dijo al pueblo que estaba con él: Pasad ahora revista, y ved quién se haya ido de los nuestros. Pasaron revista, y he aquí que faltaba Jonatán y su paje de armas."
+      },
+      {
+        "numero": 18,
+        "texto": "Y Saúl dijo a Ahías: Trae el arca de Dios. Porque el arca de Dios estaba entonces con los hijos de Israel."
+      },
+      {
+        "numero": 19,
+        "texto": "Pero aconteció que mientras aún hablaba Saúl con el sacerdote, el alboroto que había en el campamento de los filisteos aumentaba, e iba creciendo en gran manera. Entonces dijo Saúl al sacerdote: Detén tu mano."
+      },
+      {
+        "numero": 20,
+        "texto": "Y juntando Saúl a todo el pueblo que con él estaba, llegaron hasta el lugar de la batalla; y he aquí que la espada de cada uno estaba vuelta contra su compañero, y había gran confusión."
+      },
+      {
+        "numero": 21,
+        "texto": "Y los hebreos que habían estado con los filisteos de tiempo atrás, y habían venido con ellos de los alrededores al campamento, se pusieron también del lado de los israelitas que estaban con Saúl y con Jonatán."
+      },
+      {
+        "numero": 22,
+        "texto": "Asimismo todos los israelitas que se habían escondido en el monte de Efraín, oyendo que los filisteos huían, también ellos los persiguieron en aquella batalla."
+      },
+      {
+        "numero": 23,
+        "texto": "Así salvó Jehová a Israel aquel día. Y llegó la batalla hasta Bet-avén."
+      },
+      {
+        "numero": 24,
+        "texto": "Pero los hombres de Israel fueron puestos en apuro aquel día; porque Saúl había juramentado al pueblo, diciendo: Cualquiera que coma pan antes de caer la noche, antes que haya tomado venganza de mis enemigos, sea maldito. Y todo el pueblo no había probado pan."
+      },
+      {
+        "numero": 25,
+        "texto": "Y todo el pueblo llegó a un bosque, donde había miel en la superficie del campo."
+      },
+      {
+        "numero": 26,
+        "texto": "Entró, pues, el pueblo en el bosque, y he aquí que la miel corría; pero no hubo quien hiciera llegar su mano a su boca, porque el pueblo temía el juramento."
+      },
+      {
+        "numero": 27,
+        "texto": "Pero Jonatán no había oído cuando su padre había juramentado al pueblo, y alargó la punta de una vara que traía en su mano, y la mojó en un panal de miel, y llevó su mano a la boca; y fueron aclarados sus ojos."
+      },
+      {
+        "numero": 28,
+        "texto": "Entonces habló uno del pueblo, diciendo: Tu padre ha hecho jurar solemnemente al pueblo, diciendo: Maldito sea el hombre que tome hoy alimento. Y el pueblo desfallecía."
+      },
+      {
+        "numero": 29,
+        "texto": "Respondió Jonatán: Mi padre ha turbado el país. Ved ahora cómo han sido aclarados mis ojos, por haber gustado un poco de esta miel."
+      },
+      {
+        "numero": 30,
+        "texto": "¿Cuánto más si el pueblo hubiera comido libremente hoy del botín tomado de sus enemigos? ¿No se habría hecho ahora mayor estrago entre los filisteos?"
+      },
+      {
+        "numero": 31,
+        "texto": "E hirieron aquel día a los filisteos desde Micmas hasta Ajalón; pero el pueblo estaba muy cansado."
+      },
+      {
+        "numero": 32,
+        "texto": "Y se lanzó el pueblo sobre el botín, y tomaron ovejas y vacas y becerros, y los degollaron en el suelo; y el pueblo los comió con sangre."
+      },
+      {
+        "numero": 33,
+        "texto": "Y le dieron aviso a Saúl, diciendo: El pueblo peca contra Jehová, comiendo la carne con la sangre. Y él dijo: Vosotros habéis prevaricado; rodadme ahora acá una piedra grande."
+      },
+      {
+        "numero": 34,
+        "texto": "Además dijo Saúl: Esparcíos por el pueblo, y decidles que me traigan cada uno su vaca, y cada cual su oveja, y degolladlas aquí, y comed; y no pequéis contra Jehová comiendo la carne con la sangre. Y trajo todo el pueblo cada cual por su mano su vaca aquella noche, y las degollaron allí."
+      },
+      {
+        "numero": 35,
+        "texto": "Y edificó Saúl altar a Jehová; este altar fue el primero que edificó a Jehová."
+      },
+      {
+        "numero": 36,
+        "texto": "Y dijo Saúl: Descendamos de noche contra los filisteos, y los saquearemos hasta la mañana, y no dejaremos de ellos ninguno. Y ellos dijeron: Haz lo que bien te pareciere. Dijo luego el sacerdote: Acerquémonos aquí a Dios."
+      },
+      {
+        "numero": 37,
+        "texto": "Y Saúl consultó a Dios: ¿Descenderé tras los filisteos? ¿Los entregarás en mano de Israel? Mas Jehová no le dio respuesta aquel día."
+      },
+      {
+        "numero": 38,
+        "texto": "Entonces dijo Saúl: Venid acá todos los principales del pueblo, y sabed y ved en qué ha consistido este pecado hoy;"
+      },
+      {
+        "numero": 39,
+        "texto": "porque vive Jehová que salva a Israel, que aunque fuere en Jonatán mi hijo, de seguro morirá. Y no hubo en todo el pueblo quien le respondiese."
+      },
+      {
+        "numero": 40,
+        "texto": "Dijo luego a todo Israel: Vosotros estaréis a un lado, y yo y Jonatán mi hijo estaremos al otro lado. Y el pueblo respondió a Saúl: Haz lo que bien te pareciere."
+      },
+      {
+        "numero": 41,
+        "texto": "Entonces dijo Saúl a Jehová Dios de Israel: Da suerte perfecta. Y la suerte cayó sobre Jonatán y Saúl, y el pueblo salió libre."
+      },
+      {
+        "numero": 42,
+        "texto": "Y Saúl dijo: Echad suertes entre mí y Jonatán mi hijo. Y la suerte cayó sobre Jonatán."
+      },
+      {
+        "numero": 43,
+        "texto": "Entonces Saúl dijo a Jonatán: Declárame lo que has hecho. Y Jonatán se lo declaró y dijo: Ciertamente gusté un poco de miel con la punta de la vara que traía en mi mano; ¿y he de morir?"
+      },
+      {
+        "numero": 44,
+        "texto": "Y Saúl respondió: Así me haga Dios y aun me añada, que sin duda morirás, Jonatán."
+      },
+      {
+        "numero": 45,
+        "texto": "Entonces el pueblo dijo a Saúl: ¿Ha de morir Jonatán, el que ha hecho esta grande salvación en Israel? No será así. Vive Jehová, que no ha de caer un cabello de su cabeza en tierra, pues que ha actuado hoy con Dios. Así el pueblo libró de morir a Jonatán."
+      },
+      {
+        "numero": 46,
+        "texto": "Y Saúl dejó de seguir a los filisteos; y los filisteos se fueron a su lugar."
+      },
+      {
+        "numero": 47,
+        "texto": "Después de haber tomado posesión del reinado de Israel, Saúl hizo guerra a todos sus enemigos en derredor: contra Moab, contra los hijos de Amón, contra Edom, contra los reyes de Soba, y contra los filisteos; y adondequiera que se volvía, era vencedor."
+      },
+      {
+        "numero": 48,
+        "texto": "Y reunió un ejército y derrotó a Amalec, y libró a Israel de mano de los que lo saqueaban."
+      },
+      {
+        "numero": 49,
+        "texto": "Y los hijos de Saúl fueron Jonatán, Isúi y Malquisúa. Y los nombres de sus dos hijas eran, el de la mayor, Merab, y el de la menor, Mical."
+      },
+      {
+        "numero": 50,
+        "texto": "Y el nombre de la mujer de Saúl era Ahinoam, hija de Ahimaas. Y el nombre del general de su ejército era Abner, hijo de Ner tío de Saúl."
+      },
+      {
+        "numero": 51,
+        "texto": "Porque Cis padre de Saúl, y Ner padre de Abner, fueron hijos de Abiel."
+      },
+      {
+        "numero": 52,
+        "texto": "Y hubo guerra encarnizada contra los filisteos todo el tiempo de Saúl; y a todo el que Saúl veía que era hombre esforzado y apto para combatir, lo juntaba consigo."
+      }
+    ],
+    "15": [
+      {
+        "numero": 1,
+        "texto": "Después Samuel dijo a Saúl: Jehová me envió a que te ungiese por rey sobre su pueblo Israel; ahora, pues, está atento a las palabras de Jehová."
+      },
+      {
+        "numero": 2,
+        "texto": "Así ha dicho Jehová de los ejércitos: Yo castigaré lo que hizo Amalec a Israel al oponérsele en el camino cuando subía de Egipto."
+      },
+      {
+        "numero": 3,
+        "texto": "Ve, pues, y hiere a Amalec, y destruye todo lo que tiene, y no te apiades de él; mata a hombres, mujeres, niños, y aun los de pecho, vacas, ovejas, camellos y asnos."
+      },
+      {
+        "numero": 4,
+        "texto": "Saúl, pues, convocó al pueblo y les pasó revista en Telaim, doscientos mil de a pie, y diez mil hombres de Judá."
+      },
+      {
+        "numero": 5,
+        "texto": "Y viniendo Saúl a la ciudad de Amalec, puso emboscada en el valle."
+      },
+      {
+        "numero": 6,
+        "texto": "Y dijo Saúl a los ceneos: Idos, apartaos y salid de entre los de Amalec, para que no os destruya juntamente con ellos; porque vosotros mostrasteis misericordia a todos los hijos de Israel, cuando subían de Egipto. Y se apartaron los ceneos de entre los hijos de Amalec."
+      },
+      {
+        "numero": 7,
+        "texto": "Y Saúl derrotó a los amalecitas desde Havila hasta llegar a Shur, que está al oriente de Egipto."
+      },
+      {
+        "numero": 8,
+        "texto": "Y tomó vivo a Agag rey de Amalec, pero a todo el pueblo mató a filo de espada."
+      },
+      {
+        "numero": 9,
+        "texto": "Y Saúl y el pueblo perdonaron a Agag, y a lo mejor de las ovejas y del ganado mayor, de los animales engordados, de los carneros y de todo lo bueno, y no lo quisieron destruir; mas todo lo que era vil y despreciable destruyeron."
+      },
+      {
+        "numero": 10,
+        "texto": "Y vino palabra de Jehová a Samuel, diciendo:"
+      },
+      {
+        "numero": 11,
+        "texto": "Me pesa haber puesto por rey a Saúl, porque se ha vuelto de en pos de mí, y no ha cumplido mis palabras. Y se apesadumbró Samuel, y clamó a Jehová toda aquella noche."
+      },
+      {
+        "numero": 12,
+        "texto": "Madrugó luego Samuel para ir a encontrar a Saúl por la mañana; y fue dado aviso a Samuel, diciendo: Saúl ha venido a Carmel, y he aquí se levantó un monumento, y dio la vuelta, y pasó adelante y descendió a Gilgal."
+      },
+      {
+        "numero": 13,
+        "texto": "Vino, pues, Samuel a Saúl, y Saúl le dijo: Bendito seas tú de Jehová; yo he cumplido la palabra de Jehová."
+      },
+      {
+        "numero": 14,
+        "texto": "Samuel entonces dijo: ¿Pues qué balido de ovejas y bramido de vacas es este que yo oigo con mis oídos?"
+      },
+      {
+        "numero": 15,
+        "texto": "Y Saúl respondió: De Amalec los han traído; porque el pueblo perdonó lo mejor de las ovejas y de las vacas, para sacrificarlas a Jehová tu Dios, pero lo demás lo destruimos."
+      },
+      {
+        "numero": 16,
+        "texto": "Entonces dijo Samuel a Saúl: Déjame declararte lo que Jehová me ha dicho esta noche. Y él le respondió: Di."
+      },
+      {
+        "numero": 17,
+        "texto": "Y dijo Samuel: Aunque eras pequeño en tus propios ojos, ¿no has sido hecho jefe de las tribus de Israel, y Jehová te ha ungido por rey sobre Israel?"
+      },
+      {
+        "numero": 18,
+        "texto": "Y Jehová te envió en misión y dijo: Ve, destruye a los pecadores de Amalec, y hazles guerra hasta que los acabes."
+      },
+      {
+        "numero": 19,
+        "texto": "¿Por qué, pues, no has oído la voz de Jehová, sino que vuelto al botín has hecho lo malo ante los ojos de Jehová?"
+      },
+      {
+        "numero": 20,
+        "texto": "Y Saúl respondió a Samuel: Antes bien he obedecido la voz de Jehová, y fui a la misión que Jehová me envió, y he traído a Agag rey de Amalec, y he destruido a los amalecitas."
+      },
+      {
+        "numero": 21,
+        "texto": "Mas el pueblo tomó del botín ovejas y vacas, las primicias del anatema, para ofrecer sacrificios a Jehová tu Dios en Gilgal."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Samuel dijo: ¿Se complace Jehová tanto en los holocaustos y víctimas, como en que se obedezca a las palabras de Jehová? Ciertamente el obedecer es mejor que los sacrificios, y el prestar atención que la grosura de los carneros."
+      },
+      {
+        "numero": 23,
+        "texto": "Porque como pecado de adivinación es la rebelión, y como ídolos e idolatría la obstinación. Por cuanto tú desechaste la palabra de Jehová, él también te ha desechado para que no seas rey."
+      },
+      {
+        "numero": 24,
+        "texto": "Entonces Saúl dijo a Samuel: Yo he pecado; pues he quebrantado el mandamiento de Jehová y tus palabras, porque temí al pueblo y consentí a la voz de ellos. Perdona, pues, ahora mi pecado,"
+      },
+      {
+        "numero": 25,
+        "texto": "y vuelve conmigo para que adore a Jehová."
+      },
+      {
+        "numero": 26,
+        "texto": "Y Samuel respondió a Saúl: No volveré contigo; porque desechaste la palabra de Jehová, y Jehová te ha desechado para que no seas rey sobre Israel."
+      },
+      {
+        "numero": 27,
+        "texto": "Y volviéndose Samuel para irse, él se asió de la punta de su manto, y éste se rasgó."
+      },
+      {
+        "numero": 28,
+        "texto": "Entonces Samuel le dijo: Jehová ha rasgado hoy de ti el reino de Israel, y lo ha dado a un prójimo tuyo mejor que tú."
+      },
+      {
+        "numero": 29,
+        "texto": "Además, el que es la Gloria de Israel no mentirá, ni se arrepentirá, porque no es hombre para que se arrepienta."
+      },
+      {
+        "numero": 30,
+        "texto": "Y él dijo: Yo he pecado; pero te ruego que me honres delante de los ancianos de mi pueblo y delante de Israel, y vuelvas conmigo para que adore a Jehová tu Dios."
+      },
+      {
+        "numero": 31,
+        "texto": "Y volvió Samuel tras Saúl, y adoró Saúl a Jehová."
+      },
+      {
+        "numero": 32,
+        "texto": "Después dijo Samuel: Traedme a Agag rey de Amalec. Y Agag vino a él alegremente. Y dijo Agag: Ciertamente ya pasó la amargura de la muerte."
+      },
+      {
+        "numero": 33,
+        "texto": "Y Samuel dijo: Como tu espada dejó a las mujeres sin hijos, así tu madre será sin hijo entre las mujeres. Entonces Samuel cortó en pedazos a Agag delante de Jehová en Gilgal."
+      },
+      {
+        "numero": 34,
+        "texto": "Se fue luego Samuel a Ramá, y Saúl subió a su casa en Gabaa de Saúl."
+      },
+      {
+        "numero": 35,
+        "texto": "Y nunca después vio Samuel a Saúl en toda su vida; y Samuel lloraba a Saúl; y Jehová se arrepentía de haber puesto a Saúl por rey sobre Israel."
+      }
+    ],
+    "16": [
+      {
+        "numero": 1,
+        "texto": "Dijo Jehová a Samuel: ¿Hasta cuándo llorarás a Saúl, habiéndolo yo desechado para que no reine sobre Israel? Llena tu cuerno de aceite, y ven, te enviaré a Isaí de Belén, porque de sus hijos me he provisto de rey."
+      },
+      {
+        "numero": 2,
+        "texto": "Y dijo Samuel: ¿Cómo iré? Si Saúl lo supiera, me mataría. Jehová respondió: Toma contigo una becerra de la vacada, y di: A ofrecer sacrificio a Jehová he venido."
+      },
+      {
+        "numero": 3,
+        "texto": "Y llama a Isaí al sacrificio, y yo te enseñaré lo que has de hacer; y me ungirás al que yo te dijere."
+      },
+      {
+        "numero": 4,
+        "texto": "Hizo, pues, Samuel como le dijo Jehová; y luego que él llegó a Belén, los ancianos de la ciudad salieron a recibirle con miedo, y dijeron: ¿Es pacífica tu venida?"
+      },
+      {
+        "numero": 5,
+        "texto": "El respondió: Sí, vengo a ofrecer sacrificio a Jehová; santificaos, y venid conmigo al sacrificio. Y santificando él a Isaí y a sus hijos, los llamó al sacrificio."
+      },
+      {
+        "numero": 6,
+        "texto": "Y aconteció que cuando ellos vinieron, él vio a Eliab, y dijo: De cierto delante de Jehová está su ungido."
+      },
+      {
+        "numero": 7,
+        "texto": "Y Jehová respondió a Samuel: No mires a su parecer, ni a lo grande de su estatura, porque yo lo desecho; porque Jehová no mira lo que mira el hombre; pues el hombre mira lo que está delante de sus ojos, pero Jehová mira el corazón."
+      },
+      {
+        "numero": 8,
+        "texto": "Entonces llamó Isaí a Abinadab, y lo hizo pasar delante de Samuel, el cual dijo: Tampoco a éste ha escogido Jehová."
+      },
+      {
+        "numero": 9,
+        "texto": "Hizo luego pasar Isaí a Sama. Y él dijo: Tampoco a éste ha elegido Jehová."
+      },
+      {
+        "numero": 10,
+        "texto": "E hizo pasar Isaí siete hijos suyos delante de Samuel; pero Samuel dijo a Isaí: Jehová no ha elegido a éstos."
+      },
+      {
+        "numero": 11,
+        "texto": "Entonces dijo Samuel a Isaí: ¿Son éstos todos tus hijos? Y él respondió: Queda aún el menor, que apacienta las ovejas. Y dijo Samuel a Isaí: Envía por él, porque no nos sentaremos a la mesa hasta que él venga aquí."
+      },
+      {
+        "numero": 12,
+        "texto": "Envió, pues, por él, y le hizo entrar; y era rubio, hermoso de ojos, y de buen parecer. Entonces Jehová dijo: Levántate y úngelo, porque éste es."
+      },
+      {
+        "numero": 13,
+        "texto": "Y Samuel tomó el cuerno del aceite, y lo ungió en medio de sus hermanos; y desde aquel día en adelante el Espíritu de Jehová vino sobre David. Se levantó luego Samuel, y se volvió a Ramá."
+      },
+      {
+        "numero": 14,
+        "texto": "El Espíritu de Jehová se apartó de Saúl, y le atormentaba un espíritu malo de parte de Jehová."
+      },
+      {
+        "numero": 15,
+        "texto": "Y los criados de Saúl le dijeron: He aquí ahora, un espíritu malo de parte de Dios te atormenta."
+      },
+      {
+        "numero": 16,
+        "texto": "Diga, pues, nuestro señor a tus siervos que están delante de ti, que busquen a alguno que sepa tocar el arpa, para que cuando esté sobre ti el espíritu malo de parte de Dios, él toque con su mano, y tengas alivio."
+      },
+      {
+        "numero": 17,
+        "texto": "Y Saúl respondió a sus criados: Buscadme, pues, ahora alguno que toque bien, y traédmelo."
+      },
+      {
+        "numero": 18,
+        "texto": "Entonces uno de los criados respondió diciendo: He aquí yo he visto a un hijo de Isaí de Belén, que sabe tocar, y es valiente y vigoroso y hombre de guerra, prudente en sus palabras, y hermoso, y Jehová está con él."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Saúl envió mensajeros a Isaí, diciendo: Envíame a David tu hijo, el que está con las ovejas."
+      },
+      {
+        "numero": 20,
+        "texto": "Y tomó Isaí un asno cargado de pan, una vasija de vino y un cabrito, y lo envió a Saúl por medio de David su hijo."
+      },
+      {
+        "numero": 21,
+        "texto": "Y viniendo David a Saúl, estuvo delante de él; y él le amó mucho, y le hizo su paje de armas."
+      },
+      {
+        "numero": 22,
+        "texto": "Y Saúl envió a decir a Isaí: Yo te ruego que esté David conmigo, pues ha hallado gracia en mis ojos."
+      },
+      {
+        "numero": 23,
+        "texto": "Y cuando el espíritu malo de parte de Dios venía sobre Saúl, David tomaba el arpa y tocaba con su mano; y Saúl tenía alivio y estaba mejor, y el espíritu malo se apartaba de él."
+      }
+    ],
+    "17": [
+      {
+        "numero": 1,
+        "texto": "Los filisteos juntaron sus ejércitos para la guerra, y se congregaron en Soco, que es de Judá, y acamparon entre Soco y Azeca, en Efes-damim."
+      },
+      {
+        "numero": 2,
+        "texto": "También Saúl y los hombres de Israel se juntaron, y acamparon en el valle de Ela, y se pusieron en orden de batalla contra los filisteos."
+      },
+      {
+        "numero": 3,
+        "texto": "Y los filisteos estaban sobre un monte a un lado, e Israel estaba sobre otro monte al otro lado, y el valle entre ellos."
+      },
+      {
+        "numero": 4,
+        "texto": "Salió entonces del campamento de los filisteos un paladín, el cual se llamaba Goliat, de Gat, y tenía de altura seis codos  y un palmo."
+      },
+      {
+        "numero": 5,
+        "texto": "Y traía un casco de bronce en su cabeza, y llevaba una cota de malla; y era el peso de la cota cinco mil siclos  de bronce."
+      },
+      {
+        "numero": 6,
+        "texto": "Sobre sus piernas traía grebas de bronce, y jabalina de bronce entre sus hombros."
+      },
+      {
+        "numero": 7,
+        "texto": "El asta de su lanza era como un rodillo de telar, y tenía el hierro de su lanza seiscientos siclos  de hierro; e iba su escudero delante de él."
+      },
+      {
+        "numero": 8,
+        "texto": "Y se paró y dio voces a los escuadrones de Israel, diciéndoles: ¿Para qué os habéis puesto en orden de batalla? ¿No soy yo el filisteo, y vosotros los siervos de Saúl? Escoged de entre vosotros un hombre que venga contra mí."
+      },
+      {
+        "numero": 9,
+        "texto": "Si él pudiere pelear conmigo, y me venciere, nosotros seremos vuestros siervos; y si yo pudiere más que él, y lo venciere, vosotros seréis nuestros siervos y nos serviréis."
+      },
+      {
+        "numero": 10,
+        "texto": "Y añadió el filisteo: Hoy yo he desafiado al campamento de Israel; dadme un hombre que pelee conmigo."
+      },
+      {
+        "numero": 11,
+        "texto": "Oyendo Saúl y todo Israel estas palabras del filisteo, se turbaron y tuvieron gran miedo."
+      },
+      {
+        "numero": 12,
+        "texto": "Y David era hijo de aquel hombre efrateo de Belén de Judá, cuyo nombre era Isaí, el cual tenía ocho hijos; y en el tiempo de Saúl este hombre era viejo y de gran edad entre los hombres."
+      },
+      {
+        "numero": 13,
+        "texto": "Y los tres hijos mayores de Isaí habían ido para seguir a Saúl a la guerra. Y los nombres de sus tres hijos que habían ido a la guerra eran: Eliab el primogénito, el segundo Abinadab, y el tercero Sama;"
+      },
+      {
+        "numero": 14,
+        "texto": "y David era el menor. Siguieron, pues, los tres mayores a Saúl."
+      },
+      {
+        "numero": 15,
+        "texto": "Pero David había ido y vuelto, dejando a Saúl, para apacentar las ovejas de su padre en Belén."
+      },
+      {
+        "numero": 16,
+        "texto": "Venía, pues, aquel filisteo por la mañana y por la tarde, y así lo hizo durante cuarenta días."
+      },
+      {
+        "numero": 17,
+        "texto": "Y dijo Isaí a David su hijo: Toma ahora para tus hermanos un efa  de este grano tostado, y estos diez panes, y llévalo pronto al campamento a tus hermanos."
+      },
+      {
+        "numero": 18,
+        "texto": "Y estos diez quesos de leche los llevarás al jefe de los mil; y mira si tus hermanos están buenos, y toma prendas de ellos."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Saúl y ellos y todos los de Israel estaban en el valle de Ela, peleando contra los filisteos."
+      },
+      {
+        "numero": 20,
+        "texto": "Se levantó, pues, David de mañana, y dejando las ovejas al cuidado de un guarda, se fue con su carga como Isaí le había mandado; y llegó al campamento cuando el ejército salía en orden de batalla, y daba el grito de combate."
+      },
+      {
+        "numero": 21,
+        "texto": "Y se pusieron en orden de batalla Israel y los filisteos, ejército frente a ejército."
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces David dejó su carga en mano del que guardaba el bagaje, y corrió al ejército; y cuando llegó, preguntó por sus hermanos, si estaban bien."
+      },
+      {
+        "numero": 23,
+        "texto": "Mientras él hablaba con ellos, he aquí que aquel paladín que se ponía en medio de los dos campamentos, que se llamaba Goliat, el filisteo de Gat, salió de entre las filas de los filisteos y habló las mismas palabras, y las oyó David."
+      },
+      {
+        "numero": 24,
+        "texto": "Y todos los varones de Israel que veían aquel hombre huían de su presencia, y tenían gran temor."
+      },
+      {
+        "numero": 25,
+        "texto": "Y cada uno de los de Israel decía: ¿No habéis visto aquel hombre que ha salido? El se adelanta para provocar a Israel. Al que le venciere, el rey le enriquecerá con grandes riquezas, y le dará su hija, y eximirá de tributos a la casa de su padre en Israel."
+      },
+      {
+        "numero": 26,
+        "texto": "Entonces habló David a los que estaban junto a él, diciendo: ¿Qué harán al hombre que venciere a este filisteo, y quitare el oprobio de Israel? Porque ¿quién es este filisteo incircunciso, para que provoque a los escuadrones del Dios viviente?"
+      },
+      {
+        "numero": 27,
+        "texto": "Y el pueblo le respondió las mismas palabras, diciendo: Así se hará al hombre que le venciere."
+      },
+      {
+        "numero": 28,
+        "texto": "Y oyéndole hablar Eliab su hermano mayor con aquellos hombres, se encendió en ira contra David y dijo: ¿Para qué has descendido acá? ¿y a quién has dejado aquellas pocas ovejas en el desierto? Yo conozco tu soberbia y la malicia de tu corazón, que para ver la batalla has venido."
+      },
+      {
+        "numero": 29,
+        "texto": "David respondió: ¿Qué he hecho yo ahora? ¿No es esto mero hablar?"
+      },
+      {
+        "numero": 30,
+        "texto": "Y apartándose de él hacia otros, preguntó de igual manera; y le dio el pueblo la misma respuesta de antes."
+      },
+      {
+        "numero": 31,
+        "texto": "Fueron oídas las palabras que David había dicho, y las refirieron delante de Saúl; y él lo hizo venir."
+      },
+      {
+        "numero": 32,
+        "texto": "Y dijo David a Saúl: No desmaye el corazón de ninguno a causa de él; tu siervo irá y peleará contra este filisteo."
+      },
+      {
+        "numero": 33,
+        "texto": "Dijo Saúl a David: No podrás tú ir contra aquel filisteo, para pelear con él; porque tú eres muchacho, y él un hombre de guerra desde su juventud."
+      },
+      {
+        "numero": 34,
+        "texto": "David respondió a Saúl: Tu siervo era pastor de las ovejas de su padre; y cuando venía un león, o un oso, y tomaba algún cordero de la manada,"
+      },
+      {
+        "numero": 35,
+        "texto": "salía yo tras él, y lo hería, y lo libraba de su boca; y si se levantaba contra mí, yo le echaba mano de la quijada, y lo hería y lo mataba."
+      },
+      {
+        "numero": 36,
+        "texto": "Fuese león, fuese oso, tu siervo lo mataba; y este filisteo incircunciso será como uno de ellos, porque ha provocado al ejéricto del Dios viviente."
+      },
+      {
+        "numero": 37,
+        "texto": "Añadió David: Jehová, que me ha librado de las garras del león y de las garras del oso, él también me librará de la mano de este filisteo. Y dijo Saúl a David: Ve, y Jehová esté contigo."
+      },
+      {
+        "numero": 38,
+        "texto": "Y Saúl vistió a David con sus ropas, y puso sobre su cabeza un casco de bronce, y le armó de coraza."
+      },
+      {
+        "numero": 39,
+        "texto": "Y ciñó David su espada sobre sus vestidos, y probó a andar, porque nunca había hecho la prueba. Y dijo David a Saúl: Yo no puedo andar con esto, porque nunca lo practiqué. Y David echó de sí aquellas cosas."
+      },
+      {
+        "numero": 40,
+        "texto": "Y tomó su cayado en su mano, y escogió cinco piedras lisas del arroyo, y las puso en el saco pastoril, en el zurrón que traía, y tomó su honda en su mano, y se fue hacia el filisteo."
+      },
+      {
+        "numero": 41,
+        "texto": "Y el filisteo venía andando y acercándose a David, y su escudero delante de él."
+      },
+      {
+        "numero": 42,
+        "texto": "Y cuando el filisteo miró y vio a David, le tuvo en poco; porque era muchacho, y rubio, y de hermoso parecer."
+      },
+      {
+        "numero": 43,
+        "texto": "Y dijo el filisteo a David: ¿Soy yo perro, para que vengas a mí con palos? Y maldijo a David por sus dioses."
+      },
+      {
+        "numero": 44,
+        "texto": "Dijo luego el filisteo a David: Ven a mí, y daré tu carne a las aves del cielo y a las bestias del campo."
+      },
+      {
+        "numero": 45,
+        "texto": "Entonces dijo David al filisteo: Tú vienes a mí con espada y lanza y jabalina; mas yo vengo a ti en el nombre de Jehová de los ejércitos, el Dios de los escuadrones de Israel, a quien tú has provocado."
+      },
+      {
+        "numero": 46,
+        "texto": "Jehová te entregará hoy en mi mano, y yo te venceré, y te cortaré la cabeza, y daré hoy los cuerpos de los filisteos a las aves del cielo y a las bestias de la tierra; y toda la tierra sabrá que hay Dios en Israel."
+      },
+      {
+        "numero": 47,
+        "texto": "Y sabrá toda esta congregación que Jehová no salva con espada y con lanza; porque de Jehová es la batalla, y él os entregará en nuestras manos."
+      },
+      {
+        "numero": 48,
+        "texto": "Y aconteció que cuando el filisteo se levantó y echó a andar para ir al encuentro de David, David se dio prisa, y corrió a la linea de batalla contra el filisteo."
+      },
+      {
+        "numero": 49,
+        "texto": "Y metiendo David su mano en la bolsa, tomó de allí una piedra, y la tiró con la honda, e hirió al filisteo en la frente; y la piedra quedó clavada en la frente, y cayó sobre su rostro en tierra."
+      },
+      {
+        "numero": 50,
+        "texto": "Así venció David al filisteo con honda y piedra; e hirió al filisteo y lo mató, sin tener David espada en su mano."
+      },
+      {
+        "numero": 51,
+        "texto": "Entonces corrió David y se puso sobre el filisteo; y tomando la espada de él y sacándola de su vaina, lo acabó de matar, y le cortó con ella la cabeza. Y cuando los filisteos vieron a su paladín muerto, huyeron."
+      },
+      {
+        "numero": 52,
+        "texto": "Levantándose luego los de Israel y los de Judá, gritaron, y siguieron a los filisteos hasta llegar al valle, y hasta las puertas de Ecrón. Y cayeron los heridos de los filisteos por el camino de Saaraim hasta Gat y Ecrón."
+      },
+      {
+        "numero": 53,
+        "texto": "Y volvieron los hijos de Israel de seguir tras los filisteos, y saquearon su campamento."
+      },
+      {
+        "numero": 54,
+        "texto": "Y David tomó la cabeza del filisteo y la trajo a Jerusalén, pero las armas de él las puso en su tienda."
+      },
+      {
+        "numero": 55,
+        "texto": "Y cuando Saúl vio a David que salía a encontrarse con el filisteo, dijo a Abner general del ejército: Abner, ¿de quién es hijo ese joven? Y Abner respondió:"
+      },
+      {
+        "numero": 56,
+        "texto": "Vive tu alma, oh rey, que no lo sé. Y el rey dijo: Pregunta de quién es hijo ese joven."
+      },
+      {
+        "numero": 57,
+        "texto": "Y cuando David volvía de matar al filisteo, Abner lo tomó y lo llevó delante de Saúl, teniendo David la cabeza del filisteo en su mano."
+      },
+      {
+        "numero": 58,
+        "texto": "Y le dijo Saúl: Muchacho, ¿de quién eres hijo? Y David respondió: Yo soy hijo de tu siervo Isaí de Belén."
+      }
+    ],
+    "18": [
+      {
+        "numero": 1,
+        "texto": "Aconteció que cuando él hubo acabado de hablar con Saúl, el alma de Jonatán quedó ligada con la de David, y lo amó Jonatán como a sí mismo."
+      },
+      {
+        "numero": 2,
+        "texto": "Y Saúl le tomó aquel día, y no le dejó volver a casa de su padre."
+      },
+      {
+        "numero": 3,
+        "texto": "E hicieron pacto Jonatán y David, porque él le amaba como a sí mismo."
+      },
+      {
+        "numero": 4,
+        "texto": "Y Jonatán se quitó el manto que llevaba, y se lo dio a David, y otras ropas suyas, hasta su espada, su arco y su talabarte."
+      },
+      {
+        "numero": 5,
+        "texto": "Y salía David a dondequiera que Saúl le enviaba, y se portaba prudentemente. Y lo puso Saúl sobre gente de guerra, y era acepto a los ojos de todo el pueblo, y a los ojos de los siervos de Saúl."
+      },
+      {
+        "numero": 6,
+        "texto": "Aconteció que cuando volvían ellos, cuando David volvió de matar al filisteo, salieron las mujeres de todas las ciudades de Israel cantando y danzando, para recibir al rey Saúl, con panderos, con cánticos de alegría y con instrumentos de música."
+      },
+      {
+        "numero": 7,
+        "texto": "Y cantaban las mujeres que danzaban, y decían: Saúl hirió a sus miles, Y David a sus diez miles."
+      },
+      {
+        "numero": 8,
+        "texto": "Y se enojó Saúl en gran manera, y le desagradó este dicho, y dijo: A David dieron diez miles, y a mí miles; no le falta más que el reino."
+      },
+      {
+        "numero": 9,
+        "texto": "Y desde aquel día Saúl no miró con buenos ojos a David."
+      },
+      {
+        "numero": 10,
+        "texto": "Aconteció al otro día, que un espíritu malo de parte de Dios tomó a Saúl, y él desvariaba en medio de la casa. David tocaba con su mano como los otros días; y tenía Saúl la lanza en la mano."
+      },
+      {
+        "numero": 11,
+        "texto": "Y arrojó Saúl la lanza, diciendo: Enclavaré a David a la pared. Pero David lo evadió dos veces."
+      },
+      {
+        "numero": 12,
+        "texto": "Mas Saúl estaba temeroso de David, por cuanto Jehová estaba con él, y se había apartado de Saúl;"
+      },
+      {
+        "numero": 13,
+        "texto": "por lo cual Saúl lo alejó de sí, y le hizo jefe de mil; y salía y entraba delante del pueblo."
+      },
+      {
+        "numero": 14,
+        "texto": "Y David se conducía prudentemente en todos sus asuntos, y Jehová estaba con él."
+      },
+      {
+        "numero": 15,
+        "texto": "Y viendo Saúl que se portaba tan prudentemente, tenía temor de él."
+      },
+      {
+        "numero": 16,
+        "texto": "Mas todo Israel y Judá amaba a David, porque él salía y entraba delante de ellos."
+      },
+      {
+        "numero": 17,
+        "texto": "Entonces dijo Saúl a David: He aquí, yo te daré Merab mi hija mayor por mujer, con tal que me seas hombre valiente, y pelees las batallas de Jehová. Mas Saúl decía: No será mi mano contra él, sino que será contra él la mano de los filisteos."
+      },
+      {
+        "numero": 18,
+        "texto": "Pero David respondió a Saúl: ¿Quién soy yo, o qué es mi vida, o la familia de mi padre en Israel, para que yo sea yerno del rey?"
+      },
+      {
+        "numero": 19,
+        "texto": "Y llegado el tiempo en que Merab hija de Saúl se había de dar a David, fue dada por mujer a Adriel meholatita."
+      },
+      {
+        "numero": 20,
+        "texto": "Pero Mical la otra hija de Saúl amaba a David; y fue dicho a Saúl, y le pareció bien a sus ojos."
+      },
+      {
+        "numero": 21,
+        "texto": "Y Saúl dijo: Yo se la daré, para que le sea por lazo, y para que la mano de los filisteos sea contra él. Dijo, pues, Saúl a David por segunda vez: Tú serás mi yerno hoy."
+      },
+      {
+        "numero": 22,
+        "texto": "Y mandó Saúl a sus siervos: Hablad en secreto a David, diciéndole: He aquí el rey te ama, y todos sus siervos te quieren bien; sé, pues, yerno del rey."
+      },
+      {
+        "numero": 23,
+        "texto": "Los criados de Saúl hablaron estas palabras a los oídos de David. Y David dijo: ¿Os parece a vosotros que es poco ser yerno del rey, siendo yo un hombre pobre y de ninguna estima?"
+      },
+      {
+        "numero": 24,
+        "texto": "Y los criados de Saúl le dieron la respuesta, diciendo: Tales palabras ha dicho David."
+      },
+      {
+        "numero": 25,
+        "texto": "Y Saúl dijo: Decid así a David: El rey no desea la dote, sino cien prepucios de filisteos, para que sea tomada venganza de los enemigos del rey. Pero Saúl pensaba hacer caer a David en manos de los filisteos."
+      },
+      {
+        "numero": 26,
+        "texto": "Cuando sus siervos declararon a David estas palabras, pareció bien la cosa a los ojos de David, para ser yerno del rey. Y antes que el plazo se cumpliese,"
+      },
+      {
+        "numero": 27,
+        "texto": "se levantó David y se fue con su gente, y mató a doscientos hombres de los filisteos; y trajo David los prepucios de ellos y los entregó todos al rey, a fin de hacerse yerno del rey. Y Saúl le dio su hija Mical por mujer."
+      },
+      {
+        "numero": 28,
+        "texto": "Pero Saúl, viendo y considerando que Jehová estaba con David, y que su hija Mical lo amaba,"
+      },
+      {
+        "numero": 29,
+        "texto": "tuvo más temor de David; y fue Saúl enemigo de David todos los días."
+      },
+      {
+        "numero": 30,
+        "texto": "Y salieron a campaña los príncipes de los filisteos; y cada vez que salían, David tenía más éxito que todos los siervos de Saúl, por lo cual se hizo de mucha estima su nombre."
+      }
+    ],
+    "19": [
+      {
+        "numero": 1,
+        "texto": "Habló Saúl a Jonatán su hijo, y a todos sus siervos, para que matasen a David; pero Jonatán hijo de Saúl amaba a David en gran manera,"
+      },
+      {
+        "numero": 2,
+        "texto": "y dio aviso a David, diciendo: Saúl mi padre procura matarte; por tanto cuídate hasta la mañana, y estate en lugar oculto y escóndete."
+      },
+      {
+        "numero": 3,
+        "texto": "Y yo saldré y estaré junto a mi padre en el campo donde estés; y hablaré de ti a mi padre, y te haré saber lo que haya."
+      },
+      {
+        "numero": 4,
+        "texto": "Y Jonatán habló bien de David a Saúl su padre, y le dijo: No peque el rey contra su siervo David, porque ninguna cosa ha cometido contra ti, y porque sus obras han sido muy buenas para contigo;"
+      },
+      {
+        "numero": 5,
+        "texto": "pues él tomó su vida en su mano, y mató al filisteo, y Jehová dio gran salvación a todo Israel. Tú lo viste, y te alegraste; ¿por qué, pues, pecarás contra la sangre inocente, matando a David sin causa?"
+      },
+      {
+        "numero": 6,
+        "texto": "Y escuchó Saúl la voz de Jonatán, y juró Saúl: Vive Jehová, que no morirá."
+      },
+      {
+        "numero": 7,
+        "texto": "Y llamó Jonatán a David, y le declaró todas estas palabras; y él mismo trajo a David a Saúl, y estuvo delante de él como antes."
+      },
+      {
+        "numero": 8,
+        "texto": "Después hubo de nuevo guerra; y salió David y peleó contra los filisteos, y los hirió con gran estrago, y huyeron delante de él."
+      },
+      {
+        "numero": 9,
+        "texto": "Y el espíritu malo de parte de Jehová vino sobre Saúl; y estando sentado en su casa tenía una lanza a mano, mientras David estaba tocando."
+      },
+      {
+        "numero": 10,
+        "texto": "Y Saúl procuró enclavar a David con la lanza a la pared, pero él se apartó de delante de Saúl, el cual hirió con la lanza en la pared; y David huyó, y escapó aquella noche."
+      },
+      {
+        "numero": 11,
+        "texto": "Saúl envió luego mensajeros a casa de David para que lo vigilasen, y lo matasen a la mañana. Mas Mical su mujer avisó a David, diciendo: Si no salvas tu vida esta noche, mañana serás muerto."
+      },
+      {
+        "numero": 12,
+        "texto": "Y descolgó Mical a David por una ventana; y él se fue y huyó, y escapó."
+      },
+      {
+        "numero": 13,
+        "texto": "Tomó luego Mical una estatua, y la puso sobre la cama, y le acomodó por cabecera una almohada de pelo de cabra y la cubrió con la ropa."
+      },
+      {
+        "numero": 14,
+        "texto": "Y cuando Saúl envió mensajeros para prender a David, ella respondió: Está enfermo."
+      },
+      {
+        "numero": 15,
+        "texto": "Volvió Saúl a enviar mensajeros para que viesen a David, diciendo: Traédmelo en la cama para que lo mate."
+      },
+      {
+        "numero": 16,
+        "texto": "Y cuando los mensajeros entraron, he aquí la estatua estaba en la cama, y una almohada de pelo de cabra a su cabecera."
+      },
+      {
+        "numero": 17,
+        "texto": "Entonces Saúl dijo a Mical: ¿Por qué me has engañado así, y has dejado escapar a mi enemigo? Y Mical respondió a Saúl: Porque él me dijo: Déjame ir; si no, yo te mataré."
+      },
+      {
+        "numero": 18,
+        "texto": "Huyó, pues, David, y escapó, y vino a Samuel en Ramá, y le dijo todo lo que Saúl había hecho con él. Y él y Samuel se fueron y moraron en Naiot."
+      },
+      {
+        "numero": 19,
+        "texto": "Y fue dado aviso a Saúl, diciendo: He aquí que David está en Naiot en Ramá."
+      },
+      {
+        "numero": 20,
+        "texto": "Entonces Saúl envió mensajeros para que trajeran a David, los cuales vieron una compañía de profetas que profetizaban, y a Samuel que estaba allí y los presidía. Y vino el Espíritu de Dios sobre los mensajeros de Saúl, y ellos también profetizaron."
+      },
+      {
+        "numero": 21,
+        "texto": "Cuando lo supo Saúl, envió otros mensajeros, los cuales también profetizaron. Y Saúl volvió a enviar mensajeros por tercera vez, y ellos también profetizaron."
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces él mismo fue a Ramá; y llegando al gran pozo que está en Secú, preguntó diciendo: ¿Dónde están Samuel y David? Y uno respondió: He aquí están en Naiot en Ramá."
+      },
+      {
+        "numero": 23,
+        "texto": "Y fue a Naiot en Ramá; y también vino sobre él el Espíritu de Dios, y siguió andando y profetizando hasta que llegó a Naiot en Ramá."
+      },
+      {
+        "numero": 24,
+        "texto": "Y él también se despojó de sus vestidos, y profetizó igualmente delante de Samuel, y estuvo desnudo todo aquel día y toda aquella noche. De aquí se dijo: ¿También Saúl entre los profetas?"
+      }
+    ],
+    "20": [
+      {
+        "numero": 1,
+        "texto": "Después David huyó de Naiot en Ramá, y vino delante de Jonatán, y dijo: ¿Qué he hecho yo? ¿Cuál es mi maldad, o cuál mi pecado contra tu padre, para que busque mi vida?"
+      },
+      {
+        "numero": 2,
+        "texto": "El le dijo: En ninguna manera; no morirás. He aquí que mi padre ninguna cosa hará, grande ni pequeña, que no me la descubra; ¿por qué, pues, me ha de encubrir mi padre este asunto? No será así."
+      },
+      {
+        "numero": 3,
+        "texto": "Y David volvió a jurar diciendo: Tu padre sabe claramente que yo he hallado gracia delante de tus ojos, y dirá: No sepa esto Jonatán, para que no se entristezca; y ciertamente, vive Jehová y vive tu alma, que apenas hay un paso entre mí y la muerte."
+      },
+      {
+        "numero": 4,
+        "texto": "Y Jonatán dijo a David: Lo que deseare tu alma, haré por ti."
+      },
+      {
+        "numero": 5,
+        "texto": "Y David respondió a Jonatán: He aquí que mañana será nueva luna, y yo acostumbro sentarme con el rey a comer; mas tú dejarás que me esconda en el campo hasta la tarde del tercer día."
+      },
+      {
+        "numero": 6,
+        "texto": "Si tu padre hiciere mención de mí, dirás: Me rogó mucho que lo dejase ir corriendo a Belén su ciudad, porque todos los de su familia celebran allá el sacrificio anual."
+      },
+      {
+        "numero": 7,
+        "texto": "Si él dijere: Bien está, entonces tendrá paz tu siervo; mas si se enojare, sabe que la maldad está determinada de parte de él."
+      },
+      {
+        "numero": 8,
+        "texto": "Harás, pues, misericordia con tu siervo, ya que has hecho entrar a tu siervo en pacto de Jehová contigo; y si hay maldad en mí, mátame tú, pues no hay necesidad de llevarme hasta tu padre."
+      },
+      {
+        "numero": 9,
+        "texto": "Y Jonatán le dijo: Nunca tal te suceda; antes bien, si yo supiere que mi padre ha determinado maldad contra ti, ¿no te lo avisaría yo?"
+      },
+      {
+        "numero": 10,
+        "texto": "Dijo entonces David a Jonatán: ¿Quién me dará aviso si tu padre te respondiere ásperamente?"
+      },
+      {
+        "numero": 11,
+        "texto": "Y Jonatán dijo a David: Ven, salgamos al campo. Y salieron ambos al campo."
+      },
+      {
+        "numero": 12,
+        "texto": "Entonces dijo Jonatán a David: ¡Jehová Dios de Israel, sea testigo! Cuando le haya preguntado a mi padre mañana a esta hora, o el día tercero, si resultare bien para con David, entonces enviaré a ti para hacértelo saber."
+      },
+      {
+        "numero": 13,
+        "texto": "Pero si mi padre intentare hacerte mal, Jehová haga así a Jonatán, y aun le añada, si no te lo hiciere saber y te enviare para que te vayas en paz. Y esté Jehová contigo, como estuvo con mi padre."
+      },
+      {
+        "numero": 14,
+        "texto": "Y si yo viviere, harás conmigo misericordia de Jehová, para que no muera,"
+      },
+      {
+        "numero": 15,
+        "texto": "y no apartarás tu misericordia de mi casa para siempre. Cuando Jehová haya cortado uno por uno los enemigos de David de la tierra, no dejes que el nombre de Jonatán sea quitado de la casa de David."
+      },
+      {
+        "numero": 16,
+        "texto": "Así hizo Jonatán pacto con la casa de David, diciendo: Requiéralo Jehová de la mano de los enemigos de David."
+      },
+      {
+        "numero": 17,
+        "texto": "Y Jonatán hizo jurar a David otra vez, porque le amaba, pues le amaba como a sí mismo."
+      },
+      {
+        "numero": 18,
+        "texto": "Luego le dijo Jonatán: Mañana es nueva luna, y tú serás echado de menos, porque tu asiento estará vacío."
+      },
+      {
+        "numero": 19,
+        "texto": "Estarás, pues, tres días, y luego descenderás y vendrás al lugar donde estabas escondido el día que ocurrió esto mismo, y esperarás junto a la piedra de Ezel."
+      },
+      {
+        "numero": 20,
+        "texto": "Y yo tiraré tres saetas hacia aquel lado, como ejercitándome al blanco."
+      },
+      {
+        "numero": 21,
+        "texto": "Luego enviaré al criado, diciéndole: Ve, busca las saetas. Y si dijere al criado: He allí las saetas más acá de ti, tómalas; tú vendrás, porque paz tienes, y nada malo hay, vive Jehová."
+      },
+      {
+        "numero": 22,
+        "texto": "Mas si yo dijere al muchacho así: He allí las saetas más allá de ti; vete, porque Jehová te ha enviado."
+      },
+      {
+        "numero": 23,
+        "texto": "En cuanto al asunto de que tú y yo hemos hablado, esté Jehová entre nosotros dos para siempre."
+      },
+      {
+        "numero": 24,
+        "texto": "David, pues, se escondió en el campo, y cuando llegó la nueva luna, se sentó el rey a comer pan."
+      },
+      {
+        "numero": 25,
+        "texto": "Y el rey se sentó en su silla, como solía, en el asiento junto a la pared, y Jonatán se levantó, y se sentó Abner al lado de Saúl, y el lugar de David quedó vacío."
+      },
+      {
+        "numero": 26,
+        "texto": "Mas aquel día Saúl no dijo nada, porque se decía: Le habrá acontecido algo, y no está limpio; de seguro no está purificado."
+      },
+      {
+        "numero": 27,
+        "texto": "Al siguiente día, el segundo día de la nueva luna, aconteció también que el asiento de David quedó vacío. Y Saúl dijo a Jonatán su hijo: ¿Por qué no ha venido a comer el hijo de Isaí hoy ni ayer?"
+      },
+      {
+        "numero": 28,
+        "texto": "Y Jonatán respondió a Saúl: David me pidió encarecidamente que le dejase ir a Belén,"
+      },
+      {
+        "numero": 29,
+        "texto": "diciendo: Te ruego que me dejes ir, porque nuestra familia celebra sacrificio en la ciudad, y mi hermano me lo ha mandado; por lo tanto, si he hallado gracia en tus ojos, permíteme ir ahora para visitar a mis hermanos. Por esto, pues, no ha venido a la mesa del rey."
+      },
+      {
+        "numero": 30,
+        "texto": "Entonces se encendió la ira de Saúl contra Jonatán, y le dijo: Hijo de la perversa y rebelde, ¿acaso no sé yo que tú has elegido al hijo de Isaí para confusión tuya, y para confusión de la vergüenza de tu madre?"
+      },
+      {
+        "numero": 31,
+        "texto": "Porque todo el tiempo que el hijo de Isaí viviere sobre la tierra, ni tú estarás firme, ni tu reino. Envía pues, ahora, y tráemelo, porque ha de morir."
+      },
+      {
+        "numero": 32,
+        "texto": "Y Jonatán respondió a su padre Saúl y le dijo: ¿Por qué morirá? ¿Qué ha hecho?"
+      },
+      {
+        "numero": 33,
+        "texto": "Entonces Saúl le arrojó una lanza para herirlo; de donde entendió Jonatán que su padre estaba resuelto a matar a David."
+      },
+      {
+        "numero": 34,
+        "texto": "Y se levantó Jonatán de la mesa con exaltada ira, y no comió pan el segundo día de la nueva luna; porque tenía dolor a causa de David, porque su padre le había afrentado."
+      },
+      {
+        "numero": 35,
+        "texto": "Al otro día, de mañana, salió Jonatán al campo, al tiempo señalado con David, y un muchacho pequeño con él."
+      },
+      {
+        "numero": 36,
+        "texto": "Y dijo al muchacho: Corre y busca las saetas que yo tirare. Y cuando el muchacho iba corriendo, él tiraba la saeta de modo que pasara más allá de él."
+      },
+      {
+        "numero": 37,
+        "texto": "Y llegando el muchacho adonde estaba la saeta que Jonatán había tirado, Jonatán dio voces tras el muchacho, diciendo: ¿No está la saeta más allá de ti?"
+      },
+      {
+        "numero": 38,
+        "texto": "Y volvió a gritar Jonatán tras el muchacho: Corre, date prisa, no te pares. Y el muchacho de Jonatán recogió las saetas, y vino a su señor."
+      },
+      {
+        "numero": 39,
+        "texto": "Pero ninguna cosa entendió el muchacho; solamente Jonatán y David entendían de lo que se trataba."
+      },
+      {
+        "numero": 40,
+        "texto": "Luego dio Jonatán sus armas a su muchacho, y le dijo: Vete y llévalas a la ciudad."
+      },
+      {
+        "numero": 41,
+        "texto": "Y luego que el muchacho se hubo ido, se levantó David del lado del sur, y se inclinó tres veces postrándose hasta la tierra; y besándose el uno al otro, lloraron el uno con el otro; y David lloró más."
+      },
+      {
+        "numero": 42,
+        "texto": "Y Jonatán dijo a David: Vete en paz, porque ambos hemos jurado por el nombre de Jehová, diciendo: Jehová esté entre tú y yo, entre tu descendencia y mi descendencia, para siempre. Y él se levantó y se fue; y Jonatán entró en la ciudad."
+      }
+    ],
+    "21": [
+      {
+        "numero": 1,
+        "texto": "Vino David a Nob, al sacerdote Ahimelec; y se sorprendió Ahimelec de su encuentro, y le dijo: ¿Cómo vienes tú solo, y nadie contigo?"
+      },
+      {
+        "numero": 2,
+        "texto": "Y respondió David al sacerdote Ahimelec: El rey me encomendó un asunto, y me dijo: Nadie sepa cosa alguna del asunto a que te envío, y lo que te he encomendado; y yo les señalé a los criados un cierto lugar."
+      },
+      {
+        "numero": 3,
+        "texto": "Ahora, pues, ¿qué tienes a mano? Dame cinco panes, o lo que tengas."
+      },
+      {
+        "numero": 4,
+        "texto": "El sacerdote respondió a David y dijo: No tengo pan común a la mano, solamente tengo pan sagrado; pero lo daré si los criados se han guardado a lo menos de mujeres."
+      },
+      {
+        "numero": 5,
+        "texto": "Y David respondió al sacerdote, y le dijo: En verdad las mujeres han estado lejos de nosotros ayer y anteayer; cuando yo salí, ya los vasos de los jóvenes eran santos, aunque el viaje es profano; ¿cuánto más no serán santos hoy sus vasos?"
+      },
+      {
+        "numero": 6,
+        "texto": "Así el sacerdote le dio el pan sagrado, porque allí no había otro pan sino los panes de la proposición, los cuales habían sido quitados de la presencia de Jehová, para poner panes calientes el día que aquéllos fueron quitados."
+      },
+      {
+        "numero": 7,
+        "texto": "Y estaba allí aquel día detenido delante de Jehová uno de los siervos de Saúl, cuyo nombre era Doeg, edomita, el principal de los pastores de Saúl."
+      },
+      {
+        "numero": 8,
+        "texto": "Y David dijo a Ahimelec: ¿No tienes aquí a mano lanza o espada? Porque no tomé en mi mano mi espada ni mis armas, por cuanto la orden del rey era apremiante."
+      },
+      {
+        "numero": 9,
+        "texto": "Y el sacerdote respondió: La espada de Goliat el filisteo, al que tú venciste en el valle de Ela, está aquí envuelta en un velo detrás del efod; si quieres tomarla, tómala; porque aquí no hay otra sino esa. Y dijo David: Ninguna como ella; dámela."
+      },
+      {
+        "numero": 10,
+        "texto": "Y levantándose David aquel día, huyó de la presencia de Saúl, y se fue a Aquis rey de Gat."
+      },
+      {
+        "numero": 11,
+        "texto": "Y los siervos de Aquis le dijeron: ¿No es éste David, el rey de la tierra? ¿no es éste de quien cantaban en las danzas, diciendo: Hirió Saúl a sus miles, Y David a sus diez miles?"
+      },
+      {
+        "numero": 12,
+        "texto": "Y David puso en su corazón estas palabras, y tuvo gran temor de Aquis rey de Gat."
+      },
+      {
+        "numero": 13,
+        "texto": "Y cambió su manera de comportarse delante de ellos, y se fingió loco entre ellos, y escribía en las portadas de las puertas, y dejaba correr la saliva por su barba."
+      },
+      {
+        "numero": 14,
+        "texto": "Y dijo Aquis a sus siervos: He aquí, veis que este hombre es demente; ¿por qué lo habéis traído a mí?"
+      },
+      {
+        "numero": 15,
+        "texto": "¿Acaso me faltan locos, para que hayáis traído a éste que hiciese de loco delante de mí? ¿Había de entrar éste en mi casa?"
+      }
+    ],
+    "22": [
+      {
+        "numero": 1,
+        "texto": "Yéndose luego David de allí, huyó a la cueva de Adulam; y cuando sus hermanos y toda la casa de su padre lo supieron, vinieron allí a él."
+      },
+      {
+        "numero": 2,
+        "texto": "Y se juntaron con él todos los afligidos, y todo el que estaba endeudado, y todos los que se hallaban en amargura de espíritu, y fue hecho jefe de ellos; y tuvo consigo como cuatrocientos hombres."
+      },
+      {
+        "numero": 3,
+        "texto": "Y se fue David de allí a Mizpa de Moab, y dijo al rey de Moab: Yo te ruego que mi padre y mi madre estén con vosotros, hasta que sepa lo que Dios hará de mí."
+      },
+      {
+        "numero": 4,
+        "texto": "Los trajo, pues, a la presencia del rey de Moab, y habitaron con él todo el tiempo que David estuvo en el lugar fuerte."
+      },
+      {
+        "numero": 5,
+        "texto": "Pero el profeta Gad dijo a David: No te estés en este lugar fuerte; anda y vete a tierra de Judá. Y David se fue, y vino al bosque de Haret."
+      },
+      {
+        "numero": 6,
+        "texto": "Oyó Saúl que se sabía de David y de los que estaban con él. Y Saúl estaba sentado en Gabaa, debajo de un tamarisco sobre un alto; y tenía su lanza en su mano, y todos sus siervos estaban alrededor de él."
+      },
+      {
+        "numero": 7,
+        "texto": "Y dijo Saúl a sus siervos que estaban alrededor de él: Oíd ahora, hijos de Benjamín: ¿Os dará también a todos vosotros el hijo de Isaí tierras y viñas, y os hará a todos vosotros jefes de millares y jefes de centenas,"
+      },
+      {
+        "numero": 8,
+        "texto": "para que todos vosotros hayáis conspirado contra mí, y no haya quien me descubra al oído cómo mi hijo ha hecho alianza con el hijo de Isaí, ni alguno de vosotros que se duela de mí y me descubra cómo mi hijo ha levantado a mi siervo contra mí para que me aceche, tal como lo hace hoy?"
+      },
+      {
+        "numero": 9,
+        "texto": "Entonces Doeg edomita, que era el principal de los siervos de Saúl, respondió y dijo: Yo vi al hijo de Isaí que vino a Nob, a Ahimelec hijo de Ahitob,"
+      },
+      {
+        "numero": 10,
+        "texto": "el cual consultó por él a Jehová y le dio provisiones, y también le dio la espada de Goliat el filisteo."
+      },
+      {
+        "numero": 11,
+        "texto": "Y el rey envió por el sacerdote Ahimelec hijo de Ahitob, y por toda la casa de su padre, los sacerdotes que estaban en Nob; y todos vinieron al rey."
+      },
+      {
+        "numero": 12,
+        "texto": "Y Saúl le dijo: Oye ahora, hijo de Ahitob. Y él dijo: Heme aquí, señor mío."
+      },
+      {
+        "numero": 13,
+        "texto": "Y le dijo Saúl: ¿Por qué habéis conspirado contra mí, tú y el hijo de Isaí, cuando le diste pan y espada, y consultaste por él a Dios, para que se levantase contra mí y me acechase, como lo hace hoy día?"
+      },
+      {
+        "numero": 14,
+        "texto": "Entonces Ahimelec respondió al rey, y dijo: ¿Y quién entre todos tus siervos es tan fiel como David, yerno también del rey, que sirve a tus órdenes y es ilustre en tu casa?"
+      },
+      {
+        "numero": 15,
+        "texto": "¿He comenzado yo desde hoy a consultar por él a Dios? Lejos sea de mí; no culpe el rey de cosa alguna a su siervo, ni a toda la casa de mi padre; porque tu siervo ninguna cosa sabe de este asunto, grande ni pequeña."
+      },
+      {
+        "numero": 16,
+        "texto": "Y el rey dijo: Sin duda morirás, Ahimelec, tú y toda la casa de tu padre."
+      },
+      {
+        "numero": 17,
+        "texto": "Entonces dijo el rey a la gente de su guardia que estaba alrededor de él: Volveos y matad a los sacerdotes de Jehová; porque también la mano de ellos está con David, pues sabiendo ellos que huía, no me lo descubrieron. Pero los siervos del rey no quisieron extender sus manos para matar a los sacerdotes de Jehová."
+      },
+      {
+        "numero": 18,
+        "texto": "Entonces dijo el rey a Doeg: Vuelve tú, y arremete contra los sacerdotes. Y se volvió Doeg el edomita y acometió a los sacerdotes, y mató en aquel día a ochenta y cinco varones que vestían efod de lino."
+      },
+      {
+        "numero": 19,
+        "texto": "Y a Nob, ciudad de los sacerdotes, hirió a filo de espada; así a hombres como a mujeres, niños hasta los de pecho, bueyes, asnos y ovejas, todo lo hirió a filo de espada."
+      },
+      {
+        "numero": 20,
+        "texto": "Pero uno de los hijos de Ahimelec hijo de Ahitob, que se llamaba Abiatar, escapó, y huyó tras David."
+      },
+      {
+        "numero": 21,
+        "texto": "Y Abiatar dio aviso a David de cómo Saúl había dado muerte a los sacerdotes de Jehová."
+      },
+      {
+        "numero": 22,
+        "texto": "Y dijo David a Abiatar: Yo sabía que estando allí aquel día Doeg el edomita, él lo había de hacer saber a Saúl. Yo he ocasionado la muerte a todas las personas de la casa de tu padre."
+      },
+      {
+        "numero": 23,
+        "texto": "Quédate conmigo, no temas; quien buscare mi vida, buscará también la tuya; pues conmigo estarás a salvo."
+      }
+    ],
+    "23": [
+      {
+        "numero": 1,
+        "texto": "Dieron aviso a David, diciendo: He aquí que los filisteos combaten a Keila, y roban las eras."
+      },
+      {
+        "numero": 2,
+        "texto": "Y David consultó a Jehová, diciendo: ¿Iré a atacar a estos filisteos? Y Jehová respondió a David: Ve, ataca a los filisteos, y libra a Keila."
+      },
+      {
+        "numero": 3,
+        "texto": "Pero los que estaban con David le dijeron: He aquí que nosotros aquí en Judá estamos con miedo; ¿cuánto más si fuéremos a Keila contra el ejército de los filisteos?"
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces David volvió a consultar a Jehová. Y Jehová le respondió y dijo: Levántate, desciende a Keila, pues yo entregaré en tus manos a los filisteos."
+      },
+      {
+        "numero": 5,
+        "texto": "Fue, pues, David con sus hombres a Keila, y peleó contra los filisteos, se llevó sus ganados, y les causó una gran derrota; y libró David a los de Keila."
+      },
+      {
+        "numero": 6,
+        "texto": "Y aconteció que cuando Abiatar hijo de Ahimelec huyó siguiendo a David a Keila, descendió con el efod en su mano."
+      },
+      {
+        "numero": 7,
+        "texto": "Y fue dado aviso a Saúl que David había venido a Keila. Entonces dijo Saúl: Dios lo ha entregado en mi mano, pues se ha encerrado entrando en ciudad con puertas y cerraduras."
+      },
+      {
+        "numero": 8,
+        "texto": "Y convocó Saúl a todo el pueblo a la batalla para descender a Keila, y poner sitio a David y a sus hombres."
+      },
+      {
+        "numero": 9,
+        "texto": "Mas entendiendo David que Saúl ideaba el mal contra él, dijo a Abiatar sacerdote: Trae el efod."
+      },
+      {
+        "numero": 10,
+        "texto": "Y dijo David: Jehová Dios de Israel, tu siervo tiene entendido que Saúl trata de venir contra Keila, a destruir la ciudad por causa mía."
+      },
+      {
+        "numero": 11,
+        "texto": "¿Me entregarán los vecinos de Keila en sus manos? ¿Descenderá Saúl, como ha oído tu siervo? Jehová Dios de Israel, te ruego que lo declares a tu siervo. Y Jehová dijo: Sí, descenderá."
+      },
+      {
+        "numero": 12,
+        "texto": "Dijo luego David: ¿Me entregarán los vecinos de Keila a mí y a mis hombres en manos de Saúl? Y Jehová respondió: Os entregarán."
+      },
+      {
+        "numero": 13,
+        "texto": "David entonces se levantó con sus hombres, que eran como seiscientos, y salieron de Keila, y anduvieron de un lugar a otro. Y vino a Saúl la nueva de que David se había escapado de Keila, y desistió de salir."
+      },
+      {
+        "numero": 14,
+        "texto": "Y David se quedó en el desierto en lugares fuertes, y habitaba en un monte en el desierto de Zif; y lo buscaba Saúl todos los días, pero Dios no lo entregó en sus manos."
+      },
+      {
+        "numero": 15,
+        "texto": "Viendo, pues, David que Saúl había salido en busca de su vida, se estuvo en Hores, en el desierto de Zif."
+      },
+      {
+        "numero": 16,
+        "texto": "Entonces se levantó Jonatán hijo de Saúl y vino a David a Hores, y fortaleció su mano en Dios."
+      },
+      {
+        "numero": 17,
+        "texto": "Y le dijo: No temas, pues no te hallará la mano de Saúl mi padre, y tú reinarás sobre Israel, y yo seré segundo después de ti; y aun Saúl mi padre así lo sabe."
+      },
+      {
+        "numero": 18,
+        "texto": "Y ambos hicieron pacto delante de Jehová; y David se quedó en Hores, y Jonatán se volvió a su casa."
+      },
+      {
+        "numero": 19,
+        "texto": "Después subieron los de Zif para decirle a Saúl en Gabaa: ¿No está David escondido en nuestra tierra en las peñas de Hores, en el collado de Haquila, que está al sur del desierto?"
+      },
+      {
+        "numero": 20,
+        "texto": "Por tanto, rey, desciende pronto ahora, conforme a tu deseo, y nosotros lo entregaremos en la mano del rey."
+      },
+      {
+        "numero": 21,
+        "texto": "Y Saúl dijo: Benditos seáis vosotros de Jehová, que habéis tenido compasión de mí."
+      },
+      {
+        "numero": 22,
+        "texto": "Id, pues, ahora, aseguraos más, conoced y ved el lugar de su escondite, y quién lo haya visto allí; porque se me ha dicho que él es astuto en gran manera."
+      },
+      {
+        "numero": 23,
+        "texto": "Observad, pues, e informaos de todos los escondrijos donde se oculta, y volved a mí con información segura, y yo iré con vosotros; y si él estuviere en la tierra, yo le buscaré entre todos los millares de Judá."
+      },
+      {
+        "numero": 24,
+        "texto": "Y ellos se levantaron, y se fueron a Zif delante de Saúl. Pero David y su gente estaban en el desierto de Maón, en el Arabá al sur del desierto."
+      },
+      {
+        "numero": 25,
+        "texto": "Y se fue Saúl con su gente a buscarlo; pero fue dado aviso a David, y descendió a la peña, y se quedó en el desierto de Maón. Cuando Saúl oyó esto, siguió a David al desierto de Maón."
+      },
+      {
+        "numero": 26,
+        "texto": "Y Saúl iba por un lado del monte, y David con sus hombres por el otro lado del monte, y se daba prisa David para escapar de Saúl; mas Saúl y sus hombres habían encerrado a David y a su gente para capturarlos."
+      },
+      {
+        "numero": 27,
+        "texto": "Entonces vino un mensajero a Saúl, diciendo: Ven luego, porque los filisteos han hecho una irrupción en el país."
+      },
+      {
+        "numero": 28,
+        "texto": "Volvió, por tanto, Saúl de perseguir a David, y partió contra los filisteos. Por esta causa pusieron a aquel lugar por nombre Sela-hama-lecot."
+      },
+      {
+        "numero": 29,
+        "texto": "Entonces David subió de allí y habitó en los lugares fuertes de En-gadi."
+      }
+    ],
+    "24": [
+      {
+        "numero": 1,
+        "texto": "Cuando Saúl volvió de perseguir a los filisteos, le dieron aviso, diciendo: He aquí David está en el desierto de En-gadi."
+      },
+      {
+        "numero": 2,
+        "texto": "Y tomando Saúl tres mil hombres escogidos de todo Israel, fue en busca de David y de sus hombres, por las cumbres de los peñascos de las cabras monteses."
+      },
+      {
+        "numero": 3,
+        "texto": "Y cuando llegó a un redil de ovejas en el camino, donde había una cueva, entró Saúl en ella para cubrir sus pies; y David y sus hombres estaban sentados en los rincones de la cueva."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces los hombres de David le dijeron: He aquí el día de que te dijo Jehová: He aquí que entrego a tu enemigo en tu mano, y harás con él como te pareciere. Y se levantó David, y calladamente cortó la orilla del manto de Saúl."
+      },
+      {
+        "numero": 5,
+        "texto": "Después de esto se turbó el corazón de David, porque había cortado la orilla del manto de Saúl."
+      },
+      {
+        "numero": 6,
+        "texto": "Y dijo a sus hombres: Jehová me guarde de hacer tal cosa contra mi señor, el ungido de Jehová, que yo extienda mi mano contra él; porque es el ungido de Jehová."
+      },
+      {
+        "numero": 7,
+        "texto": "Así reprimió David a sus hombres con palabras, y no les permitió que se levantasen contra Saúl. Y Saúl, saliendo de la cueva, siguió su camino."
+      },
+      {
+        "numero": 8,
+        "texto": "También David se levantó después, y saliendo de la cueva dio voces detrás de Saúl, diciendo: ¡Mi señor el rey! Y cuando Saúl miró hacia atrás, David inclinó su rostro a tierra, e hizo reverencia."
+      },
+      {
+        "numero": 9,
+        "texto": "Y dijo David a Saúl: ¿Por qué oyes las palabras de los que dicen: Mira que David procura tu mal?"
+      },
+      {
+        "numero": 10,
+        "texto": "He aquí han visto hoy tus ojos cómo Jehová te ha puesto hoy en mis manos en la cueva; y me dijeron que te matase, pero te perdoné, porque dije: No extenderé mi mano contra mi señor, porque es el ungido de Jehová."
+      },
+      {
+        "numero": 11,
+        "texto": "Y mira, padre mío, mira la orilla de tu manto en mi mano; porque yo corté la orilla de tu manto, y no te maté. Conoce, pues, y ve que no hay mal ni traición en mi mano, ni he pecado contra ti; sin embargo, tú andas a caza de mi vida para quitármela."
+      },
+      {
+        "numero": 12,
+        "texto": "Juzgue Jehová entre tú y yo, y véngueme de ti Jehová; pero mi mano no será contra ti."
+      },
+      {
+        "numero": 13,
+        "texto": "Como dice el proverbio de los antiguos: De los impíos saldrá la impiedad; así que mi mano no será contra ti."
+      },
+      {
+        "numero": 14,
+        "texto": "¿Tras quién ha salido el rey de Israel? ¿A quién persigues? ¿A un perro muerto? ¿A una pulga?"
+      },
+      {
+        "numero": 15,
+        "texto": "Jehová, pues, será juez, y él juzgará entre tú y yo. El vea y sustente mi causa, y me defienda de tu mano."
+      },
+      {
+        "numero": 16,
+        "texto": "Y aconteció que cuando David acabó de decir estas palabras a Saúl, Saúl dijo: ¿No es esta la voz tuya, hijo mío David? Y alzó Saúl su voz y lloró,"
+      },
+      {
+        "numero": 17,
+        "texto": "y dijo a David: Más justo eres tú que yo, que me has pagado con bien, habiéndote yo pagado con mal."
+      },
+      {
+        "numero": 18,
+        "texto": "Tú has mostrado hoy que has hecho conmigo bien; pues no me has dado muerte, habiéndome entregado Jehová en tu mano."
+      },
+      {
+        "numero": 19,
+        "texto": "Porque ¿quién hallará a su enemigo, y lo dejará ir sano y salvo? Jehová te pague con bien por lo que en este día has hecho conmigo."
+      },
+      {
+        "numero": 20,
+        "texto": "Y ahora, como yo entiendo que tú has de reinar, y que el reino de Israel ha de ser en tu mano firme y estable,"
+      },
+      {
+        "numero": 21,
+        "texto": "júrame, pues, ahora por Jehová, que no destruirás mi descendencia después de mí, ni borrarás mi nombre de la casa de mi padre."
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces David juró a Saúl. Y se fue Saúl a su casa, y David y sus hombres subieron al lugar fuerte."
+      }
+    ],
+    "25": [
+      {
+        "numero": 1,
+        "texto": "Murió Samuel, y se juntó todo Israel, y lo lloraron, y lo sepultaron en su casa en Ramá. Y se levantó David y se fue al desierto de Parán."
+      },
+      {
+        "numero": 2,
+        "texto": "Y en Maón había un hombre que tenía su hacienda en Carmel, el cual era muy rico, y tenía tres mil ovejas y mil cabras. Y aconteció que estaba esquilando sus ovejas en Carmel."
+      },
+      {
+        "numero": 3,
+        "texto": "Y aquel varón se llamaba Nabal, y su mujer, Abigail. Era aquella mujer de buen entendimiento y de hermosa apariencia, pero el hombre era duro y de malas obras; y era del linaje de Caleb."
+      },
+      {
+        "numero": 4,
+        "texto": "Y oyó David en el desierto que Nabal esquilaba sus ovejas."
+      },
+      {
+        "numero": 5,
+        "texto": "Entonces envió David diez jóvenes y les dijo: Subid a Carmel e id a Nabal, y saludadle en mi nombre,"
+      },
+      {
+        "numero": 6,
+        "texto": "y decidle así: Sea paz a ti, y paz a tu familia, y paz a todo cuanto tienes."
+      },
+      {
+        "numero": 7,
+        "texto": "He sabido que tienes esquiladores. Ahora, tus pastores han estado con nosotros; no les tratamos mal, ni les faltó nada en todo el tiempo que han estado en Carmel."
+      },
+      {
+        "numero": 8,
+        "texto": "Pregunta a tus criados, y ellos te lo dirán. Hallen, por tanto, estos jóvenes gracia en tus ojos, porque hemos venido en buen día; te ruego que des lo que tuvieres a mano a tus siervos, y a tu hijo David."
+      },
+      {
+        "numero": 9,
+        "texto": "Cuando llegaron los jóvenes enviados por David, dijeron a Nabal todas estas palabras en nombre de David, y callaron."
+      },
+      {
+        "numero": 10,
+        "texto": "Y Nabal respondió a los jóvenes enviados por David, y dijo: ¿Quién es David, y quién es el hijo de Isaí? Muchos siervos hay hoy que huyen de sus señores."
+      },
+      {
+        "numero": 11,
+        "texto": "¿He de tomar yo ahora mi pan, mi agua, y la carne que he preparado para mis esquiladores, y darla a hombres que no sé de dónde son?"
+      },
+      {
+        "numero": 12,
+        "texto": "Y los jóvenes que había enviado David se volvieron por su camino, y vinieron y dijeron a David todas estas palabras."
+      },
+      {
+        "numero": 13,
+        "texto": "Entonces David dijo a sus hombres: Cíñase cada uno su espada. Y se ciñó cada uno su espada y también David se ciñó su espada; y subieron tras David como cuatrocientos hombres, y dejaron doscientos con el bagaje."
+      },
+      {
+        "numero": 14,
+        "texto": "Pero uno de los criados dio aviso a Abigail mujer de Nabal, diciendo: He aquí David envió mensajeros del desierto que saludasen a nuestro amo, y él los ha zaherido."
+      },
+      {
+        "numero": 15,
+        "texto": "Y aquellos hombres han sido muy buenos con nosotros, y nunca nos trataron mal, ni nos faltó nada en todo el tiempo que anduvimos con ellos, cuando estábamos en el campo."
+      },
+      {
+        "numero": 16,
+        "texto": "Muro fueron para nosotros de día y de noche, todos los días que hemos estado con ellos apacentando las ovejas."
+      },
+      {
+        "numero": 17,
+        "texto": "Ahora, pues, reflexiona y ve lo que has de hacer, porque el mal está ya resuelto contra nuestro amo y contra toda su casa; pues él es un hombre tan perverso, que no hay quien pueda hablarle."
+      },
+      {
+        "numero": 18,
+        "texto": "Entonces Abigail tomó luego doscientos panes, dos cueros de vino, cinco ovejas guisadas, cinco medidas  de grano tostado, cien racimos de uvas pasas, y doscientos panes de higos secos, y lo cargó todo en asnos."
+      },
+      {
+        "numero": 19,
+        "texto": "Y dijo a sus criados: Id delante de mí, y yo os seguiré luego; y nada declaró a su marido Nabal."
+      },
+      {
+        "numero": 20,
+        "texto": "Y montando un asno, descendió por una parte secreta del monte; y he aquí David y sus hombres venían frente a ella, y ella les salió al encuentro."
+      },
+      {
+        "numero": 21,
+        "texto": "Y David había dicho: Ciertamente en vano he guardado todo lo que éste tiene en el desierto, sin que nada le haya faltado de todo cuanto es suyo; y él me ha vuelto mal por bien."
+      },
+      {
+        "numero": 22,
+        "texto": "Así haga Dios a los enemigos de David y aun les añada, que de aquí a mañana, de todo lo que fuere suyo no he de dejar con vida ni un varón."
+      },
+      {
+        "numero": 23,
+        "texto": "Y cuando Abigail vio a David, se bajó prontamente del asno, y postrándose sobre su rostro delante de David, se inclinó a tierra;"
+      },
+      {
+        "numero": 24,
+        "texto": "y se echó a sus pies, y dijo: Señor mío, sobre mí sea el pecado; mas te ruego que permitas que tu sierva hable a tus oídos, y escucha las palabras de tu sierva."
+      },
+      {
+        "numero": 25,
+        "texto": "No haga caso ahora mi señor de ese hombre perverso, de Nabal; porque conforme a su nombre, así es. El se llama Nabal, y la insensatez está con él; mas yo tu sierva no vi a los jóvenes que tú enviaste."
+      },
+      {
+        "numero": 26,
+        "texto": "Ahora pues, señor mío, vive Jehová, y vive tu alma, que Jehová te ha impedido el venir a derramar sangre y vengarte por tu propia mano. Sean, pues, como Nabal tus enemigos, y todos los que procuran mal contra mi señor."
+      },
+      {
+        "numero": 27,
+        "texto": "Y ahora este presente que tu sierva ha traído a mi señor, sea dado a los hombres que siguen a mi señor."
+      },
+      {
+        "numero": 28,
+        "texto": "Y yo te ruego que perdones a tu sierva esta ofensa; pues Jehová de cierto hará casa estable a mi señor, por cuanto mi señor pelea las batallas de Jehová, y mal no se ha hallado en ti en tus días."
+      },
+      {
+        "numero": 29,
+        "texto": "Aunque alguien se haya levantado para perseguirte y atentar contra tu vida, con todo, la vida de mi señor será ligada en el haz de los que viven delante de Jehová tu Dios, y él arrojará la vida de tus enemigos como de en medio de la palma de una honda."
+      },
+      {
+        "numero": 30,
+        "texto": "Y acontecerá que cuando Jehová haga con mi señor conforme a todo el bien que ha hablado de ti, y te establezca por príncipe sobre Israel,"
+      },
+      {
+        "numero": 31,
+        "texto": "entonces, señor mío, no tendrás motivo de pena ni remordimientos por haber derramado sangre sin causa, o por haberte vengado por ti mismo. Guárdese, pues, mi señor, y cuando Jehová haga bien a mi señor, acuérdate de tu sierva."
+      },
+      {
+        "numero": 32,
+        "texto": "Y dijo David a Abigail: Bendito sea Jehová Dios de Israel, que te envió para que hoy me encontrases."
+      },
+      {
+        "numero": 33,
+        "texto": "Y bendito sea tu razonamiento, y bendita tú, que me has estorbado hoy de ir a derramar sangre, y a vengarme por mi propia mano."
+      },
+      {
+        "numero": 34,
+        "texto": "Porque vive Jehová Dios de Israel que me ha defendido de hacerte mal, que si no te hubieras dado prisa en venir a mi encuentro, de aquí a mañana no le hubiera quedado con vida a Nabal ni un varón."
+      },
+      {
+        "numero": 35,
+        "texto": "Y recibió David de su mano lo que le había traído, y le dijo: Sube en paz a tu casa, y mira que he oído tu voz, y te he tenido respeto."
+      },
+      {
+        "numero": 36,
+        "texto": "Y Abigail volvió a Nabal, y he aquí que él tenía banquete en su casa como banquete de rey; y el corazón de Nabal estaba alegre, y estaba completamente ebrio, por lo cual ella no le declaró cosa alguna hasta el día siguiente."
+      },
+      {
+        "numero": 37,
+        "texto": "Pero por la mañana, cuando ya a Nabal se le habían pasado los efectos del vino, le refirió su mujer estas cosas; y desmayó su corazón en él, y se quedó como una piedra."
+      },
+      {
+        "numero": 38,
+        "texto": "Y diez días después, Jehová hirió a Nabal, y murió."
+      },
+      {
+        "numero": 39,
+        "texto": "Luego que David oyó que Nabal había muerto, dijo: Bendito sea Jehová, que juzgó la causa de mi afrenta recibida de mano de Nabal, y ha preservado del mal a su siervo; y Jehová ha vuelto la maldad de Nabal sobre su propia cabeza. Después envió David a hablar con Abigail, para tomarla por su mujer."
+      },
+      {
+        "numero": 40,
+        "texto": "Y los siervos de David vinieron a Abigail en Carmel, y hablaron con ella, diciendo: David nos ha enviado a ti, para tomarte por su mujer."
+      },
+      {
+        "numero": 41,
+        "texto": "Y ella se levantó e inclinó su rostro a tierra, diciendo: He aquí tu sierva, que será una sierva para lavar los pies de los siervos de mi señor."
+      },
+      {
+        "numero": 42,
+        "texto": "Y levantándose luego Abigail con cinco doncellas que le servían, montó en un asno y siguió a los mensajeros de David, y fue su mujer."
+      },
+      {
+        "numero": 43,
+        "texto": "También tomó David a Ahinoam de Jezreel, y ambas fueron sus mujeres."
+      },
+      {
+        "numero": 44,
+        "texto": "Porque Saúl había dado a su hija Mical mujer de David a Palti hijo de Lais, que era de Galim."
+      }
+    ],
+    "26": [
+      {
+        "numero": 1,
+        "texto": "Vinieron los zifeos a Saúl en Gabaa, diciendo: ¿No está David escondido en el collado de Haquila, al oriente del desierto?"
+      },
+      {
+        "numero": 2,
+        "texto": "Saúl entonces se levantó y descendió al desierto de Zif, llevando consigo tres mil hombres escogidos de Israel, para buscar a David en el desierto de Zif."
+      },
+      {
+        "numero": 3,
+        "texto": "Y acampó Saúl en el collado de Haquila, que está al oriente del desierto, junto al camino. Y estaba David en el desierto, y entendió que Saúl le seguía en el desierto."
+      },
+      {
+        "numero": 4,
+        "texto": "David, por tanto, envió espías, y supo con certeza que Saúl había venido."
+      },
+      {
+        "numero": 5,
+        "texto": "Y se levantó David, y vino al sitio donde Saúl había acampado; y miró David el lugar donde dormían Saúl y Abner hijo de Ner, general de su ejército. Y estaba Saúl durmiendo en el campamento, y el pueblo estaba acampado en derredor de él."
+      },
+      {
+        "numero": 6,
+        "texto": "Entonces David dijo a Ahimelec heteo y a Abisai hijo de Sarvia, hermano de Joab: ¿Quién descenderá conmigo a Saúl en el campamento? Y dijo Abisai: Yo descenderé contigo."
+      },
+      {
+        "numero": 7,
+        "texto": "David, pues, y Abisai fueron de noche al ejército; y he aquí que Saúl estaba tendido durmiendo en el campamento, y su lanza clavada en tierra a su cabecera; y Abner y el ejército estaban tendidos alrededor de él."
+      },
+      {
+        "numero": 8,
+        "texto": "Entonces dijo Abisai a David: Hoy ha entregado Dios a tu enemigo en tu mano; ahora, pues, déjame que le hiera con la lanza, y lo enclavaré en la tierra de un golpe, y no le daré segundo golpe."
+      },
+      {
+        "numero": 9,
+        "texto": "Y David respondió a Abisai: No le mates; porque ¿quién extenderá su mano contra el ungido de Jehová, y será inocente?"
+      },
+      {
+        "numero": 10,
+        "texto": "Dijo además David: Vive Jehová, que si Jehová no lo hiriere, o su día llegue para que muera, o descendiendo en batalla perezca,"
+      },
+      {
+        "numero": 11,
+        "texto": "guárdeme Jehová de extender mi mano contra el ungido de Jehová. Pero toma ahora la lanza que está a su cabecera, y la vasija de agua, y vámonos."
+      },
+      {
+        "numero": 12,
+        "texto": "Se llevó, pues, David la lanza y la vasija de agua de la cabecera de Saúl, y se fueron; y no hubo nadie que viese, ni entendiese, ni velase, pues todos dormían; porque un profundo sueño enviado de Jehová había caído sobre ellos."
+      },
+      {
+        "numero": 13,
+        "texto": "Entonces pasó David al lado opuesto, y se puso en la cumbre del monte a lo lejos, habiendo gran distancia entre ellos."
+      },
+      {
+        "numero": 14,
+        "texto": "Y dio voces David al pueblo, y a Abner hijo de Ner, diciendo: ¿No respondes, Abner? Entonces Abner respondió y dijo: ¿Quién eres tú que gritas al rey?"
+      },
+      {
+        "numero": 15,
+        "texto": "Y dijo David a Abner: ¿No eres tú un hombre? ¿y quién hay como tú en Israel? ¿Por qué, pues, no has guardado al rey tu señor? Porque uno del pueblo ha entrado a matar a tu señor el rey."
+      },
+      {
+        "numero": 16,
+        "texto": "Esto que has hecho no está bien. Vive Jehová, que sois dignos de muerte, porque no habéis guardado a vuestro señor, al ungido de Jehová. Mira pues, ahora, dónde está la lanza del rey, y la vasija de agua que estaba a su cabecera."
+      },
+      {
+        "numero": 17,
+        "texto": "Y conociendo Saúl la voz de David, dijo: ¿No es esta tu voz, hijo mío David? Y David respondió: Mi voz es, rey señor mío."
+      },
+      {
+        "numero": 18,
+        "texto": "Y dijo: ¿Por qué persigue así mi señor a su siervo? ¿Qué he hecho? ¿Qué mal hay en mi mano?"
+      },
+      {
+        "numero": 19,
+        "texto": "Ruego, pues, que el rey mi señor oiga ahora las palabras de su siervo. Si Jehová te incita contra mí, acepte él la ofrenda; mas si fueren hijos de hombres, malditos sean ellos en presencia de Jehová, porque me han arrojado hoy para que no tenga parte en la heredad de Jehová, diciendo: Vé y sirve a dioses ajenos."
+      },
+      {
+        "numero": 20,
+        "texto": "No caiga, pues, ahora mi sangre en tierra delante de Jehová, porque ha salido el rey de Israel a buscar una pulga, así como quien persigue una perdiz por los montes."
+      },
+      {
+        "numero": 21,
+        "texto": "Entonces dijo Saúl: He pecado; vuélvete, hijo mío David, que ningún mal te haré más, porque mi vida ha sido estimada preciosa hoy a tus ojos. He aquí yo he hecho neciamente, y he errado en gran manera."
+      },
+      {
+        "numero": 22,
+        "texto": "Y David respondió y dijo: He aquí la lanza del rey; pase acá uno de los criados y tómela."
+      },
+      {
+        "numero": 23,
+        "texto": "Y Jehová pague a cada uno su justicia y su lealtad; pues Jehová te había entregado hoy en mi mano, mas yo no quise extender mi mano contra el ungido de Jehová."
+      },
+      {
+        "numero": 24,
+        "texto": "Y he aquí, como tu vida ha sido estimada preciosa hoy a mis ojos, así sea mi vida a los ojos de Jehová, y me libre de toda aflicción."
+      },
+      {
+        "numero": 25,
+        "texto": "Y Saúl dijo a David: Bendito eres tú, hijo mío David; sin duda emprenderás tú cosas grandes, y prevalecerás. Entonces David se fue por su camino, y Saúl se volvió a su lugar."
+      }
+    ],
+    "27": [
+      {
+        "numero": 1,
+        "texto": "Dijo luego David en su corazón: Al fin seré muerto algún día por la mano de Saúl; nada, por tanto, me será mejor que fugarme a la tierra de los filisteos, para que Saúl no se ocupe de mí, y no me ande buscando más por todo el territorio de Israel; y así escaparé de su mano."
+      },
+      {
+        "numero": 2,
+        "texto": "Se levantó, pues, David, y con los seiscientos hombres que tenía consigo se pasó a Aquis hijo de Maoc, rey de Gat."
+      },
+      {
+        "numero": 3,
+        "texto": "Y moró David con Aquis en Gat, él y sus hombres, cada uno con su familia; David con sus dos mujeres, Ahinoam jezreelita y Abigail la que fue mujer de Nabal el de Carmel."
+      },
+      {
+        "numero": 4,
+        "texto": "Y vino a Saúl la nueva de que David había huido a Gat, y no lo buscó más."
+      },
+      {
+        "numero": 5,
+        "texto": "Y David dijo a Aquis: Si he hallado gracia ante tus ojos, séame dado lugar en alguna de las aldeas para que habite allí; pues ¿por qué ha de morar tu siervo contigo en la ciudad real?"
+      },
+      {
+        "numero": 6,
+        "texto": "Y Aquis le dio aquel día a Siclag, por lo cual Siclag vino a ser de los reyes de Judá hasta hoy."
+      },
+      {
+        "numero": 7,
+        "texto": "Fue el número de los días que David habitó en la tierra de los filisteos, un año y cuatro meses."
+      },
+      {
+        "numero": 8,
+        "texto": "Y subía David con sus hombres, y hacían incursiones contra los gesuritas, los gezritas y los amalecitas; porque éstos habitaban de largo tiempo la tierra, desde como quien va a Shur hasta la tierra de Egipto."
+      },
+      {
+        "numero": 9,
+        "texto": "Y asolaba David el país, y no dejaba con vida hombre ni mujer; y se llevaba las ovejas, las vacas, los asnos, los camellos y las ropas, y regresaba a Aquis."
+      },
+      {
+        "numero": 10,
+        "texto": "Y decía Aquis: ¿Dónde habéis merodeado hoy? Y David decía: En el Neguev de Judá, y el Neguev de Jerameel, o en el Neguev de los ceneos."
+      },
+      {
+        "numero": 11,
+        "texto": "Ni hombre ni mujer dejaba David con vida para que viniesen a Gat; diciendo: No sea que den aviso de nosotros y digan: Esto hizo David. Y esta fue su costumbre todo el tiempo que moró en la tierra de los filisteos."
+      },
+      {
+        "numero": 12,
+        "texto": "Y Aquis creía a David, y decía: El se ha hecho abominable a su pueblo de Israel, y será siempre mi siervo."
+      }
+    ],
+    "28": [
+      {
+        "numero": 1,
+        "texto": "Aconteció en aquellos días, que los filisteos reunieron sus fuerzas para pelear contra Israel. Y dijo Aquis a David: Ten entendido que has de salir conmigo a campaña, tú y tus hombres."
+      },
+      {
+        "numero": 2,
+        "texto": "Y David respondió a Aquis: Muy bien, tú sabrás lo que hará tu siervo. Y Aquis dijo a David: Por tanto, yo te constituiré guarda de mi persona durante toda mi vida."
+      },
+      {
+        "numero": 3,
+        "texto": "Ya Samuel había muerto, y todo Israel lo había lamentado, y le habían sepultado en Ramá, su ciudad. Y Saúl había arrojado de la tierra a los encantadores y adivinos."
+      },
+      {
+        "numero": 4,
+        "texto": "Se juntaron, pues, los filisteos, y vinieron y acamparon en Sunem; y Saúl juntó a todo Israel, y acamparon en Gilboa."
+      },
+      {
+        "numero": 5,
+        "texto": "Y cuando vio Saúl el campamento de los filisteos, tuvo miedo, y se turbó su corazón en gran manera."
+      },
+      {
+        "numero": 6,
+        "texto": "Y consultó Saúl a Jehová; pero Jehová no le respondió ni por sueños, ni por Urim, ni por profetas."
+      },
+      {
+        "numero": 7,
+        "texto": "Entonces Saúl dijo a sus criados: Buscadme una mujer que tenga espíritu de adivinación, para que yo vaya a ella y por medio de ella pregunte. Y sus criados le respondieron: He aquí hay una mujer en Endor que tiene espíritu de adivinación."
+      },
+      {
+        "numero": 8,
+        "texto": "Y se disfrazó Saúl, y se puso otros vestidos, y se fue con dos hombres, y vinieron a aquella mujer de noche; y él dijo: Yo te ruego que me adivines por el espíritu de adivinación, y me hagas subir a quien yo te dijere."
+      },
+      {
+        "numero": 9,
+        "texto": "Y la mujer le dijo: He aquí tú sabes lo que Saúl ha hecho, cómo ha cortado de la tierra a los evocadores y a los adivinos. ¿Por qué, pues, pones tropiezo a mi vida, para hacerme morir?"
+      },
+      {
+        "numero": 10,
+        "texto": "Entonces Saúl le juró por Jehová, diciendo: Vive Jehová, que ningún mal te vendrá por esto."
+      },
+      {
+        "numero": 11,
+        "texto": "La mujer entonces dijo: ¿A quién te haré venir? Y él respondió: Hazme venir a Samuel."
+      },
+      {
+        "numero": 12,
+        "texto": "Y viendo la mujer a Samuel, clamó en alta voz, y habló aquella mujer a Saúl, diciendo:"
+      },
+      {
+        "numero": 13,
+        "texto": "¿Por qué me has engañado? pues tú eres Saúl. Y el rey le dijo: No temas. ¿Qué has visto? Y la mujer respondió a Saúl: He visto dioses que suben de la tierra."
+      },
+      {
+        "numero": 14,
+        "texto": "El le dijo: ¿Cuál es su forma? Y ella respondió: Un hombre anciano viene, cubierto de un manto. Saúl entonces entendió que era Samuel, y humillando el rostro a tierra, hizo gran reverencia."
+      },
+      {
+        "numero": 15,
+        "texto": "Y Samuel dijo a Saúl: ¿Por qué me has inquietado haciéndome venir? Y Saúl respondió: Estoy muy angustiado, pues los filisteos pelean contra mí, y Dios se ha apartado de mí, y no me responde más, ni por medio de profetas ni por sueños; por esto te he llamado, para que me declares lo que tengo que hacer."
+      },
+      {
+        "numero": 16,
+        "texto": "Entonces Samuel dijo: ¿Y para qué me preguntas a mí, si Jehová se ha apartado de ti y es tu enemigo?"
+      },
+      {
+        "numero": 17,
+        "texto": "Jehová te ha hecho como dijo por medio de mí; pues Jehová ha quitado el reino de tu mano, y lo ha dado a tu compañero, David."
+      },
+      {
+        "numero": 18,
+        "texto": "Como tú no obedeciste a la voz de Jehová, ni cumpliste el ardor de su ira contra Amalec, por eso Jehová te ha hecho esto hoy."
+      },
+      {
+        "numero": 19,
+        "texto": "Y Jehová entregará a Israel también contigo en manos de los filisteos; y mañana estaréis conmigo, tú y tus hijos; y Jehová entregará también al ejército de Israel en mano de los filisteos."
+      },
+      {
+        "numero": 20,
+        "texto": "Entonces Saúl cayó en tierra cuan grande era, y tuvo gran temor por las palabras de Samuel; y estaba sin fuerzas, porque en todo aquel día y aquella noche no había comido pan."
+      },
+      {
+        "numero": 21,
+        "texto": "Entonces la mujer vino a Saúl, y viéndolo turbado en gran manera, le dijo: He aquí que tu sierva ha obedecido a tu voz, y he arriesgado mi vida, y he oído las palabras que tú me has dicho."
+      },
+      {
+        "numero": 22,
+        "texto": "Te ruego, pues, que tú también oigas la voz de tu sierva; pondré yo delante de ti un bocado de pan para que comas, a fin de que cobres fuerzas, y sigas tu camino."
+      },
+      {
+        "numero": 23,
+        "texto": "Y él rehusó diciendo: No comeré. Pero porfiaron con él sus siervos juntamente con la mujer, y él les obedeció. Se levantó, pues, del suelo, y se sentó sobre una cama."
+      },
+      {
+        "numero": 24,
+        "texto": "Y aquella mujer tenía en su casa un ternero engordado, el cual mató luego; y tomó harina y la amasó, y coció de ella panes sin levadura."
+      },
+      {
+        "numero": 25,
+        "texto": "Y lo trajo delante de Saúl y de sus siervos; y después de haber comido, se levantaron, y se fueron aquella noche."
+      }
+    ],
+    "29": [
+      {
+        "numero": 1,
+        "texto": "Los filisteos juntaron todas sus fuerzas en Afec, e Israel acampó junto a la fuente que está en Jezreel."
+      },
+      {
+        "numero": 2,
+        "texto": "Y cuando los príncipes de los filisteos pasaban revista a sus compañías de a ciento y de a mil hombres, David y sus hombres iban en la retaguardia con Aquis."
+      },
+      {
+        "numero": 3,
+        "texto": "Y dijeron los príncipes de los filisteos: ¿Qué hacen aquí estos hebreos? Y Aquis respondió a los príncipes de los filisteos: ¿No es éste David, el siervo de Saúl rey de Israel, que ha estado conmigo por días y años, y no he hallado falta en él desde el día que se pasó a mí hasta hoy?"
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces los príncipes de los filisteos se enojaron contra él, y le dijeron: Despide a este hombre, para que se vuelva al lugar que le señalaste, y no venga con nosotros a la batalla, no sea que en la batalla se nos vuelva enemigo; porque ¿con qué cosa volvería mejor a la gracia de su señor que con las cabezas de estos hombres?"
+      },
+      {
+        "numero": 5,
+        "texto": "¿No es éste David, de quien cantaban en las danzas, diciendo: Saúl hirió a sus miles, Y David a sus diez miles?"
+      },
+      {
+        "numero": 6,
+        "texto": "Y Aquis llamó a David y le dijo: Vive Jehová, que tú has sido recto, y que me ha parecido bien tu salida y tu entrada en el campamento conmigo, y que ninguna cosa mala he hallado en ti desde el día que viniste a mí hasta hoy; mas a los ojos de los príncipes no agradas."
+      },
+      {
+        "numero": 7,
+        "texto": "Vuélvete, pues, y vete en paz, para no desagradar a los príncipes de los filisteos."
+      },
+      {
+        "numero": 8,
+        "texto": "Y David respondió a Aquis: ¿Qué he hecho? ¿Qué has hallado en tu siervo desde el día que estoy contigo hasta hoy, para que yo no vaya y pelee contra los enemigos de mi señor el rey?"
+      },
+      {
+        "numero": 9,
+        "texto": "Y Aquis respondió a David, y dijo: Yo sé que tú eres bueno ante mis ojos, como un ángel de Dios; pero los príncipes de los filisteos me han dicho: No venga con nosotros a la batalla."
+      },
+      {
+        "numero": 10,
+        "texto": "Levántate, pues, de mañana, tú y los siervos de tu señor que han venido contigo; y levantándoos al amanecer, marchad."
+      },
+      {
+        "numero": 11,
+        "texto": "Y se levantó David de mañana, él y sus hombres, para irse y volver a la tierra de los filisteos; y los filisteos fueron a Jezreel."
+      }
+    ],
+    "30": [
+      {
+        "numero": 1,
+        "texto": "Cuando David y sus hombres vinieron a Siclag al tercer día, los de Amalec habían invadido el Neguev y a Siclag, y habían asolado a Siclag y le habían prendido fuego."
+      },
+      {
+        "numero": 2,
+        "texto": "Y se habían llevado cautivas a las mujeres y a todos los que estaban allí, desde el menor hasta el mayor; pero a nadie habían dado muerte, sino se los habían llevado al seguir su camino."
+      },
+      {
+        "numero": 3,
+        "texto": "Vino, pues, David con los suyos a la ciudad, y he aquí que estaba quemada, y sus mujeres y sus hijos e hijas habían sido llevados cautivos."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces David y la gente que con él estaba alzaron su voz y lloraron, hasta que les faltaron las fuerzas para llorar."
+      },
+      {
+        "numero": 5,
+        "texto": "Las dos mujeres de David, Ahinoam jezreelita y Abigail la que fue mujer de Nabal el de Carmel, también eran cautivas."
+      },
+      {
+        "numero": 6,
+        "texto": "Y David se angustió mucho, porque el pueblo hablaba de apedrearlo, pues todo el pueblo estaba en amargura de alma, cada uno por sus hijos y por sus hijas; mas David se fortaleció en Jehová su Dios."
+      },
+      {
+        "numero": 7,
+        "texto": "Y dijo David al sacerdote Abiatar hijo de Ahimelec: Yo te ruego que me acerques el efod. Y Abiatar acercó el efod a David."
+      },
+      {
+        "numero": 8,
+        "texto": "Y David consultó a Jehová, diciendo: ¿Perseguiré a estos merodeadores? ¿Los podré alcanzar? Y él le dijo: Síguelos, porque ciertamente los alcanzarás, y de cierto librarás a los cautivos."
+      },
+      {
+        "numero": 9,
+        "texto": "Partió, pues, David, él y los seiscientos hombres que con él estaban, y llegaron hasta el torrente de Besor, donde se quedaron algunos."
+      },
+      {
+        "numero": 10,
+        "texto": "Y David siguió adelante con cuatrocientos hombres; porque se quedaron atrás doscientos, que cansados no pudieron pasar el torrente de Besor."
+      },
+      {
+        "numero": 11,
+        "texto": "Y hallaron en el campo a un hombre egipcio, el cual trajeron a David, y le dieron pan, y comió, y le dieron a beber agua."
+      },
+      {
+        "numero": 12,
+        "texto": "Le dieron también un pedazo de masa de higos secos y dos racimos de pasas. Y luego que comió, volvió en él su espíritu; porque no había comido pan ni bebido agua en tres días y tres noches."
+      },
+      {
+        "numero": 13,
+        "texto": "Y le dijo David: ¿De quién eres tú, y de dónde eres? Y respondió el joven egipcio: Yo soy siervo de un amalecita, y me dejó mi amo hoy hace tres días, porque estaba yo enfermo;"
+      },
+      {
+        "numero": 14,
+        "texto": "pues hicimos una incursión a la parte del Neguev que es de los cereteos, y de Judá, y al Neguev de Caleb; y pusimos fuego a Siclag."
+      },
+      {
+        "numero": 15,
+        "texto": "Y le dijo David: ¿Me llevarás tú a esa tropa? Y él dijo: Júrame por Dios que no me matarás, ni me entregarás en mano de mi amo, y yo te llevaré a esa gente."
+      },
+      {
+        "numero": 16,
+        "texto": "Lo llevó, pues; y he aquí que estaban desparramados sobre toda aquella tierra, comiendo y bebiendo y haciendo fiesta, por todo aquel gran botín que habían tomado de la tierra de los filisteos y de la tierra de Judá."
+      },
+      {
+        "numero": 17,
+        "texto": "Y los hirió David desde aquella mañana hasta la tarde del día siguiente; y no escapó de ellos ninguno, sino cuatrocientos jóvenes que montaron sobre los camellos y huyeron."
+      },
+      {
+        "numero": 18,
+        "texto": "Y libró David todo lo que los amalecitas habían tomado, y asimismo libertó David a sus dos mujeres."
+      },
+      {
+        "numero": 19,
+        "texto": "Y no les faltó cosa alguna, chica ni grande, así de hijos como de hijas, del robo, y de todas las cosas que les habían tomado; todo lo recuperó David."
+      },
+      {
+        "numero": 20,
+        "texto": "Tomó también David todas las ovejas y el ganado mayor; y trayéndolo todo delante, decían: Este es el botín de David."
+      },
+      {
+        "numero": 21,
+        "texto": "Y vino David a los doscientos hombres que habían quedado cansados y no habían podido seguir a David, a los cuales habían hecho quedar en el torrente de Besor; y ellos salieron a recibir a David y al pueblo que con él estaba. Y cuando David llegó a la gente, les saludó con paz."
+      },
+      {
+        "numero": 22,
+        "texto": "Entonces todos los malos y perversos de entre los que habían ido con David, respondieron y dijeron: Porque no fueron con nosotros, no les daremos del botín que hemos quitado, sino a cada uno su mujer y sus hijos; que los tomen y se vayan."
+      },
+      {
+        "numero": 23,
+        "texto": "Y David dijo: No hagáis eso, hermanos míos, de lo que nos ha dado Jehová, quien nos ha guardado, y ha entregado en nuestra mano a los merodeadores que vinieron contra nosotros."
+      },
+      {
+        "numero": 24,
+        "texto": "¿Y quién os escuchará en este caso? Porque conforme a la parte del que desciende a la batalla, así ha de ser la parte del que queda con el bagaje; les tocará parte igual."
+      },
+      {
+        "numero": 25,
+        "texto": "Desde aquel día en adelante fue esto por ley y ordenanza en Israel, hasta hoy."
+      },
+      {
+        "numero": 26,
+        "texto": "Y cuando David llegó a Siclag, envió del botín a los ancianos de Judá, sus amigos, diciendo: He aquí un presente para vosotros del botín de los enemigos de Jehová."
+      },
+      {
+        "numero": 27,
+        "texto": "Lo envió a los que estaban en Bet-el, en Ramot del Neguev, en Jatir,"
+      },
+      {
+        "numero": 28,
+        "texto": "en Aroer, en Sifmot, en Estemoa,"
+      },
+      {
+        "numero": 29,
+        "texto": "en Racal, en las ciudades de Jerameel, en las ciudades del ceneo,"
+      },
+      {
+        "numero": 30,
+        "texto": "en Horma, en Corasán, en Atac,"
+      },
+      {
+        "numero": 31,
+        "texto": "en Hebrón, y en todos los lugares donde David había estado con sus hombres."
+      }
+    ],
+    "31": [
+      {
+        "numero": 1,
+        "texto": "Los filisteos, pues, pelearon contra Israel, y los de Israel huyeron delante de los filisteos, y cayeron muertos en el monte de Gilboa."
+      },
+      {
+        "numero": 2,
+        "texto": "Y siguiendo los filisteos a Saúl y a sus hijos, mataron a Jonatán, a Abinadab y a Malquisúa, hijos de Saúl."
+      },
+      {
+        "numero": 3,
+        "texto": "Y arreció la batalla contra Saúl, y le alcanzaron los flecheros, y tuvo gran temor de ellos."
+      },
+      {
+        "numero": 4,
+        "texto": "Entonces dijo Saúl a su escudero: Saca tu espada, y traspásame con ella, para que no vengan estos incircuncisos y me traspasen, y me escarnezcan. Mas su escudero no quería, porque tenía gran temor. Entonces tomó Saúl su propia espada y se echó sobre ella."
+      },
+      {
+        "numero": 5,
+        "texto": "Y viendo su escudero a Saúl muerto, él también se echó sobre su espada, y murió con él."
+      },
+      {
+        "numero": 6,
+        "texto": "Así murió Saúl en aquel día, juntamente con sus tres hijos, y su escudero, y todos sus varones."
+      },
+      {
+        "numero": 7,
+        "texto": "Y los de Israel que eran del otro lado del valle, y del otro lado del Jordán, viendo que Israel había huido y que Saúl y sus hijos habían sido muertos, dejaron las ciudades y huyeron; y los filisteos vinieron y habitaron en ellas."
+      },
+      {
+        "numero": 8,
+        "texto": "Aconteció al siguiente día, que viniendo los filisteos a despojar a los muertos, hallaron a Saúl y a sus tres hijos tendidos en el monte de Gilboa."
+      },
+      {
+        "numero": 9,
+        "texto": "Y le cortaron la cabeza, y le despojaron de las armas; y enviaron mensajeros por toda la tierra de los filisteos, para que llevaran las buenas nuevas al templo de sus ídolos y al pueblo."
+      },
+      {
+        "numero": 10,
+        "texto": "Y pusieron sus armas en el templo de Astarot, y colgaron su cuerpo en el muro de Bet-sán."
+      },
+      {
+        "numero": 11,
+        "texto": "Mas oyendo los de Jabes de Galaad esto que los filisteos hicieron a Saúl,"
+      },
+      {
+        "numero": 12,
+        "texto": "todos los hombres valientes se levantaron, y anduvieron toda aquella noche, y quitaron el cuerpo de Saúl y los cuerpos de sus hijos del muro de Bet-sán; y viniendo a Jabes, los quemaron allí."
+      },
+      {
+        "numero": 13,
+        "texto": "Y tomando sus huesos, los sepultaron debajo de un árbol en Jabes, y ayunaron siete días."
+      }
+    ]
+  }
+}

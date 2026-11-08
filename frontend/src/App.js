@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Route,
@@ -93,6 +94,8 @@ import BibleStudyTools from "./pages/member/resources/BibleStudyTools";
 import OldTestamentBooks from "./pages/member/resources/OldTestamentBooks";
 import NewTestamentBooks from "./pages/member/resources/NewTestamentBooks";
 import BibleBookDetails from "./pages/member/resources/BibleBookDetails";
+// Página que presenta un capítulo de nuestra Biblia local.
+import BibleReader from "./pages/member/resources/BibleReader";
 import PrayerGuides from "./pages/member/resources/PrayerGuides";
 import PrayerGuideDetails from "./pages/member/resources/PrayerGuideDetails";
 import DiscipleshipMaterials from "./pages/member/resources/DiscipleshipMaterials";
@@ -259,6 +262,8 @@ function App() {
               <Route path="recursos/biblia/libros/antiguo-testamento" element={<OldTestamentBooks />} />
               <Route path="recursos/biblia/libros/nuevo-testamento" element={<NewTestamentBooks />} />
               <Route path="recursos/biblia/libro/:slug" element={<BibleBookDetails />} />
+              {/* El miembro elige libro y capítulo; evitamos enlaces 404. */}
+              <Route path="recursos/biblia/leer/:slug/:chapter" element={<BibleReader />} />
               <Route path="recursos/guias-oracion" element={<PrayerGuides />} />
               <Route path="recursos/guias-oracion/:slug" element={<PrayerGuideDetails />} />
               <Route path="recursos/discipulado" element={<DiscipleshipMaterials />} />

@@ -1,0 +1,7 @@
+/* El lector virtual se integrará cuando exista una API bíblica autorizada. */
+.bible-reader-unavailable {
+  cursor: default !important;
+  opacity: .58;
+  pointer-events: none;
+  text-decoration: none !important;
+}

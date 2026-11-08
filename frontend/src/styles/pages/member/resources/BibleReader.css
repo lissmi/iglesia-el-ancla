@@ -1,0 +1,331 @@
+/* ========================================================= */
+/* LECTOR BÍBLICO - ESTILO EL ANCLA */
+/* ========================================================= */
+.bible-reader {
+  color: #24364b;
+  background: #f7f5f2;
+  min-height: 75vh;
+}
+.bible-reader__shell {
+  width: min(1080px, calc(100% - 40px));
+  margin-inline: auto;
+}
+.bible-reader__hero {
+  padding: 54px 0 64px;
+  color: #fff;
+  background: linear-gradient(120deg, #20344a 0%, #2b4559 65%, #54717a 100%);
+}
+.bible-reader__breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+  font-size: 12px;
+  color: #d6e0e7;
+}
+.bible-reader__breadcrumbs a { color: inherit; text-decoration: none; }
+.bible-reader__breadcrumbs a:hover { text-decoration: underline; }
+.bible-reader__eyebrow {
+  color: #e6c8a1;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+.bible-reader__hero h1 {
+  margin: 8px 0 12px;
+  font: 400 clamp(42px, 6vw, 68px)/1.05 Georgia, "Times New Roman", serif;
+}
+.bible-reader__hero h1 span { color: #e8d3b9; }
+.bible-reader__hero p:last-child { font-size: 15px; opacity: .9; }
+.bible-reader__body { padding: 32px 0 64px; }
+.bible-reader__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid #e5e7ea;
+  border-radius: 17px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.bible-reader__toolbar label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #405971;
+}
+.bible-reader__toolbar select {
+  padding: 12px 38px 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d7e2e9;
+  background: #fbfdfe;
+  color: #22384c;
+  font: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  min-width: 145px;
+}
+.bible-reader__toolbar label:first-child select { min-width: 235px; }
+.bible-reader__version { margin-left: auto; display: grid; gap: 6px; }
+.bible-reader__version small { font-size: 11px; color: #698098; }
+.bible-reader__version strong { color: #254357; font-size: 14px; }
+.bible-reader__reading {
+  background: white;
+  border: 1px solid #e6e8e9;
+  border-radius: 18px;
+  padding: clamp(24px, 5vw, 58px);
+  box-shadow: 0 12px 34px rgba(36, 54, 75, 0.06);
+}
+.bible-reader__reading-heading {
+  text-align: center;
+  border-bottom: 1px solid #eaeef0;
+  padding-bottom: 30px;
+  margin-bottom: 35px;
+}
+.bible-reader__reading-heading p {
+  letter-spacing: .16em;
+  font-size: 11px;
+  color: #a67f4a;
+  font-weight: 700;
+}
+.bible-reader__reading-heading h2 {
+  font: 400 clamp(30px, 4vw, 42px)/1.2 Georgia, serif;
+  color: #192c40;
+  margin: 12px 0 0;
+}
+.bible-reader__chapter-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 18px/2 Georgia, "Times New Roman", serif;
+  color: #283d4b;
+  max-width: 76ch;
+  margin-inline: auto;
+}
+.bible-reader__notice { text-align: center; padding: 26px; color: #53738a; }
+.bible-reader__notice--error { background: #f8f5f0; border-radius: 12px; }
+.bible-reader__notice--error button { padding: 10px; border: 1px solid #bdcdd4; border-radius: 8px; background: white; cursor: pointer; }
+.bible-reader__credits {
+  margin-top: 38px;
+  padding-top: 22px;
+  border-top: 1px solid #e7ebee;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #5b7186;
+}
+.bible-reader__credits p { overflow-wrap: anywhere; }
+.bible-reader__credits a { color: #347b95; }
+.bible-reader__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
+.bible-reader__navigation button, .bible-reader__navigation a {
+  display: inline-block;
+  background: #fff;
+  color: #244459;
+  border: 1px solid #d5e1e8;
+  border-radius: 9px;
+  padding: 12px 18px;
+  text-decoration: none;
+  font-family: inherit; font-weight: 600; font-size: 13px; line-height: 1.2;
+  cursor: pointer;
+}
+.bible-reader__navigation button:disabled { opacity: .45; cursor: not-allowed; }
+.bible-reader--empty { padding: 90px 24px; text-align: center; }
+@media (max-width: 620px) {
+  .bible-reader__hero { padding: 36px 0 42px; }
+  .bible-reader__toolbar { padding: 18px; flex-direction: column; align-items: stretch; }
+  .bible-reader__toolbar label:first-child select, .bible-reader__toolbar select { width: 100%; min-width: 0; }
+  .bible-reader__version { margin-left: 0; }
+  .bible-reader__chapter-text { line-height: 1.85; }
+  .bible-reader__navigation { align-items: stretch; }
+}
+.bible-reader__copyright { text-align: left; margin: 32px auto; max-width: 850px; }
+.bible-reader__copyright h2 { font: 400 30px/1.2 Georgia, serif; }
+.bible-reader__copyright p { font-size: 15px; line-height: 1.8; }
+.bible-reader__copyright a { color: #347b95; }
+
+/* Enlaces de lectura y selectores: foco visible para navegación con teclado. */
+.bible-reader a:focus-visible, .bible-reader button:focus-visible,
+.bible-reader select:focus-visible { outline: 3px solid #cb9c60; outline-offset: 3px; }
+
+/* Conservamos la presentación anterior como respaldo de capítulos completos. */
+.bible-reader__chapter-text { text-align: left; text-wrap: pretty; }
+
+/* Los avisos ocupan su propio espacio sin desplazar otras secciones inesperadamente. */
+.bible-reader__notice--error { line-height: 1.7; }
+
+/* ========================================================= */
+/* CONTROLES DE ACCESIBILIDAD - TAMAÑO DE LECTURA */
+/* ========================================================= */
+
+/* Agrupamos los botones y su rótulo sin alterar los selectores existentes. */
+.bible-reader__font-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Utilizamos el mismo aspecto de etiqueta que los selectores de libro/capítulo. */
+.bible-reader__font-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #405971;
+}
+
+/* Los botones y el tamaño actual se muestran en una sola línea. */
+.bible-reader__font-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botones suficientemente amplios para utilizarlos también en pantallas táctiles. */
+.bible-reader__font-button {
+  width: 46px;
+  min-height: 44px;
+  border: 1px solid #d7e2e9;
+  border-radius: 10px;
+  background: #fbfdfe;
+  color: #244459;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+/* La interacción mantiene la paleta azul del proyecto. */
+.bible-reader__font-button:hover:not(:disabled) {
+  background: #eaf2f6;
+  border-color: #93b4c3;
+}
+
+/* Comunicamos visualmente los límites mínimo y máximo de ampliación. */
+.bible-reader__font-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* El indicador informa el tamaño elegido sin cambiarse a sí mismo. */
+.bible-reader__font-current {
+  min-width: 54px;
+  text-align: center;
+  white-space: nowrap;
+  color: #405971;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* En celulares los controles se mantienen compactos y alineados a la izquierda. */
+@media (max-width: 620px) {
+  .bible-reader__font-controls { width: 100%; }
+  .bible-reader__font-buttons { justify-content: flex-start; }
+}
+
+
+/* ========================================================= */
+/* BÚSQUEDA DE REFERENCIAS - LECTOR VER3 */
+/* ========================================================= */
+
+/* Buscador independiente del selector de libro y del tamaño de letra. */
+.bible-reader__quick-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  background: #fff;
+  border: 1px solid #e5e7ea;
+  border-radius: 17px;
+}
+
+/* Dejamos visible la ayuda de formato para visitantes poco familiarizados. */
+.bible-reader__quick-search-copy { display: grid; gap: 6px; }
+.bible-reader__quick-search-copy label { font-weight: 700; color: #254357; font-size: 14px; }
+.bible-reader__quick-search-copy small { font-size: 12px; color: #718094; }
+.bible-reader__quick-search-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* La entrada y el botón conservan la estética de los selectores actuales. */
+.bible-reader__quick-search-inputs input {
+  padding: 12px 14px;
+  min-width: min(260px, 75vw);
+  border: 1px solid #d7e2e9;
+  background: #fbfdfe;
+  border-radius: 10px;
+  color: #22384c;
+  font-family: inherit; font-size: 14px; font-weight: 500; line-height: 1.4;
+}
+.bible-reader__quick-search-inputs button {
+  padding: 12px 22px;
+  border: 1px solid #284f66;
+  background: #284f66;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.bible-reader__quick-search-inputs button:hover { background: #1c3e54; }
+.bible-reader__lookup-error { flex-basis: 100%; color: #a63838; font-size: 13px; margin: 0; }
+
+/* ========================================================= */
+/* VERSÍCULOS SEPARADOS Y SELECCIÓN DE REFERENCIA */
+/* ========================================================= */
+
+/* Los versículos se presentan en párrafos individuales y legibles. */
+.bible-reader__verses { white-space: normal; }
+.bible-reader__verse {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 10px;
+  line-height: 1.85;
+  scroll-margin-top: 96px;
+}
+.bible-reader__verse + .bible-reader__verse { margin-top: 3px; }
+
+/* Números compactos que se pueden seleccionar con teclado y pantalla táctil. */
+.bible-reader__verse-number {
+  flex: 0 0 30px;
+  border: 0;
+  border-radius: 6px;
+  padding: 5px 3px;
+  background: transparent;
+  color: #9b815e;
+  cursor: pointer;
+  text-align: right;
+  font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1.4;
+}
+.bible-reader__verse-number:hover { background: #eee7dd; color: #5d4630; }
+.bible-reader__verse span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+
+/* Resaltamos únicamente la referencia buscada, sin alterar otros versículos. */
+.bible-reader__verse--selected { background: #f9efd8; box-shadow: inset 3px 0 #c19b5f; }
+.bible-reader__verse--selected .bible-reader__verse-number { color: #79572e; }
+
+@media (max-width: 620px) {
+  .bible-reader__quick-search { padding: 18px; }
+  .bible-reader__quick-search-copy,
+  .bible-reader__quick-search-inputs,
+  .bible-reader__quick-search-inputs input,
+  .bible-reader__quick-search-inputs button { width: 100%; min-width: 0; }
+  .bible-reader__verse { gap: 10px; padding-inline: 4px; }
+  .bible-reader__verse-number { flex-basis: 26px; }
+}
+
+/* Marcamos el foco del buscador para mejorar la navegación con teclado. */
+.bible-reader__quick-search-inputs input:focus-visible {
+  outline: 3px solid #cb9c60;
+  outline-offset: 2px;
+}

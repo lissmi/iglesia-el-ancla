@@ -1,32 +1,32 @@
+
 // Importamos Link para navegar dentro de la aplicación
 // y useParams para obtener el slug incluido en la URL.
 import { Link, useParams } from "react-router-dom";
+import { BibleInlineText, BibleInlineList } from "../../../components/administration/resources/BibleInlineEditable";
 
 // Importamos el encabezado general del sitio.
 import Header from "../../../components/public/Header";
 
 // Importamos los libros de ambos testamentos.
-import oldTestamentBooks from "../../../data/bible/oldTestamentBooks";
-import newTestamentBooks from "../../../data/bible/newTestamentBooks";
+import { useBibleBookCatalog } from "../../../services/useBibleBookCatalog";
+
+
+import "../../../styles/pages/member/resources/BibleReaderUnavailable.css";
 
 // Importamos el CSS exclusivo de esta página.
 import "../../../styles/pages/member/resources/BibleBookDetails.css";
 
-// Unimos los libros de ambos testamentos en un solo arreglo.
-// De esta forma, una sola página puede buscar cualquiera de los 66 libros.
-const allBibleBooks = [
-    ...oldTestamentBooks,
-    ...newTestamentBooks,
-];
 
 // Creamos el componente reutilizable.
-function BibleBookDetails() {
+function BibleBookDetails({ bookOverride = null, editor = null, showHeader = true }) {
+    // Las fichas usan la última versión publicada por Administración.
+    const { allBibleBooks, oldTestamentBooks, newTestamentBooks } = useBibleBookCatalog();
     // Obtenemos el slug desde una URL como:
-    // /recursos/biblia/libro/genesis
+    // /member/recursos/biblia/libro/genesis
     const { slug } = useParams();
 
     // Buscamos el libro cuyo slug coincida con el de la URL.
-    const book = allBibleBooks.find(
+    const book = bookOverride || allBibleBooks.find(
         (currentBook) => currentBook.slug === slug
     );
 
@@ -35,7 +35,7 @@ function BibleBookDetails() {
     if (!book) {
         return (
             <>
-                <Header />
+                {showHeader && <Header />}
 
                 <main className="book-details-not-found">
                     <section className="book-details-not-found__container">
@@ -52,7 +52,7 @@ function BibleBookDetails() {
                             libro todavía no esté disponible.
                         </p>
 
-                        <Link to="/recursos/biblia">
+                        <Link to={editor ? editor.listPath : "/member/recursos/biblia"} onClick={editor?.beforeNavigate}>
                             Volver a Biblia y herramientas
                         </Link>
                     </section>
@@ -67,11 +67,12 @@ function BibleBookDetails() {
 
     // Definimos la ruta de regreso según el testamento.
     const testamentBooksPath = isOldTestament
-        ? "/recursos/biblia/libros/antiguo-testamento"
-        : "/recursos/biblia/libros/nuevo-testamento";
+        ? "/member/recursos/biblia/libros/antiguo-testamento"
+        : "/member/recursos/biblia/libros/nuevo-testamento";
+    const listPath = editor ? editor.listPath : testamentBooksPath;
 
     // Definimos el texto del enlace de regreso.
-    const testamentBooksLabel = isOldTestament
+    const testamentBooksLabel = editor ? "Volver a la gestión bíblica" : isOldTestament
         ? "Ver libros del Antiguo Testamento"
         : "Ver libros del Nuevo Testamento";
 
@@ -106,30 +107,26 @@ function BibleBookDetails() {
         : [book.description];
 
     // Comprobamos si existen personajes principales.
-    const hasKeyCharacters =
-        Array.isArray(book.keyCharacters) &&
-        book.keyCharacters.length > 0;
+    const hasKeyCharacters = Boolean(editor && !editor.preview) ||
+        (Array.isArray(book.keyCharacters) && book.keyCharacters.length > 0);
 
     // Comprobamos si existen acontecimientos importantes.
-    const hasKeyEvents =
-        Array.isArray(book.keyEvents) &&
-        book.keyEvents.length > 0;
+    const hasKeyEvents = Boolean(editor && !editor.preview) ||
+        (Array.isArray(book.keyEvents) && book.keyEvents.length > 0);
 
     // Comprobamos si existen temas principales.
-    const hasKeyThemes =
-        Array.isArray(book.keyThemes) &&
-        book.keyThemes.length > 0;
+    const hasKeyThemes = Boolean(editor && !editor.preview) ||
+        (Array.isArray(book.keyThemes) && book.keyThemes.length > 0);
 
     // Comprobamos si existe un versículo destacado completo.
-    const hasFeaturedVerse =
-        book.featuredVerse &&
-        book.featuredVerse.reference &&
-        book.featuredVerse.text;
+    const hasFeaturedVerse = Boolean(editor && !editor.preview) || (
+        book.featuredVerse && book.featuredVerse.reference && book.featuredVerse.text
+    );
 
     return (
         <>
             {/* Encabezado general del sitio. */}
-            <Header />
+            {showHeader && <Header />}
 
             {/* Contenido principal de la página. */}
             <main className="book-details-page">
@@ -145,15 +142,15 @@ function BibleBookDetails() {
                             className="book-details-breadcrumb"
                             aria-label="Ruta de navegación"
                         >
-                            <Link to="/">
-                                Inicio
+                            <Link to={editor ? editor.listPath : "/"} onClick={editor?.beforeNavigate}>
+                                {editor ? "Administración" : "Inicio"}
                             </Link>
 
                             <span aria-hidden="true">
                                 /
                             </span>
 
-                            <Link to="/recursos">
+                            <Link to={editor ? editor.listPath : "/member/recursos"} onClick={editor?.beforeNavigate}>
                                 Recursos
                             </Link>
 
@@ -161,7 +158,7 @@ function BibleBookDetails() {
                                 /
                             </span>
 
-                            <Link to="/recursos/biblia">
+                            <Link to={editor ? editor.listPath : "/member/recursos/biblia"} onClick={editor?.beforeNavigate}>
                                 Biblia y herramientas
                             </Link>
 
@@ -169,7 +166,7 @@ function BibleBookDetails() {
                                 /
                             </span>
 
-                            <Link to={testamentBooksPath}>
+                            <Link to={listPath} onClick={editor?.beforeNavigate}>
                                 {book.testament}
                             </Link>
 
@@ -193,9 +190,13 @@ function BibleBookDetails() {
                         </h1>
 
                         {/* Tema principal del libro. */}
-                        <p className="book-details-hero__theme">
-                            {book.theme}
-                        </p>
+                        {(editor && !editor.preview) ? (
+                            <BibleInlineText as="p" className="book-details-hero__theme" label="Tema principal"
+                                value={book.theme} multiline maxLength={150} disabled={editor.busy}
+                                onChange={(value) => editor.setField("theme", value)} />
+                        ) : (
+                            <p className="book-details-hero__theme">{book.theme}</p>
+                        )}
 
                         {/* Datos rápidos del libro. */}
                         <div className="book-details-hero__facts">
@@ -250,13 +251,13 @@ function BibleBookDetails() {
 
                             {/* Recorremos los párrafos de la descripción. */}
                             <div className="book-details-main__description">
-                                {descriptionParagraphs.map(
-                                    (paragraph, index) => (
-                                        <p key={`${book.slug}-description-${index}`}>
-                                            {paragraph}
-                                        </p>
-                                    )
-                                )}
+                                {(editor && !editor.preview) ? (
+                                    <BibleInlineList type="paragraphs" label="Descripción del libro"
+                                        values={descriptionParagraphs} maxLength={600} maxItems={8}
+                                        disabled={editor.busy} onChange={(values) => editor.setField("description", values)} />
+                                ) : descriptionParagraphs.map((paragraph, index) => (
+                                    <p key={`${book.slug}-description-${index}`}>{paragraph}</p>
+                                ))}
                             </div>
 
                             {/* Tarjeta con el tema central. */}
@@ -265,9 +266,11 @@ function BibleBookDetails() {
                                     Tema principal
                                 </span>
 
-                                <p>
-                                    {book.theme}
-                                </p>
+                                {(editor && !editor.preview) ? (
+                                    <BibleInlineText as="p" label="Tema central" value={book.theme}
+                                        multiline maxLength={150} disabled={editor.busy}
+                                        onChange={(value) => editor.setField("theme", value)} />
+                                ) : <p>{book.theme}</p>}
                             </div>
                         </article>
                     </div>
@@ -304,15 +307,15 @@ function BibleBookDetails() {
                                         Personajes principales
                                     </h3>
 
-                                    <ul className="book-details-info-card__list">
-                                        {book.keyCharacters.map(
-                                            (character) => (
-                                                <li key={character}>
-                                                    {character}
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
+                                    {(editor && !editor.preview) ? (
+                                        <BibleInlineList label="Personajes principales" values={book.keyCharacters}
+                                            maxLength={80} maxItems={20} disabled={editor.busy}
+                                            onChange={(values) => editor.setField("keyCharacters", values)} />
+                                    ) : (
+                                        <ul className="book-details-info-card__list">
+                                            {book.keyCharacters.map((character) => <li key={character}>{character}</li>)}
+                                        </ul>
+                                    )}
                                 </article>
                             )}
 
@@ -327,15 +330,15 @@ function BibleBookDetails() {
                                         Acontecimientos importantes
                                     </h3>
 
-                                    <ul className="book-details-info-card__list">
-                                        {book.keyEvents.map(
-                                            (event) => (
-                                                <li key={event}>
-                                                    {event}
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
+                                    {(editor && !editor.preview) ? (
+                                        <BibleInlineList label="Acontecimientos importantes" values={book.keyEvents}
+                                            maxLength={150} maxItems={25} disabled={editor.busy}
+                                            onChange={(values) => editor.setField("keyEvents", values)} />
+                                    ) : (
+                                        <ul className="book-details-info-card__list">
+                                            {book.keyEvents.map((event) => <li key={event}>{event}</li>)}
+                                        </ul>
+                                    )}
                                 </article>
                             )}
 
@@ -350,15 +353,15 @@ function BibleBookDetails() {
                                         Temas principales
                                     </h3>
 
-                                    <div className="book-details-info-card__tags">
-                                        {book.keyThemes.map(
-                                            (keyTheme) => (
-                                                <span key={keyTheme}>
-                                                    {keyTheme}
-                                                </span>
-                                            )
-                                        )}
-                                    </div>
+                                    {(editor && !editor.preview) ? (
+                                        <BibleInlineList type="tags" label="Temas y enseñanzas" values={book.keyThemes}
+                                            maxLength={60} maxItems={20} disabled={editor.busy}
+                                            onChange={(values) => editor.setField("keyThemes", values)} />
+                                    ) : (
+                                        <div className="book-details-info-card__tags">
+                                            {book.keyThemes.map((keyTheme) => <span key={keyTheme}>{keyTheme}</span>)}
+                                        </div>
+                                    )}
                                 </article>
                             )}
 
@@ -397,13 +400,16 @@ function BibleBookDetails() {
                             </p>
 
                             <blockquote>
-                                <p>
-                                    “{book.featuredVerse.text}”
-                                </p>
-
-                                <footer>
-                                    {book.featuredVerse.reference}
-                                </footer>
+                                {(editor && !editor.preview) ? (
+                                    <BibleInlineText as="p" label="Texto del versículo" multiline
+                                        value={book.featuredVerse?.text || ""} prefix="“" suffix="”" maxLength={400}
+                                        disabled={editor.busy} onChange={(value) => editor.setVerse("text", value)} />
+                                ) : <p>“{book.featuredVerse.text}”</p>}
+                                {(editor && !editor.preview) ? (
+                                    <BibleInlineText as="footer" label="Referencia del versículo"
+                                        value={book.featuredVerse?.reference || ""} maxLength={80}
+                                        disabled={editor.busy} onChange={(value) => editor.setVerse("reference", value)} />
+                                ) : <footer>{book.featuredVerse.reference}</footer>}
                             </blockquote>
                         </div>
                     </section>
@@ -426,17 +432,26 @@ function BibleBookDetails() {
                                 el mensaje, los acontecimientos y las
                                 enseñanzas que contiene.
                             </p>
+
+                            {/* Recomendación breve que también puede actualizar Administración. */}
+                            {(book.suggestedStart || (editor && !editor.preview)) && (
+                                <p><strong>Lectura sugerida:</strong>{" "}
+                                    {(editor && !editor.preview) ? (
+                                        <BibleInlineText inline as="span" label="Lectura sugerida"
+                                            value={book.suggestedStart || ""} maxLength={80}
+                                            disabled={editor.busy} onChange={(value) => editor.setField("suggestedStart", value)} />
+                                    ) : book.suggestedStart}
+                                </p>
+                            )}
                         </div>
 
+                        {/* Abrimos el lector real del libro, respetando cambios pendientes en Administración. */}
                         <Link
                             className="book-details-read__button"
-                            to={`/recursos/biblia/leer/${book.slug}`}
+                            to={`/member/recursos/biblia/leer/${book.slug}/1`}
+                            onClick={editor?.beforeNavigate}
                         >
                             Leer {book.name}
-
-                            <span aria-hidden="true">
-                                →
-                            </span>
                         </Link>
                     </div>
                 </section>
@@ -462,7 +477,8 @@ function BibleBookDetails() {
                         <div className="book-details-explore__actions">
                             <Link
                                 className="book-details-explore__button book-details-explore__button--secondary"
-                                to={testamentBooksPath}
+                                to={listPath}
+                                onClick={editor?.beforeNavigate}
                             >
                                 {testamentBooksLabel}
                             </Link>
@@ -480,7 +496,8 @@ function BibleBookDetails() {
                         {previousBook ? (
                             <Link
                                 className="book-details-navigation__link book-details-navigation__link--previous"
-                                to={`/recursos/biblia/libro/${previousBook.slug}`}
+                                to={editor ? `${editor.adminBase}/recursos/biblia/libro/${previousBook.slug}/editar` : `/member/recursos/biblia/libro/${previousBook.slug}`}
+                                onClick={editor?.beforeNavigate}
                             >
                                 <span aria-hidden="true">
                                     ←
@@ -503,7 +520,8 @@ function BibleBookDetails() {
                         {/* Enlace para volver al listado completo. */}
                         <Link
                             className="book-details-navigation__all"
-                            to={testamentBooksPath}
+                            to={listPath}
+                                onClick={editor?.beforeNavigate}
                         >
                             Ver todos los libros
                         </Link>
@@ -512,7 +530,8 @@ function BibleBookDetails() {
                         {nextBook ? (
                             <Link
                                 className="book-details-navigation__link book-details-navigation__link--next"
-                                to={`/recursos/biblia/libro/${nextBook.slug}`}
+                                to={editor ? `${editor.adminBase}/recursos/biblia/libro/${nextBook.slug}/editar` : `/member/recursos/biblia/libro/${nextBook.slug}`}
+                                onClick={editor?.beforeNavigate}
                             >
                                 <div>
                                     <small>

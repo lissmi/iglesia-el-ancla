@@ -1,3 +1,4 @@
+
 // =========================================================
 // IMPORTACIONES
 // =========================================================
@@ -31,6 +32,7 @@ import MembersManagement from "../pages/administration/MembersManagement";
 import VolunteersManagement from "../pages/administration/VolunteersManagement";
 
 import ResourcesManagement from "../pages/administration/ResourcesManagement";
+import BibleBookInlineEditor from "../pages/administration/BibleBookInlineEditor";
 
 import RecommendationsManagement from "../pages/administration/RecommendationsManagement";
 
@@ -183,6 +185,12 @@ function SharedAdminRoutes() {
             />
 
 
+            {/* EDITOR VISUAL: la ficha bíblica real con lápices sobre los textos. */}
+            <Route
+                path="recursos/biblia/libro/:slug/editar"
+                element={<BibleBookInlineEditor />}
+            />
+
             {/* =========================================== */}
             {/* GESTIÓN DE RECOMENDADOS */}
             {/* =========================================== */}
@@ -294,3 +302,6 @@ function SharedAdminRoutes() {
 }
 
 export default SharedAdminRoutes;
+
+
+
