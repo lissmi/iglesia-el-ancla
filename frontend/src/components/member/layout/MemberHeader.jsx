@@ -1,3 +1,4 @@
+
 // =========================================================
 // HEADER DEL ÁREA DE MIEMBROS - IGLESIA EL ANCLA
 // Archivo: frontend/src/components/member/layout/MemberHeader.jsx
@@ -31,6 +32,9 @@ import {
 
 // Única instancia Axios del proyecto (incluye cookies HttpOnly).
 import api from "../../../services/api";
+
+// Limpiamos la conversación temporal solo después de cerrar sesión correctamente.
+import { clearMartinChat } from "../../../utils/martinChatSession";
 
 // Imagen institucional reutilizada en el sitio y área de miembros.
 import logoElAncla from "../../../assets/images/logo-el-ancla.png";
@@ -219,6 +223,9 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
       if (response.data?.success !== true) {
         throw new Error("El servidor no confirmó el cierre de sesión.");
       }
+
+      // Eliminamos la conversación de Martín al cerrar la sesión.
+      clearMartinChat();
 
       // Cerramos todos los menús y redirigimos al inicio de sesión.
       closeMenu();
@@ -494,3 +501,5 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
 
 // Compartimos el header entre los roles member, admin y super_admin.
 export default MemberHeader;
+
+

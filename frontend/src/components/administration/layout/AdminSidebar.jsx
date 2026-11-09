@@ -1,3 +1,4 @@
+
 //frontend/src/components/administration/layout/AdminSidebar.jsx
 import { useState } from "react";
 
@@ -10,6 +11,9 @@ import {
 
 // Importamos la conexión existente con el backend.
 import api from "../../../services/api";
+
+// Limpiamos la conversación temporal solo después de cerrar sesión correctamente.
+import { clearMartinChat } from "../../../utils/martinChatSession";
 
 // Importamos los iconos del menú.
 import {
@@ -102,6 +106,9 @@ function AdminSidebar({ isOpen, onClose }) {
 
       // Verificamos que el servidor confirme el cierre.
       if (response.data?.success) {
+
+        // Borramos la conversación de Martín de esta pestaña.
+        clearMartinChat();
 
         // Cerramos el menú móvil.
         onClose?.();
@@ -626,3 +633,6 @@ function AdminSidebar({ isOpen, onClose }) {
 
 // Exportamos el componente para ambos paneles.
 export default AdminSidebar;
+
+
+

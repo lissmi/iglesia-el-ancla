@@ -1,0 +1,7 @@
+{
+  "publico": "Visitantes: solo opciones predefinidas; no se llama a Gemini.",
+  "cuentas": "Solo usuarios autenticados pueden usar preguntas libres, con cuotas y controles del servidor.",
+  "seguridad": "No compartir ni solicitar contraseñas, tokens, información financiera ni datos personales. Gemini nunca recibe credenciales de MongoDB.",
+  "privacidad": "No almacenar textos completos de conversaciones ni información personal en estadísticas.",
+  "nota": "Este archivo es orientativo. Las autorizaciones y límites obligatorios se ejecutan en el backend, nunca se confía en reglas JSON por sí solas."
+}

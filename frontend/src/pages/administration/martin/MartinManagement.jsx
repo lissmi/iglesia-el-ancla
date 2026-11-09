@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bot, LayoutDashboard, Settings2, BookOpen, ShieldCheck, Activity, ChevronRight, Info } from "lucide-react";
+import { Bot, LayoutDashboard, Settings2, BookOpen, ShieldCheck, Activity, ChevronRight } from "lucide-react";
 import "../../../styles/pages/administration/martin/MartinManagement.css";
 
 import MartinOverview from "../../../components/administration/martin/MartinOverview";
@@ -11,6 +11,7 @@ import MartinKnowledge from "../../../components/administration/martin/MartinKno
 import MartinSecurity from "../../../components/administration/martin/MartinSecurity";
 
 import MartinActivity from "../../../components/administration/martin/MartinActivity";
+import { useMartin } from "../../../context/martin/MartinContext";
 
 // =========================================================
 // ADMINISTRACIÓN DEL ASISTENTE MARTÍN
@@ -64,6 +65,16 @@ function MartinManagement() {
     const [activeSection, setActiveSection] = useState(
         "overview"
     );
+
+    // El estado que mostramos proviene de la configuración guardada.
+    const { settings, isLoading, isBackendConnected } = useMartin();
+    const assistantStatus = isLoading
+        ? "Consultando estado"
+        : !isBackendConnected
+            ? "No disponible"
+            : settings.enabled
+                ? "Activo"
+                : "Desactivado";
 
     const selectedSection =
         managementSections.find(
@@ -135,16 +146,16 @@ function MartinManagement() {
                         <h2>Martín, asistente virtual</h2>
 
                         <span className="martin-management__status">
-                            En desarrollo
+                            {assistantStatus}
                         </span>
 
                     </div>
 
                     <p>
-                        Martín estará orientado a ayudar a
-                        visitantes y miembros con información
-                        institucional, actividades de la iglesia
-                        y recursos bíblicos autorizados.
+                        Martín ayuda a conocer nuestra iglesia, sus actividades y
+                        los recursos bíblicos. Los visitantes pueden consultar
+                        opciones de ayuda; las conversaciones están reservadas
+                        para personas con una cuenta autorizada.
                     </p>
 
                 </div>
@@ -261,29 +272,10 @@ function MartinManagement() {
 
             </section>
 
-            {/* ========================================= */}
-            {/* AVISO DE DESARROLLO */}
-            {/* ========================================= */}
 
-            <div className="martin-management__notice">
-
-                <Info size={18} />
-
-                <p>
-                    El asistente Martín todavía no está conectado
-                    a servicios de inteligencia artificial.
-                    Esta interfaz corresponde a la etapa inicial
-                    de administración.
-                </p>
-
-            </div>
 
         </div>
     );
 }
 
 export default MartinManagement;
-
-
-
-

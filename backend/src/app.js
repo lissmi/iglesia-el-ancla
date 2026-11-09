@@ -27,6 +27,9 @@ import rateLimit from "express-rate-limit";
 // las cookies enviadas por el navegador.
 import cookieParser from "cookie-parser";
 
+// Ruta segura del asistente Martín.
+import martinRoutes from "./routes/martinRoutes.js";
+
 // Importamos la gestión de actividades puntuales para miembros.
 import activitiesRoutes from "./routes/activitiesRoutes.js";
 
@@ -605,6 +608,9 @@ app.use("/api/resource-content", resourceContentRoutes);
 // Exponemos lectura protegida de capítulos bíblicos para cuentas autenticadas.
 app.use("/api/bible-reader", bibleReaderRoutes);
 
+// API de Martín: cuenta autenticada, límites y consultas bíblicas.
+app.use("/api/martin", martinRoutes);
+
 // =========================================================
 // PÁGINAS INFORMATIVAS
 // =========================================================
@@ -681,6 +687,9 @@ app.use(
 // server.js se encarga de inicializar
 // MongoDB y levantar el servidor.
 export default app;
+
+
+
 
 
 

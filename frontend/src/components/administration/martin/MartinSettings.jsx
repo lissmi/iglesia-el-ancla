@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useMartin } from "../../../context/martin/MartinContext";
 import {
     Bot, Globe2, Users, BookOpen, Search, Map, Church,
@@ -42,15 +43,53 @@ function SettingSwitch({ checked, onChange, label, description, icon: Icon, disa
 }
 
 /**
- * Configuración local de demostración.
- * El backend deberá validar y persistir estos valores antes de habilitar Martín.
+ * Las opciones se guardan en la configuración de la iglesia.
+ * El servidor comprueba los permisos antes de aplicar los cambios.
  */
 function MartinSettings() {
-    const { settings: savedSettings, saveSettings } = useMartin();
+    const { settings: savedSettings, saveSettings, isBackendConnected, isLoading, backendError } = useMartin();
     const [settings, setSettings] = useState(() => cloneSettings(savedSettings));
     const [notice, setNotice] = useState("");
+    const [saving, setSaving] = useState(false);
+    // Evita que el interruptor muestre un estado no guardado.
+    const [savingAvailability, setSavingAvailability] = useState(false);
+    useEffect(() => { setSettings(cloneSettings(savedSettings)); }, [savedSettings]);
 
     const hasChanges = JSON.stringify(settings) !== JSON.stringify(savedSettings);
+
+    // La disponibilidad general se guarda de inmediato, sin exigir otro clic.
+    // También se guardan los demás cambios visibles si el formulario fue editado.
+    const toggleAvailability = async (enabled) => {
+        // No enviamos solicitudes repetidas ni cambios con el servidor desconectado.
+        if (saving || savingAvailability || !isBackendConnected || isLoading) return;
+
+        const previousSettings = cloneSettings(settings);
+        const nextSettings = { ...cloneSettings(settings), enabled };
+
+        // Si se habilita Martín, debe haber al menos un público seleccionado.
+        if (enabled && !Object.values(nextSettings.audiences).some(Boolean)) {
+            setNotice("Selecciona quién podrá utilizar a Martín antes de activarlo.");
+            return;
+        }
+
+        setSavingAvailability(true);
+        setNotice("Guardando el cambio de Martín…");
+
+        try {
+            // Esperamos que el servidor confirme el guardado en MongoDB.
+            await saveSettings(nextSettings);
+            setNotice(enabled
+                ? "Martín quedó activado. Los cambios ya están guardados."
+                : "Martín quedó desactivado. Los cambios ya están guardados.");
+        } catch (error) {
+            // Ante un error, mostramos la configuración anterior, sin fingir éxito.
+            setSettings(previousSettings);
+            setNotice(error.response?.data?.message ||
+                "No pudimos guardar el cambio. Inténtalo nuevamente.");
+        } finally {
+            setSavingAvailability(false);
+        }
+    };
 
     const setAudience = (key, value) => {
         setSettings((previous) => ({
@@ -68,18 +107,20 @@ function MartinSettings() {
         setNotice("");
     };
 
-    const saveLocally = (event) => {
+    const saveConfiguration = async (event) => {
         event.preventDefault();
         if (settings.enabled && !Object.values(settings.audiences).some(Boolean)) {
             setNotice("Selecciona al menos un tipo de usuario antes de habilitar a Martín.");
             return;
         }
         try {
-            saveSettings(settings);
-            setNotice("Configuración aplicada al estado compartido del frontend. No se ha guardado en la base de datos.");
+            if (savingAvailability) return;
+            setSaving(true);
+            await saveSettings(settings);
+            setNotice("Los cambios se guardaron correctamente y ya se aplican en Martín.");
         } catch (error) {
-            setNotice(error.message || "No fue posible aplicar la configuración.");
-        }
+            setNotice(error.response?.data?.message || error.message || "No fue posible guardar la configuración.");
+        } finally { setSaving(false); }
     };
 
     const discardChanges = () => {
@@ -88,10 +129,10 @@ function MartinSettings() {
     };
 
     return (
-        <form className="martin-settings" onSubmit={saveLocally}>
+        <form className="martin-settings" onSubmit={saveConfiguration}>
             <div className="martin-settings__banner" role="note">
                 <Info size={18} />
-                <p>Configuración de frontend: los cambios aplicados se comparten entre secciones mientras permanezca abierta la administración. No se guardan en MongoDB ni habilitan a Martín para usuarios.</p>
+                <p>{isLoading ? "Consultando la configuración de Martín…" : isBackendConnected ? "Los cambios que guardes se aplicarán a Martín. Las visitas sin iniciar sesión solo podrán ver un saludo y opciones de ayuda." : `No pudimos cargar la configuración. ${backendError}`}</p>
             </div>
 
             <section className="martin-settings__section" aria-labelledby="martin-availability-title">
@@ -99,19 +140,20 @@ function MartinSettings() {
                     <span className="martin-settings__section-icon"><Bot size={21} /></span>
                     <div>
                         <h4 id="martin-availability-title">Disponibilidad general</h4>
-                        <p>Controla si Martín podrá estar habilitado cuando se integre el asistente.</p>
+                        <p>Decide si Martín puede responder a los usuarios registrados.</p>
                     </div>
                 </div>
                 <SettingSwitch
                     checked={settings.enabled}
-                    onChange={(value) => { setSettings((previous) => ({ ...previous, enabled: value })); setNotice(""); }}
+                    onChange={toggleAvailability}
                     label="Habilitar Martín"
-                    description="Interruptor general del asistente (sin efecto público todavía)."
+                    description="Este cambio se guarda automáticamente al pulsar el interruptor."
+                    disabled={savingAvailability || saving || !isBackendConnected || isLoading}
                     icon={Bot}
                 />
                 <div className="martin-settings__status">
                     <span className={`martin-settings__status-dot${settings.enabled ? " martin-settings__status-dot--enabled" : ""}`} />
-                    {settings.enabled ? "Habilitación seleccionada (solo demostración)" : "Deshabilitado"}
+                    {savingAvailability ? "Guardando cambio…" : settings.enabled ? "Martín habilitado" : "Martín desactivado"}
                 </div>
             </section>
 
@@ -120,11 +162,11 @@ function MartinSettings() {
                     <span className="martin-settings__section-icon"><Users size={21} /></span>
                     <div>
                         <h4 id="martin-audiences-title">Usuarios que podrán utilizarlo</h4>
-                        <p>Determina en qué experiencias de la PWA aparecerá Martín.</p>
+                        <p>Selecciona quién podrá ver a Martín y recibir su ayuda.</p>
                     </div>
                 </div>
                 <div className="martin-settings__switch-list">
-                    <SettingSwitch checked={settings.audiences.visitors} onChange={(value) => setAudience("visitors", value)} label="Visitantes y público general" description="Información pública sobre Iglesia El Ancla." icon={Globe2} />
+                    <SettingSwitch checked={settings.audiences.visitors} onChange={(value) => setAudience("visitors", value)} label="Visitantes y público general" description="Pueden ver un saludo y elegir opciones de ayuda, sin conversar libremente." icon={Globe2} />
                     <SettingSwitch checked={settings.audiences.members} onChange={(value) => setAudience("members", value)} label="Miembros registrados" description="Información pública y recursos autorizados para miembros." icon={Users} />
                 </div>
             </section>
@@ -134,7 +176,7 @@ function MartinSettings() {
                     <span className="martin-settings__section-icon"><ShieldCheck size={21} /></span>
                     <div>
                         <h4 id="martin-capabilities-title">Funciones permitidas</h4>
-                        <p>Selecciona las tareas que Martín podrá realizar. La autorización efectiva se validará en el backend.</p>
+                        <p>Elige los temas en los que Martín puede ayudar a la comunidad.</p>
                     </div>
                 </div>
                 <div className="martin-settings__switch-list">
@@ -164,11 +206,15 @@ function MartinSettings() {
 
             {notice && <p className="martin-settings__notice" role="status">{notice}</p>}
             <div className="martin-settings__actions">
-                <button type="button" className="martin-settings__button martin-settings__button--secondary" onClick={discardChanges} disabled={!hasChanges}><RotateCcw size={16} /> Descartar cambios</button>
-                <button type="submit" className="martin-settings__button martin-settings__button--primary" disabled={!hasChanges}><Save size={16} /> Aplicar configuración local</button>
+                <button type="button" className="martin-settings__button martin-settings__button--secondary" onClick={discardChanges} disabled={!hasChanges || saving || savingAvailability}><RotateCcw size={16} /> Descartar cambios</button>
+                <button type="submit" className="martin-settings__button martin-settings__button--primary" disabled={!hasChanges || saving || savingAvailability || !isBackendConnected}><Save size={16} /> Guardar configuración</button>
             </div>
         </form>
     );
 }
 
 export default MartinSettings;
+
+
+
+

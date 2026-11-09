@@ -1,0 +1,8 @@
+{
+  "nombre": "Iglesia El Ancla",
+  "tipo": "Comunidad cristiana",
+  "horariosConfirmados": [
+    { "actividad": "Culto general", "dia": "domingo", "hora": "11:00", "zonaHoraria": "America/Santiago" }
+  ],
+  "nota": "La programación puede variar. Para cambios o reuniones especiales, revisa las actividades publicadas por la iglesia."
+}

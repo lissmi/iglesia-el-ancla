@@ -16,12 +16,12 @@ import {
 
 import "../../../styles/components/administration/martin/MartinOverview.css";
 
-// Los datos provienen del contexto compartido (solo frontend).
-// El estado operativo seguirá siendo "En desarrollo" hasta integrar el backend.
+// El estado y las estadísticas provienen del backend cuando está conectado.
 const statusLabels = {
-    development: "En desarrollo",
+    development: "No disponible",
     active: "Activo",
     paused: "Pausado",
+    inactive: "Desactivado",
 };
 
 const capabilities = [
@@ -74,7 +74,7 @@ function MartinOverview({ onNavigate }) {
         },
         {
             id: "cost",
-            label: "Consumo estimado",
+            label: "Costo registrado",
             value: data.estimatedCost,
             icon: CalendarDays,
         },
@@ -110,11 +110,13 @@ function MartinOverview({ onNavigate }) {
                         </span>
                     </div>
                     <p>
-                        {isOperational
-                            ? "Martín se encuentra disponible para los públicos autorizados."
-                            : configuredEnabled
-                                ? "Martín está habilitado en la configuración local, pero aún no está publicado ni conectado al backend."
-                                : "Martín está desactivado en la configuración local. Su conexión y publicación se realizarán en etapas posteriores."}
+                        {!isBackendConnected
+                            ? "No pudimos consultar el estado de Martín. Intenta nuevamente más tarde."
+                            : isOperational
+                                ? "Martín está habilitado para las cuentas autorizadas."
+                                : configuredEnabled
+                                    ? "Martín está habilitado para las personas autorizadas."
+                                    : "Martín está desactivado. Puedes activarlo en Configuración cuando lo necesites."}
                     </p>
                 </div>
             </section>
@@ -123,7 +125,7 @@ function MartinOverview({ onNavigate }) {
                 <div className="martin-overview__section-heading">
                     <div>
                         <h4 id="martin-overview-metrics">Indicadores de uso</h4>
-                        <p>Las estadísticas reales estarán disponibles cuando conectemos el servicio.</p>
+                        <p>Aquí puedes ver cuántas consultas ha recibido Martín.</p>
                     </div>
                 </div>
                 <div className="martin-overview__metrics">
@@ -144,7 +146,7 @@ function MartinOverview({ onNavigate }) {
                 <div className="martin-overview__section-heading">
                     <div>
                         <h4 id="martin-overview-capabilities">Funciones del asistente</h4>
-                        <p>Funciones seleccionadas en la configuración local. No están disponibles públicamente.</p>
+                        <p>Elige qué tipo de ayuda puede ofrecer Martín a la comunidad.</p>
                     </div>
                     {onNavigate && (
                         <button
@@ -169,7 +171,7 @@ function MartinOverview({ onNavigate }) {
                                     <div className="martin-overview__capability-title">
                                         <h5>{capability.title}</h5>
                                         <span className={enabled ? "martin-overview__tag martin-overview__tag--enabled" : "martin-overview__tag"}>
-                                            {enabled ? "Configurada" : "No configurada"}
+                                            {enabled ? "Permitida" : "Desactivada"}
                                         </span>
                                     </div>
                                     <p>{capability.description}</p>
@@ -185,9 +187,8 @@ function MartinOverview({ onNavigate }) {
                 <div>
                     <h4>Acceso controlado a la información</h4>
                     <p>
-                        Martín se diseñará para consultar únicamente fuentes autorizadas.
-                        No tendrá acceso directo a MongoDB ni a información administrativa o personal.
-                        Estas protecciones todavía deben implementarse y verificarse en el backend.
+                        Martín tiene restricciones para proteger la información privada de la comunidad.
+                        No puede consultar contraseñas, datos personales ni información reservada de la iglesia.
                     </p>
                 </div>
                 {onNavigate && (

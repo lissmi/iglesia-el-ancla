@@ -1,3 +1,5 @@
+import MartinWidget from "./components/martin/MartinWidget";
+
 import {
   BrowserRouter,
   Route,
@@ -409,6 +411,9 @@ function App() {
           />
 
         </Routes>
+
+        {/* Martín aparece en la PWA sin modificar las rutas existentes. */}
+        <MartinWidget />
       </div>
     </BrowserRouter>
   );

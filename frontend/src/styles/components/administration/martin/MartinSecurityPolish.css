@@ -1,0 +1,61 @@
+/* Acciones de Seguridad y límites: alineadas con el panel administrativo. */
+.martin-security .martin-security__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+.martin-security .martin-security__actions .martin-security__action-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 43px;
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.martin-security .martin-security__actions .martin-security__action-button--secondary {
+  background: #fff;
+  border-color: #d1dfe7;
+  color: #35546a;
+}
+.martin-security .martin-security__actions .martin-security__action-button--secondary:hover:not(:disabled) {
+  background: #eef5f9;
+  border-color: #abc5d4;
+}
+.martin-security .martin-security__actions .martin-security__action-button--primary {
+  background: #376a85;
+  border-color: #376a85;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(29, 77, 102, .12);
+}
+.martin-security .martin-security__actions .martin-security__action-button--primary:hover:not(:disabled) {
+  background: #285570;
+  border-color: #285570;
+  transform: translateY(-1px);
+}
+.martin-security .martin-security__actions .martin-security__action-button:focus-visible {
+  outline: 3px solid #8bbbd2;
+  outline-offset: 3px;
+}
+.martin-security .martin-security__actions .martin-security__action-button:disabled {
+  opacity: .48;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+@media (max-width: 520px) {
+  .martin-security .martin-security__actions { flex-direction: column-reverse; align-items: stretch; }
+  .martin-security .martin-security__actions .martin-security__action-button { width: 100%; }
+}

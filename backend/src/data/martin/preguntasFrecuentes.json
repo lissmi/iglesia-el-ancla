@@ -1,0 +1,65 @@
+{
+  "saludo": "¡Hola! Soy Martín ⚓😊. ¡Qué gusto tenerte por aquí! ¿Te gustaría conocer algo de nuestra comunidad? Elige lo que más te interese y con cariño te acompaño.",
+  "opciones": [
+    {
+      "id": "horarios",
+      "titulo": "⛪ ¿Cuándo nos reunimos?",
+      "respuesta": "¡Qué alegría que quieras acompañarnos! 💙 Nuestro culto general se realiza los domingos a las 11:00 horas. También tenemos otras actividades para compartir y aprender juntos. ¡Será un gusto verte! ⚓",
+      "enlace": "/eventos",
+      "enlaceTexto": "Ver reuniones y actividades"
+    },
+    {
+      "id": "eventos",
+      "titulo": "📅 ¿Qué actividades se vienen?",
+      "respuesta": "¡Siempre es lindo encontrar momentos para compartir! 😊 En nuestra página de eventos puedes conocer las actividades publicadas y revisar sus fechas y horarios.",
+      "enlace": "/eventos",
+      "enlaceTexto": "Descubrir próximos eventos"
+    },
+    {
+      "id": "nosotros",
+      "titulo": "💙 ¿Quieres conocer nuestra iglesia?",
+      "respuesta": "¡Me encanta que quieras conocernos! 💙 En nuestra sección «Nosotros» puedes descubrir más sobre Iglesia El Ancla y nuestra comunidad.",
+      "enlace": "/nosotros",
+      "enlaceTexto": "Conocer nuestra iglesia"
+    },
+    {
+      "id": "biblia",
+      "titulo": "📜 Quiero leer la Biblia",
+      "respuesta": "¡Qué lindo que quieras acercarte a la Palabra! 📖 Elige el libro, el capítulo y el versículo que te gustaría leer. Puedes hacerlo aquí mismo, sin iniciar sesión. 💙"
+    },
+    {
+      "id": "recursos",
+      "titulo": "📖 ¿Te gustaría explorar recursos bíblicos?",
+      "respuesta": "¡Qué bonito interés por aprender! 📖 Nuestra comunidad cuenta con materiales y estudios para seguir creciendo juntos. Para explorar la biblioteca de recursos necesitas entrar con tu cuenta de miembro.",
+      "respuestaAutenticado": "¡Qué bonito interés por aprender! 📖 Puedes visitar los recursos disponibles para nuestra comunidad y descubrir nuevos materiales de estudio.",
+      "enlaceAutenticado": "/member/recursos",
+      "enlaceTextoAutenticado": "Explorar mis recursos"
+    },
+    {
+      "id": "lutero",
+      "titulo": "🌟 ¿Sabes qué inspiró mi nombre?",
+      "respuesta": "¡Me encanta que me lo preguntes! 😊 Mi nombre es un homenaje a Martín Lutero, un teólogo alemán del siglo XVI que impulsó la Reforma protestante y resaltó la importancia de conocer las Escrituras. ¡Por eso me llamo Martín! 📖⚓"
+    },
+    {
+      "id": "donaciones",
+      "titulo": "💛 ¿Cómo puedo hacer una donación?",
+      "respuesta": "¡Gracias por querer apoyar a nuestra comunidad! 💛 Los aportes son completamente voluntarios. En nuestra página de donaciones puedes conocer cómo colaborar y elegir el monto que desees.",
+      "enlace": "/donaciones",
+      "enlaceTexto": "Conocer cómo donar"
+    },
+    {
+      "id": "ubicacion",
+      "titulo": "📍 ¿Dónde están y cómo puedo llegar?",
+      "respuesta": "¡Nos encantaría recibirte! 😊 Estamos en Artillería 199, Playa Ancha, Valparaíso, Chile. Si quieres conocer más detalles o ponerte en contacto, puedes visitar nuestra página de contacto. ¡Te esperamos! ⚓",
+      "enlace": "/contacto",
+      "enlaceTexto": "Ver ubicación y contacto"
+    },
+    {
+      "id": "acceso",
+      "titulo": "💬 ¿Puedo hacerte otra pregunta?",
+      "respuesta": "¡Por supuesto! 😊 Para conversar conmigo sobre la Biblia o nuestra iglesia, puedes iniciar sesión con tu cuenta.",
+      "enlace": "/login",
+      "enlaceTexto": "Iniciar sesión"
+    }
+  ]
+}

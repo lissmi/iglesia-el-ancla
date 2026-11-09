@@ -1,0 +1,104 @@
+/* Ventana de confirmación de eliminación, en lugar del aviso del navegador. */
+.martin-knowledge-confirm__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(22, 39, 54, .56);
+  backdrop-filter: blur(3px);
+}
+.martin-knowledge-confirm__dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 32px;
+  border: 1px solid #e3e9ee;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 22px 60px rgba(17, 36, 52, .25);
+  color: #243d51;
+}
+.martin-knowledge-confirm__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  color: #a95441;
+  background: #fff1ea;
+}
+.martin-knowledge-confirm__dialog h4 {
+  margin: 0 35px 12px 0;
+  color: #203e54;
+  font-size: 21px;
+  line-height: 1.35;
+}
+.martin-knowledge-confirm__dialog p {
+  margin: 0;
+  color: #61788a;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.martin-knowledge-confirm__dialog p strong { color: #304f64; }
+.martin-knowledge-confirm__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 9px;
+  background: #f2f5f7;
+  color: #516d7f;
+  cursor: pointer;
+}
+.martin-knowledge-confirm__close:hover { background: #e5edf1; }
+.martin-knowledge-confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+.martin-knowledge-confirm__actions button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.martin-knowledge-confirm__cancel {
+  border: 1px solid #cddce4;
+  background: #fff;
+  color: #35576d;
+}
+.martin-knowledge-confirm__cancel:hover { background: #f0f6f8; }
+.martin-knowledge-confirm__delete {
+  border: 1px solid #ad594a;
+  background: #ad594a;
+  color: #fff;
+}
+.martin-knowledge-confirm__delete:hover { background: #93483c; }
+.martin-knowledge-confirm__dialog button:focus-visible {
+  outline: 3px solid #8bbbd2;
+  outline-offset: 3px;
+}
+@media (max-width: 520px) {
+  .martin-knowledge-confirm__dialog { padding: 26px 20px; }
+  .martin-knowledge-confirm__actions { flex-direction: column-reverse; }
+  .martin-knowledge-confirm__actions button { width: 100%; }
+}

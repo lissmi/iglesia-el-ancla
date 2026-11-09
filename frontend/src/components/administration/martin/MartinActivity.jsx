@@ -8,8 +8,7 @@ import {
 import "../../../styles/components/administration/martin/MartinActivity.css";
 import { useMartin } from "../../../context/martin/MartinContext";
 
-// Este componente no consulta datos ni registra conversaciones.
-// Los registros y métricas provienen del contexto; por ahora están vacíos.
+// Los indicadores se muestran por día y no incluyen el texto de las conversaciones.
 const EVENT_TYPES = {
     request: "Consulta",
     blocked: "Solicitud bloqueada",
@@ -75,10 +74,10 @@ function MartinActivity() {
     const exportCsv = () => {
         if (!filteredEvents.length) return;
         const rows = [
-            ["ID", "Fecha", "Tipo", "Categoría", "Descripción técnica"],
+            ["Día", "Tipo", "Categoría", "Descripción", "Cantidad"],
             ...filteredEvents.map((event) => [
-                event.id ?? "", formatDate(event.createdAt),
-                EVENT_TYPES[event.type] ?? "Evento", event.category ?? "", event.summary ?? "",
+                event.day ?? "", EVENT_TYPES[event.type] ?? "Evento",
+                event.category ?? "", event.summary ?? "", event.count ?? 0,
             ]),
         ];
         const csv = "\uFEFF" + rows.map((row) => row.map((value) =>
@@ -98,23 +97,23 @@ function MartinActivity() {
                 <div>
                     <span className="martin-activity__eyebrow">Supervisión</span>
                     <h4>Actividad y estadísticas</h4>
-                    <p>Consulta indicadores operativos y eventos de seguridad del asistente.</p>
+                    <p>Revisa cuánto se utiliza Martín y las solicitudes que se han bloqueado.</p>
                 </div>
-                <span className="martin-activity__phase"><Clock3 size={14} /> {isBackendConnected ? "Conectado al backend" : "Sin conexión al backend"}</span>
+                <span className="martin-activity__phase"><Clock3 size={14} /> {isBackendConnected ? "Información actualizada" : "No se pudo actualizar"}</span>
             </div>
 
             <div className="martin-activity__metrics">
-                <MetricCard icon={MessageSquareText} label="Consultas de hoy" value={formatNumber(metrics?.todayRequests)} description="Solicitudes recibidas hoy" />
-                <MetricCard icon={CalendarDays} label="Consultas del mes" value={formatNumber(metrics?.monthRequests)} description="Solicitudes del mes actual" />
-                <MetricCard icon={ShieldAlert} label="Solicitudes bloqueadas" value={formatNumber(metrics?.blockedRequests)} description="Rechazos por políticas de seguridad" />
-                <MetricCard icon={Wallet} label="Consumo estimado" value={typeof metrics?.estimatedCostUsd === "number" ? `US$ ${metrics.estimatedCostUsd.toFixed(2)}` : "—"} description="Costo de API en el período" />
+                <MetricCard icon={MessageSquareText} label="Consultas de hoy" value={formatNumber(metrics?.todayRequests)} description="Preguntas recibidas durante el día" />
+                <MetricCard icon={CalendarDays} label="Consultas del mes" value={formatNumber(metrics?.monthRequests)} description="Preguntas recibidas este mes" />
+                <MetricCard icon={ShieldAlert} label="Solicitudes bloqueadas" value={formatNumber(metrics?.blockedRequests)} description="Consultas rechazadas para proteger a la comunidad" />
+                <MetricCard icon={Wallet} label="Costo registrado" value={typeof metrics?.estimatedCostUsd === "number" ? `US$ ${metrics.estimatedCostUsd.toFixed(2)}` : "—"} description="Sin información de costos disponible" />
             </div>
 
             <section className="martin-activity__panel" aria-labelledby="martin-activity-events-title">
                 <div className="martin-activity__panel-head">
                     <div>
                         <h4 id="martin-activity-events-title"><Activity size={19} /> Registro de actividad</h4>
-                        <p>Eventos operativos sin contenido íntegro de las conversaciones.</p>
+                        <p>Resumen diario sin guardar ni mostrar conversaciones privadas.</p>
                     </div>
                     <button className="martin-activity__export" type="button" onClick={exportCsv} disabled={!filteredEvents.length} title={!filteredEvents.length ? "No hay registros para exportar" : "Exportar registros filtrados"}>
                         <Download size={16} /> Exportar CSV
@@ -152,13 +151,14 @@ function MartinActivity() {
                 {filteredEvents.length ? (
                     <div className="martin-activity__table-wrap">
                         <table className="martin-activity__table">
-                            <thead><tr><th>Fecha</th><th>Evento</th><th>Categoría</th><th>Descripción técnica</th></tr></thead>
+                            <thead><tr><th>Día</th><th>Evento</th><th>Categoría</th><th>Descripción</th><th>Cantidad</th></tr></thead>
                             <tbody>{filteredEvents.map((event, index) => (
                                 <tr key={event.id ?? index}>
-                                    <td>{formatDate(event.createdAt)}</td>
+                                    <td>{event.day || formatDate(event.createdAt)}</td>
                                     <td><span className={`martin-activity__type martin-activity__type--${EVENT_TYPES[event.type] ? event.type : "other"}`}>{EVENT_TYPES[event.type] ?? "Evento"}</span></td>
                                     <td>{event.category || "—"}</td>
                                     <td>{event.summary || "—"}</td>
+                                    <td>{formatNumber(event.count ?? 0)}</td>
                                 </tr>
                             ))}</tbody>
                         </table>
@@ -166,16 +166,16 @@ function MartinActivity() {
                 ) : (
                     <div className="martin-activity__empty">
                         <BarChart3 size={30} strokeWidth={1.5} />
-                        <h5>{events.length ? "No hay eventos que coincidan" : "Todavía no hay actividad registrada"}</h5>
-                        <p>{events.length ? "Prueba cambiando los filtros de búsqueda." : "Cuando Martín esté conectado, aquí aparecerán las métricas y los eventos autorizados."}</p>
+                        <h5>{events.length ? "No hay eventos que coincidan" : "Todavía no hay estadísticas registradas"}</h5>
+                        <p>{events.length ? "Prueba cambiando los filtros de búsqueda." : "Cuando Martín reciba consultas, aquí verás un resumen de cada día."}</p>
                     </div>
                 )}
-                <div className="martin-activity__table-footer">{filteredEvents.length} {filteredEvents.length === 1 ? "registro" : "registros"} en la selección</div>
+                <div className="martin-activity__table-footer">{filteredEvents.length} {filteredEvents.length === 1 ? "fila" : "filas"} en la selección</div>
             </section>
 
             <div className="martin-activity__notice">
                 <Info size={18} />
-                <p><strong>Privacidad y seguridad:</strong> el registro futuro deberá evitar mensajes completos, datos sensibles, tokens y direcciones IP en esta pantalla. El backend definirá permisos, retención y auditoría. Los indicadores actuales no representan actividad real.</p>
+                <p><strong>Privacidad:</strong> esta sección muestra un resumen del uso de Martín, sin enseñar las conversaciones privadas. El costo del servicio no se calcula en esta pantalla.</p>
             </div>
         </div>
     );

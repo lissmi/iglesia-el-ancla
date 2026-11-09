@@ -4,9 +4,11 @@ import {
     useContext,
     useMemo,
     useState,
+    useEffect,
 } from "react";
+import api from "../../services/api";
 
-// Estado compartido de demostración. No habilita servicios públicos ni GPT.
+// Configuración inicial mientras se consulta la versión persistida del servidor.
 export const DEFAULT_MARTIN_SETTINGS = {
     enabled: false,
     audiences: { visitors: true, members: true },
@@ -27,9 +29,12 @@ export const DEFAULT_MARTIN_SECURITY = {
     rejectSensitiveRequests: true,
     blockPromptInjection: true,
     avoidPersonalData: true,
-    visitorDailyLimit: 10,
-    memberDailyLimit: 30,
-    maxMessageLength: 500,
+    visitorDailyLimit: 0, // El público no realiza consultas a Gemini.
+    memberDailyLimit: 10,
+    adminDailyLimit: 20,
+    abuseStrikeLimit: 3,
+    abuseBlockMinutes: 30,
+    maxMessageLength: 700,
     maxConversationTurns: 12,
     logSecurityEvents: true,
     enableAbuseDetection: true,
@@ -37,29 +42,7 @@ export const DEFAULT_MARTIN_SECURITY = {
         "Puedo ayudarte con información de Iglesia El Ancla y recursos bíblicos. ¿Qué te gustaría consultar?",
 };
 
-export const DEFAULT_MARTIN_KNOWLEDGE = [
-    {
-        id: "demo-1",
-        title: "Horario del culto general",
-        category: "institutional",
-        audience: "public",
-        status: "draft",
-        question: "¿Cuándo es el culto general?",
-        answer: "El culto general se realiza los domingos a las 11:00 horas.",
-        source: "Horario institucional (verificar antes de publicar)",
-    },
-    {
-        id: "demo-2",
-        title: "Estudios bíblicos publicados",
-        category: "resources",
-        audience: "members",
-        status: "draft",
-        question: "¿Dónde encuentro los estudios bíblicos?",
-        answer:
-            "Puedes revisar los estudios y guías disponibles en la sección Recursos de la plataforma.",
-        source: "Sección Recursos de la PWA (enlace pendiente)",
-    },
-];
+export const DEFAULT_MARTIN_KNOWLEDGE = [];
 
 const MartinContext = createContext(null);
 
@@ -80,87 +63,117 @@ function validateSettings(settings) {
     }
 }
 
-function validateSecurity(security) {
-    if (!security || typeof security !== "object") {
-        throw new Error("La configuración de seguridad no es válida.");
-    }
-    const ranges = {
-        visitorDailyLimit: [1, 100],
-        memberDailyLimit: [1, 200],
-        maxMessageLength: [100, 2000],
-        maxConversationTurns: [1, 30],
-    };
-    for (const [key, [min, max]] of Object.entries(ranges)) {
-        if (!Number.isInteger(Number(security[key])) || Number(security[key]) < min || Number(security[key]) > max) {
-            throw new Error(`El valor de ${key} debe estar entre ${min} y ${max}.`);
-        }
-    }
-    if (!String(security.fallbackMessage || "").trim()) {
-        throw new Error("El mensaje de rechazo es obligatorio.");
-    }
-}
-
 export function MartinProvider({ children }) {
     const [settings, setSettings] = useState(() => clone(DEFAULT_MARTIN_SETTINGS));
     const [security, setSecurity] = useState(() => clone(DEFAULT_MARTIN_SECURITY));
-    const [knowledgeEntries, setKnowledgeEntries] = useState(() => clone(DEFAULT_MARTIN_KNOWLEDGE));
+    // Los contenidos se leen de MongoDB; no cargamos ejemplos que puedan confundirse con información real.
+    const [knowledgeEntries, setKnowledgeEntries] = useState([]);
+    const [knowledgeError, setKnowledgeError] = useState("");
+    const [isKnowledgeLoading, setIsKnowledgeLoading] = useState(true);
 
     // Las métricas y los eventos permanecerán vacíos hasta disponer de backend.
-    const [activityEvents] = useState([]);
-    const [activityMetrics] = useState(null);
+    const [activityEvents, setActivityEvents] = useState([]);
+    const [activityMetrics, setActivityMetrics] = useState(null);
+    const [isBackendConnected, setIsBackendConnected] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [backendError, setBackendError] = useState("");
 
-    const saveSettings = useCallback((nextSettings) => {
+    // El panel obtiene datos reales de un endpoint protegido para administradores.
+    const refreshBackend = useCallback(async () => {
+        try {
+            const [configuration, activity, knowledge] = await Promise.all([
+                api.get("/martin/admin/configuracion"),
+                api.get("/martin/admin/actividad"),
+                api.get("/martin/admin/conocimientos"),
+            ]);
+            setKnowledgeEntries(knowledge.data.data);
+            setKnowledgeError("");
+            const data = configuration.data.data;
+            setSettings({
+                enabled: data.enabled,
+                audiences: data.audiences,
+                capabilities: data.capabilities,
+                welcomeMessage: data.welcomeMessage,
+                outOfScopeMessage: data.outOfScopeMessage,
+            });
+            setSecurity(previous => ({
+                ...previous,
+                memberDailyLimit: data.memberDailyLimit,
+                adminDailyLimit: data.adminDailyLimit,
+                abuseStrikeLimit: data.abuseStrikeLimit,
+                abuseBlockMinutes: data.abuseBlockMinutes,
+                maxMessageLength: data.maxMessageLength,
+            }));
+            setActivityEvents(activity.data.data.events);
+            setActivityMetrics(activity.data.data.metrics);
+            setIsBackendConnected(true);
+            setBackendError("");
+        } catch (error) {
+            setIsBackendConnected(false);
+            const message = error.response?.data?.message || "No fue posible cargar los datos de Martín.";
+            setBackendError(message);
+            setKnowledgeError(message);
+        } finally { setIsLoading(false); setIsKnowledgeLoading(false); }
+    }, []);
+
+    useEffect(() => { refreshBackend(); }, [refreshBackend]);
+
+    // Guardamos primero en MongoDB y después sincronizamos el estado compartido.
+    const saveSettings = useCallback(async (nextSettings) => {
         validateSettings(nextSettings);
-        setSettings(clone(nextSettings));
+        const response = await api.patch("/martin/admin/configuracion", nextSettings);
+        const data = response.data.data;
+        setSettings({ enabled: data.enabled, audiences: data.audiences,
+            capabilities: data.capabilities, welcomeMessage: data.welcomeMessage,
+            outOfScopeMessage: data.outOfScopeMessage });
+        return data;
     }, []);
 
-    const resetSettings = useCallback(() => {
-        setSettings(clone(DEFAULT_MARTIN_SETTINGS));
+    const resetSettings = useCallback(() => {}, []); // Sin borrado automático de configuración persistente.
+
+    // Las protecciones esenciales no se pueden desactivar desde este panel.
+    const saveSecurity = useCallback(async (nextSecurity) => {
+        const numeric = ["memberDailyLimit", "adminDailyLimit", "abuseStrikeLimit", "abuseBlockMinutes", "maxMessageLength"];
+        const payload = Object.fromEntries(numeric.map(key => [key, Number(nextSecurity[key])]));
+        const response = await api.patch("/martin/admin/configuracion", payload);
+        const data = response.data.data;
+        setSecurity(previous => ({ ...previous, ...payload,
+            rejectSensitiveRequests: true, avoidPersonalData: true, blockPromptInjection: true }));
+        return data;
     }, []);
 
-    const saveSecurity = useCallback((nextSecurity) => {
-        validateSecurity(nextSecurity);
-        // Estas protecciones no pueden desactivarse desde la interfaz.
-        setSecurity(clone({
-            ...nextSecurity,
-            rejectSensitiveRequests: true,
-            avoidPersonalData: true,
-        }));
+    const resetSecurity = useCallback(() => {}, []);
+
+    // Cada operación espera la respuesta del servidor antes de cambiar la lista visible.
+    const addKnowledgeEntry = useCallback(async (entry) => {
+        const result = await api.post("/martin/admin/conocimientos", entry);
+        setKnowledgeEntries((previous) => [result.data.data, ...previous]);
+        return result.data.data.id;
     }, []);
 
-    const resetSecurity = useCallback(() => {
-        setSecurity(clone(DEFAULT_MARTIN_SECURITY));
+    const updateKnowledgeEntry = useCallback(async (id, changes) => {
+        const result = await api.patch(`/martin/admin/conocimientos/${encodeURIComponent(id)}`, changes);
+        setKnowledgeEntries((previous) => previous.map((entry) => entry.id === id ? result.data.data : entry));
+        return result.data.data;
     }, []);
 
-    const addKnowledgeEntry = useCallback((entry) => {
-        const id = `local-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-        const created = { ...entry, id, status: entry.status || "draft" };
-        setKnowledgeEntries((previous) => [created, ...previous]);
-        return id;
-    }, []);
-
-    const updateKnowledgeEntry = useCallback((id, changes) => {
-        setKnowledgeEntries((previous) => previous.map((entry) =>
-            entry.id === id ? { ...entry, ...changes, id } : entry
-        ));
-    }, []);
-
-    const deleteKnowledgeEntry = useCallback((id) => {
+    const deleteKnowledgeEntry = useCallback(async (id) => {
+        await api.delete(`/martin/admin/conocimientos/${encodeURIComponent(id)}`);
         setKnowledgeEntries((previous) => previous.filter((entry) => entry.id !== id));
     }, []);
 
     const overview = useMemo(() => ({
         // No indicar "activo" hasta que exista el backend público.
-        status: "development",
+        status: isBackendConnected ? (settings.enabled ? "active" : "inactive") : "development",
         publicEnabled: settings.enabled && settings.audiences.visitors,
         membersEnabled: settings.enabled && settings.audiences.members,
         bibleEnabled: settings.enabled && settings.capabilities.biblicalGuidance,
         resourcesEnabled: settings.enabled && settings.capabilities.resourceSearch,
-        todayRequests: null,
-        monthRequests: null,
+        todayRequests: activityMetrics?.todayRequests ?? null,
+        monthRequests: activityMetrics?.monthRequests ?? null,
         estimatedCost: null,
         lastActivity: null,
-    }), [settings]);
+    }), [settings, activityMetrics, isBackendConnected]);
 
     const value = useMemo(() => ({
         settings,
@@ -170,18 +183,20 @@ export function MartinProvider({ children }) {
         saveSecurity,
         resetSecurity,
         knowledgeEntries,
+        knowledgeError, isKnowledgeLoading,
         addKnowledgeEntry,
         updateKnowledgeEntry,
         deleteKnowledgeEntry,
         activityEvents,
         activityMetrics,
         overview,
-        isBackendConnected: false,
+        isBackendConnected, isLoading, backendError, refreshBackend,
     }), [
         settings, saveSettings, resetSettings,
         security, saveSecurity, resetSecurity,
-        knowledgeEntries, addKnowledgeEntry, updateKnowledgeEntry, deleteKnowledgeEntry,
+        knowledgeEntries, knowledgeError, isKnowledgeLoading, addKnowledgeEntry, updateKnowledgeEntry, deleteKnowledgeEntry,
         activityEvents, activityMetrics, overview,
+        isBackendConnected, isLoading, backendError, refreshBackend,
     ]);
 
     return <MartinContext.Provider value={value}>{children}</MartinContext.Provider>;
