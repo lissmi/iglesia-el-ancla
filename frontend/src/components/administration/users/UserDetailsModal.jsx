@@ -1,4 +1,5 @@
 
+
 import { useEffect, useRef } from "react";
 
 import {
@@ -72,6 +73,40 @@ const formatDate = (value) => {
     day: "2-digit",
     month: "long",
     year: "numeric",
+  }).format(date);
+};
+
+
+// =========================================================
+// FORMATEAR FECHA Y HORA DEL ÚLTIMO ACCESO
+// =========================================================
+
+// La fecha queda registrada al iniciar sesión correctamente.
+// Mostramos la hora de Chile para que sea fácil de interpretar.
+const formatLastLogin = (value) => {
+
+  // Si todavía no ha iniciado sesión, lo indicamos claramente.
+  if (!value) {
+    return "Aún no ha iniciado sesión";
+  }
+
+  // Convertimos la fecha guardada a un objeto Date.
+  const date = new Date(value);
+
+  // Evitamos mostrar fechas incorrectas.
+  if (Number.isNaN(date.getTime())) {
+    return "Fecha no disponible";
+  }
+
+  // Presentamos fecha y hora en la zona horaria de Chile continental.
+  return new Intl.DateTimeFormat("es-CL", {
+    timeZone: "America/Santiago",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
   }).format(date);
 };
 
@@ -280,29 +315,49 @@ function UserDetailsModal({
 
   const initials = getInitials(userName);
 
-  const isBlocked = user.isBlocked === true;
+  const isBlocked = user.isActive === false;
 
   const roleLabel = getRoleLabel(user.role);
 
-  // Normalizamos la información de sucursales
-  // cuando exista en el objeto recibido.
+  // El sistema utiliza "sucursalPrincipal" para identificar
+  // la sede principal y "sucursales" para todas las asignadas.
+  // La API ya devuelve las sedes con su nombre desde MongoDB.
 
-  const branches = Array.isArray(user.branches)
-    ? user.branches
+  // Extraemos únicamente nombres legibles; nunca mostramos
+  // identificadores internos de MongoDB como si fueran sedes.
+  const getBranchName = (branch) => {
+    if (!branch || typeof branch !== "object") {
+      return "";
+    }
+
+    return typeof branch.name === "string"
+      ? branch.name.trim()
+      : "";
+  };
+
+  // Obtenemos la sede principal del usuario.
+  const primaryBranch = user.sucursalPrincipal;
+  const primaryBranchName = getBranchName(primaryBranch);
+
+  // Las demás sedes corresponden a asignaciones adicionales.
+  const assignedBranches = Array.isArray(user.sucursales)
+    ? user.sucursales
     : [];
 
-  const branchNames = branches
-    .map((branch) => {
+  // Comparamos identificadores para evitar repetir la sede principal.
+  const primaryBranchId = String(primaryBranch?._id || primaryBranch?.id || "");
 
-      if (typeof branch === "string") {
-        return branch;
-      }
-
-      return branch.name || branch.nombre || "";
-
-    })
-    .filter(Boolean)
-    .join(", ");
+  const otherBranchNames = [
+    ...new Set(
+      assignedBranches
+        .filter((branch) => {
+          const branchId = String(branch?._id || branch?.id || "");
+          return !primaryBranchId || branchId !== primaryBranchId;
+        })
+        .map(getBranchName)
+        .filter(Boolean)
+    ),
+  ];
 
 
   // =========================================================
@@ -532,14 +587,24 @@ function UserDetailsModal({
             <UserDetailField
               icon={Clock3}
               label="Último acceso"
-              value={formatDate(user.lastLogin)}
+              value={formatLastLogin(user.lastLoginAt)}
             />
 
             <UserDetailField
               icon={Building2}
-              label="Sucursales autorizadas"
-              value={branchNames || "Sin información"}
+              label="Sucursal principal"
+              value={primaryBranchName || "Sin sucursal asignada"}
             />
+
+            {otherBranchNames.length > 0 && (
+
+              <UserDetailField
+                icon={Building2}
+                label="Otras sucursales asignadas"
+                value={otherBranchNames.join(", ")}
+              />
+
+            )}
 
           </div>
 
@@ -559,10 +624,10 @@ function UserDetailsModal({
           />
 
           <p>
-            Esta ventana permite consultar la información
-            de la cuenta. La edición de datos y la
-            administración de permisos se realizarán
-            mediante funcionalidades independientes.
+            Aquí puedes consultar los datos de la cuenta.
+            Para cambiar su información, utiliza la opción
+            de edición. Las sucursales se gestionan desde
+            Configuración.
           </p>
 
         </div>
@@ -596,3 +661,7 @@ function UserDetailsModal({
 // =========================================================
 
 export default UserDetailsModal;
+
+
+
+

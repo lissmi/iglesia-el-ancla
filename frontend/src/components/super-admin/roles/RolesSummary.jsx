@@ -1,43 +1,40 @@
 
+
 import {
   KeyRound,
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
 
-import {
-  SYSTEM_PERMISSIONS,
-  SYSTEM_ROLES,
-} from "../../../data/admin/rolesPermissions";
 
 import "../../../styles/components/super-admin/roles/RolesSummary.css";
 
-function RolesSummary() {
-  const protectedRoles = SYSTEM_ROLES.filter(
-    (role) => role.protected
-  ).length;
+function RolesSummary({ data }) {
+  const roles = data.roles;
+  const permissions = data.permissions;
+  const protectedRoles = roles.filter((role) => role.protected).length;
 
   const summary = [
     {
       id: "roles",
       label: "Roles del sistema",
-      value: SYSTEM_ROLES.length,
+      value: roles.length,
       icon: UsersRound,
       description: "Niveles de acceso definidos",
     },
     {
       id: "permissions",
-      label: "Permisos documentados",
-      value: SYSTEM_PERMISSIONS.length,
+      label: "Funciones disponibles",
+      value: permissions.length,
       icon: KeyRound,
-      description: "Operaciones en la matriz propuesta",
+      description: "Acciones contempladas en esta tabla",
     },
     {
       id: "protected",
-      label: "Roles privilegiados",
+      label: "Roles protegidos",
       value: protectedRoles,
       icon: ShieldCheck,
-      description: "Roles con protección especial",
+      description: "Tipos de cuenta con mayor protección",
     },
   ];
 
@@ -80,3 +77,7 @@ function RolesSummary() {
 }
 
 export default RolesSummary;
+
+
+
+

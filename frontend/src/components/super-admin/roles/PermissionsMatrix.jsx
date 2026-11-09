@@ -1,4 +1,5 @@
 
+
 import { useMemo, useState } from "react";
 
 import {
@@ -7,15 +8,10 @@ import {
   X,
 } from "lucide-react";
 
-import {
-  PERMISSION_CATEGORIES,
-  SYSTEM_PERMISSIONS,
-  SYSTEM_ROLES,
-} from "../../../data/admin/rolesPermissions";
-
 import "../../../styles/components/super-admin/roles/PermissionsMatrix.css";
 
-function PermissionsMatrix({ selectedRole }) {
+function PermissionsMatrix({ selectedRole, roles, permissions }) {
+  const permissionCategories = ["Todas", ...new Set(permissions.map((item) => item.category))];
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
 
@@ -27,7 +23,7 @@ function PermissionsMatrix({ selectedRole }) {
     const normalizedSearch =
       search.trim().toLocaleLowerCase("es");
 
-    return SYSTEM_PERMISSIONS.filter((permission) => {
+    return permissions.filter((permission) => {
       const matchesCategory =
         category === "Todas" ||
         permission.category === category;
@@ -45,7 +41,7 @@ function PermissionsMatrix({ selectedRole }) {
 
       return matchesCategory && matchesSearch;
     });
-  }, [search, category]);
+  }, [search, category, permissions]);
 
   // =========================================================
   // AGRUPACIÓN POR CATEGORÍA
@@ -73,8 +69,8 @@ function PermissionsMatrix({ selectedRole }) {
           <h2>Matriz de permisos</h2>
 
           <p>
-            Consulta los accesos propuestos para
-            cada rol y módulo del sistema.
+            Revisa qué puede hacer cada tipo de usuario.
+            Algunas acciones también dependen de la iglesia o de la información a la que tenga acceso.
           </p>
         </div>
 
@@ -113,7 +109,7 @@ function PermissionsMatrix({ selectedRole }) {
           }
           aria-label="Filtrar por categoría"
         >
-          {PERMISSION_CATEGORIES.map((item) => (
+          {permissionCategories.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
@@ -133,7 +129,7 @@ function PermissionsMatrix({ selectedRole }) {
                 Módulo / Permiso
               </th>
 
-              {SYSTEM_ROLES.map((role) => (
+              {roles.map((role) => (
                 <th
                   scope="col"
                   key={role.id}
@@ -157,6 +153,7 @@ function PermissionsMatrix({ selectedRole }) {
                   groupName={groupName}
                   permissions={permissions}
                   selectedRole={selectedRole}
+                  roles={roles}
                 />
               )
             )}
@@ -164,7 +161,7 @@ function PermissionsMatrix({ selectedRole }) {
             {filteredPermissions.length === 0 && (
               <tr>
                 <td
-                  colSpan={SYSTEM_ROLES.length + 1}
+                  colSpan={roles.length + 1}
                   className="permissions-matrix__empty"
                 >
                   No se encontraron permisos con
@@ -177,9 +174,9 @@ function PermissionsMatrix({ selectedRole }) {
       </div>
 
       <p className="permissions-matrix__note">
-        Esta matriz es una propuesta funcional.
-        No modifica ni representa una verificación
-        de los permisos efectivos del servidor.
+        Esta tabla te ayuda a comprender los accesos de cada rol.
+        Algunas funciones requieren autorización adicional, por ejemplo, para ver datos de una sede o de otra persona.
+        Seleccionar un rol aquí no cambia sus permisos.
       </p>
     </section>
   );
@@ -193,13 +190,14 @@ function FragmentRows({
   groupName,
   permissions,
   selectedRole,
+  roles,
 }) {
   return (
     <>
       <tr className="permissions-matrix__group">
         <th
           scope="rowgroup"
-          colSpan={SYSTEM_ROLES.length + 1}
+          colSpan={roles.length + 1}
         >
           {groupName}
         </th>
@@ -213,7 +211,7 @@ function FragmentRows({
             <span>{permission.description}</span>
           </td>
 
-          {SYSTEM_ROLES.map((role) => {
+          {roles.map((role) => {
             const isAllowed =
               permission.roles[role.id] === true;
 
@@ -235,13 +233,13 @@ function FragmentRows({
                   ].join(" ")}
                   aria-label={
                     isAllowed
-                      ? "Permiso propuesto"
-                      : "Permiso no contemplado"
+                      ? "Puede realizar esta acción, según sus autorizaciones"
+                      : "Esta acción no está disponible para este rol"
                   }
                   title={
                     isAllowed
-                      ? "Permiso propuesto"
-                      : "Permiso no contemplado"
+                      ? "Puede realizar esta acción, según sus autorizaciones"
+                      : "Esta acción no está disponible para este rol"
                   }
                 >
                   {isAllowed ? (
@@ -260,3 +258,7 @@ function FragmentRows({
 }
 
 export default PermissionsMatrix;
+
+
+
+

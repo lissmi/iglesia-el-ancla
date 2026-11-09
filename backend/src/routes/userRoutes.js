@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import mongoose from "mongoose";
 import { createHash, randomBytes } from "node:crypto";
@@ -1188,6 +1189,46 @@ router.get("/stats", async (req, res, next) => {
 });
 
 // =========================================================
+// DIRECTORIO DE ADMINISTRADORES
+// GET /api/users/administrators
+// =========================================================
+// Consultamos exclusivamente las cuentas administrativas reales.
+// Esta ruta hereda la protección de superadministrador del router.
+// Evitamos el límite de 100 usuarios del listado general.
+router.get("/administrators", async (req, res, next) => {
+  try {
+    res.set("Cache-Control", "no-store");
+
+    // Seleccionamos únicamente los roles administrativos.
+    const administrators = await User.find({
+      role: { $in: ["admin", "super_admin"] },
+    })
+      .select(USER_PUBLIC_FIELDS)
+      .populate({ path: "sucursales", select: BRANCH_PUBLIC_FIELDS })
+      .populate({ path: "sucursalPrincipal", select: BRANCH_PUBLIC_FIELDS })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Resumimos los datos obtenidos sin inventar cifras.
+    const summary = {
+      total: administrators.length,
+      administrators: administrators.filter((user) => user.role === "admin").length,
+      superAdministrators: administrators.filter((user) => user.role === "super_admin").length,
+      active: administrators.filter((user) => user.isActive === true).length,
+      inactive: administrators.filter((user) => user.isActive === false).length,
+    };
+
+    return res.status(200).json({
+      success: true,
+      administrators,
+      summary,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// =========================================================
 // LISTADO DE USUARIOS
 // GET /api/users
 // =========================================================
@@ -1362,4 +1403,107 @@ router.patch("/:id/sucursales", requireTrustedOrigin, async (req, res, next) => 
   }
 });
 
+
+// =========================================================
+// EDICIÓN ADMINISTRATIVA DE DATOS PERSONALES Y ROL
+// PATCH /api/users/:id
+// =========================================================
+// No modificamos correos desde aquí: cambiar un correo exige
+// comprobar nuevamente su titularidad mediante un flujo propio.
+router.patch("/:id", requireTrustedOrigin, async (req, res, next) => {
+  try {
+    res.set("Cache-Control", "no-store");
+    if (!mongoose.isObjectIdOrHexString(req.params.id)) {
+      return res.status(400).json({ success: false, message: "Identificador inválido." });
+    }
+    if (!req.is("application/json") || !req.body || typeof req.body !== "object" || Array.isArray(req.body)) {
+      return res.status(400).json({ success: false, message: "Se requiere un objeto JSON." });
+    }
+    const allowed = ["firstName", "lastName", "phone", "birthDate", "role"];
+    if (Object.keys(req.body).length !== allowed.length || allowed.some(key => !Object.hasOwn(req.body, key))) {
+      return res.status(400).json({ success: false, message: "Campos de edición no permitidos." });
+    }
+    const { firstName, lastName, phone, birthDate, role } = req.body;
+    if ([firstName, lastName, phone, birthDate, role].some(value => typeof value !== "string")) {
+      return res.status(400).json({ success: false, message: "Formato de campos inválido." });
+    }
+    const first = firstName.trim();
+    const last = lastName.trim();
+    const telephone = phone.trim();
+    if (first.length < 2 || first.length > 60 || last.length < 2 || last.length > 60 ||
+        /[\x00-\x1f\x7f]/u.test(first + last) || !isValidOptionalPhone(telephone) ||
+        !["member", "admin"].includes(role)) {
+      return res.status(400).json({ success: false, message: "Nombre, teléfono o rol no válidos." });
+    }
+    const date = parseRegistrationBirthDate(birthDate);
+    if (!date) return res.status(400).json({ success: false, message: "Fecha de nacimiento inválida." });
+    // Restringimos de forma atómica la edición a cuentas no privilegiadas.
+    // No permitimos que se edite la propia cuenta del superadministrador.
+    if (String(req.user._id) === req.params.id) {
+      return res.status(403).json({ success: false, message: "Utiliza Mi cuenta para modificar tu perfil." });
+    }
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, role: { $ne: "super_admin" } },
+      {
+        $set: { firstName: first, lastName: last, phone: telephone, birthDate: date, role },
+        // Cualquier edición administrativa invalida sesiones antiguas.
+        $inc: { tokenVersion: 1 },
+      },
+      { new: true, runValidators: true, context: "query" }
+    ).select(USER_PUBLIC_FIELDS)
+      .populate({ path: "sucursales", select: BRANCH_PUBLIC_FIELDS })
+      .populate({ path: "sucursalPrincipal", select: BRANCH_PUBLIC_FIELDS });
+    if (!user) return res.status(404).json({ success: false, message: "Usuario no encontrado o protegido." });
+    return res.json({ success: true, message: "Datos actualizados; sesiones anteriores revocadas.", user });
+  } catch (error) {
+    if (error.name === "ValidationError" || error.name === "CastError") {
+      return res.status(400).json({ success: false, message: "Los datos no cumplen las validaciones." });
+    }
+    return next(error);
+  }
+});
+
+// =========================================================
+// ACTIVAR O DESACTIVAR CUENTAS EXISTENTES
+// PATCH /api/users/:id/status
+// =========================================================
+router.patch("/:id/status", requireTrustedOrigin, async (req, res, next) => {
+  try {
+    res.set("Cache-Control", "no-store");
+    if (!mongoose.isObjectIdOrHexString(req.params.id)) {
+      return res.status(400).json({ success: false, message: "Identificador inválido." });
+    }
+    if (!req.is("application/json") || !req.body || typeof req.body !== "object" ||
+        Array.isArray(req.body) || Object.keys(req.body).length !== 1 ||
+        typeof req.body.isActive !== "boolean") {
+      return res.status(400).json({ success: false, message: "Indica únicamente isActive como booleano." });
+    }
+    if (String(req.user._id) === req.params.id) {
+      return res.status(403).json({ success: false, message: "No puedes desactivar tu propia cuenta." });
+    }
+    // La condición de rol se comprueba en la misma operación de MongoDB.
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, role: { $ne: "super_admin" }, isActive: { $ne: req.body.isActive } },
+      {
+        $set: {
+          isActive: req.body.isActive,
+          deactivatedAt: req.body.isActive ? null : new Date(),
+        },
+        $inc: { tokenVersion: 1 },
+      },
+      { new: true, runValidators: true }
+    ).select(USER_PUBLIC_FIELDS)
+      .populate({ path: "sucursales", select: BRANCH_PUBLIC_FIELDS })
+      .populate({ path: "sucursalPrincipal", select: BRANCH_PUBLIC_FIELDS });
+    if (!user) {
+      return res.status(409).json({ success: false, message: "No se aplicó el cambio: cuenta protegida, inexistente o estado ya modificado. Actualiza el listado." });
+    }
+    return res.json({ success: true, message: req.body.isActive ? "Cuenta habilitada." : "Cuenta desactivada y sesiones revocadas.", user });
+  } catch (error) { return next(error); }
+});
+
 export default router;
+
+
+
+

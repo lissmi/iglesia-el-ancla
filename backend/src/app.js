@@ -1,4 +1,5 @@
 
+
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -48,6 +49,9 @@ import loginRoutes from "./routes/loginRoutes.js";
 
 // Rutas de gestión de usuarios.
 import userRoutes from "./routes/userRoutes.js";
+
+// Consulta institucional de roles y permisos para superadministración.
+import roleAccessRoutes from "./routes/roleAccessRoutes.js";
 
 // Rutas de configuración institucional.
 import systemSettingsRoutes from "./routes/systemSettingsRoutes.js";
@@ -425,6 +429,9 @@ app.use(
 );
 
 
+// Inventario protegido y estadísticas reales de cuentas por rol.
+app.use("/api/system/role-access", roleAccessRoutes);
+
 // =========================================================
 // CONFIGURACIÓN INSTITUCIONAL
 // =========================================================
@@ -674,3 +681,7 @@ app.use(
 // server.js se encarga de inicializar
 // MongoDB y levantar el servidor.
 export default app;
+
+
+
+

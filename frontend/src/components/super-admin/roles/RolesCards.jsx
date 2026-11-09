@@ -1,13 +1,11 @@
 
+
 import {
   Crown,
   Shield,
   UserRound,
 } from "lucide-react";
 
-import {
-  SYSTEM_ROLES,
-} from "../../../data/admin/rolesPermissions";
 
 import "../../../styles/components/super-admin/roles/RolesCards.css";
 
@@ -20,10 +18,12 @@ const ROLE_ICONS = {
 function RolesCards({
   selectedRole,
   onSelectRole,
+  roles,
+  counts,
 }) {
   return (
     <div className="roles-cards">
-      {SYSTEM_ROLES.map((role) => {
+      {roles.map((role) => {
         const Icon = ROLE_ICONS[role.id];
 
         const isSelected =
@@ -63,7 +63,7 @@ function RolesCards({
             </div>
 
             <div className="roles-card__footer">
-              <span>{role.scope}</span>
+              <span>{role.scope} · {counts?.[role.id]?.total ?? 0} cuentas ({counts?.[role.id]?.active ?? 0} activas)</span>
 
               {role.protected && (
                 <strong>Protegido</strong>
@@ -77,3 +77,7 @@ function RolesCards({
 }
 
 export default RolesCards;
+
+
+
+

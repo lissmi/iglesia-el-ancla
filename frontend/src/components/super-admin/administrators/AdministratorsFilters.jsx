@@ -1,11 +1,21 @@
-
-import {
-  Search,
-  Filter,
-  RotateCcw,
-} from "lucide-react";
-
+// Filtros del directorio de cuentas administrativas.
+import { Search, Filter, RotateCcw, CircleCheck } from "lucide-react";
+import AdministratorFilterSelect from "./AdministratorFilterSelect";
 import "../../../styles/components/super-admin/administrators/AdministratorsFilters.css";
+import "../../../styles/components/super-admin/administrators/AdministratorsFilterSelect.css";
+
+// Las etiquetas describen el filtro con palabras sencillas.
+const ROLE_OPTIONS = [
+  { value: "all", label: "Todos los roles" },
+  { value: "admin", label: "Administradores" },
+  { value: "super_admin", label: "Superadministradores" },
+];
+
+const STATUS_OPTIONS = [
+  { value: "all", label: "Todos los estados" },
+  { value: "active", label: "Activos" },
+  { value: "inactive", label: "Desactivados" },
+];
 
 function AdministratorsFilters({
   search,
@@ -16,69 +26,47 @@ function AdministratorsFilters({
   onStatusChange,
   onClear,
 }) {
-
-  const hasFilters =
-    search.trim() !== "" ||
-    role !== "all" ||
-    status !== "all";
+  // Evitamos ofrecer limpiar cuando los filtros ya están en su estado inicial.
+  const hasFilters = search.trim() !== "" || role !== "all" || status !== "all";
 
   return (
-    <div className="administrators-filters">
-
-      <div className="administrators-filters__search">
+    <div className="administrators-filters administrators-filters--custom">
+      <div className="administrators-filters__search admin-filters-search">
         <Search size={17} aria-hidden="true" />
-
         <input
           type="search"
           value={search}
-          onChange={(event) =>
-            onSearchChange(event.target.value)
-          }
+          onChange={(event) => onSearchChange(event.target.value)}
           placeholder="Buscar por nombre, correo o sucursal..."
           aria-label="Buscar administradores"
         />
       </div>
 
-      <div className="administrators-filters__select">
-        <Filter size={16} aria-hidden="true" />
+      <AdministratorFilterSelect
+        label="Filtrar por rol"
+        value={role}
+        options={ROLE_OPTIONS}
+        onChange={onRoleChange}
+        icon={Filter}
+      />
 
-        <select
-          value={role}
-          onChange={(event) =>
-            onRoleChange(event.target.value)
-          }
-          aria-label="Filtrar por rol"
-        >
-          <option value="all">Todos los roles</option>
-          <option value="admin">Administradores</option>
-          <option value="super_admin">Superadministradores</option>
-        </select>
-      </div>
-
-      <div className="administrators-filters__select">
-        <select
-          value={status}
-          onChange={(event) =>
-            onStatusChange(event.target.value)
-          }
-          aria-label="Filtrar por estado"
-        >
-          <option value="all">Todos los estados</option>
-          <option value="active">Activos</option>
-          <option value="inactive">Desactivados</option>
-        </select>
-      </div>
+      <AdministratorFilterSelect
+        label="Filtrar por estado"
+        value={status}
+        options={STATUS_OPTIONS}
+        onChange={onStatusChange}
+        icon={CircleCheck}
+      />
 
       <button
         type="button"
-        className="administrators-filters__clear"
+        className="administrators-filters__clear admin-filters-clear"
         onClick={onClear}
         disabled={!hasFilters}
       >
         <RotateCcw size={15} aria-hidden="true" />
         Limpiar
       </button>
-
     </div>
   );
 }

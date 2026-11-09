@@ -1,4 +1,5 @@
 
+
  // =========================================================
  // IMPORTACIÓN DE ICONOS
  // =========================================================
@@ -45,7 +46,7 @@
 
      icon: UsersRound,
 
-     valueKey: "total",
+     valueKey: "totalUsers",
 
      variant: "total",
    },
@@ -59,7 +60,7 @@
 
      icon: UserRoundCheck,
 
-     valueKey: "active",
+     valueKey: "activeUsers",
 
      variant: "active",
    },
@@ -67,13 +68,13 @@
    {
      id: "blocked",
 
-     title: "Usuarios bloqueados",
+     title: "Usuarios desactivados",
 
-     description: "Cuentas con acceso restringido.",
+     description: "Cuentas deshabilitadas por administración.",
 
      icon: UserRoundX,
 
-     valueKey: "blocked",
+     valueKey: "inactiveUsers",
 
      variant: "blocked",
    },
@@ -108,9 +109,9 @@
  //
  // <UsersSummary
  //   stats={{
- //     total: 120,
- //     active: 105,
- //     blocked: 15,
+ //     totalUsers: 120,
+ //     activeUsers: 105,
+ //     inactiveUsers: 15,
  //     administrators: 4,
  //   }}
  // />
@@ -261,3 +262,7 @@
  // =========================================================
 
  export default UsersSummary;
+
+
+
+

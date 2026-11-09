@@ -1,3 +1,4 @@
+
 // =========================================================
 // GESTIÓN DE SUCURSALES — CONSULTA, REGISTRO Y EDICIÓN
 // =========================================================
@@ -39,7 +40,7 @@ function BranchSettings() {
       try {
         const response = await api.get("/system/branches", { signal: controller.signal });
         if (!response.data?.success || !Array.isArray(response.data?.branches)) {
-          throw new Error("El servidor devolvió una respuesta inesperada.");
+          throw new Error("No pudimos leer la lista de sucursales. Intenta actualizar.");
         }
         if (!controller.signal.aborted) setBranches(response.data.branches);
       } catch (requestError) {
@@ -62,7 +63,7 @@ function BranchSettings() {
       const response = editingBranch
         ? await api.patch(`/system/branches/${editingBranch.id}`, payload)
         : await api.post("/system/branches", payload);
-      if (!response.data?.success || !response.data?.branch) throw new Error("Respuesta de guardado inesperada.");
+      if (!response.data?.success || !response.data?.branch) throw new Error("No pudimos confirmar que la sucursal se haya guardado.");
       const savedBranch = response.data.branch;
       setBranches((previous) => editingBranch
         ? previous.map((item) => item.id === savedBranch.id ? savedBranch : item)
@@ -72,7 +73,7 @@ function BranchSettings() {
     } catch (requestError) {
       const status = requestError.response?.status;
       setSaveError(status === 401 ? "Tu sesión ha expirado. Vuelve a iniciar sesión."
-        : status === 403 ? "No tienes permiso para realizar esta operación o el origen fue rechazado."
+        : status === 403 ? "Tu cuenta no tiene autorización para guardar estos cambios."
         : requestError.response?.data?.message || requestError.message || "No fue posible guardar la sucursal.");
     } finally { setSaving(false); }
   };
@@ -101,7 +102,7 @@ function BranchSettings() {
         { isActive: target }
       );
       if (!response.data?.success || !response.data?.branch) {
-        throw new Error("El servidor no confirmó el cambio de estado.");
+        throw new Error("No pudimos confirmar el cambio. Vuelve a intentarlo.");
       }
       // Actualizamos solo con el documento confirmado por el backend.
       const saved = response.data.branch;
@@ -130,7 +131,7 @@ function BranchSettings() {
           <button className="branch-settings__create" type="button" onClick={openCreate} disabled={loading || Boolean(error) || saving}><Plus size={17}/> Registrar sucursal</button>
         </div>
       </div>
-      <div className="branch-settings__notice" role="note"><ShieldCheck size={18} aria-hidden="true"/><span>Registro y edición disponibles solo para superadministradores. La sede principal no puede desactivarse y las sedes con usuarios asignados están protegidas desde el servidor.</span></div>
+      <div className="branch-settings__notice" role="note"><ShieldCheck size={18} aria-hidden="true"/><span>Solo los superadministradores pueden registrar y modificar sucursales. La sede principal no se puede desactivar; primero debes cambiar de sede a las personas asignadas antes de desactivar una sucursal.</span></div>
       {success && <div className="branch-settings__success" role="status"><CheckCircle2 size={18}/>{success}</div>}
       {loading ? <div className="branch-settings__feedback" role="status"><LoaderCircle size={25} className="branch-settings__spinning"/> Cargando sucursales...</div>
         : error ? <div className="branch-settings__feedback branch-settings__feedback--error" role="alert"><AlertCircle size={22}/><span>{error}</span><button type="button" onClick={handleRefresh}>Reintentar</button></div>
@@ -157,3 +158,7 @@ function BranchSettings() {
   );
 }
 export default BranchSettings;
+
+
+
+

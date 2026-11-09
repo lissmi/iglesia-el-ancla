@@ -1,4 +1,5 @@
 
+
 import { useEffect, useRef } from "react";
 
 import {
@@ -347,9 +348,9 @@ function AdministratorDetailsModal({
           <div className="administrator-details__notice">
             <Info size={17} />
             <span>
-              Esta vista es informativa. Las acciones
-              administrativas estarán disponibles
-              cuando implementemos sus controles.
+              Esta ventana es solo de consulta.
+              Si necesitas modificar una cuenta, utiliza
+              la sección Gestión de usuarios.
             </span>
           </div>
 
@@ -371,3 +372,7 @@ function AdministratorDetailsModal({
 }
 
 export default AdministratorDetailsModal;
+
+
+
+

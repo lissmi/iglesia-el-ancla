@@ -1,0 +1,219 @@
+.user-edit-confirm__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(3, 9, 15, 0.78);
+  backdrop-filter: blur(6px);
+  overflow-y: auto;
+  animation: user-edit-confirm-fade 0.18s ease-out;
+}
+
+.user-edit-confirm__dialog {
+  position: relative;
+  width: min(100%, 480px);
+  padding: 32px;
+  background: linear-gradient(145deg, #1d2226, #15191c);
+  color: #f2f6fa;
+  border: 1px solid #39454d;
+  border-radius: 20px;
+  box-shadow: 0 25px 85px rgba(0, 0, 0, 0.46);
+  animation: user-edit-confirm-rise 0.2s ease-out;
+}
+
+.user-edit-confirm__close {
+  position: absolute;
+  right: 18px;
+  top: 17px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: #2b3237;
+  color: #a8b8c5;
+  cursor: pointer;
+}
+
+.user-edit-confirm__close:hover {
+  background: #39434b;
+  color: #ffffff;
+}
+
+.user-edit-confirm__icon {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  color: #7ac9e4;
+  background: rgba(49, 126, 162, 0.14);
+  border: 1px solid rgba(104, 181, 217, 0.25);
+}
+
+.user-edit-confirm__eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: #65b7d4;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.user-edit-confirm__dialog h2 {
+  margin: 0 0 12px;
+  color: #f3f6fa;
+  font-size: 25px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  font-weight: 750;
+}
+
+.user-edit-confirm__description {
+  margin: 0 0 22px;
+  color: #aabac8;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.user-edit-confirm__description strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.user-edit-confirm__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px 15px;
+  margin-bottom: 26px;
+  border: 1px solid #34444b;
+  border-radius: 12px;
+  background: #202b30;
+  color: #84c7dd;
+}
+
+.user-edit-confirm__note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.user-edit-confirm__note p {
+  margin: 0;
+  color: #bdd0da;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.user-edit-confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 11px;
+}
+
+.user-edit-confirm__actions button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 17px;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.user-edit-confirm__cancel {
+  border: 1px solid #49555d;
+  background: transparent;
+  color: #d6e0e7;
+}
+
+.user-edit-confirm__cancel:hover {
+  background: #30383f;
+}
+
+.user-edit-confirm__accept {
+  border: 1px solid #3f7692;
+  background: #2c5870;
+  color: #ffffff;
+}
+
+.user-edit-confirm__accept:hover {
+  background: #366984;
+}
+
+.user-edit-confirm__actions button:disabled,
+.user-edit-confirm__close:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.user-edit-confirm__dialog button:focus-visible {
+  outline: 2px solid #7ac9e4;
+  outline-offset: 3px;
+}
+
+.user-edit-confirm__spinner {
+  animation: user-edit-confirm-spin 1s linear infinite;
+}
+
+@keyframes user-edit-confirm-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes user-edit-confirm-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes user-edit-confirm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  .user-edit-confirm__dialog {
+    padding: 26px 20px;
+  }
+
+  .user-edit-confirm__actions {
+    flex-direction: column-reverse;
+  }
+
+  .user-edit-confirm__actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .user-edit-confirm__overlay,
+  .user-edit-confirm__dialog,
+  .user-edit-confirm__spinner {
+    animation: none;
+  }
+}

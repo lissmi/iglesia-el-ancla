@@ -1,3 +1,4 @@
+
 // =========================================================
 // GESTIÓN DE SUCURSALES — RUTAS Y CONTROLADORES
 // =========================================================
@@ -9,6 +10,9 @@ import { Router } from "express";
 import mongoose from "mongoose";
 import Sucursal from "../models/Sucursal.js";
 import User from "../models/User.js";
+import { createRequire } from "node:module";
+const requireJson = createRequire(import.meta.url);
+const chileLocations = requireJson("../data/locations/chileLocations.json");
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 
@@ -16,8 +20,8 @@ const router = Router();
 
 // Nunca aceptamos isHeadquarters, isActive, _id ni campos
 // de auditoría en las operaciones de edición general.
-const EDITABLE_FIELDS = ["name", "slug", "address", "contactEmail", "contactPhone", "timezone"];
-const ADDRESS_FIELDS = ["street", "number", "sector", "city", "region", "country"];
+const EDITABLE_FIELDS = ["name", "address", "contactEmail", "contactPhone"];
+const ADDRESS_FIELDS = ["street", "number", "sector", "city", "region"];
 
 // Protegemos todas las rutas, incluso las de lectura.
 router.use(authenticateUser, authorizeRoles("super_admin"));
@@ -30,10 +34,10 @@ function validateWriteOrigin(req, res, next) {
     const allowed = new URL(process.env.FRONTEND_URL || "http://localhost:3000").origin;
     const origin = req.get("Origin") || (req.get("Referer") ? new URL(req.get("Referer")).origin : null);
     if (origin !== allowed) {
-      return res.status(403).json({ success: false, message: "Origen de solicitud no autorizado" });
+      return res.status(403).json({ success: false, message: "No pudimos comprobar que la solicitud venga de la plataforma." });
     }
   } catch {
-    return res.status(403).json({ success: false, message: "Origen de solicitud no válido" });
+    return res.status(403).json({ success: false, message: "No pudimos comprobar el origen de esta solicitud." });
   }
   return next();
 }
@@ -68,32 +72,21 @@ function sanitizeEditableFields(body, { create = false } = {}) {
   if (!fields.length || fields.some((field) => !EDITABLE_FIELDS.includes(field))) {
     throw new Error("La solicitud contiene campos vacíos o no permitidos");
   }
-  if (create && ["name", "slug", "address"].some((field) => !Object.hasOwn(body, field))) {
-    throw new Error("Nombre, slug y dirección son obligatorios");
+  if (create && ["name", "address"].some((field) => !Object.hasOwn(body, field))) {
+    throw new Error("Completa el nombre y la dirección de la sucursal.");
   }
 
   const result = {};
   if (Object.hasOwn(body, "name")) result.name = validateString(body.name, "Nombre", 3, 150);
-  if (Object.hasOwn(body, "slug")) {
-    const slug = validateString(body.slug, "Slug", 1, 150).toLowerCase();
-    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error("Slug inválido: usa letras minúsculas, números y guiones");
-    result.slug = slug;
-  }
   if (Object.hasOwn(body, "contactEmail")) {
     const email = validateString(body.contactEmail, "Correo", 0, 150, false).toLowerCase();
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Correo inválido");
+    if (email && !/^[a-z0-9.!#$%&'*+\/=?^_`{|}~-]+@gmail\.com$/i.test(email)) throw new Error("Ingresa un correo que termine en @gmail.com.");
     result.contactEmail = email;
   }
   if (Object.hasOwn(body, "contactPhone")) {
     const phone = validateString(body.contactPhone, "Teléfono", 0, 30, false);
-    if (phone && !/^\+?[0-9\s()-]{7,30}$/.test(phone)) throw new Error("Teléfono inválido");
+    if (phone && !/^\+569\d{8}$/.test(phone)) throw new Error("Ingresa un celular chileno con +56 9 y ocho números.");
     result.contactPhone = phone;
-  }
-  if (Object.hasOwn(body, "timezone")) {
-    const timezone = validateString(body.timezone, "Zona horaria", 1, 80);
-    try { new Intl.DateTimeFormat("es-CL", { timeZone: timezone }); }
-    catch { throw new Error("Zona horaria IANA inválida"); }
-    result.timezone = timezone;
   }
   if (Object.hasOwn(body, "address")) {
     if (!isPlainObject(body.address) ||
@@ -107,13 +100,17 @@ function sanitizeEditableFields(body, { create = false } = {}) {
       if (Object.hasOwn(body.address, field)) {
         const required = field !== "sector";
         address[field] = validateString(body.address[field], `Dirección: ${field}`, required ? 1 : 0,
-          field === "number" ? 20 : 100, required);
+          field === "number" ? 8 : 100, required);
+        if (field === "number" && !/^\d{1,8}$/.test(address[field])) throw new Error("El número de calle debe contener solo dígitos (máximo 8).");
       }
     }
     if (!Object.keys(address).length) throw new Error("La dirección no puede estar vacía");
     if (create && ["street", "number", "city", "region"].some((field) => !Object.hasOwn(address, field))) {
       throw new Error("La nueva sucursal requiere calle, número, ciudad y región");
     }
+    if (Object.hasOwn(address, "street") && !/^[\p{L}\p{M}0-9 .,#°ºª'\-/]{2,100}$/u.test(address.street)) throw new Error("Revisa el nombre de la calle: solo letras, números y signos habituales.");
+    if (Object.hasOwn(address, "sector") && address.sector && !/^[\p{L}\p{M}0-9 .,#°ºª'\-/]{1,100}$/u.test(address.sector)) throw new Error("Revisa el sector o barrio.");
+    if (Object.hasOwn(address, "region") && !Object.hasOwn(chileLocations, address.region)) throw new Error("Selecciona una región válida de Chile.");
     result.address = address;
   }
   return result;
@@ -124,7 +121,7 @@ function handleError(error, res, next) {
     return res.status(400).json({ success: false, message: Object.values(error.errors).map((e) => e.message).join("; ") });
   }
   if (error?.code === 11000) {
-    return res.status(409).json({ success: false, message: "Ya existe una sucursal con ese código o slug" });
+    return res.status(409).json({ success: false, message: "Ya existe una sucursal con esos datos. Revisa el nombre e inténtalo nuevamente." });
   }
   return next(error);
 }
@@ -136,6 +133,36 @@ function branchData(doc) {
     timezone: doc.timezone, isHeadquarters: doc.isHeadquarters, isActive: doc.isActive,
     createdAt: doc.createdAt, updatedAt: doc.updatedAt,
   };
+}
+
+// Lista local de regiones y ciudades disponibles para seleccionar.
+// La pantalla y el servidor usan exactamente los mismos nombres.
+router.get("/locations", (_req, res) => {
+  return res.status(200).json({ success: true, regions: chileLocations });
+});
+
+// Genera un nombre seguro para la URL interna, sin pedirle datos técnicos al usuario.
+function toSlug(value) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 110) || "sucursal";
+}
+
+// Verifica que la ciudad elegida pertenezca a la región indicada.
+function validateCityRegion(address) {
+  if (!chileLocations[address?.region]?.includes(address?.city)) {
+    throw new Error("Selecciona una ciudad de la región indicada.");
+  }
+}
+
+// Calcula el siguiente código según el mayor número existente.
+// El índice único de MongoDB evita duplicados al guardar en paralelo.
+async function getNextBranchNumber() {
+  const [result] = await Sucursal.aggregate([
+    { $match: { code: /^SUC-\d+$/ } },
+    { $project: { number: { $toInt: { $substrBytes: ["$code", 4, -1] } } } },
+    { $group: { _id: null, max: { $max: "$number" } } },
+  ]);
+  return (result?.max ?? 0) + 1;
 }
 
 // =========================================================
@@ -163,22 +190,35 @@ router.get("/:id", async (req, res, next) => {
 // =========================================================
 // POST /api/system/branches — CREAR SEDE
 // =========================================================
-// Requiere código explícito, estable y único. La nueva sede
-// no puede declararse sede principal mediante esta ruta.
+// El sistema asigna un código único y crea la dirección interna automáticamente.
 router.post("/", validateWriteOrigin, validateBody, async (req, res, next) => {
   try {
-    const allowed = [...EDITABLE_FIELDS, "code"];
-    if (Object.keys(req.body).some((field) => !allowed.includes(field))) return badRequest(res, "Campos no permitidos");
-    const code = validateString(req.body.code, "Código", 7, 30).toUpperCase();
-    if (!/^SUC-\d{3,}$/.test(code)) return badRequest(res, "El código debe tener el formato SUC-002");
-    const { code: _code, ...editable } = req.body;
-    const validated = sanitizeEditableFields(editable, { create: true });
-    const branch = await Sucursal.create({
-      ...validated, code, isHeadquarters: false, isActive: true,
-      address: { country: "Chile", sector: "", ...validated.address },
-      timezone: validated.timezone || "America/Santiago",
-    });
-    return res.status(201).json({ success: true, message: "Sucursal registrada", branch: branchData(branch) });
+    const validated = sanitizeEditableFields(req.body, { create: true });
+    validateCityRegion(validated.address);
+
+    // Si dos solicitudes llegan juntas, el índice único decide cuál se guarda.
+    // La que encuentre el código ocupado vuelve a calcular el siguiente.
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      const number = await getNextBranchNumber();
+      const code = `SUC-${String(number).padStart(3, "0")}`;
+      const slug = `${toSlug(validated.name)}-${code.toLowerCase()}`;
+      try {
+        const branch = await Sucursal.create({
+          ...validated,
+          code,
+          slug,
+          isHeadquarters: false,
+          isActive: true,
+          address: { country: "Chile", sector: "", ...validated.address },
+          timezone: "America/Santiago",
+        });
+        return res.status(201).json({ success: true, message: "Sucursal registrada correctamente.", branch: branchData(branch) });
+      } catch (error) {
+        if (error?.code === 11000) continue;
+        throw error;
+      }
+    }
+    return res.status(409).json({ success: false, message: "No pudimos reservar un código. Intenta nuevamente." });
   } catch (error) {
     if (error instanceof Error && !(error instanceof mongoose.Error) && !error.code) return badRequest(res, error.message);
     return handleError(error, res, next);
@@ -192,6 +232,11 @@ router.patch("/:id", validateWriteOrigin, validateBody, async (req, res, next) =
   try {
     if (!mongoose.isObjectIdOrHexString(req.params.id)) return badRequest(res, "Identificador inválido");
     const validated = sanitizeEditableFields(req.body);
+    if (validated.address) {
+      const existing = await Sucursal.findById(req.params.id).lean();
+      if (!existing) return res.status(404).json({ success: false, message: "Sucursal no encontrada." });
+      validateCityRegion({ ...existing.address, ...validated.address });
+    }
     const changes = { ...validated };
     if (validated.address) {
       delete changes.address;
@@ -241,3 +286,6 @@ router.patch("/:id/status", validateWriteOrigin, validateBody, async (req, res, 
 });
 
 export default router;
+
+
+

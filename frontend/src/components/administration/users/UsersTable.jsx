@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from "react";
 
 import {
@@ -163,7 +164,7 @@ function UsersTable({
     // Esta primera versión utiliza isBlocked.
     // Ajustaremos el campo al integrar el modelo
     // real de Usuario del backend.
-    const isBlocked = user.isBlocked === true;
+    const isBlocked = user.isActive === false;
 
     const matchesStatus =
       status === "all" ||
@@ -382,7 +383,7 @@ function UsersTable({
                   const initials = getInitials(userName);
 
                   const isBlocked =
-                    user.isBlocked === true;
+                    user.isActive === false;
 
                   const userId =
                     user._id || user.id;
@@ -686,3 +687,7 @@ function UsersTable({
 // =========================================================
 
 export default UsersTable;
+
+
+
+

@@ -1,0 +1,67 @@
+/* Barra de actualización con el mismo estilo del panel de El Ancla. */
+.administrators-connected__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0 20px;
+  color: #90b4c8;
+  font-size: 13px;
+}
+
+/* Botón para solicitar nuevamente los datos al sistema. */
+.administrators-connected__toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #46525e;
+  border-radius: 10px;
+  background: #171d23;
+  color: #d6e6f1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Cambio visual al colocar el cursor sobre el botón. */
+.administrators-connected__toolbar button:hover:not(:disabled) {
+  border-color: #6ca6c4;
+  background: #22313e;
+}
+
+/* Evitamos iniciar una segunda consulta mientras existe otra pendiente. */
+.administrators-connected__toolbar button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+/* Mensajes de error claros, sin ventanas genéricas del navegador. */
+.administrators-connected__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #865b54;
+  border-radius: 12px;
+  background: #352626;
+  color: #ffd5cf;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Mantenemos visible un mensaje durante la primera consulta. */
+.administrators-connected__message {
+  padding: 20px;
+  color: #b2c6d2;
+  font-size: 14px;
+}
+
+/* Indicador de teclado para accesibilidad. */
+.administrators-connected__toolbar button:focus-visible {
+  outline: 2px solid #83cbe9;
+  outline-offset: 3px;
+}

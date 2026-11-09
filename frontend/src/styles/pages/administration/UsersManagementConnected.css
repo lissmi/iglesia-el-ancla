@@ -1,0 +1,22 @@
+/* Estilos complementarios de conexión: respetan la página original. */
+.users-connected__toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 20px;color:#536575;font-size:14px}
+.users-connected__toolbar button,.users-connected__actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid #bcc8cb;background:#fff;color:#21394b;cursor:pointer;font:inherit}
+.users-connected__toolbar button:hover,.users-connected__actions button:hover{background:#eef3f2}
+.users-connected__toolbar button:disabled,.users-connected__actions button:disabled{opacity:.55;cursor:not-allowed}
+.users-connected__error,.users-connected__success{padding:13px 16px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.users-connected__error{color:#8c2828;background:#fff0ed;border:1px solid #f2c1b9}
+.users-connected__success{color:#245a42;background:#e9f5ec;border:1px solid #c8dfd1}
+.users-connected__hint{font-size:13px;color:#62717a;line-height:1.5;margin-top:12px}
+.users-connected__overlay{position:fixed;inset:0;z-index:2500;background:rgba(17,36,50,.65);display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.users-connected__modal{width:min(100%,620px);max-height:calc(100vh - 40px);overflow:auto;border-radius:20px;padding:26px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.2);color:#21394b}
+.users-connected__modal-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:20px}
+.users-connected__modal-header h2{font-size:24px;margin:0 0 6px}.users-connected__modal-header p{color:#64717a;margin:0}
+.users-connected__modal-header button{border:0;background:transparent;cursor:pointer;color:inherit}
+.users-connected__form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.users-connected__form label{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:600}
+.users-connected__form input,.users-connected__form select{width:100%;padding:11px 12px;border:1px solid #c4d0d2;border-radius:10px;font:inherit;color:#263b4b;background:white}
+.users-connected__form input:focus,.users-connected__form select:focus{outline:2px solid #a8b9b0;outline-offset:1px}
+.users-connected__form .users-connected__hint,.users-connected__form .users-connected__error,.users-connected__actions{grid-column:1/-1}
+.users-connected__actions{display:flex;justify-content:flex-end;gap:10px}
+.users-connected__actions button[type=submit]{background:#223c50;color:#fff;border-color:#223c50}
+@media(max-width:580px){.users-connected__form{grid-template-columns:1fr}.users-connected__modal{padding:20px}}
