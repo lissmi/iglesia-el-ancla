@@ -1,4 +1,3 @@
-
 /* =========================================================
    RUTAS DE DONACIONES - IGLESIA EL ANCLA
 ========================================================= */
@@ -25,6 +24,9 @@ import {
 
 // Importamos el modelo para consultar resultados.
 import Donacion from "../models/Donacion.js";
+
+// Protegemos el historial y los aportes asociados a una cuenta.
+import authenticateUser from "../middleware/authenticateUser.js";
 
 
 
@@ -159,6 +161,88 @@ const iniciarDonacionController = async (req, res) => {
     }
 
 };
+
+
+/* =========================================================
+   HISTORIAL PRIVADO DEL MIEMBRO
+========================================================= */
+
+// El identificador del usuario se obtiene exclusivamente de su sesión.
+router.get("/mis-donaciones", authenticateUser, async (req, res) => {
+    res.set("Cache-Control", "no-store");
+    try {
+        // Paginación evita cargar un historial ilimitado.
+        const requestedPage = Number(req.query.page || 1);
+        if (!Number.isSafeInteger(requestedPage) || requestedPage < 1 || requestedPage > 100000) {
+            return res.status(400).json({ success: false, message: "La página solicitada no es válida." });
+        }
+        const page = requestedPage;
+        const perPage = 10;
+        const filter = { usuario: req.user._id, estado: "aprobada" };
+        const [items, count, summary] = await Promise.all([
+            Donacion.find(filter)
+                .select("ordenCompra monto moneda estado fechaConfirmacion ambiente createdAt")
+                .sort({ createdAt: -1, _id: -1 })
+                .skip((page - 1) * perPage)
+                .limit(perPage)
+                .lean(),
+            Donacion.countDocuments(filter),
+            Donacion.aggregate([
+                { $match: filter },
+                { $group: { _id: null, total: { $sum: "$monto" }, cantidad: { $sum: 1 } } },
+            ]),
+        ]);
+        return res.status(200).json({
+            success: true,
+            donations: items.map((item) => ({
+                id: String(item._id),
+                reference: item.ordenCompra,
+                amount: item.monto,
+                currency: item.moneda,
+                status: item.estado,
+                date: item.fechaConfirmacion || item.createdAt,
+                environment: item.ambiente,
+            })),
+            summary: {
+                total: summary[0]?.total || 0,
+                count: summary[0]?.cantidad || 0,
+            },
+            pagination: { page, perPage, total: count, pages: Math.ceil(count / perPage) },
+        });
+    } catch (error) {
+        console.error("Error al consultar donaciones personales:", error.message);
+        return res.status(500).json({ success: false, message: "No pudimos consultar tus aportes. Inténtalo nuevamente." });
+    }
+});
+
+/* =========================================================
+   INICIAR UN APORTE ASOCIADO A LA SESIÓN ACTUAL
+========================================================= */
+
+// Esta ruta convive con la ruta pública: los visitantes pueden seguir donando.
+router.post("/iniciar-miembro", authenticateUser, donacionLimiter, async (req, res) => {
+    res.set("Cache-Control", "no-store");
+    const monto = req.body?.monto;
+    if (!Number.isInteger(monto) || monto < 1000 || monto > 5000000) {
+        return res.status(400).json({ success: false, message: "Ingresa un monto válido entre $1.000 y $5.000." });
+    }
+    try {
+        // Nunca se recibe el identificador de usuario desde React.
+        const result = await iniciarDonacion(monto, req.user._id);
+        return res.status(201).json({
+            success: true,
+            data: {
+                ordenCompra: result.ordenCompra,
+                monto: result.monto,
+                url: result.url,
+                token: result.token,
+            },
+        });
+    } catch (error) {
+        console.error("Error al iniciar aporte de miembro:", error.message);
+        return res.status(503).json({ success: false, message: "No pudimos iniciar el aporte en este momento. Inténtalo nuevamente." });
+    }
+});
 
 
 /* =========================================================

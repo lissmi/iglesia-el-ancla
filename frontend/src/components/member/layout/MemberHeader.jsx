@@ -17,6 +17,7 @@ import {
   CalendarDays,
   ChevronDown,
   HeartHandshake,
+  HandHeart,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -64,6 +65,7 @@ const personalNavigation = [
   { label: "Mis recomendados", to: "/member/recomendados", icon: Sparkles },
   { label: "Insumos básicos", to: "/member/insumos-basicos", icon: Package },
   { label: "Mis peticiones de oración", to: "/member/peticiones-oracion", icon: HeartHandshake },
+  { label: "Mis donaciones", to: "/member/mis-donaciones", icon: HandHeart },
   { label: "Resumen financiero", to: "/member/finanzas", icon: Wallet },
   { label: "Mi cuenta", to: "/member/mi-cuenta", icon: UserRound },
 ];

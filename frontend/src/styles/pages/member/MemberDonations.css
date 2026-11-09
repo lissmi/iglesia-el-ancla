@@ -1,0 +1,32 @@
+/* Página privada de donaciones con la paleta institucional de El Ancla. */
+.member-donations{min-height:65vh;background:#f5f8fa;color:#173449;padding:34px 20px 72px;font-family:inherit}
+.member-donations__container{max-width:1120px;margin:0 auto;display:grid;gap:22px}
+.member-donations__back{display:inline-flex;align-items:center;gap:8px;width:fit-content;color:#427f9f;text-decoration:none;font-weight:650;font-size:13px}
+.member-donations__hero{display:flex;align-items:center;gap:22px;padding:30px 34px;border-radius:22px;background:linear-gradient(120deg,#193a51,#275775);color:#fff;box-shadow:0 14px 30px rgba(19,50,69,.13)}
+.member-donations__hero-icon{display:grid;place-items:center;flex-shrink:0;width:66px;height:66px;border-radius:18px;background:rgba(255,255,255,.13);color:#bee5f4}
+.member-donations__eyebrow{font-size:11px;letter-spacing:.15em;font-weight:800;color:#9cd5eb}
+.member-donations__hero h1{font-size:clamp(25px,3vw,36px);margin:7px 0 6px;color:#fff}
+.member-donations__hero p{max-width:670px;margin:0;line-height:1.7;color:#d1e3ec}
+.member-donations__notice{display:flex;align-items:center;gap:12px;padding:14px 18px;border:1px solid #d7e8ee;border-radius:13px;background:#edf6f9;color:#46728a;font-size:13px}
+.member-donations__notice svg{flex-shrink:0}.member-donations__notice p{margin:0;line-height:1.6}
+.member-donations__summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.member-donations__summary>div{display:grid;gap:11px;padding:23px 25px;border:1px solid #e0e9ee;border-radius:17px;background:white;box-shadow:0 6px 20px rgba(19,50,69,.035)}
+.member-donations__summary span{font-size:13px;color:#658094}.member-donations__summary strong{font-size:30px;color:#183d55}
+.member-donations__panel{background:#fff;border:1px solid #e0e9ee;border-radius:18px;padding:25px;box-shadow:0 8px 25px rgba(19,50,69,.035)}
+.member-donations__section-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.member-donations__section-header h2{margin:0 0 6px;font-size:20px;color:#153a52}.member-donations__section-header p{margin:0;color:#7991a1;font-size:13px}
+.member-donations__refresh,.member-donations__pager button{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 13px;border:1px solid #cfdde5;border-radius:10px;background:#fff;color:#29516a;cursor:pointer;font:inherit;font-size:13px;font-weight:600}
+.member-donations__refresh:hover,.member-donations__pager button:hover:not(:disabled){background:#eef6fa}.member-donations button:disabled{opacity:.55;cursor:wait}
+.member-donations__feedback,.member-donations__empty{display:flex;align-items:center;justify-content:center;gap:12px;padding:37px 10px;text-align:center;color:#658092;font-size:14px}
+.member-donations__feedback--error{color:#a84848}.member-donations__empty{flex-direction:column;gap:10px;padding:42px 16px}.member-donations__empty svg{color:#64a6c1}.member-donations__empty h3{margin:0;color:#264b62}.member-donations__empty p{margin:0;max-width:440px;line-height:1.6}
+.member-donations__table-scroll{width:100%;overflow-x:auto}.member-donations__table{border-collapse:collapse;width:100%;min-width:625px;text-align:left;font-size:13px}
+.member-donations__table th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#698ca0;background:#f5f9fb;padding:14px 12px}.member-donations__table td{border-bottom:1px solid #edf2f5;padding:17px 12px;color:#34566c}.member-donations__reference{font-family:ui-monospace,monospace;font-size:12px}.member-donations__amount{font-weight:800;color:#1b425d!important}
+.member-donations__approved{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:9px;color:#247451;background:#e8f6ee;font-weight:700;font-size:12px}
+.member-donations__pager{display:flex;align-items:center;justify-content:flex-end;gap:13px;padding-top:19px;font-size:13px;color:#668298}
+.member-donations__info{line-height:1.7;font-size:13px;color:#657f90}.member-donations__form{max-width:630px;display:grid;gap:14px;margin-top:19px}
+.member-donations__amount-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.member-donations__preset{padding:12px 7px;border-radius:11px;border:1px solid #d3e2e8;background:#f8fbfc;color:#30586e;font-weight:700;cursor:pointer}.member-donations__preset--selected{border-color:#2a779d;background:#e8f4f9;color:#1b668b}
+.member-donations__form label{font-size:13px;font-weight:700;color:#274d63}.member-donations__form input{width:100%;padding:12px 14px;border-radius:11px;border:1px solid #c9dce5;color:#173449;font:inherit}.member-donations__form input:focus-visible{outline:2px solid #6cbedc;outline-offset:2px}
+.member-donations__form-error{display:flex;align-items:center;gap:7px;color:#a83a3a;font-size:13px;margin:0}.member-donations__donate{width:fit-content;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 20px;border:0;border-radius:11px;background:#224b63;color:#fff;font:inherit;font-weight:700;cursor:pointer}.member-donations__donate:hover:not(:disabled){background:#2d617f}
+.member-donations__disclaimer{margin:17px 0 0;color:#7b8f9c;font-size:12px;line-height:1.6}.member-donations__spin{animation:member-donations-spin 1s linear infinite}@keyframes member-donations-spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){.member-donations{padding:20px 12px 50px}.member-donations__hero{padding:24px 19px;align-items:flex-start;gap:14px}.member-donations__hero-icon{width:48px;height:48px}.member-donations__summary{grid-template-columns:1fr}.member-donations__panel{padding:18px}.member-donations__section-header{align-items:flex-start;flex-direction:column}.member-donations__amount-options{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.member-donations__spin{animation:none}}

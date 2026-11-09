@@ -1,4 +1,3 @@
-
 /* =========================================================
    MODELO DE DONACIONES - IGLESIA EL ANCLA
 ========================================================= */
@@ -15,6 +14,15 @@ import mongoose from "mongoose";
 const donacionSchema = new mongoose.Schema(
 
     {
+        // Cuenta que inició el aporte mientras tenía una sesión válida.
+        // Los aportes de visitantes permanecen sin usuario asociado.
+        usuario: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+            immutable: true,
+        },
+
         // Identificador único de la transacción.
         ordenCompra: {
             type: String,
@@ -143,6 +151,8 @@ const donacionSchema = new mongoose.Schema(
 ========================================================= */
 
 // Facilita consultar donaciones por estado y fecha.
+donacionSchema.index({ usuario: 1, createdAt: -1 });
+
 donacionSchema.index({
     estado: 1,
     createdAt: -1,

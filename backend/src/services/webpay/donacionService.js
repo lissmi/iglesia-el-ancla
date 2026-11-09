@@ -1,4 +1,3 @@
-
 /* =========================================================
    SERVICIO DE DONACIONES - WEBPAY PLUS
 ========================================================= */
@@ -125,7 +124,7 @@ const obtenerUrlRetorno = () => {
 ========================================================= */
 
 // Función principal para iniciar un aporte voluntario.
-export const iniciarDonacion = async (monto) => {
+export const iniciarDonacion = async (monto, usuarioId = null) => {
 
     // Primero verificamos el monto solicitado.
     validarMonto(monto);
@@ -139,6 +138,9 @@ export const iniciarDonacion = async (monto) => {
 
     // Registramos el intento antes de contactar a Webpay.
     const donacion = await Donacion.create({
+
+        // Asociamos solamente una cuenta validada por el servidor.
+        usuario: usuarioId,
 
         // Orden que identifica esta transacción.
         ordenCompra,

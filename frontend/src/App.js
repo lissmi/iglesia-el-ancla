@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Route,
@@ -75,6 +74,7 @@ import MyAccount from "./pages/account/MyAccount";
 import MemberLayout from "./components/member/layout/MemberLayout";
 
 import MemberDashboard from "./pages/member/MemberDashboard";
+import MemberDonations from "./pages/member/MemberDonations";
 import MemberActivities from "./pages/member/MemberActivities";
 import MemberPrayerRequests from "./pages/member/MemberPrayerRequests";
 // Necesidades reales de inventario y colaboración.
@@ -280,6 +280,7 @@ function App() {
               <Route path="actividades" element={<MemberActivities />} />
               <Route path="peticiones-oracion" element={<MemberPrayerRequests />} />
               <Route path="voluntariado" element={<MemberVolunteerAssignments />} />
+              <Route path="mis-donaciones" element={<MemberDonations />} />
               <Route path="finanzas" element={<FinanceOverview />} />
               <Route path="insumos-basicos" element={<MemberBasicSupplies />} />
 
