@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#20374B" />
+  <title>Sin conexión | El Ancla</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, Segoe UI, sans-serif; }
+    body { margin: 0; background: #f8f5f0; color: #20374b; min-height: 100vh; display: grid; place-items: center; padding: 20px; box-sizing: border-box; }
+    main { max-width: 420px; text-align: center; padding: 32px 24px; border-radius: 18px; background: white; box-shadow: 0 12px 40px #20374b1c; }
+    img { width: 96px; height: 96px; border-radius: 18px; }
+    h1 { font-size: 1.6rem; }
+    p { color: #51667a; line-height: 1.65; }
+    button { padding: 13px 22px; border: 0; border-radius: 11px; background: #315a72; color: white; font-size: 1rem; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #bc8b55; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="/icons/icon-192.png" alt="Símbolo de Iglesia El Ancla" />
+    <h1>Por ahora estás sin conexión ⚓</h1>
+    <p>Necesitas acceso a Internet para consultar las actividades, tu cuenta y los servicios de nuestra comunidad.</p>
+    <button type="button" onclick="window.location.reload()">Volver a intentar</button>
+  </main>
+</body>
+</html>

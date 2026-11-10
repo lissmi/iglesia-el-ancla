@@ -1,68 +1,117 @@
+
 <!DOCTYPE html>
+
+<!-- Definimos el idioma principal de la aplicación. -->
 <html lang="es">
+
   <head>
+
+    <!-- ===================================================== -->
+    <!-- CONFIGURACIÓN GENERAL -->
+    <!-- ===================================================== -->
+
     <!-- Permite utilizar tildes, ñ y caracteres especiales. -->
     <meta charset="utf-8" />
 
-    <!-- Icono pequeño mostrado en la pestaña del navegador. -->
-    <link
-      rel="icon"
-      href="%PUBLIC_URL%/favicon.ico"
-    />
-
-    <!-- Permite adaptar correctamente el contenido a celulares y tablets. -->
+    <!-- Adapta la interfaz a teléfonos, tablets y computadores. -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1"
     />
 
-    <!-- Color principal utilizado por algunos navegadores móviles. -->
+    <!-- Color principal del navegador y de la PWA. -->
     <meta
       name="theme-color"
       content="#b89573"
     />
 
-    <!-- Descripción utilizada por buscadores y al compartir el sitio. -->
+    <!-- ===================================================== -->
+    <!-- INFORMACIÓN DEL SITIO -->
+    <!-- ===================================================== -->
+
+    <!-- Descripción utilizada por buscadores y enlaces compartidos. -->
     <meta
       name="description"
       content="Plataforma oficial de El Ancla Comunidad Cristiana. Consulta actividades, reuniones, horarios, recursos y novedades de nuestra comunidad."
     />
 
-    <!-- Información sobre la organización responsable del sitio. -->
+    <!-- Identifica a la organización responsable. -->
     <meta
       name="author"
       content="El Ancla Comunidad Cristiana"
     />
 
-    <!-- Permite que los buscadores indexen las páginas del sitio. -->
+    <!-- Permite indexar las páginas públicas del sitio. -->
     <meta
       name="robots"
       content="index, follow"
     />
 
-    <!-- Icono utilizado al guardar la plataforma en dispositivos Apple. -->
+    <!-- ===================================================== -->
+    <!-- IDENTIDAD VISUAL E ICONOS -->
+    <!-- ===================================================== -->
+
+    <!-- Icono utilizado en las pestañas del navegador. -->
+    <link
+      rel="icon"
+      href="%PUBLIC_URL%/favicon.ico"
+    />
+
+    <!-- Icono específico para la pantalla de inicio del iPhone. -->
     <link
       rel="apple-touch-icon"
-      href="%PUBLIC_URL%/logo192.png"
+      sizes="180x180"
+      href="%PUBLIC_URL%/icons/apple-touch-icon.png"
     />
 
-    <!-- Archivo con la configuración de instalación de la futura PWA. -->
+    <!-- ===================================================== -->
+    <!-- CONFIGURACIÓN PWA -->
+    <!-- ===================================================== -->
+
+    <!-- Manifiesto oficial de instalación de Iglesia El Ancla. -->
     <link
       rel="manifest"
-      href="%PUBLIC_URL%/manifest.json"
+      href="%PUBLIC_URL%/manifest.webmanifest"
     />
 
-    <!-- Título mostrado en la pestaña del navegador. -->
+    <!-- Nombre mostrado en el acceso directo de dispositivos Apple. -->
+    <meta
+      name="apple-mobile-web-app-title"
+      content="El Ancla"
+    />
+
+    <!-- Permite iniciar la PWA en modo aplicación en dispositivos
+         Apple que admiten esta configuración. -->
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes"
+    />
+
+    <!-- Configura el estilo de la barra de estado en iOS. -->
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="default"
+    />
+
+    <!-- ===================================================== -->
+    <!-- TÍTULO DE LA APLICACIÓN -->
+    <!-- ===================================================== -->
+
+    <!-- Texto mostrado en la pestaña del navegador. -->
     <title>El Ancla Comunidad Cristiana</title>
+
   </head>
 
   <body>
-    <!-- Mensaje mostrado cuando JavaScript está desactivado. -->
+
+    <!-- Mensaje alternativo para navegadores sin JavaScript. -->
     <noscript>
       Necesitas habilitar JavaScript para utilizar la plataforma de El Ancla.
     </noscript>
 
-    <!-- React insertará toda la aplicación dentro de este elemento. -->
+    <!-- React renderiza aquí la aplicación completa. -->
     <div id="root"></div>
+
   </body>
+
 </html>
