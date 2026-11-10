@@ -1,3 +1,4 @@
+import { NotificationsProvider } from "./context/notifications/NotificationsContext";
 import MartinWidget from "./components/martin/MartinWidget";
 // Control global de lectura asistida, disponible en todas las rutas.
 import AccessibilityReader from "./components/accessibility/AccessibilityReader";
@@ -151,6 +152,8 @@ import NotFound from "./pages/public/NotFound";
 function App() {
   return (
     <BrowserRouter>
+      {/* Una sola bandeja de notificaciones para toda la navegación. */}
+      <NotificationsProvider>
       <div className="app">
         <Routes>
 
@@ -425,6 +428,7 @@ function App() {
         {/* Invitación a instalar la PWA desde el navegador, sin cambiar de ruta. */}
         <PwaInstallBanner />
       </div>
+      </NotificationsProvider>
     </BrowserRouter>
   );
 }

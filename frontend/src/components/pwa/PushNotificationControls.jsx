@@ -1,4 +1,3 @@
-
 /* =========================================================
    CONTROLES DE NOTIFICACIONES PUSH — EL ANCLA
    ========================================================= */
@@ -10,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   BellRing,
   BellOff,
-  Send,
   LoaderCircle,
 } from "lucide-react";
 
@@ -249,54 +247,6 @@ export default function PushNotificationControls() {
 
 
   // =======================================================
-  // ENVIAR NOTIFICACIÓN DE PRUEBA
-  // =======================================================
-
-  async function test() {
-
-    setBusy(true);
-    setMessage("");
-
-    try {
-
-      // Consultamos la suscripción del dispositivo.
-      const registration = await navigator.serviceWorker.ready;
-
-      const subscription =
-        await registration.pushManager.getSubscription();
-
-      // No enviamos pruebas sin una suscripción.
-      if (!subscription) {
-        throw new Error("No existe una suscripción activa.");
-      }
-
-      // Pedimos al backend enviar una prueba a este dispositivo.
-      await api.post("/push/test", {
-        endpoint: subscription.endpoint,
-      });
-
-      // Indicamos que el servidor aceptó el envío.
-      setMessage(
-        "Prueba enviada. Revisa las notificaciones de este dispositivo."
-      );
-
-    } catch (error) {
-
-      setMessage(
-        error.response?.data?.message ||
-        error.message ||
-        "No se pudo enviar la prueba."
-      );
-
-    } finally {
-
-      setBusy(false);
-
-    }
-  }
-
-
-  // =======================================================
   // INTERFAZ VISUAL
   // =======================================================
 
@@ -319,12 +269,12 @@ export default function PushNotificationControls() {
         <div className="push-controls__information">
 
           <h3 className="push-controls__title">
-            Avisos en mi teléfono
+            Avisos en este dispositivo
           </h3>
 
           <p className="push-controls__description">
-            Recibe avisos de El Ancla incluso cuando
-            cierres la aplicación.
+            Recibe avisos de El Ancla cuando haya novedades.
+            Puedes desactivarlos en cualquier momento.
           </p>
 
         </div>
@@ -371,30 +321,6 @@ export default function PushNotificationControls() {
           ) : (
 
             <>
-              {/* Enviamos una prueba al dispositivo actual. */}
-              <button
-                type="button"
-                className="push-controls__button push-controls__button--secondary"
-                disabled={busy}
-                onClick={test}
-              >
-
-                {busy ? (
-                  <LoaderCircle
-                    size={17}
-                    className="push-controls__spinner"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <Send size={17} aria-hidden="true" />
-                )}
-
-                <span>
-                  {busy ? "Procesando..." : "Enviar prueba"}
-                </span>
-
-              </button>
-
               {/* Permitimos cancelar los avisos voluntariamente. */}
               <button
                 type="button"

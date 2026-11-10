@@ -7,7 +7,6 @@ import AdminSidebar from "./AdminSidebar";
 import AdminTour from "./AdminTour";
 import AdminHeader from "./AdminHeader";
 import { ExpensesProvider } from "../../../context/expenses/ExpensesContext";
-import { NotificationsProvider } from "../../../context/notifications/NotificationsContext";
 import "../../../styles/components/administration/layout/AdminLayout.css";
 import AdminBackButton from "./AdminBackButton";
 
@@ -27,7 +26,6 @@ function AdminLayout() {
   return (
     // Ambos proveedores abarcan el encabezado y las rutas hijas.
     <ExpensesProvider>
-      <NotificationsProvider basePath={adminBasePath}>
         <div className="admin-layout">
           <AdminSidebar
             isOpen={isSidebarOpen}
@@ -61,7 +59,6 @@ function AdminLayout() {
             closeSidebar={handleCloseSidebar}
           />
         </div>
-      </NotificationsProvider>
     </ExpensesProvider>
   );
 }

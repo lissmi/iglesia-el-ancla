@@ -1,0 +1,68 @@
+/* =========================================================
+   CAMPANA DE MIEMBROS — AVISOS ACTUALIZADOS
+   Complementa MemberHeader.css sin cambiar el diseño original.
+   ========================================================= */
+
+/* Título principal del desplegable. */
+.member-header__alerts-title {
+  display: block;
+  margin-bottom: 12px;
+  color: #20364b;
+  font-size: 15px;
+}
+
+/* Secciones que solo aparecen cuando existen avisos reales. */
+.member-header__alerts-section {
+  display: block;
+  margin: 14px 0 10px;
+  color: #20364b;
+  font-size: 14px;
+}
+
+/* Mensaje mientras se consulta información. */
+.member-header__alerts-loading,
+.member-header__alerts-empty {
+  margin: 8px 0 12px;
+  color: #52687a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Errores de red o autorización: nunca se presentan como inventario completo. */
+.member-header__alerts-error {
+  margin: 10px 0 14px;
+  padding: 12px;
+  border: 1px solid #e8d0c6;
+  border-radius: 12px;
+  background: #fff8f5;
+  color: #754b3c;
+}
+
+.member-header__alerts-error p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Permite reintentar la consulta sin salir de la campana. */
+.member-header__alerts-retry {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #c8d7e1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #24475d;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.member-header__alerts-retry:hover {
+  background: #edf4f7;
+}
+
+.member-header__alerts-retry:focus-visible {
+  outline: 3px solid #b59b7e;
+  outline-offset: 2px;
+}

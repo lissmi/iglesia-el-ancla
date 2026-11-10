@@ -201,6 +201,15 @@ const userSchema = new Schema(
         },
 
 
+        // Identificadores de avisos leídos: solo 250 como máximo.
+        // La bandeja deriva los avisos de las colecciones existentes.
+        // Este campo interno no se entrega en perfiles ni en /auth/me.
+        notificationReadIds: {
+            type: [String],
+            default: undefined,
+            select: false,
+        },
+
         // Nivel de acceso general del usuario.
         //
         // member:

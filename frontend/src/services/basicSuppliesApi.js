@@ -14,7 +14,14 @@ async function result(request) {
 export const listBasicSuppliesAdmin = () => result(api.get("/basic-supplies/admin"));
 
 // Necesidades visibles para personas con sesión, sin datos de otros miembros.
-export const listBasicSuppliesNeeds = () => result(api.get("/basic-supplies/needs"));
+export const listBasicSuppliesNeeds = (options = {}) =>
+  result(
+    api.get("/basic-supplies/needs", {
+      ...options,
+      // Este parámetro evita mostrar una respuesta GET privada conservada en una caché intermedia.
+      params: { ...(options.params || {}), _refresh: Date.now() },
+    })
+  );
 
 // Registra un nuevo producto del inventario.
 export const createBasicSupply = (data) => result(api.post("/basic-supplies/admin", data));

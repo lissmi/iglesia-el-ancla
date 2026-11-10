@@ -1,5 +1,4 @@
 
-
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -30,8 +29,11 @@ import cookieParser from "cookie-parser";
 // Ruta segura del asistente Martín.
 import martinRoutes from "./routes/martinRoutes.js";
 
-// Rutas protegidas para registrar dispositivos y enviar pruebas Web Push.
+// Rutas protegidas para las suscripciones y recordatorios Web Push.
 import pushRoutes from "./routes/pushRoutes.js";
+
+// Bandeja de avisos única y protegida por usuario.
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 // Importamos la gestión de actividades puntuales para miembros.
 import activitiesRoutes from "./routes/activitiesRoutes.js";
@@ -213,6 +215,10 @@ app.use(
       "Content-Type",
       "Authorization",
       "X-CSRF-Token",
+      // Compatibilidad con clientes que todavía incluyan
+      // Cache-Control al validar la sesión de usuario.
+      // CORS sigue restringido al origen institucional autorizado.
+      "Cache-Control",
     ],
   })
 );
@@ -618,10 +624,12 @@ app.use("/api/martin", martinRoutes);
 // NOTIFICACIONES PUSH
 // =========================================================
 
-// Registramos los dispositivos autorizados del usuario y
-// permitimos enviar una notificación de prueba a su propia cuenta.
-// La autenticación se comprueba dentro de pushRoutes.js.
+// Registramos dispositivos autorizados y el cron diario privado.
+// La autenticación de los usuarios y del cron se valida en pushRoutes.js.
 app.use("/api/push", pushRoutes);
+
+// Bandeja compartida entre la PWA pública autenticada y los paneles privados.
+app.use("/api/notifications", notificationRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS
@@ -699,10 +707,3 @@ app.use(
 // server.js se encarga de inicializar
 // MongoDB y levantar el servidor.
 export default app;
-
-
-
-
-
-
-

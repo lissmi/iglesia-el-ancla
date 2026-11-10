@@ -1,0 +1,61 @@
+/* =========================================================
+   AVISOS UNIFICADOS — COLORES DE IGLESIA EL ANCLA ⚓
+   Solo complementa la hoja de estilos del encabezado existente.
+   ========================================================= */
+
+/* Encabezado flexible, adaptado a pantallas angostas. */
+.member-header__alerts-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Grupos de avisos: únicamente se dibujan cuando contienen registros. */
+.member-header__alerts-group { margin: 14px 0; }
+
+/* Separación entre un aviso y su control de lectura. */
+.member-header__unified-item {
+  border: 1px solid #dae4eb;
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #ffffff;
+}
+
+/* Evita que el enlace tenga doble borde si la clase base ya pinta una tarjeta. */
+.member-header__unified-item .member-volunteer-alert {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: #233c51;
+  text-decoration: none;
+}
+
+/* Avisos leídos permanecen visibles sin aumentar el contador. */
+.member-header__unified-item.is-read { opacity: 0.72; }
+
+/* La acción secundaria se mantiene discreta respecto al aviso. */
+.member-header__unified-item .member-header__alerts-retry {
+  display: inline-flex;
+  margin-top: 6px;
+  padding: 6px 0;
+  color: #285673;
+  font-size: 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.member-header__unified-item :focus-visible,
+.member-header__alerts-heading :focus-visible {
+  outline: 3px solid #b9a183;
+  outline-offset: 2px;
+}

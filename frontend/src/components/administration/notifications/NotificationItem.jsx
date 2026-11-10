@@ -1,10 +1,10 @@
 // =========================================================
 // FILA INDIVIDUAL DE NOTIFICACIÓN
 // =========================================================
-import { BellRing, Check, CircleAlert, CalendarDays, ReceiptText } from "lucide-react";
+import { BellRing, Check, CircleAlert, CalendarDays, ReceiptText, Package, HandHeart, Users } from "lucide-react";
 import "../../../styles/components/administration/notifications/NotificationItem.css";
 
-const ICONS = { finance: ReceiptText, events: CalendarDays, alert: CircleAlert };
+const ICONS = { finance: ReceiptText, events: CalendarDays, alert: CircleAlert, supplies: Package, volunteers: Users, prayer: HandHeart };
 
 function NotificationItem({ notification, onRead, onOpen }) {
   const Icon = ICONS[notification.category] || BellRing;

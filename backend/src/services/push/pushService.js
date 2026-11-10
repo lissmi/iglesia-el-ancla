@@ -1,3 +1,4 @@
+
 // Envío desde Node.js; las claves VAPID privadas nunca llegan al frontend.
 import webpush from "web-push";
 
@@ -15,6 +16,6 @@ export async function sendWebPush(subscription, payload) {
   return webpush.sendNotification(
     { endpoint: subscription.endpoint, keys: subscription.keys },
     JSON.stringify(payload),
-    { TTL: 60, urgency: "normal" }
+    { TTL: 60 * 60 * 4, urgency: "normal" }
   );
 }

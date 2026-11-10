@@ -1,9 +1,9 @@
 // =========================================================
-// PANEL DESPLEGABLE DE NOTIFICACIONES
+// PANEL ADMINISTRATIVO — MISMA BANDEJA QUE EN /MEMBER
 // =========================================================
 import { useEffect, useId, useRef, useState } from "react";
-import { BellOff, CheckCheck, X } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { BellOff, CheckCheck, RotateCw, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useNotifications } from "../../../context/notifications/NotificationsContext";
 import NotificationItem from "./NotificationItem";
 import "../../../styles/components/administration/notifications/NotificationPanel.css";
@@ -13,12 +13,11 @@ function NotificationPanel({ onClose }) {
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const [filter, setFilter] = useState("all");
+  const [actionError, setActionError] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const adminBasePath = location.pathname.startsWith("/super-admin") ? "/super-admin" : "/admin";
-  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+  const { notifications, unreadCount, loading, error, refreshNotifications, markAsRead, markAllAsRead } = useNotifications();
 
-  // Restituimos el foco al elemento desde el que se abrió el panel.
+  // Conservamos el enfoque por teclado del panel original.
   useEffect(() => {
     const previousFocus = document.activeElement;
     closeRef.current?.focus();
@@ -41,109 +40,28 @@ function NotificationPanel({ onClose }) {
     ? notifications.filter((notification) => !notification.read)
     : notifications;
 
-  // Usamos un enlace profundo que conserva el ID del gasto en la URL.
-  // No dependemos del estado transitorio de React Router.
-
-  // =========================================================
-  // ABRIR INFORMACIÓN DE UNA NOTIFICACIÓN
-  // =========================================================
-
-  const handleOpen = (notification) => {
-
-    // Verificamos que exista una notificación válida.
-    if (!notification) {
-      console.error("Notificación no válida.");
-      return;
-    }
-
-    // =======================================================
-    // NOTIFICACIONES DE GASTOS
-    // =======================================================
-
-    if (notification.source === "expense") {
-
-      // Obtenemos el identificador del gasto.
-      const expenseId = notification.expenseId;
-
-      // No navegamos si falta el identificador.
-      if (expenseId == null || String(expenseId).trim() === "") {
-        console.error(
-          "La notificación no contiene un expenseId válido:",
-          notification
-        );
-
-        return;
-      }
-
-      // Construimos la ruta utilizando el panel actual.
-      // Así funciona tanto para admin como super_admin.
-      const expensePath =
-        `${adminBasePath}/finanzas/gastos`;
-
-      // Agregamos el identificador como parámetro.
-      const searchParams = new URLSearchParams();
-
-      searchParams.set(
-        "gasto",
-        String(expenseId)
-      );
-
-      // Marcamos la notificación como leída.
-      markAsRead(notification.id);
-
-      // Cerramos el panel de notificaciones.
-      onClose();
-
-      // Navegamos directamente al gasto.
-      navigate({
-        pathname: expensePath,
-        search: `?${searchParams.toString()}`,
-      });
-
-      return;
-    }
-
-    // =======================================================
-    // OTRAS NOTIFICACIONES
-    // =======================================================
-
+  // Solo navegamos a rutas internas permitidas; backend ya filtró por permisos.
+  async function handleOpen(notification) {
+    if (!notification || typeof notification.path !== "string") return;
     const path = notification.path;
-
-    // Comprobamos que exista una ruta.
-    if (typeof path !== "string") {
-      console.error(
-        "La notificación no tiene una ruta válida:",
-        notification
-      );
-
-      return;
+    if (!/^\/(member|admin|super-admin)(\/|\?|$)/.test(path) || path.startsWith("//") || path.includes("\\")) return;
+    try {
+      await markAsRead(notification.id);
+      onClose();
+      navigate(path);
+    } catch {
+      setActionError("No se pudo guardar la lectura. Vuelve a intentarlo.");
     }
+  }
 
-    // Permitimos solamente rutas internas relativas
-    // al panel administrativo activo.
-    const destination = path.startsWith(`${adminBasePath}/`)
-      ? path
-      : null;
-
-    if (!destination) {
-      console.error(
-        "La notificación apunta fuera del panel actual:",
-        path
-      );
-
-      return;
+  async function handleReadAll() {
+    try {
+      await markAllAsRead();
+      setActionError("");
+    } catch {
+      setActionError("No pudimos marcar los avisos como leídos.");
     }
-
-    // Registramos la lectura.
-    markAsRead(notification.id);
-
-    // Cerramos las notificaciones.
-    onClose();
-
-    // Navegamos al módulo correspondiente.
-    navigate(destination);
-  };
-
+  }
 
   return (
     <div className="notification-panel__backdrop" onMouseDown={(event) => {
@@ -151,7 +69,11 @@ function NotificationPanel({ onClose }) {
     }}>
       <section ref={panelRef} className="notification-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <header className="notification-panel__header">
-          <div><span>ACTIVIDAD ADMINISTRATIVA</span><h2 id={titleId}>Notificaciones</h2><p>Información que requiere tu atención.</p></div>
+          <div>
+            <span>COMUNIDAD Y ADMINISTRACIÓN</span>
+            <h2 id={titleId}>Notificaciones</h2>
+            <p>Tus avisos pendientes, en una sola bandeja.</p>
+          </div>
           <button ref={closeRef} type="button" className="notification-panel__close" onClick={onClose} aria-label="Cerrar notificaciones"><X size={19} /></button>
         </header>
         <div className="notification-panel__tools">
@@ -159,13 +81,25 @@ function NotificationPanel({ onClose }) {
             <button type="button" className={filter === "all" ? "is-active" : ""} aria-pressed={filter === "all"} onClick={() => setFilter("all")}>Todas</button>
             <button type="button" className={filter === "unread" ? "is-active" : ""} aria-pressed={filter === "unread"} onClick={() => setFilter("unread")}>No leídas ({unreadCount})</button>
           </div>
-          <button type="button" className="notification-panel__read-all" onClick={markAllAsRead} disabled={unreadCount === 0}><CheckCheck size={15} /> Marcar todas</button>
+          <button type="button" className="notification-panel__read-all" onClick={handleReadAll} disabled={unreadCount === 0}><CheckCheck size={15} /> Marcar todas</button>
         </div>
         <div className="notification-panel__list" aria-live="polite">
-          {visibleNotifications.length === 0 ? (
-            <div className="notification-panel__empty"><BellOff size={34} strokeWidth={1.5} /><strong>{filter === "unread" ? "No tienes notificaciones sin leer" : "Sin notificaciones por ahora"}</strong><p>{filter === "unread" ? "Todas las notificaciones están al día." : "No hay pagos vencidos ni otros avisos administrativos activos."}</p></div>
+          {loading && <p role="status">Actualizando avisos...</p>}
+          {(error || actionError) && (
+            <div role="alert">
+              <p>{error || actionError}</p>
+              <button type="button" onClick={() => refreshNotifications({ force: true })}><RotateCw size={14} /> Reintentar</button>
+            </div>
+          )}
+          {!loading && !error && visibleNotifications.length === 0 ? (
+            <div className="notification-panel__empty">
+              <BellOff size={34} strokeWidth={1.5} />
+              <strong>{filter === "unread" ? "No tienes avisos sin leer" : "Sin avisos que requieran atención"}</strong>
+            </div>
           ) : visibleNotifications.map((notification) => (
-            <NotificationItem key={notification.id} notification={notification} onRead={markAsRead} onOpen={handleOpen} />
+            <NotificationItem key={notification.id} notification={notification}
+              onRead={(id) => markAsRead(id).catch(() => setActionError("No se pudo guardar la lectura."))}
+              onOpen={handleOpen} />
           ))}
         </div>
       </section>

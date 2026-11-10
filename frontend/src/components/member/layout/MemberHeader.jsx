@@ -1,5 +1,3 @@
-
-
 // =========================================================
 // HEADER DEL ÁREA DE MIEMBROS - IGLESIA EL ANCLA
 // Archivo: frontend/src/components/member/layout/MemberHeader.jsx
@@ -35,6 +33,9 @@ import {
 // Única instancia Axios del proyecto (incluye cookies HttpOnly).
 import api from "../../../services/api";
 
+// Bandeja única entre páginas públicas autenticadas y paneles privados.
+import { useNotifications } from "../../../context/notifications/NotificationsContext";
+
 // Limpiamos la conversación temporal solo después de cerrar sesión correctamente.
 import { clearMartinChat } from "../../../utils/martinChatSession";
 
@@ -47,6 +48,9 @@ import logoElAncla from "../../../assets/images/logo-el-ancla.png";
 // Se conserva el CSS original para no afectar la identidad del proyecto.
 import "../../../styles/components/member/layout/MemberHeader.css";
 import "../../../styles/components/member/volunteers/MemberVolunteerNotice.css";
+// Estilos complementarios para errores y actualización de avisos reales.
+import "../../../styles/components/member/layout/MemberNotificationAlerts.css";
+import "../../../styles/components/member/layout/UnifiedNotifications.css";
 
 // =========================================================
 // ENLACES VISIBLES EN LA NAVEGACIÓN PRINCIPAL
@@ -83,7 +87,11 @@ const personalNavigation = [
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, supplyNeeds = [], supplyNeedsLoading = false, onStartTour, tourItem = null }) {
+function MemberHeader({
+  user,
+  onStartTour,
+  tourItem = null,
+}) {
   // Muestra u oculta la navegación completa cuando se usa el menú móvil.
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -122,6 +130,24 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
 
   // Obtenemos el rol validado desde la sesión, no desde localStorage.
   const role = user?.role;
+
+  // Los avisos y el estado de lectura se comparten en TODAS las rutas.
+  const { notifications, unreadCount, loading: notificationsLoading,
+    error: notificationsError, refreshNotifications, markAsRead, markAllAsRead,
+    clearAccount: clearNotificationAccount } = useNotifications();
+
+  // Organizamos únicamente las notificaciones reales de esta cuenta.
+  const notificationSections = [
+    { label: "Insumos que necesitamos", types: ["supplies"] },
+    { label: "Mis turnos de servicio", types: ["volunteers"] },
+    { label: "Actividades de la comunidad", types: ["events"] },
+    { label: "Peticiones de oración", types: ["prayer"] },
+    { label: "Administración y finanzas", types: ["finance"] },
+  ].map((section) => ({
+    ...section,
+    items: notifications.filter((item) => section.types.includes(item.category)),
+  })).filter((section) => section.items.length > 0);
+
 
   // Solo admin y super_admin tienen un panel administrativo al cual regresar.
   const adminPanelPath = role === "super_admin"
@@ -235,6 +261,9 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
       // Eliminamos la conversación de Martín al cerrar la sesión.
       clearMartinChat();
 
+      // Borramos los avisos privados antes de volver al sitio público.
+      clearNotificationAccount();
+
       // Cerramos todos los menús y redirigimos al inicio de sesión.
       closeMenu();
       setNotificationsOpen(false);
@@ -287,7 +316,10 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                 data-member-tour="notifications"
                 type="button"
                 onClick={() => {
-                  setNotificationsOpen((open) => !open);
+                  // Consultamos inventario y turnos actuales cada vez que abrimos la campana.
+                  const opening = !notificationsOpen;
+                  setNotificationsOpen(opening);
+                  if (opening) refreshNotifications({ force: true });
                   setPersonalOpen(false);
                   setMenuOpen(false);
                 }}
@@ -297,9 +329,9 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                 title="Notificaciones"
               >
                 <Bell size={21} strokeWidth={1.8} aria-hidden="true" />
-                {(volunteerAlerts.length + supplyNeeds.length) > 0 && (
+                {unreadCount > 0 && (
                   <span className="member-volunteer-alert-count" aria-hidden="true">
-                    {volunteerAlerts.length + supplyNeeds.length > 9 ? "9+" : volunteerAlerts.length + supplyNeeds.length}
+                    {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
               </button>
@@ -481,39 +513,63 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                   role="region"
                   aria-label="Notificaciones de la comunidad"
                 >
-                  <strong>Mis avisos de servicio</strong>
-                  {assignmentsLoading ? (
-                    <p role="status">Consultando tus avisos...</p>
-                  ) : volunteerAlerts.length === 0 ? (
-                    <p>No tienes avisos de voluntariado pendientes.</p>
-                  ) : (
-                    <div className="member-volunteer-alert-list">
-                      {volunteerAlerts.slice(0, 5).map((alert) => (
-                        <Link key={alert.id} to={alert.to} className="member-volunteer-alert">
-                          <strong>{alert.title}</strong>
-                          <span>{alert.message}</span>
-                        </Link>
-                      ))}
+                  {/* Una sola fuente de verdad para miembros y administradores. */}
+                  <div className="member-header__alerts-heading">
+                    <strong className="member-header__alerts-title">Avisos que requieren atención</strong>
+                    {unreadCount > 0 && (
+                      <button type="button" className="member-header__alerts-retry"
+                        onClick={() => markAllAsRead().catch(() => refreshNotifications({ force: true }))}>
+                        Marcar todos como leídos
+                      </button>
+                    )}
+                  </div>
+
+                  {notificationsLoading && <p role="status" className="member-header__alerts-loading">Actualizando avisos...</p>}
+                  {notificationsError && (
+                    <div className="member-header__alerts-error" role="alert">
+                      <p>{notificationsError}</p>
+                      <button className="member-header__alerts-retry" type="button"
+                        onClick={() => refreshNotifications({ force: true })}>Reintentar consulta</button>
                     </div>
                   )}
-                  <Link className="member-volunteer-alert-more" to="/member/voluntariado" onClick={() => setNotificationsOpen(false)}>
-                    Ver todos mis turnos
-                  </Link>
-                  <strong style={{display:"block", marginTop: "14px"}}>Insumos que necesitamos</strong>
-                  {supplyNeedsLoading ? <p>Consultando necesidades...</p> : supplyNeeds.length === 0 ?
-                    <p>Por ahora estamos bien abastecidos.</p> :
-                    <div className="member-volunteer-alert-list">
-                      {supplyNeeds.slice(0, 5).map((supply) =>
-                        <Link key={supply.id} to="/member/insumos-basicos" className="member-volunteer-alert" onClick={() => setNotificationsOpen(false)}>
-                          <strong>{supply.name}</strong>
-                          <span>{supply.status === "out" ? "Agotado" : "Quedan pocas unidades"} · Puedes colaborar si lo deseas.</span>
-                        </Link>
-                      )}
+
+                  {/* Solo las secciones con avisos reales aparecen en la campana. */}
+                  {notificationSections.map((section) => (
+                    <div key={section.label} className="member-header__alerts-group">
+                      <strong className="member-header__alerts-section">{section.label}</strong>
+                      <div className="member-volunteer-alert-list">
+                        {section.items.slice(0, 12).map((notification) => (
+                          <div key={notification.id} className={`member-header__unified-item ${notification.read ? "is-read" : ""}`}>
+                            <Link
+                              to={notification.path}
+                              className="member-volunteer-alert"
+                              onClick={() => {
+                                // Registrar lectura nunca entrega permisos adicionales.
+                                markAsRead(notification.id).catch(() => {});
+                                setNotificationsOpen(false);
+                              }}
+                            >
+                              <strong>{notification.title}</strong>
+                              <span>{notification.message}</span>
+                            </Link>
+                            {!notification.read && (
+                              <button type="button" className="member-header__alerts-retry"
+                                onClick={() => markAsRead(notification.id).catch(() => {})}>
+                                Marcar como leído
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  }
-                  <Link className="member-volunteer-alert-more" to="/member/insumos-basicos" onClick={() => setNotificationsOpen(false)}>
-                    Ver necesidades de la iglesia
-                  </Link>
+                  ))}
+
+                  {!notificationsLoading && !notificationsError && notifications.length === 0 && (
+                    <p className="member-header__alerts-empty">
+                      No hay avisos que requieran tu atención en este momento.
+                    </p>
+                  )}
+
                   {/* Configuración de avisos push para esta cuenta y este dispositivo. */}
                   {/* Se muestra al final para conservar las notificaciones existentes. */}
                   <PushNotificationControls />
@@ -530,8 +586,3 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
 
 // Compartimos el header entre los roles member, admin y super_admin.
 export default MemberHeader;
-
-
-
-
-

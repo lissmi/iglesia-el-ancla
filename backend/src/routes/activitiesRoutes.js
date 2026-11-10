@@ -1,3 +1,4 @@
+
 // =========================================================
 // RUTAS DE ACTIVIDADES - PWA IGLESIA EL ANCLA
 // MongoDB Atlas + Cloudinary + roles y cookies HttpOnly
@@ -17,6 +18,8 @@ import Activity, { ACTIVITY_TIME_ZONE } from "../models/Activity.js";
 // Gestionamos las confirmaciones individuales sin duplicarlas en Activity.
 import ActivityConfirmation from "../models/ActivityConfirmation.js";
 import activityAttendanceRoutes from "./activityAttendanceRoutes.js";
+// Notificamos novedades reales sin exponer datos de actividades en pantalla bloqueada.
+import { announceCommunityChange } from "../services/push/automaticPushService.js";
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import validateRequestOrigin from "../middleware/validateRequestOrigin.js";
@@ -402,6 +405,13 @@ router.post(
       await activity.save();
       saved = true;
 
+      // Una actividad publicada desde su creación es una novedad real.
+      // El error de push no debe anular una publicación ya guardada.
+      if (activity.publicationStatus === "published") {
+        try { await announceCommunityChange("activity"); }
+        catch (error) { console.error("Aviso de nueva actividad no enviado:", error.message); }
+      }
+
       // Devolvemos la actividad creada sin el identificador privado de imagen.
       res.set("Cache-Control", "private, no-store");
       return res.status(201).json({
@@ -441,10 +451,16 @@ router.patch(
       const activity = await Activity.findById(req.params.id);
       if (!activity) throw httpError(404, "Actividad no encontrada");
 
+      // Conservamos el estado anterior para avisar solo al publicar de verdad.
+      const wasPublished = activity.publicationStatus === "published";
       // Guardamos la transición y la identidad de quien la efectuó.
       activity.publicationStatus = status;
       activity.updatedBy = req.user._id;
       await activity.save();
+      if (!wasPublished && status === "published") {
+        try { await announceCommunityChange("activity"); }
+        catch (error) { console.error("Aviso de publicación no enviado:", error.message); }
+      }
 
       // Respondemos sin exponer el identificador privado de Cloudinary.
       res.set("Cache-Control", "private, no-store");
@@ -480,6 +496,8 @@ router.patch(
 
       // Leemos exclusivamente los campos editables.
       const { fields, removeImage } = readActivityPayload(req);
+      // Solo avisamos cambios de calendario, no cada edición de texto.
+      const previousSchedule = `${activity.date}|${activity.time}|${activity.publicationStatus}`;
 
       // No se permite subir y quitar la imagen al mismo tiempo.
       if (removeImage && req.file) {
@@ -558,6 +576,12 @@ router.patch(
       // Persistimos todos los cambios primero en MongoDB.
       await activity.save();
       saved = true;
+
+      const newSchedule = `${activity.date}|${activity.time}|${activity.publicationStatus}`;
+      if (activity.publicationStatus === "published" && previousSchedule !== newSchedule) {
+        try { await announceCommunityChange("activityChange"); }
+        catch (error) { console.error("Aviso de cambio de actividad no enviado:", error.message); }
+      }
 
       // Eliminamos la imagen anterior solo después de guardar el reemplazo.
       let warning = null;

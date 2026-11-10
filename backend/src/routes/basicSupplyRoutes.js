@@ -1,3 +1,4 @@
+
 // =========================================================
 // API DE INSUMOS BÁSICOS - IGLESIA EL ANCLA
 // CRUD administrativo, stock y compromisos de miembros.
@@ -5,6 +6,7 @@
 import { Router } from "express";
 import mongoose from "mongoose";
 import BasicSupply, { BASIC_SUPPLY_CATEGORIES } from "../models/BasicSupply.js";
+import { announceCommunityChange } from "../services/push/automaticPushService.js";
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import validateRequestOrigin from "../middleware/validateRequestOrigin.js";
@@ -124,6 +126,11 @@ router.post("/admin", ADMIN, validateRequestOrigin, async (req, res, next) => {
       throw fail(400, "Completa los datos obligatorios del insumo");
     }
     const supply = await BasicSupply.create({ ...data, createdBy: req.user._id });
+    // Si nace con stock bajo, se anuncia una sola vez en el día.
+    if (supply.stock <= supply.minimumStock) {
+      try { await announceCommunityChange("supply"); }
+      catch (error) { console.error("Aviso de insumos no enviado:", error.message); }
+    }
     return res.status(201).json({ success: true, supply: shapeAdmin(supply) });
   } catch (error) { return handleError(error, next); }
 });
@@ -145,6 +152,11 @@ router.put("/admin/:id", ADMIN, validateRequestOrigin, async (req, res, next) =>
       { new: true, runValidators: true }
     );
     if (!updated) throw fail(409, "Otro administrador actualizó el insumo. Vuelve a cargar");
+    // Avisar cuando aumentar el stock mínimo crea una necesidad nueva.
+    if (supply.stock > supply.minimumStock && updated.stock <= updated.minimumStock) {
+      try { await announceCommunityChange("supply"); }
+      catch (error) { console.error("Aviso de insumos no enviado:", error.message); }
+    }
     return res.json({ success: true, supply: shapeAdmin(updated) });
   } catch (error) { return handleError(error, next); }
 });
@@ -166,6 +178,12 @@ router.post("/admin/:id/movements", ADMIN, validateRequestOrigin, async (req, re
     };
     const supply = await BasicSupply.findOneAndUpdate(filter, update, { new: true });
     if (!supply) throw fail(409, "No se pudo registrar el movimiento: revisa las existencias disponibles");
+    // Solo notificamos el tránsito de stock suficiente a insuficiente.
+    const previousStock = type === "expense" ? supply.stock + quantity : supply.stock - quantity;
+    if (previousStock > supply.minimumStock && supply.stock <= supply.minimumStock) {
+      try { await announceCommunityChange("supply"); }
+      catch (error) { console.error("Aviso de stock bajo no enviado:", error.message); }
+    }
     return res.json({ success: true, supply: shapeAdmin(supply) });
   } catch (error) { return next(error); }
 });

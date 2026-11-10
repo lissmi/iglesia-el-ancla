@@ -1,4 +1,5 @@
 
+
 /* =========================================================
    EVENTOS PÚBLICOS RECURRENTES - IGLESIA EL ANCLA
    Archivo: backend/src/routes/eventRoutes.js
@@ -24,6 +25,7 @@ import mongoose from "mongoose";
 
 // Importamos el modelo de eventos y la zona horaria oficial compartida.
 import Event, { EVENT_TIME_ZONE } from "../models/Event.js";
+import { announceCommunityChange } from "../services/push/automaticPushService.js";
 
 // Reutilizamos la configuración institucional para los textos de la página.
 import SystemSettings from "../models/SystemSettings.js";
@@ -916,6 +918,11 @@ router.post(
       // Guardamos el evento en MongoDB Atlas.
       await event.save();
       saved = true;
+      // No anunciamos borradores ni usamos detalles privados en el push.
+      if (event.publicationStatus === "published") {
+        try { await announceCommunityChange("event"); }
+        catch (error) { console.error("Aviso de nuevo evento no enviado:", error.message); }
+      }
 
       // Evitamos caché con datos administrativos.
       res.set("Cache-Control", "private, no-store");
@@ -978,6 +985,8 @@ router.patch(
         throw httpError(404, "Evento no encontrado");
       }
 
+      // Evitamos repetir un aviso cuando ya estaba publicado.
+      const wasPublished = event.publicationStatus === "published";
       // Modificamos el estado de publicación.
       event.publicationStatus = status;
 
@@ -986,6 +995,10 @@ router.patch(
 
       // Persistimos el cambio.
       await event.save();
+      if (!wasPublished && status === "published") {
+        try { await announceCommunityChange("event"); }
+        catch (error) { console.error("Aviso de publicación no enviado:", error.message); }
+      }
 
       // Si ya no es público, retiramos referencias a su destacado.
       // No afecta los textos guardados de la página de Eventos.
@@ -1062,6 +1075,8 @@ router.patch(
       // Conservamos la referencia a la imagen anterior.
       const previousImageId = event.image?.publicId;
 
+      // Guardamos el horario anterior para no avisar cada cambio de texto.
+      const beforeSchedule = JSON.stringify([event.publicationStatus, event.date, event.time, event.recurrence?.toObject?.() || event.recurrence]);
       // Actualizamos solamente los campos permitidos.
       event.set(fields);
 
@@ -1087,6 +1102,11 @@ router.patch(
       // Confirmamos los cambios en MongoDB.
       await event.save();
       saved = true;
+      const afterSchedule = JSON.stringify([event.publicationStatus, event.date, event.time, event.recurrence?.toObject?.() || event.recurrence]);
+      if (event.publicationStatus === "published" && beforeSchedule !== afterSchedule) {
+        try { await announceCommunityChange("eventChange"); }
+        catch (error) { console.error("Aviso de cambio de reunión no enviado:", error.message); }
+      }
 
       // La eliminación de una imagen antigua es posterior al guardado.
       let warning = null;

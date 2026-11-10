@@ -1,3 +1,4 @@
+
 // =========================================================
 // API DE PETICIONES DE ORACIÓN - IGLESIA EL ANCLA
 // Archivo: backend/src/routes/prayerRequestRoutes.js
@@ -20,6 +21,7 @@ import validateRequestOrigin from "../middleware/validateRequestOrigin.js";
 
 // Colección única para peticiones de oración.
 import PrayerRequest, { PRAYER_CATEGORIES, PRAYER_STATUSES } from "../models/PrayerRequest.js";
+import { announceCommunityChange } from "../services/push/automaticPushService.js";
 
 // Usamos el servicio existente de eliminaciones auditadas.
 import { deleteResourceWithAudit } from "../services/audit/deletionService.js";
@@ -189,6 +191,16 @@ router.post("/member", authorizeRoles(...memberRoles), createLimiter, async (req
   try {
     const data = parseContent(req.body);
     const created = await PrayerRequest.create({ ...data, createdBy: req.user._id });
+    // Mensajes genéricos: privadas solo a administradores, públicas a la comunidad.
+    try {
+      if (created.visibility === "community") {
+        await announceCommunityChange("prayer", { exceptUserId: req.user._id });
+      } else {
+        await announceCommunityChange("privatePrayer", {
+          exceptUserId: req.user._id, allowedRoles: ["admin", "super_admin"],
+        });
+      }
+    } catch (error) { console.error("Aviso de oración no enviado:", error.message); }
     const doc = await findFullPrayer({ _id: created._id });
     return respond(res, { message: "Tu petición fue enviada correctamente", request: serializePrayer(doc, req.user._id) }, 201);
   } catch (error) { next(error); }
@@ -204,10 +216,16 @@ router.patch("/member/:id", authorizeRoles(...memberRoles), async (req, res, nex
     const changes = parseContent(req.body, { partial: true });
     const doc = await PrayerRequest.findOne({ _id: id, createdBy: req.user._id }).select("+prayingMembers");
     if (!doc) throw httpError(404, "Petición no encontrada");
+    const previouslyPrivate = doc.visibility === "private";
     doc.set({ ...changes, updatedBy: req.user._id });
     // Una petición que pasa a privada deja de aceptar apoyos comunitarios.
     if (changes.visibility === "private") doc.prayingMembers = [];
     await doc.save();
+    // Si el propio autor la convirtió en comunitaria, anunciamos el cambio.
+    if (previouslyPrivate && doc.visibility === "community" && ["pending", "praying"].includes(doc.status)) {
+      try { await announceCommunityChange("prayer", { exceptUserId: req.user._id }); }
+      catch (error) { console.error("Aviso comunitario no enviado:", error.message); }
+    }
     const updated = await findFullPrayer({ _id: id });
     return respond(res, { message: "Tu petición fue actualizada", request: serializePrayer(updated, req.user._id) });
   } catch (error) { next(error); }
@@ -288,6 +306,16 @@ router.post("/admin", authorizeRoles(...adminRoles), createLimiter, async (req, 
   try {
     const data = parseContent(req.body);
     const created = await PrayerRequest.create({ ...data, createdBy: req.user._id });
+    // Mensajes genéricos: privadas solo a administradores, públicas a la comunidad.
+    try {
+      if (created.visibility === "community") {
+        await announceCommunityChange("prayer", { exceptUserId: req.user._id });
+      } else {
+        await announceCommunityChange("privatePrayer", {
+          exceptUserId: req.user._id, allowedRoles: ["admin", "super_admin"],
+        });
+      }
+    } catch (error) { console.error("Aviso de oración no enviado:", error.message); }
     const doc = await findFullPrayer({ _id: created._id });
     return respond(res, { message: "Petición registrada correctamente", request: serializePrayer(doc, req.user._id, { administrative: true }) }, 201);
   } catch (error) { next(error); }
@@ -320,10 +348,16 @@ router.patch("/admin/:id", authorizeRoles(...adminRoles), async (req, res, next)
     if (!Object.keys(data).length) throw httpError(400, "No se recibieron cambios");
     const doc = await PrayerRequest.findById(id).select("+followUpNote +prayingMembers");
     if (!doc) throw httpError(404, "Petición no encontrada");
+    const previouslyPrivate = doc.visibility === "private";
     doc.set({ ...data, updatedBy: req.user._id });
     // Si administración cambia la petición a privada, retiramos apoyos antiguos.
     if (data.visibility === "private") doc.prayingMembers = [];
     await doc.save();
+    // La administración puede cambiar una petición privada a comunitaria.
+    if (previouslyPrivate && doc.visibility === "community" && ["pending", "praying"].includes(doc.status)) {
+      try { await announceCommunityChange("prayer", { exceptUserId: doc.createdBy }); }
+      catch (error) { console.error("Aviso comunitario no enviado:", error.message); }
+    }
     const updated = await findFullPrayer({ _id: id });
     return respond(res, { message: "Petición actualizada correctamente", request: serializePrayer(updated, req.user._id, { administrative: true }) });
   } catch (error) { next(error); }
