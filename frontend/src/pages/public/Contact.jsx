@@ -19,6 +19,12 @@ import reunionIcon from "../../assets/icons/reunion.png";
 import facebookIcon from "../../assets/icons/fb.png";
 import instagramIcon from "../../assets/icons/insta.png";
 
+// Importamos la sección independiente del mapa, sin modificar el formulario existente.
+import ContactLocationMap from "../../components/public/ContactLocationMap";
+
+// Construimos el enlace oficial de Google Maps a partir de la dirección publicada.
+import { buildDirectionsUrl } from "../../utils/googleMapsLinks";
+
 // Estilos originales; no introducimos los del editor administrativo.
 import "../../styles/pages/public/Contact.css";
 
@@ -42,6 +48,12 @@ function Contact() {
 
   // Correo al que se dirigirá el formulario y enlace de la tarjeta.
   const churchEmail = page.information.email.address;
+
+  // Obtenemos la ubicación publicada para el mapa y el botón «Cómo llegar».
+  const churchLocation = page.information.location;
+
+  // Google Maps abrirá el destino ya definido, sin pedir que escriban la dirección.
+  const directionsUrl = buildDirectionsUrl(churchLocation);
 
   // El formulario no se persiste en MongoDB ni en Drive.
   const [formData, setFormData] = useState({
@@ -125,6 +137,18 @@ function Contact() {
                   <br />
                   {page.information.location.city}
                 </p>
+
+                {/* Ofrecemos indicaciones incluso antes de bajar hasta el mapa. */}
+                {directionsUrl && (
+                  <a
+                    className="contact-location-map__quick-link"
+                    href={directionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Cómo llegar en Google Maps
+                  </a>
+                )}
               </div>
             </article>
 
@@ -159,7 +183,12 @@ function Contact() {
         </section>
 
         {/* ===================================================== */}
-        {/* 3. INFORMACIÓN, REDES SOCIALES Y FORMULARIO */}
+        {/* 3. MAPA PÚBLICO Y DIRECCIONES HASTA LA IGLESIA */}
+        {/* ===================================================== */}
+        <ContactLocationMap location={churchLocation} />
+
+        {/* ===================================================== */}
+        {/* 4. INFORMACIÓN, REDES SOCIALES Y FORMULARIO */}
         {/* ===================================================== */}
         <section className="contact-main">
           <div className="contact-main__container">

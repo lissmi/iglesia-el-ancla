@@ -1,0 +1,215 @@
+/* ========================================================= */
+/* MAPA DE CONTACTO — PALETA INSTITUCIONAL DE EL ANCLA */
+/* Archivo independiente para no modificar el Contact.css actual. */
+/* ========================================================= */
+
+/* Separamos la sección del listado de tarjetas y del formulario. */
+.contact-location-map {
+  padding: clamp(28px, 5vw, 64px) 20px;
+  background: #faf8f4;
+  color: #213548;
+}
+
+/* Conservamos un ancho semejante al resto de las secciones públicas. */
+.contact-location-map__container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* Presentamos texto y mapa sin ocupar demasiado espacio de pantalla. */
+.contact-location-map__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 54px);
+}
+
+/* Evitamos que el contenido largo desborde una columna. */
+.contact-location-map__details {
+  min-width: 0;
+}
+
+/* Etiqueta pequeña con el acento cálido institucional. */
+.contact-location-map__eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #966c3f;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+/* Título con la tipografía editorial usada en las páginas públicas. */
+.contact-location-map__title {
+  max-width: 550px;
+  margin: 0;
+  color: #213a52;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 3.6vw, 2.65rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* Descripción con ancho de lectura moderado. */
+.contact-location-map__description {
+  max-width: 520px;
+  margin: 17px 0 21px;
+  color: #5e6d7a;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+/* Alineamos el icono de dirección con el texto publicado. */
+.contact-location-map__address {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 24px;
+  color: #213a52;
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+/* Evitamos que el icono de ubicación se comprima. */
+.contact-location-map__address svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #a78059;
+}
+
+/* Botón principal de navegación, accesible también en pantallas táctiles. */
+.contact-location-map__directions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 50px;
+  padding: 12px 22px;
+  color: #ffffff;
+  background: #213a52;
+  border: 1px solid #213a52;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(28, 49, 70, 0.17);
+  font-size: 0.94rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+/* Destacamos la interacción sin cambiar el tamaño del botón. */
+.contact-location-map__directions:hover {
+  background: #14293b;
+  transform: translateY(-2px);
+}
+
+/* Mostramos una señal visible para la navegación por teclado. */
+.contact-location-map__directions:focus-visible,
+.contact-location-map__map-footer a:focus-visible,
+.contact-location-map__quick-link:focus-visible {
+  outline: 3px solid #d6a24a;
+  outline-offset: 4px;
+}
+
+/* Aclaramos qué ocurrirá después de presionar Cómo llegar. */
+.contact-location-map__hint {
+  margin: 13px 0 0;
+  color: #667585;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Tarjeta suave que enmarca el mapa sin competir con el formulario. */
+.contact-location-map__map-wrapper {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #ded9d0;
+  border-radius: 20px;
+  box-shadow: 0 17px 36px rgba(22, 46, 66, 0.1);
+  overflow: hidden;
+}
+
+/* El mapa ocupa un tamaño prudente, nunca toda la ventana del usuario. */
+.contact-location-map__iframe {
+  display: block;
+  width: 100%;
+  height: 340px;
+  border: 0;
+  background: #edeae3;
+}
+
+/* Pie de mapa para identificar el lugar y acceder a Google Maps. */
+.contact-location-map__map-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 13px 16px;
+  color: #556a7b;
+  font-size: 0.8rem;
+}
+
+/* Enlace secundario a la vista ampliada del mapa. */
+.contact-location-map__map-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #213a52;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Enlace pequeño de acceso directo en la tarjeta original de dirección. */
+.contact-location-map__quick-link {
+  display: inline-block;
+  margin-top: 13px;
+  color: #213a52;
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* En tablet y móvil pasamos el mapa debajo de la descripción. */
+@media (max-width: 800px) {
+  .contact-location-map__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-location-map__iframe {
+    height: 325px;
+  }
+}
+
+/* Optimizamos proporciones y el botón para pantallas estrechas. */
+@media (max-width: 480px) {
+  .contact-location-map {
+    padding: 34px 16px;
+  }
+
+  .contact-location-map__iframe {
+    height: 280px;
+  }
+
+  .contact-location-map__directions {
+    width: 100%;
+  }
+
+  .contact-location-map__map-footer {
+    align-items: flex-start;
+  }
+}
+
+/* Respetamos las preferencias del sistema sobre movimiento reducido. */
+@media (prefers-reduced-motion: reduce) {
+  .contact-location-map__directions {
+    transition: none;
+  }
+
+  .contact-location-map__directions:hover {
+    transform: none;
+  }
+}

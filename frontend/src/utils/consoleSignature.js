@@ -65,8 +65,10 @@ export function showElAnclaConsoleSignature() {
 
   // Nombramos las integraciones efectivamente presentes.
   // El asistente Martín utiliza Google Gemini en el backend.
+  // Google Maps utiliza un mapa incrustado y enlaces de navegación,
+  // sin afirmar que se consumen APIs de Maps con facturación.
   console.log(
-    "%c🔗 Integraciones%c PWA · Service Worker · Web Push · Gmail API / OAuth 2.0 · Gemini API · Cloudinary · Google Drive API",
+    "%c🔗 Integraciones%c PWA · Service Worker · Web Push · Gmail API / OAuth 2.0 · Gemini API · Cloudinary · Google Drive API · Google Maps ",
     categoryStyle,
     nativeStyle
   );
