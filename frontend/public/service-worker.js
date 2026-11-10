@@ -18,7 +18,7 @@
 // =========================================================
 
 // Nueva versión de caché para la actualización del Service Worker.
-const CACHE_NAME = "el-ancla-static-v3";
+const CACHE_NAME = "el-ancla-static-v4";
 
 // Página pública que se muestra cuando no existe conexión.
 const OFFLINE_URL = "/offline.html";
@@ -43,10 +43,10 @@ const PUSH_DEFAULT_BODY =
   "Tienes un nuevo aviso de Iglesia El Ancla.";
 
 // Icono institucional para las notificaciones de Android.
-const PUSH_ICON = "/icons/icon-192.png";
+const PUSH_ICON = "/icons/icon-192-v2.png";
 
 // Icono pequeño para dispositivos compatibles.
-const PUSH_BADGE = "/icons/icon-96.png";
+const PUSH_BADGE = "/icons/notification-badge-96.png";
 
 // Ruta predeterminada que abriremos al tocar un aviso.
 const PUSH_DEFAULT_URL = "/member";
