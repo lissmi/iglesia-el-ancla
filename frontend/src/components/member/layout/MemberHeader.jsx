@@ -1,4 +1,5 @@
 
+
 // =========================================================
 // HEADER DEL ÁREA DE MIEMBROS - IGLESIA EL ANCLA
 // Archivo: frontend/src/components/member/layout/MemberHeader.jsx
@@ -27,6 +28,7 @@ import {
   Sparkles,
   UserRound,
   Wallet,
+  GraduationCap,
   X,
 } from "lucide-react";
 
@@ -78,12 +80,15 @@ const personalNavigation = [
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, supplyNeeds = [], supplyNeedsLoading = false }) {
+function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, supplyNeeds = [], supplyNeedsLoading = false, onStartTour, tourItem = null }) {
   // Muestra u oculta la navegación completa cuando se usa el menú móvil.
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Controla la apertura del submenú de información personal.
   const [personalOpen, setPersonalOpen] = useState(false);
+
+  // El tutorial puede desplegar el menú sin simular clics.
+  const tourPersonalOpen = Boolean(tourItem);
 
   // Controla el panel de notificaciones reales del voluntariado.
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -257,6 +262,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
           {/* El logo conduce al panel personal del miembro autenticado. */}
           <Link
             className="member-header__brand"
+            data-member-tour="brand"
             to="/member"
             onClick={closeMenu}
             aria-label="Ir a mi espacio en El Ancla"
@@ -275,6 +281,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
               <button
                 ref={notificationsButtonRef}
                 className="member-header__icon-button"
+                data-member-tour="notifications"
                 type="button"
                 onClick={() => {
                   setNotificationsOpen((open) => !open);
@@ -300,6 +307,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             {adminPanelPath && (
               <Link
                 className="member-header__admin-button"
+                data-member-tour="admin-return"
                 to={adminPanelPath}
                 onClick={closeMenu}
               >
@@ -309,7 +317,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             )}
 
             {/* Nombre visible como identidad; Mi cuenta está en el desplegable. */}
-            <div className="member-header__account" title={displayName}>
+            <div className="member-header__account" data-member-tour="account" title={displayName}>
               <UserRound size={19} aria-hidden="true" />
               <span className="member-header__account-name">{displayName}</span>
               {adminPanelPath && (
@@ -320,6 +328,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             {/* El cierre de sesión funciona en escritorio y tablet. */}
             <button
               className="member-header__logout"
+              data-member-tour="logout"
               type="button"
               onClick={handleLogout}
               disabled={isLoggingOut}
@@ -332,6 +341,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             {/* En móvil mostramos el icono que abre toda la navegación. */}
             <button
               className="member-header__menu-toggle"
+              data-member-tour="mobile-menu"
               type="button"
               onClick={() => {
                 setMenuOpen((open) => !open);
@@ -354,7 +364,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
       {/* =================================================== */}
       <div
         id="member-header-navigation"
-        className={`member-header__navigation-wrap ${menuOpen ? "member-header__navigation-wrap--open" : ""}`}
+        className={`member-header__navigation-wrap ${(menuOpen || (tourPersonalOpen && window.innerWidth <= 850)) ? "member-header__navigation-wrap--open" : ""}`}
       >
         <nav className="member-header__navigation" aria-label="Navegación de miembros">
           {/* Solo mostramos en la barra las páginas generales de la iglesia. */}
@@ -362,6 +372,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             <NavLink
               key={item.to}
               className={getLinkClass}
+              data-member-tour={`public-${item.label}`}
               to={item.to}
               end={item.end}
               onClick={closeMenu}
@@ -377,7 +388,8 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
               ref={personalButtonRef}
               type="button"
               className={`member-header__link member-header__personal-trigger ${isPersonalRoute ? "member-header__personal-trigger--active" : ""}`}
-              aria-expanded={personalOpen}
+              data-member-tour="personal-toggle"
+              aria-expanded={personalOpen || tourPersonalOpen}
               aria-controls="member-personal-navigation"
               onClick={() => {
                 setPersonalOpen((open) => !open);
@@ -394,7 +406,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
             </button>
 
             {/* La lista solo existe visualmente cuando el usuario la abre. */}
-            {personalOpen && (
+            {(personalOpen || tourPersonalOpen) && (
               <div
                 id="member-personal-navigation"
                 className="member-header__personal-panel"
@@ -409,6 +421,7 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                     to={to}
                     end={end}
                     onClick={closeMenu}
+                    data-member-tour={`personal-${label}`}
                     className={({ isActive }) =>
                       `member-header__personal-option${isActive ? " member-header__personal-option--active" : ""}`
                     }
@@ -417,6 +430,16 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                     <span>{label}</span>
                   </NavLink>
                 ))}
+                {/* La guía también se puede repetir tras completarla o saltarla. */}
+                <button
+                  type="button"
+                  className="member-header__personal-option member-header__tour-link"
+                  data-member-tour="guide"
+                  onClick={() => { closeMenu(); onStartTour?.(); }}
+                >
+                  <GraduationCap size={17} aria-hidden="true" />
+                  <span>Guía de mi espacio</span>
+                </button>
               </div>
             )}
           </div>
@@ -501,5 +524,8 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
 
 // Compartimos el header entre los roles member, admin y super_admin.
 export default MemberHeader;
+
+
+
 
 

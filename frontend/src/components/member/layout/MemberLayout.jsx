@@ -1,3 +1,4 @@
+
 // =========================================================
 // LAYOUT COMÚN DE MIEMBROS (member, admin y super_admin)
 // =========================================================
@@ -6,6 +7,7 @@
 // useOutletContext obtiene el usuario autenticado por ProtectedRoute.
 import { Outlet, useLocation, useOutletContext } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import MemberTour from "./MemberTour";
 import api from "../../../services/api";
 import { listBasicSuppliesNeeds } from "../../../services/basicSuppliesApi";
 import { deriveVolunteerAlerts } from "../../../utils/memberVolunteerAlerts";
@@ -27,6 +29,10 @@ function MemberLayout() {
   // La sesión y el rol ya fueron verificados por ProtectedRoute.
   const { user } = useOutletContext() || {};
   const location = useLocation();
+  // La guía no utiliza MongoDB; conserva su finalización en este navegador.
+  const [tourRequestId, setTourRequestId] = useState(0);
+  const [tourItem, setTourItem] = useState(null);
+  const startMemberTour = () => setTourRequestId((value) => value + 1);
   const [assignments, setAssignments] = useState([]);
   const [assignmentsLoading, setAssignmentsLoading] = useState(true);
   const [assignmentsError, setAssignmentsError] = useState("");
@@ -82,7 +88,9 @@ function MemberLayout() {
       {/* Encabezado con navegación y acciones según el usuario. */}
       <MemberHeader user={user} volunteerAlerts={volunteerAlerts} assignmentsLoading={assignmentsLoading}
         supplyNeeds={supplyNeeds.filter((item) => item.status !== "available")}
-        supplyNeedsLoading={supplyNeedsLoading} />
+        supplyNeedsLoading={supplyNeedsLoading}
+        onStartTour={startMemberTour}
+        tourItem={tourItem} />
 
       {/* Navegación única para toda el área comunitaria. */}
       <SiteNavigation />
@@ -102,6 +110,13 @@ function MemberLayout() {
         }} />
       </div>
 
+      {/* Recorrido no destructivo para miembros, con pasos del menú y de la portada. */}
+      <MemberTour
+        requestId={tourRequestId}
+        tourItemChange={setTourItem}
+        hasAdminPanel={user?.role === "admin" || user?.role === "super_admin"}
+      />
+
       {/* Footer público compartido, visible en todas las rutas /member. */}
       <Footer />
     </div>
@@ -110,3 +125,6 @@ function MemberLayout() {
 
 // Permite reutilizar el layout desde App.js.
 export default MemberLayout;
+
+
+

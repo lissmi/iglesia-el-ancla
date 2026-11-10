@@ -1,5 +1,6 @@
 import { Link, useOutletContext } from "react-router-dom";
 import MemberVolunteerNotice from "../../components/member/volunteers/MemberVolunteerNotice";
+import usePublishedRecurringEvents, { getEventDayLabel, getEventTimeLabel } from "../../hooks/usePublishedRecurringEvents";
 import {
   ArrowRight,
   BookOpen,
@@ -19,14 +20,6 @@ import {
 import logoElAncla from "../../assets/images/logo-el-ancla.png";
 import "../../styles/pages/member/MemberDashboard.css";
 
-// Estas actividades son contenido informativo; no representan inscripciones del miembro.
-const weeklyActivities = [
-  { id: "sunday", day: "Domingo", title: "Culto general", time: "11:00", mode: "Presencial", icon: MapPin },
-  { id: "tuesday", day: "Martes", title: "Descubriendo la Biblia", time: "20:00", mode: "Online", icon: Video },
-  { id: "wednesday", day: "Miércoles", title: "Reunión de oración", time: "21:00", mode: "Online", icon: Video },
-  { id: "thursday", day: "Jueves", title: "Estudio bíblico", time: "20:00", mode: "Online", icon: Video },
-];
-
 // Solo enlazamos secciones públicas que ya aparecen en App.js.
 const resourceLinks = [
   { title: "Guías de oración", description: "Un espacio para acompañar tus momentos de oración.", to: "/member/recursos/guias-oracion", icon: HeartHandshake },
@@ -42,6 +35,9 @@ function MemberDashboard() {
   const firstName = typeof user?.firstName === "string" ? user.firstName.trim() : "";
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
   const primaryBranch = user?.sucursalPrincipal?.name;
+
+  // La portada muestra exclusivamente eventos recurrentes publicados en MongoDB.
+  const { events: weeklyActivities, loading: eventsLoading, error: eventsError } = usePublishedRecurringEvents();
 
   return (
     <div className="member-page">
@@ -67,7 +63,7 @@ function MemberDashboard() {
             <p>Encuentra nuestras actividades, explora recursos para crecer en la fe y mantente cerca de la comunidad de El Ancla.</p>
             <div className="member-hero__actions">
               {/* Enlazamos directamente a los eventos registrados por la administración. */}
-              <Link className="member-button member-button--light" to="/member/eventos">Mis actividades <ArrowRight size={17} aria-hidden="true" /></Link>
+              <Link className="member-button member-button--light" to="/member/actividades">Mis actividades <ArrowRight size={17} aria-hidden="true" /></Link>
               <Link className="member-button member-button--outline" to="/contacto">Contáctanos</Link>
             </div>
           </div>
@@ -152,7 +148,7 @@ function MemberDashboard() {
 
                 <Link
                   className="member-resource"
-                  to="/member/eventos"
+                  to="/member/actividades"
                 >
                   <span className="member-resource__icon">
                     <CalendarDays
@@ -186,20 +182,45 @@ function MemberDashboard() {
                 <div>
                   <span className="member-section__kicker">Compartamos juntos</span>
                   <h2 id="member-activities-title">Actividades de la semana</h2>
-                  <p>Horarios habituales de nuestra comunidad. Consulta los detalles antes de asistir.</p>
+                  <p>Reuniones habituales publicadas por la iglesia. Consulta los detalles antes de asistir.</p>
                 </div>
                 {/* El listado privado muestra los eventos reales y las confirmaciones. */}
                 <Link className="member-text-link" to="/member/eventos">Ver mis actividades <ArrowRight size={17} aria-hidden="true" /></Link>
               </div>
 
-              <div className="member-activities">
-                {weeklyActivities.map((activity) => {
-                  const ActivityIcon = activity.icon;
+              <div className="member-activities" aria-live="polite">
+                {/* No mostramos horarios ficticios durante la consulta. */}
+                {eventsLoading && (
+                  <p role="status">Cargando actividades habituales de la iglesia…</p>
+                )}
+
+                {/* El error no debe confundirse con una agenda sin eventos. */}
+                {!eventsLoading && eventsError && (
+                  <p role="alert">No pudimos consultar las actividades en este momento. Intenta actualizar la página.</p>
+                )}
+
+                {/* La ausencia de publicaciones es un estado válido. */}
+                {!eventsLoading && !eventsError && weeklyActivities.length === 0 && (
+                  <p>Por ahora no hay actividades habituales publicadas.</p>
+                )}
+
+                {/* Cada actividad proviene de GET /api/events/public. */}
+                {!eventsLoading && !eventsError && weeklyActivities.map((activity) => {
+                  // Representamos la modalidad que realmente se registró.
+                  const ActivityIcon = activity.modality === "Presencial" ? MapPin : Video;
                   return (
                     <article className="member-activity" key={activity.id}>
-                      <div className="member-activity__day"><CalendarDays size={19} aria-hidden="true" /><span>{activity.day}</span></div>
-                      <div className="member-activity__body"><h3>{activity.title}</h3><span><ActivityIcon size={15} aria-hidden="true" /> {activity.mode}</span></div>
-                      <div className="member-activity__time"><Clock3 size={16} aria-hidden="true" /> {activity.time}</div>
+                      <div className="member-activity__day">
+                        <CalendarDays size={19} aria-hidden="true" />
+                        <span>{getEventDayLabel(activity)}</span>
+                      </div>
+                      <div className="member-activity__body">
+                        <h3>{activity.title}</h3>
+                        <span><ActivityIcon size={15} aria-hidden="true" /> {activity.modality || "Modalidad por confirmar"}</span>
+                      </div>
+                      <div className="member-activity__time">
+                        <Clock3 size={16} aria-hidden="true" /> {getEventTimeLabel(activity)}
+                      </div>
                     </article>
                   );
                 })}

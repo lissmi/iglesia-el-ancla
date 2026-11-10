@@ -14,6 +14,9 @@ import "../../../styles/components/administration/home/MemberOverview.css";
 // Estilos adicionales de la tarjeta personal reutilizable.
 import "../../../styles/components/administration/home/MemberAccountShortcut.css";
 
+// Reutiliza la misma fuente real que la portada del miembro.
+import usePublishedRecurringEvents, { getEventDayLabel, getEventTimeLabel } from "../../../hooks/usePublishedRecurringEvents";
+
 
 // Importamos los iconos
 // utilizados dentro de este resumen.
@@ -26,42 +29,6 @@ import {
   MapPin,
   Video,
 } from "lucide-react";
-
-
-// =========================================================
-// EVENTOS RECURRENTES (INFORMATIVOS)
-// =========================================================
-
-// Estos horarios habituales son informativos, no confirmaciones de actividades.
-//
-// Más adelante serán obtenidas
-// desde MongoDB mediante la API.
-const recurringPublicEvents = [
-  {
-    id: "sunday",
-    day: "Domingo",
-    title: "Culto general",
-    time: "11:00 hrs",
-    mode: "Presencial",
-    icon: MapPin,
-  },
-  {
-    id: "tuesday",
-    day: "Martes",
-    title: "Descubriendo la Biblia",
-    time: "20:00 hrs",
-    mode: "Online",
-    icon: Video,
-  },
-  {
-    id: "wednesday",
-    day: "Miércoles",
-    title: "Reunión de oración",
-    time: "21:00 hrs",
-    mode: "Online",
-    icon: Video,
-  },
-];
 
 
 // =========================================================
@@ -119,6 +86,8 @@ const memberActions = [
 // Aunque tenga permisos administrativos,
 // sigue siendo también miembro de la iglesia.
 function MemberOverview() {
+  // Los horarios y publicaciones se leen desde MongoDB mediante la API pública.
+  const { events: recurringPublicEvents, loading: eventsLoading, error: eventsError } = usePublishedRecurringEvents();
   // Identificamos el panel para conservar su propia navegación.
   const { pathname } = useLocation();
   const accountPath = pathname.startsWith("/super-admin")
@@ -195,7 +164,7 @@ function MemberOverview() {
               className="super-admin-member__header-link"
               to="/eventos"
             >
-              Ver todas
+              Ver más
 
               <ArrowRight
                 size={16}
@@ -207,66 +176,45 @@ function MemberOverview() {
           </div>
 
 
-          <div className="super-admin-member__activities">
+          <div className="super-admin-member__activities" aria-live="polite">
 
-            {recurringPublicEvents.map(
-              (event) => {
-
-                // Guardamos el icono
-                // correspondiente a la actividad.
-                const EventIcon =
-                  event.icon;
-
-                return (
-                  <div
-                    className="super-admin-member__activity"
-                    key={event.id}
-                  >
-
-                    <div className="super-admin-member__activity-icon">
-
-                      <EventIcon
-                        size={19}
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-
-                    </div>
-
-
-                    <div className="super-admin-member__activity-content">
-
-                      <div className="super-admin-member__activity-top">
-
-                        <strong>
-                          {event.title}
-                        </strong>
-
-                        <span>
-                          {event.day}
-                        </span>
-
-                      </div>
-
-
-                      <div className="super-admin-member__activity-details">
-
-                        <span>
-                          {event.time}
-                        </span>
-
-                        <span>
-                          {event.mode}
-                        </span>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-                );
-              }
+            {/* Indicamos cuando la consulta todavía está en proceso. */}
+            {eventsLoading && (
+              <p role="status">Cargando eventos habituales…</p>
             )}
+
+            {/* No mostramos horarios antiguos si la API falla. */}
+            {!eventsLoading && eventsError && (
+              <p role="alert">No se pudieron cargar los eventos. Actualiza la página para intentarlo nuevamente.</p>
+            )}
+
+            {/* Un listado vacío significa que no hay eventos publicados. */}
+            {!eventsLoading && !eventsError && recurringPublicEvents.length === 0 && (
+              <p>Por ahora no hay eventos habituales publicados.</p>
+            )}
+
+            {/* Mostramos solamente los tres primeros eventos publicados. */}
+            {/* El orden proviene del hook compartido con el panel del miembro. */}
+            {!eventsLoading && !eventsError && recurringPublicEvents.slice(0, 3).map((event) => {
+              const EventIcon = event.modality === "Presencial" ? MapPin : Video;
+              return (
+                <div className="super-admin-member__activity" key={event.id}>
+                  <div className="super-admin-member__activity-icon">
+                    <EventIcon size={19} strokeWidth={1.8} aria-hidden="true" />
+                  </div>
+                  <div className="super-admin-member__activity-content">
+                    <div className="super-admin-member__activity-top">
+                      <strong>{event.title}</strong>
+                      <span>{getEventDayLabel(event)}</span>
+                    </div>
+                    <div className="super-admin-member__activity-details">
+                      <span>{getEventTimeLabel(event)} hrs</span>
+                      <span>{event.modality || "Por confirmar"}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
 
           </div>
 

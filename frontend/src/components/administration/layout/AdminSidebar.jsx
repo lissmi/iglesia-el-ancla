@@ -1,5 +1,3 @@
-
-//frontend/src/components/administration/layout/AdminSidebar.jsx
 import { useState } from "react";
 
 // Importamos las herramientas de navegación.
@@ -11,9 +9,6 @@ import {
 
 // Importamos la conexión existente con el backend.
 import api from "../../../services/api";
-
-// Limpiamos la conversación temporal solo después de cerrar sesión correctamente.
-import { clearMartinChat } from "../../../utils/martinChatSession";
 
 // Importamos los iconos del menú.
 import {
@@ -44,6 +39,7 @@ import {
   Wallet,
   Sparkles,
   Bot,
+  GraduationCap,
 } from "lucide-react";
 
 // Importamos los estilos exclusivos del sidebar.
@@ -56,7 +52,7 @@ import logoElAncla from "../../../assets/images/logo-el-ancla2.jpg";
 // COMPONENTE PRINCIPAL
 // =========================================================
 
-function AdminSidebar({ isOpen, onClose }) {
+function AdminSidebar({ isOpen, onClose, onStartTour }) {
 
   // Permite redirigir al usuario mediante React Router.
   const navigate = useNavigate();
@@ -106,9 +102,6 @@ function AdminSidebar({ isOpen, onClose }) {
 
       // Verificamos que el servidor confirme el cierre.
       if (response.data?.success) {
-
-        // Borramos la conversación de Martín de esta pestaña.
-        clearMartinChat();
 
         // Cerramos el menú móvil.
         onClose?.();
@@ -470,6 +463,7 @@ function AdminSidebar({ isOpen, onClose }) {
 
           <section
             className="admin-sidebar__group"
+            data-admin-tour={group.title}
             key={group.title}
           >
 
@@ -539,6 +533,7 @@ function AdminSidebar({ isOpen, onClose }) {
 
                     <NavLink
                       to={item.path}
+                      data-admin-tour-item={item.label}
                       end={item.end}
                       onClick={onClose}
                       className={({ isActive }) =>
@@ -573,6 +568,24 @@ function AdminSidebar({ isOpen, onClose }) {
         ))}
 
 
+        {/* El tutorial puede repetirse en cualquier momento. */}
+        <section className="admin-sidebar__group">
+          <ul className="admin-sidebar__list">
+            <li>
+              <button
+                className="admin-sidebar__link"
+                data-admin-tour-action="guide"
+                type="button"
+                onClick={onStartTour}
+                aria-label="Ver tutorial del panel administrativo"
+              >
+                <GraduationCap size={19} strokeWidth={1.8} aria-hidden="true" />
+                <span>Guía del panel</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+
         {/* ================================================= */}
         {/* ACCIONES DE SESIÓN Y SITIO PÚBLICO (JUNTO A LOS BOTONES) */}
         {/* ================================================= */}
@@ -584,6 +597,7 @@ function AdminSidebar({ isOpen, onClose }) {
             <li>
               <a
                 className="admin-sidebar__link admin-sidebar__public-link"
+                data-admin-tour-action="public"
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -604,6 +618,7 @@ function AdminSidebar({ isOpen, onClose }) {
             <li>
               <button
                 className="admin-sidebar__link admin-sidebar__logout"
+                data-admin-tour-action="logout"
                 type="button"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
