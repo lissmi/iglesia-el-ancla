@@ -1,4 +1,3 @@
-
 /* ========================================================= */
 /* IMPORTACIONES */
 /* ========================================================= */
@@ -98,6 +97,9 @@ import administratorProtectionRoutes from "./routes/administratorProtectionRoute
 // Rutas de gestión de contraseña
 // para usuarios autenticados.
 import passwordRoutes from "./routes/passwordRoutes.js";
+
+// Recuperación pública por código Gmail, independiente de sesiones.
+import passwordRecoveryRoutes from "./routes/passwordRecoveryRoutes.js";
 
 // =========================================================
 // AUTORIZACIÓN OAUTH 2.0 DE GOOGLE
@@ -421,6 +423,9 @@ app.use(
 //
 // Mantenemos este router después de la activación
 // pública para evitar bloquear a nuevos miembros.
+// Recuperación pública: antes del middleware autenticado de passwordRoutes.
+app.use("/api/auth/recovery", passwordRecoveryRoutes);
+
 app.use(
   "/api/auth",
   passwordRoutes

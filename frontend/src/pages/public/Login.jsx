@@ -29,6 +29,9 @@ import {
 // configurada para comunicarse con el backend.
 import api from "../../services/api";
 
+// Enlace de recuperación dentro de la tarjeta de acceso.
+import LoginRecoveryShortcut from "../../components/auth/LoginRecoveryShortcut";
+
 
 // Importamos los estilos
 // exclusivos del login público.
@@ -556,6 +559,8 @@ function Login() {
 
                     </div>
 
+                    {/* Recuperación de contraseña justo después del aviso. */}
+                    <LoginRecoveryShortcut />
 
                 </div>
 

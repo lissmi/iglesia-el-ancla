@@ -33,6 +33,7 @@ const emailVerificationCodeSchema = new mongoose.Schema(
       enum: [
         "verify_email",
         "password_change",
+        "password_reset", // Recuperación sin sesión, validada por correo.
       ],
 
       default: "verify_email",

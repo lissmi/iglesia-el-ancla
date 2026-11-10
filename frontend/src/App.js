@@ -65,6 +65,9 @@ import ActivateAccount from "./pages/auth/ActivateAccount";
 
 import Login from "./pages/public/Login";
 
+// Recuperación pública por Gmail, enlazada desde el interior del login.
+import ForgotPassword from "./pages/auth/ForgotPassword";
+
 // Página compartida para cambiar la contraseña de la propia cuenta.
 import ChangePassword from "./pages/auth/ChangePassword";
 
@@ -208,6 +211,9 @@ function App() {
               path="/login"
               element={<Login />}
             />
+
+            {/* Recuperación por Gmail disponible sin iniciar sesión. */}
+            <Route path="/recuperar-contrasena" element={<ForgotPassword />} />
 
             {/* Activación por invitación, disponible sin iniciar sesión. */}
             <Route

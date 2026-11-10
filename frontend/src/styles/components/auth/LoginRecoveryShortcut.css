@@ -1,0 +1,44 @@
+/* Enlace de recuperación dentro de la tarjeta del login de El Ancla. */
+.login-recovery-shortcut {
+  /* Lo separamos del aviso anterior sin salir de la tarjeta. */
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 0;
+}
+
+.login-recovery-shortcut__link {
+  /* Alineamos icono y texto; mantenemos la paleta institucional. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #294761;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.login-recovery-shortcut__link:hover {
+  /* Realzamos el enlace al pasar el cursor. */
+  color: #9b6b24;
+  text-decoration: underline;
+}
+
+.login-recovery-shortcut__link:focus-visible {
+  /* Indicador visible para navegación con teclado. */
+  outline: 3px solid #d6a24a;
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+@media (max-width: 560px) {
+  .login-recovery-shortcut {
+    /* Se mantiene centrado y legible en teléfonos. */
+    margin-top: 16px;
+  }
+}
