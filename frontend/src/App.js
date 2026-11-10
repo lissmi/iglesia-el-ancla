@@ -1,4 +1,6 @@
 import MartinWidget from "./components/martin/MartinWidget";
+// Control global de lectura asistida, disponible en todas las rutas.
+import AccessibilityReader from "./components/accessibility/AccessibilityReader";
 
 import {
   BrowserRouter,
@@ -414,6 +416,9 @@ function App() {
 
         {/* Martín aparece en la PWA sin modificar las rutas existentes. */}
         <MartinWidget />
+
+        {/* Lectura asistida independiente de Martín y de las rutas de usuario. */}
+        <AccessibilityReader />
       </div>
     </BrowserRouter>
   );

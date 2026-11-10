@@ -68,6 +68,25 @@ export default function MartinWidget() {
   const messagesEnd = useRef(null);
   const inputRef = useRef(null);
 
+  // Identifica los mensajes ya existentes al cargar la pestaña para evitar
+  // volver a leer el historial que el usuario escuchó anteriormente.
+  const lastSpeechMessageRef = useRef(messages[messages.length - 1]?.id ?? null);
+
+  // Comunica únicamente las NUEVAS respuestas de Martín al lector global.
+  // No se manda audio ni texto a otro servidor: la voz la crea el navegador.
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (!lastMessage || lastMessage.id === lastSpeechMessageRef.current) return;
+    lastSpeechMessageRef.current = lastMessage.id;
+
+    // Nunca leemos automáticamente la pregunta escrita por el usuario.
+    if (!open || lastMessage.from !== "martin") return;
+
+    window.dispatchEvent(new CustomEvent("el-ancla:martin-new-response", {
+      detail: { text: lastMessage.text },
+    }));
+  }, [messages, open]);
+
   // Conservamos los mensajes al minimizar o cambiar de página.
   // sessionStorage pertenece a esta pestaña y no almacena las conversaciones en MongoDB.
   useEffect(() => { saveMartinChat(messages); }, [messages]);

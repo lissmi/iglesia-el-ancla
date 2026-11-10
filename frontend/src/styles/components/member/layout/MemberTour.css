@@ -226,3 +226,10 @@
 @media (prefers-reduced-motion: reduce) {
   .member-tour__progress span, .member-tour__spotlight { transition: none; }
 }
+
+/* Evitamos que el cuadro del miembro ocupe toda la pantalla móvil. */
+@media (max-width: 600px) {
+  .member-tour__dialog { max-height: min(55dvh, 430px); }
+  .member-tour__body { overscroll-behavior: contain; }
+  .member-tour__actions { flex-shrink: 0; }
+}

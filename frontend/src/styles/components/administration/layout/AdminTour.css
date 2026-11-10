@@ -198,3 +198,11 @@
   .admin-tour__progress span,
   .admin-tour__spotlight { transition: none; }
 }
+
+/* En móvil dejamos una franja libre para la opción resaltada;
+   los textos largos se desplazan dentro de la tarjeta. */
+@media (max-width: 600px) {
+  .admin-tour__dialog { max-height: min(55dvh, 430px); }
+  .admin-tour__body { overscroll-behavior: contain; }
+  .admin-tour__actions { flex-shrink: 0; }
+}

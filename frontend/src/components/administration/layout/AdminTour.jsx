@@ -58,6 +58,7 @@ const END_STEPS = [
   { title: "Ver sitio público", text: "Este enlace abre la página pública de Iglesia El Ancla en una pestaña nueva para que puedas consultar lo que ven los visitantes.", example: "Úsalo para revisar el contenido público de la iglesia.", action: "public" },
   { title: "Cerrar sesión", text: "Esta opción finaliza tu sesión de administrador y te devuelve a la página de acceso.", example: "Utilízala al terminar de trabajar, especialmente en computadores compartidos.", tip: "El tutorial no presionará este botón ni cerrará tu sesión.", action: "logout" },
   { title: "Notificaciones 🔔", text: "La campana de la parte superior permite consultar tus notificaciones. Al presionarla podrás revisar los avisos que el sistema tenga disponibles para tu cuenta.", example: "Cuando veas un aviso, abre la campana para conocer sus detalles.", selector: '[data-admin-tour="notifications"], [data-admin-tour-action="notifications"], .admin-header__notifications button, .admin-header__notification-button, button[aria-label*="notific" i], button[title*="notific" i]' },
+  { title: "Lectura asistida 🔊", text: "El botón con forma de oreja activa las opciones de lectura asistida. Puedes escuchar textos al pasar el cursor o al navegar con el teclado, ajustar la velocidad de voz y pedir que Martín lea sus respuestas.", example: "Cuando termines esta guía, pulsa la oreja que aparece debajo de Martín y selecciona «Activar lectura».", tip: "La voz está apagada inicialmente. Puedes pausarla o detenerla en cualquier momento; evita usarla para información privada en lugares públicos.", selector: '[data-el-ancla-reader="launcher"]' },
   { title: "Conoce a Martín ⚓", text: "Martín es el asistente virtual de la iglesia. Desde su botón flotante puedes consultar información de la comunidad, leer versículos de la Biblia y, si tienes una sesión habilitada, hacer preguntas relacionadas con la fe.", example: "Pulsa «¿Te ayudo?» para abrirlo cuando termines el tutorial.", tip: "Martín complementa la atención de la comunidad, pero no reemplaza el acompañamiento de sus líderes.", selector: '.martin-widget__launcher, .martin-widget__minimized, .martin-widget__toggle, .martin-widget button[aria-label*="martín" i], [data-admin-tour="martin"]' },
   { title: "¡Terminaste el recorrido! 💙", text: "Ya conoces las opciones del menú, la campana de notificaciones y a Martín. Puedes comenzar a explorar el panel y trabajar con las herramientas que correspondan a tus permisos.", example: "Si quieres repetir este aprendizaje, encontrarás Guía del panel en la barra lateral.", target: ".admin-layout__content" },
 ];
@@ -165,6 +166,15 @@ function AdminTour({ basePath, requestId, openSidebar, closeSidebar }) {
   const [dialogHeight, setDialogHeight] = useState(420);
   const firstRequestRef = useRef(requestId);
   const step = steps[Math.min(index, steps.length - 1)];
+
+  // Indica al lector si el recorrido está activo para evitar
+  // que su botón cubra los enlaces y textos destacados.
+  useEffect(() => {
+    if (!active) return undefined;
+    document.body.dataset.elAnclaTour =
+      step.selector?.includes('data-el-ancla-reader') ? "reader" : "other";
+    return () => { delete document.body.dataset.elAnclaTour; };
+  }, [active, step]);
 
   // Reinicia el tutorial cuando se pulsa «Guía del panel».
   useEffect(() => {

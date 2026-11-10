@@ -1,0 +1,125 @@
+/* =========================================================
+   LECTURA ASISTIDA — IGLESIA EL ANCLA
+   Control compacto en la esquina derecha, debajo del acceso a Martín.
+   ========================================================= */
+.accessibility-reader {
+  position: fixed;
+  z-index: 21000;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  right: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 10px;
+  font-family: inherit;
+}
+.accessibility-reader button,
+.accessibility-reader select { font: inherit; }
+.accessibility-reader button:focus-visible,
+.accessibility-reader select:focus-visible,
+.accessibility-reader input:focus-visible {
+  outline: 3px solid #c9975b;
+  outline-offset: 3px;
+}
+.accessibility-reader__launcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  width: 46px;
+  height: 46px;
+  min-height: 46px;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #dce5eb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #233f53;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(18, 39, 54, .17);
+}
+.accessibility-reader__launcher--active { border-color: #b98c57; background: #f8f2e8; }
+/* El icono compacto usa un nombre accesible, pero no texto visible. */
+.accessibility-reader__launcher-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.accessibility-reader__launcher:hover { background: #f4f8fa; }
+.accessibility-reader__dot { width: 8px; height: 8px; border-radius: 50%; background: #2f866f; }
+.accessibility-reader__panel {
+  box-sizing: border-box;
+  width: min(355px, calc(100vw - 32px));
+  max-height: min(74dvh, 530px);
+  overflow-y: auto;
+  padding: 18px;
+  border: 1px solid #dce5eb;
+  border-radius: 17px;
+  background: #ffffff;
+  color: #1b364d;
+  box-shadow: 0 17px 42px rgba(18, 39, 54, .23);
+}
+.accessibility-reader__heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.accessibility-reader__heading strong { font-size: 17px; }
+.accessibility-reader__heading p { margin: 5px 0 14px; font-size: 13px; line-height: 1.5; color: #597287; }
+.accessibility-reader__icon-button { display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 8px; background: #eff4f6; color: #25465d; cursor: pointer; }
+.accessibility-reader__main-button {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; min-height: 44px; padding: 10px;
+  border: 0; border-radius: 11px;
+  background: #315a72; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.accessibility-reader__main-button:hover { background: #24485e; }
+.accessibility-reader__help { color: #567082; font-size: 12px; line-height: 1.5; margin: 12px 0; }
+.accessibility-reader__setting { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 0; font-size: 13px; }
+.accessibility-reader__setting span { display: inline-flex; align-items: center; gap: 7px; }
+.accessibility-reader__setting select { max-width: 130px; min-height: 37px; border: 1px solid #d2dfe7; border-radius: 9px; padding: 6px; background: #fff; color: #203a50; }
+.accessibility-reader__checkbox { display: flex; align-items: flex-start; gap: 9px; margin: 15px 0; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.accessibility-reader__checkbox input { margin-top: 3px; accent-color: #315a72; width: 17px; height: 17px; flex-shrink: 0; }
+.accessibility-reader__controls { display: flex; gap: 8px; }
+.accessibility-reader__controls button { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; border: 1px solid #d5e1e8; border-radius: 9px; color: #315a72; background: #f4f8fa; cursor: pointer; font-weight: 650; font-size: 13px; }
+.accessibility-reader__controls button:disabled { opacity: .5; cursor: not-allowed; }
+.accessibility-reader__status { margin-top: 12px; padding-top: 10px; border-top: 1px solid #e7eef2; color: #61798b; font-size: 12px; line-height: 1.5; }
+@media (max-width: 680px) {
+  .accessibility-reader { right: 10px; bottom: max(9px, env(safe-area-inset-bottom)); }
+  .accessibility-reader__launcher { width: 42px; height: 42px; min-height: 42px; padding: 0; }
+  .accessibility-reader__panel { max-height: 65dvh; padding: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .accessibility-reader *, .accessibility-reader *::before, .accessibility-reader *::after { transition: none !important; }
+}
+
+
+/* =========================================================
+   CONVIVENCIA DE MARTÍN Y LECTURA ASISTIDA
+   - Martín se eleva solo cuando está minimizado.
+   - El lector permanece debajo, sin bloquear el sidebar.
+   - Si Martín se abre, el lector se coloca a su izquierda
+     en escritorio; en móvil se oculta visualmente mientras
+     el panel esté abierto para no tapar la conversación.
+   ========================================================= */
+body:has(.accessibility-reader) .martin-widget:has(.martin-widget__launcher) {
+  bottom: 78px;
+}
+body:has(.martin-widget__panel) .accessibility-reader {
+  right: min(444px, calc(100vw - 62px));
+}
+@media (max-width: 680px) {
+  body:has(.accessibility-reader) .martin-widget:has(.martin-widget__launcher) {
+    bottom: 62px;
+  }
+  body:has(.martin-widget__panel) .accessibility-reader:not(:focus-within) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* Durante una guía, la oreja no debe tapar las secciones.
+   Se muestra únicamente en el paso que enseña su uso. */
+body[data-el-ancla-tour]:not([data-el-ancla-tour="reader"]) .accessibility-reader {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+body[data-el-ancla-tour="reader"] .accessibility-reader {
+  opacity: 1;
+  pointer-events: none; /* el tutorial nunca activa botones reales */
+}
+/* La ventana de opciones no debe competir con la explicación. */
+body[data-el-ancla-tour] .accessibility-reader__panel { display: none; }

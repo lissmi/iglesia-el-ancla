@@ -137,6 +137,13 @@ const STEPS = [
     selector: ".member-community",
   },
   {
+    title: "Lectura asistida 🔊",
+    text: "Este botón con una oreja abre las opciones de lectura asistida. Si la activas podrás escuchar textos de la página al pasar el cursor o utilizar Tab, cambiar la velocidad y escuchar las respuestas de Martín.",
+    example: "Al finalizar la guía pulsa la oreja ubicada debajo de Martín y elige «Activar lectura».",
+    tip: "La lectura se enciende únicamente cuando tú lo decides; puedes detenerla cuando quieras.",
+    selector: '[data-el-ancla-reader="launcher"]',
+  },
+  {
     title: "Nuestro amigo Martín ⚓",
     text: "Martín es el asistente virtual de El Ancla. Desde «¿Te ayudo?» puedes conocer la iglesia, consultar versículos de la Biblia y realizar preguntas relacionadas con la fe dentro de los límites disponibles para tu cuenta.",
     example: "Presiona «¿Te ayudo?» para conversar con Martín cuando finalices la guía.",
@@ -210,6 +217,15 @@ function MemberTour({ requestId, tourItemChange, hasAdminPanel }) {
     setRect(null);
     tourItemChange(null);
   }, [tourItemChange]);
+
+  // Indica al lector si el recorrido está activo para evitar
+  // que su botón cubra los enlaces y textos destacados.
+  useEffect(() => {
+    if (!active) return undefined;
+    document.body.dataset.elAnclaTour =
+      step.selector?.includes('data-el-ancla-reader') ? "reader" : "other";
+    return () => { delete document.body.dataset.elAnclaTour; };
+  }, [active, step]);
 
   // Escape es una salida accesible del recorrido.
   useEffect(() => {
