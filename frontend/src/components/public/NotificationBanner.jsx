@@ -1,50 +1,57 @@
-// Importamos el icono relacionado con mensajes y notificaciones.
+
+import { Link } from "react-router-dom";
+
+// Importamos el icono institucional de notificaciones.
 import mensajeIcon from "../../assets/icons/notificaciones.png";
 
-// Importamos el archivo CSS exclusivo del componente.
+// Importamos los estilos exclusivos del banner.
 import "../../styles/components/public/NotificationBanner.css";
 
-// Creamos el componente del banner de notificaciones.
+// Componente informativo de notificaciones de la página pública.
 function NotificationBanner() {
-  // Retornamos la estructura visual del banner.
+
   return (
-    // Sección que presenta la futura función de notificaciones.
     <section
       className="notification-banner"
       aria-labelledby="notification-banner-title"
     >
-      {/* Contenedor principal que limita y centra el contenido. */}
+
+      {/* Contenedor principal del banner. */}
       <div className="notification-banner__container">
-        {/* Bloque visual que contiene el icono. */}
+
+        {/* Elementos visuales decorativos. */}
         <div
           className="notification-banner__visual"
           aria-hidden="true"
         >
-          {/* Círculo decorativo ubicado detrás del icono. */}
+
+          {/* Círculo situado detrás del icono. */}
           <div className="notification-banner__icon-circle">
-            {/* Mostramos el icono de mensajes. */}
+
+            {/* Icono de notificaciones. */}
             <img
               className="notification-banner__icon"
               src={mensajeIcon}
               alt=""
             />
+
           </div>
 
-          {/* Primera onda decorativa alrededor del icono. */}
-          <span className="notification-banner__wave notification-banner__wave--one"></span>
+          {/* Ondas decorativas. */}
+          <span className="notification-banner__wave notification-banner__wave--one" />
+          <span className="notification-banner__wave notification-banner__wave--two" />
 
-          {/* Segunda onda decorativa alrededor del icono. */}
-          <span className="notification-banner__wave notification-banner__wave--two"></span>
         </div>
 
-        {/* Bloque de contenido textual. */}
+        {/* Información de notificaciones. */}
         <div className="notification-banner__content">
-          {/* Texto introductorio pequeño. */}
+
+          {/* Texto introductorio. */}
           <p className="notification-banner__eyebrow">
             Mantente informado
           </p>
 
-          {/* Título principal del banner. */}
+          {/* Título principal. */}
           <h2
             className="notification-banner__title"
             id="notification-banner-title"
@@ -52,58 +59,63 @@ function NotificationBanner() {
             Recibe recordatorios de El Ancla
           </h2>
 
-          {/* Explicación de la función. */}
+          {/* Descripción de la funcionalidad. */}
           <p className="notification-banner__description">
-            Activa las notificaciones de nuestra PWA para recibir
-            recordatorios de reuniones, actividades, novedades y cambios
-            importantes de horario.
+            Con nuestra aplicación podrás activar
+            notificaciones en tu teléfono para recibir
+            avisos de reuniones, actividades y novedades
+            importantes de nuestra comunidad.
           </p>
 
-          {/* Lista de ejemplos de notificaciones. */}
+          {/* Ejemplos de los avisos previstos. */}
           <ul className="notification-banner__features">
-            {/* Primer tipo de aviso. */}
+
             <li className="notification-banner__feature">
-              {/* Indicador decorativo. */}
               <span
                 className="notification-banner__feature-marker"
                 aria-hidden="true"
-              ></span>
-
+              />
               Recordatorios de reuniones y actividades.
             </li>
 
-            {/* Segundo tipo de aviso. */}
             <li className="notification-banner__feature">
-              {/* Indicador decorativo. */}
               <span
                 className="notification-banner__feature-marker"
                 aria-hidden="true"
-              ></span>
-
+              />
               Avisos de cambios de horario o modalidad.
             </li>
 
-            {/* Tercer tipo de aviso. */}
             <li className="notification-banner__feature">
-              {/* Indicador decorativo. */}
               <span
                 className="notification-banner__feature-marker"
                 aria-hidden="true"
-              ></span>
-
+              />
               Información relevante para la comunidad.
             </li>
+
           </ul>
 
-          {/* Mensaje temporal mientras Firebase todavía no está conectado. */}
-          <p className="notification-banner__status">
-            Próximamente.
-          </p>
+          {/* Acceso al inicio de sesión para miembros. */}
+          <Link
+            to="/login"
+            className="notification-banner__status"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            Inicia sesión para configurar tus avisos
+          </Link>
+
         </div>
       </div>
     </section>
   );
 }
 
-// Exportamos el componente para utilizarlo en Home.
+// Exportamos el banner público.
 export default NotificationBanner;

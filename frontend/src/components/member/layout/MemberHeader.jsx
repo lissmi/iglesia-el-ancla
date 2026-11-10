@@ -38,6 +38,9 @@ import api from "../../../services/api";
 // Limpiamos la conversación temporal solo después de cerrar sesión correctamente.
 import { clearMartinChat } from "../../../utils/martinChatSession";
 
+// Controles privados para activar, probar y desactivar Web Push en el dispositivo.
+import PushNotificationControls from "../../pwa/PushNotificationControls";
+
 // Imagen institucional reutilizada en el sitio y área de miembros.
 import logoElAncla from "../../../assets/images/logo-el-ancla.png";
 
@@ -511,6 +514,9 @@ function MemberHeader({ user, volunteerAlerts = [], assignmentsLoading = false, 
                   <Link className="member-volunteer-alert-more" to="/member/insumos-basicos" onClick={() => setNotificationsOpen(false)}>
                     Ver necesidades de la iglesia
                   </Link>
+                  {/* Configuración de avisos push para esta cuenta y este dispositivo. */}
+                  {/* Se muestra al final para conservar las notificaciones existentes. */}
+                  <PushNotificationControls />
                 </div>
               )}
 

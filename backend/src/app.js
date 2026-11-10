@@ -30,6 +30,9 @@ import cookieParser from "cookie-parser";
 // Ruta segura del asistente Martín.
 import martinRoutes from "./routes/martinRoutes.js";
 
+// Rutas protegidas para registrar dispositivos y enviar pruebas Web Push.
+import pushRoutes from "./routes/pushRoutes.js";
+
 // Importamos la gestión de actividades puntuales para miembros.
 import activitiesRoutes from "./routes/activitiesRoutes.js";
 
@@ -610,6 +613,15 @@ app.use("/api/bible-reader", bibleReaderRoutes);
 
 // API de Martín: cuenta autenticada, límites y consultas bíblicas.
 app.use("/api/martin", martinRoutes);
+
+// =========================================================
+// NOTIFICACIONES PUSH
+// =========================================================
+
+// Registramos los dispositivos autorizados del usuario y
+// permitimos enviar una notificación de prueba a su propia cuenta.
+// La autenticación se comprueba dentro de pushRoutes.js.
+app.use("/api/push", pushRoutes);
 
 // =========================================================
 // PÁGINAS INFORMATIVAS

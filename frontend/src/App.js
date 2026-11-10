@@ -1,6 +1,8 @@
 import MartinWidget from "./components/martin/MartinWidget";
 // Control global de lectura asistida, disponible en todas las rutas.
 import AccessibilityReader from "./components/accessibility/AccessibilityReader";
+// Invitación a instalar la PWA cuando el navegador lo permita.
+import PwaInstallBanner from "./components/pwa/PwaInstallBanner";
 
 import {
   BrowserRouter,
@@ -419,6 +421,9 @@ function App() {
 
         {/* Lectura asistida independiente de Martín y de las rutas de usuario. */}
         <AccessibilityReader />
+
+        {/* Invitación a instalar la PWA desde el navegador, sin cambiar de ruta. */}
+        <PwaInstallBanner />
       </div>
     </BrowserRouter>
   );
