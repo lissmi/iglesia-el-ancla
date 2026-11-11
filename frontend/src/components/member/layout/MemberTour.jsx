@@ -1,3 +1,4 @@
+
 // =========================================================
 // GUÍA INTERACTIVA DEL ESPACIO DE MIEMBROS — EL ANCLA ⚓
 // Explica funciones existentes, sin navegar ni ejecutar acciones.
@@ -137,6 +138,14 @@ const STEPS = [
     selector: ".member-community",
   },
   {
+    // El selector coincide con el botón flotante de ThemeSwitcher.jsx.
+    title: "Elige modo claro u oscuro 🌗",
+    text: "En la esquina inferior izquierda encontrarás un botón con un sol o una luna. Tócalo para cambiar el aspecto de toda la PWA, tanto en el teléfono como en el computador.",
+    example: "Si prefieres fondos oscuros, cambia al modo oscuro. Puedes volver al claro en cualquier momento sin salir de tu página.",
+    tip: "Tu elección se mantiene al navegar y recargar durante esta sesión de la pestaña. No se guarda en tu cuenta ni en la base de datos.",
+    selector: '[data-member-tour="theme-switcher"]',
+  },
+  {
     title: "Lectura asistida 🔊",
     text: "Este botón con una oreja abre las opciones de lectura asistida. Si la activas podrás escuchar textos de la página al pasar el cursor o utilizar Tab, cambiar la velocidad y escuchar las respuestas de Martín.",
     example: "Al finalizar la guía pulsa la oreja ubicada debajo de Martín y elige «Activar lectura».",
@@ -184,6 +193,8 @@ function MemberTour({ requestId, tourItemChange, hasAdminPanel }) {
   }, [hasAdminPanel]);
 
   const [active, setActive] = useState(() => {
+    // El recorrido automático corresponde a la portada, no a una ficha profunda.
+    if (window.location.pathname !== "/member") return false;
     try { return !window.localStorage.getItem(STORAGE_KEY); }
     catch { return true; }
   });

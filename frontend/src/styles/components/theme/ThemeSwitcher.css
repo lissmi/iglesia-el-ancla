@@ -1,0 +1,64 @@
+/* =========================================================
+   IGLESIA EL ANCLA - BOTÓN DE APARIENCIA, SOLO ICONO
+   Se aplica a escritorio, tablet y móviles sin texto visible.
+========================================================= */
+
+/* Posición separada de Martín y de los controles de accesibilidad. */
+.el-ancla-theme-control {
+  position: fixed;
+  left: calc(14px + env(safe-area-inset-left, 0px));
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  z-index: 1300;
+  pointer-events: none;
+}
+
+/* Área táctil de 48 px, superior al mínimo de 44 px recomendado. */
+.el-ancla-theme-control__button {
+  box-sizing: border-box;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: 1px solid var(--ea-theme-border, #dce3e3);
+  border-radius: 50%;
+  background-color: var(--ea-theme-floating, #ffffff);
+  color: var(--ea-theme-text, #1b303c);
+  box-shadow: 0 7px 22px rgba(4, 17, 27, .22);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color 160ms ease, color 160ms ease,
+    border-color 160ms ease, transform 160ms ease;
+}
+
+.el-ancla-theme-control__button:hover {
+  transform: translateY(-2px);
+}
+
+.el-ancla-theme-control__button:focus-visible {
+  outline: 3px solid var(--ea-theme-focus, #bd8c53);
+  outline-offset: 3px;
+}
+
+.el-ancla-theme-control__button svg {
+  flex-shrink: 0;
+}
+
+/* Ajustamos la posición para pantallas estrechas y áreas seguras del móvil. */
+@media (max-width: 600px) {
+  .el-ancla-theme-control {
+    left: calc(10px + env(safe-area-inset-left, 0px));
+    bottom: calc(83px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Respetamos la preferencia de reducir animaciones. */
+@media (prefers-reduced-motion: reduce) {
+  .el-ancla-theme-control__button { transition: none; }
+  .el-ancla-theme-control__button:hover { transform: none; }
+}

@@ -1,9 +1,16 @@
+
 import { NotificationsProvider } from "./context/notifications/NotificationsContext";
 import MartinWidget from "./components/martin/MartinWidget";
 // Control global de lectura asistida, disponible en todas las rutas.
 import AccessibilityReader from "./components/accessibility/AccessibilityReader";
 // Invitación a instalar la PWA cuando el navegador lo permita.
 import PwaInstallBanner from "./components/pwa/PwaInstallBanner";
+// Tema visual compartido entre todas las rutas de la PWA.
+import { ThemeProvider } from "./context/theme/ThemeContext";
+import ThemeSwitcher from "./components/theme/ThemeSwitcher";
+// Cargamos las variables y ajustes visuales globales una sola vez.
+import "./styles/theme/GlobalTheme.css";
+
 
 import {
   BrowserRouter,
@@ -154,6 +161,7 @@ import NotFound from "./pages/public/NotFound";
 
 function App() {
   return (
+    <ThemeProvider>
     <BrowserRouter>
       {/* Una sola bandeja de notificaciones para toda la navegación. */}
       <NotificationsProvider>
@@ -425,7 +433,10 @@ function App() {
 
         </Routes>
 
-        {/* Martín aparece en la PWA sin modificar las rutas existentes. */}
+{/* Selector de apariencia que acompaña al usuario en todas las páginas. */}
+<ThemeSwitcher />
+
+{/* Martín aparece en la PWA sin modificar las rutas existentes. */}
         <MartinWidget />
 
         {/* Lectura asistida independiente de Martín y de las rutas de usuario. */}
@@ -436,6 +447,7 @@ function App() {
       </div>
       </NotificationsProvider>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
@@ -444,3 +456,7 @@ function App() {
 // =========================================================
 
 export default App;
+
+
+
+

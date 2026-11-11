@@ -1,0 +1,1361 @@
+/* ========================================================= */
+/* SISTEMA GLOBAL DE APARIENCIA — IGLESIA EL ANCLA           */
+/* ========================================================= */
+/* IMPORTANTE: este archivo se carga una sola vez desde App.js.
+ * Los CSS antiguos usan muchos colores directos. Estas reglas cubren
+ * superficies comunes sin invertir imágenes ni logos. Los nuevos módulos
+ * deben utilizar las variables --ea-theme-* para un resultado consistente. */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+  --ea-theme-bg: #f8f7f3;
+  --ea-theme-surface: #ffffff;
+  --ea-theme-surface-alt: #f0f3f3;
+  --ea-theme-floating: #ffffff;
+  --ea-theme-text: #1b303c;
+  --ea-theme-muted: #546a75;
+  --ea-theme-border: #dce3e3;
+  --ea-theme-accent: #aa7b43;
+  --ea-theme-focus: #bd8c53;
+  --ea-theme-input: #ffffff;
+  --ea-theme-shadow: rgba(19, 36, 44, 0.09);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ea-theme-bg: #101c26;
+  --ea-theme-surface: #1c303d;
+  --ea-theme-surface-alt: #243a47;
+  --ea-theme-floating: #203644;
+  --ea-theme-text: #f1f5f5;
+  --ea-theme-muted: #c3d3da;
+  --ea-theme-border: #3b5361;
+  --ea-theme-accent: #e2bd87;
+  --ea-theme-focus: #eac28a;
+  --ea-theme-input: #1b303d;
+  --ea-theme-shadow: rgba(0, 0, 0, 0.25);
+}
+
+/* El fondo global también cubre el área segura de los teléfonos. */
+html, body, #root { min-height: 100%; }
+html { background-color: var(--ea-theme-bg); }
+html[data-theme="dark"] body { background-color: var(--ea-theme-bg); color: var(--ea-theme-text); }
+html[data-theme="dark"] .app { background-color: var(--ea-theme-bg); color: var(--ea-theme-text); }
+
+/* Capas generales de los tres espacios principales de la aplicación. */
+html[data-theme="dark"] :is(
+  .member-layout, .member-layout__content,
+  .admin-layout, .admin-layout__main, .admin-layout__content,
+  .terms-public-page
+) {
+  background-color: var(--ea-theme-bg) !important;
+  color: var(--ea-theme-text);
+}
+
+/* Encabezados, navegación y menús comunes: conserva el acento institucional. */
+html[data-theme="dark"] :is(
+  .header, .header__container, .member-header, .member-header__top,
+  .member-header__navigation-wrap, .admin-header, .admin-sidebar,
+  .member-header__personal-panel, .member-header__notifications-panel
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text);
+  border-color: var(--ea-theme-border);
+}
+
+/* Componentes compartidos que suelen tener fondos blancos escritos en sus CSS. */
+html[data-theme="dark"] :is(
+  [class*="__card"], [class$="-card"],
+  [class*="__panel"], [class$="-panel"],
+  [class*="__modal"], [class$="-modal"],
+  [class*="__dialog"], [class*="__popover"],
+  [class*="__dropdown"], [class*="__summary"],
+  [class*="__table-container"], [class*="__table-wrapper"],
+  [class*="__form-container"], [class*="__form-wrapper"]
+) {
+  background-color: var(--ea-theme-surface) !important;
+  border-color: var(--ea-theme-border) !important;
+  color: var(--ea-theme-text);
+}
+
+/* Regiones de listas, tablas y detalles en paneles protegidos. */
+html[data-theme="dark"] :is(
+  table, thead, tbody, tfoot, tr, td, th,
+  [class*="__table"], [class*="__list-item"],
+  [class*="__detail-item"], [class*="__row"]
+) {
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(th, thead, [class*="__table-head"]) {
+  background-color: var(--ea-theme-surface-alt) !important;
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(td, tbody tr) {
+  background-color: transparent;
+  color: var(--ea-theme-text);
+}
+
+/* Campos y controles HTML, sin cambiar los botones de acción coloreados. */
+html[data-theme="dark"] :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  textarea, select, [contenteditable="true"]
+) {
+  color: var(--ea-theme-text) !important;
+  background-color: var(--ea-theme-input) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(input, textarea)::placeholder {
+  color: #a6bbc5;
+  opacity: 1;
+}
+html[data-theme="dark"] :is(input, textarea, select, button, a):focus-visible {
+  outline-color: var(--ea-theme-focus);
+}
+
+/*
+ * IMPORTANTE: no pintar TODOS los títulos del sitio de blanco.
+ * En la versión anterior esta regla afectaba, por ejemplo, al título de
+ * bienvenida, aunque su contenedor continuaba teniendo fondo beige.
+ * Los colores de títulos se aplican a superficies oscurecidas o en reglas
+ * específicas de cada módulo (más abajo).
+ */
+html[data-theme="dark"] :is(
+  [class*="__card"], [class$="-card"],
+  [class*="__panel"], [class$="-panel"],
+  [class*="__modal"], [class$="-modal"],
+  [class*="__dialog"], [class*="__popover"],
+  [class*="__dropdown"]
+) :is(
+  [class*="__title"], [class$="-title"],
+  [class*="__heading"], [class*="__label"],
+  [class*="__value"], [class*="__name"]
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  [class*="__card"], [class$="-card"],
+  [class*="__panel"], [class$="-panel"],
+  [class*="__modal"], [class$="-modal"],
+  [class*="__dialog"]
+) :is(
+  [class*="__description"], [class*="__subtitle"],
+  [class*="__help"], [class*="__meta"],
+  [class*="__hint"]
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Enlaces, textos y separadores del documento de términos/privacidad. */
+html[data-theme="dark"] :is(
+  .terms-editor-document, .terms-editor-document__intro,
+  .terms-editor-document__sidebar-card, .terms-editor-document__section
+) {
+  background-color: var(--ea-theme-surface) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .terms-editor-document__intro-text, .terms-editor-document__section-content,
+  .terms-editor-document__sidebar-card a
+) { color: var(--ea-theme-muted) !important; }
+html[data-theme="dark"] :is(
+  .terms-editor-document__section-title, .terms-editor-document__sidebar-card h2
+) { color: var(--ea-theme-text) !important; }
+
+/* Las páginas legales estaban diseñadas con fondo oscuro fijo.
+ * Adaptamos sus bloques también cuando el usuario selecciona modo claro. */
+html[data-theme="light"] .terms-public-page {
+  background-color: var(--ea-theme-bg) !important;
+  color: var(--ea-theme-text);
+}
+html[data-theme="light"] :is(
+  .terms-editor-document, .terms-editor-document__intro,
+  .terms-editor-document__sidebar-card, .terms-editor-document__section
+) {
+  background-color: var(--ea-theme-surface) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="light"] :is(
+  .terms-editor-document__intro-text, .terms-editor-document__section-content,
+  .terms-editor-document__sidebar-card a
+) { color: var(--ea-theme-muted) !important; }
+html[data-theme="light"] :is(
+  .terms-editor-document__section-title, .terms-editor-document__sidebar-card h2
+) { color: var(--ea-theme-text) !important; }
+
+/* Mantiene visibles los enlaces y los textos básicos en modo oscuro. */
+html[data-theme="dark"] :is(.admin-layout, .member-layout, .terms-public-page) a {
+  border-color: var(--ea-theme-border);
+}
+
+/* Los controles de lectura y el asistente mantienen sus propios diseños;
+ * el selector global no aplica filtros ni invierte fotografías, iconos o GIF. */
+
+/* Sin movimientos innecesarios para personas con sensibilidad visual. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme] * { scroll-behavior: auto !important; }
+}
+
+
+/* =========================================================
+   CONTRASTE REFORZADO - ESPACIO DE MIEMBROS
+   Corrige los títulos y textos internos que los CSS originales
+   pintan en azul oscuro incluso sobre tarjetas oscuras.
+   Solo se aplica en data-theme="dark"; no afecta el modo claro.
+========================================================= */
+
+/* Fondo general del espacio y de las páginas de la cuenta. */
+html[data-theme="dark"] :is(.member-page, .my-account) {
+  background-color: var(--ea-theme-bg) !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* Logo, nombre de la iglesia, menús y navegación sobre barras oscuras. */
+html[data-theme="dark"] :is(
+  .member-header__brand, .member-header__brand-text,
+  .member-header__brand-text strong,
+  .member-header__link, .member-header__personal-trigger,
+  .member-header__personal-heading
+) {
+  color: var(--ea-theme-text) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .member-header__brand-text small {
+  color: var(--ea-theme-muted) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] :is(
+  .member-header__link, .member-header__personal-trigger,
+  .member-header__personal-option
+):hover {
+  background-color: var(--ea-theme-surface-alt) !important;
+}
+html[data-theme="dark"] :is(
+  .member-header__personal-option, .member-header__personal-option span,
+  .member-header__alerts-title, .member-header__alerts-section
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .member-header__personal-trigger--active,
+  .member-header__link--active,
+  .member-header__personal-option--active
+) {
+  color: var(--ea-theme-accent) !important;
+}
+
+/* Migas de pan: texto muted legible sobre el fondo oscuro. */
+html[data-theme="dark"] :is(
+  .site-navigation, .site-navigation__trail,
+  .site-navigation__item, .site-navigation__item a,
+  .site-navigation__item span
+) {
+  color: var(--ea-theme-muted) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .site-navigation__item a:hover {
+  color: var(--ea-theme-text) !important;
+}
+/* El botón de volver tiene un fondo claro: conserva su texto oscuro. */
+html[data-theme="dark"] .site-navigation__back {
+  color: #22394a !important;
+  background-color: #f7f8f9 !important;
+}
+
+/* Encabezado principal, títulos y descripciones de "Mi cuenta". */
+html[data-theme="dark"] :is(
+  .my-account__heading h1,
+  .my-account__card-heading h2,
+  .my-account__details dd,
+  .my-account__details strong
+) {
+  color: var(--ea-theme-text) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] :is(
+  .my-account__heading p,
+  .my-account__card-heading p,
+  .my-account__details dt,
+  .my-account__details p,
+  .my-account__field,
+  .my-account__field > span
+) {
+  color: var(--ea-theme-muted) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] :is(
+  .my-account__card, .my-account__aside .my-account__card
+) {
+  background-color: var(--ea-theme-surface) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] .my-account__eyebrow {
+  color: var(--ea-theme-accent) !important;
+}
+html[data-theme="dark"] :is(
+  .my-account__details > div, .my-account__details div,
+  .my-account__card-heading
+) {
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] .my-account__save {
+  background-color: #31566c !important;
+  border-color: #63869b !important;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .my-account__save:hover:not(:disabled) {
+  background-color: #406b84 !important;
+}
+
+/* Tarjetas compactas de privacidad: títulos, cuerpo y enlaces legibles. */
+html[data-theme="dark"] :is(
+  .account-privacy__card, .account-privacy__expanded
+) {
+  background-color: var(--ea-theme-surface) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .account-privacy__header h2,
+  .account-privacy__expanded h3,
+  .account-privacy__law-title
+) {
+  color: var(--ea-theme-text) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] :is(
+  .account-privacy__header p,
+  .account-privacy__body,
+  .account-privacy__expanded p,
+  .account-privacy__rights li,
+  .account-privacy__admin-help,
+  .account-privacy__expanded .account-privacy__note
+) {
+  color: var(--ea-theme-muted) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] :is(
+  .account-privacy__law-summary, .account-privacy__expanded
+) {
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .account-privacy__text-button, .account-privacy__links a
+) {
+  color: #eac58b !important;
+}
+html[data-theme="dark"] .account-privacy__pill-row span {
+  color: #d8f0e2 !important;
+  background-color: #244036 !important;
+  border: 1px solid #43685a;
+}
+
+/* Botón de eliminar: mantiene una acción discreta pero reconocible. */
+html[data-theme="dark"] .account-privacy__delete-open {
+  background-color: #f5f5f3 !important;
+  border-color: #d7c8bd !important;
+  color: #5b3d37 !important;
+}
+html[data-theme="dark"] .account-privacy__delete-open:hover {
+  background-color: #ffffff !important;
+}
+
+/* Modal de confirmación: coherente con las tarjetas y campos oscuros. */
+html[data-theme="dark"] .account-privacy__dialog {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border: 1px solid var(--ea-theme-border);
+}
+html[data-theme="dark"] :is(
+  .account-privacy__dialog h2, .account-privacy__label,
+  .account-privacy__label strong
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .account-privacy__step, .account-privacy__dialog p,
+  .account-privacy__checkbox
+) {
+  color: var(--ea-theme-muted) !important;
+}
+html[data-theme="dark"] .account-privacy__cancel {
+  background-color: var(--ea-theme-surface-alt) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] .account-privacy__continue {
+  background-color: #456e82 !important;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .account-privacy__confirm {
+  background-color: #a3655a !important;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .account-privacy__confirm:disabled {
+  background-color: #475b64 !important;
+  color: #e1e9ed !important;
+}
+
+/* Texto de la portada y tarjetas comunitarias, sin invertir logotipos. */
+html[data-theme="dark"] :is(
+  .member-section__heading h2, .member-resource strong,
+  .member-resource__arrow, .member-section__heading h3
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .member-section__heading p, .member-resource > span:not(.member-resource__icon),
+  .member-community p
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Permite distinguir los estados de foco en teclado y los enlaces accionables. */
+html[data-theme="dark"] :is(
+  .member-header__link, .member-header__personal-option,
+  .account-privacy__text-button, .site-navigation__item a
+):focus-visible {
+  outline: 3px solid var(--ea-theme-focus) !important;
+  outline-offset: 3px;
+}
+
+/* Los controles pequeños deben seguir siendo pulsables desde móviles. */
+@media (max-width: 600px) {
+  html[data-theme="dark"] .my-account__heading h1 {
+    line-height: 1.2;
+  }
+  html[data-theme="dark"] .account-privacy__pill-row span {
+    font-size: .77rem;
+  }
+}
+
+
+/* =========================================================
+   MODO OSCURO NATIVO - SUPERFICIES DE MI ESPACIO
+   =========================================================
+   Opera puede forzar estilos desde el navegador. Nuestra PWA necesita
+   implementar el mismo principio con CSS: cada superficie cambia de fondo
+   Y también sus textos; no usamos filtros que alteren fotos o logos.
+
+   Esta sección se aplica solo en oscuro y mantiene intacto el modo claro.
+   Se usa la estructura que existe en MemberDashboard.jsx y
+   MemberVolunteerNotice.jsx, sin agregar componentes ni dependencias.
+========================================================= */
+
+html[data-theme="dark"] {
+  /* Paleta oscura de base para el espacio de miembros. */
+  --ea-theme-bg: #101a23;
+  --ea-theme-surface: #1d2c38;
+  --ea-theme-surface-alt: #273a48;
+  --ea-theme-floating: #233746;
+  --ea-theme-text: #eff5f8;
+  --ea-theme-muted: #c6d4dd;
+  --ea-theme-border: #425966;
+  --ea-theme-accent: #e8bf88;
+  --ea-theme-focus: #f4cf96;
+  --ea-theme-input: #192b37;
+  --ea-theme-shadow: rgba(0, 0, 0, .28);
+}
+
+/* Las columnas de la portada no deben conservar fondos beige o blancos. */
+html[data-theme="dark"] :is(
+  .member-page,
+  .member-main,
+  .member-grid,
+  .member-grid__main,
+  .member-grid__aside
+) {
+  color: var(--ea-theme-text);
+}
+
+/* ---------------------------------------------------------
+   1. HERO / BIENVENIDA - PROBLEMA MOSTRADO EN LA CAPTURA
+   --------------------------------------------------------- */
+html[data-theme="dark"] .member-page .member-hero {
+  /* Sustituye por completo el antiguo degradado de color crema. */
+  background-color: #222e38 !important;
+  background-image: linear-gradient(
+    112deg,
+    #1b2934 0%,
+    #243039 55%,
+    #40332a 100%
+  ) !important;
+  border: 1px solid #5b4b3e !important;
+  color: var(--ea-theme-text) !important;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .16) !important;
+}
+
+/* El título usa blanco claro sobre el fondo oscuro, no sobre crema. */
+html[data-theme="dark"] .member-page .member-hero :is(
+  h1, .member-hero__title-main
+) {
+  color: #f4f7f9 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+/* Conservamos el color arena de la identidad institucional. */
+html[data-theme="dark"] .member-page .member-hero .member-hero__title-accent {
+  color: #e8bf88 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="dark"] .member-page .member-hero :is(
+  .member-eyebrow, .member-hero__verse
+) {
+  color: #eac894 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .member-page .member-hero__content > p {
+  color: #d7e1e7 !important;
+  opacity: 1 !important;
+}
+
+/* Los anillos decorativos mantienen contraste sutil, sin brillos blancos. */
+html[data-theme="dark"] .member-page .member-hero__ring {
+  border-color: rgba(230, 190, 142, .28) !important;
+}
+
+/* La marca mantiene su fondo claro original para no invertir el logo. */
+html[data-theme="dark"] .member-page .member-hero__symbol {
+  background-color: #faf7f1 !important;
+  border-color: #cdb69b !important;
+}
+html[data-theme="dark"] .member-page .member-hero__symbol img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* CTA primario con texto muy oscuro y CTA secundario transparente. */
+html[data-theme="dark"] .member-page .member-hero .member-button--light {
+  background-color: #e8c48f !important;
+  border-color: #e8c48f !important;
+  color: #182632 !important;
+}
+html[data-theme="dark"] .member-page .member-hero .member-button--light:hover {
+  background-color: #f4d5a8 !important;
+}
+html[data-theme="dark"] .member-page .member-hero .member-button--outline {
+  background-color: rgba(12, 24, 34, .34) !important;
+  border-color: #bd9d75 !important;
+  color: #f2f5f7 !important;
+}
+html[data-theme="dark"] .member-page .member-hero .member-button--outline:hover {
+  background-color: rgba(235, 200, 151, .13) !important;
+}
+
+/* ---------------------------------------------------------
+   2. PRÓXIMO COMPROMISO - NO ES UNA CLASE '__card'
+   --------------------------------------------------------- */
+html[data-theme="dark"] .member-page .member-volunteer-notice {
+  background: #1d2c38 !important;
+  color: var(--ea-theme-text) !important;
+  border: 1px solid #415664 !important;
+  border-left: 4px solid #d3ad80 !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .16) !important;
+}
+
+html[data-theme="dark"] .member-page .member-volunteer-notice :is(
+  h2, .member-volunteer-notice__title
+) {
+  color: #f1f6f9 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .member-page .member-volunteer-notice :is(
+  p, .member-volunteer-notice__details, .member-volunteer-notice__status
+) {
+  color: #d0dee5 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .member-page .member-volunteer-notice__kicker {
+  color: #e8bf88 !important;
+}
+html[data-theme="dark"] .member-page .member-volunteer-notice__icon {
+  background-color: #293d4b !important;
+  color: #e6c28d !important;
+  border-color: #4d6676 !important;
+}
+html[data-theme="dark"] .member-page .member-volunteer-notice__link {
+  color: #eac58f !important;
+}
+html[data-theme="dark"] .member-page .member-volunteer-notice__link:hover {
+  color: #fff0d5 !important;
+}
+
+/* ---------------------------------------------------------
+   3. ACTIVIDADES, RECURSOS Y CUADRO DEL PERFIL
+   --------------------------------------------------------- */
+html[data-theme="dark"] .member-page :is(
+  .member-resource,
+  .member-activity,
+  .member-profile,
+  .member-community,
+  .member-help
+) {
+  background-color: var(--ea-theme-surface) !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .12) !important;
+}
+
+html[data-theme="dark"] .member-page :is(
+  .member-section__heading h2,
+  .member-resource strong,
+  .member-activity__body h3,
+  .member-profile__heading h2,
+  .member-community h2,
+  .member-profile__details dd
+) {
+  color: var(--ea-theme-text) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .member-page :is(
+  .member-section__heading p,
+  .member-activity__body > span,
+  .member-resource > span:not(.member-resource__icon):not(.member-resource__arrow),
+  .member-profile__details dt,
+  .member-profile__note,
+  .member-profile__empty,
+  .member-community p,
+  .member-help p
+) {
+  color: var(--ea-theme-muted) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .member-page :is(
+  .member-section__kicker,
+  .member-activity__day,
+  .member-activity__time,
+  .member-profile__heading > div > span
+) {
+  color: #e5bf8c !important;
+}
+
+html[data-theme="dark"] .member-page :is(
+  .member-text-link,
+  .member-resource__arrow,
+  .member-community a,
+  .member-help a
+) {
+  color: #edc791 !important;
+}
+
+html[data-theme="dark"] .member-page :is(
+  .member-resource__icon,
+  .member-profile__icon,
+  .member-community__icon
+) {
+  color: #e8c18e !important;
+  background-color: #2b4050 !important;
+  border-color: #587080 !important;
+}
+
+html[data-theme="dark"] .member-page .member-profile__details > div {
+  border-color: var(--ea-theme-border) !important;
+}
+
+/* ---------------------------------------------------------
+   4. OTRAS PÁGINAS DEL ÁREA DE MIEMBROS
+   --------------------------------------------------------- */
+/* Gestión de eventos: las tarjetas y el modal no deben quedar blancos. */
+html[data-theme="dark"] :is(
+  .member-events-page__event,
+  .member-events-page__modal,
+  .member-events-page__notice,
+  .member-events-page__detail-section,
+  .member-events-page__contribution-row
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .member-events-page__event-info h2,
+  .member-events-page__event-info h3,
+  .member-events-page__modal-header h2,
+  .member-events-page__modal-body h3
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .member-events-page__excerpt,
+  .member-events-page__description,
+  .member-events-page__detail-help,
+  .member-events-page__modal-body p
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Peticiones de oración: tratamiento legible de tarjetas y formularios. */
+html[data-theme="dark"] :is(
+  .member-prayer__card,
+  .member-prayer__summary-card,
+  .member-prayer__modal,
+  .member-prayer__fieldset,
+  .member-prayer__privacy-note,
+  .member-prayer__empty
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .member-prayer__header h1,
+  .member-prayer__section-heading h2,
+  .member-prayer__modal-header h2,
+  .member-prayer__details-content h2
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .member-prayer__card-description,
+  .member-prayer__details-description,
+  .member-prayer__card-meta,
+  .member-prayer__privacy-note p,
+  .member-prayer__form-notice
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Turnos de voluntariado y sus estados de lectura. */
+html[data-theme="dark"] :is(
+  .member-volunteer__card,
+  .member-volunteer__section,
+  .member-volunteer__empty
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .member-volunteer__header h1,
+  .member-volunteer__card h2,
+  .member-volunteer__card h3
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .member-volunteer__description,
+  .member-volunteer__notes,
+  .member-volunteer__facts
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Catálogo de recursos: las fotografías siguen siendo fotografías. */
+html[data-theme="dark"] :is(
+  .resource-card,
+  .resource-featured-card,
+  .resources-help
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] :is(
+  .resource-card__title,
+  .resource-featured-card__title,
+  .resources-help__title
+) {
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] :is(
+  .resource-card__description,
+  .resource-featured-card__description,
+  .resources-help__description
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* ---------------------------------------------------------
+   5. ACCESIBILIDAD, PANTALLAS PEQUEÑAS Y LOGOS
+   --------------------------------------------------------- */
+/* Texto que parece desactivado sobre oscuro: asegurar visibilidad real. */
+html[data-theme="dark"] :is(
+  .member-hero__content,
+  .member-volunteer-notice,
+  .member-resource,
+  .member-activity,
+  .member-profile,
+  .member-community
+) {
+  opacity: 1;
+}
+
+/* Respeta el dispositivo: sin filtros de inversión en imágenes, videos ni SVG. */
+html[data-theme="dark"] :is(
+  .member-page img,
+  .member-page video,
+  .member-page svg
+) {
+  filter: none;
+}
+
+/* Los estados de teclado siguen visibles también dentro del hero oscuro. */
+html[data-theme="dark"] .member-page :is(a, button):focus-visible {
+  outline: 3px solid var(--ea-theme-focus) !important;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  /* En móviles el degradado es menos complejo y el título conserva lectura. */
+  html[data-theme="dark"] .member-page .member-hero {
+    background-image: linear-gradient(155deg, #1c2a35 0%, #362e2b 100%) !important;
+  }
+
+  html[data-theme="dark"] .member-page .member-hero :is(
+    h1, .member-hero__title-main, .member-hero__title-accent
+  ) {
+    line-height: 1.12 !important;
+  }
+
+  /* No reducir el tamaño de controles ni depender solo del color del estado. */
+  html[data-theme="dark"] .member-page .member-button {
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   CONTRASTE REAL - LOGIN PÚBLICO Y ENCABEZADO (NOV 2026)
+   =========================================================
+   Se utilizan las clases originales de Login.jsx y Header.jsx.
+   Cada superficie oscura incluye explícitamente su color de texto.
+   No se utiliza filter: invert ni se modifica el modo claro.
+========================================================= */
+
+/* 1. HEADER PÚBLICO - vínculos legibles sobre la barra oscura. */
+html[data-theme="dark"] .header {
+  background: #1a2a36 !important;
+  border-color: var(--ea-theme-border) !important;
+}
+
+html[data-theme="dark"] .header :is(
+  .header__link,
+  .header__brand,
+  .header__brand-text,
+  .header__brand-name,
+  .header__menu-toggle,
+  .header__mobile-toggle
+) {
+  color: #f4f7f9 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .header .header__link:hover,
+html[data-theme="dark"] .header .header__link:focus-visible {
+  color: #f5d4a5 !important;
+}
+
+html[data-theme="dark"] .header .header__link--active {
+  color: #f2c888 !important;
+}
+
+/* Los enlaces del menú móvil también deben contrastar con su fondo. */
+html[data-theme="dark"] .header :is(
+  .header__nav,
+  .header__navigation,
+  .header__menu,
+  .header__mobile-menu,
+  .header__dropdown
+) {
+  background-color: #1a2a36 !important;
+  border-color: #425966 !important;
+}
+
+/* El logo oscuro necesita una superficie clara propia, no invertir la imagen. */
+html[data-theme="dark"] .header .header__brand img {
+  background-color: #f7f4ed;
+  border-radius: 9px;
+  padding: 3px;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Los botones con fondo beige mantienen texto oscuro; no los volvemos blancos. */
+html[data-theme="dark"] .header :is(
+  .header__login,
+  .header__login-button,
+  .header__signin,
+  .header__sign-in
+) {
+  color: #182936 !important;
+}
+
+/* 2. NAVEGACIÓN PÚBLICA / MIGAS DE PAN. */
+html[data-theme="dark"] .site-navigation {
+  background-color: #172632 !important;
+  border-color: #3c5160 !important;
+  color: #e5eef3 !important;
+}
+
+html[data-theme="dark"] .site-navigation :is(
+  .site-navigation__trail,
+  .site-navigation__item,
+  .site-navigation__item a,
+  .site-navigation__item span
+) {
+  color: #d5e2e9 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .site-navigation .site-navigation__back {
+  color: #1b303c !important;
+  background-color: #f4f7f8 !important;
+  border-color: #d0dbe2 !important;
+}
+
+/* 3. LOGIN - transformar también la mitad clara, no solo la tarjeta. */
+html[data-theme="dark"] .login {
+  background-color: #101a23 !important;
+  color: #f3f7fa !important;
+}
+
+html[data-theme="dark"] .login .login__form-area {
+  background: linear-gradient(135deg, #121d26 0%, #172732 100%) !important;
+  color: #f3f7fa !important;
+}
+
+html[data-theme="dark"] .login .login__card {
+  background: #20313d !important;
+  background-image: none !important;
+  color: #f3f7fa !important;
+  border: 1px solid #49606d !important;
+  box-shadow: 0 20px 56px rgba(0, 0, 0, .24) !important;
+}
+
+/* El título estaba tomando un azul marino casi invisible. */
+html[data-theme="dark"] .login .login__header :is(h1, h2, h3) {
+  color: #f5f8fa !important;
+  opacity: 1 !important;
+}
+
+/* La bajada explicativa debe ser clara, sin perder jerarquía. */
+html[data-theme="dark"] .login .login__header :is(p, small) {
+  color: #cedce5 !important;
+  opacity: 1 !important;
+}
+
+/* Etiquetas esenciales: Correo electrónico / Contraseña. */
+html[data-theme="dark"] .login .login__field :is(label, legend) {
+  color: #f2f6f9 !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+/* Campo, iconos y opción de mostrar contraseña. */
+html[data-theme="dark"] .login .login__input-wrapper {
+  background-color: #152632 !important;
+  border-color: #526b7c !important;
+  color: #f4f7f9 !important;
+}
+
+html[data-theme="dark"] .login .login__input-wrapper input {
+  background-color: #152632 !important;
+  color: #f4f7f9 !important;
+  border-color: #526b7c !important;
+  caret-color: #f2c888;
+}
+
+html[data-theme="dark"] .login .login__input-wrapper input::placeholder {
+  color: #b2c7d1 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .login :is(
+  .login__input-icon,
+  .login__password-toggle,
+  .login__back
+) {
+  color: #c4d6df !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .login .login__input-wrapper:focus-within {
+  border-color: #f0c68b !important;
+  outline: 2px solid rgba(240, 198, 139, .38);
+  outline-offset: 1px;
+}
+
+/* Aviso inferior y enlace de recuperación: no quedan semitransparentes. */
+html[data-theme="dark"] .login :is(
+  .login__security,
+  .login__security p,
+  .login__security span
+) {
+  color: #c7d7df !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .login :is(
+  .login__back a,
+  .login__form a,
+  .login__card a
+) {
+  color: #f0c993 !important;
+  opacity: 1 !important;
+}
+
+/* El botón principal tiene fondo sólido y un rótulo de alto contraste. */
+html[data-theme="dark"] .login .login__submit {
+  background-color: #315a74 !important;
+  border-color: #4d7891 !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .login .login__submit:hover:not(:disabled) {
+  background-color: #406e8a !important;
+}
+
+html[data-theme="dark"] .login .login__error {
+  background-color: #41272b !important;
+  border-color: #9d5f68 !important;
+  color: #ffe5e9 !important;
+}
+
+/* 4. Etiquetas de otros formularios dentro de superficies ya oscurecidas. */
+html[data-theme="dark"] :is(
+  [class*="__card"], [class$="-card"],
+  [class*="__panel"], [class$="-panel"],
+  [class*="__modal"], [class$="-modal"]
+) :is(label, legend) {
+  color: var(--ea-theme-text) !important;
+  opacity: 1 !important;
+}
+
+/* 5. Pantallas pequeñas: conservar el ancho y el campo pulsable. */
+@media (max-width: 640px) {
+  html[data-theme="dark"] .login .login__card {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .18) !important;
+  }
+
+  html[data-theme="dark"] .login :is(
+    .login__submit,
+    .login__password-toggle
+  ) {
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   CAPA GLOBAL DE CONTRASTE — TODOS LOS MÓDULOS DE LA PWA
+   =========================================================
+   Problema: numerosos CSS antiguos fijan fondo #fff, gradientes
+   crema y textos azul oscuro. Un cambio de fondo aislado deja
+   texto ilegible. Este bloque neutraliza AMBOS a escala global.
+
+   Orden:
+   1) Fondo oscuro base.
+   2) Textos claros + supresión de fondos claros heredados.
+   3) Superficies diferenciadas para tarjetas y diálogos.
+   4) Controles, enlaces, estados y excepciones para imágenes.
+
+   Solo se ejecuta con data-theme="dark". El modo claro mantiene
+   los estilos de cada componente, sin cambios adicionales.
+   ========================================================= */
+
+html[data-theme="dark"] {
+  /* Colores suficientes para contraste de lectura WCAG AA. */
+  color-scheme: dark;
+  --ea-theme-bg: #101923;
+  --ea-theme-surface: #1d2b36;
+  --ea-theme-surface-alt: #263945;
+  --ea-theme-floating: #223541;
+  --ea-theme-input: #162732;
+  --ea-theme-text: #f2f6f9;
+  --ea-theme-muted: #ccd9e1;
+  --ea-theme-border: #4b6270;
+  --ea-theme-accent: #eec995;
+  --ea-theme-focus: #f5d49e;
+  --ea-theme-shadow: rgba(0, 0, 0, .28);
+}
+
+/* 1. Toda la superficie de la aplicación parte de un fondo oscuro. */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root,
+html[data-theme="dark"] .app {
+  background: var(--ea-theme-bg) !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* 2. Barrido global de estilos claros fijos.
+   :where() permite que las reglas de superficies siguientes prevalezcan.
+   No modificamos los píxeles de fotos, vídeos, lienzos ni SVG. */
+html[data-theme="dark"] #root :where(
+  *:not(img):not(picture):not(video):not(canvas):not(iframe):not(svg):not(svg *)
+) {
+  background-color: transparent !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+  text-shadow: none !important;
+}
+
+/* Eliminar también los gradientes BLANCOS / CREMA heredados.
+   Se exceptúan superficies cuya función es presentar una imagen. */
+html[data-theme="dark"] #root :where(
+  *:not(img):not(picture):not(video):not(canvas):not(iframe):not(svg):not(svg *)
+    :not([class*="photo"]):not([class*="image"])
+    :not([class*="thumbnail"]):not([class*="poster"])
+    :not([class*="cover"]):not([class*="avatar"])
+    :not([class*="logo"]):not([class*="icon"])
+    :not([class*="artwork"])
+    :not([style*="background-image: url"]):not([style*="background-image:url"])
+) {
+  background-image: none !important;
+}
+
+/* Texto explícito: los estilos con color oscuro y alta especificidad
+   no deben prevalecer sobre el tema oscuro, ni en tarjetas ni en el header. */
+html[data-theme="dark"] #root :is(
+  h1, h2, h3, h4, h5, h6, p, label, legend, dt, dd,
+  strong, b, em, small, span, li, summary, time, figcaption,
+  th, td, blockquote, cite,
+  [class*="__title"], [class*="__heading"],
+  [class*="__label"], [class*="__description"],
+  [class*="__subtitle"], [class*="__meta"],
+  [class*="__value"], [class*="__date"],
+  [class*="__time"], [class*="__day"],
+  [class*="__detail"], [class*="__help"],
+  [class*="__hint"], [class*="__text"]
+) {
+  color: var(--ea-theme-text) !important;
+  /* Rehabilita textos con degradado que en el CSS original usan fill transparente. */
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* Diferenciamos explicaciones y textos secundarios sin perder legibilidad. */
+html[data-theme="dark"] #root :is(
+  [class*="__description"], [class*="__subtitle"],
+  [class*="__meta"], [class*="__help"],
+  [class*="__hint"], [class*="__excerpt"],
+  [class*="__caption"], [class*="__muted"],
+  [class*="__secondary"]
+) {
+  color: var(--ea-theme-muted) !important;
+}
+
+/* Enlaces con CSS local muy específico también necesitan un color claro. */
+html[data-theme="dark"] #root :is(a, button, [class*="__link"], [class$="-link"]) {
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* Etiquetas SVG de gráficos (sin invertir iconos ni fotografías). */
+html[data-theme="dark"] #root :is(
+  svg text, svg tspan,
+  .recharts-cartesian-axis-tick-value,
+  .recharts-label,
+  .recharts-legend-item-text
+) {
+  fill: var(--ea-theme-text) !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* 3. Capas semánticas: el contenido es oscuro y las tarjetas se distinguen. */
+html[data-theme="dark"] #root :is(
+  header, footer, aside, nav,
+  .header, .footer, .site-navigation,
+  .member-header, .admin-header, .admin-sidebar,
+  [class$="__sidebar"], [class$="__footer"],
+  [class$="__navbar"], [class$="__navigation"]
+) {
+  background-color: var(--ea-theme-surface) !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* Contenedores de lectura: cualquier sección conserva fondo OSCURO. */
+html[data-theme="dark"] #root :is(
+  main, section, article, form, fieldset,
+  [class$="-page"], [class$="__page"],
+  [class$="__content"], [class$="__main"],
+  [class$="__container"], [class$="__grid"]
+) {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* Tarjetas/paneles/modales de cualquier módulo: ya no pueden quedar blancos. */
+html[data-theme="dark"] #root :is(
+  [class*="__card"], [class$="-card"], [class$="Card"],
+  [class*="__panel"], [class$="-panel"],
+  [class*="__tile"], [class$="-tile"],
+  [class*="__modal"], [class$="-modal"],
+  [class*="__dialog"], [class$="-dialog"],
+  [class*="__popover"], [class*="__dropdown"],
+  [class*="__notice"], [class*="__alert"],
+  [class*="__feature"], [class*="__summary"],
+  [class*="__intro"], [class*="__hero"],
+  .member-hero, .member-volunteer-notice,
+  [role="dialog"], dialog,
+  .card, .panel, .modal, .popover, .dropdown
+) {
+  background-color: var(--ea-theme-surface) !important;
+  background-image: none !important;
+  border-color: var(--ea-theme-border) !important;
+  color: var(--ea-theme-text) !important;
+}
+
+/* Barra superior de tarjetas, listas, detalles y etiquetas agrupadas. */
+html[data-theme="dark"] #root :is(
+  [class*="__card-header"], [class*="__card-top"],
+  [class*="__panel-header"], [class*="__toolbar"],
+  [class*="__filter"], [class*="__tab"],
+  [class*="__badge"], [class*="__chip"],
+  [class*="__pill"], [class*="__tag"],
+  [class*="__stat"], [class*="__metric"],
+  [class*="__list-item"], [class*="__list-row"]
+) {
+  background-color: var(--ea-theme-surface-alt) !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+
+/* 4. Botones, enlaces y navegación visibles tanto en PC como móvil. */
+html[data-theme="dark"] #root :is(
+  a, [class*="__link"], [class$="-link"],
+  [class*="__action"], [class$="-action"],
+  [class*="__details"], [class*="__more"]
+) {
+  color: var(--ea-theme-accent) !important;
+  text-decoration-color: currentColor;
+}
+html[data-theme="dark"] #root a:hover {
+  color: #ffe1b3 !important;
+}
+html[data-theme="dark"] #root :is(
+  .header a, .member-header a, .admin-header a,
+  nav a, .site-navigation a,
+  [class*="__nav-link"], [class*="__menu-link"]
+) {
+  color: var(--ea-theme-text) !important;
+}
+
+/* También se oscurecen botones con fondo blanco o beige fijo. */
+html[data-theme="dark"] #root :is(
+  button, [role="button"], input[type="button"], input[type="submit"],
+  [class*="__button"], [class$="-button"],
+  .btn, .button
+) {
+  background-color: var(--ea-theme-surface-alt) !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] #root :is(button, [role="button"], .btn, .button):hover:not(:disabled) {
+  background-color: #345061 !important;
+}
+html[data-theme="dark"] #root :is(button, a, input, textarea, select, [role="button"]):focus-visible {
+  outline: 3px solid var(--ea-theme-focus) !important;
+  outline-offset: 2px !important;
+}
+
+/* Formularios, opciones del selector y datos insertados por autofill. */
+html[data-theme="dark"] #root :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  textarea, select, option, [contenteditable="true"],
+  [role="textbox"], [role="combobox"]
+) {
+  background-color: var(--ea-theme-input) !important;
+  background-image: none !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+  caret-color: var(--ea-theme-accent);
+}
+html[data-theme="dark"] #root :is(input, textarea)::placeholder {
+  color: #b9cbd4 !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] #root input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ea-theme-text) !important;
+  box-shadow: 0 0 0 1000px var(--ea-theme-input) inset !important;
+}
+
+/* Tablas y paneles extensos: cabeceras claras y filas oscuras. */
+html[data-theme="dark"] #root :is(table, [role="table"], [class*="__table-wrapper"]) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] #root :is(thead, th, [role="columnheader"], [class*="__table-head"]) {
+  background-color: var(--ea-theme-surface-alt) !important;
+  color: var(--ea-theme-text) !important;
+}
+html[data-theme="dark"] #root :is(tr, td, [role="row"], [role="cell"]) {
+  background-color: transparent !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] #root tr:hover td {
+  background-color: rgba(255, 255, 255, .045) !important;
+}
+
+/* No borrar accidentalmente el fondo protector de los diálogos. */
+html[data-theme="dark"] #root :is(
+  [class*="__overlay"], [class*="__backdrop"],
+  .modal-overlay, .dialog-overlay
+) {
+  background-color: rgba(2, 9, 15, .78) !important;
+}
+html[data-theme="dark"] dialog::backdrop {
+  background: rgba(2, 9, 15, .78) !important;
+}
+
+/* Mantener logos, fotografías y medios sin inversión de tonos. */
+html[data-theme="dark"] #root :is(img, picture, video, canvas, iframe, svg) {
+  filter: none !important;
+}
+/* Logos oscuros pequeños: una base neutra mantiene su lectura. */
+html[data-theme="dark"] #root :is(
+  .header__brand img, .member-hero__symbol img,
+  [class*="__logo"] img
+) {
+  background-color: #f7f4ed !important;
+  border-radius: 8px;
+}
+
+/* El selector de tema sigue siendo un icono compacto y accesible. */
+html[data-theme="dark"] #root :is(
+  .theme-switcher, .theme-switcher__button,
+  .theme-toggle, .theme-toggle__button
+) {
+  background-color: var(--ea-theme-surface-alt) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+
+
+/* Popovers de bibliotecas que crean portales FUERA del nodo #root. */
+html[data-theme="dark"] body > :not(#root) :is(
+  [role="dialog"], [role="menu"], [role="listbox"],
+  .modal, .popover, .dropdown,
+  [class*="__modal"], [class*="__popover"], [class*="__dropdown"]
+) {
+  background-color: var(--ea-theme-surface) !important;
+  color: var(--ea-theme-text) !important;
+  border-color: var(--ea-theme-border) !important;
+}
+html[data-theme="dark"] body > :not(#root) :is(
+  h1, h2, h3, h4, p, span, label, li, a, button
+) {
+  color: var(--ea-theme-text) !important;
+}
+
+/* Barras de desplazamiento oscuras; también para paneles internos. */
+html[data-theme="dark"] * {
+  scrollbar-color: #536d7a #14232e;
+}
+
+/* Reducción de movimiento y tamaños táctiles sin alterar el layout. */
+@media (max-width: 640px) {
+  html[data-theme="dark"] #root :is(button, [role="button"], input[type="submit"]) {
+    min-height: 40px;
+  }
+}

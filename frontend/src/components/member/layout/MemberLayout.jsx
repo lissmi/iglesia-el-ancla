@@ -1,3 +1,4 @@
+
 // =========================================================
 // LAYOUT COMÚN DE MIEMBROS (member, admin y super_admin)
 // =========================================================
@@ -5,13 +6,16 @@
 // Outlet renderiza la página seleccionada dentro del área de miembros.
 // useOutletContext obtiene el usuario autenticado por ProtectedRoute.
 import { Outlet, useLocation, useOutletContext } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../../../services/api";
 import { listBasicSuppliesNeeds } from "../../../services/basicSuppliesApi";
 import { deriveVolunteerAlerts } from "../../../utils/memberVolunteerAlerts";
 
 // Reutilizamos el encabezado comunitario para los tres roles.
 import MemberHeader from "./MemberHeader";
+
+// La guía usa los elementos reales del espacio, incluido el selector de tema.
+import MemberTour from "./MemberTour";
 
 // Unificamos el botón de regreso y el breadcrumb en todas las páginas.
 import SiteNavigation from "../../shared/layout/SiteNavigation";
@@ -27,6 +31,16 @@ function MemberLayout() {
   // La sesión y el rol ya fueron verificados por ProtectedRoute.
   const { user } = useOutletContext() || {};
   const location = useLocation();
+  // Permite volver a iniciar la guía desde el menú personal.
+  const [tourRequest, setTourRequest] = useState(0);
+
+  // El tutorial puede pedir abrir temporalmente un enlace del menú personal.
+  const [tourItem, setTourItem] = useState(null);
+
+  // Mantenemos estables estas funciones para los efectos internos de MemberTour.
+  const startTour = useCallback(() => setTourRequest((value) => value + 1), []);
+  const handleTourItemChange = useCallback((item) => setTourItem(item), []);
+
   const [assignments, setAssignments] = useState([]);
   const [assignmentsLoading, setAssignmentsLoading] = useState(true);
   const [assignmentsError, setAssignmentsError] = useState("");
@@ -152,6 +166,8 @@ function MemberLayout() {
       {/* Encabezado con navegación y acciones según el usuario. */}
       <MemberHeader
         user={user}
+        onStartTour={startTour}
+        tourItem={tourItem}
         volunteerAlerts={volunteerAlerts}
         assignmentsLoading={assignmentsLoading}
         assignmentsError={assignmentsError}
@@ -178,6 +194,13 @@ function MemberLayout() {
           supplyNeeds,
         }} />
       </div>
+
+      {/* Guía interactiva compartida por todas las rutas de Mi espacio. */}
+      <MemberTour
+        requestId={tourRequest}
+        tourItemChange={handleTourItemChange}
+        hasAdminPanel={user?.role === "admin" || user?.role === "super_admin"}
+      />
 
       {/* Footer público compartido, visible en todas las rutas /member. */}
       <Footer />
