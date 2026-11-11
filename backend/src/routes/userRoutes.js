@@ -1,4 +1,5 @@
 
+
 import { Router } from "express";
 import mongoose from "mongoose";
 import { createHash, randomBytes } from "node:crypto";
@@ -13,6 +14,18 @@ import Sucursal from "../models/Sucursal.js";
 import authenticateUser from "../middleware/authenticateUser.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import authorizeSucursal from "../middleware/authorizeSucursal.js";
+
+// Protección independiente para la operación irreversible de eliminación.
+import { comparePassword } from "../utils/passwordUtils.js";
+import {
+  AUTH_COOKIE_NAME,
+  getAuthCookieClearOptions,
+} from "../utils/tokenUtils.js";
+import {
+  DELETE_ACCOUNT_PHRASE,
+  deleteMemberAccount,
+} from "../services/accounts/accountDeletionService.js";
+
 
 // =========================================================
 // ROUTER DE GESTIÓN DE USUARIOS
@@ -191,6 +204,82 @@ router.patch("/me/profile", requireTrustedOrigin, async (req, res, next) => {
       profile: serializeMyProfile(user),
     });
   } catch (error) {
+    return next(error);
+  }
+});
+
+// =========================================================
+// ELIMINACIÓN DEFINITIVA DE MI CUENTA (SOLO MEMBER)
+// =========================================================
+
+// Limitamos los intentos de contraseña y confirmación por dirección IP.
+const deleteAccountLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { success: false, message: "Demasiados intentos. Inténtalo más tarde." },
+});
+
+// La identidad proviene de la cookie JWT, no de un ID enviado por el cliente.
+router.post("/me/delete-account", requireTrustedOrigin, deleteAccountLimiter, async (req, res, next) => {
+  try {
+    // No guardamos en caché el resultado de una operación de cuenta.
+    res.set("Cache-Control", "no-store");
+
+    // Este flujo no debe destruir recursos propios de una cuenta administrativa.
+    if (req.user.role !== "member") {
+      return res.status(403).json({
+        success: false,
+        message: "Las cuentas administrativas requieren una revisión institucional para su eliminación.",
+      });
+    }
+
+    // Rechazamos cargas incompletas, campos arbitrarios y cuerpos no JSON.
+    if (!req.is("application/json") || !req.body ||
+      typeof req.body !== "object" || Array.isArray(req.body) ||
+      Object.keys(req.body).length !== 2 ||
+      !Object.hasOwn(req.body, "confirmation") ||
+      !Object.hasOwn(req.body, "password")) {
+      return res.status(400).json({ success: false, message: "Solicitud de eliminación inválida." });
+    }
+
+    // El texto debe coincidir exactamente con lo mostrado en la pantalla.
+    if (req.body.confirmation !== DELETE_ACCOUNT_PHRASE ||
+      typeof req.body.password !== "string" ||
+      req.body.password.length === 0 ||
+      Buffer.byteLength(req.body.password, "utf8") > 72) {
+      return res.status(400).json({ success: false, message: "La confirmación o contraseña no es válida." });
+    }
+
+    // La contraseña actual se recupera únicamente de la base de datos.
+    const account = await User.findOne({ _id: req.user._id, role: "member", isActive: true })
+      .select("+passwordHash");
+
+    // No diferenciamos deliberadamente una cuenta inválida y una clave incorrecta.
+    if (!account || !await comparePassword(req.body.password, account.passwordHash)) {
+      return res.status(401).json({ success: false, message: "No pudimos verificar tu contraseña actual." });
+    }
+
+    // El servicio elimina datos personales y desvincula asientos contables cerrados.
+    await deleteMemberAccount({
+      userId: account._id,
+      expectedPasswordHash: account.passwordHash,
+    });
+
+    // La cookie desaparece incluso si aún no ha caducado su JWT.
+    res.clearCookie(AUTH_COOKIE_NAME, getAuthCookieClearOptions());
+
+    // Ningún documento del perfil se incluye en esta respuesta.
+    return res.status(200).json({
+      success: true,
+      message: "Tu cuenta y los datos personales eliminables se han retirado de la plataforma.",
+    });
+  } catch (error) {
+    // Las reglas de conciliación y de auditoría devuelven errores controlados.
+    if (error?.status) {
+      return res.status(error.status).json({ success: false, message: error.message });
+    }
     return next(error);
   }
 });
@@ -1503,6 +1592,10 @@ router.patch("/:id/status", requireTrustedOrigin, async (req, res, next) => {
 });
 
 export default router;
+
+
+
+
 
 
 

@@ -1,3 +1,4 @@
+
 {
   "name": "iglesia-el-ancla-backend",
   "version": "1.0.0",
@@ -7,7 +8,8 @@
   "scripts": {
     "start": "node --env-file=./src/middleware/.env server.js",
     "dev": "nodemon --exec \"node --env-file=./src/middleware/.env\" server.js",
-    "setup:initial-admin": "node --env-file=./src/middleware/.env src/scripts/createInitialAdmin.js"
+    "setup:initial-admin": "node --env-file=./src/middleware/.env src/scripts/admin/createInitialAdmin.js",
+    "setup:second-super-admin": "node --env-file=./src/middleware/.env src/scripts/admin/createSecondSuperAdmin.js"
   },
   "keywords": [
     "node",

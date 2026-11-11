@@ -1,0 +1,115 @@
+/* =========================================================
+   IGLESIA EL ANCLA · PRIVACIDAD COMPACTA
+   Estilo aislado para la página Mi cuenta.
+   Paleta: azul marino, arena cálida, blanco.
+========================================================= */
+
+/* Dos tarjetas equilibradas en escritorio, una columna en pantallas reducidas. */
+.account-privacy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  align-items: start;
+  gap: 14px;
+  margin: 18px 0 0;
+}
+
+/* Cada tarjeta tiene una altura natural y un relleno moderado. */
+.account-privacy__card {
+  min-width: 0;
+  padding: 18px 20px;
+  border: 1px solid #e4e8ec;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(20, 39, 53, 0.035);
+}
+
+/* Evitamos que la opción de borrado parezca una alarma. */
+.account-privacy__card--delete { border-color: #e8e3dc; }
+
+/* Encabezado pequeño, con títulos legibles y sin iconos demasiado grandes. */
+.account-privacy__header { display: flex; align-items: flex-start; gap: 11px; }
+.account-privacy__header h2 { margin: 0; color: #23394b; font-size: 1.04rem; line-height: 1.35; font-weight: 700; }
+.account-privacy__header p { margin: 3px 0 0; color: #687988; font-size: .84rem; line-height: 1.45; }
+.account-privacy__icon { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 36px; background: #f5f0e9; color: #90795f; border-radius: 10px; }
+.account-privacy__icon--delete { background: #f5f1ec; color: #866c60; }
+
+/* La descripción se mantiene en dos o tres líneas en pantallas normales. */
+.account-privacy__body { margin: 12px 0; color: #506474; font-size: .89rem; line-height: 1.58; }
+
+/* Garantías resumidas, sin llenar toda la tarjeta de etiquetas. */
+.account-privacy__pill-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.account-privacy__pill-row span { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; background: #f3f6f4; color: #506b5a; font-size: .76rem; font-weight: 600; }
+
+/* La ley queda en una fila con separador, sin una subtarjeta voluminosa. */
+.account-privacy__law-summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 13px; padding-top: 12px; border-top: 1px solid #e8e9e7; }
+.account-privacy__law-title { display: inline-flex; align-items: center; gap: 7px; color: #2b4253; font-weight: 700; font-size: .85rem; }
+.account-privacy__law-title svg { color: #9b8162; }
+.account-privacy__text-button { display: inline-flex; align-items: center; gap: 5px; padding: 5px 0; border: 0; background: transparent; color: #2a607c; font: inherit; font-weight: 700; font-size: .83rem; cursor: pointer; }
+.account-privacy__text-button:hover { text-decoration: underline; }
+
+/* El contenido legal detallado solo se muestra después de desplegarlo. */
+.account-privacy__expanded { margin-top: 13px; padding-top: 4px; border-top: 1px solid #edf0f2; }
+.account-privacy__expanded h3 { margin: 14px 0 5px; font-size: .91rem; color: #2c4356; }
+.account-privacy__expanded p { margin: 0; color: #536676; font-size: .85rem; line-height: 1.62; }
+.account-privacy__rights { list-style: none; padding: 0; margin: 7px 0; display: grid; gap: 6px; }
+.account-privacy__rights li { display: flex; align-items: flex-start; gap: 7px; font-size: .84rem; line-height: 1.5; color: #536676; }
+.account-privacy__rights svg { color: #698573; flex-shrink: 0; margin-top: 3px; }
+.account-privacy__links { display: flex; flex-wrap: wrap; gap: 9px 15px; margin-top: 14px; }
+.account-privacy__links a { color: #2a607c; font-weight: 700; font-size: .83rem; text-decoration: underline; text-underline-offset: 3px; }
+.account-privacy__expanded .account-privacy__note { margin-top: 12px; color: #7b858e; font-size: .78rem; }
+
+/* Acción separada, con tamaño contenido y una apariencia tranquila. */
+.account-privacy__delete-open { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 8px 13px; border: 1px solid #b9aaa1; border-radius: 9px; background: #fff; color: #6b5149; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
+.account-privacy__delete-open:hover { background: #f8f5f2; }
+.account-privacy__admin-help { margin: 10px 0 0; color: #526575; font-size: .85rem; line-height: 1.55; }
+
+/* Fondo del diálogo: oscurecemos el sitio sin utilizar un rojo alarmante. */
+.account-privacy__overlay { position: fixed; inset: 0; z-index: 9000; display: grid; place-items: center; overflow-y: auto; padding: 16px; background: rgba(17, 34, 47, .62); backdrop-filter: blur(3px); }
+
+/* Modal de confirmación más pequeño, centrado y legible. */
+.account-privacy__dialog { width: min(100%, 455px); max-height: calc(100dvh - 32px); overflow-y: auto; box-sizing: border-box; padding: 22px; border-radius: 17px; background: white; color: #23394b; box-shadow: 0 24px 70px rgba(10, 24, 34, .23); }
+.account-privacy__dialog-top { display: flex; align-items: center; justify-content: space-between; }
+.account-privacy__dialog-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: #f5f1ea; color: #87705c; }
+.account-privacy__close { padding: 6px; border: 0; border-radius: 8px; background: transparent; color: #657784; cursor: pointer; }
+.account-privacy__step { margin: 13px 0 4px; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #90745e; }
+.account-privacy__dialog h2 { margin: 0 0 8px; font-size: 1.22rem; line-height: 1.35; color: #20374a; }
+.account-privacy__dialog h2:focus { outline: none; }
+.account-privacy__dialog p:not(.account-privacy__step) { margin: 0; color: #566979; font-size: .89rem; line-height: 1.62; }
+
+/* Botones secundarios y acción irreversible claramente identificados. */
+.account-privacy__dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.account-privacy__dialog-actions button { min-height: 40px; padding: 9px 13px; border-radius: 9px; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
+.account-privacy__cancel { border: 1px solid #d3dce2; background: #fff; color: #394e60; }
+.account-privacy__continue { border: 1px solid #294358; background: #294358; color: #fff; }
+.account-privacy__confirm { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #8c544b; background: #8c544b; color: #fff; }
+.account-privacy__confirm:disabled { border-color: #d4cbca; background: #d4cbca; color: #625b59; cursor: not-allowed; }
+
+/* Formulario de confirmación protegido, sin espacios excesivos. */
+.account-privacy__delete-form { display: grid; gap: 7px; margin-top: 13px; }
+.account-privacy__label { font-size: .85rem; color: #344b5e; font-weight: 650; margin-top: 4px; }
+.account-privacy__label strong { color: #765045; }
+.account-privacy__delete-form input:not([type="checkbox"]) { box-sizing: border-box; width: 100%; min-width: 0; padding: 9px 11px; border: 1px solid #cad4dc; border-radius: 9px; background: white; color: #23394b; font: inherit; font-size: .88rem; }
+.account-privacy__checkbox { display: flex; gap: 9px; align-items: flex-start; margin-top: 7px; color: #506575; font-size: .84rem; line-height: 1.45; }
+.account-privacy__checkbox input { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: #294358; }
+.account-privacy__dialog .account-privacy__error { margin-top: 7px; padding: 10px; border-radius: 8px; background: #fff3ef; color: #9a3d35; font-size: .85rem; }
+
+/* Foco visible para navegación con teclado y tecnologías asistivas. */
+.account-privacy button:focus-visible, .account-privacy a:focus-visible, .account-privacy input:focus-visible { outline: 3px solid #83a5bb; outline-offset: 2px; }
+
+/* En móviles, una sola columna deja espacio suficiente para leer. */
+@media (max-width: 760px) {
+  .account-privacy { grid-template-columns: 1fr; gap: 12px; }
+  .account-privacy__card { padding: 16px; }
+  .account-privacy__dialog { padding: 18px; }
+}
+
+/* Botones de modal a ancho completo en pantallas pequeñas. */
+@media (max-width: 430px) {
+  .account-privacy__dialog-actions { flex-direction: column-reverse; }
+  .account-privacy__dialog-actions button { width: 100%; }
+}
+
+/* Eliminamos desplazamientos animados cuando la persona lo solicita. */
+@media (prefers-reduced-motion: reduce) {
+  .account-privacy * { scroll-behavior: auto; }
+}

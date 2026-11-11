@@ -1,3 +1,4 @@
+
 // =========================================================
 // MI CUENTA: PÁGINA COMPARTIDA ENTRE LOS TRES ROLES
 // =========================================================
@@ -17,6 +18,7 @@ import {
   UserRoundCog,
 } from "lucide-react";
 import api from "../../services/api";
+import AccountPrivacyAndDeletion from "../../components/account/AccountPrivacyAndDeletion";
 import "../../styles/pages/account/MyAccount.css";
 
 // Valores iniciales del formulario, antes de cargar los datos.
@@ -201,9 +203,17 @@ function MyAccount() {
             </aside>
           </div>
         )}
+        {/* Privacidad y eliminación se muestran bajo el perfil autenticado. */}
+        {!loading && profile && (
+          <AccountPrivacyAndDeletion role={profile.role} />
+        )}
       </div>
     </main>
   );
 }
 
 export default MyAccount;
+
+
+
+
