@@ -1,128 +1,109 @@
 /* ========================================================= */
-/* ACTIVACIÓN: INFORMACIÓN Y ACEPTACIÓN LEGAL - EL ANCLA */
-/* Archivo adicional: conserva ActivateAccount.css original. */
+/* ACTIVACIÓN - AVISO LEGAL BREVE Y ACEPTACIÓN                */
+/* Archivo: frontend/src/styles/components/auth/             */
+/*          ActivationLegalNotice.css                        */
 /* ========================================================= */
 
-/* Ampliamos únicamente la tarjeta que contiene el aviso completo. */
+/* La tarjeta vuelve a tener un ancho adecuado para dos párrafos. */
 .activate-account-page .activate-account-card--legal {
-  width: min(100%, 880px);
-  max-width: 880px;
+  width: min(100%, 650px);
+  max-width: 650px;
 }
 
+/* Separaciones moderadas para no alargar el proceso de activación. */
 .activation-legal {
   display: grid;
-  gap: 21px;
-  margin-top: 24px;
-  color: #23394c;
+  gap: 17px;
+  margin-top: 22px;
   text-align: left;
 }
 
+/* Aviso compacto, con esquinas suaves y colores del tema. */
 .activation-legal__intro {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 15px 17px;
-  border: 1px solid #cbdce4;
-  border-radius: 12px;
-  background: #f2f7fa;
+  gap: 11px;
+  padding: 17px 18px;
+  border: 1px solid var(--ea-theme-border, #cbdce4);
+  border-radius: 14px;
+  background: var(--ea-theme-surface, #f2f7fa);
 }
 
-.activation-legal__intro svg { flex-shrink: 0; margin-top: 3px; color: #35677f; }
-.activation-legal__intro p { margin: 0; font-size: 14px; line-height: 1.75; }
-
-.activation-legal__section { display: grid; gap: 13px; }
-.activation-legal__section h2 {
-  margin: 0;
-  color: #23394c;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(19px, 3vw, 24px);
-  font-weight: 600;
-  line-height: 1.3;
-}
-.activation-legal__section p {
-  margin: 0;
-  color: #4c6170;
-  font-size: 14px;
-  line-height: 1.83;
-  white-space: pre-line;
+.activation-legal__intro > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--ea-theme-accent, #35677f);
 }
 
-.activation-legal__section--risk {
-  padding: 20px;
-  border: 1px solid #e4d8cc;
-  border-left: 4px solid #b67458;
-  border-radius: 13px;
-  background: #fbf9f6;
-}
-.activation-legal__risk-heading { display: flex; align-items: flex-start; gap: 11px; }
-.activation-legal__risk-heading svg { flex-shrink: 0; color: #9a654e; margin-top: 3px; }
-
-.activation-legal__document-list { display: grid; gap: 8px; }
-.activation-legal__document {
-  overflow: hidden;
-  border: 1px solid #dce4e8;
-  border-radius: 10px;
-  background: #ffffff;
-}
-.activation-legal__document summary {
-  padding: 13px 16px;
-  color: #23394c;
-  font-size: 14px;
-  font-weight: 650;
-  cursor: pointer;
-}
-.activation-legal__document summary:focus-visible,
-.activation-legal__links a:focus-visible,
-.activation-legal__accept:focus-within { outline: 2px solid #35677f; outline-offset: 2px; }
-.activation-legal__document-content {
+/* Dos párrafos legibles, sin márgenes adicionales. */
+.activation-legal__copy {
   display: grid;
-  gap: 15px;
-  padding: 16px;
-  border-top: 1px solid #e7ecef;
+  gap: 12px;
+  min-width: 0;
 }
-.activation-legal__document-content section { display: grid; gap: 7px; }
-.activation-legal__document-content h4 { margin: 0; font-size: 14px; color: #23394c; }
-.activation-legal__document-content p { white-space: pre-line; }
-.activation-legal__links { display: flex; flex-wrap: wrap; column-gap: 21px; row-gap: 9px; }
-.activation-legal__links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: #35677f;
-  font-size: 13px;
-  font-weight: 600;
+
+.activation-legal__copy p {
+  margin: 0;
+  color: var(--ea-theme-text, #344b5c);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Los enlaces permiten consultar la información completa en otra pestaña. */
+.activation-legal__copy a {
+  display: inline;
+  color: var(--ea-theme-accent, #35677f);
+  font-weight: 650;
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
+
+.activation-legal__copy a svg {
+  display: inline-block;
+  vertical-align: -1px;
+}
+
+/* Aceptación explícita e independiente del enlace a las políticas. */
 .activation-legal__accept {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   padding: 15px;
-  border: 1px solid #d7e1e4;
+  border: 1px solid var(--ea-theme-border, #d7e1e4);
   border-radius: 12px;
-  background: #f8faf9;
+  background: var(--ea-theme-surface, #f8faf9);
   cursor: pointer;
 }
+
 .activation-legal__accept input {
   width: 19px;
   height: 19px;
-  margin: 1px 0 0;
   flex-shrink: 0;
-  accent-color: #35677f;
+  margin: 2px 0 0;
+  accent-color: var(--ea-theme-accent, #35677f);
   cursor: pointer;
 }
-.activation-legal__accept span { font-size: 14px; line-height: 1.72; color: #23394c; }
-.activation-legal__continue { width: 100%; justify-content: center; }
-.activation-legal__footnote { margin: 0; color: #6d7d86; font-size: 12px; line-height: 1.7; }
 
-@media (max-width: 600px) {
-  .activation-legal { gap: 17px; }
-  .activation-legal__section--risk { padding: 15px; }
-  .activation-legal__intro { padding: 13px; }
-  .activation-legal__accept { padding: 12px; }
+.activation-legal__accept span {
+  color: var(--ea-theme-text, #23394c);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
-/* En el segundo paso ofrecemos una forma clara de revisar lo aceptado. */
+/* El botón de la página conserva su aspecto y sus validaciones existentes. */
+.activation-legal__continue {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Se indica claramente dónde está el foco del teclado. */
+.activation-legal__copy a:focus-visible,
+.activation-legal__accept:focus-within {
+  outline: 2px solid var(--ea-theme-accent, #35677f);
+  outline-offset: 3px;
+}
+
+/* Mantiene el botón para volver al aviso desde el paso de contraseña. */
 .activate-account-page .activate-account-card__back {
   display: inline-flex;
   align-items: center;
@@ -131,13 +112,29 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #35677f;
+  color: var(--ea-theme-accent, #35677f);
   font: inherit;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
+
 .activate-account-page .activate-account-card__back:focus-visible {
-  outline: 2px solid #35677f;
+  outline: 2px solid var(--ea-theme-accent, #35677f);
   outline-offset: 4px;
+}
+
+/* Evitamos que el aviso quede apretado en pantallas móviles. */
+@media (max-width: 600px) {
+  .activation-legal {
+    gap: 14px;
+  }
+
+  .activation-legal__intro {
+    padding: 14px;
+  }
+
+  .activation-legal__accept {
+    padding: 13px;
+  }
 }

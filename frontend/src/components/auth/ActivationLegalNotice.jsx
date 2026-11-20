@@ -1,104 +1,49 @@
 // =========================================================
-// AVISO LEGAL PREVIO A LA ACTIVACIÓN - IGLESIA EL ANCLA
+// AVISO BREVE Y ACEPTACIÓN DE CONDICIONES - IGLESIA EL ANCLA
 // Archivo: frontend/src/components/auth/ActivationLegalNotice.jsx
 // =========================================================
 
-// Importamos Link para navegar por el sitio sin recargar la PWA.
+// Link permite navegar a las páginas legales sin recargar la aplicación.
 import { Link } from "react-router-dom";
 
-// Importamos los iconos utilizados por la interfaz.
-import { ShieldCheck, ExternalLink, Info, ArrowRight } from "lucide-react";
+// Utilizamos iconos para distinguir el aviso y la acción de continuar.
+import { Info, ExternalLink, ArrowRight } from "lucide-react";
 
-// Utilizamos el contenido de respaldo revisado para mostrar en esta
-// pantalla los documentos completos incluso si Drive no responde.
-import termsDemoData from "../../data/informationalPages/termsDemoData";
-import privacyDemoData from "../../data/informationalPages/privacyDemoData";
-
-// Importamos estilos propios sin reemplazar la hoja original del proyecto.
+// Conservamos el archivo de estilos propio del aviso.
 import "../../styles/components/auth/ActivationLegalNotice.css";
 
-// Muestra secciones completas sin permitir modificaciones del contenido.
-function LegalDocumentPreview({ title, document }) {
-  return (
-    <details className="activation-legal__document">
-      <summary>{title}</summary>
-      <div className="activation-legal__document-content">
-        <p>{document.information.introduction}</p>
-        {document.sections.map((section) => (
-          <section key={section.id}>
-            <h4>{section.title}</h4>
-            <p>{section.content}</p>
-          </section>
-        ))}
-      </div>
-    </details>
-  );
-}
-
-// Recibimos el contenido desde el backend y las opciones controladas
-// por la página principal. No guardamos aceptaciones en localStorage.
-function ActivationLegalNotice({
-  legal,
-  accepted,
-  onAcceptedChange,
-  onContinue,
-}) {
+// La página de activación controla el estado del checkbox y el cambio de paso.
+// Este componente no almacena ninguna aceptación por sí mismo.
+function ActivationLegalNotice({ legal, accepted, onAcceptedChange, onContinue }) {
   return (
     <div className="activation-legal">
-      <div className="activation-legal__intro">
+      {/* Informamos de forma breve y enlazamos los documentos completos. */}
+      <section className="activation-legal__intro" aria-label="Información antes de activar la cuenta">
         <Info size={19} aria-hidden="true" />
-        <p>
-          Antes de activar tu cuenta, revisa la información que ya fue
-          registrada, cómo se tratarán tus datos y cuáles son los riesgos
-          tecnológicos. Tú decides si quieres continuar.
-        </p>
-      </div>
 
-      <section className="activation-legal__section" aria-labelledby="activation-data-heading">
-        <h2 id="activation-data-heading">Cómo utilizaremos tus datos</h2>
-        {legal.dataNotice.map((paragraph, index) => (
-          <p key={`data-${index}`}>{paragraph}</p>
-        ))}
-      </section>
+        <div className="activation-legal__copy">
+          <p>
+            Antes de activar tu cuenta, te invitamos a leer nuestros{" "}
+            <Link to={legal.termsPath} target="_blank" rel="noopener noreferrer">
+              Términos y Condiciones <ExternalLink size={13} aria-hidden="true" />
+            </Link>{" "}
+            y nuestra{" "}
+            <Link to={legal.privacyPath} target="_blank" rel="noopener noreferrer">
+              Política de Privacidad <ExternalLink size={13} aria-hidden="true" />
+            </Link>.
+            {" "}Allí explicamos qué datos utiliza la plataforma, para qué se usan,
+            cómo se protegen y cuáles son los posibles riesgos tecnológicos.
+          </p>
 
-      <section className="activation-legal__section activation-legal__section--risk" aria-labelledby="activation-risk-heading">
-        <div className="activation-legal__risk-heading">
-          <ShieldCheck size={22} aria-hidden="true" />
-          <h2 id="activation-risk-heading">{legal.securityHeading}</h2>
-        </div>
-        {/* Los seis párrafos de la cláusula se muestran sin recortes. */}
-        {legal.securityParagraphs.map((paragraph, index) => (
-          <p key={`risk-${index}`}>{paragraph}</p>
-        ))}
-      </section>
-
-      <section className="activation-legal__section" aria-label="Documentación legal completa">
-        <h2>Documentos que debes revisar</h2>
-        <p>
-          Puedes consultar los documentos completos aquí mismo y abrir también
-          sus páginas públicas. La versión utilizada para esta activación es
-          {" "}<strong>{legal.version}</strong>.
-        </p>
-        <div className="activation-legal__document-list">
-          <LegalDocumentPreview
-            title="Leer todos los Términos y Condiciones"
-            document={termsDemoData}
-          />
-          <LegalDocumentPreview
-            title="Leer toda la Política de Privacidad"
-            document={privacyDemoData}
-          />
-        </div>
-        <div className="activation-legal__links">
-          <Link to={legal.termsPath} target="_blank" rel="noopener noreferrer">
-            Términos y Condiciones <ExternalLink size={14} aria-hidden="true" />
-          </Link>
-          <Link to={legal.privacyPath} target="_blank" rel="noopener noreferrer">
-            Política de Privacidad <ExternalLink size={14} aria-hidden="true" />
-          </Link>
+          <p>
+            Si prefieres no activar tu cuenta, no necesitas hacer nada: la
+            invitación vencerá a las 24 horas y tu registro provisional se
+            eliminará automáticamente después del vencimiento.
+          </p>
         </div>
       </section>
 
+      {/* La casilla comienza sin marcarse; el usuario debe aceptarla expresamente. */}
       <label className="activation-legal__accept">
         <input
           type="checkbox"
@@ -106,9 +51,11 @@ function ActivationLegalNotice({
           onChange={(event) => onAcceptedChange(event.target.checked)}
           required
         />
+        {/* Mantenemos el texto oficial obtenido del backend. */}
         <span>{legal.acknowledgement}</span>
       </label>
 
+      {/* El primer paso no permite crear contraseñas hasta aceptar. */}
       <button
         type="button"
         className="activate-account-card__submit activation-legal__continue"
@@ -116,14 +63,8 @@ function ActivationLegalNotice({
         onClick={onContinue}
       >
         <ArrowRight size={18} aria-hidden="true" />
-        Aceptar y continuar para crear mi contraseña
+        Aceptar y continuar
       </button>
-      <p className="activation-legal__footnote">
-        Si no deseas activar tu cuenta, puedes cerrar esta página sin marcar
-        la casilla. La invitación vencerá a las 24 horas y tu registro
-        provisional se eliminará automáticamente de la base de datos después
-        del vencimiento, sin necesidad de solicitarlo.
-      </p>
     </div>
   );
 }
