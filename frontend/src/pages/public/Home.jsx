@@ -1,13 +1,14 @@
-
 // Importamos la sección de valores de la comunidad.
 import CommunityValues from "../../components/public/CommunityValues";
+
 // Importamos la sección de próximas actividades.
 import UpcomingActivities from "../../components/public/UpcomingActivities";
+
 // Importamos la sección informativa para personas nuevas.
 import FirstVisitSection from "../../components/public/FirstVisitSection";
-// Importamos el banner informativo sobre notificaciones.
-import NotificationBanner from "../../components/public/NotificationBanner";
 
+// Importamos la nueva sección pública para compartir el sitio y su código QR.
+import PublicShare from "../../components/public/PublicShare";
 
 // Importamos el video del atardecer.
 import videoAtardecer from "../../assets/images/atardecer-el-ancla.mp4";
@@ -95,14 +96,18 @@ function Home() {
                     {/* Forma inferior decorativa. */}
                     <div className="home-hero__curve"></div>
                 </section>
+
                 {/* Mostramos los valores principales de la comunidad. */}
                 <CommunityValues />
+
                 {/* Mostramos las próximas actividades de la iglesia. */}
                 <UpcomingActivities />
+
                 {/* Mostramos información para personas que visitan la iglesia por primera vez. */}
                 <FirstVisitSection />
-                {/* Presentamos la futura función de notificaciones de la PWA. */}
-                <NotificationBanner />
+
+                {/* Reemplazamos el antiguo banner de notificaciones por la sección de compartir. */}
+                <PublicShare />
 
             </main>
         </div>

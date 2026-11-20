@@ -1,4 +1,3 @@
-
 import { NotificationsProvider } from "./context/notifications/NotificationsContext";
 import MartinWidget from "./components/martin/MartinWidget";
 // Control global de lectura asistida, disponible en todas las rutas.
@@ -456,7 +455,3 @@ function App() {
 // =========================================================
 
 export default App;
-
-
-
-
