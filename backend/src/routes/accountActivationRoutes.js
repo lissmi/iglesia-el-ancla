@@ -12,6 +12,13 @@ import { createHash } from "node:crypto";
 import User from "../models/User.js";
 import EmailVerificationCode from "../models/EmailVerificationCode.js";
 import { hashPassword, validatePassword } from "../utils/passwordUtils.js";
+import {
+  ACTIVATION_LEGAL_VERSION,
+  ACTIVATION_LEGAL_ACKNOWLEDGEMENT,
+  ACTIVATION_DATA_NOTICE,
+  ACTIVATION_SECURITY_HEADING,
+  ACTIVATION_SECURITY_PARAGRAPHS,
+} from "../config/activationLegalPolicy.js";
 
 const router = Router();
 
@@ -43,6 +50,23 @@ function requireTrustedOrigin(req, res, next) {
 // Mensaje idéntico para tokens desconocidos, vencidos y ya utilizados.
 const INVALID_LINK = "El enlace es inválido, ha vencido o ya fue utilizado. Solicita una nueva invitación al administrador.";
 
+// GET /api/auth/account-activation/legal
+// Página pública: la persona recibe exactamente el aviso que debe
+// revisar antes de decidir si acepta la invitación.
+router.get("/legal", (req, res) => {
+  res.set("Cache-Control", "no-store");
+  return res.status(200).json({
+    success: true,
+    version: ACTIVATION_LEGAL_VERSION,
+    acknowledgement: ACTIVATION_LEGAL_ACKNOWLEDGEMENT,
+    dataNotice: ACTIVATION_DATA_NOTICE,
+    securityHeading: ACTIVATION_SECURITY_HEADING,
+    securityParagraphs: ACTIVATION_SECURITY_PARAGRAPHS,
+    termsPath: "/terminos-y-condiciones",
+    privacyPath: "/politica-de-privacidad",
+  });
+});
+
 // POST /api/auth/account-activation/complete
 router.post("/complete", requireTrustedOrigin, activationLimiter, async (req, res, next) => {
   try {
@@ -51,16 +75,33 @@ router.post("/complete", requireTrustedOrigin, activationLimiter, async (req, re
     // Nunca aceptamos campos de autorización ni identificadores de usuario.
     if (!req.is("application/json") || !req.body ||
         typeof req.body !== "object" || Array.isArray(req.body) ||
-        Object.keys(req.body).length !== 2 ||
+        Object.keys(req.body).length !== 4 ||
         !Object.hasOwn(req.body, "token") ||
-        !Object.hasOwn(req.body, "newPassword")) {
+        !Object.hasOwn(req.body, "newPassword") ||
+        !Object.hasOwn(req.body, "acceptedLegalTerms") ||
+        !Object.hasOwn(req.body, "documentVersion")) {
       return res.status(400).json({ success: false, message: "Solicitud de activación no válida." });
     }
 
-    const { token, newPassword } = req.body;
+    const { token, newPassword, acceptedLegalTerms, documentVersion } = req.body;
     if (typeof token !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(token) ||
         typeof newPassword !== "string") {
       return res.status(400).json({ success: false, message: "Datos de activación no válidos." });
+    }
+
+    // Nunca aceptamos la casilla por defecto ni confiamos en la interfaz.
+    // La versión publicada en el backend es la única versión autorizada.
+    if (acceptedLegalTerms !== true) {
+      return res.status(400).json({
+        success: false,
+        message: "Debes aceptar los Términos y Condiciones y confirmar que recibiste la información de privacidad y riesgos.",
+      });
+    }
+    if (documentVersion !== ACTIVATION_LEGAL_VERSION) {
+      return res.status(409).json({
+        success: false,
+        message: "Las condiciones han cambiado. Actualiza la página y vuelve a revisarlas antes de activar tu cuenta.",
+      });
     }
 
     // Respetamos la misma política usada por el cambio de contraseña.
@@ -137,7 +178,19 @@ router.post("/complete", requireTrustedOrigin, activationLimiter, async (req, re
               isActive: true,
               mustChangePassword: false,
               passwordChangedAt: new Date(),
+              // La aceptación y la activación se registran juntas.
+              // No guardamos direcciones IP ni información adicional innecesaria.
+              legalAcceptance: {
+                termsVersion: ACTIVATION_LEGAL_VERSION,
+                privacyVersion: ACTIVATION_LEGAL_VERSION,
+                riskNoticeAcknowledged: true,
+                acceptedAt: new Date(),
+                acceptedVia: "account_invitation",
+              },
             },
+            // Una cuenta activada deja de ser candidata al índice TTL.
+            // Esta operación forma parte de la misma transacción.
+            $unset: { invitationExpiresAt: "" },
             $inc: { tokenVersion: 1 },
           },
           { session }

@@ -104,3 +104,105 @@
         font-size: 15px;
     }
 }
+
+
+/* ========================================================= */
+/* MEJORA VISUAL: TÉRMINOS Y POLÍTICA DE PRIVACIDAD          */
+/* Compatible con GlobalTheme: modo claro y oscuro           */
+/* ========================================================= */
+
+/* Suavizamos el fondo general del documento. */
+html[data-theme] .terms-editable .terms-editor-document {
+  background-color: color-mix(
+    in srgb,
+    var(--ea-theme-surface) 90%,
+    var(--ea-theme-border) 10%
+  ) !important;
+}
+
+/* Quitamos el fondo continuo del contenedor principal. */
+html[data-theme] .terms-editable .terms-editor-document__content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Redondeamos y suavizamos la tarjeta de introducción. */
+html[data-theme] .terms-editable .terms-editor-document__intro {
+  background-color: var(--ea-theme-surface) !important;
+
+  border: 1px solid var(--ea-theme-border) !important;
+
+  border-radius: 18px;
+
+  box-shadow: 0 4px 16px rgba(20, 38, 54, 0.035);
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+}
+
+/* Cada apartado se muestra como una tarjeta independiente. */
+html[data-theme] .terms-editable .terms-editor-document__section {
+  background-color: color-mix(
+    in srgb,
+    var(--ea-theme-surface) 97%,
+    var(--ea-theme-border) 3%
+  ) !important;
+
+  border: 1px solid var(--ea-theme-border) !important;
+
+  border-radius: 18px;
+
+  padding: 28px 30px;
+
+  margin-bottom: 16px;
+
+  box-shadow: 0 4px 16px rgba(20, 38, 54, 0.035);
+
+  overflow: hidden;
+
+  scroll-margin-top: 90px;
+}
+
+/* Eliminamos el espacio sobrante tras el último apartado. */
+html[data-theme] .terms-editable .terms-editor-document__section:last-child {
+  margin-bottom: 0;
+}
+
+/* Redondeamos también la tarjeta del índice lateral. */
+html[data-theme] .terms-editable .terms-editor-document__sidebar-card {
+  border-radius: 18px;
+
+  border: 1px solid var(--ea-theme-border) !important;
+
+  box-shadow: 0 4px 16px rgba(20, 38, 54, 0.035);
+}
+
+/* ========================================================= */
+/* ADAPTACIÓN PARA DISPOSITIVOS MÓVILES                      */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Reducimos los espacios interiores en pantallas pequeñas. */
+  html[data-theme] .terms-editable .terms-editor-document__section {
+    padding: 22px 20px;
+
+    border-radius: 15px;
+
+    margin-bottom: 12px;
+  }
+
+  /* Ajustamos las esquinas de la introducción. */
+  html[data-theme] .terms-editable .terms-editor-document__intro {
+    border-radius: 15px;
+
+    margin-bottom: 12px;
+  }
+
+  /* Mantenemos coherencia con el índice lateral. */
+  html[data-theme] .terms-editable .terms-editor-document__sidebar-card {
+    border-radius: 15px;
+  }
+}

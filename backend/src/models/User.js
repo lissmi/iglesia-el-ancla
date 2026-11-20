@@ -370,6 +370,51 @@ const userSchema = new Schema(
         },
 
 
+        // =========================================================
+        // CADUCIDAD Y ELIMINACIÓN AUTOMÁTICA DE CUENTAS INVITADAS
+        // =========================================================
+        // Solo se asigna durante el registro por invitación.
+        // Los usuarios existentes y las cuentas ya activadas no tienen
+        // este campo, por lo que nunca se eliminan mediante el TTL.
+        // En una activación exitosa se elimina con $unset.
+        invitationExpiresAt: {
+            type: Date,
+            default: undefined,
+            select: false,
+        },
+
+        // =========================================================
+        // EVIDENCIA DE ACEPTACIÓN DURANTE LA INVITACIÓN
+        // =========================================================
+        // Solo se registra cuando el destinatario confirma expresamente
+        // las condiciones y completa correctamente su activación.
+        // No es obligatorio para las cuentas existentes, que pueden haberse
+        // creado antes de que se incorporara este nuevo procedimiento.
+        legalAcceptance: {
+            type: new Schema(
+                {
+                    // Versión de los términos aceptados por la persona.
+                    termsVersion: { type: String, required: true },
+                    // Versión de la información de privacidad revisada.
+                    privacyVersion: { type: String, required: true },
+                    // Constancia de haber recibido el aviso tecnológico.
+                    riskNoticeAcknowledged: { type: Boolean, required: true },
+                    // Momento registrado por el servidor, nunca por React.
+                    acceptedAt: { type: Date, required: true },
+                    // Método de aceptación utilizado para esta cuenta.
+                    acceptedVia: {
+                        type: String,
+                        enum: ["account_invitation"],
+                        required: true,
+                    },
+                },
+                { _id: false }
+            ),
+            default: undefined,
+            // No forma parte de las respuestas de perfiles públicos.
+            select: false,
+        },
+
         // Cuenta los intentos consecutivos
         // de acceso fallidos.
         loginAttempts: {
@@ -604,6 +649,27 @@ userSchema.index({
 });
 
 
+// MongoDB Atlas elimina automáticamente cada CUENTA INVITADA
+// cuando se alcanza su fecha individual de expiración.
+// La fecha solo existe en cuentas pendientes de invitación y
+// se elimina al activarlas; un usuario desactivado normalmente
+// no tiene esta fecha y por tanto jamás se borra por TTL.
+// La eliminación es asíncrona: puede ejecutarse después del minuto exacto.
+userSchema.index(
+    { invitationExpiresAt: 1 },
+    {
+        expireAfterSeconds: 0,
+        name: "invitationExpiresAt_ttl",
+        // Defensa adicional: incluso ante un campo residual, jamás
+        // se elimina una cuenta que ya esté activa o verificada.
+        partialFilterExpression: {
+            isActive: false,
+            emailVerifiedAt: null,
+        },
+    }
+);
+
+
 // Creamos un índice para facilitar
 // futuros listados de cumpleaños.
 userSchema.index({
@@ -648,6 +714,10 @@ userSchema.set(
             document,
             returnedObject
         ) {
+
+            // Ocultamos la fecha de eliminación automática
+            // en cualquier serialización del perfil.
+            delete returnedObject.invitationExpiresAt;
 
             // Eliminamos el hash
             // de la contraseña.

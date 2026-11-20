@@ -1,4 +1,3 @@
-
 // =========================================================
 // TÉRMINOS Y CONDICIONES - IGLESIA EL ANCLA
 // Contenido de respaldo cuando no existe publicación en Drive.
@@ -12,7 +11,7 @@ const termsDemoData = {
     "description": "Conoce las reglas básicas para usar nuestra plataforma comunitaria de forma sencilla, segura y respetuosa."
   },
   "information": {
-    "lastUpdated": "Un espacio de encuentro basado en el respeto y la confianza.",
+    "lastUpdated": "Actualizado el 20 de noviembre de 2026 · Versión 2026-11-20-v2 para nuevas invitaciones.",
     "introduction": "La plataforma de Iglesia El Ancla Comunidad Cristiana busca facilitar el acceso a información, actividades y recursos. Queremos que su uso sea claro y voluntario. Estas condiciones explican cómo funciona el servicio, qué esperamos de cada persona y dónde puedes consultar tus derechos sobre los datos personales."
   },
   "sections": [
@@ -24,7 +23,7 @@ const termsDemoData = {
     {
       "id": "TERM-002",
       "title": "Acceso y cuentas",
-      "content": "Las funciones disponibles dependen del tipo de usuario y de los permisos asignados. Una cuenta de miembro permite acceder a herramientas comunitarias; los accesos administrativos dependen de las responsabilidades autorizadas por la iglesia. La invitación, activación y recuperación de acceso se realizan mediante los mecanismos habilitados en la plataforma."
+      "content": "Las funciones disponibles dependen del tipo de usuario y de los permisos asignados. Una cuenta de miembro permite acceder a herramientas comunitarias; los accesos administrativos dependen de las responsabilidades autorizadas por la iglesia. La invitación, activación y recuperación de acceso se realizan mediante los mecanismos habilitados en la plataforma. Las invitaciones duran 24 horas: si no se completa la activación, el registro provisional de la cuenta se elimina automáticamente de la base de datos después del vencimiento, mediante un proceso técnico que puede tener una breve demora."
     },
     {
       "id": "TERM-003",
@@ -75,6 +74,11 @@ const termsDemoData = {
       "id": "TERM-012",
       "title": "Consultas y contacto",
       "content": "Si tienes preguntas sobre el uso de la plataforma, una actividad, tu cuenta o tus datos personales, puedes comunicarte con Iglesia El Ancla Comunidad Cristiana por los medios publicados en /contacto. Las solicitudes relacionadas con datos personales se gestionan de acuerdo con la legislación chilena aplicable."
+    },
+    {
+      "id": "TERM-013",
+      "title": "Seguridad de la información y riesgos tecnológicos",
+      "content": "La plataforma digital de Iglesia El Ancla Comunidad Cristiana incorpora medidas técnicas y organizativas destinadas a proteger la información de sus usuarios y prevenir accesos no autorizados.\n\nNo obstante, el usuario reconoce y comprende que ningún sistema informático conectado a Internet puede garantizar una seguridad absoluta. Por lo tanto, existe la posibilidad de que ocurran incidentes tecnológicos, ataques informáticos, accesos no autorizados, filtraciones de información o interrupciones del servicio, aun cuando se hayan implementado medidas de protección.\n\nAl aceptar las condiciones de uso, el usuario declara haber sido informado de estos riesgos y comprende las características del entorno digital en el que participará.\n\nAsimismo, se compromete a proteger sus credenciales de acceso, utilizar contraseñas seguras, no compartir su cuenta y comunicar cualquier actividad sospechosa.\n\nIglesia El Ancla Comunidad Cristiana y los prestadores tecnológicos que participen en el funcionamiento de la plataforma responderán únicamente conforme a las obligaciones y responsabilidades que les correspondan de acuerdo con la legislación aplicable.\n\nEsta disposición no constituye una renuncia a los derechos que la ley reconoce a los titulares de datos personales ni excluye las responsabilidades que legalmente no pueden ser limitadas."
     }
   ]
 };

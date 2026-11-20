@@ -1,4 +1,3 @@
-
 // =========================================================
 // POLÍTICA DE PRIVACIDAD - IGLESIA EL ANCLA
 // Contenido de respaldo cuando no existe publicación en Drive.
@@ -12,7 +11,7 @@ const privacyDemoData = {
     "description": "Te contamos qué información utilizamos, cómo la cuidamos y qué opciones tienes para decidir sobre tus datos."
   },
   "information": {
-    "lastUpdated": "Tu privacidad y tranquilidad son importantes para nosotros.",
+    "lastUpdated": "Actualizado el 20 de noviembre de 2026 · Versión 2026-11-20-v2 para nuevas invitaciones.",
     "introduction": "En Iglesia El Ancla Comunidad Cristiana queremos que participes con tranquilidad. Utilizamos tus datos para ofrecer las funciones de la plataforma y acompañar las actividades de nuestra comunidad; no para venderlos, crear perfiles comerciales ni enviarte publicidad de empresas. Aquí explicamos con claridad qué información se trata, qué personas pueden verla y cómo puedes actualizarla o solicitar su eliminación."
   },
   "sections": [
@@ -74,12 +73,12 @@ const privacyDemoData = {
     {
       "id": "PRIV-012",
       "title": "¿Cómo protegemos la información?",
-      "content": "Aplicamos controles de acceso según el rol, protecciones de sesión y medidas de seguridad en el servidor y la base de datos. Limitamos el acceso a la información que cada función necesita, especialmente en asuntos de oración y administración. Ningún sistema digital es infalible; por eso también debemos mantener procedimientos de respaldo, revisión de permisos y atención de incidentes."
+      "content": "Aplicamos controles de acceso según el rol, protecciones de sesión y medidas de seguridad en el servidor y la base de datos. Limitamos el acceso a la información que cada función necesita, especialmente en asuntos de oración y administración. Ningún sistema digital es infalible: pueden ocurrir incidentes tecnológicos, ataques informáticos, accesos no autorizados, filtraciones de información o interrupciones, aun cuando se aplican medidas de seguridad. La iglesia y sus prestadores tecnológicos responderán conforme a sus obligaciones legales; conocer los riesgos no significa renunciar a los derechos de protección de datos. Debemos mantener procedimientos de respaldo, revisión de permisos y atención de incidentes."
     },
     {
       "id": "PRIV-013",
       "title": "¿Cuánto tiempo se conserva?",
-      "content": "Conservamos la información mientras sea necesaria para la función por la que fue recopilada y revisamos cuándo corresponde eliminarla o desvincularla. Los datos del perfil y de participación pueden retirarse al eliminar la cuenta. Algunos comprobantes o referencias técnicas de operaciones deben tratarse por separado para verificar pagos y atender obligaciones aplicables; esto no significa conservar indefinidamente tu perfil. Los plazos concretos por tipo de dato se definirán en la política de conservación institucional."
+      "content": "Conservamos la información mientras sea necesaria para la función por la que fue recopilada y revisamos cuándo corresponde eliminarla o desvincularla. Los datos del perfil y de participación pueden retirarse al eliminar la cuenta. Algunos comprobantes o referencias técnicas de operaciones deben tratarse por separado para verificar pagos y atender obligaciones aplicables; esto no significa conservar indefinidamente tu perfil. Los registros provisionales de cuentas invitadas que no se activan caducan a las 24 horas y se eliminan automáticamente de la base de datos después del vencimiento mediante una limpieza técnica que puede demorarse brevemente. Los demás plazos concretos por tipo de dato se definirán en la política de conservación institucional."
     },
     {
       "id": "PRIV-014",
@@ -100,6 +99,11 @@ const privacyDemoData = {
       "id": "PRIV-017",
       "title": "Actualizaciones y consultas",
       "content": "Podemos actualizar esta política si cambian las funciones, los proveedores o las reglas aplicables. Procuraremos informar los cambios relevantes por nuestros canales oficiales. Para consultas sobre privacidad o solicitudes relacionadas con tu información, utiliza la página /contacto."
+    },
+    {
+      "id": "PRIV-018",
+      "title": "Información previa a la activación y riesgos tecnológicos",
+      "content": "Antes de activar una cuenta por invitación, un administrador puede haber ingresado nombre, apellidos, correo electrónico, fecha de nacimiento, rol, sucursal y teléfono opcional para preparar la cuenta. La persona invitada recibe un aviso de privacidad por correo y, al abrir el enlace, revisa íntegramente la cláusula sobre riesgos tecnológicos y acepta expresamente los Términos y Condiciones antes de crear su contraseña. El sistema conserva un registro técnico de fecha y versión de la aceptación. Si no desea activar la cuenta, puede ignorar la invitación: el enlace caduca a las 24 horas y el registro provisional se elimina automáticamente de la base de datos después del vencimiento, sin necesidad de efectuar una solicitud. La eliminación técnica puede presentar una breve demora; ello no afecta los derechos de la persona sobre sus datos. La información completa sobre seguridad se desarrolla también en los Términos y Condiciones; la aceptación no elimina responsabilidades legales."
     }
   ]
 };

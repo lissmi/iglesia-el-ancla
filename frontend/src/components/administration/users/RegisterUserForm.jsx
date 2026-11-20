@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import api from "../../../services/api";
 
@@ -1019,31 +1018,39 @@ function RegisterUserForm({
           )}
 
           {/* ============================================= */}
-          {/* ACCIONES */}
+          {/* ACCIONES DEL FORMULARIO */}
           {/* ============================================= */}
 
-          <div className="register-user-form__actions">
+          {/*
+            Mostramos Limpiar y Revisar únicamente durante la edición.
+            Cuando aparece la confirmación, esos botones se ocultan
+            para que solo queden Volver y Registrar y enviar invitación.
+            Si se presiona Volver o falla el envío, se muestran nuevamente.
+          */}
+          {!showConfirmation && (
+            <div className="register-user-form__actions">
 
-            <button
-              type="button"
-              className="register-user-form__button-secondary"
-              onClick={handleReset}
-              disabled={isSubmitting}
-            >
-              <RotateCcw size={17} />
-              Limpiar formulario
-            </button>
+              <button
+                type="button"
+                className="register-user-form__button-secondary"
+                onClick={handleReset}
+                disabled={isSubmitting}
+              >
+                <RotateCcw size={17} />
+                Limpiar formulario
+              </button>
 
-            <button
-              type="submit"
-              className="register-user-form__button-primary"
-              disabled={isSubmitting || loadingBranches || Boolean(branchesError) || branches.length === 0 || Boolean(registrationSuccess)}
-            >
-              <UserPlus size={17} />
-              {isSubmitting ? "Enviando invitación..." : "Revisar registro"}
-            </button>
+              <button
+                type="submit"
+                className="register-user-form__button-primary"
+                disabled={isSubmitting || loadingBranches || Boolean(branchesError) || branches.length === 0 || Boolean(registrationSuccess)}
+              >
+                <UserPlus size={17} />
+                {isSubmitting ? "Enviando invitación..." : "Revisar registro"}
+              </button>
 
-          </div>
+            </div>
+          )}
 
         </form>
 

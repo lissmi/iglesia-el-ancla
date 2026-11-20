@@ -1,5 +1,3 @@
-
-
 import { Router } from "express";
 import mongoose from "mongoose";
 import { createHash, randomBytes } from "node:crypto";
@@ -700,6 +698,12 @@ function buildInvitationEmailHtml({ firstName, link }) {
   // Conservamos el enlace de activación individual y seguro.
   const safeLink = escapeInvitationHtml(link);
 
+  // Enlazamos documentos públicos sin copiar el token de la invitación.
+  const legalOrigin = new URL(link).origin;
+  const safeTermsUrl = escapeInvitationHtml(`${legalOrigin}/terminos-y-condiciones`);
+  const safePrivacyUrl = escapeInvitationHtml(`${legalOrigin}/politica-de-privacidad`);
+  const safeContactUrl = escapeInvitationHtml(`${legalOrigin}/contacto`);
+
   // Utilizamos la URL pública del logotipo oficial.
   // Gmail no puede acceder a rutas internas de React ni a localhost.
   // El archivo debe existir en frontend/public/logo-el-ancla.png.
@@ -799,6 +803,36 @@ function buildInvitationEmailHtml({ firstName, link }) {
           </tr>
 
           <!-- ========================================= -->
+          <!-- INFORMACIÓN DE PRIVACIDAD PREVIA A LA DECISIÓN -->
+          <!-- ========================================= -->
+          <tr>
+            <td style="padding:9px 42px 6px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f7f8f8;border:1px solid #e1e7e9;border-radius:11px;">
+                <tr><td style="padding:17px 19px;">
+                  <p style="margin:0 0 10px;color:#23394c;font-size:14px;font-weight:bold;line-height:1.5;">
+                    Antes de decidir, conoce cómo usamos tus datos
+                  </p>
+                  <p style="margin:0 0 10px;color:#596d79;font-size:12px;line-height:1.8;">
+                    Un administrador registró tu nombre, apellidos, correo, fecha de nacimiento y los datos necesarios de tu cuenta, para enviarte esta invitación y gestionar tu eventual participación en la plataforma.
+                  </p>
+                  <p style="margin:0 0 10px;color:#596d79;font-size:12px;line-height:1.8;">
+                    Si aceptas, tus datos se utilizarán para administrar tu acceso y las funciones comunitarias correspondientes. Algunos proveedores tecnológicos podrán tratar la información necesaria para prestar el servicio. No se vende para publicidad comercial.
+                  </p>
+         
+                  <p style="margin:0;color:#35677f;font-size:12px;line-height:1.8;">
+                    <a href="${safeTermsUrl}" style="color:#35677f;text-decoration:underline;">Términos y Condiciones</a>
+                    &nbsp;·&nbsp;
+                    <a href="${safePrivacyUrl}" style="color:#35677f;text-decoration:underline;">Política de Privacidad</a>
+                  </p>
+                  <p style="margin:11px 0 0;color:#796b5e;font-size:12px;line-height:1.75;">
+                    Al abrir tu invitación podrás revisar el aviso completo y decidir si aceptas antes de crear una contraseña. Si no deseas activar tu cuenta, no necesitas hacer nada: después de 24 horas el enlace vencerá y el registro provisional se eliminará automáticamente de nuestra base de datos. La eliminación puede presentar una breve demora técnica.
+                  </p>
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ========================================= -->
           <!-- BOTÓN DE ACTIVACIÓN -->
           <!-- ========================================= -->
 
@@ -847,6 +881,8 @@ function buildInvitationEmailHtml({ firstName, link }) {
                     <p style="margin:0;color:#796b5e;font-size:12px;line-height:1.75;">
                       Esta invitación vence en <strong>24 horas</strong>
                       y solo puede utilizarse <strong>una vez</strong>.
+                      Si no la aceptas, la cuenta provisional se eliminará
+                      automáticamente tras el vencimiento, sin necesidad de solicitarlo.
                       No compartas el enlace ni tu contraseña con otras personas.
                     </p>
 
@@ -880,8 +916,12 @@ function buildInvitationEmailHtml({ firstName, link }) {
               </p>
 
               <p style="margin:0 0 14px;color:#75858d;font-size:12px;line-height:1.7;">
-                Si no esperabas esta invitación, puedes ignorar este mensaje.
-                Tu cuenta no se activará hasta que completes el proceso.
+                Si no esperabas esta invitación, puedes ignorarla.
+                Tu cuenta no se activará y el registro pendiente caducará a las 24 horas.
+              </p>
+
+              <p style="margin:0 0 12px;color:#75858d;font-size:12px;line-height:1.7;">
+                ¿Tienes otra consulta? <a href="${safeContactUrl}" style="color:#35677f;text-decoration:underline;">Visita nuestra página de Contacto</a>.
               </p>
 
               <p style="margin:0;color:#a2a7a9;font-size:10px;letter-spacing:1px;text-transform:uppercase;">
@@ -906,6 +946,7 @@ async function sendInvitationMail({ to, firstName, token }) {
   // Conservamos la generación de enlace del flujo actual.
   const link = invitationLink(token);
   const name = firstName?.trim() || "amigo/a";
+  const legalOrigin = new URL(link).origin;
 
   // Gmail construirá automáticamente un correo multipart/alternative.
   // Los clientes que no muestren HTML usarán este texto completo.
@@ -918,12 +959,23 @@ async function sendInvitationMail({ to, firstName, token }) {
       "¡Bienvenido a la comunidad de Iglesia El Ancla!",
       "Un administrador ha registrado tu información para que puedas acceder a nuestro espacio digital.",
       "",
-      "Para confirmar tu correo y crear una contraseña personal, abre este enlace:",
+      "Información sobre tu invitación y privacidad:",
+      "Un administrador registró tu nombre, apellidos, correo, fecha de nacimiento y datos de cuenta para preparar esta invitación.",
+      "Si aceptas, utilizaremos tus datos para gestionar tu acceso y las funciones comunitarias que uses; los proveedores tecnológicos tendrán acceso solamente según su función.",
+      "Ningún sistema informático ofrece seguridad absoluta: pueden existir ciberataques, filtraciones o accesos no autorizados. Tu aceptación no limita los derechos establecidos por ley.",
+      `Términos y Condiciones: ${legalOrigin}/terminos-y-condiciones`,
+      `Política de Privacidad: ${legalOrigin}/politica-de-privacidad`,
+      "Antes de crear tu contraseña, podrás leer la advertencia completa y decidir si deseas aceptar.",
+      "",
+      "Para revisar las condiciones y, si estás de acuerdo, crear tu contraseña personal, abre este enlace:",
       link,
       "",
       "El enlace vence en 24 horas y solamente puede utilizarse una vez.",
+      "Si no aceptas la invitación, no debes hacer nada: el registro provisional se eliminará automáticamente de nuestra base de datos después del vencimiento. La limpieza puede tardar brevemente.",
       "No compartas el enlace ni tu contraseña con otras personas.",
       "",
+      "Para otras consultas, visita nuestra página de Contacto:",
+      `${legalOrigin}/contacto`,
       "Si no esperabas esta invitación, puedes ignorar el mensaje.",
       "",
       "Nos alegra caminar contigo.",
@@ -1053,14 +1105,56 @@ router.post(
         return res.status(400).json({ success: false, message: "Hay sucursales inexistentes o inactivas." });
       }
 
-      // El índice único de User.email es la protección final contra duplicados.
-      if (await User.exists({ email: input.email })) {
-        return res.status(409).json({ success: false, message: "Ese correo ya tiene una cuenta registrada." });
+      // Una cuenta caducada puede permanecer unos minutos en MongoDB
+      // mientras el proceso TTL completa su barrido. Para permitir
+      // volver a invitar ese correo, limpiamos solo la cuenta realmente
+      // pendiente y caducada (nunca una cuenta activa o desactivada).
+      const existingUser = await User.findOne({ email: input.email })
+        .select("_id isActive emailVerifiedAt +invitationExpiresAt").lean();
+
+      if (existingUser) {
+        const expiredInvitation =
+          !existingUser.isActive &&
+          !existingUser.emailVerifiedAt &&
+          existingUser.invitationExpiresAt instanceof Date &&
+          existingUser.invitationExpiresAt <= new Date();
+
+        if (!expiredInvitation) {
+          return res.status(409).json({ success: false, message: "Ese correo ya tiene una cuenta registrada." });
+        }
+
+        const removed = await User.deleteOne({
+          _id: existingUser._id,
+          isActive: false,
+          emailVerifiedAt: null,
+          invitationExpiresAt: { $lte: new Date() },
+        });
+
+        if (removed.deletedCount !== 1) {
+          return res.status(409).json({ success: false, message: "El registro anterior cambió de estado. Actualiza la página e intenta nuevamente." });
+        }
+
+        // El código vencido también tiene TTL independiente.
+        // Lo retiramos ahora para que no quede un desafío huérfano.
+        await EmailVerificationCode.deleteOne({
+          user: existingUser._id,
+          purpose: "verify_email",
+        }).catch(() => {
+          // La colección de desafíos también usa TTL propio.
+          // Si falla esta limpieza adicional, el token ya no podrá
+          // activar una cuenta borrada y caducará por sí mismo.
+          console.warn("[REGISTRO] No se pudo retirar un desafío de invitación caducado.");
+        });
       }
 
       // Nadie conoce esta contraseña aleatoria. Solo se reemplaza al activar.
       const unusablePassword = `${randomBytes(32).toString("hex")}Aa1!`;
       const passwordHash = await hashPassword(unusablePassword);
+
+      // Ambas entidades usan exactamente el mismo vencimiento.
+      // El índice TTL borrará el usuario provisional sin requerir
+      // un proceso programado en Vercel ni intervención administrativa.
+      const invitationExpiresAt = new Date(Date.now() + INVITATION_LIFETIME_MS);
 
       createdUser = await User.create({
         ...input,
@@ -1068,6 +1162,7 @@ router.post(
         isActive: false,
         emailVerifiedAt: null,
         mustChangePassword: true,
+        invitationExpiresAt,
       });
 
       const { token, tokenHash } = makeInvitationToken();
@@ -1076,7 +1171,7 @@ router.post(
         purpose: "verify_email",
         codeHash: tokenHash,
         email: createdUser.email,
-        expiresAt: new Date(Date.now() + INVITATION_LIFETIME_MS),
+        expiresAt: invitationExpiresAt,
         lastSentAt: new Date(),
         consumedAt: null,
       });
@@ -1117,7 +1212,7 @@ router.post(
 
       return res.status(201).json({
         success: true,
-        message: "Invitación enviada. Indícale al nuevo usuario que revise su correo, incluida la carpeta de spam, para confirmar su cuenta y crear su contraseña.",
+        message: "Invitación enviada. El destinatario tiene 24 horas para activar su cuenta; de lo contrario, el registro provisional será eliminado automáticamente.",
         user: { id: String(createdUser._id), email: createdUser.email, role: createdUser.role },
       });
     } catch (error) {
@@ -1154,7 +1249,8 @@ router.post(
 );
 
 // POST /api/users/:id/resend-invitation
-// Permite recuperar invitaciones vencidas SIN crear cuentas duplicadas.
+// Permite reenviar solo invitaciones todavía vigentes.
+// Vencidas las 24 horas, el usuario provisional se elimina mediante TTL.
 router.post(
   "/:id/resend-invitation",
   authorizeRoles("admin", "super_admin"),
@@ -1169,9 +1265,16 @@ router.post(
         return res.status(400).json({ success: false, message: "Solicitud no válida." });
       }
 
-      const user = await User.findById(req.params.id);
+      const user = await User.findById(req.params.id)
+        .select("+invitationExpiresAt");
       if (!user || user.isActive || user.emailVerifiedAt || user.deactivatedAt) {
         return res.status(409).json({ success: false, message: "La cuenta no está pendiente de activación." });
+      }
+      if (user.invitationExpiresAt && user.invitationExpiresAt <= new Date()) {
+        return res.status(410).json({
+          success: false,
+          message: "La invitación ya venció. El registro provisional se eliminará automáticamente. Puedes registrar nuevamente a la persona después de la limpieza.",
+        });
       }
       if (req.user.role === "admin") {
         const allowed = (req.user.sucursales || []).filter((branch) => branch?.isActive)
@@ -1195,7 +1298,36 @@ router.post(
       const { token, tokenHash } = makeInvitationToken();
       const nextExpiresAt = new Date(Date.now() + INVITATION_LIFETIME_MS);
       const nextSentAt = new Date();
-      await EmailVerificationCode.findOneAndUpdate(
+      const previousUserExpiresAt = user.invitationExpiresAt;
+
+      // Prolongamos el plazo del usuario antes de sustituir el token;
+      // así el TTL no elimina una cuenta mientras se reenvía el correo.
+      const userExtended = await User.updateOne(
+        {
+          _id: user._id,
+          isActive: false,
+          emailVerifiedAt: null,
+          ...(previousUserExpiresAt ? { invitationExpiresAt: { $gt: new Date() } } : {}),
+        },
+        { $set: { invitationExpiresAt: nextExpiresAt } }
+      );
+      if (userExtended.modifiedCount !== 1) {
+        return res.status(409).json({ success: false, message: "La cuenta dejó de estar pendiente o la invitación ya venció." });
+      }
+
+      // Si falla el reenvío, restauramos también la fecha de caducidad.
+      async function restorePendingExpiry() {
+        const original = previousUserExpiresAt
+          ? { $set: { invitationExpiresAt: previousUserExpiresAt } }
+          : { $unset: { invitationExpiresAt: "" } };
+        await User.updateOne(
+          { _id: user._id, isActive: false, emailVerifiedAt: null, invitationExpiresAt: nextExpiresAt },
+          original
+        ).catch(() => { });
+      }
+
+      try {
+        await EmailVerificationCode.findOneAndUpdate(
         { user: user._id, purpose: "verify_email" },
         {
           $set: {
@@ -1208,7 +1340,11 @@ router.post(
           }, $setOnInsert: { user: user._id, purpose: "verify_email" }
         },
         { upsert: true, new: true, runValidators: true }
-      );
+        );
+      } catch (challengeError) {
+        await restorePendingExpiry();
+        throw challengeError;
+      }
 
       try {
         await sendInvitationMail({ to: user.email, firstName: user.firstName, token });
@@ -1232,6 +1368,7 @@ router.post(
         } else {
           await EmailVerificationCode.deleteOne(currentFilter).catch(() => { });
         }
+        await restorePendingExpiry();
         return res.status(503).json({
           success: false,
           code: mailErrorCode,
@@ -1241,7 +1378,7 @@ router.post(
 
       return res.status(200).json({
         success: true,
-        message: "Invitación reenviada. Solicita al usuario revisar su correo y crear su contraseña.",
+        message: "Invitación reenviada. El destinatario dispone de 24 horas desde este nuevo envío para activar su cuenta.",
       });
     } catch (error) {
       return next(error);
@@ -1592,11 +1729,3 @@ router.patch("/:id/status", requireTrustedOrigin, async (req, res, next) => {
 });
 
 export default router;
-
-
-
-
-
-
-
-
