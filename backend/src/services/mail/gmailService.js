@@ -6,6 +6,10 @@
 
 import { google } from "googleapis";
 
+// Importación estática desde la API pública de Nodemailer.
+// Vercel puede detectar esta dependencia al construir la función.
+import nodemailer from "nodemailer";
+
 
 import { getGoogleOAuthClient } from "./googleOAuthClient.js";
 import { getGoogleMailRefreshToken } from "./googleMailConnectionService.js";
@@ -55,16 +59,20 @@ async function buildRawMessage({
   html,
 }) {
 
-  // Importamos Nodemailer solamente cuando
-  // realmente necesitamos construir un correo.
-  // Así no bloqueamos el arranque de Express.
-  const { default: MailComposer } = await import(
-    "nodemailer/lib/mail-composer/index.js"
-  );
+  // Construimos el mensaje MIME con el transporte de memoria oficial.
+  // Este transporte NO envía correos por SMTP: solo produce los bytes
+  // que posteriormente entregaremos a Gmail API.
+  const transport = nodemailer.createTransport({
+    streamTransport: true,
+    buffer: true,
+    // Nuestro servicio solo admite cadenas HTML/texto, no adjuntos remotos.
+    disableFileAccess: true,
+    disableUrlAccess: true,
+  });
 
-  // Construimos el mensaje utilizando el
-  // mismo MailComposer que ya usábamos.
-  const composer = new MailComposer({
+  // Preparamos exactamente los campos que ya utilizaba la invitación
+  // y la recuperación de contraseña; no cambiamos su contenido.
+  const info = await transport.sendMail({
     from,
     to,
     subject,
@@ -72,25 +80,14 @@ async function buildRawMessage({
     ...(html ? { html } : {}),
   });
 
-  // Convertimos el contenido del correo
-  // al formato requerido por Gmail API.
-  return new Promise((resolve, reject) => {
+  // El transporte con buffer:true debe devolver un Buffer con el MIME.
+  // No registramos el contenido porque puede contener datos personales.
+  if (!Buffer.isBuffer(info.message)) {
+    throw new Error("Nodemailer no generó un mensaje MIME válido");
+  }
 
-    // Generamos el mensaje MIME.
-    composer.compile().build((error, buffer) => {
-
-      // Propagamos los errores de composición.
-      if (error) {
-        return reject(error);
-      }
-
-      // Gmail API necesita el mensaje codificado
-      // como Base64URL.
-      resolve(buffer.toString("base64url"));
-
-    });
-
-  });
+  // Gmail API recibe el mensaje RFC 822 codificado como Base64URL.
+  return info.message.toString("base64url");
 
 }
 
