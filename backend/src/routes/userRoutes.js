@@ -618,39 +618,116 @@ function invitationLink(token) {
 // Solo clasificamos el error. Nunca mostramos ni registramos
 // tokens de Google, cabeceras HTTP, contraseñas o direcciones privadas.
 function classifyInvitationMailError(error) {
-  const responseError = error?.response?.data?.error;
-  const providerCode = typeof responseError === "string" ? responseError : "";
-  const message = typeof error?.message === "string" ? error.message : "";
-  const status = Number(error?.response?.status ?? error?.status ?? 0);
+  // Algunas respuestas de Google guardan el error en un objeto,
+  // otras lo devuelven como texto. Consideramos ambos formatos.
+  const googleError = error?.response?.data?.error;
+  const googleCode = typeof googleError === "string"
+    ? googleError
+    : typeof googleError?.status === "string"
+      ? googleError.status
+      : "";
 
-  // Google rechaza el refresh token si expiró o fue revocado.
-  if (providerCode === "invalid_grant" || /\binvalid_grant\b/i.test(message)) {
+  // Este texto se utiliza solo para clasificar el fallo.
+  // Nunca lo imprimimos ni lo devolvemos al navegador.
+  const message = [
+    error?.message,
+    typeof googleError === "object" ? googleError?.message : "",
+  ].filter((value) => typeof value === "string").join(" ");
+
+  // Obtenemos el estado HTTP real de la llamada saliente a Google.
+  // No debemos confundirlo con el HTTP 503 de nuestra propia API.
+  const status = Number(error?.response?.status ?? error?.status ?? 0);
+  const providerReason = googleError?.errors?.[0]?.reason;
+  const networkCode = typeof error?.code === "string" ? error.code : "";
+
+  // Autorización OAuth caducada o revocada.
+  if (googleCode === "invalid_grant" || /\binvalid_grant\b|refresh token.*(?:expired|revoked)/i.test(message)) {
     return "GMAIL_AUTH_EXPIRED";
   }
 
-  // No existe conexión activa en la base de datos.
+  // No se ha conectado la cuenta institucional.
   if (/correo institucional aún no está conectado|correo institucional aun no esta conectado/i.test(message)) {
     return "GMAIL_NOT_CONNECTED";
   }
 
-  // La cuenta emisora o las variables de entorno no coinciden.
+  // Configuración del remitente.
   if (/GMAIL_SENDER_EMAIL|no corresponde al correo institucional|correo institucional configurado no es válido/i.test(message)) {
     return "GMAIL_SENDER_CONFIGURATION";
   }
 
-  // Credenciales OAuth o claves para descifrar el refresh token.
+  // Configuración o descifrado de OAuth.
   if (/Faltan las credenciales OAuth|GOOGLE_TOKEN_ENCRYPTION_KEY|Unsupported state or unable to authenticate data/i.test(message)) {
     return "GMAIL_OAUTH_CONFIGURATION";
   }
 
-  // La autorización perdió el permiso de envío o Google denegó acceso.
+  // Validaciones del destinatario y del mensaje, previas a Gmail API.
+  if (/El destinatario no es válido|El campo to no es válido/i.test(message)) {
+    return "GMAIL_RECIPIENT_INVALID";
+  }
+  if (/El contenido HTML no es válido|El campo (?:subject|text) no es válido/i.test(message)) {
+    return "GMAIL_TEMPLATE_INVALID";
+  }
+
+  // Los límites de uso también pueden presentarse como HTTP 403.
+  if (status === 429 || ["rateLimitExceeded", "userRateLimitExceeded", "dailyLimitExceeded"].includes(providerReason)) {
+    return "GMAIL_RATE_LIMIT";
+  }
+
+  // Problemas de autorización y permisos.
   if (status === 401 || status === 403 || /no tiene permiso para enviar correos/i.test(message)) {
     return "GMAIL_PERMISSION_DENIED";
   }
 
-  if (status === 429) return "GMAIL_RATE_LIMIT";
-  if (status >= 500 && status <= 599) return "GMAIL_PROVIDER_UNAVAILABLE";
+  // Gmail rechazó el contenido de la solicitud enviada.
+  if (status === 400) {
+    return "GMAIL_BAD_REQUEST";
+  }
+
+  // Errores transitorios de conexión con el proveedor.
+  if (["ETIMEDOUT", "ECONNRESET", "ENOTFOUND", "EAI_AGAIN", "ECONNREFUSED"].includes(networkCode)) {
+    return "GMAIL_NETWORK_ERROR";
+  }
+
+  // Respuestas de servidor del proveedor.
+  if (status >= 500 && status <= 599) {
+    return "GMAIL_PROVIDER_UNAVAILABLE";
+  }
+
+  // Categoría genérica: necesitamos el diagnóstico seguro adicional.
   return "GMAIL_SEND_FAILED";
+}
+
+// Extraemos únicamente metadatos técnicos seguros para los logs de Vercel.
+// No registramos el mensaje completo de Google porque podría incluir
+// información del destinatario, cabeceras o detalles de autorización.
+function safeInvitationMailDiagnostic(error) {
+  const googleError = error?.response?.data?.error;
+  const candidateStatus = Number(error?.response?.status ?? error?.status ?? 0);
+
+  // Aceptamos solo un código HTTP válido; nunca mostramos el objeto completo.
+  const providerHttpStatus = Number.isInteger(candidateStatus) &&
+    candidateStatus >= 400 && candidateStatus <= 599
+    ? candidateStatus
+    : null;
+
+  // Los códigos de error y razones de Google son identificadores técnicos.
+  // La validación impide registrar cadenas largas o texto arbitrario.
+  const safeIdentifier = (value) =>
+    typeof value === "string" && /^[A-Za-z][A-Za-z0-9_.-]{0,63}$/.test(value)
+      ? value
+      : null;
+
+  return {
+    category: classifyInvitationMailError(error),
+    providerHttpStatus,
+    providerCode: safeIdentifier(
+      typeof googleError === "string" ? googleError : googleError?.status
+    ),
+    providerReason: safeIdentifier(googleError?.errors?.[0]?.reason),
+    networkCode: safeIdentifier(error?.code),
+    // Este campo identifica si falló un objeto de Google o una operación local.
+    hasProviderResponse: Boolean(error?.response),
+  };
 }
 
 // Mensaje de orientación para el administrador; no revela datos internos.
@@ -818,7 +895,9 @@ function buildInvitationEmailHtml({ firstName, link }) {
                   <p style="margin:0 0 10px;color:#596d79;font-size:12px;line-height:1.8;">
                     Si aceptas, tus datos se utilizarán para administrar tu acceso y las funciones comunitarias correspondientes. Algunos proveedores tecnológicos podrán tratar la información necesaria para prestar el servicio. No se vende para publicidad comercial.
                   </p>
-         
+                  <p style="margin:0 0 10px;color:#596d79;font-size:12px;line-height:1.8;">
+                    Ninguna plataforma conectada a Internet está libre de riesgos: pueden ocurrir ciberataques, accesos no autorizados o filtraciones incluso con medidas de seguridad. La aceptación no supone renunciar a tus derechos legales.
+                  </p>
                   <p style="margin:0;color:#35677f;font-size:12px;line-height:1.8;">
                     <a href="${safeTermsUrl}" style="color:#35677f;text-decoration:underline;">Términos y Condiciones</a>
                     &nbsp;·&nbsp;
@@ -1184,7 +1263,7 @@ router.post(
         // Registramos únicamente una categoría diagnóstica, nunca
         // el error original porque algunas respuestas OAuth contienen secretos.
         const mailErrorCode = classifyInvitationMailError(mailError);
-        console.error("[REGISTRO][CORREO] Envío de invitación fallido:", mailErrorCode);
+        console.error("[REGISTRO][CORREO] Envío de invitación fallido:", safeInvitationMailDiagnostic(mailError));
 
         // Conservamos el comportamiento anterior: no dejamos una cuenta
         // pendiente si Gmail no confirmó el envío de la invitación.
@@ -1350,7 +1429,7 @@ router.post(
         await sendInvitationMail({ to: user.email, firstName: user.firstName, token });
       } catch (mailError) {
         const mailErrorCode = classifyInvitationMailError(mailError);
-        console.error("[REGISTRO][CORREO] Reenvío de invitación fallido:", mailErrorCode);
+        console.error("[REGISTRO][CORREO] Reenvío de invitación fallido:", safeInvitationMailDiagnostic(mailError));
 
         // Restauramos la invitación anterior si todavía no se usó.
         const currentFilter = { user: user._id, purpose: "verify_email", codeHash: tokenHash };
