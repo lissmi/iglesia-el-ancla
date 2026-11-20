@@ -16,6 +16,7 @@ import videoAtardecer from "../../assets/images/atardecer-el-ancla.mp4";
 // Importamos los estilos exclusivos de Home.
 import "../../styles/pages/public/Home.css";
 
+
 // Creamos la página principal.
 function Home() {
     // Retornamos la estructura completa del Home.
