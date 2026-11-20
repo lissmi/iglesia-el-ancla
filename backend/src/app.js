@@ -178,9 +178,11 @@ app.disable("x-powered-by");
 // CONFIGURACIÓN DEL PROXY
 // =========================================================
 
-// En producción confiamos en el primer proxy
-// del proveedor de alojamiento.
-if (process.env.NODE_ENV === "production") {
+// Vercel está detrás de un proxy inverso y envía X-Forwarded-For.
+// Detectamos Vercel explícitamente: NODE_ENV puede estar mal
+// configurado y no debemos perder la identificación de la IP.
+// Confiamos SOLO en el primer salto de proxy, nunca en todos.
+if (process.env.VERCEL === "1" || process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
 

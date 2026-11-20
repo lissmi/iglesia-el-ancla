@@ -725,7 +725,13 @@ function safeInvitationMailDiagnostic(error) {
     ),
     providerReason: safeIdentifier(googleError?.errors?.[0]?.reason),
     networkCode: safeIdentifier(error?.code),
-    // Este campo identifica si falló un objeto de Google o una operación local.
+    // Identificamos dónde se produjo el fallo sin guardar el error completo.
+    mailStage: safeIdentifier(error?.mailStage),
+    errorName: safeIdentifier(error?.name),
+    // Algunas bibliotecas envuelven errores reales en `cause`.
+    causeName: safeIdentifier(error?.cause?.name),
+    causeNetworkCode: safeIdentifier(error?.cause?.code),
+    // Si es false, Gmail no devolvió una respuesta HTTP utilizable.
     hasProviderResponse: Boolean(error?.response),
   };
 }

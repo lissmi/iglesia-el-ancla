@@ -94,6 +94,30 @@ async function buildRawMessage({
 
 }
 
+// Atribuimos cada fallo a una etapa concreta del servicio de correo.
+// Este marcador es interno: no contiene destinatarios ni secretos OAuth.
+async function executeMailStage(stage, operation) {
+  try {
+    return await operation();
+  } catch (error) {
+    // Conservamos el error original, incluido su estado HTTP o código de red.
+    // Únicamente añadimos el identificador fijo de la operación que falló.
+    if (error && typeof error === "object") {
+      try {
+        if (!error.mailStage) {
+          Object.defineProperty(error, "mailStage", {
+            value: stage,
+            configurable: true,
+          });
+        }
+      } catch {
+        // El diagnóstico nunca debe sustituir el error original.
+      }
+    }
+    throw error;
+  }
+}
+
 /**
  * Envía un correo institucional a un único destinatario.
  * El caller debe ser un proceso de backend autorizado,
@@ -101,37 +125,60 @@ async function buildRawMessage({
  * @returns {Promise<{ messageId: string }>} Nunca devuelve tokens.
  */
 export async function sendInstitutionalEmail({ to, subject, text, html }) {
-  const sender = getInstitutionalSender();
-  const recipient = validateRecipient(to);
-  const safeSubject = requireText(subject, "subject", MAX_SUBJECT_LENGTH);
-  const safeText = requireText(text, "text", MAX_BODY_LENGTH);
+  // Comprobamos los campos antes de consultar credenciales de Google.
+  const { sender, recipient, safeSubject, safeText } = await executeMailStage(
+    "input_validation",
+    () => {
+      const sender = getInstitutionalSender();
+      const recipient = validateRecipient(to);
+      const safeSubject = requireText(subject, "subject", MAX_SUBJECT_LENGTH);
+      const safeText = requireText(text, "text", MAX_BODY_LENGTH);
 
-  if (html !== undefined && (typeof html !== "string" || html.length > MAX_BODY_LENGTH)) {
-    throw new Error("El contenido HTML no es válido");
-  }
+      if (html !== undefined &&
+        (typeof html !== "string" || html.length > MAX_BODY_LENGTH)) {
+        throw new Error("El contenido HTML no es válido");
+      }
+      return { sender, recipient, safeSubject, safeText };
+    }
+  );
 
-  // Solo se lee del almacenamiento cifrado del backend.
-  const refreshToken = await getGoogleMailRefreshToken();
-  const oauthClient = getGoogleOAuthClient();
-  oauthClient.setCredentials({ refresh_token: refreshToken });
+  // Recuperamos el token cifrado y verificamos la conexión institucional.
+  const refreshToken = await executeMailStage(
+    "connection_read",
+    () => getGoogleMailRefreshToken()
+  );
 
-  const raw = await buildRawMessage({
+  // Creamos un cliente independiente para este envío.
+  const oauthClient = await executeMailStage("oauth_client", () => {
+    const client = getGoogleOAuthClient();
+    client.setCredentials({ refresh_token: refreshToken });
+    return client;
+  });
+
+  // Construimos el correo MIME sin acceder todavía a Gmail API.
+  const raw = await executeMailStage("mime_build", () => buildRawMessage({
     from: sender,
     to: recipient,
     subject: safeSubject,
     text: safeText,
     html,
+  }));
+
+  // Aquí se realiza la solicitud saliente a Google. Si falla,
+  // conservamos el error real para que userRoutes.js lo clasifique.
+  const response = await executeMailStage("gmail_send", async () => {
+    const gmail = google.gmail({ version: "v1", auth: oauthClient });
+    return gmail.users.messages.send({
+      userId: "me",
+      requestBody: { raw },
+    });
   });
 
-  const gmail = google.gmail({ version: "v1", auth: oauthClient });
-  const response = await gmail.users.messages.send({
-    userId: "me",
-    requestBody: { raw },
+  // Gmail debe confirmar el envío con un ID de mensaje.
+  return executeMailStage("gmail_response", () => {
+    if (!response?.data?.id) {
+      throw new Error("Gmail no devolvió un identificador de mensaje");
+    }
+    return { messageId: response.data.id };
   });
-
-  if (!response.data.id) {
-    throw new Error("Gmail no devolvió un identificador de mensaje");
-  }
-
-  return { messageId: response.data.id };
 }
